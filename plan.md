@@ -154,7 +154,7 @@ one chunk per `##` section with `chunk_id = {block_id}#{section-slug}`. Never sp
 - `GET /catalogue/{product_code}` and `POST /catalogue/compare` `{product_codes[], benefit_codes[]?}`
 - `GET /actions/{brand}` and `GET /actions/{brand}/{action_id}`
 **DoD §4:** contracts package builds; JSON Schemas exported to `/packages/contracts/schema/*.json`;
-round-trip tests (yaml frontmatter → model → yaml) pass. **[x — v1 initial commit]**
+round-trip tests (yaml frontmatter → model → yaml) pass. **[x — f5c2ed0]**
 ---
 ## 5. Phase 0 — Foundations
 1. [x] Scaffold monorepo per §2; docker-compose with postgres(pgvector), redis, langfuse; alembic baseline
