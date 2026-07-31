@@ -48,10 +48,18 @@ def page_metadata(page: CrawledPage) -> dict[str, Any]:
     }
 
 
-async def index_page(conn: psycopg.AsyncConnection[Any], page: CrawledPage, embedder: VllmClient) -> int:
+async def index_page(
+    conn: psycopg.AsyncConnection[Any], page: CrawledPage, embedder: VllmClient | None
+) -> int:
     """Replace all chunks for the page's canonical URL. Returns chunk count."""
     texts = chunk_page_text(page.text)
-    embeddings = await embedder.embed(texts) if texts else []
+    if embedder is None:
+        from insurance_clients.pseudo import pseudo_embedding, pseudo_sparse
+        from insurance_clients.vllm import Embedding
+
+        embeddings = [Embedding(dense=pseudo_embedding(t), sparse=pseudo_sparse(t)) for t in texts]
+    else:
+        embeddings = await embedder.embed(texts) if texts else []
     metadata = page_metadata(page)
     async with conn.cursor() as cur:
         await cur.execute("DELETE FROM web_chunks WHERE canonical_url = %s", (page.canonical_url,))
@@ -80,7 +88,9 @@ async def index_page(conn: psycopg.AsyncConnection[Any], page: CrawledPage, embe
     return len(texts)
 
 
-def make_embedder(settings: Settings) -> VllmClient:
+def make_embedder(settings: Settings) -> VllmClient | None:
+    if not settings.vllm_embed_base_url:
+        return None
     return VllmClient(
         VllmEndpoint(
             base_url=settings.vllm_embed_base_url,

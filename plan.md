@@ -246,24 +246,36 @@ pre-grading. Injection screen applied to web-index tool results (poisoned-chunk 
 endpoints + ingested fixture bundle (mocked-vLLM pipeline tests cover the harness paths in CI).
 ---
 ## 9. Phase 4 — Channels
-1. [~] **Widget:** React/TS SSE chat with brand theming, citations, action buttons, feedback thumbs,
-   in-memory session. Embeddable script build + server-side brand binding pending.
-2. [~] **Gateway hardening:** regex PII redaction + shared injection screen + rate limits +
-   message persistence (sessions/messages, raw + redacted) + `/v1/feedback` (comment redacted);
-   JWT session issuance, Presidio, pgcrypto raw-storage encryption pending.
-3. [~] **Internal portal:** internal-audience chat + placeholder read-only views.
+1. [x] **Widget:** React/TS SSE chat with brand theming, citations, feedback thumbs, in-memory
+   session; action renderer resolves action_ids to exact registry values (tel:/mailto:/link);
+   session JWT bootstrap with brand bound server-side per widget key. Iframe/script packaging
+   remains a build task.
+2. [x] **Gateway hardening:** regex PII redaction + shared injection screen + rate limits +
+   message persistence (raw pgcrypto-encrypted when MESSAGE_ENC_KEY set, redacted queryable) +
+   `/v1/feedback` + JWT session issuance (HS256, server-side audience/brand claims; internal
+   audience requires the SSO header stub even in dev mode). Presidio swap-in still open.
+3. [~] **Internal portal:** internal-audience chat behind the SSO header stub + placeholder
+   read-only views (transcript/feedback/audit/eval read APIs still to wire).
 4. [x] **Handover:** `handover.requests` Redis stream emission with `{transcript, summary, reason}`
    payload (logged fallback without Redis); widget shows hotline/live-chat actions meanwhile.
 **DoD Phase 4:** pending e2e tests against the compose stack.
 ---
 ## 10. Phase 5 — Hardening & ops
-1. [~] Containerfiles rootless-compatible **[x]**; systemd/quadlet units pending; nginx conf with SSE
-   buffering off, gzip, security headers, rate limit zone **[x]**.
-2. [ ] Load test (locust): 50 concurrent sessions, p95 < 6s RAG turn.
-3. [ ] Failure drills: agent endpoint down / judge down / retrieval empty.
-4. [ ] Compliance evidence pack; React source maps disabled in prod builds **[x]**.
-5. [ ] Weekly analytics job: cluster low-rated + unanswered turns → gap report CSV.
-**DoD Phase 5:** pending.
+1. [x] Containerfiles rootless-compatible; systemd/quadlet units (services + retention/gap-report
+   timers); nginx conf with SSE buffering off, gzip, security headers, rate limit zone.
+2. [~] Load test: locustfile committed (`make loadtest`, 50 users, done-event validation); report
+   to be captured against a fully provisioned stack.
+3. [x] Failure drills as automated tests: agent endpoint down => degraded banner + hotline while
+   emergency route stays fully functional; judge down => rule-graders-only; retrieval empty =>
+   clarify, never guess; orchestrator down => gateway closes the SSE turn gracefully.
+4. [x] Compliance evidence pack (`docs/compliance/`: data-flow diagram, retention config +
+   daily TTL purge job, audit-log query examples, eval-gate history export script); React
+   source maps disabled in prod builds.
+5. [x] Weekly analytics job (`apps/analytics`): clusters low-rated + unanswered turns
+   (dependency-free k-means; pseudo-embeddings offline, real embeddings in prod) => gap report
+   CSV (question_cluster, count, nearest_block, suggested_block_type); weekly systemd timer.
+**DoD Phase 5:** drills automated; `make release` builds versioned images; load-test report
+capture against a provisioned stack remains.
 ---
 ## 11. Testing & CI gates (applies to every phase)
 - Unit: contracts round-trip, chunker boundaries, filter SQL, graders (table-driven), canonical map. **[x]**

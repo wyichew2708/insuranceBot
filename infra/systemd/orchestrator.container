@@ -1,0 +1,18 @@
+[Unit]
+Description=insuranceBot orchestrator
+After=network-online.target
+
+[Container]
+Image=localhost/insurancebot-orchestrator:latest
+EnvironmentFile=/etc/insurancebot/env
+PublishPort=8001:8001
+User=10001
+NoNewPrivileges=true
+ReadOnly=true
+Tmpfs=/tmp
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

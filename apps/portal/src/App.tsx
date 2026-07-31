@@ -26,7 +26,8 @@ export function App() {
     try {
       const resp = await fetch("/v1/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // SSO header stub (§9.3): internal audience requires staff identity.
+        headers: { "Content-Type": "application/json", "X-Staff-User": "dev-staff" },
         body: JSON.stringify({
           session_id: sessionId.current,
           brand: "etiqa",

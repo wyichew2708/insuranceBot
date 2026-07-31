@@ -198,7 +198,8 @@ async def crawl_domain(domain: str, settings: Settings, promo_only: bool = False
             if page is None:
                 continue
             indexed += await index_page(conn, page, embedder)
-    await embedder.aclose()
+    if embedder is not None:
+        await embedder.aclose()
     logger.info("crawl %s (%s): %d chunks indexed", domain, "promo" if promo_only else "full", indexed)
     return indexed
 

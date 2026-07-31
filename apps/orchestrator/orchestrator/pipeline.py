@@ -51,6 +51,11 @@ OUT_OF_SCOPE_TEXT = (
     "claims, and policy servicing. What can I help you with?"
 )
 
+DEGRADED_TEXT = (
+    "I'm having trouble answering right now. You can reach us on our customer "
+    "hotline, or try again in a few minutes."
+)
+
 
 @dataclass
 class PipelineDeps:
@@ -203,14 +208,23 @@ class ChatPipeline:
         async def executor(tool: str, args: dict[str, Any], c: ToolContext) -> Any:
             return await _screened_executor(self.deps.executor, tool, args, c)
 
-        result: LoopResult = await run_agent_loop(
-            state,
-            planner,
-            ctx,
-            self.deps.settings.agent_max_steps,
-            audit=auditor.emit,
-            executor=executor,
-        )
+        try:
+            result: LoopResult = await run_agent_loop(
+                state,
+                planner,
+                ctx,
+                self.deps.settings.agent_max_steps,
+                audit=auditor.emit,
+                executor=executor,
+            )
+        except Exception as exc:
+            # Failure drill (§10.3): agent endpoint down => degraded banner +
+            # hotline routing; deterministic routes stay fully functional.
+            logger.error("agent loop unavailable: %s", exc)
+            auditor.emit("degraded", {"reason": "agent_unavailable", "error": str(exc)})
+            yield ChatEvent(type=ChatEventType.token, text=DEGRADED_TEXT)
+            yield ChatEvent(type=ChatEventType.action, action_id="customer-hotline")
+            return
 
         if result.handover is not None:
             payload = HandoverPayload(

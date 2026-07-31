@@ -50,6 +50,21 @@ class Settings(BaseSettings):
     orchestrator_url: str = "http://localhost:8001"
     retrieval_url: str = "http://localhost:8002"
 
+    # Sessions & data protection (Phase 4)
+    session_secret: str = ""  # empty => dev mode, no JWT enforcement
+    widget_keys: str = ""  # "key1:tiq,key2:etiqa" — brand bound server-side per key
+    message_enc_key: str = ""  # pgcrypto symmetric key; empty => plaintext storage
+    message_ttl_days: int = 90
+
+    @property
+    def widget_key_map(self) -> dict[str, str]:
+        out: dict[str, str] = {}
+        for pair in self.widget_keys.split(","):
+            if ":" in pair:
+                key, brand = pair.split(":", 1)
+                out[key.strip()] = brand.strip()
+        return out
+
     @property
     def allowlisted_domains(self) -> list[str]:
         return [d.strip() for d in self.crawl_allowlist.split(",") if d.strip()]

@@ -34,6 +34,11 @@ Embedded = tuple[Chunk, list[float], dict[str, float]]
 
 
 async def embed_chunks(chunks: list[Chunk], settings: Settings) -> list[Embedded]:
+    if not settings.vllm_embed_base_url:
+        from insurance_clients.pseudo import pseudo_embedding, pseudo_sparse
+
+        logger.warning("no embed endpoint configured — using dev pseudo-embeddings")
+        return [(c, pseudo_embedding(c.embed_text), pseudo_sparse(c.embed_text)) for c in chunks]
     client = VllmClient(
         VllmEndpoint(
             base_url=settings.vllm_embed_base_url,

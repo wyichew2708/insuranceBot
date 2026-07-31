@@ -38,22 +38,37 @@ async def readyz() -> dict[str, str]:
     return {"status": "ready"}
 
 
-@app.post("/search")
-async def search(req: SearchRequest) -> list[SearchResult]:
-    settings = get_settings()
-    embed_client = VllmClient(
+async def _embed_query(query: str, settings: Any) -> tuple[list[float], dict[str, float]]:
+    if not settings.vllm_embed_base_url:
+        from insurance_clients.pseudo import pseudo_embedding, pseudo_sparse
+
+        return pseudo_embedding(query), pseudo_sparse(query)
+    client = VllmClient(
         VllmEndpoint(
             base_url=settings.vllm_embed_base_url,
             model=settings.vllm_embed_model,
             api_key=settings.vllm_api_key,
         )
     )
+    try:
+        [embedding] = await client.embed([query])
+        return embedding.dense, embedding.sparse
+    finally:
+        await client.aclose()
+
+
+@app.post("/search")
+async def search(req: SearchRequest) -> list[SearchResult]:
+    settings = get_settings()
     conn = await _conn()
     try:
-        [embedding] = await embed_client.embed([req.query])
-        candidates = await hybrid_search(conn, req.index, req.filters, embedding.dense, embedding.sparse)
+        dense, sparse = await _embed_query(req.query, settings)
+        candidates = await hybrid_search(conn, req.index, req.filters, dense, sparse)
         if not candidates:
             return []
+        if not settings.vllm_rerank_base_url:
+            # No reranker (dev / drill): RRF order stands.
+            return candidates[: req.top_k]
         rerank_client = VllmClient(
             VllmEndpoint(
                 base_url=settings.vllm_rerank_base_url,
@@ -71,7 +86,6 @@ async def search(req: SearchRequest) -> list[SearchResult]:
         finally:
             await rerank_client.aclose()
     finally:
-        await embed_client.aclose()
         await conn.close()
 
 
