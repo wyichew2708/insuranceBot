@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY packages ./packages
 COPY apps ./apps
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --package retrieval
 ENV PATH="/app/.venv/bin:$PATH"
 USER 10001
 EXPOSE 8002

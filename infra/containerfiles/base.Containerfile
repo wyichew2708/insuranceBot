@@ -8,5 +8,5 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY packages ./packages
 COPY apps ./apps
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --package gateway
 USER 10001

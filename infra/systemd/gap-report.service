@@ -5,5 +5,5 @@ Description=insuranceBot weekly gap report for the CMS team
 Type=oneshot
 ExecStart=/usr/bin/podman run --rm --env-file /etc/insurancebot/env \
     -v /var/lib/insurancebot/reports:/reports:Z \
-    localhost/insurancebot-gateway:latest \
+    localhost/insurancebot-analytics:latest \
     python -m analytics.gap_report --out /reports/gap_report.csv

@@ -30,7 +30,7 @@ _PATH_RULES: list[tuple[re.Pattern[str], str]] = [
 
 def in_allowlist(url: str, allowlist: list[str]) -> bool:
     host = urlparse(url).netloc.lower().split(":")[0]
-    return any(host == d.lower() or host == f"www.{d.lower()}".removeprefix("www.www.") for d in allowlist)
+    return any(host.removeprefix("www.") == d.lower().removeprefix("www.") for d in allowlist)
 
 
 def is_excluded(url: str) -> bool:

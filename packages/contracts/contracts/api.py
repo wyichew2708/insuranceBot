@@ -12,10 +12,10 @@ from contracts.okf import Audience, Brand, Jurisdiction, Language
 
 
 class ChatRequest(BaseModel):
-    session_id: str
+    session_id: str = Field(min_length=1, max_length=128)
     brand: Brand
     audience: Audience
-    message: str
+    message: str = Field(min_length=1, max_length=4000)
 
 
 class ChatEventType(str, Enum):

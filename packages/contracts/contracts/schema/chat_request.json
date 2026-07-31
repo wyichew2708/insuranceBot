@@ -26,10 +26,14 @@
       "$ref": "#/$defs/Brand"
     },
     "message": {
+      "maxLength": 4000,
+      "minLength": 1,
       "title": "Message",
       "type": "string"
     },
     "session_id": {
+      "maxLength": 128,
+      "minLength": 1,
       "title": "Session Id",
       "type": "string"
     }

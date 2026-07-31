@@ -22,9 +22,6 @@ from orchestrator.pipeline import ChatPipeline, PipelineDeps, sse_format
 
 app = FastAPI(title="orchestrator")
 
-EMERGENCY_ACTION_ID = "emergency-services-hotline"
-EMERGENCY_BLOCK_ID = "common/escalation/overseas-emergency"
-
 
 @app.get("/healthz")
 async def healthz() -> dict[str, str]:

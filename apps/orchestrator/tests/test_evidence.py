@@ -39,6 +39,19 @@ def test_web_results_carry_promo_windows() -> None:
     assert accurate == dt.date(2026, 7, 1)
 
 
+def test_get_procedure_list_result_feeds_citations() -> None:
+    tool_results = [
+        {
+            "tool": "get_procedure",
+            "args": {"intent": "cancel-policy"},
+            "result": [{"chunk_id": "p1", "text": "steps", "metadata": {"audience": "public"}}],
+        }
+    ]
+    ev = build_evidence(tool_results, "public")
+    assert "p1" in ev.permitted_chunk_ids
+    assert ev.cited_texts["p1"] == "steps"
+
+
 def test_actions_and_pages_feed_verbatim_registry() -> None:
     tool_results = [
         {"tool": "get_action", "args": {}, "result": {"action_id": "hotline", "value": "6123 4567"}},

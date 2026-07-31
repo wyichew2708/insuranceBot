@@ -61,7 +61,9 @@ def build_evidence(
     for obs in tool_results:
         tool = obs.get("tool")
         result = obs.get("result")
-        if tool in {"search_kb", "search_web_index"} and isinstance(result, list):
+        # get_procedure returns a block dict (by id) OR a search list (by
+        # intent) — both shapes must feed the evidence.
+        if tool in {"search_kb", "search_web_index", "get_procedure"} and isinstance(result, list):
             for item in result:
                 if not isinstance(item, dict) or "chunk_id" not in item:
                     continue

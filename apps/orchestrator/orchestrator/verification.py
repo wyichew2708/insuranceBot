@@ -50,7 +50,19 @@ class GraderResult:
 PHONE_RE = re.compile(r"\+?\d[\d\s\-]{6,}\d")
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 SWIFT_RE = re.compile(r"\b[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?\b")
+_SWIFT_CONTEXT_RE = re.compile(r"\b(swift|bic)\b", re.IGNORECASE)
 ACCOUNT_RE = re.compile(r"\b\d{3}-\d{4,}-\d+\b|\b\d{9,17}\b")
+
+
+def _looks_like_swift(match: re.Match[str], text: str) -> bool:
+    """The bare pattern matches any 8-letter uppercase word ("COVERAGE",
+    "OVERSEAS"); only treat it as a SWIFT code when it contains a digit or
+    appears near a SWIFT/BIC mention."""
+    token = match.group()
+    if any(ch.isdigit() for ch in token):
+        return True
+    window = text[max(0, match.start() - 30) : match.end() + 30]
+    return bool(_SWIFT_CONTEXT_RE.search(window))
 
 
 def extract_verbatim_tokens(text: str) -> list[str]:
@@ -58,7 +70,7 @@ def extract_verbatim_tokens(text: str) -> list[str]:
     tokens: list[str] = []
     tokens += [m.group().strip() for m in PHONE_RE.finditer(text)]
     tokens += [m.group() for m in EMAIL_RE.finditer(text)]
-    tokens += [m.group() for m in SWIFT_RE.finditer(text)]
+    tokens += [m.group() for m in SWIFT_RE.finditer(text) if _looks_like_swift(m, text)]
     tokens += [m.group() for m in ACCOUNT_RE.finditer(text)]
     return tokens
 

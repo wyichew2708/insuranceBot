@@ -35,7 +35,7 @@ async def hybrid_search(
     )
     params = {**sql_filter.params, "qvec": json.dumps(query_dense), "pool": candidate_pool}
     async with conn.cursor() as cur:
-        await cur.execute(dense_sql.encode(), params)  # type: ignore[arg-type]
+        await cur.execute(dense_sql, params)  # type: ignore[arg-type]
         rows = await cur.fetchall()
 
     by_id = {row["chunk_id"]: row for row in rows}

@@ -62,14 +62,23 @@ async def discover_urls(domain: str, http: httpx.AsyncClient, max_html_pages: in
     return await html_link_crawl(domain, http, max_pages=max_html_pages)
 
 
+def _same_host(url: str, domain: str) -> bool:
+    from urllib.parse import urlparse
+
+    host = (urlparse(url).hostname or "").lower()
+    return host == domain.lower() or host == domain.lower().removeprefix("www.")
+
+
 async def html_link_crawl(domain: str, http: httpx.AsyncClient, max_pages: int = 200) -> list[str]:
-    """Breadth-first link crawl bounded to the domain (final fallback, §7.1)."""
+    """Breadth-first link crawl bounded to the domain host (final fallback,
+    §7.1). Host comparison, not substring — an off-site URL that merely
+    mentions the domain in its path/query must not be crawled."""
     start = f"https://{domain}/"
     queue = [start]
     visited: set[str] = set()
     while queue and len(visited) < max_pages:
         url = queue.pop(0)
-        if url in visited or domain not in url:
+        if url in visited or not _same_host(url, domain):
             continue
         visited.add(url)
         try:
@@ -79,7 +88,7 @@ async def html_link_crawl(domain: str, http: httpx.AsyncClient, max_pages: int =
         if resp.status_code != 200 or "text/html" not in resp.headers.get("content-type", ""):
             continue
         for link in extract_links(resp.text, url):
-            if domain in link and link not in visited:
+            if _same_host(link, domain) and link not in visited:
                 queue.append(link)
     return sorted(visited)
 
@@ -95,18 +104,19 @@ def rel_canonical(html: str) -> str | None:
     return m.group(1) if m else None
 
 
-_HREF_RE = re.compile(r"<a[^>]+href=[\"']([^\"'#]+)[\"']", re.IGNORECASE)
+_HREF_RE = re.compile(r"<a[^>]+href=[\"']([^\"']+)[\"']", re.IGNORECASE)
 
 
 def extract_links(html: str, base_url: str) -> list[str]:
-    """Absolute same-scheme links for the fallback HTML crawl."""
+    """Absolute links for the fallback HTML crawl; fragments stripped (a link
+    to page#section is still a link to the page)."""
     from urllib.parse import urljoin
 
     seen: set[str] = set()
     for href in _HREF_RE.findall(html):
-        absolute = urljoin(base_url, href)
-        if absolute.startswith("http"):
-            seen.add(absolute.split("#")[0])
+        absolute = urljoin(base_url, href).split("#")[0]
+        if absolute.startswith("http") and absolute:
+            seen.add(absolute)
     return sorted(seen)
 
 
@@ -163,7 +173,9 @@ def build_page(
 
 
 def domain_brand(domain: str) -> str:
-    return "tiq" if "tiq" in domain else "etiqa"
+    # NB: "etiqa" contains the substring "tiq" — check the more specific
+    # brand first or every Etiqa page gets indexed under the wrong brand.
+    return "etiqa" if "etiqa" in domain else "tiq"
 
 
 async def crawl_domain(domain: str, settings: Settings, promo_only: bool = False) -> int:

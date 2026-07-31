@@ -33,7 +33,7 @@ migrate:
 
 # Versioned images for every service (§10 DoD: make release).
 VERSION := $(shell git describe --tags --always --dirty)
-SERVICES := gateway orchestrator retrieval ingestion crawler
+SERVICES := gateway orchestrator retrieval ingestion crawler analytics
 release:
 	@for svc in $(SERVICES); do \
 		docker build -f infra/containerfiles/$$svc.Containerfile \

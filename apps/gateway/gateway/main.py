@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 import httpx
 from contracts.api import ChatRequest
@@ -25,16 +26,17 @@ from gateway.storage import store_feedback, store_message
 
 logger = logging.getLogger("gateway")
 
-app = FastAPI(title="gateway")
-
 _rate_limiter: RateLimiter = MemoryRateLimiter()
 
 
-@app.on_event("startup")
-async def _startup() -> None:
+@asynccontextmanager
+async def _lifespan(_: FastAPI) -> AsyncIterator[None]:
     global _rate_limiter
-    settings = get_settings()
-    _rate_limiter = build_rate_limiter(settings.redis_url)
+    _rate_limiter = build_rate_limiter(get_settings().redis_url)
+    yield
+
+
+app = FastAPI(title="gateway", lifespan=_lifespan)
 
 
 @app.get("/healthz")
@@ -84,6 +86,9 @@ async def create_session(req: SessionRequest, request: Request) -> dict[str, str
     the client never chooses it (§9.1 anti-tamper). The internal portal path
     uses the SSO header stub instead of a widget key."""
     settings = get_settings()
+    client_ip = request.client.host if request.client else "unknown"
+    if not await _rate_limiter.allow(f"session-mint:{client_ip}"):
+        raise HTTPException(status_code=429, detail="rate limit exceeded")
     if not settings.session_secret:
         raise HTTPException(status_code=503, detail="sessions not configured (SESSION_SECRET unset)")
     staff_user = request.headers.get("X-Staff-User")

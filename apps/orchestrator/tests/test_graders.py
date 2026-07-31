@@ -57,6 +57,14 @@ def test_extracts_phones_emails_swift_accounts() -> None:
     assert "123-45678-9" in tokens
 
 
+def test_uppercase_words_are_not_mistaken_for_swift_codes() -> None:
+    tokens = extract_verbatim_tokens("YOUR OVERSEAS COVERAGE INCLUDES BAGGAGE")
+    assert tokens == []
+    # ...but a code with a digit, or near a SWIFT/BIC mention, still counts
+    assert "EXAMSGS1" in extract_verbatim_tokens("send to EXAMSGS1 please")
+    assert "EXAMSGSG" in extract_verbatim_tokens("the BIC is EXAMSGSG")
+
+
 def test_verbatim_digit_must_match_cited_source_exactly() -> None:
     d = Draft(text="Please call 1234 5678.", citations=["c1"])
     ok = ev(cited_texts={"c1": "Hotline: 1234 5678 (weekdays)"})

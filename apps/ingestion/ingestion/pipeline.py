@@ -22,6 +22,15 @@ logger = logging.getLogger("ingestion.pipeline")
 KEEP_BUNDLES = 3
 
 
+def new_bundle_id() -> str:
+    """Time-prefixed so lexical order == chronological order — the keep-last-N
+    cleanup and rollback tooling sort by bundle_id."""
+    import datetime as dt
+
+    stamp = dt.datetime.now(dt.UTC).strftime("%Y%m%d%H%M%S%f")
+    return f"{stamp}-{uuid.uuid4().hex[:6]}"
+
+
 class IngestionError(Exception):
     pass
 
@@ -67,19 +76,24 @@ async def ingest_bundle(bundle_dir: Path, settings: Settings, activate: bool = T
 
     chunks = [c for b in blocks for c in chunk_block(b)]
     embedded = await embed_chunks(chunks, settings)
-    bundle_id = uuid.uuid4().hex[:12]
+    bundle_id = new_bundle_id()
 
     async with await psycopg.AsyncConnection.connect(_dsn(settings)) as conn:
         async with conn.cursor() as cur:
             for chunk, dense, sparse in embedded:
+                # PK is (chunk_id, language, bundle_id): language variants of a
+                # block coexist, and previous bundles stay intact so rollback
+                # (§6.1.6) has something to roll back to.
                 await cur.execute(
-                    "INSERT INTO kb_chunks (chunk_id, block_id, bundle_id, text, dense, sparse,"
-                    " metadata, active) VALUES (%s, %s, %s, %s, %s::vector, %s, %s, false)"
-                    " ON CONFLICT (chunk_id) DO UPDATE SET bundle_id = EXCLUDED.bundle_id,"
+                    "INSERT INTO kb_chunks (chunk_id, language, block_id, bundle_id, text, dense,"
+                    " sparse, metadata, active)"
+                    " VALUES (%s, %s, %s, %s, %s, %s::vector, %s, %s, false)"
+                    " ON CONFLICT (chunk_id, language, bundle_id) DO UPDATE SET"
                     " text = EXCLUDED.text, dense = EXCLUDED.dense, sparse = EXCLUDED.sparse,"
                     " metadata = EXCLUDED.metadata, active = false",
                     (
                         chunk.chunk_id,
+                        chunk.metadata.get("language", "en"),
                         chunk.block_id,
                         bundle_id,
                         chunk.text,

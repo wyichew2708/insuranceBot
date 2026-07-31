@@ -133,7 +133,7 @@ async def _search_web(args: BaseModel, ctx: ToolContext) -> Any:
 
 async def _read_page(args: BaseModel, ctx: ToolContext) -> Any:
     assert isinstance(args, ReadPageArgs)
-    return await _retrieval_get(ctx, f"/page/{args.block_id}")
+    return await _retrieval_get(ctx, f"/page/{args.block_id}?language={ctx.language}")
 
 
 async def _get_catalogue(args: BaseModel, ctx: ToolContext) -> Any:
@@ -151,7 +151,7 @@ async def _get_procedure(args: BaseModel, ctx: ToolContext) -> Any:
     if not args.block_id and not args.intent:
         raise ToolError("get_procedure requires intent or block_id")
     if args.block_id:
-        return await _retrieval_get(ctx, f"/page/{args.block_id}")
+        return await _retrieval_get(ctx, f"/page/{args.block_id}?language={ctx.language}")
     req = SearchRequest(
         query=f"procedure: {args.intent}", index=SearchIndex.kb, filters=_session_filters(ctx), top_k=3
     )

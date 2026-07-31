@@ -90,15 +90,16 @@ async def search(req: SearchRequest) -> list[SearchResult]:
 
 
 @app.get("/page/{block_id:path}")
-async def read_page(block_id: str) -> dict[str, Any]:
+async def read_page(block_id: str, language: str = "en") -> dict[str, Any]:
     conn = await _conn()
     try:
         async with conn.cursor(row_factory=dict_row) as cur:
             await cur.execute(
                 "SELECT block_id, string_agg(text, E'\\n\\n' ORDER BY chunk_id) AS text,"
                 " (array_agg(metadata))[1] AS metadata"
-                " FROM kb_chunks WHERE block_id = %s AND active = true GROUP BY block_id",
-                (block_id,),
+                " FROM kb_chunks WHERE block_id = %s AND active = true AND language = %s"
+                " GROUP BY block_id",
+                (block_id, language),
             )
             row = await cur.fetchone()
         if row is None:

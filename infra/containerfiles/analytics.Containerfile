@@ -5,8 +5,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY packages ./packages
 COPY apps ./apps
-RUN uv sync --frozen --no-dev --package gateway
+RUN uv sync --frozen --no-dev --package analytics
 ENV PATH="/app/.venv/bin:$PATH"
 USER 10001
-EXPOSE 8000
-CMD uvicorn gateway.main:app --host 0.0.0.0 --port 8000
+CMD python -m analytics.gap_report --out /reports/gap_report.csv

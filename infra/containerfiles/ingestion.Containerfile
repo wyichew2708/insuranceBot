@@ -6,7 +6,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY packages ./packages
 COPY apps ./apps
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --package ingestion
 ENV PATH="/app/.venv/bin:$PATH"
 USER 10001
 CMD python -m ingestion.cli watch
