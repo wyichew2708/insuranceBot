@@ -94,6 +94,29 @@ async def read_page(block_id: str) -> dict[str, Any]:
         await conn.close()
 
 
+@app.get("/index/{language}/{path:path}")
+async def navigation_index(language: str, path: str) -> list[dict[str, Any]]:
+    """Navigation listing (§6.2.3): published blocks under a path prefix,
+    per language. Internal blocks are never listed here — this endpoint has
+    no session context, so it serves the public view only."""
+    conn = await _conn()
+    try:
+        async with conn.cursor(row_factory=dict_row) as cur:
+            await cur.execute(
+                "SELECT DISTINCT block_id, metadata->>'title' AS title, metadata->>'type' AS type"
+                " FROM kb_chunks WHERE active = true"
+                " AND block_id LIKE %s"
+                " AND metadata->>'language' = %s"
+                " AND metadata->>'status' = 'published'"
+                " AND metadata->>'audience' != 'internal'"
+                " ORDER BY block_id",
+                (f"{path}%", language),
+            )
+            return [dict(r) for r in await cur.fetchall()]
+    finally:
+        await conn.close()
+
+
 @app.get("/catalogue/{product_code}")
 async def get_catalogue(product_code: str) -> dict[str, Any]:
     conn = await _conn()

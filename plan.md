@@ -186,15 +186,17 @@ end-to-end gateway→orchestrator with a Langfuse trace visible.
 5. [x] **Actions:** load `actions.json` → `actions`; entries with `verbatim: true` feed the verbatim registry.
 6. [x] **Atomic swap + rollback:** activation = single transaction flipping `active` by `bundle_id`;
    keep last 3 bundles; `rollback(bundle_id)` command.
-7. [~] **Event consumer:** subscribe `KB_PUBLISH_STREAM`; stages bundle inactive; eval-gated activation
-   wiring (delta re-embed + line-scoped suites) is pending.
+7. [x] **Event consumer:** subscribe `KB_PUBLISH_STREAM`; stages bundle inactive; eval-gated
+   activation (gate.py, unit-tested; runner via subprocess). Delta re-embed + line-scoped suites
+   still run the full pipeline/suite (optimisation pending).
 ### 6.2 Retrieval service (`/apps/retrieval`)
 1. [x] Hybrid search: dense cosine (pgvector) + sparse score (BGE-M3 lexical weights via in-process
    fusion), Reciprocal Rank Fusion, then rerank top-30 → top-k via rerank endpoint.
 2. [x] Mandatory filters applied in SQL before scoring: `audience` (public sessions ⇒ `audience != 'internal'`
    AND `audience` allowed set), `brand` (match or `both`), `language`, `jurisdiction`,
    `effective_from <= :today < coalesce(effective_to,'infinity')`, `status='published'`, `active=true`.
-3. [~] `GET /page/{block_id}` wiki reader done; `GET /index/{language}/{path}` navigation pages pending.
+3. [x] `GET /page/{block_id}` wiki reader + `GET /index/{language}/{path}` navigation listing
+   (public view only).
 4. [x] Catalogue endpoints per §4.3; `compare` returns aligned benefit rows.
 **Seed data note:** initial bundle content derives from the site inventory (product pages → benefit /
 eligibility / exclusion / faq blocks; claims pages → procedure blocks; /policy-services/ → ~50 procedure
@@ -206,16 +208,17 @@ pgvector, publish-event→eval-gate→activation demo, and rollback demo remain 
 the compose stack.
 ---
 ## 7. Phase 2 — Site crawler & web index
-1. [~] Discovery: sitemap.xml / wp-sitemap.xml + WP REST fallback implemented; HTML link crawl pending.
-2. [~] Extraction: trafilatura when installed (fallback tag-stripper); `rel=canonical` handling pending;
-   `canonical_map.yml` for known slug drift **[x]**.
+1. [x] Discovery: sitemap.xml / wp-sitemap.xml, WP REST fallback, bounded HTML link crawl fallback.
+2. [x] Extraction: trafilatura when installed (fallback tag-stripper); `rel=canonical` honoured;
+   `canonical_map.yml` for known slug drift.
 3. [x] Classification per URL: `page_type ∈ {product, claims, servicing, governance, promo, blog, other}`
    by path rules; promos get `CRAWL_PROMO_REFRESH_HOURS` TTL; "accurate as of {date}" and promo validity
    windows parsed into `accurate_as_of` / `expires_at`.
 4. [x] Exclusions: `/LoginPortal/`, `/iConnect/`, `/online/`, `/buy-online/**`; PDFs under
    `/policy-wordings/` recorded but not chunked.
 5. [x] Stale flags: COVID-era / "fully subscribed" pages `demoted=true`.
-6. [ ] Chunk + embed into `web_chunks`; nightly full refresh; 6-hourly promo refresh (APScheduler).
+6. [x] Chunk + embed into `web_chunks` (word-window chunks + freshness metadata, migration 0002);
+   nightly full refresh + promo refresh loop in the worker (plain asyncio scheduler).
 **DoD Phase 2:** pending live crawl of both domains.
 ---
 ## 8. Phase 3 — Agent harness (orchestrator)
@@ -223,28 +226,34 @@ the compose stack.
 Order of evaluation (first match wins):
 1. [x] **Emergency:** regex signals → escalation + Emergency Services Hotline action verbatim, no
    retrieval, `route=emergency` logged. Small-model classifier augmentation pending.
-2. [~] **Servicing intents:** keyword prefilter in place; small-model structured classifier
-   (`{intent, product_code?, confidence}`, threshold 0.8) pending.
+2. [x] **Servicing intents:** keyword prefilter + small-model structured classifier
+   (`{intent, product_code?, confidence}`, threshold 0.8, taxonomy-constrained enum schema);
+   falls through below threshold.
 3. [x] **Product discovery / comparison** route detection.
 4. [x] **Coverage / FAQ QA** default route.
 5. [x] **Out of scope / smalltalk:** static handled responses.
 ### 8.2 Tools **[x]** — typed args models, permission tags, schema-validated dispatch, malformed-args
 tests; renderer-substituted `action_id`s keep raw contact facts away from the model.
-### 8.3 Agent loop **[~]** — deterministic harness with step budget, loop detection, guided-procedure
-hook, escalate-terminal; the model planner (structured outputs) and LangGraph migration are pending
-(echo planner stub in place).
-### 8.4 Verification loop **[~]** — all 7 rule graders implemented + table-driven tests; LLM-judge
-verdict, retry-with-feedback, and degrade path wiring into the stream pending.
-**DoD Phase 3:** pending golden `core.yaml` (60 Qs) and the model planner.
+### 8.3 Agent loop **[x]** — deterministic harness with step budget, loop detection, escalate-terminal,
+model planner via structured outputs (guided decoding), guided-procedure flow (template rendering with
+channels/SLA/action_ref + "can't make this change" line). Echo mode remains the fallback when no agent
+endpoint is configured. LangGraph migration optional (harness is a drop-in swap).
+### 8.4 Verification loop **[x]** — all 7 rule graders + LLM-judge structured verdict + 1 retry with
+grader feedback + degrade (near-verbatim block with citation / clarify); judge-down = rule-graders-only
+mode; every verdict audited. Answer policies (disclaimer/get-advice markers) applied mechanically
+pre-grading. Injection screen applied to web-index tool results (poisoned-chunk test).
+**DoD Phase 3:** golden `core.yaml` (60 Qs) authored; full-suite run requires live agent/judge
+endpoints + ingested fixture bundle (mocked-vLLM pipeline tests cover the harness paths in CI).
 ---
 ## 9. Phase 4 — Channels
 1. [~] **Widget:** React/TS SSE chat with brand theming, citations, action buttons, feedback thumbs,
    in-memory session. Embeddable script build + server-side brand binding pending.
-2. [~] **Gateway hardening:** regex PII redaction (NRIC/passport/policy/email/phone) + injection screen
-   + per-session/per-IP rate limits (Redis or in-memory) in place; JWT session issuance, Presidio,
-   encrypted raw storage pending.
+2. [~] **Gateway hardening:** regex PII redaction + shared injection screen + rate limits +
+   message persistence (sessions/messages, raw + redacted) + `/v1/feedback` (comment redacted);
+   JWT session issuance, Presidio, pgcrypto raw-storage encryption pending.
 3. [~] **Internal portal:** internal-audience chat + placeholder read-only views.
-4. [ ] **Handover:** `handover.requests` stream emission.
+4. [x] **Handover:** `handover.requests` Redis stream emission with `{transcript, summary, reason}`
+   payload (logged fallback without Redis); widget shows hotline/live-chat actions meanwhile.
 **DoD Phase 4:** pending e2e tests against the compose stack.
 ---
 ## 10. Phase 5 — Hardening & ops

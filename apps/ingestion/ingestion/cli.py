@@ -1,8 +1,8 @@
 """Ingestion CLI: ingest | activate | rollback | lint | watch.
 
-`watch` consumes the KB publish stream (§6.1.7); activation is gated on the
-eval suite in the CI/eval harness — the watcher records intent and defers to
-`evals/runner.py` for the gate.
+`watch` consumes the KB publish stream (§6.1.7): each event stages the new
+bundle inactive, runs the eval smoke suite against the running gateway, and
+activates only when the pass rate clears EVAL_GATE (gate logic in gate.py).
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from typing import Any
 from contracts.api import PublishEvent
 from contracts.settings import get_settings
 
+from ingestion.gate import handle_publish_event, record_eval_run, run_eval_suite_subprocess
 from ingestion.loader import load_bundle, sync_bundle_repo
 from ingestion.pipeline import activate_bundle, ingest_bundle, rollback
 from ingestion.validator import lint_bundle
@@ -47,10 +48,20 @@ async def watch() -> None:
                 bundle_dir = sync_bundle_repo(
                     settings.kb_bundle_git_url, event.git_ref or settings.kb_bundle_git_ref, checkout
                 )
-                # Ingest inactive; activation is performed by the eval gate step
-                # (evals/runner.py --activate-bundle) only if pass-rate >= EVAL_GATE.
-                bundle_id = await ingest_bundle(bundle_dir, settings, activate=False)
-                logger.info("bundle %s staged (inactive), awaiting eval gate", bundle_id)
+
+                async def ingest(bundle_dir: Path = bundle_dir) -> str:
+                    return await ingest_bundle(bundle_dir, settings, activate=False)
+
+                async def run_evals(bundle_id: str) -> float:
+                    return await run_eval_suite_subprocess()
+
+                async def activate(bundle_id: str) -> None:
+                    await activate_bundle(bundle_id, settings)
+
+                async def record(bundle_id: str, pass_rate: float, activated: bool) -> None:
+                    await record_eval_run(settings, bundle_id, pass_rate, activated)
+
+                await handle_publish_event(event, settings, ingest, run_evals, activate, record)
 
 
 def main() -> None:

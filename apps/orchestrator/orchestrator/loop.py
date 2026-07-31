@@ -26,11 +26,21 @@ class PlannerDecision(BaseModel):
     tool: str | None = None
     args: dict[str, Any] | None = None
     final_text: str | None = None
+    # A clarifying question / refusal carries no factual claims; the citation
+    # grader is skipped but verbatim-digit checks still apply.
+    is_clarification: bool = False
     citations: list[str] = []
     action_ids: list[str] = []
 
 
 Planner = Callable[["AgentState"], Awaitable[PlannerDecision]]
+ToolExecutor = Callable[[str, dict[str, Any], "ToolContext"], Awaitable[Any]]
+
+
+async def registry_executor(tool: str, raw_args: dict[str, Any], ctx: ToolContext) -> Any:
+    """Default executor: schema-validate then dispatch through the registry."""
+    args = validate_tool_call(tool, raw_args)
+    return await REGISTRY[tool].handler(args, ctx)
 
 
 @dataclass
@@ -52,6 +62,7 @@ class LoopResult:
     handover: dict[str, Any] | None = None
     steps: int = 0
     forced_clarification: bool = False
+    is_clarification: bool = False
 
 
 CLARIFY_TEXT = (
@@ -65,6 +76,7 @@ async def run_agent_loop(
     tool_ctx: ToolContext,
     max_steps: int,
     audit: Callable[[str, dict[str, Any]], None] | None = None,
+    executor: ToolExecutor = registry_executor,
 ) -> LoopResult:
     seen_calls: set[str] = set()
 
@@ -78,6 +90,7 @@ async def run_agent_loop(
                 citations=decision.citations,
                 action_ids=decision.action_ids,
                 steps=state.step_count,
+                is_clarification=decision.is_clarification,
             )
 
         call_key = f"{decision.tool}:{json.dumps(decision.args or {}, sort_keys=True)}"
@@ -93,9 +106,7 @@ async def run_agent_loop(
         seen_calls.add(call_key)
 
         try:
-            args = validate_tool_call(decision.tool, decision.args or {})
-            spec = REGISTRY[decision.tool]
-            result = await spec.handler(args, tool_ctx)
+            result = await executor(decision.tool, decision.args or {}, tool_ctx)
         except ToolError as exc:
             result = {"error": str(exc)}
         except Exception as exc:  # tool backend failure is an observation, not a crash

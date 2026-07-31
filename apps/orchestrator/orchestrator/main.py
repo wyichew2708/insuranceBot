@@ -1,9 +1,9 @@
-"""Orchestrator service: /v1/chat SSE endpoint.
+"""Orchestrator service: /v1/chat SSE endpoint over the chat pipeline.
 
-Phase 0 behaviour: emergency route short-circuits with the hotline action;
-everything else flows through the agent loop with a stub echo planner so the
-gateway -> orchestrator -> stream path is real end-to-end. Later phases only
-replace the planner and enable retrieval-backed tools.
+With VLLM_AGENT_BASE_URL configured, turns run the full harness (classifier,
+model planner, verification loop). Without it (dev/tests), the pipeline
+serves the deterministic routes plus a stub echo — the transport behaviour
+is identical either way.
 """
 
 from __future__ import annotations
@@ -11,15 +11,14 @@ from __future__ import annotations
 import json
 from collections.abc import AsyncIterator
 
-from contracts.api import ChatEvent, ChatEventType, ChatRequest
+from contracts.api import ChatEvent, ChatRequest
 from contracts.settings import Settings, get_settings
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from insurance_clients.observability import get_tracer
+from insurance_clients.vllm import VllmClient, VllmEndpoint
 
-from orchestrator.loop import AgentState, PlannerDecision, run_agent_loop
-from orchestrator.router import Route, route_message
-from orchestrator.tools import ToolContext
+from orchestrator.pipeline import ChatPipeline, PipelineDeps, sse_format
 
 app = FastAPI(title="orchestrator")
 
@@ -37,73 +36,47 @@ async def readyz() -> dict[str, str]:
     return {"status": "ready"}
 
 
-def _sse(event: ChatEvent) -> str:
-    return f"data: {event.model_dump_json(exclude_none=True)}\n\n"
-
-
-async def _echo_planner(state: AgentState) -> PlannerDecision:
-    """Phase 0 stub: no tools, no facts. Replaced by the model planner in Phase 3."""
-    return PlannerDecision(
-        action="final",
-        final_text=(
-            "Thanks for your message. I'm the assistant for your insurer and I'm "
-            f"still being set up. You said: {state.message!r}"
-        ),
-        citations=[],
-        action_ids=[],
-    )
-
-
-async def _chat_events(req: ChatRequest, settings: Settings) -> AsyncIterator[str]:
-    tracer = get_tracer()
-    trace_id = tracer.new_trace_id()
-    decision = route_message(req.message)
-
-    with tracer.span(trace_id, "router", route=decision.route.value):
-        pass
-
-    if decision.route == Route.emergency:
-        # Hard product rule 5: hotline first, before any retrieval.
-        yield _sse(
-            ChatEvent(
-                type=ChatEventType.token,
-                text=(
-                    "If you are facing an emergency overseas, please call our "
-                    "Emergency Services Hotline right away — it is available around "
-                    "the clock, every day."
-                ),
+def build_deps(settings: Settings, trace_id: str) -> PipelineDeps:
+    agent = None
+    judge = None
+    if settings.vllm_agent_base_url:
+        agent = VllmClient(
+            VllmEndpoint(
+                base_url=settings.vllm_agent_base_url,
+                model=settings.vllm_agent_model,
+                api_key=settings.vllm_api_key,
             )
         )
-        yield _sse(ChatEvent(type=ChatEventType.action, action_id=EMERGENCY_ACTION_ID))
-        yield _sse(ChatEvent(type=ChatEventType.citation, chunk_id=EMERGENCY_BLOCK_ID))
-        yield _sse(ChatEvent(type=ChatEventType.done, route=decision.route.value, trace_id=trace_id))
-        return
+    if settings.vllm_judge_base_url:
+        judge = VllmClient(
+            VllmEndpoint(
+                base_url=settings.vllm_judge_base_url,
+                model=settings.vllm_judge_model,
+                api_key=settings.vllm_api_key,
+            )
+        )
+    return PipelineDeps(settings=settings, agent=agent, judge=judge, trace_id=trace_id)
 
-    state = AgentState(session_id=req.session_id, route=decision.route.value, message=req.message)
-    tool_ctx = ToolContext(
-        settings=settings,
-        session_id=req.session_id,
-        brand=req.brand.value,
-        audience=req.audience.value,
-        trace_id=trace_id,
-    )
-    result = await run_agent_loop(state, _echo_planner, tool_ctx, settings.agent_max_steps)
 
-    if result.handover is not None:
-        yield _sse(ChatEvent(type=ChatEventType.handover, payload=result.handover))
-    else:
-        yield _sse(ChatEvent(type=ChatEventType.token, text=result.final_text))
-        for chunk_id in result.citations:
-            yield _sse(ChatEvent(type=ChatEventType.citation, chunk_id=chunk_id))
-        for action_id in result.action_ids:
-            yield _sse(ChatEvent(type=ChatEventType.action, action_id=action_id))
-    yield _sse(ChatEvent(type=ChatEventType.done, route=decision.route.value, trace_id=trace_id))
+async def _chat_events(req: ChatRequest) -> AsyncIterator[str]:
+    settings = get_settings()
+    tracer = get_tracer()
+    trace_id = tracer.new_trace_id()
+    deps = build_deps(settings, trace_id)
+    pipeline = ChatPipeline(deps)
+    try:
+        with tracer.span(trace_id, "chat_turn", session_id=req.session_id, brand=req.brand.value):
+            async for event in pipeline.run(req):
+                yield sse_format(event)
+    finally:
+        for client in (deps.agent, deps.judge):
+            if isinstance(client, VllmClient):
+                await client.aclose()
 
 
 @app.post("/v1/chat")
 async def chat(req: ChatRequest) -> StreamingResponse:
-    settings = get_settings()
-    return StreamingResponse(_chat_events(req, settings), media_type="text/event-stream")
+    return StreamingResponse(_chat_events(req), media_type="text/event-stream")
 
 
 def parse_sse_line(line: str) -> ChatEvent | None:

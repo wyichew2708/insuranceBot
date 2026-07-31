@@ -16,9 +16,11 @@ from contracts.api import ChatRequest
 from contracts.settings import get_settings
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
 from gateway.rate_limit import MemoryRateLimiter, RateLimiter, build_rate_limiter
 from gateway.redaction import redact, screen_injection
+from gateway.storage import store_feedback, store_message
 
 logger = logging.getLogger("gateway")
 
@@ -83,9 +85,38 @@ async def chat(req: ChatRequest, request: Request) -> StreamingResponse:
             sorted({k for k, _ in redaction.entities}),
         )
 
+    await store_message(
+        settings.database_url,
+        req.session_id,
+        channel="widget",
+        brand=req.brand.value,
+        audience=req.audience.value,
+        role="user",
+        content=req.message,
+        redacted_content=screened,
+    )
+
     forwarded = req.model_copy(update={"message": screened})
     return StreamingResponse(
         _proxy_stream(forwarded.model_dump(mode="json"), settings.orchestrator_url),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
+
+
+class FeedbackRequest(BaseModel):
+    session_id: str
+    rating: str | int  # "up" | "down" | -1..1
+    message_index: int | None = None
+    comment: str | None = None
+
+
+@app.post("/v1/feedback", status_code=202)
+async def feedback(req: FeedbackRequest) -> dict[str, str]:
+    settings = get_settings()
+    rating = req.rating
+    if isinstance(rating, str):
+        rating = {"up": 1, "down": -1}.get(rating.lower(), 0)
+    comment = redact(req.comment).redacted if req.comment else None
+    stored = await store_feedback(settings.database_url, req.session_id, int(rating), comment)
+    return {"status": "stored" if stored else "accepted"}

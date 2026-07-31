@@ -44,21 +44,8 @@ def redact(text: str) -> RedactionResult:
     return RedactionResult(redacted=redacted, entities=entities)
 
 
-# Prompt-injection screen: strip/flag imperative-to-assistant patterns in user
-# input AND in web-index text at retrieval time (§9.2).
-_INJECTION_RE = re.compile(
-    r"(ignore (all )?(previous|prior|above) (instructions?|prompts?)"
-    r"|disregard (your|the) (instructions?|system prompt)"
-    r"|you are now\b"
-    r"|new system prompt"
-    r"|reveal (your|the) (system )?prompt"
-    r"|act as (if|though) you (are|were))",
-    re.IGNORECASE,
-)
+# Prompt-injection screening is shared with the orchestrator (web-index text
+# at retrieval time) — single implementation in contracts.screening.
+from contracts.screening import screen_injection  # noqa: E402
 
-
-def screen_injection(text: str) -> tuple[str, bool]:
-    """Returns (screened_text, flagged). Matches are neutralised, not obeyed."""
-    flagged = bool(_INJECTION_RE.search(text))
-    screened = _INJECTION_RE.sub("[removed-instruction]", text)
-    return screened, flagged
+__all__ = ["RedactionResult", "redact", "screen_injection"]
