@@ -1,0 +1,27 @@
+[
+  {
+    "product_code": "TIQ-TRV",
+    "brand": ["tiq"],
+    "line": "personal/travel",
+    "name": "Travel Insurance",
+    "tiers": ["Entry", "Savvy", "Luxury"],
+    "benefits": {
+      "overseas-medical": {
+        "label": "Overseas medical expenses",
+        "block_ref": "tiq-trv/benefit/medical-coverage",
+        "by_tier": {"Entry": "tier limit A", "Savvy": "tier limit B", "Luxury": "tier limit C"}
+      },
+      "baggage": {
+        "label": "Baggage loss or damage",
+        "block_ref": "tiq-trv/benefit/baggage-cover",
+        "by_tier": {"Entry": "tier limit A", "Savvy": "tier limit B", "Luxury": "tier limit C"}
+      }
+    },
+    "block_refs": [
+      "tiq-trv/benefit/medical-coverage",
+      "tiq-trv/benefit/baggage-cover",
+      "tiq-trv/eligibility/who-can-buy",
+      "tiq-trv/exclusions/pre-existing-conditions"
+    ]
+  }
+]

@@ -1,0 +1,237 @@
+{
+  "$defs": {
+    "Audience": {
+      "enum": [
+        "public",
+        "policyholder",
+        "internal"
+      ],
+      "title": "Audience",
+      "type": "string"
+    },
+    "BlockType": {
+      "enum": [
+        "faq",
+        "benefit",
+        "eligibility",
+        "exclusion",
+        "procedure",
+        "disclaimer",
+        "escalation"
+      ],
+      "title": "BlockType",
+      "type": "string"
+    },
+    "Brand": {
+      "enum": [
+        "etiqa",
+        "tiq"
+      ],
+      "title": "Brand",
+      "type": "string"
+    },
+    "DistributionChannel": {
+      "enum": [
+        "banca",
+        "ifa_ad",
+        "direct",
+        "all"
+      ],
+      "title": "DistributionChannel",
+      "type": "string"
+    },
+    "Jurisdiction": {
+      "enum": [
+        "SG",
+        "MY"
+      ],
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "Language": {
+      "enum": [
+        "en",
+        "ms",
+        "zh"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "draft",
+        "in_review",
+        "published",
+        "retired"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "description": "YAML frontmatter of one OKF block. Unknown keys are preserved.",
+  "properties": {
+    "action_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Action Ref"
+    },
+    "audience": {
+      "$ref": "#/$defs/Audience"
+    },
+    "brand": {
+      "items": {
+        "$ref": "#/$defs/Brand"
+      },
+      "title": "Brand",
+      "type": "array"
+    },
+    "channels": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Channels"
+    },
+    "distribution_channel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DistributionChannel"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "effective_from": {
+      "format": "date",
+      "title": "Effective From",
+      "type": "string"
+    },
+    "effective_to": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective To"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "$ref": "#/$defs/Jurisdiction"
+    },
+    "language": {
+      "$ref": "#/$defs/Language"
+    },
+    "line": {
+      "title": "Line",
+      "type": "string"
+    },
+    "okf": {
+      "title": "Okf",
+      "type": "string"
+    },
+    "product_code": {
+      "title": "Product Code",
+      "type": "string"
+    },
+    "related": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Related",
+      "type": "array"
+    },
+    "sla": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sla"
+    },
+    "source_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Ref"
+    },
+    "status": {
+      "$ref": "#/$defs/Status"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "takaful": {
+      "default": false,
+      "title": "Takaful",
+      "type": "boolean"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/BlockType"
+    },
+    "version": {
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "okf",
+    "id",
+    "type",
+    "title",
+    "product_code",
+    "line",
+    "audience",
+    "brand",
+    "language",
+    "jurisdiction",
+    "version",
+    "status",
+    "effective_from"
+  ],
+  "title": "OkfFrontmatter",
+  "type": "object"
+}

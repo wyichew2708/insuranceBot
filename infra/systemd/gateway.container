@@ -1,0 +1,18 @@
+[Unit]
+Description=insuranceBot gateway
+After=network-online.target
+
+[Container]
+Image=localhost/insurancebot-gateway:latest
+EnvironmentFile=/etc/insurancebot/env
+PublishPort=8000:8000
+User=10001
+NoNewPrivileges=true
+ReadOnly=true
+Tmpfs=/tmp
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

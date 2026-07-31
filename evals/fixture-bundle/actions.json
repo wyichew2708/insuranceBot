@@ -1,0 +1,14 @@
+[
+  {"action_id": "emergency-services-hotline", "brand": "tiq", "kind": "phone", "value": "+65 6100 0000", "label": "Emergency Services Hotline (24/7)", "verbatim": true},
+  {"action_id": "emergency-services-hotline", "brand": "etiqa", "kind": "phone", "value": "+65 6100 0000", "label": "Emergency Services Hotline (24/7)", "verbatim": true},
+  {"action_id": "customer-hotline", "brand": "tiq", "kind": "phone", "value": "+65 6200 0000", "label": "Customer Hotline", "verbatim": true},
+  {"action_id": "customer-hotline", "brand": "etiqa", "kind": "phone", "value": "+65 6200 0001", "label": "Customer Hotline", "verbatim": true},
+  {"action_id": "customer-portal", "brand": "tiq", "kind": "link", "value": "https://www.tiq.com.sg/customer-portal", "label": "Customer Portal", "verbatim": true},
+  {"action_id": "customer-portal", "brand": "etiqa", "kind": "link", "value": "https://www.etiqa.com.sg/customer-portal", "label": "Customer Portal", "verbatim": true},
+  {"action_id": "care-email", "brand": "tiq", "kind": "email", "value": "care@example.sg", "label": "Email us", "verbatim": true},
+  {"action_id": "care-email", "brand": "etiqa", "kind": "email", "value": "care@example.sg", "label": "Email us", "verbatim": true},
+  {"action_id": "get-advice", "brand": "tiq", "kind": "link", "value": "https://www.tiq.com.sg/get-advice", "label": "Get Advice from an adviser", "verbatim": false},
+  {"action_id": "get-advice", "brand": "etiqa", "kind": "link", "value": "https://www.etiqa.com.sg/get-advice", "label": "Get Advice from an adviser", "verbatim": false},
+  {"action_id": "live-chat", "brand": "tiq", "kind": "link", "value": "https://www.tiq.com.sg/live-chat", "label": "Live Chat", "verbatim": false},
+  {"action_id": "live-chat", "brand": "etiqa", "kind": "link", "value": "https://www.etiqa.com.sg/live-chat", "label": "Live Chat", "verbatim": false}
+]

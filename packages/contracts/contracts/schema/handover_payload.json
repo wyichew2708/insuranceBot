@@ -1,0 +1,34 @@
+{
+  "properties": {
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "session_id": {
+      "title": "Session Id",
+      "type": "string"
+    },
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
+    "transcript": {
+      "items": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "title": "Transcript",
+      "type": "array"
+    }
+  },
+  "required": [
+    "session_id",
+    "transcript",
+    "summary",
+    "reason"
+  ],
+  "title": "HandoverPayload",
+  "type": "object"
+}

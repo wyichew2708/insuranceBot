@@ -1,0 +1,7 @@
+[Unit]
+Description=insuranceBot message retention purge
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman run --rm --env-file /etc/insurancebot/env \
+    localhost/insurancebot-gateway:latest python -m gateway.retention_cli

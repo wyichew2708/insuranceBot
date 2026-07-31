@@ -1,0 +1,31 @@
+{
+  "description": "Event published by the CMS on the Redis stream KB_PUBLISH_STREAM.",
+  "properties": {
+    "blocks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocks",
+      "type": "array"
+    },
+    "bundle_id": {
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "delta": {
+      "default": false,
+      "title": "Delta",
+      "type": "boolean"
+    },
+    "git_ref": {
+      "title": "Git Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bundle_id",
+    "git_ref"
+  ],
+  "title": "PublishEvent",
+  "type": "object"
+}

@@ -1,0 +1,18 @@
+[Unit]
+Description=insuranceBot retrieval
+After=network-online.target
+
+[Container]
+Image=localhost/insurancebot-retrieval:latest
+EnvironmentFile=/etc/insurancebot/env
+PublishPort=8002:8002
+User=10001
+NoNewPrivileges=true
+ReadOnly=true
+Tmpfs=/tmp
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

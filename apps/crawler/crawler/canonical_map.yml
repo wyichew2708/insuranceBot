@@ -1,0 +1,4 @@
+# Known slug drift across the two sites (§7.2). Keys are literal path
+# substrings rewritten to their canonical form.
+/tiqinvest: /tiq-invest
+/faq/: /faqs/

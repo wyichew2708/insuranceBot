@@ -1,0 +1,19 @@
+[project]
+name = "orchestrator"
+version = "0.1.0"
+description = "Agent harness: intent router, agent loop, tools, verification"
+requires-python = ">=3.11"
+dependencies = [
+    "contracts",
+    "insurance-clients",
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["orchestrator"]
