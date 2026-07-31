@@ -1,0 +1,55 @@
+{
+  "$defs": {
+    "ActionKind": {
+      "enum": [
+        "link",
+        "phone",
+        "email"
+      ],
+      "title": "ActionKind",
+      "type": "string"
+    },
+    "Brand": {
+      "enum": [
+        "etiqa",
+        "tiq"
+      ],
+      "title": "Brand",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "action_id": {
+      "title": "Action Id",
+      "type": "string"
+    },
+    "brand": {
+      "$ref": "#/$defs/Brand"
+    },
+    "kind": {
+      "$ref": "#/$defs/ActionKind"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "value": {
+      "title": "Value",
+      "type": "string"
+    },
+    "verbatim": {
+      "default": false,
+      "title": "Verbatim",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "action_id",
+    "brand",
+    "kind",
+    "value",
+    "label"
+  ],
+  "title": "Action",
+  "type": "object"
+}

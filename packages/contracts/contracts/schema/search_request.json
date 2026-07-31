@@ -1,0 +1,133 @@
+{
+  "$defs": {
+    "Audience": {
+      "enum": [
+        "public",
+        "policyholder",
+        "internal"
+      ],
+      "title": "Audience",
+      "type": "string"
+    },
+    "Brand": {
+      "enum": [
+        "etiqa",
+        "tiq"
+      ],
+      "title": "Brand",
+      "type": "string"
+    },
+    "Jurisdiction": {
+      "enum": [
+        "SG",
+        "MY"
+      ],
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "Language": {
+      "enum": [
+        "en",
+        "ms",
+        "zh"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "SearchFilters": {
+      "properties": {
+        "active_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Active On"
+        },
+        "audience": {
+          "$ref": "#/$defs/Audience"
+        },
+        "brand": {
+          "$ref": "#/$defs/Brand"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction",
+          "default": "SG"
+        },
+        "language": {
+          "$ref": "#/$defs/Language",
+          "default": "en"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "product_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Code"
+        }
+      },
+      "required": [
+        "brand",
+        "audience"
+      ],
+      "title": "SearchFilters",
+      "type": "object"
+    },
+    "SearchIndex": {
+      "enum": [
+        "kb",
+        "web"
+      ],
+      "title": "SearchIndex",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "filters": {
+      "$ref": "#/$defs/SearchFilters"
+    },
+    "index": {
+      "$ref": "#/$defs/SearchIndex",
+      "default": "kb"
+    },
+    "query": {
+      "title": "Query",
+      "type": "string"
+    },
+    "top_k": {
+      "default": 8,
+      "maximum": 50,
+      "minimum": 1,
+      "title": "Top K",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "query",
+    "filters"
+  ],
+  "title": "SearchRequest",
+  "type": "object"
+}

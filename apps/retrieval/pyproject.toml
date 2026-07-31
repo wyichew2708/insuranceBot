@@ -1,0 +1,19 @@
+[project]
+name = "retrieval"
+version = "0.1.0"
+description = "Hybrid search over pgvector (kb + web indexes), wiki reader, catalogue, actions"
+requires-python = ">=3.11"
+dependencies = [
+    "contracts",
+    "insurance-clients",
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "psycopg[binary]>=3.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["retrieval"]

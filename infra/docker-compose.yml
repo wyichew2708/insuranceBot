@@ -1,0 +1,104 @@
+# Local dev stack (§5.1). Langfuse is dev-only; production points
+# LANGFUSE_HOST at the managed instance.
+name: insurancebot
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: bot
+      POSTGRES_PASSWORD: bot
+      POSTGRES_DB: bot
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  langfuse:
+    image: langfuse/langfuse:2
+    profiles: [observability]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://bot:bot@postgres:5432/bot
+      NEXTAUTH_SECRET: dev-secret
+      NEXTAUTH_URL: http://localhost:3000
+      SALT: dev-salt
+    ports: ["3000:3000"]
+
+  migrate:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/migrate.Containerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://bot:bot@postgres:5432/bot
+
+  gateway:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/gateway.Containerfile
+    depends_on: [orchestrator]
+    environment: &svc-env
+      DATABASE_URL: postgresql+psycopg://bot:bot@postgres:5432/bot
+      REDIS_URL: redis://redis:6379
+      ORCHESTRATOR_URL: http://orchestrator:8001
+      RETRIEVAL_URL: http://retrieval:8002
+    ports: ["8000:8000"]
+
+  orchestrator:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/orchestrator.Containerfile
+    environment: *svc-env
+    ports: ["8001:8001"]
+
+  retrieval:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/retrieval.Containerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *svc-env
+    ports: ["8002:8002"]
+
+  ingestion:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/ingestion.Containerfile
+    profiles: [workers]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment: *svc-env
+
+  crawler:
+    build:
+      context: ..
+      dockerfile: infra/containerfiles/crawler.Containerfile
+    profiles: [workers]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *svc-env
+
+volumes:
+  pgdata:

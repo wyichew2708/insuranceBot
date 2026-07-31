@@ -1,0 +1,71 @@
+[project]
+name = "insurancebot-workspace"
+version = "0.1.0"
+description = "GenAI insurance chatbot monorepo (Etiqa / Tiq)"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv.workspace]
+members = [
+    "packages/contracts",
+    "packages/clients",
+    "apps/gateway",
+    "apps/orchestrator",
+    "apps/retrieval",
+    "apps/ingestion",
+    "apps/crawler",
+]
+
+[dependency-groups]
+dev = [
+    "contracts",
+    "insurance-clients",
+    "gateway",
+    "orchestrator",
+    "retrieval",
+    "ingestion",
+    "crawler",
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "httpx>=0.27",
+    "pyyaml>=6",
+    "alembic>=1.13",
+    "sqlalchemy>=2",
+    "types-PyYAML",
+]
+
+[tool.uv.sources]
+contracts = { workspace = true }
+insurance-clients = { workspace = true }
+gateway = { workspace = true }
+orchestrator = { workspace = true }
+retrieval = { workspace = true }
+ingestion = { workspace = true }
+crawler = { workspace = true }
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+# UP042: (str, Enum) kept deliberately — pydantic v2 serialization + .value ergonomics
+ignore = ["SIM108", "UP042"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = false
+files = ["packages", "apps", "evals/runner.py"]
+exclude = ["build", "dist", "node_modules"]
+
+[[tool.mypy.overrides]]
+module = ["trafilatura.*", "langfuse.*", "psycopg.*", "apscheduler.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["packages", "apps", "tests", "evals"]
+addopts = "-q"

@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "benefit_codes": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Benefit Codes"
+    },
+    "product_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2,
+      "title": "Product Codes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "product_codes"
+  ],
+  "title": "CompareRequest",
+  "type": "object"
+}

@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "chunk_id": {
+      "title": "Chunk Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "score": {
+      "title": "Score",
+      "type": "number"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "chunk_id",
+    "text",
+    "score"
+  ],
+  "title": "SearchResult",
+  "type": "object"
+}

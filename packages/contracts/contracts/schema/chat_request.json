@@ -1,0 +1,45 @@
+{
+  "$defs": {
+    "Audience": {
+      "enum": [
+        "public",
+        "policyholder",
+        "internal"
+      ],
+      "title": "Audience",
+      "type": "string"
+    },
+    "Brand": {
+      "enum": [
+        "etiqa",
+        "tiq"
+      ],
+      "title": "Brand",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "audience": {
+      "$ref": "#/$defs/Audience"
+    },
+    "brand": {
+      "$ref": "#/$defs/Brand"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "session_id": {
+      "title": "Session Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id",
+    "brand",
+    "audience",
+    "message"
+  ],
+  "title": "ChatRequest",
+  "type": "object"
+}
