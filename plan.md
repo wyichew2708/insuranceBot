@@ -242,7 +242,7 @@ endpoint is configured. LangGraph migration optional (harness is a drop-in swap)
 grader feedback + degrade (near-verbatim block with citation / clarify); judge-down = rule-graders-only
 mode; every verdict audited. Answer policies (disclaimer/get-advice markers) applied mechanically
 pre-grading. Injection screen applied to web-index tool results (poisoned-chunk test).
-**DoD Phase 3:** golden `core.yaml` (60 Qs) authored; full-suite run requires live agent/judge
+**DoD Phase 3 [f9ea9ab]:** golden `core.yaml` (60 Qs) authored; full-suite run requires live agent/judge
 endpoints + ingested fixture bundle (mocked-vLLM pipeline tests cover the harness paths in CI).
 ---
 ## 9. Phase 4 — Channels
