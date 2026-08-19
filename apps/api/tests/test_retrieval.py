@@ -1,0 +1,93 @@
+import datetime as dt
+
+from api.retrieval import frontmatter_filter, keywords, needs_rag, rag_search, score_page, wiki_read
+from harness import Budget, Trace
+
+from conftest import TODAY, make_session
+from okf import Bundle
+
+
+def test_filter_records_a_reason_for_every_rejection(bundle: Bundle) -> None:
+    trace = Trace()
+    frontmatter_filter(bundle, "travel delay benefit", make_session(), trace, 0.08)
+    assert trace.candidates, "the filter must record what it considered"
+    for candidate in trace.rejected:
+        assert candidate.reason, f"{candidate.page_id} rejected without a reason"
+
+
+def test_expired_promotion_is_rejected_with_its_reason(bundle: Bundle) -> None:
+    trace = Trace()
+    frontmatter_filter(bundle, "travel promotion discount", make_session(), trace, 0.08)
+    expired = next(c for c in trace.candidates if c.page_id == "promotion/travel-jun-2026")
+    assert not expired.admitted
+    assert "effective window" in expired.reason
+
+
+def test_review_overdue_demotes_everything(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(
+        bundle, "travel medical limit", make_session(today=dt.date(2026, 12, 1)), trace, 0.08
+    )
+    assert admitted == []
+    # Some pages are rejected earlier in the chain (an expired promotion never
+    # reaches the review check), so assert the demotion actually fired.
+    assert any("review overdue" in c.reason for c in trace.rejected)
+
+
+def test_alias_hit_outranks_bag_of_words(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(bundle, "Tiq Travel cover", make_session(), trace, 0.08)
+    assert admitted[0][0].id.startswith("product/general/travel")
+    assert "product/general/travel" in trace.entities
+
+
+def test_wiki_read_follows_the_graph(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(bundle, "travel exclusions", make_session(), trace, 0.08)
+    pages = wiki_read(bundle, admitted, trace, Budget(), 5, TODAY)
+    assert any(p.via == "graph" for p in trace.loaded)
+    assert len(pages) <= 5
+
+
+def test_wiki_read_respects_the_page_budget(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(bundle, "travel", make_session(), trace, 0.0)
+    pages = wiki_read(bundle, admitted, trace, Budget(max_pages=2), 5, TODAY)
+    assert len(pages) <= 2
+
+
+def test_rag_triggers_on_a_clause_level_question(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(
+        bundle, "what does section 4.2 of the wording say", make_session(), trace, 0.08
+    )
+    assert needs_rag("what does section 4.2 of the policy wording say", admitted, make_session(), 0.45)
+
+
+def test_rag_triggers_on_a_historic_policy_version(bundle: Bundle) -> None:
+    trace = Trace()
+    session = make_session(policy_id="TRV-900001", version="2025.2")
+    admitted = frontmatter_filter(bundle, "travel delay threshold", session, trace, 0.08)
+    assert "historic version" in needs_rag("travel delay threshold", admitted, session, 0.45)
+
+
+def test_rag_not_needed_for_a_well_matched_wiki_question(bundle: Bundle) -> None:
+    trace = Trace()
+    admitted = frontmatter_filter(bundle, "travel delay benefit threshold", make_session(), trace, 0.08)
+    assert needs_rag("travel delay benefit threshold", admitted, make_session(), 0.45) == ""
+
+
+def test_rag_search_filters_wordings_to_the_in_force_version(bundle: Bundle) -> None:
+    hits = rag_search(
+        bundle.root / "raw", "travel delay threshold", make_session(policy_id="TRV-900001", version="2025.2")
+    )
+    wording_hits = [h for h in hits if "/wordings/" in h.source_path]
+    assert wording_hits, "expected the 2025.2 wording to be retrievable"
+    assert all("2025.2" in h.source_path for h in wording_hits)
+
+
+def test_score_page_and_keywords(bundle: Bundle) -> None:
+    page = bundle.get("product/general/travel")
+    assert page is not None
+    assert score_page(page, keywords("travel insurance")) > 0
+    assert "the" not in keywords("the travel plan")

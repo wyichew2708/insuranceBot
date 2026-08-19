@@ -1,0 +1,133 @@
+"""Traces — the harness's own input (§F.4).
+
+Records pages loaded AND pages considered-and-rejected by the frontmatter
+filter. The rejected-candidates log is the underrated signal: when the filter
+repeatedly rejects the page a human would have wanted, the taxonomy is wrong —
+and you only see that if you log rejections, not just selections.
+"""
+
+from __future__ import annotations
+
+import time
+import uuid
+from collections.abc import Iterator
+from contextlib import contextmanager
+from typing import Any
+
+from pydantic import BaseModel, Field
+
+from harness.contracts import GateResult
+
+
+class StageTiming(BaseModel):
+    name: str
+    ms: float
+    detail: dict[str, Any] = Field(default_factory=dict)
+
+
+class Candidate(BaseModel):
+    """A page the frontmatter filter considered."""
+
+    page_id: str
+    title: str = ""
+    admitted: bool = True
+    reason: str = ""
+    score: float = 0.0
+
+
+class LoadedPage(BaseModel):
+    page_id: str
+    title: str = ""
+    via: str = "filter"  # filter | graph | index
+    hop: int = 0
+    chars: int = 0
+
+
+class RagHit(BaseModel):
+    source_path: str
+    locator: str = ""
+    score: float = 0.0
+    excerpt: str = ""
+
+
+class Trace(BaseModel):
+    trace_id: str = Field(default_factory=lambda: uuid.uuid4().hex[:16])
+    question: str = ""
+    session_id: str = ""
+    channel: str = ""
+    created_at: float = Field(default_factory=time.time)
+
+    entities: list[str] = Field(default_factory=list)
+    candidates: list[Candidate] = Field(default_factory=list)
+    loaded: list[LoadedPage] = Field(default_factory=list)
+    rag_used: bool = False
+    rag_reason: str = ""
+    rag_hits: list[RagHit] = Field(default_factory=list)
+    sor_calls: list[str] = Field(default_factory=list)
+
+    figures_resolved: list[dict[str, str]] = Field(default_factory=list)
+    unresolved: list[str] = Field(default_factory=list)
+
+    gates: list[GateResult] = Field(default_factory=list)
+    stages: list[StageTiming] = Field(default_factory=list)
+    budget: dict[str, Any] = Field(default_factory=dict)
+    composer: str = ""
+    notes: list[str] = Field(default_factory=list)
+    # The draft a gate refused to deliver. Kept for the debug console — a
+    # blocked answer you cannot inspect teaches you nothing.
+    blocked_draft: str = ""
+    delivered: bool = True
+    # The delivered contract, so a stored trace replays faithfully in the console.
+    answer: dict[str, Any] | None = None
+
+    @property
+    def rejected(self) -> list[Candidate]:
+        return [c for c in self.candidates if not c.admitted]
+
+    @property
+    def total_ms(self) -> float:
+        return round(sum(s.ms for s in self.stages), 2)
+
+    @contextmanager
+    def stage(self, name: str, **detail: Any) -> Iterator[dict[str, Any]]:
+        started = time.perf_counter()
+        payload: dict[str, Any] = dict(detail)
+        try:
+            yield payload
+        finally:
+            self.stages.append(
+                StageTiming(name=name, ms=round((time.perf_counter() - started) * 1000, 2), detail=payload)
+            )
+
+    def note(self, message: str) -> None:
+        self.notes.append(message)
+
+
+class TraceStore:
+    """In-memory ring buffer of recent traces for the debug console. A real
+    deployment ships these to Langfuse (§H.1); the console reads the same shape."""
+
+    def __init__(self, capacity: int = 200) -> None:
+        self.capacity = capacity
+        self._order: list[str] = []
+        self._items: dict[str, Trace] = {}
+
+    def put(self, trace: Trace) -> None:
+        self._items[trace.trace_id] = trace
+        self._order.append(trace.trace_id)
+        while len(self._order) > self.capacity:
+            evicted = self._order.pop(0)
+            self._items.pop(evicted, None)
+
+    def get(self, trace_id: str) -> Trace | None:
+        return self._items.get(trace_id)
+
+    def recent(self, limit: int = 25) -> list[Trace]:
+        return [self._items[t] for t in reversed(self._order[-limit:])]
+
+    def all(self) -> list[Trace]:
+        return [self._items[t] for t in self._order]
+
+    def clear(self) -> None:
+        self._order.clear()
+        self._items.clear()

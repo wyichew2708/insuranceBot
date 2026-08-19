@@ -1,0 +1,76 @@
+# Golden set (§G Loop 3) — per product × journey, with the expected source page.
+# Seeded by hand here; at maturity these come from real transcripts and adviser
+# FAQs, targeting 800–1,200 cases.
+- id: golden-travel-medical-limit
+  question: What is the overseas medical expenses limit on my travel policy?
+  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001}
+  expect:
+    delivered: true
+    must_cite: [product/general/travel/benefits]
+    figures_bound: true
+    must_contain: ["S$500,000"]
+    gates_pass: [numeric-binding, groundedness, reference-integrity]
+
+- id: golden-travel-delay-threshold
+  question: How long must my flight be delayed before the travel delay benefit applies?
+  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001}
+  expect:
+    delivered: true
+    figures_bound: true
+    must_contain: ["6 hours"]
+    must_not_contain: ["4 hours"]
+
+- id: golden-travel-delay-tier3
+  question: What is the travel delay payout per block and the cap?
+  session: {channel: channel/etiqa-sg, auth_level: L2, policy_id: TRV-100002}
+  expect:
+    delivered: true
+    figures_bound: true
+    must_contain: ["S$200", "S$1,500"]
+
+- id: golden-travel-baggage
+  question: What is the baggage loss limit and the per item sub-limit?
+  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001}
+  expect:
+    delivered: true
+    figures_bound: true
+    must_contain: ["S$5,000", "S$500"]
+
+- id: golden-travel-preexisting
+  question: Are pre-existing medical conditions covered on travel insurance?
+  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001}
+  expect:
+    delivered: true
+    must_cite: [product/general/travel/exclusions]
+    must_contain: ["pre-existing"]
+
+- id: golden-travel-claim-journey
+  question: How do I submit a travel claim?
+  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001}
+  expect:
+    delivered: true
+    must_cite: [journey/claim/travel]
+
+- id: golden-home-contents
+  question: What is the home contents limit and the excess?
+  session: {channel: channel/etiqa-sg, auth_level: L2, policy_id: HOM-100001}
+  expect:
+    delivered: true
+    figures_bound: true
+    must_contain: ["S$50,000", "S$250"]
+
+- id: golden-car-excess
+  question: What is the own damage excess on private car insurance?
+  session: {channel: channel/etiqa-sg, auth_level: L0}
+  expect:
+    delivered: true
+    figures_bound: true
+    must_contain: ["S$500"]
+
+- id: golden-anonymous-tier-unknown
+  question: What is the overseas medical expenses limit on travel insurance?
+  session: {channel: channel/tiq-sg, auth_level: L0}
+  expect:
+    delivered: true
+    unresolved_nonempty: true
+    must_not_contain: ["S$500,000", "S$1,000,000"]

@@ -1,0 +1,13 @@
+[project]
+name = "harness"
+version = "0.2.0"
+description = "Harness layer: typed contracts, verification gates, budgets, tracing"
+requires-python = ">=3.11"
+dependencies = ["okf", "pydantic>=2.7", "pydantic-settings>=2.3"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["harness"]

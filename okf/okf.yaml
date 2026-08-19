@@ -1,0 +1,29 @@
+# Bundle manifest (§C.1). This seed bundle is FIXTURE DATA for development:
+# tier names and every number are placeholders, not Etiqa product facts. The
+# real values arrive from raw/wordings + raw/product-summaries via the
+# compile loop (Part D) and must be reviewed before any page is `approved`.
+name: etiqa-sg-knowledge
+okf_version: "0.1"
+jurisdiction: SG
+underwriter: Etiqa Insurance Pte. Ltd.
+uen: "201331905K"
+fixture: true
+
+taxonomy:
+  product_roots: [protection, health-medical, savings-retirement, investments,
+                  general, motor, business, premier, scheme]
+  page_types: [product, concept, journey, channel, entity, promotion, index]
+
+# Ordered highest-first. The compiler writes from the highest authority and
+# files every contradiction below it to conflicts/ (§D.2).
+authority_order:
+  - raw/wordings
+  - raw/product-summaries
+  - raw/benefit-tables
+  - raw/web/etiqa-sg
+  - raw/web/tiq-sg
+  - raw/blog          # never authoritative — context only
+
+link_rules:
+  product_requires: [benefits, exclusions]
+  approved_requires: [reviewed_by, review_due, authority]

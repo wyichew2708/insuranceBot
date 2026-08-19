@@ -1,0 +1,4 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+home,2026.1,ALL,contents,limit,50000,S$,raw/product-summaries/home-2026.1.md#contents
+home,2026.1,ALL,contents,excess,250,S$,raw/product-summaries/home-2026.1.md#excess
+home,2026.1,ALL,alternative_accommodation,limit,10000,S$,raw/product-summaries/home-2026.1.md#accom

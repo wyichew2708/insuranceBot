@@ -1,0 +1,127 @@
+"""Typed contracts — every step is a contract, not a prose instruction (§F.1).
+
+The model emits `GroundedAnswer` under guided decoding. `unresolved` matters
+more than it looks: an agent that can say "I could not establish the sub-limit
+for this tier" degrades honestly instead of confabulating.
+"""
+
+from __future__ import annotations
+
+import datetime as dt
+from enum import Enum
+
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class AuthLevel(str, Enum):
+    anonymous = "L0"
+    identified = "L1"
+    authenticated = "L2"
+
+
+class Channel(str, Enum):
+    tiq_sg = "channel/tiq-sg"
+    etiqa_sg = "channel/etiqa-sg"
+    unknown = "unknown"  # e.g. WhatsApp — render both routes (§C.4)
+
+
+class PolicyContext(BaseModel):
+    """The customer's in-force policy, from the system of record — never from
+    the wiki, which describes only what is currently sold (§B.2)."""
+
+    policy_id: str
+    product_id: str
+    version: str
+    tier: str
+    inception: dt.date | None = None
+    in_force: bool = True
+
+
+class Session(BaseModel):
+    session_id: str
+    channel: Channel = Channel.unknown
+    auth_level: AuthLevel = AuthLevel.anonymous
+    policy: PolicyContext | None = None
+    locale: str = "en-SG"
+    today: dt.date = Field(default_factory=dt.date.today)
+
+
+class Claim(BaseModel):
+    """One factual assertion, bound to where it came from."""
+
+    text: str
+    source_id: str  # wiki page id, or a raw/ path
+    locator: str | None = None
+
+
+class Figure(BaseModel):
+    """A number. Must bind to a benefit-tables row or an SOR field — the
+    numeric-binding gate blocks anything else (§F.2)."""
+
+    model_config = ConfigDict(frozen=True)
+
+    label: str
+    text: str
+    table_row_id: str | None = None
+    sor_field: str | None = None
+    # Promotions are effective-dated and have no benefit-table row; a figure
+    # lifted verbatim from an in-window promotion page binds here instead.
+    page_ref: str | None = None
+
+    @property
+    def is_bound(self) -> bool:
+        return bool(self.table_row_id or self.sor_field or self.page_ref)
+
+
+class ChannelRender(BaseModel):
+    """Deep links resolved deterministically from session.channel. The model
+    never chooses which brand to mention (§C.4)."""
+
+    channel: Channel
+    brand: str | None = None
+    landing: str | None = None
+    hotline: str | None = None
+    both_shown: bool = False
+
+
+class Verdict(str, Enum):
+    pass_ = "pass"
+    fail = "fail"
+    skip = "skip"
+
+
+class GateResult(BaseModel):
+    gate: str
+    verdict: Verdict
+    detail: str = ""
+
+    @property
+    def blocking(self) -> bool:
+        return self.verdict == Verdict.fail
+
+
+class GroundedAnswer(BaseModel):
+    answer: str
+    claims: list[Claim] = Field(default_factory=list)
+    figures: list[Figure] = Field(default_factory=list)
+    channel_render: ChannelRender | None = None
+    advice_flag: bool = False
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    unresolved: list[str] = Field(default_factory=list)
+    # Set when the answer is a refusal/handoff rather than a factual reply;
+    # the coverage-assertion gates do not apply to it.
+    handoff: bool = False
+
+
+class AnswerRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=2000)
+    session: Session
+
+
+class AnswerEnvelope(BaseModel):
+    """What the API returns: the answer plus everything needed to debug it."""
+
+    answer: GroundedAnswer
+    gates: list[GateResult] = Field(default_factory=list)
+    delivered: bool = True
+    trace_id: str = ""

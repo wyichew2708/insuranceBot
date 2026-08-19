@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Layer · Debug Console</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%232dd4bf'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0f1419; --bg-2:#161c23; --bg-3:#1d252e; --line:#2a3540;
+  --fg:#e6edf3; --fg-dim:#8b98a5; --fg-mute:#5c6b7a;
+  --accent:#2dd4bf; --accent-dim:#134e4a;
+  --pass:#3fb950; --fail:#f85149; --skip:#6e7681; --warn:#d29922;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f8fa; --bg-2:#fff; --bg-3:#eef2f6; --line:#d6dee6;
+  --fg:#1c2128; --fg-dim:#57606a; --fg-mute:#8c959f; --accent-dim:#ccfbf1;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--sans);
+     -webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--accent)}
+
+header{display:flex;align-items:center;gap:16px;padding:10px 18px;
+       background:var(--bg-2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+header h1{font-size:14px;font-weight:650;margin:0;letter-spacing:.2px}
+header h1 span{color:var(--accent)}
+.status{display:flex;gap:14px;margin-left:auto;align-items:center;font-size:12px;color:var(--fg-dim)}
+.status b{color:var(--fg);font-weight:600}
+.icon-btn{background:var(--bg-3);border:1px solid var(--line);border-radius:6px;
+          padding:5px 10px;cursor:pointer;font-size:12px}
+.icon-btn:hover{border-color:var(--accent)}
+
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr) minmax(0,1.05fr);
+        gap:1px;background:var(--line);min-height:calc(100vh - 45px)}
+.pane{background:var(--bg);overflow:auto;max-height:calc(100vh - 45px)}
+.pane-inner{padding:16px}
+@media(max-width:1200px){.layout{grid-template-columns:1fr}.pane{max-height:none}}
+
+h2.sec{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--fg-mute);
+       margin:0 0 10px;font-weight:650}
+h2.sec+ *{margin-top:0}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;color:var(--fg-dim);margin-bottom:4px;
+             text-transform:uppercase;letter-spacing:.6px}
+textarea,select,input[type=date]{width:100%;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:7px;padding:8px 10px;outline:none}
+textarea{resize:vertical;min-height:76px;font-family:var(--sans)}
+textarea:focus,select:focus,input:focus{border-color:var(--accent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ask{width:100%;background:var(--accent);color:#04211d;border:0;border-radius:7px;
+     padding:10px;font-weight:650;cursor:pointer;margin-top:2px}
+.ask:hover{filter:brightness(1.08)}
+.ask:disabled{opacity:.5;cursor:progress}
+
+.examples{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--bg-3);border:1px solid var(--line);border-radius:20px;
+      padding:4px 10px;font-size:11.5px;cursor:pointer;color:var(--fg-dim)}
+.chip:hover{border-color:var(--accent);color:var(--fg)}
+
+.hist{display:flex;flex-direction:column;gap:4px}
+.hist-item{display:flex;gap:8px;align-items:center;padding:6px 8px;border-radius:6px;
+           cursor:pointer;font-size:12px;border:1px solid transparent}
+.hist-item:hover{background:var(--bg-2)}
+.hist-item.on{background:var(--bg-2);border-color:var(--accent)}
+.hist-q{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--fg-dim)}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.dot.ok{background:var(--pass)} .dot.no{background:var(--fail)}
+
+.card{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;
+      padding:14px 16px;margin-bottom:14px}
+.banner{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:8px;
+        margin-bottom:14px;font-size:12.5px;font-weight:600}
+.banner.ok{background:rgba(63,185,80,.12);color:var(--pass);border:1px solid rgba(63,185,80,.3)}
+.banner.no{background:rgba(248,81,73,.12);color:var(--fail);border:1px solid rgba(248,81,73,.3)}
+.answer{white-space:pre-wrap;font-size:14.5px;line-height:1.65}
+.answer .fig{background:var(--accent-dim);color:var(--accent);border-radius:4px;padding:0 4px;
+             font-weight:600;font-family:var(--mono);font-size:13px;cursor:help}
+:root[data-theme="light"] .answer .fig{color:#0f766e}
+
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{font-size:11px;font-family:var(--mono);background:var(--bg-3);border:1px solid var(--line);
+     border-radius:5px;padding:2px 7px;color:var(--fg-dim)}
+.tag.warn{border-color:var(--warn);color:var(--warn)}
+.tag.accent{border-color:var(--accent);color:var(--accent)}
+
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:14px;
+      overflow-x:auto;position:sticky;top:0;background:var(--bg);z-index:5;padding-top:2px}
+.tab{padding:7px 12px;font-size:12px;cursor:pointer;border:0;background:none;color:var(--fg-mute);
+     border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--fg)}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--mono);font-size:10.5px;opacity:.75;margin-left:4px}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;
+   color:var(--fg-mute);font-weight:600;padding:5px 8px;border-bottom:1px solid var(--line)}
+td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.mono{font-family:var(--mono);font-size:11.5px}
+.dim{color:var(--fg-dim)}
+.mute{color:var(--fg-mute)}
+.clickable{color:var(--accent);cursor:pointer;text-decoration:underline dotted}
+
+.pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;padding:2px 7px;
+      border-radius:20px;text-transform:uppercase}
+.pill.pass{background:rgba(63,185,80,.15);color:var(--pass)}
+.pill.fail{background:rgba(248,81,73,.15);color:var(--fail)}
+.pill.skip{background:rgba(110,118,129,.18);color:var(--skip)}
+
+.gate{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.gate:last-child{border:0}
+.gate-name{font-weight:600;font-size:12.5px;min-width:150px}
+.gate-detail{color:var(--fg-dim);font-size:12px;flex:1;word-break:break-word}
+
+.bar-row{display:flex;align-items:center;gap:9px;margin-bottom:7px;font-size:12px}
+.bar-label{min-width:132px;color:var(--fg-dim)}
+.bar-track{flex:1;height:7px;background:var(--bg-3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:4px}
+.bar-fill.hot{background:var(--warn)}
+.bar-val{min-width:74px;text-align:right;font-family:var(--mono);font-size:11px;color:var(--fg-dim)}
+
+pre.json{background:var(--bg-3);border:1px solid var(--line);border-radius:8px;padding:12px;
+     overflow:auto;font-family:var(--mono);font-size:11.5px;max-height:70vh;margin:0}
+.empty{color:var(--fg-mute);font-size:12.5px;padding:22px;text-align:center}
+.hint{font-size:11.5px;color:var(--fg-mute);margin:-4px 0 10px;line-height:1.5}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:50;padding:40px 20px}
+.modal.on{display:block}
+.modal-box{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;max-width:900px;
+           margin:0 auto;max-height:calc(100vh - 80px);overflow:auto}
+.modal-head{display:flex;align-items:center;gap:12px;padding:13px 18px;
+            border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg-2)}
+.modal-head h3{margin:0;font-size:13px;font-family:var(--mono)}
+.modal-body{padding:18px}
+pre.page{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.6;margin:0}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--fg-mute);
+      border-top-color:var(--accent);border-radius:50%;animation:s .7s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Etiqa SG <span>Knowledge Layer</span> · Debug Console</h1>
+  <div class="status">
+    <span id="bundleStat">loading…</span>
+    <button class="icon-btn" id="reloadBtn" title="Reload the OKF bundle from disk">↻ Bundle</button>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme">◐</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- ── session ─────────────────────────────────────────── -->
+  <section class="pane"><div class="pane-inner">
+    <h2 class="sec">Ask</h2>
+    <div class="field">
+      <textarea id="q" placeholder="How long must my flight be delayed before the travel delay benefit applies?"></textarea>
+    </div>
+    <div class="field">
+      <label>Channel</label>
+      <select id="channel">
+        <option value="channel/tiq-sg">Tiq (direct online)</option>
+        <option value="channel/etiqa-sg">Etiqa (online or adviser)</option>
+        <option value="unknown">unknown (e.g. WhatsApp)</option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Auth</label>
+        <select id="auth">
+          <option value="L0">L0 anonymous</option>
+          <option value="L1">L1 identified</option>
+          <option value="L2" selected>L2 authenticated</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Policy</label>
+        <select id="policy"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Date (effective-dating)</label>
+      <input type="date" id="today">
+    </div>
+    <button class="ask" id="askBtn">Ask →</button>
+
+    <h2 class="sec" style="margin-top:22px">Try</h2>
+    <div class="examples" id="examples"></div>
+
+    <h2 class="sec" style="margin-top:22px">Recent turns</h2>
+    <div class="hist" id="hist"><div class="empty">no turns yet</div></div>
+  </div></section>
+
+  <!-- ── answer ──────────────────────────────────────────── -->
+  <section class="pane"><div class="pane-inner">
+    <h2 class="sec">Answer</h2>
+    <div id="answerArea"><div class="empty">Ask something to see the grounded answer.</div></div>
+  </div></section>
+
+  <!-- ── debug ───────────────────────────────────────────── -->
+  <section class="pane"><div class="pane-inner">
+    <div class="tabs" id="tabs"></div>
+    <div id="tabBody"><div class="empty">Trace detail appears here.</div></div>
+  </div></section>
+</div>
+
+<div class="modal" id="modal"><div class="modal-box">
+  <div class="modal-head"><h3 id="modalTitle"></h3>
+    <button class="icon-btn" style="margin-left:auto" onclick="closeModal()">✕</button></div>
+  <div class="modal-body" id="modalBody"></div>
+</div></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api = async (path, opts) => {
+  const r = await fetch(path, opts);
+  if (!r.ok) throw new Error(`${path} → ${r.status}`);
+  return r.json();
+};
+
+let TRACE = null, ENVELOPE = null, TAB = 'gates', HISTORY = [];
+
+const EXAMPLES = [
+  'How long must my flight be delayed before the travel delay benefit applies?',
+  'What is the overseas medical expenses limit?',
+  'Are pre-existing conditions covered?',
+  'What is the baggage limit and per item sub-limit?',
+  'How do I submit a travel claim?',
+  'Which travel plan should I buy?',
+  'Is there a promotion running this month?',
+  'The website says delay starts after 4 hours, correct?',
+  'What is the home contents limit and excess?',
+];
+
+// ── boot ────────────────────────────────────────────────────
+async function boot() {
+  $('#examples').innerHTML = EXAMPLES.map(e =>
+    `<span class="chip" onclick="setQ(${JSON.stringify(e).replace(/"/g,'&quot;')})">${esc(e.length > 42 ? e.slice(0,40)+'…' : e)}</span>`).join('');
+  try {
+    const [info, fx] = await Promise.all([api('/v1/bundle'), api('/v1/fixtures')]);
+    const lint = info.lint.ok ? `<b style="color:var(--pass)">lint clean</b>`
+                              : `<b style="color:var(--fail)">${info.lint.errors} lint errors</b>`;
+    $('#bundleStat').innerHTML = `<b>${info.pages}</b> pages · <b>${info.table_rows}</b> table rows · ${lint}`;
+    $('#policy').innerHTML = '<option value="">— none —</option>' +
+      fx.policies.map(p => `<option value="${p.policy_id}">${p.policy_id} · ${p.tier} · v${p.version}</option>`).join('');
+    $('#policy').value = 'TRV-100001';
+    $('#today').value = fx.today;
+  } catch (e) { $('#bundleStat').textContent = 'bundle unavailable: ' + e.message; }
+  renderTabs();
+  loadHistory();
+}
+
+const setQ = t => { $('#q').value = t; $('#q').focus(); };
+
+// ── ask ─────────────────────────────────────────────────────
+async function ask() {
+  const question = $('#q').value.trim() || $('#q').placeholder;
+  const btn = $('#askBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+  try {
+    const policyId = $('#policy').value;
+    const session = {
+      session_id: 'console',
+      channel: $('#channel').value,
+      auth_level: $('#auth').value,
+      today: $('#today').value || undefined,
+      policy: policyId ? {
+        policy_id: policyId, product_id: 'product/general/travel',
+        version: $('#policy').selectedOptions[0].text.split('v')[1] || '2026.1',
+        tier: $('#policy').selectedOptions[0].text.split('·')[1].trim(),
+      } : null,
+    };
+    ENVELOPE = await api('/v1/answer', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({question, session}),
+    });
+    TRACE = await api('/v1/traces/' + ENVELOPE.trace_id);
+    renderAnswer(); renderTabs(); renderTab(); loadHistory();
+  } catch (e) {
+    $('#answerArea').innerHTML = `<div class="banner no">Request failed — ${esc(e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Ask →'; }
+}
+
+// ── answer pane ─────────────────────────────────────────────
+function highlightFigures(text, figures) {
+  let html = esc(text);
+  // Longest first so "S$1,500" is not clobbered by "S$1"
+  [...figures].sort((a,b) => b.text.length - a.text.length).forEach(f => {
+    const needle = esc(f.text);
+    const bind = f.table_row_id || f.sor_field || f.page_ref || 'unbound';
+    html = html.split(needle).join(`<span class="fig" title="${esc(bind)}">${needle}</span>`);
+  });
+  return html;
+}
+
+function renderAnswer() {
+  const a = ENVELOPE.answer, failed = ENVELOPE.gates.filter(g => g.verdict === 'fail');
+  const banner = ENVELOPE.delivered
+    ? `<div class="banner ok">✓ Delivered — all gates passed</div>`
+    : `<div class="banner no">✕ Blocked by ${failed.length} gate${failed.length>1?'s':''}: ${failed.map(g=>esc(g.gate)).join(', ')}</div>`;
+
+  const tags = [
+    `<span class="tag">confidence ${a.confidence}</span>`,
+    a.advice_flag ? `<span class="tag warn">advice boundary</span>` : '',
+    a.handoff ? `<span class="tag warn">handoff</span>` : '',
+    a.channel_render ? `<span class="tag accent">${esc(a.channel_render.brand || a.channel_render.channel)}</span>` : '',
+    `<span class="tag">${a.claims.length} claims</span>`,
+    `<span class="tag">${a.figures.length} figures</span>`,
+    TRACE ? `<span class="tag">${TRACE.total_ms} ms</span>` : '',
+  ].filter(Boolean).join('');
+
+  const unresolved = a.unresolved.length
+    ? `<div class="card"><h2 class="sec">Unresolved — what it could not establish</h2>
+       <div class="hint">The contract carries this explicitly so the agent degrades honestly instead of confabulating.</div>
+       ${a.unresolved.map(u => `<div class="mono dim">• ${esc(u)}</div>`).join('')}</div>` : '';
+
+  const draft = (!ENVELOPE.delivered && TRACE && TRACE.blocked_draft)
+    ? `<div class="card"><h2 class="sec">Blocked draft — what the gates refused</h2>
+       <div class="hint">Kept for debugging: a blocked answer you cannot inspect teaches you nothing.</div>
+       <div class="answer dim">${esc(TRACE.blocked_draft)}</div></div>` : '';
+
+  const claims = a.claims.length ? `<div class="card"><h2 class="sec">Claims → sources</h2><table>
+    <tr><th>Claim</th><th>Source page</th><th>Locator</th></tr>
+    ${a.claims.map(c => `<tr><td>${esc(c.text.slice(0,120))}</td>
+      <td><span class="clickable mono" onclick="showPage('${esc(c.source_id)}')">${esc(c.source_id)}</span></td>
+      <td class="mono mute">${esc(c.locator||'')}</td></tr>`).join('')}</table></div>` : '';
+
+  $('#answerArea').innerHTML = banner +
+    `<div class="card"><div class="answer">${highlightFigures(a.answer, a.figures)}</div>
+     <div class="meta">${tags}</div></div>` + draft + unresolved + claims;
+}
+
+// ── debug tabs ──────────────────────────────────────────────
+function tabSpec() {
+  const t = TRACE;
+  return [
+    ['gates', 'Gates', t ? t.gates.filter(g=>g.verdict==='fail').length || '' : ''],
+    ['pipeline', 'Pipeline', t ? t.stages.length : ''],
+    ['retrieval', 'Retrieval', t ? t.candidates.length : ''],
+    ['figures', 'Figures', t ? t.figures_resolved.length : ''],
+    ['rag', 'RAG', t && t.rag_used ? t.rag_hits.length : ''],
+    ['budget', 'Budget', ''],
+    ['evals', 'Evals', ''],
+    ['json', 'JSON', ''],
+  ];
+}
+function renderTabs() {
+  $('#tabs').innerHTML = tabSpec().map(([id, label, n]) =>
+    `<button class="tab ${id===TAB?'on':''}" onclick="selectTab('${id}')">${label}${n!==''?`<span class="n">${n}</span>`:''}</button>`).join('');
+}
+const selectTab = id => { TAB = id; renderTabs(); renderTab(); };
+
+function renderTab() {
+  if (TAB === 'evals') return renderEvals();
+  if (!TRACE) { $('#tabBody').innerHTML = '<div class="empty">Ask something first.</div>'; return; }
+  const views = {gates: viewGates, pipeline: viewPipeline, retrieval: viewRetrieval,
+                 figures: viewFigures, rag: viewRag, budget: viewBudget, json: viewJson};
+  $('#tabBody').innerHTML = views[TAB]();
+}
+
+const viewGates = () => `
+  <div class="hint">Seven deterministic checks between generation and delivery. They do not
+  involve the model's opinion of its own work — an unbound figure is blocked outright.</div>
+  <div class="card">${TRACE.gates.map(g => `
+    <div class="gate"><span class="pill ${g.verdict==='pass'?'pass':g.verdict==='fail'?'fail':'skip'}">${g.verdict}</span>
+      <span class="gate-name">${esc(g.gate)}</span>
+      <span class="gate-detail">${esc(g.detail)}</span></div>`).join('')}</div>`;
+
+const viewPipeline = () => {
+  const max = Math.max(...TRACE.stages.map(s => s.ms), 0.01);
+  return `<div class="hint">Loop 1 · Serve — route → read wiki / RAG / SOR → generate → gates → answer.</div>
+  <div class="card">${TRACE.stages.map(s => `
+    <div class="bar-row"><span class="bar-label mono">${esc(s.name)}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${Math.max(2, s.ms/max*100)}%"></span></span>
+      <span class="bar-val">${s.ms} ms</span></div>
+    ${Object.keys(s.detail||{}).length ? `<div class="mono mute" style="margin:-2px 0 8px 142px;font-size:11px">${esc(JSON.stringify(s.detail))}</div>` : ''}`).join('')}
+    <div class="bar-row" style="margin-top:8px;border-top:1px solid var(--line);padding-top:9px">
+      <span class="bar-label"><b>total</b></span><span class="bar-track"></span>
+      <span class="bar-val"><b>${TRACE.total_ms} ms</b></span></div></div>
+  <div class="card"><h2 class="sec">Entities resolved</h2>
+    ${TRACE.entities.length ? TRACE.entities.map(e => `<span class="tag accent">${esc(e)}</span> `).join('')
+      : '<span class="mute">no alias hit — the router fell back to lexical scoring</span>'}
+    <div class="hint" style="margin-top:9px">Alias lists are the cheapest single accuracy win: customers type
+    "Tiq travel", "ePROTECT travel", "travel pass" for one canonical page.</div></div>
+  <div class="card"><h2 class="sec">Composer</h2><span class="mono">${esc(TRACE.composer||'—')}</span></div>`;
+};
+
+const viewRetrieval = () => {
+  const adm = TRACE.candidates.filter(c => c.admitted), rej = TRACE.candidates.filter(c => !c.admitted);
+  return `<div class="card"><h2 class="sec">Pages loaded (${TRACE.loaded.length})</h2>
+    <table><tr><th>Page</th><th>Via</th><th>Hop</th><th>Chars</th></tr>
+    ${TRACE.loaded.map(p => `<tr>
+      <td><span class="clickable mono" onclick="showPage('${esc(p.page_id)}')">${esc(p.page_id)}</span></td>
+      <td><span class="tag">${esc(p.via)}</span></td><td class="mono">${p.hop}</td>
+      <td class="mono dim">${p.chars}</td></tr>`).join('') || '<tr><td colspan=4 class="mute">none</td></tr>'}</table>
+    <div class="hint" style="margin-top:8px"><b>graph</b> = reached by following links from a seed page.
+    Deterministic traversal guarantees the complete exclusion set, rather than hoping a retriever surfaces it.</div></div>
+
+  <div class="card"><h2 class="sec">Frontmatter filter — admitted (${adm.length})</h2>
+    <table><tr><th>Page</th><th>Score</th></tr>
+    ${adm.map(c => `<tr><td><span class="clickable mono" onclick="showPage('${esc(c.page_id)}')">${esc(c.page_id)}</span>
+      <div class="mute" style="font-size:11px">${esc(c.title)}</div></td>
+      <td class="mono">${c.score}</td></tr>`).join('') || '<tr><td colspan=2 class="mute">none admitted</td></tr>'}</table></div>
+
+  <div class="card"><h2 class="sec">Rejected candidates (${rej.length})</h2>
+    <div class="hint">The underrated signal. When the filter repeatedly rejects the page a human
+    would have wanted, the taxonomy is wrong — and you only see that if you log rejections.</div>
+    <table><tr><th>Page</th><th>Reason</th><th>Score</th></tr>
+    ${rej.map(c => `<tr><td><span class="clickable mono" onclick="showPage('${esc(c.page_id)}')">${esc(c.page_id)}</span></td>
+      <td class="dim">${esc(c.reason)}</td><td class="mono mute">${c.score}</td></tr>`).join('')}</table></div>`;
+};
+
+const viewFigures = () => `
+  <div class="hint">Every number is a deterministic row fetch from <span class="mono">benefit-tables</span>,
+  never produced by the language model. The numeric-binding gate blocks any figure without a row.</div>
+  <div class="card"><table><tr><th>Benefit</th><th>Value</th><th>Bound to row</th><th>Source</th></tr>
+  ${TRACE.figures_resolved.map(f => `<tr><td class="mono">${esc(f.label)}</td>
+    <td><b>${esc(f.value)}</b></td><td class="mono dim">${esc(f.row_id||'—')}</td>
+    <td class="mono mute">${esc(f.source_ref||'')}</td></tr>`).join('')
+    || '<tr><td colspan=4 class="mute">no figures in this answer</td></tr>'}</table></div>
+  ${TRACE.unresolved.length ? `<div class="card"><h2 class="sec">Unresolved tokens</h2>
+    ${TRACE.unresolved.map(u => `<div class="mono dim">• ${esc(u)}</div>`).join('')}</div>` : ''}`;
+
+const viewRag = () => TRACE.rag_used ? `
+  <div class="card"><h2 class="sec">RAG fallback fired</h2>
+    <div class="hint">Reason: <b>${esc(TRACE.rag_reason)}</b>. RAG covers the long tail of wordings,
+    historic versions and novel questions — the wiki covers the curated core.</div>
+    <table><tr><th>Source</th><th>Section</th><th>Score</th></tr>
+    ${TRACE.rag_hits.map(h => `<tr><td class="mono">${esc(h.source_path)}</td>
+      <td class="dim">${esc(h.locator)}</td><td class="mono">${h.score}</td></tr>
+      <tr><td colspan=3 class="mute" style="font-size:11.5px;padding-top:0">${esc(h.excerpt)}</td></tr>`).join('')}
+    </table></div>` : `<div class="card"><h2 class="sec">RAG not used</h2>
+    <div class="hint">Wiki-first retrieval answered this turn. RAG triggers on: no wiki page matched ·
+    clause-level question · historic policy version · confidence below floor.</div></div>`;
+
+const viewBudget = () => {
+  const b = TRACE.budget || {};
+  const bar = (label, used, max, unit='') => {
+    const pct = max ? Math.min(100, used/max*100) : 0;
+    return `<div class="bar-row"><span class="bar-label">${label}</span>
+      <span class="bar-track"><span class="bar-fill ${pct>75?'hot':''}" style="width:${pct}%"></span></span>
+      <span class="bar-val">${used}${unit} / ${max}${unit}</span></div>`;
+  };
+  return `<div class="hint">Hard limits on every run. Exhaustion is a <b>defined exit</b> —
+    summarise and hand off — never a loop. Long-horizon runs fail by drifting, not by crashing.</div>
+    <div class="card">
+      ${bar('pages loaded', b.pages_loaded||0, b.max_pages||0)}
+      ${bar('tool calls', b.tool_calls||0, b.max_tool_calls||0)}
+      ${bar('tokens', b.tokens_used||0, b.max_tokens||0)}
+      ${bar('wall clock', b.elapsed_ms||0, b.max_wall_clock_ms||0, ' ms')}
+      ${b.exhausted_on ? `<div class="tag warn" style="margin-top:9px">exhausted on ${esc(b.exhausted_on)}</div>` : ''}
+    </div>
+    ${TRACE.sor_calls.length ? `<div class="card"><h2 class="sec">System-of-record calls</h2>
+      ${TRACE.sor_calls.map(c => `<div class="mono dim">• ${esc(c)}</div>`).join('')}
+      <div class="hint" style="margin-top:8px">Customer data never lives in the wiki — it comes from
+      the SOR at runtime behind the entitlement predicate.</div></div>` : ''}
+    ${TRACE.notes.length ? `<div class="card"><h2 class="sec">Notes</h2>
+      ${TRACE.notes.map(n => `<div class="mono dim">• ${esc(n)}</div>`).join('')}</div>` : ''}`;
+};
+
+const viewJson = () => `<pre class="json">${esc(JSON.stringify({envelope: ENVELOPE, trace: TRACE}, null, 2))}</pre>`;
+
+// ── evals ───────────────────────────────────────────────────
+async function renderEvals() {
+  $('#tabBody').innerHTML = `<div class="hint">Loop 3 · Evaluate — runs on every publish and gates promotion.
+    Any drop in groundedness, numeric binding or safety blocks the publish.</div>
+    <div class="card"><button class="ask" id="runEval" style="max-width:200px">Run all suites</button>
+    <div id="evalOut" style="margin-top:14px"></div></div>`;
+  $('#runEval').onclick = async () => {
+    $('#evalOut').innerHTML = '<span class="spin"></span> running…';
+    try {
+      const r = await api('/v1/evals/run', {method:'POST', headers:{'Content-Type':'application/json'},
+                                            body: JSON.stringify({suite:'all'})});
+      $('#evalOut').innerHTML = `<div class="banner ${r.pass_rate===1?'ok':'no'}">
+        ${r.passed}/${r.total} passed (${(r.pass_rate*100).toFixed(1)}%)</div>` +
+        r.suites.map(s => `<div style="margin-bottom:12px"><h2 class="sec">${esc(s.suite)} — ${s.passed}/${s.total}</h2>
+          <table>${s.results.map(c => `<tr>
+            <td><span class="pill ${c.passed?'pass':'fail'}">${c.passed?'pass':'fail'}</span></td>
+            <td class="mono">${esc(c.id)}</td>
+            <td class="dim">${esc((c.failures||[]).join('; '))}</td></tr>`).join('')}</table></div>`).join('');
+    } catch (e) { $('#evalOut').innerHTML = `<div class="banner no">${esc(e.message)}</div>`; }
+  };
+}
+
+// ── history & page inspector ────────────────────────────────
+async function loadHistory() {
+  try {
+    HISTORY = await api('/v1/traces?limit=20');
+    $('#hist').innerHTML = HISTORY.length ? HISTORY.map(h => `
+      <div class="hist-item ${TRACE && h.trace_id===TRACE.trace_id ? 'on':''}" onclick="openTrace('${h.trace_id}')">
+        <span class="dot ${h.delivered?'ok':'no'}"></span>
+        <span class="hist-q">${esc(h.question)}</span>
+        <span class="mono mute">${h.total_ms}ms</span></div>`).join('')
+      : '<div class="empty">no turns yet</div>';
+  } catch {}
+}
+async function openTrace(id) {
+  TRACE = await api('/v1/traces/' + id);
+  ENVELOPE = {answer: reconstruct(TRACE), gates: TRACE.gates, delivered: TRACE.delivered, trace_id: id};
+  renderAnswer(); renderTabs(); renderTab(); loadHistory();
+}
+// A stored trace keeps the delivered contract, so replay is faithful.
+const reconstruct = t => t.answer || {
+  answer: '(no answer recorded)', claims: [], figures: [], channel_render: null,
+  advice_flag: false, confidence: 0, unresolved: t.unresolved || [], handoff: true,
+};
+
+async function showPage(id) {
+  $('#modal').classList.add('on');
+  $('#modalTitle').textContent = id;
+  $('#modalBody').innerHTML = '<span class="spin"></span>';
+  try {
+    const p = await api('/v1/bundle/page/' + id);
+    $('#modalBody').innerHTML = `
+      <h2 class="sec">Frontmatter — the pre-read filter</h2>
+      <pre class="json">${esc(JSON.stringify(p.frontmatter, null, 2))}</pre>
+      <h2 class="sec" style="margin-top:16px">Links (graph edges)</h2>
+      ${p.neighbours.length ? p.neighbours.map(n =>
+        `<span class="tag accent clickable" onclick="showPage('${esc(n)}')">${esc(n)}</span> `).join('')
+        : '<span class="mute">no outbound links</span>'}
+      <h2 class="sec" style="margin-top:16px">Body</h2>
+      <pre class="page">${esc(p.body)}</pre>`;
+  } catch (e) { $('#modalBody').innerHTML = `<div class="banner no">${esc(e.message)}</div>`; }
+}
+const closeModal = () => $('#modal').classList.remove('on');
+$('#modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── wiring ──────────────────────────────────────────────────
+$('#askBtn').onclick = ask;
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) ask(); });
+$('#themeBtn').onclick = () => {
+  const root = document.documentElement;
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+};
+$('#reloadBtn').onclick = async () => {
+  await api('/v1/bundle/reload', {method:'POST'});
+  boot();
+};
+boot();
+</script>
+</body>
+</html>

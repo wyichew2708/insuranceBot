@@ -1,0 +1,3 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+private-car,2026.1,ALL,own_damage,excess,500,S$,raw/product-summaries/private-car-2026.1.md#excess
+private-car,2026.1,ALL,ncd,max_percentage,50,%,raw/product-summaries/private-car-2026.1.md#ncd

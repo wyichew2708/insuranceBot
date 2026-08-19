@@ -1,0 +1,39 @@
+# Merge-consistency suite (§G Loop 3) — the mechanical guarantee that
+# "brand is a channel attribute, not a product identity" (§B.1) held.
+# The same question in each brand framing must return identical facts and
+# differ only in the rendered deep link.
+- id: merge-travel-delay
+  type: merge-consistency
+  variants:
+    - question: How long must a flight be delayed before the travel delay benefit applies?
+      channel: channel/tiq-sg
+      auth_level: L2
+      policy_id: TRV-100001
+    - question: How long must a flight be delayed before the travel delay benefit applies?
+      channel: channel/etiqa-sg
+      auth_level: L2
+      policy_id: TRV-100001
+
+- id: merge-travel-medical
+  type: merge-consistency
+  variants:
+    - question: What is the overseas medical expenses limit?
+      channel: channel/tiq-sg
+      auth_level: L2
+      policy_id: TRV-100001
+    - question: What is the overseas medical expenses limit?
+      channel: channel/etiqa-sg
+      auth_level: L2
+      policy_id: TRV-100001
+
+- id: merge-travel-exclusions
+  type: merge-consistency
+  variants:
+    - question: Are pre-existing conditions excluded from travel cover?
+      channel: channel/tiq-sg
+      auth_level: L2
+      policy_id: TRV-100001
+    - question: Are pre-existing conditions excluded from travel cover?
+      channel: channel/etiqa-sg
+      auth_level: L2
+      policy_id: TRV-100001
