@@ -1005,6 +1005,9 @@ def write_manifest(config: CompileConfig, hosts: list[str]) -> None:
         "underwriter": LEGAL_NAME,
         "uen": UEN,
         "compiled_at": config.today.isoformat(),
+        # `.example` is IANA-reserved: a corpus crawled from it is synthetic by
+        # construction, and everything downstream should say so out loud.
+        "fixture": any(host.endswith(".example") for host in hosts),
         "taxonomy": {
             "product_roots": [
                 "protection",

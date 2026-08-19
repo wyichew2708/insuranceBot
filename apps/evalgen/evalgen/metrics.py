@@ -115,6 +115,9 @@ class Report(BaseModel):
     generated_at: str
     ran_at: str
     total_cases: int
+    # The corpus is development or synthetic data. Carried into the rendered
+    # report so a screenshot of it can never be mistaken for real figures.
+    fixture: bool = False
 
     # headline
     accuracy: float = 0.0
@@ -193,6 +196,7 @@ def score(
     generated_at: str,
     ran_at: str,
     wall_clock_s: float,
+    fixture: bool = False,
 ) -> Report:
     total = len(results)
     report = Report(
@@ -201,6 +205,7 @@ def score(
         generated_at=generated_at,
         ran_at=ran_at,
         total_cases=total,
+        fixture=fixture,
         results=results,
         merge_results=merge_results,
     )

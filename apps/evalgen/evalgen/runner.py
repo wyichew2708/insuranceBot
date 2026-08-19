@@ -211,6 +211,7 @@ def run_suite(bundle: Bundle, settings: Settings, suite: Suite) -> Report:
         generated_at=suite.generated_at,
         ran_at=dt.datetime.now().isoformat(timespec="seconds"),
         wall_clock_s=wall_clock,
+        fixture=bundle.manifest.fixture,
     )
     today = dt.date.today()
     expected: list[dict[str, str]] = []

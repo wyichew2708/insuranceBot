@@ -27,6 +27,9 @@ class Manifest:
     jurisdiction: str = "SG"
     underwriter: str = ""
     uen: str = ""
+    # True when the corpus is development or synthetic data. Everything
+    # downstream that shows numbers to a human is expected to say so.
+    fixture: bool = False
 
     @classmethod
     def load(cls, path: Path) -> Manifest:
@@ -39,6 +42,7 @@ class Manifest:
             jurisdiction=str(data.get("jurisdiction", "SG")),
             underwriter=str(data.get("underwriter", "")),
             uen=str(data.get("uen", "")),
+            fixture=bool(data.get("fixture", False)),
         )
 
 

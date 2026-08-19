@@ -60,6 +60,16 @@ def markdown(report: Report) -> str:
         f"- Run: {report.ran_at}",
         f"- Cases: **{report.total_cases}** generated + {report.merge_total} merge pairs",
         "",
+        *(
+            [
+                "> **Synthetic corpus.** This bundle is development or fixture data — every "
+                "figure in it is invented and none of it is a real product fact. The metrics "
+                "below measure the pipeline, not the accuracy of any published information.",
+                "",
+            ]
+            if report.fixture
+            else []
+        ),
         "## Headline",
         "",
         "| Metric | Value |",
@@ -147,6 +157,15 @@ def _bar_chart(pairs: list[tuple[str, float]], unit: str = "", width: int = 460)
 def html(report: Report) -> str:
     failures = [r for r in report.results if not r.passed]
     buckets = Counter(diagnose(r) for r in failures)
+    fixture_banner = (
+        '<div class="note" style="max-width:none;border:1px solid var(--line)">'
+        "<b>Synthetic corpus.</b> This bundle is development or fixture data: every figure in "
+        "it is invented and none of it is a real product fact. What the numbers below measure "
+        "is the pipeline — retrieval, binding, the gates — not the accuracy of any published "
+        "information.</div>"
+        if report.fixture
+        else ""
+    )
 
     def scorecard(label: str, value: str, good: bool | None = None, note: str = "") -> str:
         tone = "" if good is None else (" good" if good else " bad")
@@ -299,6 +318,7 @@ p{{margin:10px 0 0}}
   each derived from the corpus itself — a benefit-table row, an authored alias,
   an effective window — rather than hand-written.
 </p>
+{fixture_banner}
 
 <div class="grid">
   {
