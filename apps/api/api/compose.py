@@ -81,7 +81,7 @@ def select_sections(
     pages: list[Page],
     question: str,
     limit: int = 3,
-    page_scores: dict[str, float] | None = None,
+    idf: dict[str, float] | None = None,
 ) -> list[Selection]:
     """Relevance is page relevance times section match, where page relevance is the
     *lexical* score only. The alias boost belongs to retrieval — deciding which
@@ -104,7 +104,11 @@ def select_sections(
         # certainly right while its body shares none of the customer's words —
         # that is what the authored aliases and the title exist to bridge — and
         # multiplying would zero it out.
-        page_relevance = score_page(page, terms)
+        # Bag of words only, deliberately. The phrase and alias evidence that
+        # ranks pages in retrieval identifies the *product*; reusing it here
+        # would rank a product page above its own benefits page, which is the
+        # page that actually holds the figure.
+        page_relevance = score_page(page, terms, idf=idf or {})
         page_type = page.frontmatter.type
         # Question type implies page type: a number comes from a benefits page,
         # a definition from a concept page, a procedure from a journey page.
@@ -181,6 +185,20 @@ def clean_prose(text: str) -> str:
 def render_channel(bundle: Bundle, product: Page | None, session: Session) -> ChannelRender:
     """Deterministic. The model never picks the brand (§C.4)."""
     if product is None or not product.frontmatter.channels:
+        # No product in play — a contact question, say. The channel page itself
+        # carries the binding, and a hotline is a verbatim-only value, so it is
+        # substituted from frontmatter rather than quoted out of prose.
+        page = bundle.get(session.channel.value) if session.channel != Channel.unknown else None
+        if page is not None:
+            extra = page.frontmatter.model_extra or {}
+            landing, hotline = extra.get("landing"), extra.get("hotline")
+            if landing or hotline:
+                return ChannelRender(
+                    channel=session.channel,
+                    brand=str(extra.get("brand") or "") or None,
+                    landing=str(landing) if landing else None,
+                    hotline=str(hotline) if hotline else None,
+                )
         return ChannelRender(channel=session.channel, both_shown=session.channel == Channel.unknown)
     if session.channel == Channel.unknown:
         return ChannelRender(channel=Channel.unknown, both_shown=True)
@@ -205,9 +223,23 @@ def compose(
     tier: str,
     advice_required: bool,
     top_score: float,
-    page_scores: dict[str, float] | None = None,
+    idf: dict[str, float] | None = None,
+    no_confident_match: bool = False,
 ) -> Composition:
-    selections = select_sections(pages, question, page_scores=page_scores)
+    selections = select_sections(pages, question, idf=idf)
+    if no_confident_match:
+        # Nothing cleared the confidence floor and the raw corpus had nothing
+        # either. Composing from the least-bad pages is how an assistant
+        # invents a product it does not sell (§F.1) — say so and hand off.
+        return Composition(
+            answer=GroundedAnswer(
+                answer=NO_ANSWER,
+                handoff=True,
+                advice_flag=advice_required,
+                confidence=0.0,
+                unresolved=["no page matched the question above the confidence floor"],
+            )
+        )
     if not selections:
         answer = GroundedAnswer(
             answer=NO_ANSWER,

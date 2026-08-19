@@ -1,0 +1,18 @@
+[project]
+name = "crawler"
+version = "0.2.0"
+description = "Polite allowlisted crawler: discovery, extraction, dated raw snapshots"
+requires-python = ">=3.11"
+dependencies = ["okf", "httpx>=0.27", "pyyaml>=6"]
+
+[project.optional-dependencies]
+# trafilatura gives markedly better boilerplate removal; the built-in
+# extractor is the fallback so a crawl never depends on it.
+extract = ["trafilatura>=1.12"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["crawler"]

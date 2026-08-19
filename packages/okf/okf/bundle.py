@@ -8,6 +8,8 @@ the alias index — per §B.3 the cheapest single accuracy win in the build.
 from __future__ import annotations
 
 import datetime as dt
+import math
+import re
 from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -48,6 +50,7 @@ class Bundle:
     tables: BenefitTables = field(default_factory=lambda: BenefitTables([]))
     load_errors: list[str] = field(default_factory=list)
     _alias_index: dict[str, list[str]] = field(default_factory=dict, repr=False)
+    _idf: dict[str, float] = field(default_factory=dict, repr=False)
 
     @classmethod
     def load(cls, root: Path) -> Bundle:
@@ -174,3 +177,33 @@ class Bundle:
 
 def normalise(text: str) -> str:
     return " ".join("".join(ch.lower() if ch.isalnum() else " " for ch in text).split())
+
+
+WORD_RE = re.compile(r"[a-z0-9]+")
+
+
+def page_terms(page: Page) -> set[str]:
+    fm = page.frontmatter
+    text = " ".join([fm.title, " ".join(fm.aliases), fm.id.replace("/", " "), page.body])
+    return {w for w in WORD_RE.findall(text.lower()) if len(w) > 2}
+
+
+def term_idf(bundle: Bundle) -> dict[str, float]:
+    """Inverse document frequency over the corpus, normalised to (0, 1].
+
+    Without it, "insurance" and "cover" count as much as the word that actually
+    identifies the product — so a question about a line the corpus does not
+    carry ("what does your crop insurance cover?") scores like a real one and
+    gets answered from whichever page happens to sort first. Weighting by
+    rarity makes the absence of evidence visible as a low score, which is what
+    the confidence floor and the RAG fallback are there to act on.
+    """
+    if not bundle._idf:
+        total = max(len(bundle.pages), 1)
+        frequency: dict[str, int] = {}
+        for page in bundle.pages.values():
+            for term in page_terms(page):
+                frequency[term] = frequency.get(term, 0) + 1
+        ceiling = math.log(1 + total)
+        bundle._idf = {t: math.log(1 + total / c) / ceiling for t, c in frequency.items()}
+    return bundle._idf

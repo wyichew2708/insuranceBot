@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 
 from api.settings import Settings
+from api.sor import register_bundle_policies
 
 from evalgen.generator import generate
 from evalgen.metrics import Report
@@ -31,6 +32,7 @@ DEFAULT_OUT = Path(".eval-reports")
 
 def _bundle(path: Path) -> Bundle:
     bundle = Bundle.load(path)
+    register_bundle_policies(bundle)
     if bundle.load_errors:
         print("bundle failed to load cleanly:", file=sys.stderr)
         for error in bundle.load_errors:

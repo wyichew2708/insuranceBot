@@ -10,3 +10,7 @@ __pycache__/
 .traces/
 .eval-reports/
 node_modules/
+
+# Build output: `make knowledge` regenerates it from the crawler + fixture.
+# It is synthetic content and must never be mistaken for a real corpus.
+okf-web/

@@ -39,6 +39,22 @@ jobs:
       - name: Auto-evaluation gate
         run: uv run python -m evalgen.cli all --gate 0.95
 
+      # The crawl → compile → evaluate chain, end to end. The synthetic site is
+      # served in-process, so CI exercises the real crawler and the real
+      # compile loop without reaching the network.
+      - name: Crawl the fixture site
+        run: |
+          uv run python -m crawler.cli run \
+            --allowlist www.etiqa.example www.tiq.example \
+            --out okf-web/raw --rps 200 --fixture
+      - name: Compile the crawl into an OKF wiki
+        run: |
+          uv run python -m compiler.cli --bundle okf-web wiki \
+            --sign-off "product-owner:ci" "compliance:ci"
+          uv run python -m compiler.cli --bundle okf-web lint
+      - name: Auto-evaluation gate on the compiled corpus
+        run: uv run python -m evalgen.cli --bundle okf-web --out .eval-reports/web --gate 0.95 all
+
       - name: Publish the report
         if: always()
         uses: actions/upload-artifact@v4

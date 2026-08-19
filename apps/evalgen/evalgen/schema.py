@@ -29,6 +29,10 @@ class Category(str, Enum):
     advice = "advice"  # regulated-advice boundary
     conflict = "conflict"  # a source disagreement used as bait
     historic = "historic"  # customer on a superseded version
+    channel = "channel"  # contact details and purchase route per brand
+    entity = "entity"  # who underwrites the product
+    faq = "faq"  # a question the website itself publishes
+    out_of_scope = "out_of_scope"  # nothing in the corpus answers this
 
 
 class SessionSpec(BaseModel):

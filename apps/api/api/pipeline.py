@@ -25,10 +25,17 @@ from okf.tables import find_tokens
 
 from api.compose import compose
 from api.gates_ext import advice_required
-from api.retrieval import frontmatter_filter, needs_rag, rag_search, wiki_read
+from api.retrieval import (
+    NO_MATCH_PREFIXES,
+    frontmatter_filter,
+    needs_rag,
+    rag_search,
+    unsupported_term,
+    wiki_read,
+)
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
-from okf import Bundle, Page, PageType
+from okf import Bundle, Page, PageType, term_idf
 
 HANDOFF = (
     "I'd rather not answer that from memory. I'm passing you to a colleague who can "
@@ -72,13 +79,21 @@ def answer_question(
         top_score = admitted[0][1] if admitted else 0.0
 
         with trace.stage("rag-decision") as detail:
-            reason = needs_rag(question, admitted, session, settings.confidence_floor)
+            reason = needs_rag(question, admitted, session, settings.confidence_floor, bundle)
             detail["reason"] = reason or "not needed"
             if reason:
                 trace.rag_used = True
                 trace.rag_reason = reason
                 budget.charge_tool()
-                trace.rag_hits = rag_search(raw_root, question, session)
+                trace.rag_hits = rag_search(
+                    raw_root,
+                    question,
+                    session,
+                    idf=term_idf(bundle),
+                    must_include=unsupported_term(bundle, question, admitted),
+                )
+            starved = reason.startswith(NO_MATCH_PREFIXES) and not trace.rag_hits
+            detail["starved"] = starved
 
         # Customer-specific data only ever comes from the system of record.
         version = (product.frontmatter.version_in_force or "") if product else ""
@@ -112,6 +127,8 @@ def answer_question(
                 tier=tier,
                 advice_required=needs_advice,
                 top_score=top_score,
+                idf=term_idf(bundle),
+                no_confident_match=starved,
             )
             draft = composition.answer
             trace.composer = "deterministic"

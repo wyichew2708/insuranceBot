@@ -14,10 +14,26 @@ The four layers, wired into loops rather than chosen between:
 | **RAG** — the long tail and the raw source of truth | `apps/api/api/retrieval.py` — fallback over `okf/raw/` |
 | **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, seven gates, budgets, traces |
 
+Two more pieces close the loop from the live websites to the wiki:
+
+| Stage | Here |
+|---|---|
+| **Crawl** — allowlisted, robots-obeying, dated snapshots | `apps/crawler` — `make crawl` |
+| **Compile** — snapshots → one canonical page per product | `apps/compiler/compiler/wiki.py` — `make wiki` |
+
 > **Fixture data.** The seed bundle is for development: tier names are
 > `tier-1..3` placeholders and every number is invented. Real values come from
 > `raw/wordings` and `raw/product-summaries` through the compile loop and must
 > be reviewed before any page is marked `approved`.
+
+> **The real sites are not reachable from this environment.** `www.etiqa.com.sg`
+> and `www.tiq.com.sg` are refused by the egress policy (the proxy returns 403
+> to CONNECT), so the corpus in `okf-web/` is compiled from a **synthetic
+> fixture site** on IANA-reserved `.example` hosts. Every page of it carries a
+> banner saying so and every figure in it is invented. Nothing in this
+> repository asserts a real Etiqa or Tiq product fact. When egress is granted,
+> `make crawl` points the same crawler at the real hosts and the compile step
+> is unchanged.
 
 ## Run it
 
@@ -38,12 +54,43 @@ you why the answer came out the way it did:
 - **budgets**, stage latencies, and the raw trace JSON
 - a **page inspector** (click any page id) and an in-browser **eval runner**
 
+## Gathering the corpus
+
+```bash
+make crawl          # the real hosts, once egress allows it
+make knowledge      # crawl the fixture site → compile → lint (what CI runs)
+make autoeval-web   # evaluate against the compiled corpus
+```
+
+The crawler is deliberately unclever and very polite: host-equality allowlist
+(not substring — `www.etiqa.com.sg.example.test` is a different site), robots.txt
+with longest-match Allow/Disallow and `Crawl-delay`, one token bucket per host,
+sitemap → sitemap-index → WordPress REST → bounded link crawl for discovery,
+and content-hashed snapshots written to `raw/web/<host>/<date>/`. PDFs — the
+wordings and product summaries, which are the *highest* authority — are
+recorded as an inventory rather than chunked as web copy.
+
+The compile step is where the design earns its keep:
+
+| Crawled | Compiled |
+|---|---|
+| the same plan on two brand sites | **one** `product/<line>/<slug>` page with two channel bindings |
+| a benefit table in HTML | rows in `raw/benefit-tables/<slug>.csv`, prose keeps `{{table:…}}` |
+| a "What is not covered" section | its own exclusions page, linked — traversable, not hoped for |
+| a claims or servicing page | a `journey/` page |
+| two sites disagreeing on a figure | the higher-authority value, plus a **website defect ticket** |
+| any page at all | `status: draft` — `--sign-off` is what a human review records |
+
+Nothing compiled is retrievable until someone signs off: the frontmatter filter
+admits `approved` pages only, so an unreviewed compile answers nothing rather
+than answering unreviewed.
+
 ## The four loops (§G)
 
 | Loop | Cadence | Command |
 |---|---|---|
 | 1 · Serve | per turn | `make console`, or `POST /v1/answer` |
-| 2 · Compile | nightly / on publish | `make conflicts`, `make lint-bundle` |
+| 2 · Compile | nightly / on publish | `make crawl`, `make wiki`, `make conflicts`, `make lint-bundle` |
 | 3 · Evaluate | every publish | `make evals` (curated) · `make autoeval` (generated) |
 | 4 · Evolve | weekly | trace review; each fix ships a new eval case |
 
@@ -67,6 +114,10 @@ corpus**. Every case comes from something already in the bundle:
 | an effective window | live promotions quotable, expired ones not |
 | a superseded version | expected to be *refused*, not answered |
 | a detected source conflict | the wrong website figure, offered as bait |
+| a channel page | "how do I contact X?" — with the *other* brand's hotline as a forbidden string |
+| an entity page | "who underwrites this?" |
+| an FAQ the website itself publishes | that question, asked back |
+| a product line the corpus does **not** carry | must hand off, never answer from the nearest neighbour |
 
 Two things follow. The suite **grows with the corpus** — publish fifty product
 pages and their questions appear without anyone writing YAML. And coverage
@@ -111,10 +162,21 @@ defect ticket*, not a wiki problem.
 tier-specific limit is left `[unavailable]` and named in `unresolved` rather
 than guessed.
 
+**Refusing to answer is a feature.** "What does your crop insurance cover?"
+used to return the home-insurance page: every word in it except *crop* is
+corpus-wide vocabulary, so a bag-of-words score looked respectable. Retrieval
+now weights terms by corpus IDF, and a word the corpus has never seen sitting
+in front of a product head word ("crop **insurance**") is treated as naming a
+line we do not carry — the wiki filter, the RAG fallback and the composer all
+decline, and the turn hands off. Which product a question is about is decided
+by contiguous title and alias matches rather than term overlap, so "the
+personal accident limit on **Maid Insurance**" reaches the maid tables and not
+the Personal Accident product that owns both words.
+
 ## Layout
 
 ```
-okf/                    the bundle — knowledge is code
+okf/                    the seed bundle — hand-written, small; the curated suites run here
   okf.yaml              manifest: taxonomy, authority order, link rules
   raw/                  IMMUTABLE sources: wordings, product summaries,
                         benefit tables (CSV), crawl snapshots, regulatory
@@ -122,10 +184,13 @@ okf/                    the bundle — knowledge is code
                         channel · entity · promotion
   conflicts/            unresolved source disagreements → human queue
   log.md                append-only operation log
-packages/okf/           page model, frontmatter schema, tables, graph, linter
+okf-web/                build output: crawled + compiled. `make knowledge` regenerates it
+fixtures/               the synthetic two-brand site the crawler is proved against
+packages/okf/           page model, frontmatter schema, tables, graph, linter, corpus IDF
 packages/harness/       contracts, seven gates, budgets, traces
 apps/api/               serve loop + debug console
-apps/compiler/          fact extraction, conflict detection, impact analysis
+apps/crawler/           allowlist + robots policy, extraction, dated snapshots
+apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
 evals/suites/           golden · merge-consistency · adversarial · staleness
 ```
 
@@ -161,8 +226,9 @@ WIKI_READ_LIMIT=5       CANDIDATE_FLOOR=0.08     CONFIDENCE_FLOOR=0.45
 Built: the OKF bundle contract and linter, wiki-first retrieval with graph
 traversal, deterministic numeric binding, RAG fallback over `raw/`, the SOR
 entitlement stub, all seven gates, budgets, full tracing, the debug console,
-conflict detection with impact analysis, and the four eval suites wired to a
-CI gate.
+conflict detection with impact analysis, the four eval suites wired to a CI
+gate, the allowlisted crawler, and the compile step that turns crawl snapshots
+into canonical pages, benefit-table CSVs and website defect tickets.
 
 Not built:
 
@@ -172,7 +238,6 @@ Not built:
   from the current wiki page. That is the safe outcome, and the console shows
   the retrieved clauses — but turning them into a cited answer is the next
   piece of work.
-- **The crawler** that populates `raw/web/` (snapshots here are fixtures).
 - **LLM-backed extraction and composition** under guided decoding. The
   contracts and the fact/prose separation are in place; the deterministic
   composer is the fallback and stays the offline path.

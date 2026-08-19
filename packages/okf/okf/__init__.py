@@ -1,6 +1,6 @@
 """OKF bundle library: pages, benefit tables, graph, linter."""
 
-from okf.bundle import Bundle, Manifest, normalise
+from okf.bundle import Bundle, Manifest, normalise, term_idf
 from okf.linter import LintReport, Severity, Violation, lint_bundle, lint_page
 from okf.page import (
     ChannelBinding,
@@ -50,4 +50,5 @@ __all__ = [
     "parse_page",
     "render_page",
     "resolve_transclusions",
+    "term_idf",
 ]

@@ -296,19 +296,39 @@ def concept_cases(bundle: Bundle) -> list[GeneratedCase]:
 
 
 def journey_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """One case per journey, plus one per section it actually publishes.
+
+    The phrasing comes from the page's own headings rather than assuming every
+    journey has a "Steps" section — asking for steps of a page that documents
+    "Before you buy" and "Route" tests the fixture's vocabulary, not the
+    assistant's routing, and the answer lands on whichever *other* journey
+    happens to use the word.
+    """
     cases: list[GeneratedCase] = []
     for page in sorted(bundle.by_type(PageType.journey), key=lambda p: p.id):
         title = page.frontmatter.title
+        expect = Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id])
         cases.append(
             GeneratedCase(
                 id=f"jrn-{_slug(page.id)}",
-                question=f"{title}: what are the steps?",
+                question=f"How do I go about this: {title}?",
                 category=Category.journey,
                 generated_from=page.id,
                 session=SessionSpec(auth_level="L0"),
-                expect=Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id]),
+                expect=expect,
             )
         )
+        for heading, _ in _sections(page)[:2]:
+            cases.append(
+                GeneratedCase(
+                    id=f"jrn-{_slug(page.id)}-{_slug(heading)}",
+                    question=f"{title} — {heading.lower()}?",
+                    category=Category.journey,
+                    generated_from=f"{page.id}#{heading}",
+                    session=SessionSpec(auth_level="L0"),
+                    expect=Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id]),
+                )
+            )
     return cases
 
 
@@ -333,6 +353,15 @@ def coverage_cases(bundle: Bundle) -> list[GeneratedCase]:
     return cases
 
 
+def _promo_subject(page: Page) -> str:
+    """What to call the offer. Taken from the page's own alias list so the
+    question tracks the corpus instead of a phrasing baked in for one bundle."""
+    for alias in page.frontmatter.aliases:
+        if len(alias.split()) >= 2:
+            return alias.lower()
+    return page.frontmatter.title.split("—")[0].strip().lower()
+
+
 def promotion_cases(bundle: Bundle, today: dt.date) -> list[GeneratedCase]:
     """Live promotions must be quotable; expired ones must not be. Derived from
     the effective windows themselves, so the suite tracks the calendar."""
@@ -340,7 +369,6 @@ def promotion_cases(bundle: Bundle, today: dt.date) -> list[GeneratedCase]:
     for page in sorted(bundle.by_type(PageType.promotion), key=lambda p: p.id):
         numbers = re.findall(r"\d+(?:\.\d+)?\s?%|S?\$\s?\d[\d,]*", page.body)
         live = page.frontmatter.is_effective_on(today)
-        title = page.frontmatter.title
         expect = Expectation(expect_delivered=True)
         if live:
             expect.must_contain = numbers[:1]
@@ -350,9 +378,9 @@ def promotion_cases(bundle: Bundle, today: dt.date) -> list[GeneratedCase]:
             GeneratedCase(
                 id=f"promo-{_slug(page.id)}",
                 question=(
-                    "Is there a travel promotion running right now?"
+                    f"Is the {_promo_subject(page)} still running right now?"
                     if live
-                    else f"What was the discount on the {title.split('—')[-1].strip()} offer?"
+                    else f"What was the discount on the {_promo_subject(page)}?"
                 ),
                 category=Category.promotion if live else Category.staleness,
                 generated_from=page.id,
@@ -453,6 +481,129 @@ def merge_cases(bundle: Bundle, index: TransclusionIndex) -> list[MergeCase]:
     return cases
 
 
+def channel_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """Contact details are a verbatim-only zone (§C.4): a hotline is either
+    reproduced exactly from the channel binding or not given at all. These
+    cases also reach the channel pages, which no other family cites."""
+    cases: list[GeneratedCase] = []
+    for page in sorted(bundle.by_type(PageType.channel), key=lambda p: p.id):
+        fm = page.frontmatter
+        brand = str(getattr(fm, "brand", None) or fm.title.split("(")[0].strip())
+        hotline = getattr(fm, "hotline", None)
+        other = [
+            str(getattr(p.frontmatter, "hotline", "") or "")
+            for p in bundle.by_type(PageType.channel)
+            if p.id != page.id
+        ]
+        expect = Expectation(
+            must_cite=[page.id],
+            must_contain=[hotline] if hotline else [],
+            # The other brand's number leaking into this channel's answer is
+            # the failure the channel-coherence gate exists to prevent.
+            must_not_contain=[h for h in other if h and h != hotline],
+            expect_delivered=True,
+            relevant_pages=[page.id],
+        )
+        cases.append(
+            GeneratedCase(
+                id=f"chan-{_slug(page.id)}",
+                question=f"How do I contact {brand} about my policy?",
+                category=Category.channel,
+                generated_from=page.id,
+                session=SessionSpec(channel=page.id),
+                expect=expect,
+            )
+        )
+    return cases
+
+
+def entity_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """One underwriter behind every brand (§B.1). If the assistant cannot say
+    who carries the risk, the merge story is decorative."""
+    entities = sorted(bundle.by_type(PageType.entity), key=lambda p: p.id)
+    if not entities:
+        return []
+    entity = entities[0]
+    cases = [
+        GeneratedCase(
+            id=f"ent-{_slug(entity.id)}",
+            question="Who underwrites these policies?",
+            category=Category.entity,
+            generated_from=entity.id,
+            expect=Expectation(must_cite=[entity.id], expect_delivered=True, relevant_pages=[entity.id]),
+        )
+    ]
+    for page in _product_pages(bundle)[:6]:
+        underwriter = page.frontmatter.underwriter
+        if not underwriter:
+            continue
+        cases.append(
+            GeneratedCase(
+                id=f"ent-{_slug(page.id)}",
+                question=f"Who is the insurer behind {page.frontmatter.title}?",
+                category=Category.entity,
+                generated_from=page.id,
+                expect=Expectation(
+                    must_contain=[underwriter],
+                    expect_delivered=True,
+                    relevant_pages=[page.id, entity.id],
+                ),
+            )
+        )
+    return cases
+
+
+def faq_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """The websites already publish their own questions. Compiling them onto
+    the product page means the suite can ask them back verbatim — the closest
+    thing to real customer phrasing this corpus contains."""
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        for match in re.finditer(r"^###\s+(.+?)\s*$", page.body, re.M):
+            question = match.group(1).strip()
+            if len(question.split()) < 3:
+                continue
+            title = page.frontmatter.title
+            cases.append(
+                GeneratedCase(
+                    id=f"faq-{_slug(page.id)}-{_slug(question)}",
+                    question=f"{question.rstrip('?')} — for {title}?",
+                    category=Category.faq,
+                    generated_from=f"{page.id}#{question}",
+                    expect=Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id]),
+                )
+            )
+    return cases
+
+
+def out_of_scope_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """Products the corpus does not carry. The only acceptable answers are a
+    handoff or an explicit gap — never a plausible-sounding invention."""
+    known = {bundle.product_key(p) for p in _product_pages(bundle)}
+    absent = [
+        ("crop insurance", "What does your crop insurance cover?"),
+        ("marine hull insurance", "What is the marine hull insurance excess?"),
+        ("kidnap and ransom cover", "Do you sell kidnap and ransom cover?"),
+    ]
+    cases: list[GeneratedCase] = []
+    for name, question in absent:
+        if any(word in key for key in known for word in name.split()[:1]):
+            continue
+        cases.append(
+            GeneratedCase(
+                id=f"oos-{_slug(name)}",
+                question=question,
+                category=Category.out_of_scope,
+                generated_from="(nothing in the corpus)",
+                # A handoff is delivered — it is a refusal the customer sees.
+                # What must not happen is a confident answer about a product
+                # the corpus does not carry.
+                expect=Expectation(expect_handoff=True),
+            )
+        )
+    return cases
+
+
 def generate(bundle: Bundle, bundle_root, today: dt.date | None = None) -> Suite:  # type: ignore[no-untyped-def]
     today = today or dt.date.today()
     index = TransclusionIndex.build(bundle)
@@ -468,6 +619,10 @@ def generate(bundle: Bundle, bundle_root, today: dt.date | None = None) -> Suite
         "entitlement": entitlement_cases(bundle),
         "advice": advice_cases(bundle),
         "conflict": conflict_cases(bundle_root, bundle),
+        "channel": channel_cases(bundle),
+        "entity": entity_cases(bundle),
+        "faq": faq_cases(bundle),
+        "out_of_scope": out_of_scope_cases(bundle),
     }
     cases = [case for group in groups.values() for case in group]
     merges = merge_cases(bundle, index)

@@ -10,6 +10,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from harness import AuthLevel, Session
+from okf.page import PageType
+
+from okf import Bundle
 
 
 class NotEntitled(PermissionError):
@@ -67,3 +70,38 @@ def policy_summary(session: Session) -> PolicySummary:
     if summary is None:
         raise NotEntitled(f"policy {session.policy.policy_id} is not readable by this session")
     return summary
+
+
+def register_bundle_policies(bundle: Bundle) -> int:
+    """Mint one fixture policy per (product, version, tier) the bundle's
+    benefit tables define.
+
+    Without this the generated suite can only ask about tiers that happen to
+    have a hand-written policy, so most tier-varying rows are never exercised
+    and the coverage report is quietly optimistic. A real deployment reads
+    entitlements from the policy-admin system; this keeps the *shape* — a
+    session is bound to exactly one (product, version, tier) — while making
+    the fixture cover whatever corpus is loaded.
+    """
+    by_key = {
+        bundle.product_key(page): page.id
+        for page in bundle.by_type(PageType.product)
+        if page.frontmatter.version_in_force
+    }
+    added = 0
+    for row in bundle.tables.rows:
+        product_id = by_key.get(row.product)
+        if product_id is None:
+            continue
+        policy_id = f"{row.product.upper()}-{row.version}-{row.tier}".replace(".", "")
+        if policy_id in FIXTURE_POLICIES:
+            continue
+        FIXTURE_POLICIES[policy_id] = PolicySummary(
+            policy_id=policy_id,
+            product_id=product_id,
+            version=row.version,
+            tier=row.tier,
+            in_force=True,
+        )
+        added += 1
+    return added

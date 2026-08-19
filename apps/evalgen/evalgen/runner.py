@@ -14,7 +14,7 @@ from pathlib import Path
 
 from api.pipeline import answer_question
 from api.settings import Settings
-from api.sor import FIXTURE_POLICIES
+from api.sor import FIXTURE_POLICIES, register_bundle_policies
 from harness import AnswerEnvelope, AuthLevel, Channel, PolicyContext, Session, Trace
 
 from evalgen.metrics import CaseResult, Coverage, Report, score
@@ -249,4 +249,6 @@ def _is_superseded(bundle: Bundle, row_id: str) -> bool:
 
 
 def load_bundle(path: Path) -> Bundle:
-    return Bundle.load(path)
+    bundle = Bundle.load(path)
+    register_bundle_policies(bundle)
+    return bundle

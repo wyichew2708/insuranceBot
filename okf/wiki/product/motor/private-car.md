@@ -35,6 +35,10 @@ confidence: high
 Private Car Insurance covers own damage, third-party liability and theft for a
 privately registered vehicle [src:raw/product-summaries/private-car-2026.1.md#excess].
 
+The policy is underwritten by Etiqa Insurance Pte. Ltd.; the brand a customer
+buys through is a distribution surface, not a different insurer
+[src:raw/product-summaries/private-car-2026.1.md#excess].
+
 ## Headline benefits
 
 A standard own-damage excess of {{table:own_damage.excess}} applies to each claim

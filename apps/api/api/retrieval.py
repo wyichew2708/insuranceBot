@@ -18,11 +18,19 @@ from pathlib import Path
 
 from harness import Budget, Candidate, LoadedPage, RagHit, Session, Trace
 
-from okf import Bundle, Page, Status
+from okf import Bundle, Page, Status, term_idf
 
 # The body is corroborating evidence, not the primary signal: frontmatter is
 # the curated surface and should still dominate.
 BODY_WEIGHT = 0.35
+
+# A contiguous phrase match is identity evidence, not vocabulary overlap. Bags
+# of words cannot tell "the personal accident limit on Maid Insurance" from a
+# question about Personal Accident Insurance — both products own both terms.
+# The page whose *title* appears verbatim is the subject; an alias match is
+# weaker because aliases are derived, and a long phrase beats a short one.
+PHRASE_WEIGHT = 0.35
+TITLE_PHRASE_BONUS = 2.0
 
 CLAUSE_LEVEL_RE = re.compile(
     r"\b(section|clause|policy wording|the wording|sub-?section|paragraph|exact wording)\b",
@@ -99,7 +107,60 @@ class Retrieved:
         return [p.id for p in self.pages]
 
 
-def score_page(page: Page, terms: set[str]) -> float:
+def benefit_phrases(bundle: Bundle) -> frozenset[str]:
+    """Benefit vocabulary, in the words a customer would use. A product whose
+    alias happens to be another product's benefit — "personal accident" is both
+    a plan and a line on the maid and mobility tables — is weak evidence of
+    what the question is about, so those aliases do not get to claim identity.
+    A title match still does."""
+    return frozenset(row.benefit_code.replace("_", " ") for row in bundle.tables.rows)
+
+
+def phrase_words(page: Page, question: str) -> int:
+    """Word count of the longest title or alias appearing verbatim in the
+    question. A one-word match ("excess") is vocabulary; a multi-word one
+    ("travel insurance") is identity."""
+    haystack = " ".join(question.lower().split())
+    best = 0
+    for phrase in [page.frontmatter.title, *page.frontmatter.aliases]:
+        candidate = " ".join(phrase.lower().split())
+        if len(candidate) >= 4 and candidate in haystack:
+            best = max(best, len(candidate.split()))
+    return best
+
+
+def phrase_score(page: Page, question: str, ambiguous: frozenset[str] = frozenset()) -> float:
+    """Length of the longest title/alias phrase occurring verbatim in the
+    question, with titles weighted above aliases."""
+    haystack = " ".join(question.lower().split())
+    best = 0.0
+    title = " ".join(page.frontmatter.title.lower().split())
+    if len(title) >= 4 and title in haystack:
+        best = TITLE_PHRASE_BONUS * len(title.split())
+    for alias in page.frontmatter.aliases:
+        phrase = " ".join(alias.lower().split())
+        if len(phrase) >= 4 and phrase in haystack and phrase not in ambiguous:
+            best = max(best, float(len(phrase.split())))
+    return best
+
+
+def _weighted(matched: set[str], terms: set[str], idf: dict[str, float]) -> float:
+    """Share of the question's *information* the page accounts for. An unknown
+    term counts at full weight in the denominator — a question the corpus has
+    no word for should score low, not be normalised away."""
+    total = sum(idf.get(term, 1.0) for term in terms)
+    if total <= 0:
+        return 0.0
+    return sum(idf.get(term, 1.0) for term in matched) / total
+
+
+def score_page(
+    page: Page,
+    terms: set[str],
+    question: str = "",
+    ambiguous: frozenset[str] = frozenset(),
+    idf: dict[str, float] | None = None,
+) -> float:
     """Lexical score over the frontmatter surface — title, aliases, id,
     headings — plus a lighter-weighted pass over the body. Deliberately not
     vector search: at this bundle size grep beats embeddings on precision, and
@@ -118,9 +179,10 @@ def score_page(page: Page, terms: set[str]) -> float:
     body_terms = keywords(page.body)
     if not surface_terms and not body_terms:
         return 0.0
-    surface_score = len(terms & surface_terms) / len(terms)
-    body_score = len(terms & body_terms) / len(terms)
-    return surface_score + BODY_WEIGHT * body_score
+    weights = idf or {}
+    surface_score = _weighted(terms & surface_terms, terms, weights)
+    body_score = _weighted(terms & body_terms, terms, weights)
+    return surface_score + BODY_WEIGHT * body_score + PHRASE_WEIGHT * phrase_score(page, question, ambiguous)
 
 
 def frontmatter_filter(
@@ -129,12 +191,14 @@ def frontmatter_filter(
     """The pre-read filter. Every rejection is recorded with its reason —
     that log is how you discover the taxonomy is wrong (§F.4)."""
     terms = keywords(question)
+    ambiguous = benefit_phrases(bundle)
+    idf = term_idf(bundle)
     alias_hits = set(bundle.resolve_aliases(question))
     trace.entities = sorted(alias_hits)
     admitted: list[tuple[Page, float]] = []
 
     scored = {
-        page.id: score_page(page, terms) + (0.5 if page.id in alias_hits else 0.0)
+        page.id: score_page(page, terms, question, ambiguous, idf) + (0.5 if page.id in alias_hits else 0.0)
         for page in bundle.pages.values()
     }
     focus = focus_product(bundle, scored)
@@ -245,6 +309,18 @@ def wiki_read(
     for page, _score in seeds[:seed_limit]:
         take(page, "filter", 0)
 
+    # Typed edges first. A product page asserts coverage, and the
+    # exclusion-completeness gate will refuse to deliver that assertion unless
+    # the exclusions page was actually read — so it is not just another
+    # neighbour competing for the last slot with a concept page (§E.1, §F.2).
+    for seed in list(pages):
+        for ref in (seed.frontmatter.links.exclusions, seed.frontmatter.links.benefits):
+            if not ref:
+                continue
+            linked = bundle.get(ref)
+            if linked is not None and bundle.retrievable(linked, today or dt.date.today()):
+                take(linked, "graph:typed", 1)
+
     # Graph traversal — deterministic multi-hop.
     for seed in list(pages):
         for hop, neighbour_id in enumerate(bundle.traverse(seed.id, max_pages=limit + 2), start=0):
@@ -261,12 +337,53 @@ def wiki_read(
     return pages
 
 
+# Reasons that mean "nothing in the wiki was a real match". If the RAG
+# fallback then finds nothing either, the turn has no grounding and must be
+# handed off rather than composed from the least-bad pages.
+NO_MATCH_PREFIXES = ("top score", "no page")
+
+
+PRODUCT_HEAD_WORDS = {"insurance", "cover", "coverage", "plan", "plans", "policy", "policies", "protection"}
+
+
+def unsupported_term(bundle: Bundle, question: str, admitted: list[tuple[Page, float]]) -> str:
+    """The question names a product line the corpus does not carry.
+
+    Detected structurally rather than by score: a word the corpus has never
+    seen, sitting immediately in front of a product head word — "crop
+    insurance", "marine hull insurance", "kidnap and ransom cover". Every other
+    word in such a question is corpus-wide vocabulary, so a bag-of-words score
+    looks respectable while the one word that identifies the product matches
+    nothing, and the answer comes from whichever product sorts first.
+
+    A multi-word title or alias appearing verbatim overrides this: the question
+    named a product we do carry, whatever else is unfamiliar in it.
+    """
+    idf = term_idf(bundle)
+    tokens = re.findall(r"[a-z0-9]+", question.lower())
+    for position, token in enumerate(tokens):
+        if len(token) <= 2 or token in STOPWORDS or token in idf:
+            continue
+        if not any(word in PRODUCT_HEAD_WORDS for word in tokens[position + 1 : position + 3]):
+            continue
+        if any(phrase_words(page, question) >= 2 for page, _ in admitted[:5]):
+            return ""
+        return str(token)
+    return ""
+
+
 def needs_rag(
-    question: str, admitted: list[tuple[Page, float]], session: Session, confidence_floor: float
+    question: str,
+    admitted: list[tuple[Page, float]],
+    session: Session,
+    confidence_floor: float,
+    bundle: Bundle | None = None,
 ) -> str:
     """RAG fallback triggers (§E.1 step 4). Returns the reason, or ''."""
     if not admitted:
         return "no wiki page matched"
+    if bundle is not None and (missing := unsupported_term(bundle, question, admitted)):
+        return f"no page mentions {missing!r}"
     if CLAUSE_LEVEL_RE.search(question):
         return "clause-level question"
     if session.policy is not None:
@@ -287,13 +404,33 @@ def needs_rag(
 SECTION_RE = re.compile(r"^##\s+(.+)$", re.M)
 
 
-def rag_search(raw_root: Path, question: str, session: Session, limit: int = 4) -> list[RagHit]:
+# A hit made only of corpus-wide vocabulary ("insurance", "cover") is not
+# evidence; it is the shape of every document in the bundle.
+RAG_FLOOR = 0.25
+# At least one matched term has to be discriminating. Matching only "insurance"
+# and "cover" describes every document in the corpus, not this question.
+INFORMATIVE_IDF = 0.4
+
+
+def rag_search(
+    raw_root: Path,
+    question: str,
+    session: Session,
+    limit: int = 4,
+    idf: dict[str, float] | None = None,
+    must_include: str = "",
+) -> list[RagHit]:
     """Lexical BM25-style search over raw/ sections. Structure-aware: an
     exclusion is never split from its parent benefit because sections are the
-    unit (§E.2). Version-filtered against the customer's in-force policy."""
+    unit (§E.2). Version-filtered against the customer's in-force policy.
+
+    Scored by information overlap, not term count: the fallback is the last
+    thing standing between a question the corpus cannot answer and an answer
+    assembled from whatever shared the most common words with it."""
     terms = keywords(question)
     if not terms or not raw_root.is_dir():
         return []
+    weights = idf or {}
     version = session.policy.version if session.policy else None
     hits: list[RagHit] = []
 
@@ -308,10 +445,19 @@ def rag_search(raw_root: Path, question: str, session: Session, limit: int = 4) 
             body_terms = keywords(f"{section} {body}")
             if not body_terms:
                 continue
+            # The fallback was triggered because this word matched nothing in
+            # the wiki. A raw section that does not contain it either is not
+            # the answer — it is the nearest neighbour, which is the failure.
+            if must_include and must_include not in body_terms:
+                continue
             overlap = terms & body_terms
             if not overlap:
                 continue
-            score = len(overlap) / len(terms) * (1 + 0.15 * len(overlap))
+            if weights and not any(weights.get(t, 1.0) >= INFORMATIVE_IDF for t in overlap):
+                continue
+            score = _weighted(overlap, terms, weights) * (1 + 0.15 * len(overlap))
+            if score < RAG_FLOOR:
+                continue
             hits.append(
                 RagHit(
                     source_path=rel,

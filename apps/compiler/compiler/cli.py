@@ -4,18 +4,25 @@ compile conflicts   — scan raw/ for source disagreements, file them
 compile impact      — which wiki pages a changed source touches
 compile facts       — dump extracted facts for a source
 compile lint        — run the bundle linter
+compile wiki        — compile raw/web snapshots into the OKF wiki (§D.1)
 """
 
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import sys
 from pathlib import Path
 
 from compiler.conflicts import scan, write_conflicts
 from compiler.facts import SourceDoc, extract_facts
 from compiler.impact import impact_set
+from compiler.wiki import CompileConfig, compile_bundle
 from okf import Bundle, lint_bundle
+
+
+def _date(value: str) -> dt.date:
+    return dt.date.fromisoformat(value)
 
 
 def cmd_conflicts(args: argparse.Namespace) -> int:
@@ -62,6 +69,37 @@ def cmd_lint(args: argparse.Namespace) -> int:
     return 1 if report.errors else 0
 
 
+def cmd_wiki(args: argparse.Namespace) -> int:
+    config = CompileConfig(
+        source_root=args.source or args.bundle,
+        dest_root=args.bundle,
+        version=args.commit,
+        today=args.today,
+        sign_off=args.sign_off or [],
+        review_months=args.review_months,
+    )
+    report = compile_bundle(config)
+    if not report.pages:
+        print(
+            f"no snapshots under {config.source_root / 'raw' / 'web'} — run `crawl run` first",
+            file=sys.stderr,
+        )
+        return 1
+
+    print(f"compiled {len(report.pages)} pages into {config.dest_root / 'wiki'}")
+    print(f"  benefit tables: {len(report.tables)} products, {sum(report.tables.values())} rows")
+    if report.conflicts:
+        print(f"  website defects filed: {len(report.conflicts)} (see {config.dest_root / 'conflicts'})")
+    for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):
+        print(f"  skipped {count:4}  {reason}")
+    if not args.sign_off:
+        print(
+            "\npages are `draft`: nothing is retrievable until a human reviews them.\n"
+            "re-run with --sign-off <name> to record the review and mark them approved."
+        )
+    return 0
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="compile")
     parser.add_argument("--bundle", type=Path, default=Path("okf"))
@@ -75,6 +113,18 @@ def main() -> None:
     p_imp = sub.add_parser("impact", help="pages touched by a changed source")
     p_imp.add_argument("sources", nargs="+")
     p_imp.set_defaults(func=cmd_impact)
+
+    p_wiki = sub.add_parser("wiki", help="compile raw/web snapshots into wiki pages")
+    p_wiki.add_argument("--source", type=Path, help="bundle holding raw/web (default: --bundle)")
+    p_wiki.add_argument("--commit", default="", help="source commit recorded on every page")
+    p_wiki.add_argument("--today", type=_date, default=dt.date.today())
+    p_wiki.add_argument(
+        "--sign-off",
+        nargs="+",
+        help="reviewer sign-offs; without these pages stay `draft` and are not retrievable",
+    )
+    p_wiki.add_argument("--review-months", type=int, default=3)
+    p_wiki.set_defaults(func=cmd_wiki)
 
     p_fac = sub.add_parser("facts", help="extract typed facts from one source")
     p_fac.add_argument("source")

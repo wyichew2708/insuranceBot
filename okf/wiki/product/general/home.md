@@ -40,6 +40,10 @@ confidence: high
 Home Insurance covers household contents and alternative accommodation where the
 home becomes uninhabitable after an insured peril [src:raw/product-summaries/home-2026.1.md#contents].
 
+The policy is underwritten by Etiqa Insurance Pte. Ltd.; the brand a customer
+buys through is a distribution surface, not a different insurer
+[src:raw/product-summaries/home-2026.1.md#contents].
+
 ## Headline benefits
 
 Contents are covered up to {{table:contents.limit}}, and an excess of
