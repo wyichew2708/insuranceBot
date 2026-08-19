@@ -89,9 +89,16 @@ def test_report_artifacts_render(report, tmp_path: Path) -> None:  # type: ignor
 
     page = html(report)
     assert page.startswith("<!doctype html>")
-    assert "Auto-evaluation report" in page
-    assert "prefers-color-scheme" in page  # readable in either theme
+    assert "Knowledge Layer Evals" in page
     assert "<script" not in page  # a report should not need to execute anything
+
+    # The viewer has three theme states: explicit light, explicit dark, and
+    # unstamped (system). All three must resolve, or the report renders one
+    # theme's text on the other theme's ground.
+    assert ':root:not([data-theme="light"])' in page
+    assert ':root[data-theme="dark"]' in page
+    assert "prefers-color-scheme" in page
+    assert "background:var(--ground)" in page  # never inherit the host ground
 
 
 def test_failures_route_to_a_loop4_bucket() -> None:

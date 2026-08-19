@@ -195,9 +195,7 @@ def html(report: Report) -> str:
         )
         or "<tr><td colspan=2 class='mute'>none</td></tr>"
     )
-    rows_note = (
-        f"<div class='note'>{report.unexercised_rows_note}</div>" if report.unexercised_rows_note else ""
-    )
+    rows_note = f"<p class='note'>{report.unexercised_rows_note}</p>" if report.unexercised_rows_note else ""
 
     latency_chart = _bar_chart(
         [
@@ -214,55 +212,93 @@ def html(report: Report) -> str:
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auto-evaluation report — {report.suite}</title>
+<title>Knowledge Layer Evals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?\
+family=Fraunces:opsz,wght@9..144,500;9..144,600&\
+family=Public+Sans:wght@400;500;600&\
+family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-:root{{--bg:#fff;--panel:#fff;--line:#e3e8ee;--fg:#111820;--dim:#5b6773;--mute:#8b98a5;
-      --accent:#0f766e;--good:#15803d;--bad:#b91c1c;--chip:#f1f5f9;
-      --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}}
-@media (prefers-color-scheme:dark){{:root{{--bg:#0f1419;--panel:#161c23;--line:#2a3540;
-      --fg:#e6edf3;--dim:#9aa7b4;--mute:#68757f;--accent:#2dd4bf;--good:#3fb950;--bad:#f85149;
-      --chip:#1d252e}}}}
+/* Light is the base palette; the dark blocks below redefine only tokens, so
+   every component keeps resolving in all three viewer states. */
+:root{{
+  --ground:#fbfcfc; --panel:#ffffff; --sunk:#f2f6f6; --line:#dde5e6;
+  --ink:#0f1a1c; --dim:#54646a; --mute:#8a999e;
+  --accent:#0d7d72; --good:#15803d; --bad:#b4231f;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Public Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}}
+@media (prefers-color-scheme:dark){{
+  :root:not([data-theme="light"]){{
+    --ground:#0e1416; --panel:#161e21; --sunk:#1b2427; --line:#2a3639;
+    --ink:#e4edee; --dim:#9dadb2; --mute:#6b7c81;
+    --accent:#37d6c3; --good:#4ac26a; --bad:#f2695f;
+  }}
+}}
+:root[data-theme="dark"]{{
+  --ground:#0e1416; --panel:#161e21; --sunk:#1b2427; --line:#2a3639;
+  --ink:#e4edee; --dim:#9dadb2; --mute:#6b7c81;
+  --accent:#37d6c3; --good:#4ac26a; --bad:#f2695f;
+}}
 *{{box-sizing:border-box}}
-body{{margin:0;background:var(--bg);color:var(--fg);
-      font:15px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}}
-.wrap{{max-width:1080px;margin:0 auto;padding:40px 24px 80px}}
-h1{{font-size:26px;margin:0 0 6px;letter-spacing:-.2px}}
-h2{{font-size:17px;margin:38px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}}
-h3{{font-size:14px;margin:22px 0 8px;color:var(--dim)}}
-.sub{{color:var(--dim);font-size:13.5px;margin-bottom:26px}}
-.sub code{{background:var(--chip);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:12px}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px}}
-.card{{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}}
-.card.good{{border-left:3px solid var(--good)}} .card.bad{{border-left:3px solid var(--bad)}}
-.card .k{{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--mute)}}
-.card .v{{font-size:23px;font-weight:640;margin:3px 0 1px;letter-spacing:-.5px}}
+body{{margin:0;background:var(--ground);color:var(--ink);
+     font:400 15px/1.6 var(--body);-webkit-font-smoothing:antialiased}}
+.wrap{{max-width:1060px;margin:0 auto;padding:56px 24px 96px;
+      display:flex;flex-direction:column;gap:8px}}
+h1{{font:600 34px/1.15 var(--display);margin:0;letter-spacing:-.4px;text-wrap:balance}}
+h2{{font:600 19px/1.3 var(--display);margin:44px 0 0;padding-bottom:9px;
+    border-bottom:1px solid var(--line);text-wrap:balance}}
+h3{{font:600 11px/1.4 var(--body);margin:22px 0 0;color:var(--mute);
+    text-transform:uppercase;letter-spacing:.9px}}
+.lede{{color:var(--dim);font-size:14px;margin:10px 0 20px;max-width:62ch}}
+.lede b{{color:var(--ink);font-weight:600}}
+.lede code{{font:400 12.5px var(--mono);background:var(--sunk);padding:1px 6px;border-radius:4px}}
+.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:12px;margin-top:12px}}
+.card{{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}}
+.card.good{{box-shadow:inset 3px 0 0 var(--good)}}
+.card.bad{{box-shadow:inset 3px 0 0 var(--bad)}}
+.card .k{{font-size:10.5px;text-transform:uppercase;letter-spacing:.9px;color:var(--mute);
+         font-weight:600}}
+.card .v{{font:600 25px/1.15 var(--display);margin:6px 0 3px;letter-spacing:-.4px;
+         font-variant-numeric:tabular-nums}}
 .card .n{{font-size:11.5px;color:var(--mute)}}
-table{{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}}
-th{{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--mute);
-   padding:7px 9px;border-bottom:1px solid var(--line)}}
-td{{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}}
-td.num{{text-align:right;font-variant-numeric:tabular-nums}}
-.mono,code{{font-family:var(--mono);font-size:12px}}
+.scroll{{overflow-x:auto;margin-top:10px}}
+table{{width:100%;border-collapse:collapse;font-size:13.5px;min-width:min(100%,440px)}}
+th{{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;
+   color:var(--mute);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);
+   white-space:nowrap}}
+td{{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}}
+tr:last-child td{{border-bottom:0}}
+td.num{{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}}
+.mono,code{{font:400 12px var(--mono)}}
 .mute{{color:var(--mute)}}
-.meter{{height:7px;background:var(--chip);border-radius:4px;overflow:hidden;min-width:90px}}
+.meter{{height:6px;background:var(--sunk);border-radius:3px;overflow:hidden;min-width:96px}}
 .meter i{{display:block;height:100%;background:var(--accent)}}
-.pill{{background:var(--chip);border-radius:20px;padding:2px 9px;font-size:11.5px;white-space:nowrap}}
-svg .lbl{{fill:var(--dim);font-size:12px}} svg .val{{fill:var(--mute);font-size:11px}}
+.pill{{background:var(--sunk);border-radius:20px;padding:3px 10px;font-size:11.5px;
+      white-space:nowrap;color:var(--dim)}}
+svg .lbl{{fill:var(--dim);font:400 12px var(--body)}}
+svg .val{{fill:var(--mute);font:400 11px var(--mono)}}
 svg .bar{{fill:var(--accent)}}
-.two{{display:grid;grid-template-columns:1fr 1fr;gap:26px}}
+.two{{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}}
 @media(max-width:760px){{.two{{grid-template-columns:1fr}}}}
-.note{{background:var(--chip);border-radius:8px;padding:12px 15px;font-size:13px;
-       color:var(--dim);margin:14px 0}}
-ul{{margin:8px 0;padding-left:20px}} li{{margin:4px 0;font-size:13.5px}}
+.note{{background:var(--sunk);border-radius:9px;padding:13px 16px;font-size:13px;
+      color:var(--dim);margin:14px 0 0;max-width:62ch}}
+.note i{{color:var(--ink);font-style:italic}}
+ul{{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:5px}}
+li{{font-size:13.5px;color:var(--dim)}} li b{{color:var(--ink)}}
+p{{margin:10px 0 0}}
 </style></head><body><div class="wrap">
 
-<h1>Auto-evaluation report</h1>
-<div class="sub">
-  Suite <b>{report.suite}</b> · bundle <code>{report.bundle}</code> ·
+<h1>Knowledge Layer Evals</h1>
+<p class="lede">
+  Suite <b>{report.suite}</b> over bundle <code>{report.bundle}</code> ·
   generated {report.generated_at} · run {report.ran_at}<br>
-  <b>{report.total_cases}</b> auto-generated cases + <b>{report.merge_total}</b> merge pairs,
-  derived from the corpus rather than hand-written.
-</div>
+  <b>{report.total_cases}</b> cases and <b>{report.merge_total}</b> merge pairs,
+  each derived from the corpus itself — a benefit-table row, an authored alias,
+  an effective window — rather than hand-written.
+</p>
 
 <div class="grid">
   {
@@ -283,7 +319,7 @@ ul{{margin:8px 0;padding-left:20px}} li{{margin:4px 0;font-size:13.5px}}
             "Figure exact match",
             _pct(report.figure_exact_match),
             report.figure_exact_match >= 0.95,
-            "value bound to the right row",
+            "bound to the right row",
         )
     }
   {
@@ -322,13 +358,14 @@ ul{{margin:8px 0;padding-left:20px}} li{{margin:4px 0;font-size:13.5px}}
 </div>
 
 <h2>Accuracy by category</h2>
-<table><tr><th>Category</th><th class="num">Cases</th><th class="num">Accuracy</th><th></th></tr>
-{cat_rows}</table>
+<div class="scroll"><table>
+<tr><th>Category</th><th class="num">Cases</th><th class="num">Accuracy</th><th></th></tr>
+{cat_rows}</table></div>
 
 <h2>Correctness</h2>
 <div class="two">
 <div>
-<table>
+<div class="scroll"><table>
 <tr><th>Metric</th><th class="num">Value</th></tr>
 <tr><td>Citation precision</td><td class="num">{report.citation_precision:.3f}</td></tr>
 <tr><td>Citation recall</td><td class="num">{report.citation_recall:.3f}</td></tr>
@@ -336,45 +373,44 @@ ul{{margin:8px 0;padding-left:20px}} li{{margin:4px 0;font-size:13.5px}}
 <tr><td>Figure exact match</td><td class="num">{_pct(report.figure_exact_match)}</td></tr>
 <tr><td>Numeric binding integrity</td><td class="num">{_pct(report.numeric_binding_integrity)}</td></tr>
 <tr><td>Mean confidence</td><td class="num">{report.mean_confidence:.2f}</td></tr>
-<tr><td>Answers declaring something unresolved</td><td class="num">{_pct(report.unresolved_rate)}</td></tr>
-</table>
-<div class="note">Read precision with care: each generated case pins the
-<i>minimal</i> expected source, so an answer that also cites a supporting page
-scores as imprecise even though the extra citation is correct. Recall is the
-unambiguous half — it is the share of expected sources the answer actually
-cited.</div>
+<tr><td>Declared something unresolved</td><td class="num">{_pct(report.unresolved_rate)}</td></tr>
+</table></div>
+<p class="note">Read precision with care: each case pins the <i>minimal</i>
+expected source, so an answer that also cites a supporting page scores as
+imprecise even though the extra citation is correct. Recall is the unambiguous
+half — the share of expected sources the answer actually cited.</p>
 </div>
 <div>
 <h3>Gate blocks</h3>
-<table><tr><th>Gate</th><th class="num">Blocks</th></tr>{gate_rows}</table>
-<div class="note">A block is not a failure. Several generated cases — a customer on a
-superseded policy version, for instance — are expected to be refused, and the
-suite asserts that they are.</div>
+<div class="scroll"><table><tr><th>Gate</th><th class="num">Blocks</th></tr>{gate_rows}</table></div>
+<p class="note">A block is not a failure. Several generated cases — a customer
+on a superseded policy version, for instance — are expected to be refused, and
+the suite asserts that they are.</p>
 </div>
 </div>
 
 <h2>Retrieval</h2>
 <div class="two">
-<div><table>
+<div><div class="scroll"><table>
 <tr><th>Metric</th><th class="num">Value</th></tr>
 <tr><td>Recall@1</td><td class="num">{report.recall_at_1:.3f}</td></tr>
 <tr><td>Recall@3</td><td class="num">{report.recall_at_3:.3f}</td></tr>
 <tr><td>Recall@5</td><td class="num">{report.recall_at_5:.3f}</td></tr>
 <tr><td>MRR</td><td class="num">{report.mrr:.3f}</td></tr>
-<tr><td>Pages reached via graph traversal</td><td class="num">{_pct(report.graph_contribution)}</td></tr>
+<tr><td>Reached via graph traversal</td><td class="num">{_pct(report.graph_contribution)}</td></tr>
 <tr><td>Mean pages loaded per turn</td><td class="num">{report.mean_pages_loaded}</td></tr>
-</table></div>
-<div><div class="note">Recall@1 below Recall@3 is expected and healthy here: the
-frontmatter filter deliberately admits a small candidate set and lets graph
-traversal pull in the linked benefit and exclusion pages, rather than betting
-the answer on a single top hit.</div></div>
+</table></div></div>
+<div><p class="note">Recall@1 sitting below Recall@3 is expected here, not a
+weakness: the frontmatter filter deliberately admits a small candidate set and
+lets graph traversal pull in the linked benefit and exclusion pages, rather
+than betting the answer on a single top hit.</p></div>
 </div>
 
 <h2>Performance</h2>
 <div class="two">
 <div><h3>End-to-end latency</h3>{latency_chart}
-<div class="note">Throughput {report.throughput_per_s}/s in-process. These figures
-exclude model inference — the deterministic composer is the offline path.</div></div>
+<p class="note">Throughput {report.throughput_per_s}/s in-process. These figures
+exclude model inference — the deterministic composer is the offline path.</p></div>
 <div><h3>p95 by stage</h3>{stage_chart}</div>
 </div>
 
@@ -382,27 +418,21 @@ exclude model inference — the deterministic composer is the offline path.</div
 <div class="grid">
   {scorecard("Pages reached", _pct(report.page_reach_rate), None, "by at least one question")}
   {scorecard("Pages cited", _pct(report.page_citation_rate), None, "in a delivered answer")}
-  {
-        scorecard(
-            "Table rows exercised",
-            _pct(report.row_coverage),
-            None,
-            f"{len(report.unexercised_rows)} untouched",
-        )
-    }
+  {scorecard("Rows exercised", _pct(report.row_coverage), None, f"{len(report.unexercised_rows)} untouched")}
 </div>
-<h3>Unexplained coverage gaps</h3>
+<h3>Unexplained gaps</h3>
 <p>{unreached}</p>
 {rows_note}
 <h3>Unreachable by design</h3>
-<table><tr><th>Page</th><th>Why</th></tr>{expected_rows}</table>
-<div class="note">A page nothing asks about is a content-ops signal; a page that
+<div class="scroll"><table><tr><th>Page</th><th>Why</th></tr>{expected_rows}</table></div>
+<p class="note">A page nothing asks about is a content-ops signal; a page that
 questions ask about but retrieval never reaches is a taxonomy signal; a page
 that is expired or unapproved is <i>supposed</i> to be unreachable. Separating
-the three is what keeps this section actionable.</div>
+the three is what keeps this section actionable.</p>
 
 <h2>Failures and triage</h2>
-<table><tr><th>Case</th><th>Category</th><th>Bucket</th><th>Why</th></tr>{fail_rows}</table>
+<div class="scroll"><table>
+<tr><th>Case</th><th>Category</th><th>Bucket</th><th>Why</th></tr>{fail_rows}</table></div>
 <h3>Where the work goes</h3>
 <ul>{bucket_rows}</ul>
 
