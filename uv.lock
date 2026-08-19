@@ -11,6 +11,7 @@ members = [
     "api",
     "compiler",
     "etiqa-knowledge-layer",
+    "evalgen",
     "harness",
     "okf",
 ]
@@ -189,6 +190,7 @@ source = { virtual = "." }
 dev = [
     { name = "api" },
     { name = "compiler" },
+    { name = "evalgen" },
     { name = "harness" },
     { name = "httpx" },
     { name = "mypy" },
@@ -205,6 +207,7 @@ dev = [
 dev = [
     { name = "api", editable = "apps/api" },
     { name = "compiler", editable = "apps/compiler" },
+    { name = "evalgen", editable = "apps/evalgen" },
     { name = "harness", editable = "packages/harness" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "mypy", specifier = ">=1.11" },
@@ -213,6 +216,25 @@ dev = [
     { name = "pytest-asyncio", specifier = ">=0.24" },
     { name = "ruff", specifier = ">=0.6" },
     { name = "types-pyyaml" },
+]
+
+[[package]]
+name = "evalgen"
+version = "0.2.0"
+source = { editable = "apps/evalgen" }
+dependencies = [
+    { name = "api" },
+    { name = "harness" },
+    { name = "okf" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "api", editable = "apps/api" },
+    { name = "harness", editable = "packages/harness" },
+    { name = "okf", editable = "packages/okf" },
+    { name = "pyyaml", specifier = ">=6" },
 ]
 
 [[package]]

@@ -33,6 +33,10 @@ class Candidate(BaseModel):
     admitted: bool = True
     reason: str = ""
     score: float = 0.0
+    # 1-based position among admitted candidates. Recorded explicitly because
+    # candidates are logged in page-id order for readability, and retrieval
+    # metrics must score the ranking, not the alphabet.
+    rank: int | None = None
 
 
 class LoadedPage(BaseModel):

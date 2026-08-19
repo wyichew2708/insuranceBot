@@ -30,5 +30,18 @@ jobs:
 
       # Loop 3 — any regression in groundedness, numeric binding or safety
       # blocks the merge. No override path that isn't logged (§G).
-      - name: Eval gate
+      - name: Eval gate (curated suites)
         run: uv run python -m evals.runner --gate 1.0
+
+      # Auto-evaluation: the suite is regenerated from the corpus on every run,
+      # so new product pages are tested the moment they are published — and a
+      # page that generates no question shows up as a coverage gap.
+      - name: Auto-evaluation gate
+        run: uv run python -m evalgen.cli all --gate 0.95
+
+      - name: Publish the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-eval-report
+          path: .eval-reports/

@@ -32,13 +32,30 @@ class PolicySummary:
         }
 
 
-# Fixture policies for development and the eval suites.
+# Fixture policies for development and the eval suites. There is one per
+# (product, version, tier) the benefit tables define, so the generated FAQ
+# suite can exercise every tier-varying figure.
 FIXTURE_POLICIES: dict[str, PolicySummary] = {
+    "TRV-100003": PolicySummary("TRV-100003", "product/general/travel", "2026.1", "tier-1", True),
     "TRV-100001": PolicySummary("TRV-100001", "product/general/travel", "2026.1", "tier-2", True),
     "TRV-100002": PolicySummary("TRV-100002", "product/general/travel", "2026.1", "tier-3", True),
     "TRV-900001": PolicySummary("TRV-900001", "product/general/travel", "2025.2", "tier-2", True),
     "HOM-100001": PolicySummary("HOM-100001", "product/general/home", "2026.1", "ALL", True),
+    "CAR-100001": PolicySummary("CAR-100001", "product/motor/private-car", "2026.1", "ALL", True),
 }
+
+
+def policy_for(product_key: str, version: str, tier: str) -> PolicySummary | None:
+    """Find the fixture policy matching a table coordinate, so a generated
+    question about a tier-specific figure runs under a session that holds it."""
+    for summary in FIXTURE_POLICIES.values():
+        if (
+            summary.product_id.rsplit("/", 1)[-1] == product_key
+            and summary.version == version
+            and summary.tier == tier
+        ):
+            return summary
+    return None
 
 
 def policy_summary(session: Session) -> PolicySummary:

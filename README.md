@@ -44,8 +44,44 @@ you why the answer came out the way it did:
 |---|---|---|
 | 1 · Serve | per turn | `make console`, or `POST /v1/answer` |
 | 2 · Compile | nightly / on publish | `make conflicts`, `make lint-bundle` |
-| 3 · Evaluate | every publish | `make evals` — blocks on any regression |
+| 3 · Evaluate | every publish | `make evals` (curated) · `make autoeval` (generated) |
 | 4 · Evolve | weekly | trace review; each fix ships a new eval case |
+
+## Auto-evaluation
+
+```bash
+make autoeval      # generate → run → score → report
+```
+
+Rather than hand-writing an eval suite, `apps/evalgen` **derives one from the
+corpus**. Every case comes from something already in the bundle:
+
+| Source in the corpus | Generated case |
+|---|---|
+| a benefit-table row | "What is the *X* limit?" pinned to that row id and tier |
+| an authored alias | one question per alias — none goes untested |
+| an exclusion section | "Are *X* covered?" expecting the exclusions page |
+| a concept page | "What does *X* mean?" |
+| a journey page | "How do I go about *X*?" |
+| a multi-channel product | a merge pair — same facts, both brand framings |
+| an effective window | live promotions quotable, expired ones not |
+| a superseded version | expected to be *refused*, not answered |
+| a detected source conflict | the wrong website figure, offered as bait |
+
+Two things follow. The suite **grows with the corpus** — publish fifty product
+pages and their questions appear without anyone writing YAML. And coverage
+becomes **measurable**: any page no question reaches, or table row no answer
+exercises, is named in the report.
+
+Metrics span four families — correctness (citation precision/recall/F1, figure
+exact match, numeric-binding integrity), retrieval (recall@1/3/5, MRR, graph
+contribution), safety (entitlement leaks, conflict resistance, advice
+boundary), and performance (latency percentiles overall and per stage,
+throughput, budget use). Every failure is routed to one of the five Loop 4
+buckets, so the report ends with owners rather than numbers.
+
+Output lands in `.eval-reports/`: `auto-eval.json` for trending,
+`auto-eval.md` for the repo, `auto-eval.html` to read.
 
 ## What the design buys you, concretely
 
@@ -143,4 +179,8 @@ Not built:
 - **Langfuse export** — traces have the right shape, nothing ships them yet.
 - **pgvector dense retrieval.** `§J.1` recommends grep + frontmatter filter
   until measured recall degrades; that is what this implements, and the
-  rejected-candidate log is how you would detect the degradation.
+  rejected-candidate log is how you would detect the degradation. The
+  auto-eval reports recall@k and MRR, so "measured" is now literal.
+- **LLM-widened paraphrasing** in the generator. Question phrasings are
+  template-derived; a configured endpoint could widen them, and the
+  deterministic templates stay the floor.

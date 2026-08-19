@@ -401,10 +401,11 @@ const viewRetrieval = () => {
     Deterministic traversal guarantees the complete exclusion set, rather than hoping a retriever surfaces it.</div></div>
 
   <div class="card"><h2 class="sec">Frontmatter filter — admitted (${adm.length})</h2>
-    <table><tr><th>Page</th><th>Score</th></tr>
-    ${adm.map(c => `<tr><td><span class="clickable mono" onclick="showPage('${esc(c.page_id)}')">${esc(c.page_id)}</span>
+    <table><tr><th>#</th><th>Page</th><th>Score</th></tr>
+    ${[...adm].sort((a,b)=>(a.rank??999)-(b.rank??999)).map(c => `<tr><td class="mono mute">${c.rank ?? '—'}</td>
+      <td><span class="clickable mono" onclick="showPage('${esc(c.page_id)}')">${esc(c.page_id)}</span>
       <div class="mute" style="font-size:11px">${esc(c.title)}</div></td>
-      <td class="mono">${c.score}</td></tr>`).join('') || '<tr><td colspan=2 class="mute">none admitted</td></tr>'}</table></div>
+      <td class="mono">${c.score}</td></tr>`).join('') || '<tr><td colspan=3 class="mute">none admitted</td></tr>'}</table></div>
 
   <div class="card"><h2 class="sec">Rejected candidates (${rej.length})</h2>
     <div class="hint">The underrated signal. When the filter repeatedly rejects the page a human

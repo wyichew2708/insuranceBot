@@ -1,4 +1,4 @@
-.PHONY: install dev lint typecheck test lint-bundle conflicts evals ci console clean
+.PHONY: install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate ci console clean
 
 install:
 	uv sync
@@ -28,7 +28,15 @@ conflicts:
 evals:
 	uv run python -m evals.runner --gate 1.0
 
-ci: lint typecheck test lint-bundle evals
+# Auto-evaluation: derive FAQ pairs from the corpus, run them, score, report.
+# Writes .eval-reports/auto-eval.{json,md,html}.
+autoeval:
+	uv run python -m evalgen.cli all --gate 0.95
+
+autoeval-generate:
+	uv run python -m evalgen.cli generate
+
+ci: lint typecheck test lint-bundle evals autoeval
 
 clean:
 	rm -rf .mypy_cache .ruff_cache .pytest_cache

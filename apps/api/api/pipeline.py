@@ -166,6 +166,9 @@ def answer_question(
             answer=GroundedAnswer(
                 answer=HANDOFF,
                 handoff=True,
+                # Preserve what the turn established: an advice question that
+                # gets blocked still needs the adviser handoff downstream.
+                advice_flag=draft.advice_flag,
                 confidence=0.0,
                 unresolved=[f"{r.gate}: {r.detail}" for r in results if r.blocking],
             ),

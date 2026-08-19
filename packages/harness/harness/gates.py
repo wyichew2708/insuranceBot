@@ -12,6 +12,7 @@ import datetime as dt
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 from harness.contracts import Channel, GateResult, GroundedAnswer, Session, Verdict
 from okf import Bundle, Status
@@ -259,13 +260,14 @@ def gate_exclusion_completeness(ctx: GateContext) -> GateResult:
         return GateResult(gate=name, verdict=Verdict.skip, detail="no coverage asserted")
     loaded = set(ctx.loaded_page_ids)
     missing: list[str] = []
-    for page_id in ctx.loaded_page_ids:
-        page = ctx.bundle.get(page_id)
-        if page is None or page.frontmatter.type.value != "product":
-            continue
-        exclusions = page.frontmatter.links.exclusions
-        if exclusions and exclusions not in loaded:
-            missing.append(exclusions)
+    # Scope to what the answer cites: asserting coverage for product X requires
+    # having read X's exclusions, not those of every page that happened to load.
+    cited = {c.source_id for c in ctx.answer.claims} or loaded
+    for page_id in cited:
+        for candidate in _product_chain(ctx, page_id):
+            exclusions = candidate.frontmatter.links.exclusions
+            if exclusions and exclusions not in loaded:
+                missing.append(exclusions)
     if missing:
         return GateResult(
             gate=name,
@@ -328,6 +330,17 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
             gate=name, verdict=Verdict.fail, detail=f"claims not entailed by loaded pages: {weak}"
         )
     return GateResult(gate=name, verdict=Verdict.pass_, detail=f"mean entailment {mean:.2f}")
+
+
+def _product_chain(ctx: GateContext, page_id: str) -> list[Any]:
+    """The cited page and its product ancestor, whichever declares exclusions."""
+    chain = []
+    parts = page_id.split("/")
+    for i in range(len(parts), 0, -1):
+        candidate = ctx.bundle.get("/".join(parts[:i]))
+        if candidate is not None and candidate.frontmatter.type.value == "product":
+            chain.append(candidate)
+    return chain
 
 
 def _channel_values(ctx: GateContext) -> list[str]:

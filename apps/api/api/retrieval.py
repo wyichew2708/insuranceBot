@@ -20,6 +20,10 @@ from harness import Budget, Candidate, LoadedPage, RagHit, Session, Trace
 
 from okf import Bundle, Page, Status
 
+# The body is corroborating evidence, not the primary signal: frontmatter is
+# the curated surface and should still dominate.
+BODY_WEIGHT = 0.35
+
 CLAUSE_LEVEL_RE = re.compile(
     r"\b(section|clause|policy wording|the wording|sub-?section|paragraph|exact wording)\b",
     re.IGNORECASE,
@@ -96,25 +100,27 @@ class Retrieved:
 
 
 def score_page(page: Page, terms: set[str]) -> float:
-    """Lexical score over the frontmatter surface — title, aliases, id — plus
-    body headings. Deliberately not vector search: at this bundle size grep
-    beats embeddings on precision, and it is debuggable (§J.1)."""
+    """Lexical score over the frontmatter surface — title, aliases, id,
+    headings — plus a lighter-weighted pass over the body. Deliberately not
+    vector search: at this bundle size grep beats embeddings on precision, and
+    it is debuggable (§J.1).
+
+    The body term matters. Benefit vocabulary such as "alternative
+    accommodation" lives in the prose, not in the title or the alias list, so a
+    frontmatter-only score returns zero for a question that names the benefit
+    directly — which is exactly how a customer asks.
+    """
     if not terms:
         return 0.0
     fm = page.frontmatter
-    surface = " ".join(
-        [
-            fm.title,
-            " ".join(fm.aliases),
-            fm.id.replace("/", " "),
-            " ".join(re.findall(r"^##\s+(.+)$", page.body, re.M)),
-        ]
-    )
-    surface_terms = keywords(surface)
-    if not surface_terms:
+    headings = " ".join(re.findall(r"^##\s+(.+)$", page.body, re.M))
+    surface_terms = keywords(" ".join([fm.title, " ".join(fm.aliases), fm.id.replace("/", " "), headings]))
+    body_terms = keywords(page.body)
+    if not surface_terms and not body_terms:
         return 0.0
-    overlap = terms & surface_terms
-    return len(overlap) / len(terms)
+    surface_score = len(terms & surface_terms) / len(terms)
+    body_score = len(terms & body_terms) / len(terms)
+    return surface_score + BODY_WEIGHT * body_score
 
 
 def frontmatter_filter(
@@ -126,6 +132,13 @@ def frontmatter_filter(
     alias_hits = set(bundle.resolve_aliases(question))
     trace.entities = sorted(alias_hits)
     admitted: list[tuple[Page, float]] = []
+
+    scored = {
+        page.id: score_page(page, terms) + (0.5 if page.id in alias_hits else 0.0)
+        for page in bundle.pages.values()
+    }
+    focus = focus_product(bundle, scored)
+    product_keys = known_product_keys(bundle)
 
     for page in sorted(bundle.pages.values(), key=lambda p: p.id):
         fm = page.frontmatter
@@ -140,10 +153,14 @@ def frontmatter_filter(
             reason = "review overdue — demoted to RAG"
         elif fm.lifecycle.value == "withdrawn":
             reason = "withdrawn"
+        elif focus is not None:
+            page_product = bundle.product_key(page)
+            if page_product in product_keys and page_product != focus:
+                # Another product's page. Loading it pollutes the answer and
+                # drags unrelated exclusion requirements into the gates.
+                reason = f"different product ({page_product}, focus is {focus})"
 
-        score = score_page(page, terms)
-        if page.id in alias_hits:
-            score += 0.5  # entity resolution beats bag-of-words
+        score = scored[page.id]
         if not reason and score < floor:
             reason = f"score {score:.2f} below floor"
 
@@ -160,11 +177,41 @@ def frontmatter_filter(
             admitted.append((page, score))
 
     admitted.sort(key=lambda pair: (-pair[1], pair[0].id))
+    ranks = {page.id: position for position, (page, _) in enumerate(admitted, start=1)}
+    for candidate in trace.candidates:
+        candidate.rank = ranks.get(candidate.page_id)
     return admitted
 
 
 def session_jurisdiction(session: Session) -> str:
     return "SG"
+
+
+def known_product_keys(bundle: Bundle) -> set[str]:
+    return {
+        bundle.product_key(page) for page in bundle.pages.values() if page.frontmatter.type.value == "product"
+    }
+
+
+def focus_product(bundle: Bundle, scored: dict[str, float]) -> str | None:
+    """The product the question is about: the highest-scoring page that belongs
+    to a product family. Returns None when nothing product-shaped matched, so
+    concept-only and cross-product questions are left alone."""
+    product_keys = known_product_keys(bundle)
+    best: tuple[float, str] | None = None
+    for page_id, value in scored.items():
+        page = bundle.get(page_id)
+        if page is None or value <= 0:
+            continue
+        key = bundle.product_key(page)
+        if key not in product_keys:
+            continue
+        if best is None or value > best[0] or (value == best[0] and page_id < best[1]):
+            best = (value, page_id)
+    if best is None:
+        return None
+    page = bundle.get(best[1])
+    return bundle.product_key(page) if page else None
 
 
 def wiki_read(

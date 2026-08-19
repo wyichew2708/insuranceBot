@@ -58,6 +58,18 @@ def split_sections(page: Page) -> list[tuple[str, str]]:
     return out
 
 
+DEFINITION_RE = re.compile(
+    r"\b(what (?:does|do|is|are)\b.*\bmean|what is meant by|explain|definition of|meaning of|"
+    r"what counts as|define)\b",
+    re.IGNORECASE,
+)
+
+PROCEDURE_RE = re.compile(
+    r"\b(how do i|how can i|how to|what are the steps|steps to|process for|procedure for|"
+    r"how do you|go about)\b",
+    re.IGNORECASE,
+)
+
 QUANTITY_RE = re.compile(
     r"\b(how (?:long|much|many)|limit|cap|excess|amount|threshold|sub-?limit|payout|"
     r"percentage|discount|per item|how far)\b",
@@ -78,29 +90,58 @@ def select_sections(
     """
     terms = keywords(question)
     wants_quantity = bool(QUANTITY_RE.search(question))
+    wants_definition = bool(DEFINITION_RE.search(question))
+    wants_procedure = bool(PROCEDURE_RE.search(question))
     scored: list[Selection] = []
+
     for page in pages:
-        page_weight = 0.6 + score_page(page, terms)
+        # Navigation pages carry no claims by construction (the linter exempts
+        # them from the source-ref rule), so composing from one can only yield
+        # an uncitable answer. They stay useful for retrieval, not for prose.
+        if page.frontmatter.type == PageType.index_page:
+            continue
+        # Page and section relevance are ADDED, not multiplied. A page can be
+        # certainly right while its body shares none of the customer's words —
+        # that is what the authored aliases and the title exist to bridge — and
+        # multiplying would zero it out.
+        page_relevance = score_page(page, terms)
+        page_type = page.frontmatter.type
+        # Question type implies page type: a number comes from a benefits page,
+        # a definition from a concept page, a procedure from a journey page.
+        if wants_definition and page_type == PageType.concept:
+            page_relevance += 0.6
+        if wants_procedure and page_type == PageType.journey:
+            page_relevance += 0.6
+
         for heading, body in split_sections(page):
             if not body.strip():
                 continue
             section_terms = keywords(f"{heading} {body}")
             if not section_terms or not terms:
                 continue
-            overlap = terms & section_terms
-            score = len(overlap) / len(terms)
+            section_relevance = len(terms & section_terms) / len(terms)
             # A heading hit is a strong signal that this is the right section.
             if terms & keywords(heading):
-                score += 0.35
+                section_relevance += 0.35
             # A quantitative question is answered by the section that can
             # actually produce the number.
             if wants_quantity and TOKEN_RE.search(body):
-                score += 0.4
-            score *= page_weight
+                section_relevance += 0.4
+            score = page_relevance + section_relevance
             if score > 0:
                 scored.append(Selection(page=page, heading=heading, body=body, score=round(score, 3)))
+
     scored.sort(key=lambda s: (-s.score, s.page.id, s.heading))
     if not scored:
+        # Retrieval found pages but no section shared the question's wording.
+        # Answering from the best page's opening section beats refusing.
+        for page in pages:
+            if page.frontmatter.type == PageType.index_page:
+                continue
+            sections = split_sections(page)
+            if sections:
+                heading, body = sections[0]
+                return [Selection(page=page, heading=heading, body=body, score=0.0)]
         return []
     # Keep only sections close to the best match. A weakly-related section is
     # not free: it dilutes the answer and drags the groundedness score down.
