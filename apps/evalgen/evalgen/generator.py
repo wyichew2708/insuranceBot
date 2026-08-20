@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime as dt
 import re
 from dataclasses import dataclass
+from pathlib import Path
 
 from api.sor import FIXTURE_POLICIES, policy_for
 from okf.linter import CHANNEL_VARIANT_RE
@@ -429,7 +430,7 @@ def advice_cases(bundle: Bundle) -> list[GeneratedCase]:
     return cases
 
 
-def conflict_cases(bundle_root, bundle: Bundle) -> list[GeneratedCase]:  # type: ignore[no-untyped-def]
+def conflict_cases(bundle_root: Path, bundle: Bundle) -> list[GeneratedCase]:
     """Every detected source disagreement becomes numeric-hallucination bait:
     the customer quotes the wrong website figure and the bot must not agree."""
     from compiler.conflicts import scan
@@ -604,7 +605,7 @@ def out_of_scope_cases(bundle: Bundle) -> list[GeneratedCase]:
     return cases
 
 
-def generate(bundle: Bundle, bundle_root, today: dt.date | None = None) -> Suite:  # type: ignore[no-untyped-def]
+def generate(bundle: Bundle, bundle_root: Path, today: dt.date | None = None) -> Suite:
     today = today or dt.date.today()
     index = TransclusionIndex.build(bundle)
 

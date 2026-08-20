@@ -42,8 +42,16 @@ uv sync
 make console        # → http://localhost:8080
 ```
 
-The **debug console** is the front door. It runs the full serve loop and shows
-you why the answer came out the way it did:
+Three surfaces come out of the same process:
+
+| URL | What it is for |
+|---|---|
+| `/` | **Debug console** — ask a question, see why that answer came out |
+| `/studio` | **Content studio** — review the corpus, scan the websites, publish |
+| `/docs` | **API** — the OpenAPI surface partners integrate against |
+
+The **debug console** runs the full serve loop and shows you why the answer came
+out the way it did:
 
 - the **answer**, with every number highlighted and hover-bound to its table row
 - **claims → sources**, each with its page id and raw locator
@@ -85,11 +93,59 @@ Nothing compiled is retrievable until someone signs off: the frontmatter filter
 admits `approved` pages only, so an unreviewed compile answers nothing rather
 than answering unreviewed.
 
+## The content studio (`/studio`)
+
+Where a content owner works. It is a writing surface over the same bundle the
+serve loop reads, so a change is live for the next question — and the rules
+that make the corpus trustworthy are enforced on the way in rather than
+reported afterwards.
+
+**Reviewing.** Filter by type, status, tag, line of business, or "needs
+attention"; every page shows whether it is actually *answering customers* —
+approved, in its effective window, not overdue — which is a different question
+from whether it exists. Open one and you get its frontmatter, its graph edges
+in both directions, its lint verdicts, and the benefit-table rows its figures
+are fetched from.
+
+**Scanning.** One button crawls `etiqa.com.sg` and `tiq.com.sg` into a
+**staging** bundle — never over the live corpus — compiles it, and diffs the
+result against what is published. The output is a review queue, ordered by what
+a customer would notice:
+
+| Finding | Why it is ranked there |
+|---|---|
+| `figure-drift` | the site now publishes a different number; the assistant is confidently quoting the old one, *with a citation* |
+| `website-defect` | the two sites disagree with each other — a defect in a website, not in the wiki |
+| `new-page` | a product on the site that the wiki does not describe at all |
+| `content-drift` | the wording moved |
+| `review-overdue` | already demoted out of wiki-first retrieval |
+
+Adopting a suggestion writes a **draft**. A scan proposes; a person disposes.
+
+**Authoring.** Hand-written content is not exempt from provenance: your
+supporting material is saved to `raw/custom/` and becomes the page's authority,
+so every `[src:…]` resolves to a real file and reference-integrity treats the
+page like any other. A number typed into prose, an unreferenced claim or a
+broken link **refuses the save** and comes back as a violation you can act on —
+the linter is a thing you work with, not a thing you hit at publish time.
+
+**Approval is a signature.** Promoting a page records who signed it off and
+when it must be looked at again; only then does it become retrievable.
+
+**Evaluation, in the same place.** The generated suite runs in-process against
+the current corpus, because publishing a page and then going to find a terminal
+is how the eval step gets skipped.
+
+**Integrations.** What the service calls and what calls it, each with what
+happens when it is absent — plus a live probe. The crawl-egress probe is the one
+that matters operationally: it reports the proxy's answer verbatim, so a blocked
+host reads as a blocked host rather than as a broken crawler.
+
 ## The four loops (§G)
 
 | Loop | Cadence | Command |
 |---|---|---|
-| 1 · Serve | per turn | `make console`, or `POST /v1/answer` |
+| 1 · Serve | per turn | `make console` → `/`, or `POST /v1/answer` |
 | 2 · Compile | nightly / on publish | `make crawl`, `make wiki`, `make conflicts`, `make lint-bundle` |
 | 3 · Evaluate | every publish | `make evals` (curated) · `make autoeval` (generated) |
 | 4 · Evolve | weekly | trace review; each fix ships a new eval case |
@@ -188,7 +244,7 @@ okf-web/                build output: crawled + compiled. `make knowledge` regen
 fixtures/               the synthetic two-brand site the crawler is proved against
 packages/okf/           page model, frontmatter schema, tables, graph, linter, corpus IDF
 packages/harness/       contracts, seven gates, budgets, traces
-apps/api/               serve loop + debug console
+apps/api/               serve loop, debug console, content studio, content API
 apps/crawler/           allowlist + robots policy, extraction, dated snapshots
 apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
 evals/suites/           golden · merge-consistency · adversarial · staleness
@@ -227,8 +283,10 @@ Built: the OKF bundle contract and linter, wiki-first retrieval with graph
 traversal, deterministic numeric binding, RAG fallback over `raw/`, the SOR
 entitlement stub, all seven gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
-gate, the allowlisted crawler, and the compile step that turns crawl snapshots
-into canonical pages, benefit-table CSVs and website defect tickets.
+gate, the allowlisted crawler, the compile step that turns crawl snapshots into
+canonical pages, benefit-table CSVs and website defect tickets, and the content
+studio — review, scan-and-verify, authoring, status workflow, tagging,
+in-process evaluation and the integration registry.
 
 Not built:
 
@@ -242,6 +300,12 @@ Not built:
   contracts and the fact/prose separation are in place; the deterministic
   composer is the fallback and stays the offline path.
 - **Langfuse export** — traces have the right shape, nothing ships them yet.
+- **Authentication on the content API.** Every write is linted, but nothing
+  yet asks *who* is writing: `actor` is a field the caller supplies, not an
+  identity the service verifies. Sign-offs are only as trustworthy as that.
+- **Durable scan jobs.** The registry is in-process, so a restart loses a
+  running scan's suggestions. The shape — submit, poll, act — is what a queue
+  would keep.
 - **pgvector dense retrieval.** `§J.1` recommends grep + frontmatter filter
   until measured recall degrades; that is what this implements, and the
   rejected-candidate log is how you would detect the degradation. The

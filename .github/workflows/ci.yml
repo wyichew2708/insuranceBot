@@ -55,6 +55,11 @@ jobs:
       - name: Auto-evaluation gate on the compiled corpus
         run: uv run python -m evalgen.cli --bundle okf-web --out .eval-reports/web --gate 0.95 all
 
+      # The portal writes to the corpus, so its refusals are the thing worth
+      # testing: a page that fails the linter must never reach disk.
+      - name: Content portal contract
+        run: uv run pytest apps/api/tests/test_cms.py -q
+
       - name: Publish the report
         if: always()
         uses: actions/upload-artifact@v4

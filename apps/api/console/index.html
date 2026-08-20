@@ -32,6 +32,11 @@ header h1 span{color:var(--accent)}
 .status b{color:var(--fg);font-weight:600}
 .icon-btn{background:var(--bg-3);border:1px solid var(--line);border-radius:6px;
           padding:5px 10px;cursor:pointer;font-size:12px}
+.surfaces{display:flex;gap:3px;margin-left:4px}
+.surfaces a{font-size:12px;padding:4px 10px;border-radius:6px;color:var(--fg-dim);
+            border:1px solid transparent;text-decoration:none}
+.surfaces a:hover{background:var(--bg-3);color:var(--fg)}
+.surfaces a.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
 .icon-btn:hover{border-color:var(--accent)}
 
 .layout{display:grid;grid-template-columns:320px minmax(0,1fr) minmax(0,1.05fr);
@@ -144,7 +149,12 @@ pre.page{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height
 </head>
 <body>
 <header>
-  <h1>Etiqa SG <span>Knowledge Layer</span> · Debug Console</h1>
+  <h1>Etiqa SG <span>Knowledge Layer</span></h1>
+  <div class="surfaces">
+    <a href="/" class="on">Debug console</a>
+    <a href="/studio">Content studio</a>
+    <a href="/docs">API</a>
+  </div>
   <div class="status">
     <span id="bundleStat">loading…</span>
     <button class="icon-btn" id="reloadBtn" title="Reload the OKF bundle from disk">↻ Bundle</button>
@@ -543,6 +553,11 @@ $('#reloadBtn').onclick = async () => {
   boot();
 };
 boot();
+
+// Deep link from the content studio: /?page=<id> opens that page's inspector,
+// so "review this" and "see how it answers" are one click apart.
+const deepLink = new URLSearchParams(location.search).get('page');
+if (deepLink) showPage(deepLink);
 </script>
 </body>
 </html>

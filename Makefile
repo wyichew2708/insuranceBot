@@ -1,12 +1,18 @@
 .PHONY: install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
-        crawl crawl-fixture wiki knowledge autoeval-web ci console clean
+        crawl crawl-fixture wiki knowledge autoeval-web studio studio-web ci console clean
 
 install:
 	uv sync
 
 # The console is the point of the dev target: start it and open the browser.
-dev console:
+# Both surfaces come from the same process: / is the debug console, /studio is
+# the content portal, /docs is the API.
+dev console studio:
 	uv run uvicorn api.main:app --reload --port 8080
+
+# The same surfaces over the crawled-and-compiled corpus rather than the seed.
+studio-web:
+	BUNDLE_PATH=okf-web uv run uvicorn api.main:app --reload --port 8080
 
 lint:
 	uv run ruff check .

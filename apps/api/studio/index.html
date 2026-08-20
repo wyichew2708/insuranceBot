@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Layer · Content Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0f1419; --bg-2:#161c23; --bg-3:#1d252e; --line:#2a3540;
+  --fg:#e6edf3; --fg-dim:#8b98a5; --fg-mute:#5c6b7a;
+  --accent:#a78bfa; --accent-dim:#2e2547; --teal:#2dd4bf;
+  --pass:#3fb950; --fail:#f85149; --skip:#6e7681; --warn:#d29922;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f8fa; --bg-2:#fff; --bg-3:#eef2f6; --line:#d6dee6;
+  --fg:#1c2128; --fg-dim:#57606a; --fg-mute:#8c959f;
+  --accent:#7c3aed; --accent-dim:#ede9fe;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--sans);
+     -webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd{font-family:var(--mono);font-size:12.5px}
+
+header{display:flex;align-items:center;gap:14px;padding:9px 18px;background:var(--bg-2);
+       border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+header h1{font-size:14px;font-weight:650;margin:0;letter-spacing:.2px;white-space:nowrap}
+header h1 span{color:var(--accent)}
+.surfaces{display:flex;gap:3px;margin-left:6px}
+.surfaces a{font-size:12px;padding:4px 10px;border-radius:6px;color:var(--fg-dim);
+            border:1px solid transparent}
+.surfaces a:hover{background:var(--bg-3);text-decoration:none;color:var(--fg)}
+.surfaces a.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+.status{display:flex;gap:12px;margin-left:auto;align-items:center;font-size:12px;color:var(--fg-dim);
+        flex-wrap:wrap;justify-content:flex-end}
+.status b{color:var(--fg);font-weight:600}
+.icon-btn{background:var(--bg-3);border:1px solid var(--line);border-radius:6px;
+          padding:5px 10px;cursor:pointer;font-size:12px}
+.icon-btn:hover{border-color:var(--accent)}
+
+.fixture-bar{background:rgba(210,153,34,.13);border-bottom:1px solid rgba(210,153,34,.35);
+             color:var(--warn);font-size:12.5px;padding:7px 18px;display:none}
+.fixture-bar.show{display:block}
+
+.shell{display:grid;grid-template-columns:196px minmax(0,1fr);gap:1px;background:var(--line);
+       min-height:calc(100vh - 44px)}
+nav.rail{background:var(--bg-2);padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+nav.rail button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:none;
+      border:1px solid transparent;border-radius:7px;padding:8px 10px;cursor:pointer;font-size:13px;
+      color:var(--fg-dim)}
+nav.rail button:hover{background:var(--bg-3);color:var(--fg)}
+nav.rail button.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent);font-weight:600}
+nav.rail .pill{margin-left:auto;font-size:10.5px;background:var(--bg);border:1px solid var(--line);
+      border-radius:20px;padding:0 6px;color:var(--fg-dim);font-family:var(--mono)}
+nav.rail button.on .pill{border-color:var(--accent);color:var(--accent)}
+nav.rail .rail-head{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:var(--fg-mute);
+      margin:14px 0 5px;padding-left:10px;font-weight:650}
+main{background:var(--bg);padding:20px 22px 60px;overflow:auto;max-height:calc(100vh - 44px)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}main{max-height:none}}
+
+h2.view{font-size:19px;margin:0 0 3px;font-weight:640;letter-spacing:-.1px}
+p.lede{color:var(--fg-dim);margin:0 0 18px;max-width:76ch;font-size:13.5px}
+h3.sec{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--fg-mute);
+       margin:22px 0 10px;font-weight:650}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.card .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--fg-mute);font-weight:650}
+.card .v{font-size:25px;font-weight:640;margin-top:5px;letter-spacing:-.5px;
+         font-variant-numeric:tabular-nums}
+.card .n{font-size:11.5px;color:var(--fg-dim);margin-top:3px}
+.card.good .v{color:var(--pass)} .card.bad .v{color:var(--fail)} .card.warn .v{color:var(--warn)}
+
+.panel{background:var(--bg-2);border:1px solid var(--line);border-radius:11px;padding:16px 18px;
+       margin-bottom:14px}
+.split{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:1080px){.split{grid-template-columns:1fr}}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+input[type=text],input[type=search],select,textarea{background:var(--bg-2);border:1px solid var(--line);
+  border-radius:7px;padding:7px 10px;outline:none;width:100%}
+textarea{resize:vertical;font-family:var(--mono);font-size:12.5px;line-height:1.6}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+select{cursor:pointer}
+.toolbar input:not([type=checkbox]),.toolbar select{width:auto;min-width:130px}
+.toolbar input[type=checkbox]{width:auto;min-width:0;accent-color:var(--accent)}
+.btn{background:var(--accent);color:#12091f;border:0;border-radius:7px;padding:8px 14px;
+     font-weight:650;cursor:pointer;font-size:13px;white-space:nowrap}
+:root[data-theme="light"] .btn{color:#fff}
+.btn:hover{filter:brightness(1.1)} .btn:disabled{opacity:.45;cursor:progress}
+.btn.ghost{background:var(--bg-3);color:var(--fg);border:1px solid var(--line);font-weight:550}
+.btn.ghost:hover{border-color:var(--accent);filter:none}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn.danger{background:var(--fail);color:#fff}
+
+.list{display:flex;flex-direction:column;gap:3px;max-height:62vh;overflow:auto;padding-right:3px}
+.item{display:flex;gap:9px;align-items:center;padding:7px 9px;border-radius:7px;cursor:pointer;
+      border:1px solid transparent;font-size:12.5px}
+.item:hover{background:var(--bg-3)}
+.item.on{background:var(--bg-3);border-color:var(--accent)}
+.item .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .t small{display:block;color:var(--fg-mute);font-family:var(--mono);font-size:10.5px;
+               overflow:hidden;text-overflow:ellipsis}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.dot.ok{background:var(--pass)} .dot.no{background:var(--fail)}
+.dot.draft{background:var(--warn)} .dot.mute{background:var(--skip)}
+
+.tag{font-size:10.5px;font-family:var(--mono);background:var(--bg-3);border:1px solid var(--line);
+     border-radius:5px;padding:1px 6px;color:var(--fg-dim);white-space:nowrap}
+.tag.accent{border-color:var(--accent);color:var(--accent)}
+.tag.ok{border-color:var(--pass);color:var(--pass)}
+.tag.no{border-color:var(--fail);color:var(--fail)}
+.tag.warn{border-color:var(--warn);color:var(--warn)}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 12px;font-size:12.5px}
+.kv dt{color:var(--fg-mute);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding-top:2px}
+.kv dd{margin:0;word-break:break-word}
+
+.field{margin-bottom:11px}
+.field label{display:block;font-size:10.5px;color:var(--fg-dim);margin-bottom:4px;
+             text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+
+.violation{display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border-radius:7px;
+           background:var(--bg-3);margin-bottom:5px;font-size:12.5px}
+.violation.error{border-left:3px solid var(--fail)}
+.violation.warning{border-left:3px solid var(--warn)}
+.violation code{color:var(--fg-dim)}
+
+.sug{border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:9px;
+     background:var(--bg-2)}
+.sug.blocking{border-left:3px solid var(--fail)}
+.sug.high{border-left:3px solid var(--warn)}
+.sug.medium{border-left:3px solid var(--accent)}
+.sug.low{border-left:3px solid var(--skip)}
+.sug.done{opacity:.5}
+.sug h4{margin:0 0 5px;font-size:13.5px;font-weight:620}
+.sug p{margin:0 0 9px;color:var(--fg-dim);font-size:12.5px;max-width:80ch}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px}
+@media(max-width:760px){.diff{grid-template-columns:1fr}}
+.diff div{background:var(--bg-3);border-radius:7px;padding:8px 10px;font-family:var(--mono);
+          font-size:11.5px;white-space:pre-wrap;max-height:190px;overflow:auto;line-height:1.5}
+.diff .lbl{font-family:var(--sans);font-size:10px;text-transform:uppercase;letter-spacing:.7px;
+           color:var(--fg-mute);margin-bottom:4px;font-weight:650}
+.diff .was{border-left:2px solid var(--fail)}
+.diff .now{border-left:2px solid var(--pass)}
+
+.log{background:var(--bg-3);border-radius:8px;padding:11px 13px;font-family:var(--mono);
+     font-size:11.5px;max-height:210px;overflow:auto;white-space:pre-wrap;line-height:1.7;
+     color:var(--fg-dim)}
+.spinner{display:inline-block;width:11px;height:11px;border:2px solid var(--line);
+         border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;
+         vertical-align:-1px;margin-right:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--fg-mute);
+   padding:6px 9px;border-bottom:1px solid var(--line);font-weight:650}
+td{padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.scroll-x{overflow-x:auto}
+
+.empty{color:var(--fg-mute);font-size:13px;padding:26px 0;text-align:center}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--bg-2);border:1px solid var(--line);
+       border-left:3px solid var(--accent);border-radius:9px;padding:11px 15px;font-size:13px;
+       max-width:440px;z-index:60;box-shadow:0 8px 26px rgba(0,0,0,.34)}
+.toast.bad{border-left-color:var(--fail)}
+.toast.good{border-left-color:var(--pass)}
+.hidden{display:none!important}
+.muted{color:var(--fg-dim)}
+.mono{font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Knowledge <span>Studio</span></h1>
+  <div class="surfaces">
+    <a href="/">Debug console</a>
+    <a href="/studio" class="on">Content studio</a>
+    <a href="/docs">API</a>
+  </div>
+  <div class="status">
+    <span id="bundleStat">loading…</span>
+    <button class="icon-btn" onclick="toggleTheme()">◐</button>
+  </div>
+</header>
+<div class="fixture-bar" id="fixtureBar"></div>
+
+<div class="shell">
+  <nav class="rail">
+    <div class="rail-head">Corpus</div>
+    <button data-view="overview" class="on">Overview</button>
+    <button data-view="content">Content <span class="pill" id="pillPages">–</span></button>
+    <button data-view="compose">New content</button>
+    <div class="rail-head">Loop</div>
+    <button data-view="scan">Scan &amp; review <span class="pill" id="pillSug">–</span></button>
+    <button data-view="evals">Evaluation</button>
+    <div class="rail-head">Platform</div>
+    <button data-view="integrations">Integrations <span class="pill" id="pillInt">–</span></button>
+  </nav>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="v-overview">
+      <h2 class="view">Corpus overview</h2>
+      <p class="lede">One canonical page per product; brand is a channel attribute. A page answers
+        customers only when it is <b>approved</b>, in its effective window and not overdue for
+        review — everything else falls through to the RAG fallback or is not served at all.</p>
+      <div class="cards" id="healthCards"></div>
+      <h3 class="sec">Groupings</h3>
+      <div id="taxonomy"></div>
+      <h3 class="sec">Recent scans</h3>
+      <div id="recentScans"></div>
+    </section>
+
+    <!-- CONTENT -->
+    <section id="v-content" class="hidden">
+      <h2 class="view">Content</h2>
+      <p class="lede">Edit a page and it is linted against the whole bundle before anything is
+        written: broken links, numbers typed into prose, unreferenced claims and missing sign-offs
+        all refuse the save rather than reaching a customer.</p>
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="Search id, title, alias, tag…" style="min-width:230px">
+        <select id="fType"><option value="">All types</option></select>
+        <select id="fStatus"><option value="">All statuses</option></select>
+        <select id="fTag"><option value="">All tags</option></select>
+        <select id="fLob"><option value="">All lines</option></select>
+        <label class="muted" style="font-size:12.5px;display:flex;gap:6px;align-items:center">
+          <input type="checkbox" id="fAttn" style="width:auto"> needs attention
+        </label>
+        <span class="muted" id="listCount" style="margin-left:auto"></span>
+      </div>
+      <div class="split">
+        <div class="panel"><div class="list" id="pageList"></div></div>
+        <div id="editor"><div class="empty">Select a page to review it.</div></div>
+      </div>
+    </section>
+
+    <!-- COMPOSE -->
+    <section id="v-compose" class="hidden">
+      <h2 class="view">New content</h2>
+      <p class="lede">Content written here is not exempt from provenance. Your supporting material
+        is saved to <code>raw/custom/</code> and becomes the page's authority, so every
+        <code>[src:…]</code> reference resolves to a real file and the reference-integrity gate
+        treats the page like any other. New pages start as <b>draft</b>.</p>
+      <div class="split">
+        <div class="panel">
+          <div class="field"><label>Page id</label>
+            <input type="text" id="cId" placeholder="concept/waiting-period"></div>
+          <div class="field"><label>Title</label>
+            <input type="text" id="cTitle" placeholder="Waiting period"></div>
+          <div class="grid2">
+            <div class="field"><label>Type</label><select id="cType"></select></div>
+            <div class="field"><label>Line of business</label>
+              <input type="text" id="cLob" placeholder="optional"></div>
+          </div>
+          <div class="field"><label>Aliases (comma separated)</label>
+            <input type="text" id="cAliases" placeholder="qualifying period, waiting time"></div>
+          <div class="field"><label>Tags (comma separated)</label>
+            <input type="text" id="cTags" placeholder="health, onboarding"></div>
+          <button class="btn" id="createBtn" style="width:100%">Create draft</button>
+        </div>
+        <div class="panel">
+          <div class="field"><label>Source material — what this page is grounded in</label>
+            <textarea id="cSource" rows="5"
+              placeholder="Paste the wording clause, the approved copy, or the decision this page records."></textarea></div>
+          <div class="field"><label>Body — Markdown, <code>##</code> sections, each claim with a
+            <code>[src:raw/custom/&lt;slug&gt;.md]</code> reference</label>
+            <textarea id="cBody" rows="13"></textarea></div>
+          <div class="toolbar">
+            <button class="btn ghost sm" id="cLintBtn">Check against the rules</button>
+            <button class="btn ghost sm" id="cScaffold">Insert a template</button>
+          </div>
+          <div id="cLint"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCAN -->
+    <section id="v-scan" class="hidden">
+      <h2 class="view">Scan &amp; review</h2>
+      <p class="lede">A scan crawls the allowlisted hosts into a staging bundle — never over the
+        live corpus — compiles it, and diffs the result against what is published. It proposes;
+        you dispose. Adopting a suggestion writes a <b>draft</b>, never an approved page.</p>
+      <div class="panel">
+        <div class="toolbar">
+          <button class="btn" id="scanReal">Scan etiqa.com.sg &amp; tiq.com.sg</button>
+          <button class="btn ghost" id="scanFixture">Scan the fixture site</button>
+          <span class="muted" id="scanState" style="margin-left:auto"></span>
+        </div>
+        <div class="log" id="scanLog">No scan run in this session.</div>
+        <div class="cards" id="scanStats" style="margin-top:12px"></div>
+      </div>
+      <h3 class="sec">Suggestions</h3>
+      <div class="toolbar">
+        <select id="sugKind"><option value="">All kinds</option></select>
+        <span class="muted" id="sugCount" style="margin-left:auto"></span>
+      </div>
+      <div id="suggestions"><div class="empty">Run a scan to compare the websites with the wiki.</div></div>
+    </section>
+
+    <!-- EVALS -->
+    <section id="v-evals" class="hidden">
+      <h2 class="view">Evaluation</h2>
+      <p class="lede">The suite is <b>derived from this corpus</b> — a benefit-table row, an
+        authored alias, an exclusion section, an effective window each produce their own question.
+        Publish a page and its questions appear without anyone writing YAML; a page no question
+        reaches is reported as a coverage gap.</p>
+      <div class="panel">
+        <div class="toolbar">
+          <button class="btn" id="runGen">Run the generated suite</button>
+          <button class="btn ghost" id="runCur">Run the curated suites</button>
+          <span class="muted" id="evalState" style="margin-left:auto"></span>
+        </div>
+      </div>
+      <div id="evalOut"><div class="empty">No run yet.</div></div>
+    </section>
+
+    <!-- INTEGRATIONS -->
+    <section id="v-integrations" class="hidden">
+      <h2 class="view">Integrations</h2>
+      <p class="lede">What this service talks to, and what happens when it cannot. Every outbound
+        dependency is optional by design — with none of them configured the serve loop still runs
+        deterministically, which is what keeps the console and the eval suites usable offline.</p>
+      <div id="integrations"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const el = (tag, cls, html) => { const n = document.createElement(tag);
+  if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pct = v => (v * 100).toFixed(1) + '%';
+
+let STATE = { overview:null, pages:[], selected:null, scan:null, suggestions:[], actor:'portal' };
+
+async function api(path, opts) {
+  const res = await fetch(path, { headers:{'content-type':'application/json'}, ...opts });
+  const text = await res.text();
+  let body; try { body = text ? JSON.parse(text) : {}; } catch { body = { detail:text }; }
+  if (!res.ok) throw Object.assign(new Error(body.detail?.message || body.detail || res.statusText),
+                                   { payload: body.detail });
+  return body;
+}
+function toast(message, kind='') {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const node = el('div', 'toast ' + kind, esc(message));
+  document.body.appendChild(node);
+  setTimeout(() => node.remove(), 5200);
+}
+function toggleTheme() {
+  const root = document.documentElement;
+  root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+  localStorage.setItem('studio-theme', root.dataset.theme);
+}
+if (localStorage.getItem('studio-theme'))
+  document.documentElement.dataset.theme = localStorage.getItem('studio-theme');
+
+// --- navigation -------------------------------------------------------------
+document.querySelectorAll('nav.rail button').forEach(btn => btn.onclick = () => show(btn.dataset.view));
+function show(view) {
+  document.querySelectorAll('nav.rail button').forEach(b => b.classList.toggle('on', b.dataset.view === view));
+  document.querySelectorAll('main > section').forEach(s => s.classList.toggle('hidden', s.id !== 'v-' + view));
+  if (view === 'integrations') loadIntegrations();
+  if (view === 'content') loadPages();
+  location.hash = view;
+}
+
+// --- overview ---------------------------------------------------------------
+async function loadOverview() {
+  const data = await api('/v1/cms/overview');
+  STATE.overview = data;
+  const { bundle, health } = data;
+
+  $('#bundleStat').innerHTML =
+    `<b>${esc(bundle.name)}</b> · <code>${esc(bundle.root)}</code> · ` +
+    `${bundle.pages} pages · ${bundle.table_rows} rows`;
+  const bar = $('#fixtureBar');
+  bar.classList.toggle('show', !!bundle.fixture);
+  bar.innerHTML = '<b>Synthetic corpus.</b> This bundle is fixture data — every figure in it is ' +
+    'invented and none of it is a real product fact. Retrieval, binding and the gates are real; ' +
+    'the content is not.';
+
+  const card = (k, v, n, tone='') =>
+    `<div class="card ${tone}"><div class="k">${k}</div><div class="v">${v}</div><div class="n">${n}</div></div>`;
+  $('#healthCards').innerHTML = [
+    card('Answering', health.retrievable, `of ${bundle.pages} pages`,
+         health.retrievable === bundle.pages ? 'good' : 'warn'),
+    card('Approved', health.approved, 'signed off by a human'),
+    card('Draft', health.draft, 'not retrievable', health.draft ? 'warn' : ''),
+    card('In review', health.in_review, 'awaiting sign-off'),
+    card('Review overdue', health.review_overdue, 'demoted to RAG',
+         health.review_overdue ? 'bad' : 'good'),
+    card('Regulated advice', health.regulated_advice, 'need an adviser handoff'),
+    card('Lint errors', health.lint_errors, 'block publishing',
+         health.lint_errors ? 'bad' : 'good'),
+    card('Warnings', health.lint_warnings, 'advisory'),
+  ].join('');
+
+  const groups = ['type','status','line_of_business','tags','confidence','channels'];
+  $('#taxonomy').innerHTML = groups.map(group => {
+    const rows = data.taxonomy[group] || [];
+    if (!rows.length) return '';
+    return `<div style="margin-bottom:11px"><div class="k" style="font-size:10.5px;color:var(--fg-mute);
+      text-transform:uppercase;letter-spacing:.7px;font-weight:650;margin-bottom:6px">
+      ${group.replace(/_/g,' ')}</div><div class="tags">` +
+      rows.map(r => `<span class="tag">${esc(r.value)} <b style="color:var(--fg)">${r.count}</b></span>`).join('') +
+      '</div></div>';
+  }).join('') || '<div class="empty">No groupings yet.</div>';
+
+  $('#pillPages').textContent = bundle.pages;
+  renderScanList(data.scans);
+}
+
+function renderScanList(scans) {
+  if (!scans || !scans.length) { $('#recentScans').innerHTML = '<div class="empty">No scans yet.</div>'; return; }
+  $('#recentScans').innerHTML = '<div class="panel scroll-x"><table><thead><tr>' +
+    '<th>Started</th><th>Hosts</th><th>State</th><th class="num">Pages</th>' +
+    '<th class="num">Docs</th><th>Findings</th></tr></thead><tbody>' +
+    scans.map(s => `<tr><td class="mono">${esc(s.started_at || '—')}</td>
+      <td>${esc(s.hosts.join(', '))}${s.fixture ? ' <span class="tag warn">fixture</span>' : ''}</td>
+      <td><span class="tag ${s.state === 'done' ? 'ok' : s.state === 'failed' ? 'no' : ''}">${esc(s.state)}</span></td>
+      <td class="num">${s.stats?.pages_crawled ?? '—'}</td>
+      <td class="num">${s.stats?.documents_found ?? '—'}</td>
+      <td>${Object.entries(s.counts || {}).map(([k,v]) =>
+        `<span class="tag">${esc(k)} ${v}</span>`).join(' ') || '—'}</td></tr>`).join('') +
+    '</tbody></table></div>';
+}
+
+// --- content ----------------------------------------------------------------
+function fillSelect(node, values, keep) {
+  const current = keep ? node.value : '';
+  node.innerHTML = node.options[0].outerHTML +
+    values.map(v => `<option value="${esc(v.value ?? v)}">${esc(v.value ?? v)}${
+      v.count != null ? ` (${v.count})` : ''}</option>`).join('');
+  node.value = current;
+}
+
+let listTimer;
+['#q','#fType','#fStatus','#fTag','#fLob','#fAttn'].forEach(sel =>
+  $(sel).addEventListener('input', () => { clearTimeout(listTimer); listTimer = setTimeout(loadPages, 160); }));
+
+async function loadPages() {
+  const tax = STATE.overview?.taxonomy;
+  if (tax) {
+    fillSelect($('#fType'), tax.type, true);
+    fillSelect($('#fStatus'), tax.status, true);
+    fillSelect($('#fTag'), tax.tags, true);
+    fillSelect($('#fLob'), tax.line_of_business, true);
+    if (!$('#cType').options.length)
+      $('#cType').innerHTML = tax.page_types.filter(t => t !== 'index')
+        .map(t => `<option${t === 'concept' ? ' selected' : ''}>${t}</option>`).join('');
+  }
+  const params = new URLSearchParams({
+    q: $('#q').value, type: $('#fType').value, status: $('#fStatus').value,
+    tag: $('#fTag').value, line_of_business: $('#fLob').value,
+    needs_attention: $('#fAttn').checked,
+  });
+  const data = await api('/v1/cms/pages?' + params);
+  STATE.pages = data.pages;
+  $('#listCount').textContent = `${data.count} of ${data.total}`;
+  $('#pageList').innerHTML = data.pages.map(p => {
+    const cls = !p.retrievable ? (p.status === 'draft' ? 'draft' : 'no') : 'ok';
+    return `<div class="item${STATE.selected === p.id ? ' on' : ''}" data-id="${esc(p.id)}">
+      <span class="dot ${cls}" title="${p.retrievable ? 'answering' : 'not retrievable'}"></span>
+      <span class="t">${esc(p.title)}<small>${esc(p.id)}</small></span>
+      <span class="tag">${esc(p.type)}</span>
+      ${p.review_overdue ? '<span class="tag no">overdue</span>' : ''}
+    </div>`;
+  }).join('') || '<div class="empty">Nothing matches.</div>';
+  $('#pageList').querySelectorAll('.item').forEach(node =>
+    node.onclick = () => openPage(node.dataset.id));
+}
+
+async function openPage(id) {
+  STATE.selected = id;
+  document.querySelectorAll('#pageList .item').forEach(n => n.classList.toggle('on', n.dataset.id === id));
+  const page = await api('/v1/cms/pages/' + id);
+  const fm = page.frontmatter;
+  const violations = page.violations;
+
+  $('#editor').innerHTML = `
+    <div class="panel">
+      <div class="toolbar">
+        <b style="font-size:15px">${esc(fm.title)}</b>
+        <span class="tag ${page.retrievable ? 'ok' : 'warn'}">${page.retrievable ? 'answering customers' : 'not retrievable'}</span>
+        <span class="tag">${esc(fm.status)}</span>
+        <span class="tag">${esc(fm.type)}</span>
+        <a class="tag accent" href="/?page=${encodeURIComponent(id)}" title="Open in the debug console">test →</a>
+      </div>
+      <dl class="kv">
+        <dt>id</dt><dd class="mono">${esc(page.id)}</dd>
+        <dt>source</dt><dd class="mono">${esc(page.source_path || '—')}</dd>
+        <dt>version in force</dt><dd>${esc(fm.version_in_force || '—')}</dd>
+        <dt>effective</dt><dd>${esc(fm.effective_from || '—')} → ${esc(fm.effective_to || 'open')}</dd>
+        <dt>reviewed by</dt><dd>${(fm.reviewed_by || []).map(r => `<span class="tag">${esc(r)}</span>`).join(' ') || '<span class="muted">nobody yet</span>'}</dd>
+        <dt>review due</dt><dd>${esc(fm.review_due || '—')}</dd>
+        <dt>authority</dt><dd>${(fm.authority || []).map(a => `<div class="mono">${esc(a)}</div>`).join('') || '<span class="muted">none</span>'}</dd>
+        <dt>links</dt><dd>${(page.neighbours || []).map(n =>
+            `<a href="#" onclick="openPage('${esc(n)}');return false" class="tag">${esc(n)}</a>`).join(' ') || '—'}</dd>
+        <dt>linked from</dt><dd>${(page.backlinks || []).map(n =>
+            `<a href="#" onclick="openPage('${esc(n)}');return false" class="tag">${esc(n)}</a>`).join(' ') || '—'}</dd>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h3 class="sec" style="margin-top:0">Tags &amp; grouping</h3>
+      <div class="field"><input type="text" id="eTags"
+        value="${esc((fm.tags || []).join(', '))}" placeholder="comma separated"></div>
+      <button class="btn ghost sm" id="saveTags">Save tags</button>
+    </div>
+
+    <div class="panel">
+      <h3 class="sec" style="margin-top:0">Body</h3>
+      <textarea id="eBody" rows="16">${esc(page.body)}</textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="btn" id="saveBody">Save</button>
+        <button class="btn ghost sm" id="lintBody">Check</button>
+        <span style="margin-left:auto"></span>
+        ${['draft','in_review','approved','deprecated'].filter(s => s !== fm.status).map(s =>
+          `<button class="btn ghost sm" data-status="${s}">→ ${s.replace('_',' ')}</button>`).join('')}
+      </div>
+      <div id="eLint" style="margin-top:10px">${renderViolations(violations)}</div>
+    </div>
+
+    ${page.table_rows.length ? `<div class="panel">
+      <h3 class="sec" style="margin-top:0">Benefit table — <code>${esc(page.product_key)}</code></h3>
+      <p class="muted" style="font-size:12.5px;margin:0 0 10px">Every figure in the answer is fetched
+        from one of these rows and keeps its row id. Prose carries only the transclusion token.</p>
+      <div class="scroll-x"><table><thead><tr><th>row id</th><th>tier</th><th>benefit</th>
+        <th class="num">value</th></tr></thead><tbody>
+        ${page.table_rows.map(r => `<tr><td class="mono">${esc(r.row_id)}</td><td>${esc(r.tier)}</td>
+          <td>${esc(r.benefit_code)}.${esc(r.attribute)}</td>
+          <td class="num">${esc(r.rendered)}</td></tr>`).join('')}
+      </tbody></table></div></div>` : ''}
+  `;
+
+  $('#saveTags').onclick = async () => {
+    try {
+      const res = await api(`/v1/cms/pages/${id}/tags`, { method:'POST',
+        body: JSON.stringify({ tags: $('#eTags').value.split(',').map(t => t.trim()).filter(Boolean),
+                               actor: STATE.actor }) });
+      toast(`Tags saved: ${res.tags.join(', ') || 'none'}`, 'good');
+      await loadOverview(); await loadPages(); openPage(id);
+    } catch (err) { showError(err, '#eLint'); }
+  };
+  $('#lintBody').onclick = async () => {
+    const res = await api('/v1/cms/lint', { method:'POST',
+      body: JSON.stringify({ frontmatter: fm, body: $('#eBody').value }) });
+    $('#eLint').innerHTML = renderViolations(res.violations, res.ok);
+  };
+  $('#saveBody').onclick = async () => {
+    try {
+      await api('/v1/cms/pages/' + id, { method:'PUT',
+        body: JSON.stringify({ frontmatter: fm, body: $('#eBody').value, actor: STATE.actor }) });
+      toast('Saved. The bundle reloaded, so the change is live for the next question.', 'good');
+      openPage(id); loadOverview();
+    } catch (err) { showError(err, '#eLint'); }
+  };
+  $('#editor').querySelectorAll('[data-status]').forEach(btn => btn.onclick = async () => {
+    try {
+      const res = await api(`/v1/cms/pages/${id}/status`, { method:'POST',
+        body: JSON.stringify({ status: btn.dataset.status, actor: STATE.actor }) });
+      toast(`${id} is now ${res.status}` +
+            (res.retrievable ? ' and answering customers.' : ' and not retrievable.'), 'good');
+      await loadOverview(); await loadPages(); openPage(id);
+    } catch (err) { showError(err, '#eLint'); }
+  });
+}
+
+function renderViolations(violations, ok) {
+  if (!violations || !violations.length)
+    return ok === undefined ? '' : '<div class="violation" style="border-left:3px solid var(--pass)">' +
+      '<b style="color:var(--pass)">Clean</b><span class="muted">nothing blocks this page</span></div>';
+  return violations.map(v => `<div class="violation ${esc(v.severity)}">
+    <span class="tag ${v.severity === 'error' ? 'no' : 'warn'}">${esc(v.rule)}</span>
+    <span>${esc(v.message)}${v.line ? ` <code>line ${v.line}</code>` : ''}</span></div>`).join('');
+}
+function showError(err, target) {
+  const payload = err.payload;
+  const violations = payload && payload.violations;
+  toast(err.message, 'bad');
+  if (target && violations) $(target).innerHTML = renderViolations(violations);
+}
+
+// --- compose ----------------------------------------------------------------
+$('#cScaffold').onclick = () => {
+  const slug = ($('#cId').value || 'new-page').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  $('#cBody').value =
+`## What it means
+
+Write the claim here, in one paragraph, and end it with its reference [src:raw/custom/${slug}.md].
+
+## When it applies
+
+A second paragraph, also referenced [src:raw/custom/${slug}.md].`;
+};
+$('#cLintBtn').onclick = async () => {
+  const res = await api('/v1/cms/lint', { method:'POST', body: JSON.stringify({
+    frontmatter: candidateFrontmatter(), body: $('#cBody').value }) });
+  $('#cLint').innerHTML = renderViolations(res.violations, res.ok);
+};
+function candidateFrontmatter() {
+  const slug = ($('#cId').value || '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return {
+    id: $('#cId').value.trim(), title: $('#cTitle').value.trim() || 'Untitled',
+    type: $('#cType').value, status: 'draft', jurisdiction: 'SG',
+    authority: [`raw/custom/${slug}.md`],
+    aliases: $('#cAliases').value.split(',').map(s => s.trim()).filter(Boolean),
+    tags: $('#cTags').value.split(',').map(s => s.trim()).filter(Boolean),
+    effective_from: new Date().toISOString().slice(0, 10),
+  };
+}
+$('#createBtn').onclick = async () => {
+  try {
+    const res = await api('/v1/cms/pages', { method:'POST', body: JSON.stringify({
+      id: $('#cId').value.trim(), title: $('#cTitle').value.trim(), type: $('#cType').value,
+      body: $('#cBody').value, source_text: $('#cSource').value,
+      aliases: $('#cAliases').value.split(',').map(s => s.trim()).filter(Boolean),
+      tags: $('#cTags').value.split(',').map(s => s.trim()).filter(Boolean),
+      line_of_business: $('#cLob').value.trim(), actor: STATE.actor }) });
+    toast(`Created ${res.created} as a draft. It answers nothing until it is approved.`, 'good');
+    await loadOverview(); show('content'); openPage(res.created);
+  } catch (err) { showError(err, '#cLint'); }
+};
+
+// --- scan -------------------------------------------------------------------
+$('#scanReal').onclick = () => startScan(false);
+$('#scanFixture').onclick = () => startScan(true);
+$('#sugKind').addEventListener('change', renderSuggestions);
+
+async function startScan(fixture) {
+  $('#scanReal').disabled = $('#scanFixture').disabled = true;
+  $('#suggestions').innerHTML = '<div class="empty">Scanning…</div>';
+  try {
+    const job = await api('/v1/cms/scan', { method:'POST', body: JSON.stringify({ fixture }) });
+    pollScan(job.id);
+  } catch (err) {
+    toast(err.message, 'bad');
+    $('#scanReal').disabled = $('#scanFixture').disabled = false;
+  }
+}
+
+async function pollScan(id) {
+  const job = await api('/v1/cms/scan/' + id);
+  STATE.scan = job;
+  $('#scanState').innerHTML = job.state === 'done' || job.state === 'failed'
+    ? `<span class="tag ${job.state === 'done' ? 'ok' : 'no'}">${job.state}</span> ${job.stats.elapsed_s ?? '—'}s`
+    : `<span class="spinner"></span>${esc(job.state)}`;
+  $('#scanLog').textContent = job.log.join('\n');
+  $('#scanLog').scrollTop = 1e6;
+
+  const stat = (k, v, n) => `<div class="card"><div class="k">${k}</div><div class="v">${v}</div>
+    <div class="n">${n}</div></div>`;
+  $('#scanStats').innerHTML = job.stats.pages_crawled != null ? [
+    stat('Pages crawled', job.stats.pages_crawled, 'HTML, allowlisted hosts only'),
+    stat('Documents', job.stats.documents_found ?? 0, 'wordings and summaries, recorded'),
+    stat('Candidate pages', job.stats.pages_compiled ?? 0, 'compiled, not published'),
+    stat('Benefit rows', job.stats.benefit_rows ?? 0, `across ${job.stats.products ?? 0} products`),
+  ].join('') : '';
+
+  if (job.state === 'done' || job.state === 'failed') {
+    $('#scanReal').disabled = $('#scanFixture').disabled = false;
+    STATE.suggestions = job.suggestions || [];
+    const kinds = [...new Set(STATE.suggestions.map(s => s.kind))];
+    $('#sugKind').innerHTML = '<option value="">All kinds</option>' +
+      kinds.map(k => `<option>${esc(k)}</option>`).join('');
+    renderSuggestions();
+    if (job.state === 'failed') {
+      $('#suggestions').innerHTML = `<div class="sug blocking"><h4>The scan could not read the sites</h4>
+        <p>${esc(job.error)}</p></div>`;
+      toast('Scan failed — see the panel for what the crawler reported.', 'bad');
+    }
+    loadOverview();
+    return;
+  }
+  setTimeout(() => pollScan(id), 900);
+}
+
+function renderSuggestions() {
+  const filter = $('#sugKind').value;
+  const rows = STATE.suggestions.filter(s => !filter || s.kind === filter);
+  $('#sugCount').textContent = `${rows.filter(s => !s.dismissed && !s.applied).length} open`;
+  $('#pillSug').textContent = STATE.suggestions.filter(s => !s.dismissed && !s.applied).length || '–';
+  if (!rows.length) {
+    $('#suggestions').innerHTML =
+      '<div class="empty">Nothing to review — the wiki matches what the sites publish.</div>';
+    return;
+  }
+  $('#suggestions').innerHTML = rows.map(s => `
+    <div class="sug ${esc(s.severity)}${s.applied || s.dismissed ? ' done' : ''}">
+      <h4>${esc(s.title)}
+        <span class="tag">${esc(s.kind)}</span>
+        ${s.applied ? '<span class="tag ok">applied</span>' : ''}
+        ${s.dismissed ? '<span class="tag">dismissed</span>' : ''}</h4>
+      <p>${esc(s.detail)}</p>
+      ${s.before || s.after ? `<div class="diff">
+        <div class="was"><div class="lbl">${esc(s.before_label)}</div>${esc(s.before) || '<span class="muted">—</span>'}</div>
+        <div class="now"><div class="lbl">${esc(s.after_label)}</div>${esc(s.after) || '<span class="muted">—</span>'}</div>
+      </div>` : ''}
+      <div class="toolbar" style="margin:0">
+        ${s.page_id ? `<a class="tag accent" href="#" onclick="show('content');openPage('${esc(s.page_id)}');return false">open ${esc(s.page_id)}</a>` : ''}
+        ${s.product ? `<span class="tag">${esc(s.product)}</span>` : ''}
+        <span style="margin-left:auto"></span>
+        ${!s.applied && !s.dismissed && (s.action === 'adopt-page' || s.action === 'adopt-tables')
+          ? `<button class="btn sm" data-apply="${esc(s.id)}">${
+              s.action === 'adopt-tables' ? 'Adopt the benefit table' : 'Adopt as a draft'}</button>` : ''}
+        ${!s.dismissed ? `<button class="btn ghost sm" data-dismiss="${esc(s.id)}">Dismiss</button>` : ''}
+      </div>
+    </div>`).join('');
+
+  $('#suggestions').querySelectorAll('[data-apply]').forEach(btn => btn.onclick = async () => {
+    btn.disabled = true;
+    try {
+      const res = await api(`/v1/cms/scan/${STATE.scan.id}/suggestions/${btn.dataset.apply}/apply`,
+        { method:'POST', body: JSON.stringify({ actor: STATE.actor }) });
+      toast(res.outcome, 'good');
+      pollScan(STATE.scan.id); loadOverview();
+    } catch (err) { showError(err); btn.disabled = false; }
+  });
+  $('#suggestions').querySelectorAll('[data-dismiss]').forEach(btn => btn.onclick = async () => {
+    await api(`/v1/cms/scan/${STATE.scan.id}/suggestions/${btn.dataset.dismiss}/dismiss`, { method:'POST' });
+    pollScan(STATE.scan.id);
+  });
+}
+
+// --- evals ------------------------------------------------------------------
+$('#runGen').onclick = () => runEval('generated');
+$('#runCur').onclick = () => runEval('curated');
+
+async function runEval(mode) {
+  $('#runGen').disabled = $('#runCur').disabled = true;
+  $('#evalState').innerHTML = '<span class="spinner"></span>running';
+  $('#evalOut').innerHTML = '<div class="empty">Generating the suite from the corpus and running it…</div>';
+  try {
+    const job = await api('/v1/cms/evals/run', { method:'POST', body: JSON.stringify({ mode }) });
+    pollEval(job.id, mode);
+  } catch (err) {
+    toast(err.message, 'bad');
+    $('#runGen').disabled = $('#runCur').disabled = false;
+  }
+}
+
+async function pollEval(id, mode) {
+  const job = await api('/v1/cms/evals/' + id);
+  if (job.state === 'running') { setTimeout(() => pollEval(id, mode), 800); return; }
+  $('#runGen').disabled = $('#runCur').disabled = false;
+  $('#evalState').innerHTML = `<span class="tag ${job.state === 'done' ? 'ok' : 'no'}">${job.state}</span> ${job.elapsed_s}s`;
+  if (job.state === 'failed') {
+    $('#evalOut').innerHTML = `<div class="sug blocking"><h4>The run failed</h4><p>${esc(job.error)}</p></div>`;
+    return;
+  }
+  mode === 'curated' ? renderCurated(job.result) : renderGenerated(job.result);
+}
+
+function renderGenerated(r) {
+  const card = (k, v, n, tone='') =>
+    `<div class="card ${tone}"><div class="k">${k}</div><div class="v">${v}</div><div class="n">${n}</div></div>`;
+  const failures = (r.results || []).filter(x => !x.passed);
+  $('#evalOut').innerHTML = `
+    <div class="cards">
+      ${card('Accuracy', pct(r.accuracy), `${r.total_cases} cases`, r.accuracy >= 0.95 ? 'good' : 'bad')}
+      ${card('Citation F1', r.citation_f1.toFixed(3), `recall ${r.citation_recall.toFixed(2)}`)}
+      ${card('Figure exact match', pct(r.figure_exact_match), `${r.unbound_figure_count} unbound`,
+             r.unbound_figure_count ? 'bad' : 'good')}
+      ${card('Safety', pct(r.safety_score), `${r.entitlement_leaks} leaks`, r.entitlement_leaks ? 'bad' : 'good')}
+      ${card('Merge consistency', `${r.merge_passed}/${r.merge_total}`, 'both brand framings')}
+      ${card('Recall@1', r.recall_at_1.toFixed(2), `MRR ${r.mrr.toFixed(2)}`)}
+      ${card('Latency p95', r.latency_p95 + ' ms', `p50 ${r.latency_p50} ms`)}
+      ${card('Corpus reach', pct(r.page_reach_rate), `rows ${pct(r.row_coverage)}`)}
+    </div>
+    <h3 class="sec">Accuracy by category</h3>
+    <div class="panel scroll-x"><table><thead><tr><th>Category</th><th class="num">Cases</th>
+      <th class="num">Accuracy</th></tr></thead><tbody>
+      ${Object.keys(r.counts_by_category).sort().map(c => `<tr><td>${esc(c)}</td>
+        <td class="num">${r.counts_by_category[c]}</td>
+        <td class="num" style="color:${r.accuracy_by_category[c] >= 0.99 ? 'var(--pass)' : 'var(--warn)'}">
+          ${pct(r.accuracy_by_category[c])}</td></tr>`).join('')}
+    </tbody></table></div>
+    ${r.unreached_pages?.length || r.unexercised_rows?.length ? `<h3 class="sec">Coverage gaps</h3>
+      <div class="panel"><p class="muted" style="margin:0 0 9px;font-size:12.5px">
+        Content no generated question reaches. Either it needs an alias a customer would use, or
+        nothing in the corpus points at it.</p>
+      <div class="tags">${[...(r.unreached_pages || []), ...(r.unexercised_rows || []).slice(0, 30)]
+        .map(x => `<span class="tag">${esc(x)}</span>`).join('')}</div></div>` : ''}
+    ${failures.length ? `<h3 class="sec">Failures</h3><div class="panel">
+      ${failures.slice(0, 40).map(f => `<div class="violation error">
+        <span class="tag no">${esc(f.category)}</span>
+        <span><b>${esc(f.id)}</b><br><span class="muted">${esc(f.question)}</span><br>
+        ${(f.failures || []).map(x => `<code>${esc(x)}</code>`).join(' ')}</span></div>`).join('')}
+      </div>` : '<h3 class="sec">Failures</h3><div class="panel"><span class="muted">None.</span></div>'}
+  `;
+}
+
+function renderCurated(r) {
+  $('#evalOut').innerHTML = `
+    <div class="cards">
+      <div class="card ${r.pass_rate === 1 ? 'good' : 'bad'}"><div class="k">Pass rate</div>
+        <div class="v">${pct(r.pass_rate)}</div><div class="n">${r.passed}/${r.total} cases</div></div>
+    </div>` +
+    r.suites.map(s => `<h3 class="sec">${esc(s.suite)} — ${s.passed}/${s.total}</h3>
+      <div class="panel">${s.results.map(x => `<div class="violation ${x.passed ? '' : 'error'}"
+        style="${x.passed ? 'border-left:3px solid var(--pass)' : ''}">
+        <span class="tag ${x.passed ? 'ok' : 'no'}">${x.passed ? 'pass' : 'fail'}</span>
+        <span><b>${esc(x.id)}</b>${(x.failures || []).map(f =>
+          `<br><code>${esc(f)}</code>`).join('')}</span></div>`).join('')}</div>`).join('');
+}
+
+// --- integrations -----------------------------------------------------------
+async function loadIntegrations() {
+  const data = await api('/v1/cms/integrations');
+  $('#pillInt').textContent = data.integrations.length;
+  const group = dir => data.integrations.filter(i => i.direction === dir);
+  const render = i => `
+    <div class="panel">
+      <div class="toolbar" style="margin-bottom:8px">
+        <b style="font-size:14px">${esc(i.label)}</b>
+        <span class="tag ${i.configured ? 'ok' : 'warn'}">${i.configured ? 'configured' : 'not configured'}</span>
+        ${i.required ? '<span class="tag">required</span>' : '<span class="tag">optional</span>'}
+        <span style="margin-left:auto"></span>
+        ${i.probe ? `<button class="btn ghost sm" data-test="${esc(i.name)}">Test</button>` : ''}
+        ${i.docs ? `<a class="tag accent" href="${esc(i.docs)}">docs</a>` : ''}
+      </div>
+      <p class="muted" style="margin:0 0 10px;font-size:12.5px;max-width:82ch">${esc(i.purpose)}</p>
+      <dl class="kv">
+        <dt>endpoint</dt><dd class="mono">${esc(i.endpoint)}</dd>
+        ${i.fallback ? `<dt>without it</dt><dd>${esc(i.fallback)}</dd>` : ''}
+        ${i.fields.map(f => `<dt>${esc(f.key)}</dt><dd class="mono">${esc(f.value) ||
+          '<span class="muted">unset</span>'}</dd>`).join('')}
+      </dl>
+      <div id="probe-${esc(i.name)}" style="margin-top:9px"></div>
+    </div>`;
+  $('#integrations').innerHTML =
+    '<h3 class="sec" style="margin-top:0">Inbound — what calls this service</h3>' +
+    group('inbound').map(render).join('') +
+    '<h3 class="sec">Outbound — what this service calls</h3>' +
+    group('outbound').map(render).join('');
+
+  $('#integrations').querySelectorAll('[data-test]').forEach(btn => btn.onclick = async () => {
+    const name = btn.dataset.test;
+    const target = $('#probe-' + name);
+    btn.disabled = true;
+    target.innerHTML = '<span class="spinner"></span><span class="muted">testing…</span>';
+    try {
+      const res = await api(`/v1/cms/integrations/${name}/test`, { method:'POST' });
+      target.innerHTML = `<div class="violation ${res.ok ? '' : 'error'}"
+        style="${res.ok ? 'border-left:3px solid var(--pass)' : ''}">
+        <span class="tag ${res.ok ? 'ok' : 'no'}">${res.ok ? 'ok' : 'failed'}</span>
+        <span>${esc(res.detail)} <code>${res.elapsed_ms} ms</code></span></div>`;
+    } catch (err) { target.innerHTML = `<div class="violation error">${esc(err.message)}</div>`; }
+    btn.disabled = false;
+  });
+}
+
+// --- boot -------------------------------------------------------------------
+(async () => {
+  try {
+    await loadOverview();
+    await loadPages();
+    show(location.hash.slice(1) || 'overview');
+  } catch (err) {
+    toast('Could not reach the API: ' + err.message, 'bad');
+  }
+})();
+</script>
+</body>
+</html>

@@ -15,13 +15,17 @@ from fastapi.responses import HTMLResponse
 from harness import AnswerEnvelope, AnswerRequest, TraceStore
 from pydantic import BaseModel
 
+from api.cms import configure as configure_cms
+from api.cms import router as cms_router
 from api.pipeline import answer_question
 from api.settings import Settings, get_settings
 from okf import Bundle, lint_bundle
 
 app = FastAPI(title="Etiqa SG knowledge layer", version="0.2.0")
 
-CONSOLE = Path(__file__).parent.parent / "console" / "index.html"
+UI_ROOT = Path(__file__).parent.parent
+CONSOLE = UI_ROOT / "console" / "index.html"
+STUDIO = UI_ROOT / "studio" / "index.html"
 
 _state: dict[str, Any] = {"bundle": None, "settings": None, "traces": TraceStore()}
 
@@ -35,9 +39,21 @@ def settings() -> Settings:
 
 def bundle() -> Bundle:
     if _state["bundle"] is None:
-        _state["bundle"] = Bundle.load(settings().bundle_path)
+        _load()
     current: Bundle = _state["bundle"]
     return current
+
+
+def _load() -> Bundle:
+    from api.sor import register_bundle_policies
+
+    loaded = Bundle.load(settings().bundle_path)
+    # The SOR fixture mints one policy per (product, version, tier) the loaded
+    # corpus defines. Without it a tier-specific figure has no session that
+    # holds the tier, and the in-app eval run reports coverage it never had.
+    register_bundle_policies(loaded)
+    _state["bundle"] = loaded
+    return loaded
 
 
 def traces() -> TraceStore:
@@ -61,6 +77,16 @@ async def console() -> HTMLResponse:
     if not CONSOLE.exists():
         raise HTTPException(status_code=404, detail="console not built")
     return HTMLResponse(CONSOLE.read_text())
+
+
+@app.get("/studio", response_class=HTMLResponse)
+async def studio() -> HTMLResponse:
+    """The content portal. Served from this app for the same reason the debug
+    console is: a review tool you have to deploy separately is a review tool
+    nobody opens."""
+    if not STUDIO.exists():
+        raise HTTPException(status_code=404, detail="studio not built")
+    return HTMLResponse(STUDIO.read_text())
 
 
 @app.post("/v1/answer", response_model=AnswerEnvelope)
@@ -174,10 +200,15 @@ async def bundle_page(page_id: str) -> dict[str, Any]:
     }
 
 
+def reload() -> Bundle:
+    """Reload after any write. The store owns the disk; this owns the cache,
+    and two caches of the corpus would be one too many."""
+    return _load()
+
+
 @app.post("/v1/bundle/reload")
 async def reload_bundle() -> dict[str, Any]:
-    _state["bundle"] = Bundle.load(settings().bundle_path)
-    loaded = bundle()
+    loaded = reload()
     return {"status": "reloaded", "pages": len(loaded.pages), "table_rows": len(loaded.tables)}
 
 
@@ -223,3 +254,7 @@ async def list_evals() -> dict[str, Any]:
     except ImportError:
         return {"suites": []}
     return {"suites": available_suites()}
+
+
+configure_cms(bundle, settings, reload)
+app.include_router(cms_router)
