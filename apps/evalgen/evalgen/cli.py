@@ -19,7 +19,7 @@ from pathlib import Path
 from api.settings import Settings
 from api.sor import register_bundle_policies
 
-from evalgen.generator import generate
+from evalgen.generator import generate, per_product_counts, per_product_facts
 from evalgen.metrics import Report
 from evalgen.report import write_all
 from evalgen.runner import run_suite
@@ -41,6 +41,31 @@ def _bundle(path: Path) -> Bundle:
     return bundle
 
 
+def _print_products(suite: Suite, floor: int) -> list[str]:
+    """Per-product coverage, and which products fall short of the floor.
+
+    Cases and facts are printed side by side on purpose. The case count is what
+    was asked for; the fact count is what the corpus actually supports. A
+    product hitting the floor at a depth of three questions per fact is
+    covered; one hitting it at thirty is being asked the same thing thirty
+    ways, and the table says which is which without anyone having to open the
+    suite.
+    """
+    counts = per_product_counts(suite)
+    facts = per_product_facts(suite)
+    print(f"\n  {'product':22} {'cases':>6} {'facts':>6} {'per fact':>9}")
+    short: list[str] = []
+    for product in sorted(counts):
+        cases = counts[product]
+        seen = facts.get(product, 0)
+        depth = f"{cases / seen:.1f}" if seen else "-"
+        flag = "" if cases >= floor else f"  < floor {floor}"
+        if cases < floor:
+            short.append(f"{product} ({cases})")
+        print(f"  {product:22} {cases:>6} {seen:>6} {depth:>9}{flag}")
+    return short
+
+
 def cmd_generate(args: argparse.Namespace) -> int:
     bundle = _bundle(args.bundle)
     suite = generate(bundle, args.bundle, args.today)
@@ -51,8 +76,15 @@ def cmd_generate(args: argparse.Namespace) -> int:
         f"and {len(bundle.tables)} table rows → {args.suite}"
     )
     for key, value in sorted(suite.stats.items()):
-        if not key.startswith("category:"):
-            print(f"  {key:14} {value}")
+        if not key.startswith(("category:", "product:", "facts:")):
+            print(f"  {key:20} {value}")
+    short = _print_products(suite, args.min_per_product)
+    if short:
+        print(
+            f"\nFAIL — below {args.min_per_product} cases per product: {', '.join(short)}",
+            file=sys.stderr,
+        )
+        return 1
     return 0
 
 
@@ -84,6 +116,7 @@ def cmd_all(args: argparse.Namespace) -> int:
     args.suite.parent.mkdir(parents=True, exist_ok=True)
     args.suite.write_text(suite.model_dump_json(indent=2))
     print(f"generated {suite.total} cases from {len(bundle.pages)} pages and {len(bundle.tables)} table rows")
+    short = _print_products(suite, args.min_per_product)
 
     report = run_suite(bundle, Settings(bundle_path=args.bundle), suite)
     paths = write_all(report, args.out)
@@ -92,6 +125,9 @@ def cmd_all(args: argparse.Namespace) -> int:
     for name, path in paths.items():
         print(f"  {name:9} {path}")
 
+    if short:
+        print(f"\nFAIL — below {args.min_per_product} cases per product: {', '.join(short)}", file=sys.stderr)
+        return 1
     if report.accuracy < args.gate:
         print(f"\nFAIL — accuracy {report.accuracy:.1%} below gate {args.gate:.0%}", file=sys.stderr)
         return 1
@@ -114,15 +150,28 @@ def _print_summary(report: Report) -> None:
         f"   ({report.unbound_figure_count} unbound)"
     )
     print(f"  safety              {report.safety_score:>7.1%}   ({report.entitlement_leaks} leaks)")
+    print(f"  failure shape       {report.unsafe_failures:>3} unsafe / {report.miss_failures} safe misses")
     print(f"  merge consistency   {report.merge_passed:>3}/{report.merge_total}")
     print(f"  recall@1 / @3 / MRR {report.recall_at_1:.2f} / {report.recall_at_3:.2f} / {report.mrr:.2f}")
     print(f"  latency p50/p95     {report.latency_p50} / {report.latency_p95} ms")
     print(f"  corpus reach        {report.page_reach_rate:>7.1%}   (rows {report.row_coverage:.0%})")
+    if report.accuracy_by_product:
+        print()
+        for product, rate in report.accuracy_by_product.items():
+            n = report.counts_by_product[product]
+            print(f"  {product:22} {rate:>7.1%}   ({n} cases)")
+
+    broken = [(k, v) for k, v in report.failures_by_surface.items() if v[0]]
+    if broken:
+        print("\n  phrasings that break a fact the corpus holds:")
+        for kind, (failed, total) in broken[:10]:
+            print(f"    {kind:22} {failed:>3}/{total:<4} {failed / total:>5.0%}")
+
     failures = [r for r in report.results if not r.passed]
     if failures:
         print(f"\n  {len(failures)} failing cases:")
-        for r in failures[:12]:
-            print(f"    {r.case_id:44} {'; '.join(r.failures)[:70]}")
+        for r in sorted(failures, key=lambda r: r.severity != "unsafe")[:12]:
+            print(f"    [{r.severity:6}] {r.case_id:40} {'; '.join(r.failures)[:60]}")
 
 
 def main() -> None:
@@ -131,6 +180,12 @@ def main() -> None:
     parser.add_argument("--suite", type=Path, default=DEFAULT_SUITE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--gate", type=float, default=0.95)
+    parser.add_argument(
+        "--min-per-product",
+        type=int,
+        default=100,
+        help="fail if any product has fewer cases attributable to it (0 disables)",
+    )
     parser.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
     sub = parser.add_subparsers(dest="command", required=True)
 

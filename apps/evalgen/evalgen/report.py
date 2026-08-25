@@ -80,6 +80,8 @@ def markdown(report: Report) -> str:
         f"| Numeric binding integrity | {_pct(report.numeric_binding_integrity)} |",
         f"| Unbound figures | {report.unbound_figure_count} |",
         f"| Merge consistency | {report.merge_passed}/{report.merge_total} |",
+        f"| Unsafe failures | **{report.unsafe_failures}** |",
+        f"| Safe misses | {report.miss_failures} |",
         f"| Safety score | {_pct(report.safety_score)} |",
         f"| Delivery rate | {_pct(report.delivery_rate)} |",
         f"| Latency p95 | {report.latency_p95} ms |",
@@ -91,6 +93,37 @@ def markdown(report: Report) -> str:
     ]
     for category, accuracy in sorted(report.accuracy_by_category.items()):
         lines.append(f"| {category} | {report.counts_by_category[category]} | {_pct(accuracy)} |")
+
+    if report.accuracy_by_product:
+        lines += [
+            "",
+            "## Accuracy by product",
+            "",
+            "Every product carries a full question set, so these are comparable to "
+            "each other in a way a per-category average is not.",
+            "",
+            "| Product | Cases | Accuracy |",
+            "|---|---:|---:|",
+        ]
+        for product, accuracy in report.accuracy_by_product.items():
+            lines.append(f"| {product} | {report.counts_by_product[product]} | {_pct(accuracy)} |")
+
+    broken = [(k, v) for k, v in report.failures_by_surface.items() if v[0]]
+    if broken:
+        lines += [
+            "",
+            "## Phrasings that break a fact the corpus holds",
+            "",
+            "Each fact is asked several ways against one expectation, so a row here "
+            "names a wording the pipeline cannot follow to an answer it demonstrably "
+            "has. A high rate on `canonical` is a corpus gap; a high rate on "
+            "`scenario` or `elliptical` is a retrieval gap.",
+            "",
+            "| Phrasing | Failed | Asked | Rate |",
+            "|---|---:|---:|---:|",
+        ]
+        for kind, (failed, total) in broken:
+            lines.append(f"| `{kind}` | {failed} | {total} | {failed / total:.0%} |")
 
     lines += [
         "",
@@ -180,6 +213,26 @@ def html(report: Report) -> str:
         f"<td><div class='meter'><i style='width:{a * 100:.0f}%'></i></div></td></tr>"
         for c, a in sorted(report.accuracy_by_category.items())
     )
+    product_rows = (
+        "".join(
+            f"<tr><td>{p}</td><td class='num'>{report.counts_by_product[p]}</td>"
+            f"<td class='num'>{_pct(a)}</td>"
+            f"<td><div class='meter'><i style='width:{a * 100:.0f}%'></i></div></td></tr>"
+            for p, a in report.accuracy_by_product.items()
+        )
+        or "<tr><td colspan=4 class='mute'>no case was attributed to a product</td></tr>"
+    )
+
+    surface_rows = (
+        "".join(
+            f"<tr><td class='mono'>{k}</td><td class='num'>{failed}</td>"
+            f"<td class='num'>{total}</td><td class='num'>{failed / total:.0%}</td></tr>"
+            for k, (failed, total) in report.failures_by_surface.items()
+            if failed
+        )
+        or "<tr><td colspan=4 class='mute'>every phrasing of every fact resolved</td></tr>"
+    )
+
     gate_rows = (
         "".join(
             f"<tr><td class='mono'>{g}</td><td class='num'>{n}</td></tr>"
@@ -191,7 +244,8 @@ def html(report: Report) -> str:
     fail_rows = (
         "".join(
             f"<tr><td class='mono'>{r.case_id}</td><td>{r.category}</td>"
-            f"<td><span class='pill'>{BUCKETS[diagnose(r)][0]}</span></td>"
+            f"<td><span class='pill'>{r.severity}</span> "
+            f"<span class='pill'>{BUCKETS[diagnose(r)][0]}</span></td>"
             f"<td class='mute'>{'; '.join(r.failures)[:150]}</td></tr>"
             for r in failures
         )
@@ -363,12 +417,18 @@ p{{margin:10px 0 0}}
             "Merge consistency",
             f"{report.merge_passed}/{report.merge_total}",
             report.merge_passed == report.merge_total,
-            "same facts, both brands",
+            "same facts on every route",
         )
     }
   {scorecard("Delivery rate", _pct(report.delivery_rate), None, f"{_pct(report.block_rate)} gate-blocked")}
   {
         scorecard(
+            "Unsafe failures",
+            str(report.unsafe_failures),
+            report.unsafe_failures == 0,
+            f"{report.miss_failures} safe misses",
+        )
+        + scorecard(
             "Latency p95",
             f"{report.latency_p95} ms",
             report.latency_p95 < 6000,
@@ -381,6 +441,23 @@ p{{margin:10px 0 0}}
 <div class="scroll"><table>
 <tr><th>Category</th><th class="num">Cases</th><th class="num">Accuracy</th><th></th></tr>
 {cat_rows}</table></div>
+
+<h2>Accuracy by product</h2>
+<p class="note">Every product carries a full question set, so these compare to each
+other in a way a per-category average does not — a thin product cannot look strong
+by being asked less.</p>
+<div class="scroll"><table>
+<tr><th>Product</th><th class="num">Cases</th><th class="num">Accuracy</th><th></th></tr>
+{product_rows}</table></div>
+
+<h2>Phrasings that break a fact the corpus holds</h2>
+<p class="note">Each fact is asked several ways against one expectation, so a row here
+names a wording the pipeline cannot follow to an answer it demonstrably has. A high
+rate on <code>canonical</code> is a corpus gap; a high rate on <code>scenario</code>
+or <code>elliptical</code> is a retrieval gap.</p>
+<div class="scroll"><table>
+<tr><th>Phrasing</th><th class="num">Failed</th><th class="num">Asked</th><th class="num">Rate</th></tr>
+{surface_rows}</table></div>
 
 <h2>Correctness</h2>
 <div class="two">

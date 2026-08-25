@@ -30,7 +30,7 @@ CANONICAL_RE = re.compile(r"(?is)<link[^>]+rel=[\"']canonical[\"'][^>]+href=[\"'
 CANONICAL_ALT_RE = re.compile(r"(?is)<link[^>]+href=[\"']([^\"']+)[\"'][^>]+rel=[\"']canonical[\"']")
 META_DESC_RE = re.compile(r"(?is)<meta[^>]+name=[\"']description[\"'][^>]+content=[\"']([^\"']*)[\"']")
 HREF_RE = re.compile(r"(?is)<a\b[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"']")
-# "Travel Insurance | Tiq" — the site name is furniture in a <title>.
+# "Travel Insurance | Etiqa" — the site name is furniture in a <title>.
 TITLE_SUFFIX = re.compile("\\s+[|\u2013\u2014]\\s+")
 TABLE_RE = re.compile(r"(?is)<table\b.*?</table\s*>")
 ROW_RE = re.compile(r"(?is)<tr\b.*?</tr\s*>")
@@ -115,7 +115,7 @@ def extract(html: str, url: str = "") -> Extracted:
     raw_title = TITLE_RE.search(html)
     h1 = H1_RE.search(html)
     out.title = text_of(h1.group(1)) if h1 else (text_of(raw_title.group(1)) if raw_title else "")
-    # Site name suffixes ("Travel Insurance | Tiq") are furniture in a title.
+    # Site name suffixes ("Travel Insurance | Etiqa") are furniture in a title.
     out.title = re.split(TITLE_SUFFIX, out.title)[0].strip() if out.title else ""
 
     desc = META_DESC_RE.search(html)

@@ -1,11 +1,15 @@
-"""A synthetic two-brand insurer site, served in-process for the crawler.
+"""A synthetic insurer site on two hosts, served in-process for the crawler.
 
 This exists because the real hosts are not reachable from this environment. It
-is **not** Etiqa or Tiq content: the hosts are IANA-reserved `.example` names,
+is **not** real Etiqa content: the hosts are IANA-reserved `.example` names,
 every page carries a fixture banner, and every number is invented. What it does
 reproduce faithfully is the *structure* the crawler must cope with — robots.txt,
 a sitemap index, WordPress-style furniture, cookie banners, canonical tags,
-benefit tables, PDF links, and one brand handing off to the other.
+benefit tables, PDF links, and the same insurer answering on two addresses.
+
+The two hosts are **not two brands**. They are two front doors of the one
+direct channel, which is why one can fall out of date on a figure while the
+other is current — a website defect to file, not a product difference.
 
 The product namespace mirrors §B.3 of the design so the compile step is
 exercised against the taxonomy it will meet in production.
@@ -29,9 +33,10 @@ BANNER = (
 
 TIERS = ["Basic", "Standard", "Premier"]
 
-# Products where one brand's site is out of date on its headline benefit. The
-# compile loop must notice and file a website defect rather than pick silently.
-STALE_ON_TIQ = {"travel", "private-car"}
+# Products where the second front door is out of date on its headline benefit.
+# The compile loop must notice and file a website defect rather than pick
+# silently — the same product cannot have two different limits.
+STALE_ON_SECOND_SURFACE = {"travel", "private-car"}
 
 
 @dataclass(frozen=True)
@@ -239,14 +244,25 @@ PRODUCTS: list[Product] = [
     ),
 ]
 
-BRAND = {ETIQA: "Etiqa", TIQ: "Tiq"}
+# One insurer, one brand. Both hosts are surfaces of the direct channel; only
+# the phone number on the page differs, and both reach the same insurer.
+BRAND = "Etiqa"
 HOTLINE = {ETIQA: "+65 6336 0477", TIQ: "+65 6887 8777"}
+
+# How the intermediated routes are described on the site, so the compiler has
+# a real source sentence for each of them.
+DISTRIBUTION = [
+    ("bank relationship manager", "through a bank relationship manager at our partner banks"),
+    ("tied agent", "through a tied agent who represents us directly"),
+    ("broker", "through a broker who arranges cover on your behalf"),
+    ("independent financial adviser", "through an independent financial adviser"),
+]
 
 
 def _chrome(host: str, title: str, canonical: str, body: str, description: str = "") -> str:
     """Realistic furniture: cookie banner, nav, breadcrumbs, footer. The
     extractor has to survive all of it."""
-    brand = BRAND[host]
+    brand = BRAND
     return f"""<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><title>{title} | {brand}</title>
@@ -301,8 +317,12 @@ def _benefit_table(product: Product, rng: random.Random, drift: bool = False) ->
 
 def _product_page(product: Product, host: str, rng: random.Random, drift: bool = False) -> str:
     other = TIQ if host == ETIQA else ETIQA
+    # The same cover at our other address — a second front door, not a second
+    # insurer and not a different product.
     handoff = (
-        f'<p>Also available from <a href="https://{other}/personal/{product.slug}/">{BRAND[other]}</a>.</p>'
+        f"<p>The same {product.title} is also at "
+        f'<a href="https://{other}/personal/{product.slug}/">{other}</a>, '
+        "our other address for buying direct.</p>"
         if other in product.hosts
         else ""
     )
@@ -313,14 +333,14 @@ def _product_page(product: Product, host: str, rng: random.Random, drift: bool =
     )
     exclusions = "".join(f"<li>{item}</li>" for item in product.exclusions)
     body = f"""<h1>{product.title}</h1>
-<p>{product.title} from {BRAND[host]} protects you against the costs described below.
+<p>{product.title} from {BRAND} protects you against the costs described below.
 Also known as {", ".join(product.aliases)}.</p>
 {advice}
 <h2>What is covered</h2>
 {_benefit_table(product, rng, drift)}
 <h2>What is not covered</h2><ul>{exclusions}</ul>
 <h2>How to buy</h2>
-<p>Buy online, or call {BRAND[host]} on {HOTLINE[host]} to speak with us.</p>
+<p>Buy online, or call {BRAND} on {HOTLINE[host]} to speak with us.</p>
 {handoff}
 <h2>Documents</h2>
 <ul><li><a href="/policy-wordings/{product.slug}-2026.pdf">Policy wording (PDF)</a></li>
@@ -375,7 +395,7 @@ def _servicing_page(slug: str, title: str, blurb: str, host: str) -> str:
 
 
 def _static_pages(host: str) -> dict[str, str]:
-    brand = BRAND[host]
+    brand = BRAND
     return {
         f"https://{host}/": _chrome(
             host,
@@ -403,6 +423,18 @@ def _static_pages(host: str) -> dict[str, str]:
         ),
         f"https://{host}/claims/": _chrome(
             host, "Claims", "/claims/", "<h1>Claims</h1><p>Choose your product to see how to claim.</p>"
+        ),
+        f"https://{host}/how-to-buy/": _chrome(
+            host,
+            "How to buy",
+            "/how-to-buy/",
+            "<h1>How to buy</h1><p>You can buy directly from us online at either "
+            "of our addresses, or through someone who advises you. Whichever "
+            "route you take, the cover, limits and exclusions are the same — "
+            "start from the product you want, not from where you buy it.</p>"
+            "<h2>Ways to buy</h2><ul>"
+            + "".join(f"<li>You can buy {blurb}.</li>" for _, blurb in DISTRIBUTION)
+            + "</ul>",
         ),
         f"https://{host}/policy-services/": _chrome(
             host,
@@ -441,10 +473,10 @@ def build_site(seed: int = 7) -> Site:
             if host not in product.hosts:
                 continue
             base = f"https://{host}/personal/{product.slug}/"
-            # Seeded per product, not per page: two brands selling the same plan
-            # publish the same numbers — except where one site has gone stale.
+            # Seeded per product, not per page: both front doors of the one
+            # channel publish the same numbers — except where one has gone stale.
             product_rng = random.Random(f"{seed}:{product.slug}")
-            drift = host == TIQ and product.slug in STALE_ON_TIQ
+            drift = host == TIQ and product.slug in STALE_ON_SECOND_SURFACE
             site.pages[base] = _product_page(product, host, product_rng, drift)
             site.pages[f"https://{host}/claims/{product.slug}/"] = _claims_page(product, host)
             site.pages[f"https://{host}/faqs/{product.slug}/"] = _faq_page(product, host)

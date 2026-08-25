@@ -71,6 +71,28 @@ def is_record_only(url: str) -> bool:
     return is_document(url) or path.startswith(PDF_RECORD_ONLY)
 
 
+#: Fetch order when a page budget cannot cover everything discovered. A
+#: sitemap lists what exists, not what matters — Tiq's 442-entry blog sitemap
+#: precedes its 64-entry product sitemap, so a budget applied in document
+#: order spends itself entirely on blog posts and leaves the product
+#: catalogue uncrawled. Ordering by type means the budget drops the least
+#: authoritative content first.
+FETCH_PRIORITY: dict[str, int] = {
+    "product": 0,
+    "faq": 1,
+    "claims": 2,
+    "servicing": 3,
+    "promo": 4,
+    "governance": 5,
+    "other": 6,
+    "blog": 7,
+}
+
+
+def fetch_priority(url: str) -> int:
+    return FETCH_PRIORITY.get(classify(url), 6)
+
+
 def classify(url: str) -> str:
     path = urlparse(url).path.lower()
     for pattern, page_type in PAGE_TYPE_RULES:

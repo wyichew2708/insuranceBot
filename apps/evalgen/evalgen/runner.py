@@ -119,6 +119,8 @@ def run_case(bundle: Bundle, settings: Settings, case: GeneratedCase) -> tuple[C
         stage_ms={s.name: s.ms for s in trace.stages},
         pages_loaded=len(trace.loaded),
         answer=answer.answer,
+        surface=case.surface,
+        product=case.product,
     )
     result.failures = _check(case, envelope, trace)
     result.passed = not result.failures
@@ -140,7 +142,7 @@ def run_case(bundle: Bundle, settings: Settings, case: GeneratedCase) -> tuple[C
 
 
 def run_merge_case(bundle: Bundle, settings: Settings, case: MergeCase) -> dict[str, object]:
-    """Facts must be identical across brand framings; only the deep link may
+    """Facts must be identical across routes; only the deep link may
     differ. This is the mechanical guarantee that the merge held (§B.1)."""
     runs = []
     for channel in case.channels:

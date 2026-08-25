@@ -56,19 +56,31 @@ def test_claim_and_reference_may_wrap_across_lines(bundle: Bundle) -> None:
     assert "source-ref" not in rules(body, bundle)
 
 
-def test_bare_brand_on_a_product_page_is_blocked(bundle: Bundle) -> None:
-    # Merge over-flattening guard (§I): brands live only in channel-variant blocks.
-    body = "## X\n\nBuy this on Tiq for a better price [src:raw/wordings/travel-2026.1.md#s4.2]."
-    assert "bare-brand" in rules(body, bundle)
+def test_bare_route_on_a_product_page_is_blocked(bundle: Bundle) -> None:
+    # Merge over-flattening guard (§I): a product is one product on every
+    # route, so purchase routes live only in channel-variant blocks.
+    body = (
+        "## X\n\nBuy this at https://www.tiq.com.sg/product/travel-insurance/ "
+        "[src:raw/wordings/travel-2026.1.md#s4.2]."
+    )
+    assert "bare-route" in rules(body, bundle)
 
 
-def test_brand_inside_a_channel_variant_block_is_allowed(bundle: Bundle) -> None:
+def test_naming_the_brand_in_product_prose_is_fine(bundle: Bundle) -> None:
+    """There is one brand, so naming it cannot imply a second product — this
+    used to be an error and deliberately is not any more."""
+    body = "## X\n\nEtiqa covers this loss [src:raw/wordings/travel-2026.1.md#s4.2]."
+    assert "bare-route" not in rules(body, bundle)
+
+
+def test_route_inside_a_channel_variant_block_is_allowed(bundle: Bundle) -> None:
     body = (
         "## How to buy\n\n<!-- okf:channel-variant -->\n"
-        "| Channel | Route |\n|---|---|\n| Tiq | x |\n"
+        "| Channel | Route |\n|---|---|\n"
+        "| Direct | https://www.tiq.com.sg/product/travel-insurance/ |\n"
         "<!-- /okf:channel-variant -->"
     )
-    assert "bare-brand" not in rules(body, bundle)
+    assert "bare-route" not in rules(body, bundle)
 
 
 def test_legal_underwriter_name_is_allowed(bundle: Bundle) -> None:

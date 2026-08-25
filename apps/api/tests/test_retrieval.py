@@ -1,7 +1,7 @@
 import datetime as dt
 
 from api.retrieval import frontmatter_filter, keywords, needs_rag, rag_search, score_page, wiki_read
-from harness import Budget, Trace
+from harness import Budget, Channel, Trace
 
 from conftest import TODAY, make_session
 from okf import Bundle
@@ -91,3 +91,29 @@ def test_score_page_and_keywords(bundle: Bundle) -> None:
     assert page is not None
     assert score_page(page, keywords("travel insurance")) > 0
     assert "the" not in keywords("the travel plan")
+
+
+def test_another_routes_channel_page_is_not_evidence(bundle: Bundle) -> None:
+    """The session fixes the route, so only that route's page may be read.
+
+    Without this a direct customer asking "I bought online, is my cover
+    different?" is answered from the bancassurance page, whose prose says
+    "rather than bought online" and so scores well on the question.
+    """
+    trace = Trace()
+    frontmatter_filter(bundle, "I bought online, is my cover different?", make_session(), trace, 0.08)
+    admitted = {c.page_id for c in trace.candidates if c.admitted}
+    assert "channel/direct" not in admitted or "channel/bancassurance" not in admitted
+    foreign = next(c for c in trace.candidates if c.page_id == "channel/bancassurance")
+    assert not foreign.admitted
+    assert "different channel" in foreign.reason
+
+
+def test_an_unknown_channel_may_read_every_route(bundle: Bundle) -> None:
+    """With no route in the session there is nothing to be incoherent with, so
+    every route stays offerable (§C.4)."""
+    trace = Trace()
+    session = make_session(channel=Channel.unknown)
+    frontmatter_filter(bundle, "how do I buy insurance?", session, trace, 0.08)
+    reasons = [c.reason for c in trace.candidates if c.page_id.startswith("channel/")]
+    assert not any("different channel" in r for r in reasons)

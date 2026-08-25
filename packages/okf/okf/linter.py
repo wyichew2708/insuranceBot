@@ -13,13 +13,22 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 from okf.bundle import Bundle
+
+# The block markers are the renderer's contract as much as the linter's, so the
+# pattern lives beside the code that substitutes into them.
+from okf.channels import CHANNEL_VARIANT_RE as CHANNEL_VARIANT_RE
 from okf.page import Page, PageType, Status
 from okf.tables import TOKEN_RE
 
 SOURCE_REF_RE = re.compile(r"\[src:([^\]#]+)(?:#([^\]]+))?\]")
-CHANNEL_VARIANT_RE = re.compile(r"<!--\s*okf:channel-variant\s*-->.*?<!--\s*/okf:channel-variant\s*-->", re.S)
 ALLOW_NUMBER = "<!-- okf:allow-number -->"
-BRAND_RE = re.compile(r"\b(Tiq|Etiqa)\b")
+# Channel-varying details: a deep link or a hotline. There is only one brand,
+# so a brand name in product prose is fine — what must not be baked into a
+# product page is the *route to market*, which differs per channel.
+ROUTE_RE = re.compile(
+    r"(?:https?://[^\s)\]]*\b(?:etiqa|tiq)\b[^\s)\]]*)"
+    r"|(?:\+65\s?\d{4}\s?\d{4})"
+)
 LEGAL_NAME = "Etiqa Insurance Pte. Ltd."
 
 # Currency amounts, percentages, or any standalone multi-digit quantity.
@@ -160,13 +169,16 @@ def lint_page(page: Page, bundle: Bundle) -> list[Violation]:
     if re.search(r"^##\s+(Also|Separately|Other)\b", page.body, re.M | re.I):
         warn("one-concept", "section suggests this page covers a second concept; split it")
 
-    # I — merge over-flattening: brand names only inside channel-variant blocks.
+    # I — merge over-flattening: a product is one canonical product across every
+    # distribution channel, so purchase routes and contact details belong in a
+    # channel-variant block, never in the product prose.
     if fm.type == PageType.product:
         scrubbed = body_no_variants.replace(LEGAL_NAME, "")
-        for match in BRAND_RE.finditer(scrubbed):
+        for match in ROUTE_RE.finditer(scrubbed):
             error(
-                "bare-brand",
-                f"bare brand {match.group()!r} outside a channel-variant block on a product page",
+                "bare-route",
+                f"channel-varying contact {match.group()!r} outside a "
+                "channel-variant block on a product page",
             )
 
     # Transclusions must resolve against the tables for the page's version.

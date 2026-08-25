@@ -17,7 +17,7 @@ confidence: high
 
 ## How to use this wiki
 
-One canonical page per product. Brand is a channel attribute, not a product
+One canonical page per product. The distribution channel is an attribute, not a product
 identity — the same product answers identically on every surface.
 
 ## Products — general
@@ -47,8 +47,13 @@ identity — the same product answers identically on every surface.
 
 ## Channels
 
-- [Tiq (Singapore)](./channel/tiq-sg.md)
-- [Etiqa (Singapore)](./channel/etiqa-sg.md)
+Routes to market, not brands. Every route sells the same canonical products.
+
+- [Direct channel (Singapore)](./channel/direct.md)
+- [Bancassurance channel (Singapore)](./channel/bancassurance.md)
+- [Agency channel (Singapore)](./channel/agency.md)
+- [Broker channel (Singapore)](./channel/broker.md)
+- [IFA channel (Singapore)](./channel/ifa.md)
 
 ## Entities
 

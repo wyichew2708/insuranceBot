@@ -12,15 +12,17 @@ line_of_business: general
 regulated_advice: false
 aliases: ["Tiq Home", "home contents", "house insurance", "HDB fire", "home cover"]
 channels:
-  - ref: channel/tiq-sg
-    brand: Tiq
+  - ref: channel/direct
+    name: Direct
     purchase: direct_online
-    landing: https://www.tiq.com.sg/product/home-insurance/
-    hotline: "+65 6887 8777"
-  - ref: channel/etiqa-sg
-    brand: Etiqa
-    purchase: online_or_adviser
     landing: https://www.etiqa.com.sg/personal/home-insurance/
+    hotline: "+65 6336 0477"
+    surfaces:
+      - https://www.tiq.com.sg/product/home-insurance/
+  - ref: channel/agency
+    name: Agency
+    purchase: via_tied_agent
+    landing: https://www.etiqa.com.sg/find-an-agent/
     hotline: "+65 6336 0477"
 authority:
   - raw/product-summaries/home-2026.1.md
@@ -40,9 +42,9 @@ confidence: high
 Home Insurance covers household contents and alternative accommodation where the
 home becomes uninhabitable after an insured peril [src:raw/product-summaries/home-2026.1.md#contents].
 
-The policy is underwritten by Etiqa Insurance Pte. Ltd.; the brand a customer
-buys through is a distribution surface, not a different insurer
-[src:raw/product-summaries/home-2026.1.md#contents].
+The policy is underwritten by Etiqa Insurance Pte. Ltd.; the route a customer
+buys through is a distribution channel, not a different insurer or a different
+product [src:raw/product-summaries/home-2026.1.md#contents].
 
 ## Headline benefits
 
@@ -57,6 +59,6 @@ Alternative accommodation is covered up to
 <!-- okf:channel-variant -->
 | Channel | Route | Contact |
 |---|---|---|
-| Tiq (direct online) | {{channel.tiq-sg.landing}} | {{channel.tiq-sg.hotline}} |
-| Etiqa (online or adviser) | {{channel.etiqa-sg.landing}} | {{channel.etiqa-sg.hotline}} |
+| Direct (direct online) | {{channel.direct.landing}} | {{channel.direct.hotline}} |
+| Agency (via tied agent) | {{channel.agency.landing}} | {{channel.agency.hotline}} |
 <!-- /okf:channel-variant -->

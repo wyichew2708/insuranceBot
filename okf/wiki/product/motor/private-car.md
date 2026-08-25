@@ -12,9 +12,9 @@ line_of_business: motor
 regulated_advice: false
 aliases: ["car insurance", "motor insurance", "private car", "vehicle cover"]
 channels:
-  - ref: channel/etiqa-sg
-    brand: Etiqa
-    purchase: online_or_adviser
+  - ref: channel/direct
+    name: Direct
+    purchase: direct_online
     landing: https://www.etiqa.com.sg/personal/car-insurance/
     hotline: "+65 6336 0477"
 authority:
@@ -52,5 +52,5 @@ No-claim discount accrues annually to a maximum of {{table:ncd.max_percentage}}
 <!-- okf:channel-variant -->
 | Channel | Route | Contact |
 |---|---|---|
-| Etiqa (online or adviser) | {{channel.etiqa-sg.landing}} | {{channel.etiqa-sg.hotline}} |
+| Direct (direct online) | {{channel.direct.landing}} | {{channel.direct.hotline}} |
 <!-- /okf:channel-variant -->

@@ -28,6 +28,7 @@ from crawler.policy import (
     absolutise,
     canonical_url,
     classify,
+    fetch_priority,
     host_of,
     in_allowlist,
     is_document,
@@ -201,6 +202,10 @@ class Crawler:
     async def crawl_host(self, host: str) -> None:
         robots = await self.robots_for(host)
         discovered = await self.discover(host)
+        # Stable sort by type: what a budget cut drops should be the least
+        # authoritative content, not whatever the sitemap happened to list
+        # last. Within a type, discovery order is preserved.
+        discovered = sorted(discovered, key=fetch_priority)
         seen: set[str] = set()
         fetched = 0
 
@@ -215,7 +220,13 @@ class Crawler:
                 # Documents are recorded, not chunked: they are source material
                 # for the compile loop, not web copy.
                 self.result.documents.append(
-                    {"url": url, "host": host, "kind": "document" if is_document(url) else "wording"}
+                    {
+                        "url": url,
+                        "host": host,
+                        "kind": "document" if is_document(url) else "wording",
+                        "referrer": "",  # found in the sitemap, not on a page
+                        "referrer_type": "",
+                    }
                 )
                 continue
             if fetched >= self.config.max_pages_per_host:
@@ -261,7 +272,17 @@ class Crawler:
                 continue
             known.add(link)
             self.result.documents.append(
-                {"url": link, "host": host, "kind": "document" if is_document(link) else "wording"}
+                {
+                    "url": link,
+                    "host": host,
+                    "kind": "document" if is_document(link) else "wording",
+                    # Which page pointed at it, and what kind of page that was.
+                    # A wording linked from a product page is the site's own
+                    # statement of which contract governs that product, which
+                    # outranks any guess made from an upload date.
+                    "referrer": url,
+                    "referrer_type": classify(url),
+                }
             )
 
     def _snapshot(self, url: str, host: str, html: str) -> PageRecord:

@@ -1,0 +1,19 @@
+# Keep the build context small and free of anything secret or regenerable.
+.git/
+.venv/
+.claude/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+.env
+.traces/
+.eval-reports/
+.scan/
+node_modules/
+# Generated corpora: build output, large, and rebuilt by `make knowledge`.
+okf-web/
+okf-real/
+okf-live/

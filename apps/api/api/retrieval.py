@@ -16,9 +16,9 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from harness import Budget, Candidate, LoadedPage, RagHit, Session, Trace
+from harness import Budget, Candidate, Channel, LoadedPage, RagHit, Session, Trace
 
-from okf import Bundle, Page, Status, term_idf
+from okf import Bundle, Page, PageType, Status, term_idf
 
 # The body is corroborating evidence, not the primary signal: frontmatter is
 # the curated surface and should still dominate.
@@ -217,6 +217,16 @@ def frontmatter_filter(
             reason = "review overdue — demoted to RAG"
         elif fm.lifecycle.value == "withdrawn":
             reason = "withdrawn"
+        elif (
+            fm.type is PageType.channel
+            and session.channel is not Channel.unknown
+            and page.id != session.channel.value
+        ):
+            # Another route's page. The session already fixes the route, so
+            # this page can only describe a way to buy that is not this
+            # customer's — its prose mentions the other route by name, which is
+            # how a direct customer ends up reading about bank branches.
+            reason = f"different channel ({page.id}, session is {session.channel.value})"
         elif focus is not None:
             page_product = bundle.product_key(page)
             if page_product in product_keys and page_product != focus:

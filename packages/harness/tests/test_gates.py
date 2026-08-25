@@ -35,7 +35,7 @@ BENEFITS = "product/general/travel/benefits"
 EXCLUSIONS = "product/general/travel/exclusions"
 
 
-def session(policy: PolicyContext | None = None, channel: Channel = Channel.tiq_sg) -> Session:
+def session(policy: PolicyContext | None = None, channel: Channel = Channel.direct) -> Session:
     return Session(
         session_id="t",
         channel=channel,
@@ -115,7 +115,7 @@ def test_number_in_prose_without_a_figure_is_blocked(bundle: Bundle) -> None:
 def test_rendered_hotline_digits_are_bound_by_construction(bundle: Bundle) -> None:
     a = GroundedAnswer(
         answer="Call +65 6887 8777 for help.",
-        channel_render=ChannelRender(channel=Channel.tiq_sg, hotline="+65 6887 8777"),
+        channel_render=ChannelRender(channel=Channel.direct, hotline="+65 6887 8777"),
     )
     assert gate_numeric_binding(ctx(bundle, a)).verdict is Verdict.pass_
 
@@ -161,16 +161,49 @@ def test_historic_policy_version_blocks_a_current_page_answer(bundle: Bundle) ->
 
 
 def test_channel_render_must_match_the_session(bundle: Bundle) -> None:
-    a = GroundedAnswer(answer="x", channel_render=ChannelRender(channel=Channel.etiqa_sg))
+    a = GroundedAnswer(answer="x", channel_render=ChannelRender(channel=Channel.agency))
     assert gate_channel_coherence(ctx(bundle, a)).verdict is Verdict.fail
 
 
-def test_answer_leaking_the_other_channels_hotline_is_blocked(bundle: Bundle) -> None:
+def test_either_front_door_of_the_direct_channel_is_fine(bundle: Bundle) -> None:
+    """etiqa.com.sg and tiq.com.sg are the same channel, not rival brands.
+
+    Citing one while the render names the other used to be a leak. It is not:
+    the customer starts from the product and never has to know which address
+    they arrived through.
+    """
+    for landing in ("https://www.etiqa.com.sg/", "https://www.tiq.com.sg/"):
+        a = GroundedAnswer(
+            answer=f"You can continue here: {landing} or call +65 6887 8777.",
+            channel_render=ChannelRender(
+                channel=Channel.direct,
+                landing="https://www.etiqa.com.sg/",
+                hotline="+65 6336 0477",
+                surfaces=["https://www.tiq.com.sg/"],
+            ),
+        )
+        assert gate_channel_coherence(ctx(bundle, a)).verdict is Verdict.pass_
+
+
+def test_answer_offering_another_distribution_route_is_blocked(bundle: Bundle) -> None:
+    """Distribution routes are still distinct: a direct customer must not be
+    handed the agency route, which is a different way to buy."""
     a = GroundedAnswer(
-        answer="Call +65 6336 0477.",
-        channel_render=ChannelRender(channel=Channel.tiq_sg, hotline="+65 6887 8777"),
+        answer="Find an agent at https://www.etiqa.com.sg/find-an-agent/.",
+        channel_render=ChannelRender(channel=Channel.direct, hotline="+65 6336 0477"),
     )
     assert gate_channel_coherence(ctx(bundle, a)).verdict is Verdict.fail
+
+
+def test_shared_corporate_hotline_is_not_a_leak(bundle: Bundle) -> None:
+    """Every route publishes the same corporate number; a shared value is not
+    evidence that the answer wandered into another channel."""
+    a = GroundedAnswer(
+        answer="Call +65 6336 0477.",
+        channel_render=ChannelRender(channel=Channel.agency, hotline="+65 6336 0477"),
+    )
+    result = gate_channel_coherence(ctx(bundle, a, session_override=session(channel=Channel.agency)))
+    assert result.verdict is Verdict.pass_
 
 
 # --- exclusion completeness ---

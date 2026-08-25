@@ -4,7 +4,7 @@ import datetime as dt
 
 from api.pipeline import answer_question
 from api.settings import Settings
-from harness import AuthLevel, Channel
+from harness import AuthLevel, Channel, Verdict
 
 from conftest import make_session
 from okf import Bundle
@@ -48,18 +48,117 @@ def test_anonymous_session_will_not_guess_a_tier(bundle: Bundle, settings: Setti
 
 
 def test_channel_render_is_deterministic(bundle: Bundle, settings: Settings) -> None:
-    tiq, _ = ask(bundle, settings, "How do I buy travel insurance?")
-    etiqa, _ = ask(bundle, settings, "How do I buy travel insurance?", channel=Channel.etiqa_sg)
-    assert tiq.answer.channel_render is not None and etiqa.answer.channel_render is not None
-    assert tiq.answer.channel_render.brand == "Tiq"
-    assert etiqa.answer.channel_render.brand == "Etiqa"
-    assert tiq.answer.channel_render.landing != etiqa.answer.channel_render.landing
+    """The route is resolved from the session, not chosen by the model — and
+    what differs between routes is how you buy, never the product."""
+    direct, _ = ask(bundle, settings, "How do I buy travel insurance?")
+    agency, _ = ask(bundle, settings, "How do I buy travel insurance?", channel=Channel.agency)
+    assert direct.answer.channel_render is not None and agency.answer.channel_render is not None
+    assert direct.answer.channel_render.name == "Direct"
+    assert agency.answer.channel_render.name == "Agency"
+    assert direct.answer.channel_render.landing != agency.answer.channel_render.landing
+
+
+def test_the_two_direct_front_doors_are_one_route(bundle: Bundle, settings: Settings) -> None:
+    """A direct session resolves to one route that carries both addresses; the
+    customer is never asked to pick a brand."""
+    env, _ = ask(bundle, settings, "How do I buy travel insurance?")
+    render = env.answer.channel_render
+    assert render is not None
+    assert render.channel is Channel.direct
+    hosts = {u.split("/")[2] for u in [render.landing or "", *render.surfaces] if u}
+    assert hosts == {"www.etiqa.com.sg", "www.tiq.com.sg"}
 
 
 def test_unknown_channel_offers_both_routes(bundle: Bundle, settings: Settings) -> None:
     env, _ = ask(bundle, settings, "How do I buy travel insurance?", channel=Channel.unknown)
     assert env.answer.channel_render is not None
-    assert env.answer.channel_render.both_shown
+    assert env.answer.channel_render.all_routes_shown
+
+
+# The routes travel.md declares in its "How to buy" channel-variant block.
+DIRECT_ROUTE = "https://www.etiqa.com.sg/personal/travel-insurance/"
+TIQ_ROUTE = "https://www.tiq.com.sg/product/travel-insurance/"
+AGENCY_ROUTE = "https://www.etiqa.com.sg/find-an-agent/"
+BUY = "Where do I buy travel insurance?"
+
+
+def test_channel_tokens_never_reach_the_customer(bundle: Bundle, settings: Settings) -> None:
+    """A channel-variant block is machine markup. Neither the `{{channel.*}}`
+    token nor the table it is authored in is customer copy, on any route."""
+    for channel in (Channel.direct, Channel.agency, Channel.broker, Channel.unknown):
+        env, _ = ask(bundle, settings, BUY, channel=channel)
+        answer = env.answer.answer
+        assert "{{" not in answer, f"unresolved token delivered on {channel.value}"
+        assert "|" not in answer, f"raw markdown table delivered on {channel.value}"
+        assert not env.answer.unresolved
+
+
+def test_how_to_buy_offers_only_the_session_route(bundle: Bundle, settings: Settings) -> None:
+    """The block declares every route the product is sold through; the answer
+    renders the one this session is actually on. Offering a second route's
+    contact is what the channel-coherence gate exists to stop."""
+    direct, _ = ask(bundle, settings, BUY)
+    agency, _ = ask(bundle, settings, BUY, channel=Channel.agency)
+    assert DIRECT_ROUTE in direct.answer.answer
+    assert AGENCY_ROUTE not in direct.answer.answer
+    assert AGENCY_ROUTE in agency.answer.answer
+    assert DIRECT_ROUTE not in agency.answer.answer
+
+
+def test_both_direct_front_doors_render_as_one_route(bundle: Bundle, settings: Settings) -> None:
+    """The direct binding carries two addresses. They are surfaces of one
+    route, so both are rendered rather than posed as a choice of brand."""
+    env, _ = ask(bundle, settings, BUY)
+    assert DIRECT_ROUTE in env.answer.answer
+    assert TIQ_ROUTE in env.answer.answer
+
+
+def test_unknown_channel_renders_every_declared_route(bundle: Bundle, settings: Settings) -> None:
+    """No route in the session means no route to guess, so the block offers
+    all of them (§C.4) rather than picking one."""
+    env, _ = ask(bundle, settings, BUY, channel=Channel.unknown)
+    assert DIRECT_ROUTE in env.answer.answer
+    assert AGENCY_ROUTE in env.answer.answer
+
+
+def test_a_route_the_page_does_not_declare_falls_back_to_the_registry(
+    bundle: Bundle, settings: Settings
+) -> None:
+    """travel.md is sold direct and through agents. A broker session is sent to
+    its own route from the channel registry, never down someone else's."""
+    env, _ = ask(bundle, settings, BUY, channel=Channel.broker)
+    assert env.delivered
+    assert DIRECT_ROUTE not in env.answer.answer
+    assert AGENCY_ROUTE not in env.answer.answer
+    assert "https://www.etiqa.com.sg/broker/" in env.answer.answer
+
+
+def test_substituted_contacts_are_bound_numbers(bundle: Bundle, settings: Settings) -> None:
+    """Digits inside a rendered contact came from the channel page, not the
+    model, so the numeric-binding gate must treat them as bound (§F.2)."""
+    env, _ = ask(bundle, settings, "How do I reach the direct channel?")
+    page = bundle.get("channel/direct")
+    assert page is not None
+    declared = (page.frontmatter.model_extra or {})["hotline"]
+    assert declared in env.answer.answer
+    numeric = next(g for g in env.gates if g.gate == "numeric-binding")
+    assert numeric.verdict is Verdict.pass_, numeric.detail
+    assert env.delivered
+
+
+def test_the_compiled_page_outranks_the_registry_constant(bundle: Bundle, settings: Settings) -> None:
+    """The channel page is compiled from the website; the registry in
+    okf.channels is only a fallback. A hotline that changes on the site must
+    not be answered from a number baked into the code."""
+    page = bundle.get("channel/direct")
+    assert page is not None
+    extra = page.frontmatter.model_extra or {}
+    env, _ = ask(bundle, settings, "How do I reach the direct channel?")
+    assert str(extra["hotline"]) in env.answer.answer
+    # Both front doors the page declares are still offered.
+    assert str(extra["landing"]) in env.answer.answer
+    for surface in extra.get("surfaces", []):
+        assert str(surface) in env.answer.answer
 
 
 def test_historic_policy_version_is_blocked_not_answered(bundle: Bundle, settings: Settings) -> None:
@@ -91,7 +190,20 @@ def test_injection_planted_in_crawled_copy_is_not_obeyed(bundle: Bundle, setting
 def test_every_stage_is_traced(bundle: Bundle, settings: Settings) -> None:
     _, trace = ask(bundle, settings, "What is the baggage limit?")
     names = [s.name for s in trace.stages]
-    assert names == ["frontmatter-filter", "wiki-read", "rag-decision", "sor", "compose", "gates"]
+    assert names == [
+        # Screening brackets the loop: nothing is retrieved for a turn that
+        # will be refused, and nothing ships without the drafted text itself
+        # having been read.
+        "guardrail-input",
+        "frontmatter-filter",
+        "wiki-read",
+        "rag-decision",
+        "sor",
+        "compose",
+        "generate",
+        "guardrail-output",
+        "gates",
+    ]
     assert trace.candidates and trace.rejected
     assert trace.budget["pages_loaded"] > 0
     assert trace.answer is not None

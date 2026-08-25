@@ -1,0 +1,72 @@
+# The knowledge layer, locally.
+#
+#     make docker-up          # or: docker compose --project-directory . \
+#                             #        -f infra/docker-compose.yml up --build
+#     open http://localhost:8080
+#
+# One service, because that is what the system is. An earlier draft of this
+# file carried postgres, redis, langfuse and five microservices; none of them
+# exist in this design — the corpus is a directory of Markdown and CSV, the
+# trace store is an in-memory ring buffer, and the system of record is a
+# fixture. Keeping them would have described an architecture nobody runs.
+#
+# `--project-directory .` is what makes the repo-root `.env` the source of
+# settings, and makes the relative paths below resolve from the repo root
+# rather than from `infra/`. The Makefile targets pass it for you. With no
+# `.env` present every value below falls back to its default, and the loop runs
+# fully deterministically — which is what keeps this usable offline.
+
+name: insurancebot
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/Containerfile
+    image: insurancebot/api:dev
+    ports: ["${API_PORT:-8080}:8080"]
+    environment:
+      # Listed one by one rather than pulled in with `env_file`, so the
+      # container's configuration is readable here and a missing `.env` is a
+      # working state rather than a startup error.
+      BUNDLE_PATH: ${BUNDLE_PATH:-okf}
+      LLM_PROVIDER: ${LLM_PROVIDER:-auto}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-5}
+      # A model running on the host is reachable at host.docker.internal —
+      # inside a container, localhost is the container.
+      VLLM_BASE_URL: ${VLLM_BASE_URL:-}
+      VLLM_MODEL: ${VLLM_MODEL:-}
+      GUARDRAILS: ${GUARDRAILS:-auto}
+      GUARDRAIL_MODEL: ${GUARDRAIL_MODEL:-}
+      GUARDRAIL_FAIL_CLOSED: ${GUARDRAIL_FAIL_CLOSED:-false}
+    volumes:
+      # Read-only: the served corpus is build output, and the container has no
+      # business editing it.
+      - ./okf:/app/okf:ro
+      # `okf-web` is compiled by `make knowledge` and absent on a fresh
+      # checkout, so it is not mounted by default. Uncomment once you have one,
+      # and set BUNDLE_PATH=okf-web.
+      # - ./okf-web:/app/okf-web:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).status==200 else 1)"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+# A locally hosted model is deliberately not a service here. On Apple Silicon
+# it runs on Metal, which Docker Desktop does not pass through to containers —
+# a containerised MLX server would fall back to CPU and be unusably slow. Run
+# it on the host and point the container at it:
+#
+#   mlx-openai-server launch --model-type lm --port 8090 \
+#     --model-path mlx-community/Qwen3.6-35B-A3B-OptiQ-4bit \
+#     --served-model-name qwen3.6-35b-a3b
+#
+#   VLLM_BASE_URL=http://host.docker.internal:8090 \
+#   VLLM_MODEL=qwen3.6-35b-a3b GUARDRAIL_MODEL= make docker-up
+#
+# On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer and
+# belongs here as a second service.

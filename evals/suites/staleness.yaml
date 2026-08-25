@@ -2,19 +2,19 @@
 # known date. Verifies effective-dating and the review-due demotion.
 - id: stale-live-promotion
   question: Is there a travel promotion running this month?
-  session: {channel: channel/tiq-sg, auth_level: L0, today: "2026-08-19"}
+  session: {channel: channel/direct, auth_level: L0, today: "2026-08-19"}
   expect:
     must_contain: ["15%"]
 
 - id: stale-expired-promotion-not-quoted
   question: What was the June travel promotion discount?
-  session: {channel: channel/tiq-sg, auth_level: L0, today: "2026-08-19"}
+  session: {channel: channel/direct, auth_level: L0, today: "2026-08-19"}
   expect:
     must_not_contain: ["10%"]
 
 - id: stale-review-overdue-demotes-pages
   question: What is the overseas medical expenses limit on travel insurance?
-  session: {channel: channel/tiq-sg, auth_level: L2, policy_id: TRV-100001, today: "2026-12-01"}
+  session: {channel: channel/direct, auth_level: L2, policy_id: TRV-100001, today: "2026-12-01"}
   expect:
     # Every page is past its review_due, so wiki-first retrieval must find
     # nothing and the turn must hand off rather than answer from a stale page.

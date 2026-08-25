@@ -21,7 +21,17 @@ from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE
 
 from api.retrieval import keywords, score_page
-from okf import Bundle, Page, PageType, resolve_transclusions
+from okf import (
+    CHANNEL_BY_SLUG,
+    Bundle,
+    Page,
+    PageType,
+    Route,
+    resolve_channel_tokens,
+    resolve_transclusions,
+    route_from_page,
+    spec_for,
+)
 
 HEADING_RE = re.compile(r"^##\s+(.+)$", re.M)
 PROMO_NUMBER_RE = re.compile(r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)|(?:\b\d+(?:\.\d+)?\s?%)")
@@ -182,8 +192,29 @@ def clean_prose(text: str) -> str:
     return "\n".join(line.strip() for line in text.splitlines() if line.strip())
 
 
+def declared_routes(bundle: Bundle) -> dict[str, Route]:
+    """What each channel's own compiled page says about itself. Those pages are
+    compiled from the website, so they outrank the registry constants."""
+    out: dict[str, Route] = {}
+    for slug, channel in CHANNEL_BY_SLUG.items():
+        page = bundle.get(channel.value)
+        if page is None:
+            continue
+        route = route_from_page(channel, page.frontmatter.model_extra or {})
+        if route is not None:
+            out[slug] = route
+    return out
+
+
 def render_channel(bundle: Bundle, product: Page | None, session: Session) -> ChannelRender:
-    """Deterministic. The model never picks the brand (§C.4)."""
+    """Deterministic (§C.4).
+
+    The model never picks the route. There is no brand to pick either: every
+    channel sells the same product, so this resolves *where the customer goes
+    next*, nothing more. A channel with several front doors renders its primary
+    one and carries the rest as equally valid surfaces.
+    """
+    spec = spec_for(session.channel)
     if product is None or not product.frontmatter.channels:
         # No product in play — a contact question, say. The channel page itself
         # carries the binding, and a hotline is a verbatim-only value, so it is
@@ -195,22 +226,40 @@ def render_channel(bundle: Bundle, product: Page | None, session: Session) -> Ch
             if landing or hotline:
                 return ChannelRender(
                     channel=session.channel,
-                    brand=str(extra.get("brand") or "") or None,
+                    name=spec.name if spec else None,
+                    purchase=str(extra.get("purchase") or "") or None,
+                    intermediary=str(extra.get("intermediary") or "") or None,
                     landing=str(landing) if landing else None,
                     hotline=str(hotline) if hotline else None,
+                    surfaces=[str(v) for v in (extra.get("surfaces") or [])],
                 )
-        return ChannelRender(channel=session.channel, both_shown=session.channel == Channel.unknown)
+        return ChannelRender(
+            channel=session.channel,
+            name=spec.name if spec else None,
+            all_routes_shown=session.channel == Channel.unknown,
+        )
     if session.channel == Channel.unknown:
-        return ChannelRender(channel=Channel.unknown, both_shown=True)
+        return ChannelRender(channel=Channel.unknown, all_routes_shown=True)
     for binding in product.frontmatter.channels:
         if binding.ref == session.channel.value:
             return ChannelRender(
                 channel=session.channel,
-                brand=binding.brand,
+                name=binding.name,
+                purchase=binding.purchase,
+                intermediary=spec.intermediary if spec else None,
                 landing=binding.landing,
                 hotline=binding.hotline,
+                surfaces=list(binding.surfaces),
             )
-    return ChannelRender(channel=session.channel, both_shown=False)
+    return ChannelRender(
+        channel=session.channel,
+        name=spec.name if spec else None,
+        purchase=spec.purchase if spec else None,
+        intermediary=spec.intermediary if spec else None,
+        landing=spec.landing if spec else None,
+        hotline=spec.hotline if spec else None,
+        all_routes_shown=False,
+    )
 
 
 def compose(
@@ -256,6 +305,10 @@ def compose(
     figures_detail: list[dict[str, str]] = []
     unresolved: list[str] = []
     product_key = bundle.product_key(product) if product else ""
+    # Set once any channel-variant block rendered a route: the page has already
+    # told the customer where to go, so the standing trailer would repeat it.
+    routed_in_body = False
+    declared = declared_routes(bundle)
 
     for selection in selections:
         resolved = resolve_transclusions(selection.body, bundle.tables, product_key, version, tier)
@@ -277,6 +330,16 @@ def compose(
                 }
             )
         unresolved.extend(f"{selection.page.id}:{token}" for token in resolved.unresolved)
+
+        # Routes are substituted from the page's own bindings, falling back to
+        # the channel registry, and scoped to this session's route (§C.4). The
+        # model never sees the token, so it can never invent a contact.
+        routed = resolve_channel_tokens(
+            resolved.text, session.channel, selection.page.frontmatter.channels, declared
+        )
+        resolved.text = routed.text
+        routed_in_body = routed_in_body or bool(routed.routes)
+        unresolved.extend(f"{selection.page.id}:channel:{t}" for t in routed.unresolved)
 
         # Promotion facts bind to their effective-dated page, not a table row.
         if selection.page.frontmatter.type == PageType.promotion:
@@ -306,9 +369,12 @@ def compose(
     render = render_channel(bundle, product, session)
     body = "\n\n".join(paragraphs)
 
-    if render.both_shown and product is not None and product.frontmatter.channels:
-        routes = ", ".join(f"{b.brand}: {b.landing}" for b in product.frontmatter.channels)
-        body += f"\n\nYou can buy or ask about this through either route — {routes}."
+    if routed_in_body:
+        # The channel-variant block already rendered this session's route(s).
+        pass
+    elif render.all_routes_shown and product is not None and product.frontmatter.channels:
+        routes = ", ".join(f"{b.name}: {b.landing}" for b in product.frontmatter.channels)
+        body += f"\n\nYou can buy or ask about this through any of these routes — {routes}."
     elif render.landing:
         body += f"\n\nYou can continue here: {render.landing}"
         if render.hotline:

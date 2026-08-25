@@ -50,13 +50,25 @@ class Confidence(str, Enum):
 
 
 class ChannelBinding(BaseModel):
-    """A brand/purchase-route binding hanging off a canonical product (§B.1)."""
+    """A distribution-route binding hanging off a canonical product (§B.1).
+
+    Brand is deliberately absent: every route sells the same Etiqa product, so
+    a binding says *how the customer buys*, not *whose product it is*. A route
+    with more than one front door lists the extras in `surfaces` — they are
+    interchangeable, and citing any of them is citing this channel.
+    """
 
     ref: str
-    brand: str
+    name: str
     purchase: str
     landing: str
     hotline: str | None = None
+    #: Additional equally-valid landing URLs for the same route.
+    surfaces: list[str] = Field(default_factory=list)
+
+    @property
+    def landings(self) -> list[str]:
+        return [self.landing, *self.surfaces]
 
 
 class Links(BaseModel):

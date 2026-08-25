@@ -17,7 +17,7 @@ from compiler.wiki import (
     CompileConfig,
     _offer_prose,
     benefit_code,
-    brand_for,
+    channel_for,
     compile_bundle,
     line_of_business,
     parse_cell,
@@ -57,8 +57,9 @@ def compiled(tmp_path_factory: pytest.TempPathFactory) -> Path:
 
 def test_brand_matching_prefers_the_more_specific_host() -> None:
     # "tiq" is a substring of "etiqa"; order matters.
-    assert brand_for(ETIQA)[:2] == ("Etiqa", "channel/etiqa-sg")
-    assert brand_for(TIQ)[:2] == ("Tiq", "channel/tiq-sg")
+    # Both hosts are front doors of the one direct channel, not two brands.
+    assert channel_for(ETIQA)[:2] == ("Direct", "channel/direct")
+    assert channel_for(TIQ)[:2] == ("Direct", "channel/direct")
 
 
 def test_line_of_business_falls_back_to_general() -> None:
@@ -101,17 +102,25 @@ def test_compiled_bundle_lints_clean(compiled: Path) -> None:
     assert report.errors == []
 
 
-def test_two_brands_compile_to_one_product_page(compiled: Path) -> None:
+def test_two_hosts_compile_to_one_product_and_one_channel(compiled: Path) -> None:
+    """Both websites are the same direct channel selling the same product.
+
+    They must collapse into a single binding carrying both front doors — not
+    two bindings the customer would have to choose between.
+    """
     bundle = Bundle.load(compiled)
     travel = bundle.get("product/general/travel")
     assert travel is not None
     refs = {c.ref for c in travel.frontmatter.channels}
-    assert refs == {"channel/etiqa-sg", "channel/tiq-sg"}
-    # Same product, different shopfronts: only the deep link differs.
-    landings = {c.landing for c in travel.frontmatter.channels}
-    assert len(landings) == 2
-    # No page exists per brand.
+    assert refs == {"channel/direct"}
+    binding = travel.frontmatter.channels[0]
+    # One route, reachable at both addresses.
+    assert len(binding.landings) == 2
+    assert {u.split("/")[2] for u in binding.landings} == {ETIQA, TIQ}
+    # No page exists per host, and none per brand.
     assert bundle.get("product/general/tiq-travel") is None
+    assert bundle.get("channel/tiq-sg") is None
+    assert bundle.get("channel/etiqa-sg") is None
 
 
 def test_numbers_leave_prose_and_become_table_rows(compiled: Path) -> None:

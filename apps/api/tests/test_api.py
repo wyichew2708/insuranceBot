@@ -35,7 +35,7 @@ async def test_answer_then_fetch_its_trace(client: httpx.AsyncClient) -> None:
             "question": "What is the baggage limit and per item sub-limit?",
             "session": {
                 "session_id": "t",
-                "channel": "channel/tiq-sg",
+                "channel": "channel/direct",
                 "auth_level": "L2",
                 "policy": {
                     "policy_id": "TRV-100001",
@@ -53,7 +53,11 @@ async def test_answer_then_fetch_its_trace(client: httpx.AsyncClient) -> None:
     trace = (await client.get(f"/v1/traces/{body['trace_id']}")).json()
     assert trace["figures_resolved"]
     assert trace["rejected"], "the console needs rejected candidates"
-    assert len(trace["gates"]) == 7
+    names = [g["gate"] for g in trace["gates"]]
+    # The seven verification gates, plus the output screen reported alongside
+    # them so one list decides whether an answer ships.
+    assert len(names) == 8
+    assert "guardrail-output" in names
 
 
 async def test_page_inspector(client: httpx.AsyncClient) -> None:

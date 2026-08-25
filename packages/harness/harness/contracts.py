@@ -10,6 +10,9 @@ from __future__ import annotations
 import datetime as dt
 from enum import Enum
 
+# The distribution-channel taxonomy is domain knowledge, so it lives in okf and
+# is re-exported here: a session binds to a route to market, never to a brand.
+from okf.channels import Channel as Channel
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -17,12 +20,6 @@ class AuthLevel(str, Enum):
     anonymous = "L0"
     identified = "L1"
     authenticated = "L2"
-
-
-class Channel(str, Enum):
-    tiq_sg = "channel/tiq-sg"
-    etiqa_sg = "channel/etiqa-sg"
-    unknown = "unknown"  # e.g. WhatsApp — render both routes (§C.4)
 
 
 class PolicyContext(BaseModel):
@@ -74,14 +71,24 @@ class Figure(BaseModel):
 
 
 class ChannelRender(BaseModel):
-    """Deep links resolved deterministically from session.channel. The model
-    never chooses which brand to mention (§C.4)."""
+    """Deep links resolved deterministically from session.channel (§C.4).
+
+    There is no brand decision to make — every route sells the same Etiqa
+    products. What varies is who the customer deals with and where they buy.
+    A channel may expose several interchangeable surfaces (the direct channel
+    answers on both etiqa.com.sg and tiq.com.sg); `landing` is the primary one
+    and `surfaces` carries the rest, all equally valid to cite.
+    """
 
     channel: Channel
-    brand: str | None = None
+    name: str | None = None
+    purchase: str | None = None
+    intermediary: str | None = None
     landing: str | None = None
     hotline: str | None = None
-    both_shown: bool = False
+    surfaces: list[str] = Field(default_factory=list)
+    # Channel unknown: every route offered rather than one guessed.
+    all_routes_shown: bool = False
 
 
 class Verdict(str, Enum):

@@ -20,6 +20,9 @@ authority_order:
   - raw/wordings
   - raw/product-summaries
   - raw/benefit-tables
+  # Two front doors of the direct channel, ranked by freshness — not two
+  # brands. A disagreement between them is a website defect, not a product
+  # difference, and the compiler files it to conflicts/.
   - raw/web/etiqa-sg
   - raw/web/tiq-sg
   - raw/blog          # never authoritative — context only

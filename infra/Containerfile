@@ -1,0 +1,57 @@
+# The serve loop, containerised. One process, one port: `/` is the debug
+# console, `/studio` the content portal, `/docs` the API.
+#
+# There is no database and no cache to wire up — the knowledge layer is a
+# directory of Markdown and CSV, the trace store is an in-memory ring buffer,
+# and the system of record is a fixture. That is why this file is short.
+
+FROM python:3.11-slim AS base
+
+# uv resolves and installs from the workspace lockfile, so the image gets the
+# same versions CI tested against rather than whatever resolves on build day.
+COPY --from=ghcr.io/astral-sh/uv:0.5 /uv /usr/local/bin/uv
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PROJECT_ENVIRONMENT=/opt/venv
+
+WORKDIR /app
+
+# Dependencies first, in their own layer: the manifests change far less often
+# than the source, so an edit to a Python file does not re-resolve the world.
+COPY pyproject.toml uv.lock ./
+COPY packages/okf/pyproject.toml packages/okf/
+COPY packages/harness/pyproject.toml packages/harness/
+COPY apps/api/pyproject.toml apps/api/
+COPY apps/compiler/pyproject.toml apps/compiler/
+COPY apps/crawler/pyproject.toml apps/crawler/
+COPY apps/evalgen/pyproject.toml apps/evalgen/
+# `--package api`, not a bare sync: the workspace root declares no runtime
+# dependencies of its own — every package sits in the dev group, so a plain
+# `--no-dev` sync installs an empty environment and the image builds cleanly
+# with no application in it. Naming the member pulls it and its transitive
+# workspace deps (okf, harness) and leaves the test and lint tooling out.
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --package api --no-install-project --no-dev
+
+COPY packages/ packages/
+# Only what the serve loop needs; the compiler, crawler and eval harness are
+# developer tools and have no business in a serving image.
+COPY apps/api/ apps/api/
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --package api --no-dev
+
+# Non-root: the process only ever reads the bundle, and the content API's write
+# path is mounted read-write explicitly where it is wanted.
+RUN useradd --create-home --uid 10001 app && chown -R app:app /app /opt/venv
+USER app
+
+ENV PATH="/opt/venv/bin:$PATH"
+EXPOSE 8080
+
+HEALTHCHECK --interval=15s --timeout=3s --start-period=20s --retries=3 \
+    CMD python -c "import urllib.request,sys; \
+sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).status==200 else 1)"
+
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]

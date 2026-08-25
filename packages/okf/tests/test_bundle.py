@@ -56,7 +56,10 @@ def test_products_declare_channel_bindings_not_forked_pages(bundle: Bundle) -> N
     travel = bundle.get("product/general/travel")
     assert travel is not None
     refs = {c.ref for c in travel.frontmatter.channels}
-    assert refs == {"channel/tiq-sg", "channel/etiqa-sg"}
+    assert refs == {"channel/direct", "channel/agency"}
+    # The direct route reaches the same product at either address.
+    direct = next(c for c in travel.frontmatter.channels if c.ref == "channel/direct")
+    assert {u.split("/")[2] for u in direct.landings} == {"www.etiqa.com.sg", "www.tiq.com.sg"}
     assert travel.frontmatter.status is Status.approved
     assert travel.frontmatter.type is PageType.product
 

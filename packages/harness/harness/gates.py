@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from harness.contracts import Channel, GateResult, GroundedAnswer, Session, Verdict
-from okf import Bundle, Status
+from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
 # Currency amounts, percentages, quantities with a time unit, or any bare
 # multi-digit number. A hallucinated "4 hours" must be caught as surely as a
@@ -169,8 +169,17 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
     render = ctx.answer.channel_render
     if render is not None:
         bound_text.extend(v for v in (render.hotline, render.landing) if v)
-    for binding in _channel_values(ctx):
-        bound_text.append(binding)
+        bound_text.extend(render.surfaces)
+        # Every front door of the rendered channel, from the registry. A route
+        # with two addresses has two contact numbers, and both are structural
+        # values the renderer substitutes — not figures the model invented.
+        # With no route in the session every route is on offer, so every
+        # route's contacts are renderer-substituted too.
+        specs = ALL_CHANNELS if render.channel is Channel.unknown else [spec_for(render.channel)]
+        for spec in specs:
+            if spec is not None:
+                bound_text.extend(spec.contact_values())
+    bound_text.extend(_channel_values(ctx))
 
     orphans: list[str] = []
     for match in NUMERIC_SPAN_RE.finditer(ctx.answer.answer):
@@ -219,6 +228,14 @@ def gate_version_coherence(ctx: GateContext) -> GateResult:
 
 
 def gate_channel_coherence(ctx: GateContext) -> GateResult:
+    """The rendered route must match the session's route, and the answer must
+    not hand the customer a *different distribution channel's* contact.
+
+    Surfaces of the same channel are interchangeable. etiqa.com.sg and
+    tiq.com.sg are both the direct channel, so citing either one in a direct
+    session is correct, not a leak — a customer starts from the product and
+    never has to know which front door they arrived through.
+    """
     name = "channel-coherence"
     render = ctx.answer.channel_render
     session_channel = ctx.session.channel
@@ -231,23 +248,22 @@ def gate_channel_coherence(ctx: GateContext) -> GateResult:
             detail=f"rendered {render.channel.value} for session {session_channel.value}",
         )
     if session_channel == Channel.unknown:
-        return GateResult(gate=name, verdict=Verdict.pass_, detail="no channel; both routes offered")
+        return GateResult(gate=name, verdict=Verdict.pass_, detail="no channel; every route offered")
 
-    other = ctx.bundle.get(
-        Channel.etiqa_sg.value if session_channel == Channel.tiq_sg else Channel.tiq_sg.value
-    )
-    if other is not None:
-        foreign = (
-            str(other.frontmatter.model_extra.get("landing", "")) if other.frontmatter.model_extra else ""
-        )
-        hotline = (
-            str(other.frontmatter.model_extra.get("hotline", "")) if other.frontmatter.model_extra else ""
-        )
-        for value in (foreign, hotline):
-            if value and value in ctx.answer.answer:
-                return GateResult(
-                    gate=name, verdict=Verdict.fail, detail=f"answer leaks other channel's {value!r}"
-                )
+    present = _urls_in(ctx.answer.answer)
+    for value, owner in _foreign_contacts(ctx, session_channel):
+        if not value:
+            continue
+        # A URL matches on the whole address, never on a prefix: the agency
+        # route lives under the direct route's domain, and
+        # ".../find-an-agent/" is not an offer of the site root.
+        hit = _norm_url(value) in present if _is_url(value) else value in ctx.answer.answer
+        if hit:
+            return GateResult(
+                gate=name,
+                verdict=Verdict.fail,
+                detail=f"answer offers {owner}'s {value!r} to a {session_channel.value} session",
+            )
     return GateResult(gate=name, verdict=Verdict.pass_, detail=f"channel {session_channel.value}")
 
 
@@ -343,18 +359,111 @@ def _product_chain(ctx: GateContext, page_id: str) -> list[Any]:
     return chain
 
 
+URL_RE = re.compile(r"https?://[^\s,;)\]<>\"']+")
+
+
+def _is_url(value: str) -> bool:
+    return value.startswith(("http://", "https://"))
+
+
+def _norm_url(value: str) -> str:
+    return value.rstrip("/.,;:").lower()
+
+
+def _urls_in(text: str) -> set[str]:
+    return {_norm_url(match.group()) for match in URL_RE.finditer(text)}
+
+
 def _channel_values(ctx: GateContext) -> list[str]:
-    """Every landing URL and hotline declared on the loaded product pages."""
+    """Every landing URL and hotline declared on the loaded pages, across all
+    routes. These are renderer-substituted, so digits in them are bound."""
     values: list[str] = []
     for page_id in ctx.loaded_page_ids:
         page = ctx.bundle.get(page_id)
         if page is None:
             continue
         for binding in page.frontmatter.channels:
-            values.append(binding.landing)
+            values.extend(binding.landings)
             if binding.hotline:
                 values.append(binding.hotline)
+        # A channel page declares its own route in frontmatter rather than in a
+        # binding, and the renderer substitutes from there too.
+        extra = page.frontmatter.model_extra or {}
+        values.extend(str(extra[key]) for key in ("landing", "hotline") if extra.get(key))
+        values.extend(str(surface) for surface in (extra.get("surfaces") or []))
     return values
+
+
+def _own_contacts(ctx: GateContext, channel: Channel) -> set[str]:
+    """Every landing URL and hotline that legitimately belongs to `channel`,
+    from the bundle if it describes the route, else from the registry."""
+    values: set[str] = set(spec.contact_values()) if (spec := spec_for(channel)) else set()
+    page = ctx.bundle.get(channel.value)
+    if page is not None and page.frontmatter.model_extra:
+        extra = page.frontmatter.model_extra
+        for key in ("landing", "hotline"):
+            if extra.get(key):
+                values.add(str(extra[key]))
+        for surface in extra.get("surfaces", []) or []:
+            values.add(str(surface))
+    # A product page may bind this route with its own deep link.
+    for page_id in ctx.loaded_page_ids:
+        loaded = ctx.bundle.get(page_id)
+        if loaded is None:
+            continue
+        for binding in loaded.frontmatter.channels:
+            if binding.ref == channel.value:
+                values.update(binding.landings)
+                if binding.hotline:
+                    values.add(binding.hotline)
+    return {v for v in values if v}
+
+
+def _foreign_contacts(ctx: GateContext, channel: Channel) -> list[tuple[str, str]]:
+    """(contact value, owning channel) for every *other* distribution channel.
+
+    Anything the session's own channel also publishes is excluded — the routes
+    share a corporate hotline, and a shared number is not a leak.
+    """
+    own = _own_contacts(ctx, channel)
+    own_norm = {_norm_url(v) if _is_url(v) else v for v in own}
+    out: list[tuple[str, str]] = []
+    seen: set[str] = set()
+
+    def add(value: str, owner: str) -> None:
+        key = _norm_url(value) if _is_url(value) else value
+        if value and key not in own_norm and key not in seen:
+            seen.add(key)
+            out.append((value, owner))
+
+    for other in Channel:
+        if other in (channel, Channel.unknown):
+            continue
+        if spec := spec_for(other):
+            for value in spec.contact_values():
+                add(value, other.value)
+        page = ctx.bundle.get(other.value)
+        if page is not None and page.frontmatter.model_extra:
+            extra = page.frontmatter.model_extra
+            for key in ("landing", "hotline"):
+                if extra.get(key):
+                    add(str(extra[key]), other.value)
+            for surface in extra.get("surfaces", []) or []:
+                add(str(surface), other.value)
+    # Bindings declared on the loaded product pages, which may carry deep links
+    # the channel page itself does not.
+    for page_id in ctx.loaded_page_ids:
+        loaded = ctx.bundle.get(page_id)
+        if loaded is None:
+            continue
+        for binding in loaded.frontmatter.channels:
+            if binding.ref == channel.value:
+                continue
+            for landing in binding.landings:
+                add(landing, binding.ref)
+            if binding.hotline:
+                add(binding.hotline, binding.ref)
+    return out
 
 
 ALL_GATES = [

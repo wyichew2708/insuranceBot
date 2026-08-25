@@ -1,16 +1,21 @@
 # Merge-consistency suite (§G Loop 3) — the mechanical guarantee that
-# "brand is a channel attribute, not a product identity" (§B.1) held.
-# The same question in each brand framing must return identical facts and
+# "the distribution channel is an attribute, not a product identity" (§B.1)
+# held. The same question asked on each route must return identical facts and
 # differ only in the rendered deep link.
+#
+# Etiqa and Tiq are deliberately absent as variants: they are not different
+# channels, they are two front doors of `channel/direct`, so there is no
+# brand framing left to be inconsistent about. What still varies, and so still
+# needs proving, is the route to market.
 - id: merge-travel-delay
   type: merge-consistency
   variants:
     - question: How long must a flight be delayed before the travel delay benefit applies?
-      channel: channel/tiq-sg
+      channel: channel/direct
       auth_level: L2
       policy_id: TRV-100001
     - question: How long must a flight be delayed before the travel delay benefit applies?
-      channel: channel/etiqa-sg
+      channel: channel/agency
       auth_level: L2
       policy_id: TRV-100001
 
@@ -18,11 +23,11 @@
   type: merge-consistency
   variants:
     - question: What is the overseas medical expenses limit?
-      channel: channel/tiq-sg
+      channel: channel/direct
       auth_level: L2
       policy_id: TRV-100001
     - question: What is the overseas medical expenses limit?
-      channel: channel/etiqa-sg
+      channel: channel/agency
       auth_level: L2
       policy_id: TRV-100001
 
@@ -30,10 +35,10 @@
   type: merge-consistency
   variants:
     - question: Are pre-existing conditions excluded from travel cover?
-      channel: channel/tiq-sg
+      channel: channel/direct
       auth_level: L2
       policy_id: TRV-100001
     - question: Are pre-existing conditions excluded from travel cover?
-      channel: channel/etiqa-sg
+      channel: channel/agency
       auth_level: L2
       policy_id: TRV-100001

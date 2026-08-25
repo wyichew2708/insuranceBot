@@ -12,15 +12,17 @@ line_of_business: general
 regulated_advice: false
 aliases: ["Tiq Travel", "Etiqa Travel Insurance", "travel plan", "travel cover", "trip insurance"]
 channels:
-  - ref: channel/tiq-sg
-    brand: Tiq
+  - ref: channel/direct
+    name: Direct
     purchase: direct_online
-    landing: https://www.tiq.com.sg/product/travel-insurance/
-    hotline: "+65 6887 8777"
-  - ref: channel/etiqa-sg
-    brand: Etiqa
-    purchase: online_or_adviser
     landing: https://www.etiqa.com.sg/personal/travel-insurance/
+    hotline: "+65 6336 0477"
+    surfaces:
+      - https://www.tiq.com.sg/product/travel-insurance/
+  - ref: channel/agency
+    name: Agency
+    purchase: via_tied_agent
+    landing: https://www.etiqa.com.sg/find-an-agent/
     hotline: "+65 6336 0477"
 plan_tiers: ["tier-1", "tier-2", "tier-3"]
 authority:
@@ -48,8 +50,8 @@ confidence: high
 Travel Insurance is a single-trip or annual policy covering overseas medical
 expenses, trip cancellation, travel delay and baggage [src:raw/product-summaries/travel-2026.1.md#medical].
 
-Coverage, limits and exclusions are identical across channels — this is one
-Etiqa Insurance Pte. Ltd. product [src:raw/wordings/travel-2026.1.md#s4.2].
+Coverage, limits and exclusions are identical across every distribution
+channel — this is one Etiqa Insurance Pte. Ltd. product [src:raw/wordings/travel-2026.1.md#s4.2].
 
 ## Headline benefits
 
@@ -72,8 +74,8 @@ and pre-existing conditions are the most commonly missed one [src:raw/wordings/t
 <!-- okf:channel-variant -->
 | Channel | Route | Contact |
 |---|---|---|
-| Tiq (direct online) | {{channel.tiq-sg.landing}} | {{channel.tiq-sg.hotline}} |
-| Etiqa (online or adviser) | {{channel.etiqa-sg.landing}} | {{channel.etiqa-sg.hotline}} |
+| Direct (direct online) | {{channel.direct.landing}} | {{channel.direct.hotline}} |
+| Agency (via tied agent) | {{channel.agency.landing}} | {{channel.agency.hotline}} |
 <!-- /okf:channel-variant -->
 
 Current promotions are not listed here; see [promotions](../../promotion/index.md),

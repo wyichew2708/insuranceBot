@@ -10,10 +10,19 @@ __pycache__/
 .traces/
 .eval-reports/
 node_modules/
+.DS_Store
+
+# Claude Code's local state. `launch.json` is committed — it defines the dev
+# servers and is worth sharing; the worktrees underneath it are not.
+.claude/*
+!.claude/launch.json
 
 # Build output: `make knowledge` regenerates it from the crawler + fixture.
 # It is synthetic content and must never be mistaken for a real corpus.
 okf-web/
+# Real crawl output: generated, large, and not ours to redistribute.
+okf-real/
+okf-live/
 
 # Scan staging: each scan crawls and compiles into its own throwaway bundle.
 .scan/

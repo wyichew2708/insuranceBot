@@ -98,7 +98,7 @@ async def test_full_crawl_writes_dated_snapshots(tmp_path: Path) -> None:
 
     assert len(result.ok_pages) > 100
     assert set(result.hosts) == set(HOSTS)
-    # Both brands were reached, and both wrote into their own dated directory.
+    # Both front doors were reached, each writing into its own dated directory.
     for host in HOSTS:
         directory = config.out_dir / "web" / host / "2026-08-19"
         assert directory.is_dir() and list(directory.glob("*.md"))
@@ -125,3 +125,34 @@ async def test_crawl_refuses_hosts_outside_the_allowlist(tmp_path: Path) -> None
     async with httpx.AsyncClient(transport=transport(), follow_redirects=True) as client:
         result = await crawl(config, client)
     assert {p.host for p in result.pages} == {ETIQA}
+
+
+def test_a_page_budget_drops_blog_before_product() -> None:
+    """A sitemap lists what exists, not what matters.
+
+    Tiq's 442-entry blog sitemap precedes its 64-entry product sitemap, so a
+    budget applied in document order spent itself entirely on blog posts and
+    fetched zero product pages. Ordering by type is what makes a budget cut
+    lose the least authoritative content first.
+    """
+    from crawler.policy import fetch_priority
+
+    discovered = (
+        [f"https://www.tiq.com.sg/blog/post-{i}" for i in range(400)]
+        + ["https://www.tiq.com.sg/product/term-life-insurance/family/"]
+        + ["https://www.tiq.com.sg/claims/motor/"]
+    )
+    budget = 10
+    naive = discovered[:budget]
+    assert not any("/product/" in u for u in naive), "the bug: budget spent on blog"
+
+    ordered = sorted(discovered, key=fetch_priority)[:budget]
+    assert any("/product/" in u for u in ordered)
+    assert any("/claims/" in u for u in ordered)
+
+
+def test_priority_order_is_stable_within_a_type() -> None:
+    from crawler.policy import fetch_priority
+
+    urls = [f"https://h/blog/{i}" for i in range(5)]
+    assert sorted(urls, key=fetch_priority) == urls

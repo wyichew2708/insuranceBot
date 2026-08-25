@@ -21,6 +21,34 @@ BUNDLE_ROOT = ROOT / "okf"
 TODAY = dt.date(2026, 8, 19)
 
 
+@pytest.fixture(scope="session", autouse=True)
+def offline_by_default():  # type: ignore[no-untyped-def]
+    """Pin the suite to the deterministic path, whatever the machine is configured for.
+
+    `Settings` reads `.env`, so the moment a real key lands there the tests stop
+    being tests: `test_pipeline_e2e` runs 610 cases through the full loop, and
+    with a provider configured that is three API calls each — eighteen hundred
+    billed requests, minutes of wall clock, and results that depend on a
+    network. Environment variables win over `.env` in pydantic-settings, so
+    setting them here restores the property the suite was built on: it runs
+    offline, free, and identically on every machine.
+
+    A test that wants the model layer injects its own provider, which is what
+    the guardrail tests do.
+    """
+    import os
+
+    pinned = {"LLM_PROVIDER": "deterministic", "GUARDRAILS": "rules"}
+    saved = {key: os.environ.get(key) for key in pinned}
+    os.environ.update(pinned)
+    yield
+    for key, value in saved.items():
+        if value is None:
+            os.environ.pop(key, None)
+        else:
+            os.environ[key] = value
+
+
 @pytest.fixture(scope="session")
 def settings():  # type: ignore[no-untyped-def]
     from api.settings import Settings
@@ -52,7 +80,7 @@ def make_session(  # type: ignore[no-untyped-def]
     )
     return Session(
         session_id="test",
-        channel=channel or Channel.tiq_sg,
+        channel=channel or Channel.direct,
         auth_level=auth or AuthLevel.authenticated,
         policy=policy,
         today=today,

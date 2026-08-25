@@ -3,12 +3,16 @@ name = "crawler"
 version = "0.2.0"
 description = "Polite allowlisted crawler: discovery, extraction, dated raw snapshots"
 requires-python = ">=3.11"
-dependencies = ["okf", "httpx>=0.27", "pyyaml>=6"]
+dependencies = ["okf", "httpx>=0.27", "pyyaml>=6", "pypdf>=4", "markitdown[pdf]>=0.1"]
 
 [project.optional-dependencies]
 # trafilatura gives markedly better boilerplate removal; the built-in
 # extractor is the fallback so a crawl never depends on it.
 extract = ["trafilatura>=1.12"]
+# docling is layout-aware and keeps benefit tables as tables, but it pulls in
+# torch and transformers. The builtin pypdf path is the fallback so an ingest
+# never depends on it.
+docling = ["docling>=2"]
 
 [build-system]
 requires = ["hatchling"]

@@ -29,6 +29,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+from okf.channels import ALL_CHANNELS, channel_for_host
 from okf.page import (
     ChannelBinding,
     Confidence,
@@ -46,13 +47,14 @@ from compiler.snapshots import Section, Snapshot, load_snapshots, slugify
 LEGAL_NAME = "Etiqa Insurance Pte. Ltd."
 UEN = "201331905K"
 
-# Host → the channel it is a surface of. Channel ids are contract, not
-# convention: the harness's Channel enum binds sessions to these exact refs.
-BRAND_RULES: list[tuple[str, str, str, str]] = [
-    # host substring, brand, channel id, purchase route
-    ("etiqa", "Etiqa", "channel/etiqa-sg", "online_or_adviser"),
-    ("tiq", "Tiq", "channel/tiq-sg", "direct_online"),
-]
+# Names a crawled page may use for the shopfront. They are the same insurer;
+# on a canonical product page they all normalise to the legal name.
+SHOPFRONT_NAMES = ("Tiq", "Etiqa")
+
+# Host → the distribution channel it is a surface of. The mapping lives in the
+# okf channel registry, which is contract: the harness's Channel enum binds
+# sessions to those exact refs. Both the Etiqa and Tiq hosts are surfaces of
+# the *same* direct channel — they are front doors, not brands.
 
 # §B.3 product roots. First match wins, so the more specific rules lead.
 LOB_RULES: list[tuple[re.Pattern[str], str]] = [
@@ -131,10 +133,11 @@ CONCEPT_TERMS: list[tuple[str, str, re.Pattern[str], list[str]]] = [
 ]
 
 
-def brand_for(host: str) -> tuple[str, str, str]:
-    for needle, brand, channel, purchase in BRAND_RULES:
-        if needle in host.lower():
-            return brand, channel, purchase
+def channel_for(host: str) -> tuple[str, str, str]:
+    """(display name, channel id, purchase route) for a crawled host."""
+    spec = channel_for_host(host)
+    if spec is not None:
+        return spec.name, spec.ref.value, spec.purchase
     label = host.split(".")[1] if host.count(".") > 1 else host
     return label.title(), f"channel/{slugify(label)}", "direct_online"
 
@@ -258,9 +261,10 @@ def _first_sentence(text: str) -> str:
 
 def _normalise_brands(text: str) -> str:
     """A canonical product page names the underwriter, not the shopfront
-    (§B.1) — brand belongs in the channel block."""
-    for _, brand, _, _ in BRAND_RULES:
-        text = re.sub(rf"\b{brand}\b", LEGAL_NAME, text)
+    (§B.1). Historic shopfront names are folded into the legal name so no page
+    reads as though Tiq and Etiqa were two different insurers."""
+    for shopfront in SHOPFRONT_NAMES:
+        text = re.sub(rf"\b{shopfront}\b(?!\s+Insurance Pte)", LEGAL_NAME, text)
     # Collapse "Etiqa Insurance Pte. Ltd. Insurance Pte. Ltd." if the source
     # already spelled part of the legal name.
     return re.sub(rf"(?:{re.escape(LEGAL_NAME)}\s+)+", f"{LEGAL_NAME} ", text)
@@ -538,17 +542,26 @@ def emit_product(
     aliases = sorted({a for a in aliases if a}, key=str.lower)
 
     regulated = any(ADVICE_RE.search(s.text) for s in ordered)
+    # One binding per *distribution channel*, not per host. Several hosts can
+    # be surfaces of the same route (etiqa.com.sg and tiq.com.sg are both
+    # direct), and the customer must never be asked to pick between them.
     channels: list[ChannelBinding] = []
+    by_channel: dict[str, list[Snapshot]] = {}
     for snapshot in ordered:
-        brand, channel_id, purchase = brand_for(snapshot.host)
-        phone = PHONE_RE.search(snapshot.text)
+        _, channel_id, _ = channel_for(snapshot.host)
+        by_channel.setdefault(channel_id, []).append(snapshot)
+    for channel_id, snaps in by_channel.items():
+        name, _, purchase = channel_for(snaps[0].host)
+        phone = next((PHONE_RE.search(s.text) for s in snaps if PHONE_RE.search(s.text)), None)
+        landings = list(dict.fromkeys(s.url for s in snaps))
         channels.append(
             ChannelBinding(
                 ref=channel_id,
-                brand=brand,
+                name=name,
                 purchase=purchase,
-                landing=snapshot.url,
+                landing=landings[0],
                 hotline=phone.group() if phone else None,
+                surfaces=landings[1:],
             )
         )
 
@@ -584,8 +597,8 @@ def emit_product(
     if intro:
         body.append(intro)
     body.append(
-        "Cover, limits and exclusions are identical on every channel; the brand is a "
-        f"distribution surface rather than a separate product [src:{primary.ref('body')}]."
+        "Cover, limits and exclusions are identical on every channel; a channel is a "
+        f"route to market rather than a separate product [src:{primary.ref('body')}]."
     )
 
     if rows:
@@ -606,7 +619,7 @@ def emit_product(
 
     body.append("## How to buy")
     rows_md = [
-        f"| {b.brand} ({b.purchase.replace('_', ' ')}) | "
+        f"| {b.name} ({b.purchase.replace('_', ' ')}) | "
         f"{{{{channel.{b.ref.split('/')[-1]}.landing}}}} | {{{{channel.{b.ref.split('/')[-1]}.hotline}}}} |"
         for b in channels
     ]
@@ -801,30 +814,105 @@ def emit_concepts(config: CompileConfig, snapshots: list[Snapshot], report: Comp
 
 
 def emit_channels(
-    config: CompileConfig, groups: dict[str, ProductGroup], hosts: list[str], report: CompileReport
+    config: CompileConfig,
+    groups: dict[str, ProductGroup],
+    hosts: list[str],
+    snapshots: list[Snapshot],
+    report: CompileReport,
 ) -> list[str]:
+    """One page per distribution channel — never one per host.
+
+    Several hosts can be front doors of the same route: etiqa.com.sg and
+    tiq.com.sg both answer `channel/direct`. They are folded into a single page
+    carrying every surface, so no reader is asked which brand they want.
+    Intermediated routes (bank, agency, broker, IFA) have no storefront of
+    their own and are emitted only where the crawl actually describes them.
+    """
     emitted: list[str] = []
+
+    # --- routes the crawl gives us a storefront for ---------------------
+    by_channel: dict[str, list[str]] = {}
     for host in hosts:
-        brand, channel_id, purchase = brand_for(host)
-        snapshots = [g.product[host] for g in groups.values() if host in g.product]
-        if not snapshots:
+        _, channel_id, _ = channel_for(host)
+        by_channel.setdefault(channel_id, []).append(host)
+
+    for channel_id, channel_hosts in by_channel.items():
+        name, _, purchase = channel_for(channel_hosts[0])
+        snaps = [g.product[h] for g in groups.values() for h in channel_hosts if h in g.product]
+        if not snaps:
             continue
-        phone = next((PHONE_RE.search(s.text) for s in snapshots if PHONE_RE.search(s.text)), None)
+        phone = next((PHONE_RE.search(s.text) for s in snaps if PHONE_RE.search(s.text)), None)
+        landings = [f"https://{h}/" for h in channel_hosts]
+        slug = channel_id.split("/")[-1]
         fm = _common(
             config,
             channel_id,
-            f"{brand} (Singapore)",
+            f"{name} channel (Singapore)",
             PageType.channel,
-            [snapshots[0].ref()],
-            aliases=[brand, channel_id.split("/")[-1], f"contact {brand}", f"{brand} hotline"],
-            effective_from=_snapshot_date(snapshots[0]),
+            sorted({s.ref() for s in snaps})[:4],
+            aliases=sorted({name, slug, f"buy {slug}", f"{slug} channel", *channel_hosts}),
+            effective_from=_snapshot_date(snaps[0]),
             confidence=Confidence.high,
-            brand=brand,
             purchase=purchase,
-            landing=f"https://{host}/",
+            landing=landings[0],
+            surfaces=landings[1:],
             hotline=phone.group() if phone else None,
         )
-        slug = channel_id.split("/")[-1]
+        surface_rows = [f"| {landing} | {{{{channel.{slug}.hotline}}}} |" for landing in landings]
+        body = [
+            "## How to reach us",
+            "\n".join(
+                [
+                    "<!-- okf:channel-variant -->",
+                    "| Route | Contact |",
+                    "|---|---|",
+                    *surface_rows,
+                    "<!-- /okf:channel-variant -->",
+                ]
+            ),
+        ]
+        if len(landings) > 1:
+            body.append(
+                "These addresses are front doors of the same channel, not different "
+                "insurers or different products; either one reaches the same cover "
+                f"[src:{snaps[0].ref()}]."
+            )
+        body += [
+            "Contact this channel about a policy through a route above; policy servicing "
+            f"requests are handled in the customer portal [src:{snaps[0].ref()}].",
+            "## Channel binding",
+            f"This channel is a route to market for {LEGAL_NAME}, and the products sold "
+            f"through it are the same canonical products [src:{snaps[0].ref()}].",
+            "The purchase route and the people the customer deals with are the only "
+            f"attributes that vary by channel [src:{snaps[0].ref()}].",
+        ]
+        _write(config, _page(fm, body), report)
+        emitted.append(channel_id)
+
+    # --- intermediated routes, if the crawl describes them ---------------
+    for spec in ALL_CHANNELS:
+        if spec.ref.value in emitted or spec.intermediary is None:
+            continue
+        found = _sentence_with(re.compile(re.escape(spec.intermediary), re.I), snapshots)
+        if found is None:
+            report.skip(f"no source sentence describes the {spec.name} channel")
+            continue
+        sentence, ref = found
+        slug = spec.ref.value.split("/")[-1]
+        fm = _common(
+            config,
+            spec.ref.value,
+            f"{spec.name} channel (Singapore)",
+            PageType.channel,
+            [ref],
+            aliases=sorted({spec.name, slug, spec.intermediary, f"buy through {spec.intermediary}"}),
+            effective_from=config.today,
+            confidence=Confidence.medium,
+            purchase=spec.purchase,
+            landing=spec.landing,
+            hotline=spec.hotline,
+            intermediary=spec.intermediary,
+        )
         body = [
             "## How to reach us",
             "\n".join(
@@ -836,16 +924,17 @@ def emit_channels(
                     "<!-- /okf:channel-variant -->",
                 ]
             ),
-            "Contact this channel about a policy through the route above; policy servicing "
-            f"requests are handled in the customer portal [src:{snapshots[0].ref()}].",
+            _grounded(sentence, ref, report)
+            or f"Cover is arranged through a {spec.intermediary} [src:{ref}].",
             "## Channel binding",
-            f"This channel is a distribution surface of {LEGAL_NAME}, and the products sold "
-            f"through it are the same canonical products [src:{snapshots[0].ref()}].",
-            "The purchase route, contact number and applicable promotions are the only "
-            f"attributes that vary by channel [src:{snapshots[0].ref()}].",
+            f"This channel is a route to market for {LEGAL_NAME}, and the products sold "
+            f"through it are the same canonical products [src:{ref}].",
+            f"A customer on this route deals with a {spec.intermediary} rather than buying "
+            f"online; the cover itself is unchanged [src:{ref}].",
         ]
         _write(config, _page(fm, body), report)
-        emitted.append(channel_id)
+        emitted.append(spec.ref.value)
+
     return emitted
 
 
@@ -888,7 +977,7 @@ def emit_promotions(config: CompileConfig, snapshots: list[Snapshot], report: Co
     for snapshot in snapshots:
         if snapshot.page_type != "promo":
             continue
-        _, channel_id, _ = brand_for(snapshot.host)
+        _, channel_id, _ = channel_for(snapshot.host)
         for section in snapshot.sections:
             if not section.heading:
                 continue
@@ -1132,7 +1221,7 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         if emitted:
             journeys.append((emitted, title))
 
-    channels = emit_channels(config, groups, hosts, report)
+    channels = emit_channels(config, groups, hosts, snapshots, report)
     promotions = emit_promotions(config, snapshots, report)
     governance = next((s for s in snapshots if s.page_type == "governance"), snapshots[0])
     entity = emit_entity(config, governance.ref(), report)

@@ -100,6 +100,48 @@ def cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_documents(args: argparse.Namespace) -> int:
+    from crawler.documents import backend_for, ingest
+
+    if not args.manifest.is_file():
+        print(f"no crawl manifest at {args.manifest} — run `crawl run` first")
+        return 1
+    backend = backend_for(args.backend, ocr=args.ocr)
+    report = asyncio.run(
+        ingest(
+            manifest_path=args.manifest,
+            out_root=args.out,
+            backend=backend,
+            rps=args.rps,
+            max_documents=args.max_documents,
+            keep_superseded=args.keep_superseded,
+            today=args.today.isoformat(),
+        )
+    )
+    print(f"\ningested {report.total} documents with the {report.backend!r} backend")
+    for tier, count in sorted(report.written.items()):
+        print(f"  {count:4}  raw/{tier}")
+    print(f"  {report.tables:4}  tables extracted")
+    if report.duplicates:
+        print(f"  {report.duplicates:4}  byte-identical to another URL (recorded, not stored twice)")
+    if report.superseded:
+        kept = "kept" if args.keep_superseded else "skipped"
+        print(f"  {report.superseded:4}  older revisions {kept} (superseded)")
+    if report.disambiguated:
+        print(f"  {report.disambiguated:4}  names disambiguated (filename reused across directories)")
+    if report.backend == "builtin" and report.total:
+        # Saying this out loud matters: a benefit table flattened into prose
+        # still *looks* like a successful ingest.
+        print(
+            "\n  note: the builtin backend extracts text only — benefit tables arrive as\n"
+            "  prose, not rows. Install the extra for layout-aware tables:\n"
+            "      uv sync --extra docling"
+        )
+    for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):
+        print(f"  skipped {count:4}  {reason}")
+    return 0
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="crawl")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -120,6 +162,37 @@ def main() -> None:
         help="serve the synthetic .example site in-process instead of going to the network",
     )
     run.set_defaults(func=cmd_run)
+
+    docs = sub.add_parser(
+        "documents",
+        help="parse the PDFs a crawl recorded into raw/wordings and raw/product-summaries",
+    )
+    docs.add_argument("--manifest", type=Path, default=Path("okf/raw/web/crawl-manifest.json"))
+    docs.add_argument("--out", type=Path, default=Path("okf/raw"))
+    docs.add_argument(
+        "--backend",
+        default="auto",
+        choices=["auto", "markitdown", "docling", "builtin"],
+        help="auto prefers markitdown (fast, tables), then docling (slower, "
+        "stronger column structure); builtin is pypdf text with no tables",
+    )
+    docs.add_argument(
+        "--ocr",
+        action="store_true",
+        help="run OCR (docling only). Off by default: insurer PDFs carry a text "
+        "layer, and OCR costs ~9x the time for nothing. Use it for scans.",
+    )
+    docs.add_argument("--rps", type=float, default=1.0)
+    docs.add_argument("--max-documents", type=int, default=0, help="0 = no limit")
+    docs.add_argument(
+        "--keep-superseded",
+        action="store_true",
+        help="also write older revisions. Off by default: only the current "
+        "wording is served, and a product page's own link decides which that is.",
+    )
+    docs.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
+    docs.set_defaults(func=cmd_documents)
+
     args = parser.parse_args()
     raise SystemExit(args.func(args))
 

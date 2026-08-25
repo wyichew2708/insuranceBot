@@ -2,7 +2,7 @@
 
 Runs on every publish and on a schedule; gates promotion. Any drop in
 groundedness, numeric binding or safety blocks the publish, and the merge
-consistency suite is the mechanical guarantee that brand-as-channel held.
+consistency suite is the mechanical guarantee that channel-as-attribute held.
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from api.llm import provider_for
 from api.pipeline import answer_question
 from api.settings import Settings
 from harness import AuthLevel, Channel, PolicyContext, Session
@@ -115,12 +116,15 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
         "failures": failures,
         "trace_id": trace.trace_id,
         "answer": envelope.answer.answer,
+        "composer": trace.composer,
     }
 
 
 def _run_merge_consistency(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> dict[str, Any]:
-    """The same question asked with each brand framing must return the same
-    facts and only different deep links (§G Loop 3)."""
+    """The same question asked on each distribution route must return the same
+    facts and only different deep links (§G Loop 3).
+
+    Routes differ in how a customer buys, never in what they bought."""
     failures: list[str] = []
     results = []
     for variant in case["variants"]:
@@ -150,6 +154,7 @@ def _run_merge_consistency(bundle: Bundle, settings: Settings, case: dict[str, A
         "failures": failures,
         "trace_id": "",
         "answer": baseline.answer.answer,
+        "composer": results[0][2].composer,
     }
 
 
@@ -197,6 +202,11 @@ def main() -> None:
     parser.add_argument("--suite", default="all")
     parser.add_argument("--bundle", type=Path, default=Path("okf"))
     parser.add_argument("--gate", type=float, default=1.0, help="minimum pass rate")
+    parser.add_argument(
+        "--allow-fallback",
+        action="store_true",
+        help="score cases the requested provider did not actually serve",
+    )
     args = parser.parse_args()
 
     settings = Settings(bundle_path=args.bundle)
@@ -209,7 +219,37 @@ def main() -> None:
             print(f"  {mark}  {result['id']}")
             for failure in result["failures"]:
                 print(f"          - {failure}")
+    # Which engine actually answered. This matters more than it looks: a
+    # provider that is rate-limited, timing out, or holding a bad key falls
+    # back to the deterministic composer *silently and per case*, so a run
+    # that never reached the model still scores 100%. An eval that cannot
+    # tell you it did not run is worse than no eval.
+    engines: dict[str, int] = {}
+    for suite in report["suites"]:
+        for result in suite["results"]:
+            engines[result.get("composer") or "unknown"] = (
+                engines.get(result.get("composer") or "unknown", 0) + 1
+            )
+    print("\nanswered by:")
+    for engine, count in sorted(engines.items(), key=lambda kv: -kv[1]):
+        print(f"  {count:3}  {engine}")
+
+    requested = provider_for(settings).name
+    fell_back = sum(
+        count
+        for engine, count in engines.items()
+        if requested != "deterministic" and not engine.startswith(f"{requested}:")
+    )
+
     print(f"\noverall {report['passed']}/{report['total']} ({report['pass_rate']:.1%}), gate {args.gate:.0%}")
+    if fell_back and not args.allow_fallback:
+        print(
+            f"\nFAILED: {requested!r} was requested but {fell_back} case(s) were served by "
+            f"the deterministic composer. Those cases measured the fallback, not the model — "
+            f"scoring them would report a pass rate the model never earned.\n"
+            f"Fix the provider, or pass --allow-fallback to score anyway."
+        )
+        sys.exit(2)
     if report["pass_rate"] < args.gate:
         sys.exit(1)
 

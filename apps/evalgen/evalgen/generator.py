@@ -17,16 +17,34 @@ the deterministic templates below are the offline path and the floor.
 from __future__ import annotations
 
 import datetime as dt
+import itertools
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlparse
 
 from api.sor import FIXTURE_POLICIES, policy_for
 from okf.linter import CHANNEL_VARIANT_RE
-from okf.tables import TOKEN_RE
+from okf.tables import TOKEN_RE, TableRow
 
 from evalgen.schema import Category, Expectation, GeneratedCase, MergeCase, SessionSpec, Suite
-from okf import Bundle, Page, PageType
+from evalgen.surfaces import (
+    BRAND_CONFUSION,
+    GAP_PROBES,
+    FigureFact,
+    Surface,
+    advice_surfaces,
+    alias_surfaces,
+    channel_surfaces,
+    concept_surfaces,
+    coverage_surfaces,
+    entity_surfaces,
+    exclusion_surfaces,
+    figure_surfaces,
+    gap_surfaces,
+    section_surfaces,
+)
+from okf import Bundle, Page, PageType, brand_for_host, spec_for
 
 # Attribute phrasing. The generic underscore-to-space rendering reads badly for
 # a few of these, so they get an explicit label and question form.
@@ -109,6 +127,100 @@ def _sections(page: Page) -> list[tuple[str, str]]:
     return out
 
 
+def _brands(page: Page) -> tuple[str, ...]:
+    """Front doors this product publishes, in the words a customer would use.
+
+    Read off the page's own channel bindings rather than the global registry,
+    so a product sold on one surface only is never asked about under a name it
+    does not carry.
+    """
+    out: list[str] = []
+    for binding in page.frontmatter.channels:
+        for url in binding.landings:
+            host = urlparse(url).hostname if url else None
+            name = brand_for_host(host) if host else None
+            if name and name not in out:
+                out.append(name)
+    return tuple(out)
+
+
+def _expand(
+    *,
+    base_id: str,
+    surfaces: list[Surface],
+    expect: Expectation,
+    session: SessionSpec,
+    generated_from: str,
+    product: str | None,
+) -> list[GeneratedCase]:
+    """One fact, one expectation, many questions.
+
+    The canonical surface keeps the bare id, so a family stays diffable against
+    an earlier run even when a later surface stops applying; the rest hang off
+    it as paraphrases. A loose surface drops `must_cite` — the question
+    withholds the vocabulary that would make an exact citation fair — but keeps
+    every figure assertion, which is the part that matters.
+    """
+    # Not every family has a canonical phrasing — the gap probes are a set of
+    # peers, no one of which is the plain form of the others — so nothing is
+    # marked a paraphrase of an id that was never emitted.
+    rooted = any(s.kind == "canonical" for s in surfaces)
+    cases: list[GeneratedCase] = []
+    for surface in surfaces:
+        this = expect.model_copy(deep=True)
+        if not surface.strict:
+            this.must_cite = []
+        if surface.asserts:
+            this.must_contain = [*this.must_contain, *surface.asserts]
+        if surface.category is Category.brand:
+            # Naming one front door must never come back as "which of the two?".
+            this.must_not_contain = [*this.must_not_contain, *BRAND_CONFUSION]
+        cases.append(
+            GeneratedCase(
+                id=base_id if surface.kind == "canonical" else f"{base_id}-{surface.kind}",
+                question=surface.question,
+                category=surface.category,
+                generated_from=generated_from,
+                session=session,
+                expect=this,
+                paraphrase_of=base_id if rooted and surface.kind != "canonical" else None,
+                product=product,
+                surface=surface.kind,
+            )
+        )
+    return cases
+
+
+def _paragraphs(body: str) -> list[str]:
+    """Prose paragraphs with citation markers and tokens stripped.
+
+    An exclusions page states one excluded thing per paragraph, so a paragraph
+    is the unit of fact here — finer splitting would have to guess whether the
+    "and" in "wear and tear" joins two items or names one.
+    """
+    body = CHANNEL_VARIANT_RE.sub("", body)
+    body = re.sub(r"\[src:[^\]]+\]", "", body)
+    body = TOKEN_RE.sub("", body)
+    out: list[str] = []
+    for chunk in re.split(r"\n\s*\n", body):
+        text = " ".join(chunk.split())
+        if text and not text.startswith(("#", "|", "<!--", "-", "*")):
+            out.append(text)
+    return out
+
+
+def _excluded_subject(paragraph: str) -> str | None:
+    """The thing a "X ... are excluded" sentence is about, as a noun phrase the
+    question can be built around."""
+    match = re.match(r"^(.*?)\s+(?:are|is)\s+excluded", paragraph, re.I)
+    if not match:
+        return None
+    subject = match.group(1).strip().rstrip(",")
+    if not subject or len(subject.split()) > 14:
+        return None
+    return subject[0].lower() + subject[1:]
+
+
 def _product_pages(bundle: Bundle) -> list[Page]:
     """Canonical product pages — the shallowest id per product key."""
     seen: dict[str, Page] = {}
@@ -123,12 +235,17 @@ def _product_pages(bundle: Bundle) -> list[Page]:
 
 
 def figure_cases(bundle: Bundle, index: TransclusionIndex) -> list[GeneratedCase]:
-    """One case per (benefit-table row x phrasing). These are the cases that
-    prove numbers are fetched rather than generated."""
+    """Every benefit-table row, asked every way it gets asked.
+
+    One case per row proves numbers are fetched rather than generated. The
+    phrasing family around it proves the fetch does not depend on the customer
+    happening to use the corpus's own words — which is the failure this suite
+    exists to catch, because it is invisible to a single-phrasing suite.
+    """
     cases: list[GeneratedCase] = []
     products = {bundle.product_key(p): p for p in _product_pages(bundle)}
 
-    for row in sorted(bundle.tables.rows, key=lambda r: r.row_id):
+    for seed, row in enumerate(sorted(bundle.tables.rows, key=lambda r: r.row_id)):
         product_page = products.get(row.product)
         if product_page is None:
             continue
@@ -143,7 +260,7 @@ def figure_cases(bundle: Bundle, index: TransclusionIndex) -> list[GeneratedCase
             policy = policy_for(row.product, row.version, "ALL") or _any_policy(row.product, row.version)
 
         session = SessionSpec(
-            channel="channel/tiq-sg",
+            channel="channel/direct",
             auth_level="L2" if policy else "L0",
             policy_id=policy.policy_id if policy else None,
         )
@@ -165,12 +282,14 @@ def figure_cases(bundle: Bundle, index: TransclusionIndex) -> list[GeneratedCase
                         expect_rag=True,
                         expect_gate_fail=["version-coherence"],
                     ),
+                    product=row.product,
+                    surface="canonical",
                 )
             )
             continue
 
         template = ATTRIBUTE_QUESTION.get(row.attribute, "What is the {benefit} {attribute} on {product}?")
-        question = template.format(
+        canonical = template.format(
             benefit=benefit,
             attribute=attribute_label(row.attribute),
             product=title,
@@ -183,34 +302,29 @@ def figure_cases(bundle: Bundle, index: TransclusionIndex) -> list[GeneratedCase
             expect_delivered=True,
             relevant_pages=citing,
         )
-        cases.append(
-            GeneratedCase(
-                id=f"fig-{_slug(row.row_id)}",
-                question=question,
-                category=Category.figure,
-                generated_from=row.row_id,
-                session=session,
+        fact = FigureFact(
+            title=title,
+            benefit_code=row.benefit_code,
+            benefit=benefit,
+            attribute=row.attribute,
+            attribute_text=attribute_label(row.attribute),
+            value=row.rendered(),
+            tier=row.tier,
+            canonical=canonical,
+            aliases=tuple(product_page.frontmatter.aliases),
+            brands=_brands(product_page),
+            seed=seed,
+        )
+        cases.extend(
+            _expand(
+                base_id=f"fig-{_slug(row.row_id)}",
+                surfaces=figure_surfaces(fact),
                 expect=expect,
+                session=session,
+                generated_from=row.row_id,
+                product=row.product,
             )
         )
-
-        # A paraphrase through an authored alias, testing entity resolution
-        # rather than bag-of-words luck. Rotating through the list keeps both
-        # brands' vocabulary in play instead of always using the first alias.
-        aliases = product_page.frontmatter.aliases
-        if aliases:
-            alias = aliases[len(cases) % len(aliases)]
-            cases.append(
-                GeneratedCase(
-                    id=f"fig-alias-{_slug(row.row_id)}",
-                    question=(f"For my {alias}, how much is the {benefit} {attribute_label(row.attribute)}?"),
-                    category=Category.alias,
-                    generated_from=f"{row.row_id} via alias {alias!r}",
-                    session=session,
-                    expect=expect.model_copy(),
-                    paraphrase_of=f"fig-{_slug(row.row_id)}",
-                )
-            )
     return cases
 
 
@@ -222,28 +336,38 @@ def _any_policy(product: str, version: str):  # type: ignore[no-untyped-def]
 
 
 def alias_coverage_cases(bundle: Bundle) -> list[GeneratedCase]:
-    """One question per authored alias, so no alias goes untested. Scored
-    through the retrieval metrics rather than a brittle citation assertion,
-    because several aliases legitimately resolve to a sub-page."""
+    """Every authored alias, asked three ways, so no alias goes untested and
+    none is tested only in the one sentence shape it happens to suit.
+
+    Scored through the retrieval metrics rather than a brittle citation
+    assertion, because several aliases legitimately resolve to a sub-page.
+    """
     cases: list[GeneratedCase] = []
     for page in sorted(bundle.pages.values(), key=lambda p: p.id):
         if page.frontmatter.type not in {PageType.product, PageType.concept}:
             continue
+        product = bundle.product_key(page) if page.frontmatter.type is PageType.product else None
         for alias in page.frontmatter.aliases:
-            cases.append(
-                GeneratedCase(
-                    id=f"ali-{_slug(page.id)}-{_slug(alias)}",
-                    question=f"Tell me about {alias}.",
-                    category=Category.alias,
-                    generated_from=f"{page.id} alias {alias!r}",
-                    session=SessionSpec(auth_level="L0"),
+            cases.extend(
+                _expand(
+                    base_id=f"ali-{_slug(page.id)}-{_slug(alias)}",
+                    surfaces=alias_surfaces(alias),
                     expect=Expectation(expect_delivered=True, relevant_pages=[page.id]),
+                    session=SessionSpec(auth_level="L0"),
+                    generated_from=f"{page.id} alias {alias!r}",
+                    product=product,
                 )
             )
     return cases
 
 
 def exclusion_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """One family per excluded thing the corpus actually states.
+
+    The unit is a paragraph rather than a heading: an exclusions page states
+    one excluded thing per paragraph, and asking once per heading tests only
+    that the page is reachable, not that each exclusion in it is.
+    """
     cases: list[GeneratedCase] = []
     for page in sorted(bundle.pages.values(), key=lambda p: p.id):
         if not page.id.endswith("/exclusions"):
@@ -251,19 +375,29 @@ def exclusion_cases(bundle: Bundle) -> list[GeneratedCase]:
         product_id = page.id.rsplit("/", 1)[0]
         product = bundle.get(product_id)
         title = product.frontmatter.title if product else page.frontmatter.title
-        for heading, _body in _sections(page):
-            cases.append(
-                GeneratedCase(
-                    id=f"exc-{_slug(page.id)}-{_slug(heading)}",
-                    question=f"Are {heading.lower()} covered under {title}?",
-                    category=Category.exclusion,
-                    generated_from=f"{page.id}#{heading}",
+        key = bundle.product_key(product) if product else None
+        brands = _brands(product) if product else ()
+        expect = Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id])
+
+        subjects: list[str] = []
+        for paragraph in _paragraphs(page.body):
+            subject = _excluded_subject(paragraph)
+            if subject and subject not in subjects:
+                subjects.append(subject)
+        # A page that states its exclusions some other way still has to be
+        # reachable, so fall back to its headings rather than emitting nothing.
+        if not subjects:
+            subjects = [heading.lower() for heading, _ in _sections(page)]
+
+        for seed, subject in enumerate(subjects):
+            cases.extend(
+                _expand(
+                    base_id=f"exc-{_slug(page.id)}-{_slug(subject)}",
+                    surfaces=exclusion_surfaces(title, subject, seed, brands),
+                    expect=expect,
                     session=SessionSpec(auth_level="L0"),
-                    expect=Expectation(
-                        must_cite=[page.id],
-                        expect_delivered=True,
-                        relevant_pages=[page.id],
-                    ),
+                    generated_from=f"{page.id} :: {subject}",
+                    product=key,
                 )
             )
     return cases
@@ -334,21 +468,23 @@ def journey_cases(bundle: Bundle) -> list[GeneratedCase]:
 
 
 def coverage_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """The question most conversations open with, including the two brand
+    forms the merge has to survive."""
     cases: list[GeneratedCase] = []
     for page in _product_pages(bundle):
         title = page.frontmatter.title
         exclusions = page.frontmatter.links.exclusions
-        cases.append(
-            GeneratedCase(
-                id=f"cov-{_slug(page.id)}",
-                question=f"What does {title} cover?",
-                category=Category.coverage,
-                generated_from=page.id,
-                session=SessionSpec(auth_level="L0"),
+        cases.extend(
+            _expand(
+                base_id=f"cov-{_slug(page.id)}",
+                surfaces=coverage_surfaces(title, _brands(page)),
                 expect=Expectation(
                     expect_delivered=True,
                     relevant_pages=[page.id] + ([exclusions] if exclusions else []),
                 ),
+                session=SessionSpec(auth_level="L0"),
+                generated_from=page.id,
+                product=bundle.product_key(page),
             )
         )
     return cases
@@ -415,16 +551,18 @@ def entitlement_cases(bundle: Bundle) -> list[GeneratedCase]:
 
 
 def advice_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """Requests for a recommendation. Every one must trip the advice boundary;
+    none may be answered with a product choice, however the customer asks."""
     cases: list[GeneratedCase] = []
     for page in _product_pages(bundle):
-        cases.append(
-            GeneratedCase(
-                id=f"adv-{_slug(page.id)}",
-                question=f"Which {page.frontmatter.title} plan should I buy for my family?",
-                category=Category.advice,
-                generated_from=page.id,
-                session=SessionSpec(auth_level="L0"),
+        cases.extend(
+            _expand(
+                base_id=f"adv-{_slug(page.id)}",
+                surfaces=advice_surfaces(page.frontmatter.title),
                 expect=Expectation(expect_advice_flag=True),
+                session=SessionSpec(auth_level="L0"),
+                generated_from=page.id,
+                product=bundle.product_key(page),
             )
         )
     return cases
@@ -489,7 +627,8 @@ def channel_cases(bundle: Bundle) -> list[GeneratedCase]:
     cases: list[GeneratedCase] = []
     for page in sorted(bundle.by_type(PageType.channel), key=lambda p: p.id):
         fm = page.frontmatter
-        brand = str(getattr(fm, "brand", None) or fm.title.split("(")[0].strip())
+        spec = spec_for(page.id)
+        route = spec.name if spec else fm.title.split("(")[0].strip()
         hotline = getattr(fm, "hotline", None)
         other = [
             str(getattr(p.frontmatter, "hotline", "") or "")
@@ -499,8 +638,9 @@ def channel_cases(bundle: Bundle) -> list[GeneratedCase]:
         expect = Expectation(
             must_cite=[page.id],
             must_contain=[hotline] if hotline else [],
-            # The other brand's number leaking into this channel's answer is
-            # the failure the channel-coherence gate exists to prevent.
+            # Another *route's* number leaking into this channel's answer is
+            # the failure the channel-coherence gate exists to prevent. Routes
+            # that publish the same corporate number are not in conflict.
             must_not_contain=[h for h in other if h and h != hotline],
             expect_delivered=True,
             relevant_pages=[page.id],
@@ -508,7 +648,7 @@ def channel_cases(bundle: Bundle) -> list[GeneratedCase]:
         cases.append(
             GeneratedCase(
                 id=f"chan-{_slug(page.id)}",
-                question=f"How do I contact {brand} about my policy?",
+                question=f"How do I contact you about a policy bought through the {route} channel?",
                 category=Category.channel,
                 generated_from=page.id,
                 session=SessionSpec(channel=page.id),
@@ -519,7 +659,7 @@ def channel_cases(bundle: Bundle) -> list[GeneratedCase]:
 
 
 def entity_cases(bundle: Bundle) -> list[GeneratedCase]:
-    """One underwriter behind every brand (§B.1). If the assistant cannot say
+    """One underwriter behind every route (§B.1). If the assistant cannot say
     who carries the risk, the merge story is decorative."""
     entities = sorted(bundle.by_type(PageType.entity), key=lambda p: p.id)
     if not entities:
@@ -532,25 +672,219 @@ def entity_cases(bundle: Bundle) -> list[GeneratedCase]:
             category=Category.entity,
             generated_from=entity.id,
             expect=Expectation(must_cite=[entity.id], expect_delivered=True, relevant_pages=[entity.id]),
+            surface="canonical",
         )
     ]
-    for page in _product_pages(bundle)[:6]:
+    for page in _product_pages(bundle):
         underwriter = page.frontmatter.underwriter
         if not underwriter:
             continue
-        cases.append(
-            GeneratedCase(
-                id=f"ent-{_slug(page.id)}",
-                question=f"Who is the insurer behind {page.frontmatter.title}?",
-                category=Category.entity,
-                generated_from=page.id,
+        cases.extend(
+            _expand(
+                base_id=f"ent-{_slug(page.id)}",
+                surfaces=entity_surfaces(page.frontmatter.title),
                 expect=Expectation(
                     must_contain=[underwriter],
                     expect_delivered=True,
                     relevant_pages=[page.id, entity.id],
                 ),
+                session=SessionSpec(auth_level="L0"),
+                generated_from=page.id,
+                product=bundle.product_key(page),
             )
         )
+    return cases
+
+
+def section_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """Every section a product page publishes under its own heading.
+
+    The corpus chose the heading, so these ask its own words back — the
+    cheapest possible retrieval, and therefore the one whose failure says the
+    most.
+    """
+    cases: list[GeneratedCase] = []
+    for page in sorted(bundle.by_type(PageType.product), key=lambda p: p.id):
+        title = page.frontmatter.title
+        key = bundle.product_key(page)
+        for heading, body in _sections(page):
+            if not body.strip():
+                continue
+            cases.extend(
+                _expand(
+                    base_id=f"sec-{_slug(page.id)}-{_slug(heading)}",
+                    surfaces=section_surfaces(title, heading),
+                    expect=Expectation(
+                        must_cite=[page.id],
+                        expect_delivered=True,
+                        relevant_pages=[page.id],
+                    ),
+                    session=SessionSpec(auth_level="L0"),
+                    generated_from=f"{page.id}#{heading}",
+                    product=key,
+                )
+            )
+    return cases
+
+
+def concept_product_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """A concept asked *through* a product.
+
+    The definition lives on the concept page and the number lives in the
+    product's tables, so these are the turns whose answer has to be assembled
+    from two pages at once — the shape a single-page retriever gets wrong while
+    scoring well everywhere else.
+    """
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        title = page.frontmatter.title
+        key = bundle.product_key(page)
+        for concept_id in page.frontmatter.links.concepts:
+            concept = bundle.get(concept_id)
+            if concept is None:
+                continue
+            cases.extend(
+                _expand(
+                    base_id=f"cpt-{_slug(page.id)}-{_slug(concept_id)}",
+                    surfaces=concept_surfaces(title, concept.frontmatter.title),
+                    expect=Expectation(
+                        expect_delivered=True,
+                        relevant_pages=[concept_id, page.id],
+                    ),
+                    session=SessionSpec(auth_level="L0"),
+                    generated_from=f"{page.id} + {concept_id}",
+                    product=key,
+                )
+            )
+    return cases
+
+
+def channel_product_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """One product down one route.
+
+    `channel_cases` proves a route's contact details are reproduced verbatim.
+    These prove the route is reachable *from a product question*, which is how
+    a customer actually arrives at it — nobody opens with "tell me about your
+    bancassurance channel".
+    """
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        title = page.frontmatter.title
+        key = bundle.product_key(page)
+        for binding in page.frontmatter.channels:
+            spec = spec_for(binding.ref)
+            route = spec.name if spec else binding.name
+            cases.extend(
+                _expand(
+                    base_id=f"cch-{_slug(page.id)}-{_slug(binding.ref)}",
+                    surfaces=channel_surfaces(title, route, binding.hotline),
+                    expect=Expectation(
+                        expect_delivered=True,
+                        relevant_pages=[page.id, binding.ref],
+                    ),
+                    session=SessionSpec(channel=binding.ref, auth_level="L0"),
+                    generated_from=f"{page.id} via {binding.ref}",
+                    product=key,
+                )
+            )
+    return cases
+
+
+def compound_cases(bundle: Bundle, index: TransclusionIndex) -> list[GeneratedCase]:
+    """Two figures in one turn.
+
+    Every figure family asks for one number. A customer routinely asks for two,
+    and an answer that binds the first correctly then improvises the second
+    passes every single-figure case in the suite.
+    """
+    cases: list[GeneratedCase] = []
+    products = {bundle.product_key(p): p for p in _product_pages(bundle)}
+    by_group: dict[tuple[str, str, str], list[TableRow]] = {}
+    for row in sorted(bundle.tables.rows, key=lambda r: r.row_id):
+        by_group.setdefault((row.product, row.version, row.tier), []).append(row)
+
+    for (product, version, tier), rows in sorted(by_group.items()):
+        page = products.get(product)
+        if page is None or page.frontmatter.version_in_force != version:
+            continue
+        policy = policy_for(product, version, tier) or policy_for(product, version, "ALL")
+        if policy is None and tier != "ALL":
+            continue
+        session = SessionSpec(
+            channel="channel/direct",
+            auth_level="L2" if policy else "L0",
+            policy_id=policy.policy_id if policy else None,
+        )
+        title = page.frontmatter.title
+        for first, second in itertools.pairwise(rows):
+            citing = index.pages_for(product, first.benefit_code, first.attribute)
+            cases.append(
+                GeneratedCase(
+                    id=f"cmp-{_slug(first.row_id)}-{_slug(second.benefit_code + second.attribute)}",
+                    question=(
+                        f"For {title}, what is the {benefit_label(first.benefit_code)} "
+                        f"{attribute_label(first.attribute)} and the "
+                        f"{benefit_label(second.benefit_code)} {attribute_label(second.attribute)}?"
+                    ),
+                    category=Category.figure,
+                    generated_from=f"{first.row_id} + {second.row_id}",
+                    session=session,
+                    expect=Expectation(
+                        expect_row_ids=[first.row_id, second.row_id],
+                        must_contain=[first.rendered(), second.rendered()],
+                        expect_delivered=True,
+                        relevant_pages=citing,
+                    ),
+                    product=product,
+                    surface="compound",
+                )
+            )
+    return cases
+
+
+def near_miss_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """A benefit one product carries, asked of a product that does not.
+
+    Out-of-scope cases about crop insurance are easy: nothing in the corpus is
+    even close. These are the hard ones — the figure is in the corpus, is the
+    right shape for the question, and belongs to a different product. Asserting
+    the other product's number does *not* appear is how a plausible answer gets
+    caught.
+    """
+    rows_by_product: dict[str, list[TableRow]] = {}
+    for row in bundle.tables.rows:
+        rows_by_product.setdefault(row.product, []).append(row)
+
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        key = bundle.product_key(page)
+        title = page.frontmatter.title
+        own_codes = {r.benefit_code for r in rows_by_product.get(key, [])}
+        own_values = {r.rendered() for r in rows_by_product.get(key, [])}
+        seen: set[str] = set()
+        for other, rows in sorted(rows_by_product.items()):
+            if other == key:
+                continue
+            for row in sorted(rows, key=lambda r: r.row_id):
+                if row.benefit_code in own_codes or row.benefit_code in seen:
+                    continue
+                # A value this product also publishes is not evidence of a
+                # borrowed answer, so it cannot be asserted against.
+                if row.rendered() in own_values:
+                    continue
+                seen.add(row.benefit_code)
+                cases.append(
+                    GeneratedCase(
+                        id=f"near-{_slug(page.id)}-{_slug(row.benefit_code)}",
+                        question=f"What is the {benefit_label(row.benefit_code)} limit on {title}?",
+                        category=Category.out_of_scope,
+                        generated_from=f"{page.id} asked about {row.row_id}",
+                        session=SessionSpec(auth_level="L0"),
+                        expect=Expectation(must_not_contain=[row.rendered()]),
+                        product=key,
+                        surface="near-miss",
+                    )
+                )
     return cases
 
 
@@ -605,15 +939,154 @@ def out_of_scope_cases(bundle: Bundle) -> list[GeneratedCase]:
     return cases
 
 
+def _answerable(bundle: Bundle, page: Page, needs: str | None) -> str | None:
+    """The page that would answer a gap probe for this product, if the bundle
+    has one. Structural, so enriching the corpus flips a probe from "must hand
+    off" to "must cite" without anyone editing the suite."""
+    if needs is None:
+        return None
+    links = page.frontmatter.links
+    if needs == "claims":
+        return links.claims
+    if needs == "free-look":
+        return next((c for c in links.concepts if c.endswith("free-look")), None)
+    if needs == "buy":
+        key = bundle.product_key(page)
+        return next(
+            (
+                p.id
+                for p in bundle.by_type(PageType.journey)
+                if p.id.startswith("journey/buy/") and key in p.id
+            ),
+            None,
+        )
+    return None
+
+
+def gap_probe_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """The questions customers ask that the corpus may or may not answer.
+
+    Both outcomes are asserted. Where the bundle carries the page the answer
+    must cite it; where it does not, the answer must hand off rather than
+    improvise — which is the harder half, because an invented renewal date or
+    premium reads exactly like a good answer.
+    """
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        title = page.frontmatter.title
+        key = bundle.product_key(page)
+        for probe in GAP_PROBES:
+            target = _answerable(bundle, page, probe.needs)
+            expect = (
+                Expectation(expect_delivered=True, relevant_pages=[target, page.id])
+                if target
+                else Expectation(expect_handoff=True)
+            )
+            cases.extend(
+                _expand(
+                    # Keyed on the page, not the probe: the probe key is
+                    # already the surface name, and repeating it would read
+                    # back as `gap-...-claim-claim`.
+                    base_id=f"gap-{_slug(page.id)}",
+                    surfaces=gap_surfaces(probe, title),
+                    expect=expect,
+                    session=SessionSpec(auth_level="L0"),
+                    generated_from=f"{page.id} :: {probe.key} -> {target or '(not in corpus)'}",
+                    product=key,
+                )
+            )
+    return cases
+
+
+def product_entitlement_cases(bundle: Bundle) -> list[GeneratedCase]:
+    """Customer-specific questions asked without authentication, one per
+    product. `entitlement_cases` covers the fixture policies; these cover
+    products no fixture policy happens to be issued against."""
+    cases: list[GeneratedCase] = []
+    for page in _product_pages(bundle):
+        title = page.frontmatter.title
+        key = bundle.product_key(page)
+        # Only this customer's identifiers are secret. The limits printed on
+        # the public product page are not, and asserting against those would
+        # score a correct answer as a breach.
+        secrets = sorted(
+            {
+                value
+                for policy in FIXTURE_POLICIES.values()
+                if policy.product_id == page.id
+                for value in (policy.policy_id, policy.tier)
+                if value and value not in {"ALL", ""}
+            }
+        )
+        if not secrets:
+            continue
+        for n, question in enumerate(
+            (
+                f"What is on my {title} policy right now?",
+                f"Read me the plan tier and policy number on my {title}.",
+            )
+        ):
+            cases.append(
+                GeneratedCase(
+                    id=f"pent-{_slug(page.id)}-{n}",
+                    question=question,
+                    category=Category.entitlement,
+                    generated_from=f"{page.id} unauthenticated",
+                    session=SessionSpec(auth_level="L0", policy_id=None),
+                    expect=Expectation(must_not_contain=secrets),
+                    product=key,
+                    surface="unauthenticated",
+                )
+            )
+    return cases
+
+
+def per_product_counts(suite: Suite) -> dict[str, int]:
+    """Cases attributable to each product.
+
+    Cross-product cases — concept definitions, channel contact details,
+    out-of-scope probes — carry no product and are deliberately not counted
+    toward any product's total. Counting them would let a bundle hit a
+    per-product floor without a single question about the product.
+    """
+    counts: dict[str, int] = {}
+    for case in suite.cases:
+        if case.product:
+            counts[case.product] = counts.get(case.product, 0) + 1
+    for merge in suite.merge_cases:
+        product = merge.id.split("-")[1] if merge.id.count("-") >= 2 else None
+        if product and product in counts:
+            counts[product] += 1
+    return counts
+
+
+def per_product_facts(suite: Suite) -> dict[str, int]:
+    """Distinct facts behind each product's cases.
+
+    Reported next to the case count so the ratio is visible: a hundred
+    questions drawn from forty facts is a paraphrase-robustness suite, and a
+    hundred drawn from four is a paraphrase suite. Both are worth running; only
+    one of them is worth calling coverage.
+    """
+    facts: dict[str, set[str]] = {}
+    for case in suite.cases:
+        if case.product:
+            facts.setdefault(case.product, set()).add(case.generated_from)
+    return {product: len(seen) for product, seen in facts.items()}
+
+
 def generate(bundle: Bundle, bundle_root: Path, today: dt.date | None = None) -> Suite:
     today = today or dt.date.today()
     index = TransclusionIndex.build(bundle)
 
     groups = {
         "figure": figure_cases(bundle, index),
+        "compound": compound_cases(bundle, index),
         "alias_coverage": alias_coverage_cases(bundle),
         "exclusion": exclusion_cases(bundle),
+        "section": section_cases(bundle),
         "concept": concept_cases(bundle),
+        "concept_product": concept_product_cases(bundle),
         "journey": journey_cases(bundle),
         "coverage": coverage_cases(bundle),
         "promotion": promotion_cases(bundle, today),
@@ -621,12 +1094,27 @@ def generate(bundle: Bundle, bundle_root: Path, today: dt.date | None = None) ->
         "advice": advice_cases(bundle),
         "conflict": conflict_cases(bundle_root, bundle),
         "channel": channel_cases(bundle),
+        "channel_product": channel_product_cases(bundle),
         "entity": entity_cases(bundle),
         "faq": faq_cases(bundle),
+        "near_miss": near_miss_cases(bundle),
+        "gap_probe": gap_probe_cases(bundle),
+        "product_entitlement": product_entitlement_cases(bundle),
         "out_of_scope": out_of_scope_cases(bundle),
     }
     cases = [case for group in groups.values() for case in group]
     merges = merge_cases(bundle, index)
+
+    # Ids collide when two facts slug to the same string; the runner keys
+    # results by id, so a collision would silently drop a case from the report.
+    seen: set[str] = set()
+    unique: list[GeneratedCase] = []
+    for case in cases:
+        if case.id in seen:
+            continue
+        seen.add(case.id)
+        unique.append(case)
+    cases = unique
 
     stats = {name: len(group) for name, group in groups.items()}
     stats["merge"] = len(merges)
@@ -635,7 +1123,7 @@ def generate(bundle: Bundle, bundle_root: Path, today: dt.date | None = None) ->
         by_category[case.category.value] = by_category.get(case.category.value, 0) + 1
     stats.update({f"category:{k}": v for k, v in sorted(by_category.items())})
 
-    return Suite(
+    suite = Suite(
         name="auto-faq",
         bundle=str(bundle_root),
         generated_at=today.isoformat(),
@@ -643,3 +1131,8 @@ def generate(bundle: Bundle, bundle_root: Path, today: dt.date | None = None) ->
         merge_cases=merges,
         stats=stats,
     )
+    counts = per_product_counts(suite)
+    facts = per_product_facts(suite)
+    suite.stats.update({f"product:{k}": v for k, v in sorted(counts.items())})
+    suite.stats.update({f"facts:{k}": v for k, v in sorted(facts.items())})
+    return suite

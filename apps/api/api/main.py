@@ -12,7 +12,7 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from harness import AnswerEnvelope, AnswerRequest, TraceStore
+from harness import AnswerEnvelope, AnswerRequest, Channel, TraceStore
 from pydantic import BaseModel
 
 from api.cms import configure as configure_cms
@@ -227,7 +227,7 @@ async def fixtures() -> dict[str, Any]:
             }
             for p in FIXTURE_POLICIES.values()
         ],
-        "channels": ["channel/tiq-sg", "channel/etiqa-sg", "unknown"],
+        "channels": [c.value for c in Channel],
         "auth_levels": ["L0", "L1", "L2"],
         "today": dt.date.today().isoformat(),
     }

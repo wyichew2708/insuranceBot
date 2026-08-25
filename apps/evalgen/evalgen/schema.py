@@ -22,21 +22,22 @@ class Category(str, Enum):
     concept = "concept"  # free-look, excess, pre-existing…
     journey = "journey"  # buy / claim / service
     alias = "alias"  # entity resolution via authored aliases
-    merge = "merge"  # same question, both brand framings
+    brand = "brand"  # one of the two front doors named by the customer
+    merge = "merge"  # same question on every route to market
     promotion = "promotion"  # effective-dated offers
     staleness = "staleness"  # answers that changed at a known date
     entitlement = "entitlement"  # customer data without authentication
     advice = "advice"  # regulated-advice boundary
     conflict = "conflict"  # a source disagreement used as bait
     historic = "historic"  # customer on a superseded version
-    channel = "channel"  # contact details and purchase route per brand
+    channel = "channel"  # contact details and purchase route per channel
     entity = "entity"  # who underwrites the product
     faq = "faq"  # a question the website itself publishes
     out_of_scope = "out_of_scope"  # nothing in the corpus answers this
 
 
 class SessionSpec(BaseModel):
-    channel: str = "channel/tiq-sg"
+    channel: str = "channel/direct"
     auth_level: str = "L0"
     policy_id: str | None = None
     today: dt.date | None = None
@@ -65,10 +66,18 @@ class GeneratedCase(BaseModel):
     session: SessionSpec = Field(default_factory=SessionSpec)
     expect: Expectation = Field(default_factory=Expectation)
     paraphrase_of: str | None = None
+    #: Which product this case is attributable to, so per-product coverage is
+    #: counted rather than inferred from the id. Cross-product cases (concepts,
+    #: channels, out-of-scope) leave it unset and are excluded from the floor.
+    product: str | None = None
+    #: Which phrasing of its fact this is — "canonical", "elliptical",
+    #: "scenario"…. Lets the report say *which wording* broke a family instead
+    #: of only that accuracy fell.
+    surface: str | None = None
 
 
 class MergeCase(BaseModel):
-    """One question asked in each brand framing. Facts must match exactly and
+    """One question asked on each route. Facts must match exactly and
     only the deep link may differ (§B.1)."""
 
     id: str

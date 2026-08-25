@@ -20,6 +20,7 @@ blocked egress policy gets mistaken for a bug in the crawler.
 from __future__ import annotations
 
 import asyncio
+import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -65,13 +66,35 @@ class Integration:
 def registry(settings: Settings) -> list[Integration]:
     return [
         Integration(
-            name="vllm",
-            label="vLLM — answer composition",
+            name="anthropic",
+            label="Anthropic — answer composition",
             direction="outbound",
             purpose=(
-                "Composes prose under guided decoding. Numbers never come from it: figures are "
-                "fetched from benefit tables and the numeric-binding gate blocks any digit that "
-                "traces to no row."
+                "Phrases the answer under structured outputs. Numbers never come from it: "
+                "figures are fetched from benefit tables, the numeric-binding gate blocks any "
+                "digit that traces to no row, and a rewrite that drops a resolved figure is "
+                "rejected before it reaches the gates."
+            ),
+            configured=bool(settings.anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")),
+            required=False,
+            endpoint="https://api.anthropic.com",
+            fallback="Deterministic composer — the offline path, and what every eval run uses.",
+            probe="anthropic",
+            fields=[
+                {"key": "LLM_PROVIDER", "value": settings.llm_provider},
+                {"key": "ANTHROPIC_API_KEY", "value": "set" if settings.anthropic_api_key else ""},
+                {"key": "ANTHROPIC_MODEL", "value": settings.anthropic_model},
+                {"key": "ANTHROPIC_EFFORT", "value": settings.anthropic_effort},
+            ],
+        ),
+        Integration(
+            name="vllm",
+            label="vLLM — answer composition (self-hosted)",
+            direction="outbound",
+            purpose=(
+                "The same job as the Anthropic provider, on a model you host. Held to the "
+                "identical JSON schema via guided_json, so switching engines changes the "
+                "runtime, not the answer contract."
             ),
             configured=bool(settings.vllm_base_url),
             required=False,
@@ -79,6 +102,7 @@ def registry(settings: Settings) -> list[Integration]:
             fallback="Deterministic composer — the offline path, and what every eval run uses.",
             probe="vllm",
             fields=[
+                {"key": "LLM_PROVIDER", "value": settings.llm_provider},
                 {"key": "VLLM_BASE_URL", "value": settings.vllm_base_url or ""},
                 {"key": "VLLM_MODEL", "value": settings.vllm_model or ""},
                 {"key": "VLLM_API_KEY", "value": "set" if settings.vllm_api_key else ""},
@@ -142,7 +166,10 @@ def registry(settings: Settings) -> list[Integration]:
             docs="/docs",
             probe="answer-api",
             fields=[
-                {"key": "session.channel", "value": "channel/tiq-sg · channel/etiqa-sg · unknown"},
+                {
+                    "key": "session.channel",
+                    "value": "channel/direct · bancassurance · agency · broker · ifa · unknown",
+                },
                 {"key": "session.auth_level", "value": "L0 anonymous · L1 identified · L2 authenticated"},
                 {"key": "session.policy", "value": "required for tier-specific figures (L2 only)"},
             ],
@@ -181,10 +208,26 @@ async def probe(name: str, settings: Settings) -> dict[str, Any]:
             **extra,
         }
 
+    if name == "anthropic":
+        key = settings.anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY", "")
+        if not key:
+            return await done(
+                False,
+                "no API key — set ANTHROPIC_API_KEY, or run `ant auth login` and the SDK "
+                "resolves a stored profile",
+            )
+        # /v1/models is the cheapest authenticated call; it proves the key
+        # without spending a single token on a completion.
+        ok, detail = await _http_ok(
+            "https://api.anthropic.com/v1/models",
+            headers={"x-api-key": key, "anthropic-version": "2023-06-01"},
+        )
+        return await done(ok, detail, model=settings.anthropic_model)
+
     if name == "vllm":
         if not settings.vllm_base_url:
             return await done(False, "not configured — the deterministic composer is in use")
-        return await done(*await _http_ok(f"{settings.vllm_base_url.rstrip('/')}/models"))
+        return await done(*await _http_ok(f"{settings.vllm_base_url.rstrip('/')}/v1/models"))
 
     if name == "langfuse":
         if not (settings.langfuse_host and settings.langfuse_public_key):
@@ -226,12 +269,12 @@ async def probe(name: str, settings: Settings) -> dict[str, Any]:
     return await done(False, f"unknown integration {name!r}")
 
 
-async def _http_ok(url: str) -> tuple[bool, str]:
+async def _http_ok(url: str, headers: dict[str, str] | None = None) -> tuple[bool, str]:
     import httpx
 
     try:
         async with httpx.AsyncClient(timeout=PROBE_TIMEOUT_S, follow_redirects=True) as client:
-            response = await client.get(url)
+            response = await client.get(url, headers=headers)
         return response.status_code < 400, f"{url} → HTTP {response.status_code}"
     except Exception as exc:
         # Verbatim. "403 to CONNECT" is a policy decision someone made, and

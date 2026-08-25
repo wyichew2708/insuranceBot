@@ -1,0 +1,32 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "knowledge-layer",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "BUNDLE_PATH=okf-web exec .venv/bin/uvicorn api.main:app --reload --port 8080"
+      ],
+      "port": 8080
+    },
+    {
+      "name": "knowledge-layer-seed",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "BUNDLE_PATH=okf exec .venv/bin/uvicorn api.main:app --reload --port 8081"
+      ],
+      "port": 8081
+    },
+    {
+      "name": "qwen-local",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "exec /Users/jimmyc/.local/share/mlx-serve/bin/mlx-openai-server launch --model-path mlx-community/Qwen3.6-35B-A3B-OptiQ-4bit --model-type lm --served-model-name qwen3.6-35b-a3b --context-length 16384 --port 8090 --host 127.0.0.1 --no-log-file"
+      ],
+      "port": 8090
+    }
+  ]
+}

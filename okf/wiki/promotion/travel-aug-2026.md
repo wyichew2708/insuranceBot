@@ -13,8 +13,8 @@ compiled_from_commit: seed
 reviewed_by: ["product-owner:fixture"]
 review_due: 2026-09-30
 confidence: high
-channel_ref: channel/tiq-sg
-promo_code: TIQAUG
+channel_ref: channel/direct
+promo_code: DIRECTAUG
 ---
 
 ## Offer
