@@ -8,6 +8,8 @@ __pycache__/
 .coverage
 .env
 .traces/
+# `mlx-openai-server` writes here from whatever directory it was started in.
+logs/
 .eval-reports/
 node_modules/
 .DS_Store
