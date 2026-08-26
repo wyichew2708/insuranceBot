@@ -344,3 +344,25 @@ def test_every_gate_runs_regardless_of_earlier_failures(bundle: Bundle) -> None:
 def test_blocked_reports_any_failure(bundle: Bundle) -> None:
     a = GroundedAnswer(answer="The limit is S$999,999.", figures=[Figure(label="l", text="S$999,999")])
     assert blocked(run_gates(ctx(bundle, a)))
+
+
+# --- smalltalk ---
+
+
+def test_a_greeting_is_not_a_factual_answer(bundle: Bundle) -> None:
+    """ "hi" carries no claims and asserts nothing. Without this the provenance
+    gates read it as a factual answer with no sources and refuse it, and the
+    customer who said hello is told we are passing them to a colleague."""
+    a = GroundedAnswer(answer="Hello. What would you like to know?", smalltalk=True)
+    results = {g.gate: g.verdict for g in run_gates(ctx(bundle, a, loaded=[], question="hi"))}
+    assert Verdict.fail not in results.values(), results
+    assert results["reference-integrity"] is Verdict.skip
+    assert results["groundedness"] is Verdict.skip
+    assert results["answerability"] is Verdict.skip
+
+
+def test_smalltalk_does_not_excuse_an_unbound_number(bundle: Bundle) -> None:
+    """The flag says the turn asserted nothing, not that anything goes. A
+    figure in a greeting is still a figure nobody fetched."""
+    a = GroundedAnswer(answer="Hello — your limit is S$500,000.", smalltalk=True)
+    assert gate_numeric_binding(ctx(bundle, a, loaded=[])).verdict is Verdict.fail

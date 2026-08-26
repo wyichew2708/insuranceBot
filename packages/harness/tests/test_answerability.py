@@ -17,7 +17,7 @@ from __future__ import annotations
 import pytest
 from harness.contracts import Claim, Figure, GroundedAnswer
 from harness.gates import GateContext, gate_answerability
-from harness.intent import REQUIREMENTS, Intent, classify
+from harness.intent import REQUIREMENTS, Intent, classify, smalltalk_kind
 
 from okf import Bundle
 
@@ -206,3 +206,34 @@ def test_a_page_that_declares_the_intent_settles_it(bundle: Bundle) -> None:
         assert not gate_answerability(_ctx(bundle, "Who can buy travel insurance?", answer)).blocking
     finally:
         bundle.pages.pop("product/general/travel/faq", None)
+
+
+# --- smalltalk ---
+
+
+def test_a_pleasantry_is_recognised_whole_or_not_at_all() -> None:
+    """Anchored end to end on purpose: "hi" is a greeting, "hi, what does
+    travel insurance cover?" is a coverage question with a greeting attached,
+    and treating the second as smalltalk drops a real question on the floor."""
+    for greeting in ("hi", "Hello!", "hey there", "good morning", "  HI  "):
+        assert smalltalk_kind(greeting) == "greeting", greeting
+    assert smalltalk_kind("thanks") == "thanks"
+    assert smalltalk_kind("bye") == "farewell"
+    assert smalltalk_kind("what can you do") == "capability"
+    assert smalltalk_kind("are you a bot?") == "capability"
+
+    for real in (
+        "hi, what does travel insurance cover?",
+        "hello can I claim for a delayed flight",
+        "thanks — what is the excess?",
+        "help me understand the free-look period",
+    ):
+        assert smalltalk_kind(real) is None, real
+
+
+def test_smalltalk_precedes_the_topic_patterns() -> None:
+    """ "help" would otherwise read as an application question and "what is
+    this" as a definition."""
+    assert classify("help") is Intent.smalltalk
+    assert classify("what is this") is Intent.smalltalk
+    assert classify("how do I buy travel insurance") is Intent.application

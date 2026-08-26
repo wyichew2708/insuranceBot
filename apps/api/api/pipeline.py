@@ -21,6 +21,7 @@ from harness import (
     blocked,
     run_gates,
 )
+from harness.intent import smalltalk_kind
 from okf.tables import find_tokens
 
 from api.compose import compose
@@ -95,6 +96,41 @@ def _product_page(pages: list[Page]) -> Page | None:
     return sorted(products, key=lambda p: (p.id.count("/"), p.id))[0]
 
 
+#: What the bot says when the turn was a pleasantry rather than a question.
+#: Deterministic and claimless on purpose — a greeting is the one reply with no
+#: source behind it, so it must not be a place where a model can offer
+#: capabilities the corpus does not have. It says what this actually does and
+#: stops.
+_PLEASANTRIES = {
+    "greeting": (
+        "Hello. I can answer questions about {underwriter}'s products from the "
+        "policy wordings and product pages — what is covered, what is not, how "
+        "to claim, and the policy conditions. What would you like to know?"
+    ),
+    "thanks": "You're welcome. Anything else about your cover?",
+    "farewell": "Goodbye. Come back any time you need to check your cover.",
+    "capability": (
+        "I am an automated assistant for {underwriter}. I answer from the "
+        "compiled policy wordings and product pages, and every answer names the "
+        "document it came from. I can cover what a product includes and "
+        "excludes, how to make a claim, and the policy conditions. I cannot give "
+        "financial advice or tell you which plan to buy — that needs a licensed "
+        "adviser — and I will say so rather than guess when the documents do "
+        "not answer your question."
+    ),
+}
+
+
+def _pleasantry(kind: str, bundle: Bundle) -> str:
+    """The reply, named after whoever actually underwrites this bundle.
+
+    The trailing stop goes: the legal name is "Etiqa Insurance Pte. Ltd." and
+    interpolating it mid-sentence otherwise yields "Ltd..".
+    """
+    underwriter = (bundle.manifest.underwriter or "this insurer").rstrip(".")
+    return _PLEASANTRIES[kind].format(underwriter=underwriter)
+
+
 def answer_question(
     bundle: Bundle, question: str, session: Session, settings: Settings
 ) -> tuple[AnswerEnvelope, Trace]:
@@ -130,6 +166,45 @@ def answer_question(
             detail["scores"] = [str(sc) for sc in incoming.scores]
     if incoming.blocked or _fail_closed(incoming, settings):
         return _refusal(trace, incoming, "guardrail-input", "refused by the input guardrail")
+
+    # After screening, before retrieval. A greeting is not a question the
+    # corpus can fail to answer, and routing one through retrieval replies to
+    # "hi" with "I could not establish that from our approved product pages" —
+    # which reads as a broken bot, not a careful one. It is screened first
+    # because "hi" with an injection payload stapled to it is not a greeting.
+    kind = smalltalk_kind(question)
+    if kind is not None:
+        with trace.stage("smalltalk") as detail:
+            detail["kind"] = kind
+        answer = GroundedAnswer(
+            answer=_pleasantry(kind, bundle),
+            smalltalk=True,
+            confidence=1.0,
+        )
+        # The gates still run. Every one of them will skip — there is nothing
+        # to check in a reply that asserts nothing — but a turn that silently
+        # bypassed verification would be indistinguishable, on the trace, from
+        # one that passed it. Skipping on the record is the point.
+        with trace.stage("gates") as detail:
+            results = run_gates(
+                GateContext(
+                    answer=answer,
+                    bundle=bundle,
+                    session=session,
+                    question=question,
+                    loaded_page_ids=[],
+                    raw_root=raw_root,
+                    today=session.today,
+                )
+            )
+            trace.gates = results
+            detail["failed"] = [g.gate for g in results if g.blocking]
+        delivered = not blocked(results)
+        trace.delivered = delivered
+        return (
+            AnswerEnvelope(answer=answer, gates=results, delivered=delivered, trace_id=trace.trace_id),
+            trace,
+        )
 
     try:
         with trace.stage("frontmatter-filter") as detail:

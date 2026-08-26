@@ -218,3 +218,47 @@ def test_exclusion_page_is_loaded_before_asserting_coverage(bundle: Bundle, sett
     _, trace = ask(bundle, settings, "Is baggage loss covered on travel insurance?")
     loaded = {p.page_id for p in trace.loaded}
     assert "product/general/travel/exclusions" in loaded
+
+
+# --- smalltalk ---
+
+
+def test_a_greeting_is_answered_as_one(bundle: Bundle, settings: Settings) -> None:
+    """Reported from the chat surface: saying "hi" returned "I could not
+    establish that from our approved product pages. Let me pass you to a
+    colleague." A greeting is not a question the corpus can fail to answer."""
+    env, _ = ask(bundle, settings, "hi")
+    assert env.delivered
+    assert env.answer.smalltalk
+    assert not env.answer.handoff
+    assert "could not establish" not in env.answer.answer
+    assert env.answer.answer.startswith("Hello")
+    # The underwriter comes from the bundle it is serving, not a constant.
+    assert bundle.manifest.underwriter.rstrip(".") in env.answer.answer
+
+
+def test_a_greeting_costs_no_retrieval(bundle: Bundle, settings: Settings) -> None:
+    """It short-circuits after screening, so no page budget, no SOR call and
+    no model call are spent discovering that "hi" is not about insurance."""
+    _, trace = ask(bundle, settings, "hello")
+    stages = [s.name for s in trace.stages]
+    assert "smalltalk" in stages
+    assert "wiki-read" not in stages
+    assert "compose" not in stages
+    assert not trace.loaded
+    assert not trace.candidates
+
+
+def test_a_greeting_is_still_gated(bundle: Bundle, settings: Settings) -> None:
+    """Every gate runs and every one skips. A turn that silently bypassed
+    verification would look identical, on the trace, to one that passed it."""
+    env, _ = ask(bundle, settings, "thanks")
+    assert env.gates, "the gates must run, not be skipped over"
+    assert not [g for g in env.gates if g.verdict is Verdict.fail]
+
+
+def test_a_greeting_with_a_question_attached_is_a_question(bundle: Bundle, settings: Settings) -> None:
+    env, trace = ask(bundle, settings, "hi, what is the overseas medical expenses limit?")
+    assert not env.answer.smalltalk
+    assert "smalltalk" not in [s.name for s in trace.stages]
+    assert env.answer.figures

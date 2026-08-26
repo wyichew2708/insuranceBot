@@ -125,6 +125,13 @@ class GroundedAnswer(BaseModel):
     # Set when the answer is a refusal/handoff rather than a factual reply;
     # the coverage-assertion gates do not apply to it.
     handoff: bool = False
+    # Set when the turn was a pleasantry — a greeting, thanks, a farewell, or
+    # "what can you do" — and the reply is conversational rather than factual.
+    # Distinct from `handoff`: nothing is being passed to a colleague, and
+    # telling a customer who said "hi" that we are passing them on is a worse
+    # answer than the greeting they expected. Like a handoff it carries no
+    # claims, so the provenance gates have nothing to check and skip.
+    smalltalk: bool = False
 
 
 class AnswerRequest(BaseModel):

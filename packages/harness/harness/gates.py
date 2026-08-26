@@ -120,6 +120,8 @@ def gate_reference_integrity(ctx: GateContext) -> GateResult:
     if not ctx.answer.claims:
         if ctx.answer.handoff:
             return GateResult(gate=name, verdict=Verdict.skip, detail="handoff carries no claims")
+        if ctx.answer.smalltalk:
+            return GateResult(gate=name, verdict=Verdict.skip, detail="greeting carries no claims")
         return GateResult(gate=name, verdict=Verdict.fail, detail="factual answer with no claims")
     problems: list[str] = []
     for claim in ctx.answer.claims:
@@ -389,6 +391,11 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
     name = "groundedness"
     if ctx.answer.handoff and not ctx.answer.claims:
         return GateResult(gate=name, verdict=Verdict.skip, detail="handoff")
+    if ctx.answer.smalltalk:
+        # A greeting is entailed by nothing because it asserts nothing. The
+        # gate below would fail it for loading no evidence pages, which is
+        # true and beside the point.
+        return GateResult(gate=name, verdict=Verdict.skip, detail="greeting asserts nothing")
     evidence = _tokens(ctx.loaded_text())
     if not evidence:
         return GateResult(gate=name, verdict=Verdict.fail, detail="no evidence pages were loaded")
@@ -559,6 +566,8 @@ def gate_answerability(ctx: GateContext) -> GateResult:
     name = "answerability"
     if ctx.answer.handoff:
         return GateResult(gate=name, verdict=Verdict.skip, detail="handoff")
+    if ctx.answer.smalltalk:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="not a question about the product")
 
     intent = classify(ctx.question)
     requirement = REQUIREMENTS.get(intent)

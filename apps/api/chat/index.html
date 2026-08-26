@@ -356,7 +356,10 @@ async function ask() {
     const a = env.answer || {};
 
     let head = "";
-    if (!env.delivered) {
+    if (a.smalltalk) {
+      // A greeting is not a handoff and must not be dressed as one.
+      head = "";
+    } else if (!env.delivered) {
       // A blocked answer is not shown. The customer gets the refusal, and
       // the reason lives in the trace where it belongs.
       head = '<div class="tag blocked">Checked and held back — passing you to a colleague</div>';

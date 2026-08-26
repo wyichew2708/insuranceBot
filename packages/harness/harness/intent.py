@@ -40,7 +40,57 @@ class Intent(str, Enum):
     document = "document"  # send me the wording
     coverage = "coverage"  # what does it cover, broadly
     definition = "definition"  # what does <term> mean
+    smalltalk = "smalltalk"  # hello, thanks, are you a bot
     unknown = "unknown"
+
+
+#: Openings and closings, and the two questions every chat surface is asked
+#: before anything else: what are you, and what can you do.
+#:
+#: Anchored end to end on purpose. "hi" is a greeting; "hi, what does travel
+#: insurance cover?" is a coverage question with a greeting attached, and
+#: treating the second as smalltalk would drop a real question on the floor.
+#: The trailing class allows the punctuation and emphasis people actually
+#: type — "hello!!", "hi there…", "thanks :)".
+SMALLTALK: dict[str, re.Pattern[str]] = {
+    "greeting": re.compile(
+        r"^(?:hi|hey|hello|hallo|helo|hiya|yo|sup|greetings|good\s+(?:morning|afternoon|evening|day)"
+        r"|hi\s+there|hey\s+there|hello\s+there)$",
+        re.I,
+    ),
+    "thanks": re.compile(
+        r"^(?:thanks?|thank\s+you(?:\s+so\s+much)?|ty|thx|cheers|much\s+appreciated"
+        r"|ok(?:ay)?|got\s+it|understood|noted|great|perfect|nice)$",
+        re.I,
+    ),
+    "farewell": re.compile(r"^(?:bye|goodbye|good\s+bye|see\s+you|see\s*ya|cya|later|that.s\s+all)$", re.I),
+    "capability": re.compile(
+        r"^(?:help|what\s+can\s+you\s+do|what\s+do\s+you\s+do|how\s+can\s+you\s+help"
+        r"|who\s+are\s+you|what\s+are\s+you|are\s+you\s+(?:a\s+)?(?:bot|robot|human|real|ai|person)"
+        r"|how\s+(?:do|does)\s+(?:this|it)\s+work|what\s+is\s+this)$",
+        re.I,
+    ),
+}
+#: Punctuation and emphasis stripped before the patterns are tried.
+_TRIM_RE = re.compile(r"^[\s\W_]+|[\s\W_]+$")
+
+
+def smalltalk_kind(question: str) -> str | None:
+    """Which pleasantry this is, or None if the turn asks something.
+
+    A greeting is not a question the corpus can fail to answer. Routing one
+    through retrieval produces "I could not establish that from our approved
+    product pages" in reply to "hi", which reads as a broken bot rather than a
+    careful one — and spends a retrieval, a model call and eight gates saying
+    so.
+    """
+    trimmed = _TRIM_RE.sub("", " ".join(question.split()))
+    if not trimmed or len(trimmed.split()) > 5:
+        return None
+    for kind, pattern in SMALLTALK.items():
+        if pattern.match(trimmed):
+            return kind
+    return None
 
 
 #: Ordered: the first match wins, so the specific patterns precede the broad
@@ -149,6 +199,10 @@ def classify(question: str) -> Intent:
     text = (question or "").strip()
     if not text:
         return Intent.unknown
+    # Before the topic patterns: "help" would otherwise read as an application
+    # question, and "what is this" as a definition.
+    if smalltalk_kind(text):
+        return Intent.smalltalk
     for intent, pattern in _PATTERNS:
         if pattern.search(text):
             return intent
