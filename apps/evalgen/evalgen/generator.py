@@ -44,7 +44,7 @@ from evalgen.surfaces import (
     gap_surfaces,
     section_surfaces,
 )
-from okf import Bundle, Page, PageType, brand_for_host, spec_for
+from okf import UNCOMPILED_MARK, Bundle, Page, PageType, brand_for_host, spec_for
 
 # Attribute phrasing. The generic underscore-to-space rendering reads badly for
 # a few of these, so they get an explicit label and question form.
@@ -384,7 +384,7 @@ def exclusion_cases(bundle: Bundle) -> list[GeneratedCase]:
         # leaving a placeholder — and the fallback below then generated "I am
         # claiming for exclusions", which is not a question anyone would ask
         # and which the bot was right to refuse.
-        if "could not be extracted" in page.body:
+        if UNCOMPILED_MARK in page.body:
             continue
 
         subjects: list[str] = []

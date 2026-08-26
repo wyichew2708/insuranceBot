@@ -1,0 +1,44 @@
+# Bundle manifest (§C.1) — COMPILED, do not hand-edit.
+# Written by `compiler.cli wiki` from the crawl snapshots under raw/web/.
+# Re-run the compile rather than patching a page: the wiki is a build output.
+name: etiqa-sg-knowledge
+okf_version: '0.1'
+jurisdiction: SG
+underwriter: Etiqa Insurance Pte. Ltd.
+uen: 201331905K
+compiled_at: '2026-08-26'
+fixture: false
+taxonomy:
+  product_roots:
+  - protection
+  - health-medical
+  - savings-retirement
+  - investments
+  - general
+  - motor
+  - business
+  - premier
+  - scheme
+  page_types:
+  - product
+  - concept
+  - journey
+  - channel
+  - entity
+  - promotion
+  - index
+authority_order:
+- raw/wordings
+- raw/product-summaries
+- raw/benefit-tables
+- raw/web/www.etiqa.com.sg
+- raw/web/www.tiq.com.sg
+- raw/blog
+link_rules:
+  product_requires:
+  - benefits
+  - exclusions
+  approved_requires:
+  - reviewed_by
+  - review_due
+  - authority

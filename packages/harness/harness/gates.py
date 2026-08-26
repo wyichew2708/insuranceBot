@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from harness.contracts import Channel, GateResult, GroundedAnswer, Session, Verdict
+from harness.contracts import Channel, Figure, GateResult, GroundedAnswer, Session, Verdict
 from harness.intent import REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
@@ -27,6 +27,10 @@ NUMERIC_SPAN_RE = re.compile(
     r"|(?:\b\d+(?:\.\d+)?\s+(?:hours?|days?|weeks?|months?|years?))"
     r"|(?:\b\d[\d,]{1,}\b)"
 )
+
+#: Raw documents read by the quotation check, keyed by resolved path. A wording
+#: is megabytes of text and an answer may quote it several times.
+_QUOTE_CACHE: dict[str, str] = {}
 
 COVERAGE_ASSERTION_RE = re.compile(
     r"\b(is covered|are covered|you are covered|covers|cover applies|reimbursed|"
@@ -147,6 +151,17 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
         return GateResult(gate=name, verdict=Verdict.fail, detail=f"unbound figures: {unbound}")
 
     for figure in ctx.answer.figures:
+        if figure.quote_ref:
+            # Claiming a quotation is not enough — the gate goes and reads it.
+            # Without this check `quote_ref` would be a way to assert any
+            # number at all, which is precisely what the gate exists to stop.
+            if not _quote_holds(ctx, figure):
+                return GateResult(
+                    gate=name,
+                    verdict=Verdict.fail,
+                    detail=f"{figure.text!r} is quoted from {figure.quote_ref!r}, which does not contain it",
+                )
+            continue
         if not figure.page_ref or figure.table_row_id or figure.sor_field:
             continue
         page = ctx.bundle.get(figure.page_ref)
@@ -197,6 +212,52 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
 
 
 # --- 3. version coherence ---------------------------------------------------
+
+
+def _source_digits(ctx: GateContext, locator: str) -> str | None:
+    """A raw document reduced to its figures, cached across gate runs.
+
+    Punctuation and spacing go: an extractor writes `S$ 1,000` where the PDF
+    printed `S$1,000`, and a comparison that failed on a thousands separator
+    would reject correct quotations for a reason no one could act on.
+    """
+    if ctx.raw_root is None:
+        return None
+    path_part = locator.split("#", 1)[0]
+    if not path_part.startswith("raw/"):
+        return None
+    path = ctx.raw_root / path_part[len("raw/") :]
+    # Keyed by the resolved path, not the locator: an eval run loads several
+    # bundles in one process and they all call their wordings `travel.md`.
+    key = str(path)
+    cached = _QUOTE_CACHE.get(key)
+    if cached is None:
+        if not path.is_file():
+            return ""
+        cached = re.sub(r"[^0-9a-z%$]+", "", path.read_text(encoding="utf-8", errors="replace").lower())
+        _QUOTE_CACHE[key] = cached
+    return cached
+
+
+def _quote_holds(ctx: GateContext, figure: Figure) -> bool:
+    """Does the cited document actually contain this figure?
+
+    What this catches is a *page* that misquotes its source — a compile bug, a
+    hand-edited wiki page, a locator pointing at the wrong document. It is not
+    what stops a model inventing a number: that is the orphan scan below,
+    which requires every numeric span in the answer to have come from a figure
+    the composer lifted out of a page. Note the asymmetry in strength — a
+    currency amount or a percentage is near-unique in a wording, while a bare
+    two-digit number will be found somewhere in any document long enough.
+    """
+    source = _source_digits(ctx, figure.quote_ref or "")
+    if source is None:
+        # No raw root to check against. The bundle is the only thing loaded,
+        # so the quotation cannot be verified — and an unverifiable claim of
+        # verbatimness is not a binding.
+        return False
+    needle = re.sub(r"[^0-9a-z%$]+", "", figure.text.lower())
+    return bool(needle) and needle in source
 
 
 def gate_version_coherence(ctx: GateContext) -> GateResult:

@@ -20,9 +20,13 @@ node_modules/
 # Build output: `make knowledge` regenerates it from the crawler + fixture.
 # It is synthetic content and must never be mistaken for a real corpus.
 okf-web/
-# Real crawl output: generated, large, and not ours to redistribute.
-# The glob also covers `okf-real.prev/`, which a re-crawl leaves behind.
-okf-real*/
+# `okf-real/` — the compiled Etiqa/Tiq corpus — is COMMITTED. It is the thing
+# the chatbot serves, and a deployment that has to crawl two websites and parse
+# 300 PDFs before it can answer anything is not a deployment. Regenerate it
+# with `make corpus`; the sources it cites travel with it, because the
+# quotation check and the RAG fallback both read them at answer time.
+# What stays out is the backup a re-crawl leaves behind.
+okf-real.prev/
 okf-live/
 
 # Scan staging: each scan crawls and compiles into its own throwaway bundle.

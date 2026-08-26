@@ -43,6 +43,26 @@ crawl-fixture:
 wiki:
 	uv run python -m compiler.cli --bundle okf-web wiki
 
+# Rebuild the committed Etiqa/Tiq corpus end to end: crawl the two sites,
+# parse the PDFs they link, read the published FAQs, compile, lint. Hours of
+# network, which is exactly why the output is committed rather than built on
+# deploy. The sign-off name is deliberately ugly — nobody has reviewed these
+# pages, and it says so in the frontmatter of every one of them.
+corpus:
+	uv run python -m crawler.cli run --allowlist www.etiqa.com.sg www.tiq.com.sg \
+		--out okf-real/raw --rps 1.0
+	uv run python -m crawler.cli documents --manifest okf-real/raw/web/crawl-manifest.json \
+		--out okf-real/raw
+	uv run python -m crawler.cli faqs --allowlist www.etiqa.com.sg www.tiq.com.sg \
+		--out okf-real/raw
+	$(MAKE) corpus-compile
+
+# The compile alone, from sources already on disk. No network: everything the
+# compiler reads is committed, so this reproduces the served wiki exactly.
+corpus-compile:
+	uv run python -m compiler.cli --bundle okf-real wiki --sign-off UNREVIEWED-eval-only
+	uv run python -m compiler.cli --bundle okf-real lint
+
 knowledge: crawl-fixture
 	uv run python -m compiler.cli --bundle okf-web wiki \
 		--sign-off "product-owner:compile-run" "compliance:compile-run"

@@ -14,6 +14,9 @@ __pycache__/
 .scan/
 node_modules/
 # Generated corpora: build output, large, and rebuilt by `make knowledge`.
+# `okf-real/` is committed but stays out of the *image*: compose bind-mounts it
+# read-only, so baking a 20MB corpus into every layer buys nothing and means a
+# recompiled bundle needs a rebuilt image.
 okf-web/
 okf-real/
 okf-live/

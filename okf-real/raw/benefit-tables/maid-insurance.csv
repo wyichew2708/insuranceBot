@@ -1,0 +1,8 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+maid-insurance,2026,plan-a,accidental_death,limit,60000,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered
+maid-insurance,2026,plan-b,accidental_death,limit,65000,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered
+maid-insurance,2026,plan-c,accidental_death,limit,70000,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered
+maid-insurance,2026,26-months,sum_insured_s,period,14,months,raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered
+maid-insurance,2026,plan-a,third_party_liability,limit,5000,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered
+maid-insurance,2026,plan-b,third_party_liability,limit,7500,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered
+maid-insurance,2026,plan-c,third_party_liability,limit,10000,$,raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered

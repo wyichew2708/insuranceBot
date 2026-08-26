@@ -1,0 +1,4 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+pet-insurance,2026,pawfect-get-quote,n_a,limit,500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing-get-quote,n_a,limit,250,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic-get-quote,n_a,limit,350,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered

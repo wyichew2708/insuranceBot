@@ -12,7 +12,7 @@ The four layers, wired into loops rather than chosen between:
 | **LLM Wiki** — knowledge compiled once, not re-discovered per query | `okf/wiki/` — one canonical page per product |
 | **OKF** — the portable, lintable file format | `packages/okf` — frontmatter schema, graph, linter |
 | **RAG** — the long tail and the raw source of truth | `apps/api/api/retrieval.py` — fallback over `okf/raw/` |
-| **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, seven gates, budgets, traces |
+| **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, eight gates, budgets, traces |
 
 Two more pieces close the loop from the live websites to the wiki:
 
@@ -257,6 +257,63 @@ text layer, so OCR re-reads pixels to recover text that was already there —
 272s versus 29s for identical output. `--ocr` is there for genuine scans,
 which the builtin backend flags as "no extractable text".
 
+**Ingesting a wording is not reading one.** For a while this repo did the
+first and called it the second: the two highest-authority tiers were full,
+the manifest declared them highest-authority, and every compiled page was
+still built from marketing HTML. It showed — 108 of 108 exclusions pages said
+the exclusions could not be extracted, while the contract that lists them sat
+unread on disk. `compiler/documents.py` closes that gap, and the work is
+almost entirely in recovering structure the PDF layer destroyed:
+
+* paragraphs are **rebuilt**, because a line break inside a sentence is an
+  artefact of page width — and one backend emits 2,470 lines with 89 blanks,
+  so blank lines cannot be the only separator;
+* folios and revision stamps are **dropped before** headings are looked for.
+  `V1.25` is short and title-cased, so it passes any shape test for a heading,
+  and letting it through opens a new section at every page foot: 110,000 words
+  of one policy contract filed themselves under a heading called "v1.25";
+* headings are **classified, not indexed**. "General Exclusions", "What is not
+  covered" and "Section 7 — Exclusions applicable to all sections" are one
+  role, and the role decides which page the text lands on. So does "What do we
+  mean with these words?", which is 40,000 words of definitions on this corpus;
+* campaign paperwork is **excluded**. The ingest tiers by filename and an
+  insurer names both its contracts and its lucky draws "terms and conditions",
+  so ~45 promotional documents arrive filed as wordings. An offer that expired
+  in 2024 is not policy terms.
+
+Where a product already has a crawled page, the contract's sections are
+written **above** the website's on the same page and both keep their own
+references: authority becomes page order, and composition reads from the top.
+Where it does not — commercial fire, contractors' all risks, fidelity
+guarantee, the whole rider range — the document *is* the product page. That is
+a third of the book that previously retrieved nothing at all.
+
+### Numbers in a contract
+
+Rule 2 says numbers never live in prose; they come from benefit-table rows. A
+policy wording breaks that rule on every page, and neither escape works: a
+notice period is not a benefit, so it has no row, and paraphrasing it away
+changes what was agreed. The third option is to **quote** — reproduce the
+clause verbatim, name the document and printed page it came from, and mark it
+as reproduced rather than written:
+
+```markdown
+> You must notify Us within thirty (30) days of the event.
+> [src:raw/wordings/tiq-home-policy-wording.md#p7]
+```
+
+A figure lifted from a quotation binds to that locator instead of to a row,
+and `numeric-binding` **re-opens the document and looks for it**. A quotation
+the source does not contain fails the gate exactly as an invented number does,
+which is what stops "it was a quote" from becoming a way to assert anything at
+all. This is why `raw/` ships with the wiki: without the sources, every quoted
+figure is unverifiable, and an unverifiable claim of verbatimness is not a
+binding.
+
+The same path now carries the published FAQs, which are also somebody else's
+words reproduced rather than the compiler's own. That change alone took the
+real bundle from 320 lint errors to zero.
+
 **The model is swappable because it never establishes a fact** (§H.1). Retrieval
 picks the pages, the transclusion pass resolves every figure against a
 benefit-table row, and the composer lifts each `[src:...]` marker into a typed
@@ -328,17 +385,104 @@ okf/                    the seed bundle — hand-written, small; the curated sui
                         channel · entity · promotion
   conflicts/            unresolved source disagreements → human queue
   log.md                append-only operation log
+okf-real/               the Etiqa/Tiq corpus — COMMITTED, and what a deployment serves
+  raw/wordings/         168 policy wordings and contracts, parsed from PDF
+  raw/product-summaries/  52 regulated product summaries
+  raw/web/              dated crawl snapshots of both hosts
+  raw/faq/              published FAQ pairs (WordPress REST, tiq.com.sg)
+  wiki/                 754 compiled pages · `make corpus-compile` regenerates
 okf-web/                build output: crawled + compiled. `make knowledge` regenerates it
 fixtures/               the synthetic two-host site the crawler is proved against
 packages/okf/           page model, frontmatter schema, tables, graph, linter, corpus IDF
-packages/harness/       contracts, seven gates, budgets, traces
+packages/harness/       contracts, eight gates, budgets, traces
 apps/api/               serve loop, debug console, content studio, content API
 apps/crawler/           allowlist + robots policy, extraction, dated snapshots
 apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
 evals/suites/           golden · merge-consistency · adversarial · staleness
 ```
 
-## The seven gates (§F.2)
+## The corpus in this repo
+
+`okf-real/` is committed, sources and all, because a deployment that has to
+crawl two websites and parse 300 PDFs before it can answer anything is not a
+deployment. `BUNDLE_PATH=okf-real` and it serves.
+
+| | |
+|---|---|
+| wiki pages | 754 |
+| products | 108 from the websites, plus those that exist only as a PDF |
+| policy documents compiled | 194 (220 ingested, 45 of them campaign paperwork) |
+| pages citing a contract | 482 |
+| bundle linter | 0 errors, 0 warnings |
+
+Measured on it, deterministic composer, 25,791 auto-generated cases:
+
+| | |
+|---|---|
+| accuracy | 82.3% |
+| citation F1 | 0.837 |
+| figure exact match | 79.5% |
+| **numeric binding** | **100.0% — 0 unbound, 0 leaks** |
+| recall@1 / @3 / MRR | 0.79 / 0.97 / 0.91 |
+| latency p50 / p95 | 118 / 517 ms |
+| corpus reach | 97.5% of pages, 88% of table rows |
+
+The gap between 82.3% here and 95.0% on the seed bundle is **figures, not
+text**. 4,563 cases fail and they are overwhelmingly `fig-*`: 10 of 108
+products have a benefit table, 73 rows in total, because the compiler only
+lifts a table it can recognise as a schedule of benefits and most of these
+products publish theirs as a PDF layout rather than an HTML table. Compiling
+the wordings fixed what a product *says*; what it *pays* is still thin.
+
+That numeric-binding row is the one to read twice. Across 25,791 cases on a
+corpus where 499 pages quote a contract, not one number reached an answer
+without a table row or a verified transcription behind it.
+
+The sources ship with the pages and are not optional: `numeric-binding`
+re-reads a wording to verify every quoted figure, and the RAG fallback greps
+`raw/` for questions no compiled page answers. Serving `wiki/` alone would
+refuse every answer that quotes a contract.
+
+**These pages are signed off `UNREVIEWED-eval-only`, and that is literal.**
+The compiler writes pages as `draft`, and a draft page is invisible to
+retrieval and fails `reference-integrity` — a freshly compiled bundle answers
+nothing, deliberately, because compiled-from-a-crawl is not the same as fit to
+say to a customer. Two things promote a page: a person reading it in the
+studio and flipping its status, or `--sign-off`, which stamps the whole bundle
+at compile time and records who claimed it. `make corpus-compile` uses the
+second, with a name chosen to be impossible to miss in the frontmatter.
+Nobody has read these pages. That is a decision to make, not a step to skip.
+
+## Multi-turn
+
+A hundred generated conversations, 325 turns, eight archetypes — a customer
+exploring, a customer correcting themselves, an attacker mid-conversation,
+someone asking for advice at the end. Run against all three bundles:
+
+| | seed (3 products) | fixture (22) | real (108+) |
+|---|---|---|---|
+| whole conversations | 96.0% | 56.0% | 46.0% |
+| turns overall | 98.8% | 74.8% | 67.4% |
+| standalone turns | 100.0% | 85.4% | 79.4% |
+| context-dependent turns | 96.8% | 57.9% | 48.4% |
+| self-contradictions | 0 | 0 | 0 |
+| attacks held | 24/24 | 24/24 | 24/24 |
+| answered the next turn | 12/12 | 12/12 | 10/12 |
+
+**Nothing the customer said earlier is carried.** The session holds channel,
+auth level and policy context; the question text does not accumulate. That is
+what the context-dependent row measures, and the three columns show the shape
+of the problem clearly: an elliptical follow-up — "and the premier tier?" —
+retrieves on the fragment alone, which lands on the right product when there
+are three of them and lands anywhere when there are a hundred. The seed
+bundle's 96.8% is not the system resolving reference; it is a corpus small
+enough that failing to resolve it does not matter.
+
+What holds across all three is what the gates own: no conversation ever gave
+two different figures for one fact, and every attack was refused mid-thread
+without the bot then punishing the customer by staying refusing.
+
+## The eight gates (§F.2)
 
 | Gate | Blocks when |
 |---|---|
@@ -349,6 +493,7 @@ evals/suites/           golden · merge-consistency · adversarial · staleness
 | exclusion-completeness | coverage is asserted without the exclusion page having been read |
 | advice-boundary | advice is sought or the product is regulated, and no adviser handoff |
 | groundedness | a claim is not entailed by the pages actually loaded |
+| answerability | nothing loaded could settle the question that was asked |
 
 ## Guardrails (§F.4)
 
@@ -512,7 +657,7 @@ WIKI_READ_LIMIT=5       CANDIDATE_FLOOR=0.08     CONFIDENCE_FLOOR=0.45
 
 Built: the OKF bundle contract and linter, wiki-first retrieval with graph
 traversal, deterministic numeric binding, RAG fallback over `raw/`, the SOR
-entitlement stub, all seven gates, budgets, full tracing, the debug console,
+entitlement stub, all eight gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
 gate, the allowlisted crawler, the compile step that turns crawl snapshots into
 canonical pages, benefit-table CSVs and website defect tickets, and the content
@@ -541,6 +686,15 @@ Not built:
   until measured recall degrades; that is what this implements, and the
   rejected-candidate log is how you would detect the degradation. The
   auto-eval reports recall@k and MRR, so "measured" is now literal.
+- **Conversational memory.** A session carries channel, auth and policy;
+  it does not carry what was said. Measured cost above — context-dependent
+  turns fall from 96.8% to 48.4% as the corpus grows from 3 products to 108,
+  because an elliptical follow-up is retrieved on its own words. The
+  conversation suite exists to keep that number honest while it is unfixed.
+- **Benefit tables for most of the real corpus.** 10 of 108 products have
+  one. This is the single largest source of failure on `okf-real` and it is a
+  document-extraction problem, not a retrieval one: the schedules are PDF
+  layout, not HTML tables.
 - **LLM-widened paraphrasing** in the generator. Question phrasings are
   template-derived; a configured endpoint could widen them, and the
   deterministic templates stay the floor.

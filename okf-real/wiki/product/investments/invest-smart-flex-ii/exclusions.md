@@ -1,0 +1,33 @@
+---
+okf_version: '0.1'
+id: product/investments/invest-smart-flex-ii/exclusions
+title: Invest smart flex II — Exclusions
+type: product
+status: approved
+lifecycle: on_sale
+underwriter: Etiqa Insurance Pte. Ltd.
+jurisdiction: SG
+line_of_business: investments
+regulated_advice: false
+aliases:
+- invest smart flex ii exclusions
+- what is not covered by invest smart flex ii
+- invest smart flex ii not covered
+channels: []
+plan_tiers: []
+authority:
+- raw/wordings/policy-contract-for-invest-smart-flex-ii.md
+version_in_force: '2026'
+links:
+  concepts: []
+compiled_from_commit: working-tree
+compiled_at: '2026-08-26T00:00:00'
+reviewed_by:
+- UNREVIEWED-eval-only
+review_due: '2026-11-24'
+confidence: high
+---
+
+## 6 What is Not Covered?
+
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/policy-contract-for-invest-smart-flex-ii.md].

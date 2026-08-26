@@ -27,6 +27,7 @@ from okf.channels import (
 )
 from okf.linter import LintReport, Severity, Violation, lint_bundle, lint_page
 from okf.page import (
+    UNCOMPILED_MARK,
     ChannelBinding,
     Confidence,
     Frontmatter,
@@ -55,6 +56,7 @@ __all__ = [
     "CHANNELS",
     "CHANNEL_BY_SLUG",
     "UEN",
+    "UNCOMPILED_MARK",
     "UNDERWRITER",
     "BenefitTables",
     "Bundle",

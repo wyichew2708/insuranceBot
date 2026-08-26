@@ -88,6 +88,7 @@ def cmd_wiki(args: argparse.Namespace) -> int:
 
     print(f"compiled {len(report.pages)} pages into {config.dest_root / 'wiki'}")
     print(f"  benefit tables: {len(report.tables)} products, {sum(report.tables.values())} rows")
+    print(f"  policy documents read: {report.documents}")
     if report.conflicts:
         print(f"  website defects filed: {len(report.conflicts)} (see {config.dest_root / 'conflicts'})")
     for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):

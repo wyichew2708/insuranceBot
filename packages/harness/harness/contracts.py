@@ -64,10 +64,17 @@ class Figure(BaseModel):
     # Promotions are effective-dated and have no benefit-table row; a figure
     # lifted verbatim from an in-window promotion page binds here instead.
     page_ref: str | None = None
+    # A figure quoted verbatim from a policy document, bound to the raw
+    # locator it was transcribed from (`raw/wordings/x.md#p7`). A contract's
+    # numbers cannot become benefit-table rows — a notice period is not a
+    # benefit — and cannot be paraphrased away without changing what was
+    # agreed. Transcription is the third option, and it is checkable: the
+    # numeric-binding gate re-reads the document and looks for the figure.
+    quote_ref: str | None = None
 
     @property
     def is_bound(self) -> bool:
-        return bool(self.table_row_id or self.sor_field or self.page_ref)
+        return bool(self.table_row_id or self.sor_field or self.page_ref or self.quote_ref)
 
 
 class ChannelRender(BaseModel):

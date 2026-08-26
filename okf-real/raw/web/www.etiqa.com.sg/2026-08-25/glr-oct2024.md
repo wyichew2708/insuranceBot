@@ -1,0 +1,133 @@
+---
+source_url: "https://www.etiqa.com.sg/glr_oct2024"
+canonical_url: "https://www.etiqa.com.sg/glr_oct2024"
+host: "www.etiqa.com.sg"
+title: "Guaranteed Loyalty Reward October 2024"
+description: ""
+page_type: "other"
+fetched_at: "2026-08-25T15:49:35+00:00"
+content_hash: "ab1512b633e17f93"
+extractor: "builtin"
+---
+
+# Guaranteed Loyalty Reward October 2024
+
+Guaranteed Loyalty Reward Entitlement
+
+TERMS AND CONDITIONS
+
+FREQUENTLY ASKED QUESTIONS
+
+TERMS AND CONDITIONS
+
+## Terms and Conditions
+
+- This Guaranteed Loyalty Reward October 2024 (“Campaign”) is organised by Etiqa Insurance Pte. Ltd. (“Etiqa”) exclusively for Etiqa customers. Customers who have purchased any eligible policy set out in clause 3 below (“Eligible Policies”) and fulfil the terms and conditions of this Campaign during the Qualifying Period (as defined below) will be entitled to an additional percentage of the policy account value of the Eligible Policies as set out in clause 5 below (“Reward”).
+- Qualifying Period: 3 October 2024 to 3 January 2025 (both dates inclusive) Any Top-ups made by 12 October 2024 will be eligible for the Reward.
+- The Eligible Policies applicable under this Campaign are as follows: * Only applicable for policies incepted between 8 February 2021 and 11 August 2022 (both dates inclusive)
+- Following are the Qualifying Criteria(s) which are applicable to this Campaign: Customer is an existing policy owner of the Eligible Policy and the Eligible Policy must remain in force throughout the Qualifying Period;
+- No surrendering of the Eligible Policy during the Qualifying Period;
+- No partial withdrawals of the Eligible Policy (with the exception of Dash PET) during the Qualifying Period;
+- In the case of Dash PET policy, the total amount of partial withdrawals made must not exceed S$1,000 (excluding surcharge) per policy owner during the Qualifying Period;
+- No reinstatement or reactivation of the Eligible Policy during the Qualifying Period; and
+- Any Top-up amounts made after 12 October 2024 will be excluded from the computation of the Reward.
+- Customers who comply with the Qualifying Criteria(s) will be entitled to the Reward: Eligible customers will be entitled to a Reward set out below in addition to his/her policy crediting rate: * Only applicable for policies incepted between 8 February 2021 and 11 August 2022 (both dates inclusive). The Reward will be credited to the account value of Eligible Policy on 4 January 2025.
+- The Reward will be computed based on the account value of the Eligible Policy as at 12 October 2024. Example: A customer has a GIGANTIQ policy with S$10,000 account value as at 12 October 2024. The customer will be entitled to a Reward of S$57.50 at the end of this Campaign (3 months’ worth of S$10,000 X 2.30% p.a.). The Reward will be credited to the account value on 4 January 2025 as long as the customer fulfils all the terms and conditions of this Campaign.
+- In the case of Dash PET, the Reward will be computed based on the account value of Dash PET policies as at 12 October 2024 less all the amount withdrawn during the Qualifying Period. If the total amount of partial withdrawals made exceeds S$1,000 (excluding surcharge) per policy owner during the Qualifying Period, you will not be eligible for the Reward. Example: A customer has a Dash PET policy with S$10,000 account value as at 12 October 2024. The customer has made partial withdrawals from his/her Dash PET policy. The total amount of partial withdrawals made from his/her Dash PET policy during the Qualifying Period is S$1,000. The customer will be entitled to a Reward of S$51.75 at the end of this Campaign (3 months’ worth of S$10,000 less S$1,000 of total partial withdrawals made 2.30% p.a.). The Reward will be credited to the account value on 4 January 2025 as long as the customer fulfils all the terms and conditions of this Campaign.
+- Participation in this Campaign is automatic. Customers with an Eligible Policy will receive a letter from Etiqa via the registered email or hardcopy letters in regards to the enrolment for this Campaign by 1 November 2024.
+- Only eligible customers who have received the enrolment letter from Etiqa and fulfilled all the terms and conditions of this Campaign will receive a letter from Etiqa via the registered email or hardcopy letters in regards to the Reward by 31 January 2025.
+- Existing terms and conditions for the Eligible Policies apply.
+- This Campaign is not valid in conjunction with any ongoing existing insurance promotions, coupons, staff discounts and privileges unless otherwise stated.
+- Notwithstanding anything herein, Etiqa has the absolute discretion to determine the eligibility of any person to participate in the Campaign.
+- If Etiqa subsequently determines that a person is not eligible, for any reason whatsoever, Etiqa may at its discretion, disqualify that person and cancel the Reward without prior notice.
+- Etiqa reserves the right, at any time in its sole and absolute discretion, to amend the terms and conditions of the Campaign.
+- In the event of any inconsistency between these terms and conditions and other materials relating to the Campaign, these terms and conditions shall prevail.
+- These policies are protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC websites ( lia.org.sg or www.sdic.org.sg ).
+- By participating in the Campaign, the Customer consents to Etiqa and its related, its agents, authorised service providers and marketing partners collecting, using or disclosing and/or processing their personal data, for the purpose to evaluate their proposal form and to provide the product and services which they are applying for and such other purposes as stated in Etiqa’s Data Protection and Privacy Statement on Etiqa’s website, which the Customer confirmed that they have read and understood.
+- The Customer confirm and agree that their consents herein supplement but do not supersede or replace any other consents which they may have previously provided to Etiqa, and are additional to any rights which Etiqa may have at law to collect, use or disclose their personal data, with or without their consent, to the extent permitted under applicable law.
+- In addition, where personal data of any person is disclosed by the Customer, the Customer further confirms and represents that they have obtained the consent of the individual concerned for the purposes, unless such consent is not required under applicable laws.
+- By participating in the Campaign, the customer agrees to release and hold Etiqa harmless from any and all liability whatsoever for any injuries, losses or damages of any kind to any person or property arising from or in connection with, either directly or indirectly the participation in the Campaign.
+- A person who is not a party to this Campaign terms and conditions has no right under the Contracts (Rights of Third Parties) Act 2001, to enforce any of these Terms and Conditions.
+- The terms and conditions of the Campaign shall be governed by and interpreted in accordance with Singapore law. The courts of Singapore shall have exclusive jurisdiction over any disputes arising from the terms and conditions, including the validity and enforceability thereof. All information is correct as at 9 September 2024.
+
+FREQUENTLY ASKED QUESTIONS
+
+## Frequently Asked Questions
+
+How do I participate in this Campaign?
+
+There is no action required on your end. If you are a policy owner of any Eligible Policy, you will be automatically enrolled for the Campaign. You will receive a letter from Etiqa via your registered email or hardcopy letters in regards to the enrolment for this Campaign by 1 November 2024.
+
+What is the Qualifying Period and how is the Reward computed?
+
+The Qualifying Period for the Campaign is from 3 October 2024 to 3 January 2025 (both dates inclusive). Etiqa will compute the Reward based on your account value as at 12 October 2024.
+
+In the case of Dash PET, the Reward will be computed based on your account value as at 12 October 2024 less all the amount withdrawn during the Qualifying Period. If the total amount of partial withdrawals made exceeds S$1,000 (excluding surcharge) per policy owner during the Qualifying Period, you will not be eligible for the Reward.
+
+If I were to perform a Top-up to my policy by 11 April 2024, would my Top-up be eligible for the Reward?
+
+Yes, any Top-ups made by 12 October 2024 will be accumulated in the account value as at 12 October 2024 and thus are eligible for the Reward.
+
+I were to perform a Top-up to my policy after 11 April 2024, would my Top-up be eligible for the Reward?
+
+No, Top-ups made after 12 October 2024 will not be eligible for the Reward.
+
+If I were to surrender my policy and subsequently reinstate or reactivate it during the Qualifying Period, would I still be eligible for the Reward?
+
+No, you will not be eligible for the Reward because you have surrendered your policy before.
+
+I have made partial withdrawals from my account value before the Qualifying Period, will I still be eligible for the Reward?
+
+Yes, you will still be eligible for the Reward as long as your policy remains in force and there are no partial withdrawals made throughout the Qualifying Period.
+
+Would I still qualify for the Reward if I were to make a partial withdrawal from the Top-up amount that I have made to my policy (excluding Dash PET) before the Qualifying Period?
+
+No, you will no longer be eligible for the Reward as you have made partial withdrawals during the Qualifying Period.
+
+Would I still qualify for the Reward if I were to make a partial withdrawal from my Dash PET policy during the Qualifying Period?
+
+You will still be eligible for the Reward as long as the total amount of partial withdrawals made from your Dash PET policy does not exceed S$1,000 (excluding surcharge) during the Qualifying Period.
+
+My riders’ premium is deducted from my account value, will I still be eligible for the Reward?
+
+Yes, you will still be eligible for the Reward. Deduction of riders’ premium from account value is not considered a partial withdrawal.
+
+I have linked my Dash Wallet to my Dash PET account value. If the credit in my Dash Wallet is insufficient, Dash Wallet will withdraw from my Dash PET account value. Does this constitute as a partial withdrawal?
+
+Yes, this is considered as a partial withdrawal. You will still be eligible for the Reward as long as the total amount of partial withdrawals made from your Dash PET policy does not exceed S$1,000 during the Qualifying Period.
+
+When will the Reward be credited to the account value?
+
+The Reward will be credited to your account value on 4 January 2025.
+
+Who should I contact if I have further questions?
+
+If you have any other enquiries, you may WhatsApp our friendly Customer Care Consultants at +65 6887 8777 during our operating hours – Mondays to Fridays, 8.45am to 5.30pm. We are closed on Saturdays, Sundays, and Public Holidays.
+
+These policies are underwritten by  Etiqa Insurance Pte. Ltd. . This content is for reference only and is not a contract of insurance. Full details of the policy terms and conditions can be found in the policy contract.
+
+As buying a life insurance policy is a long-term commitment, an early termination of the policy usually involves high costs and the surrender value, if any, that is payable to you may be zero or less than the total premiums paid. You should seek advice from a financial adviser before deciding to purchase the policy. If you choose not to seek advice, you should consider if the policy is suitable for you. The information contained on this product advertisement is intended to be valid in Singapore only and shall not be construed as an offer to sell or solicitation to buy or provision of any insurance product outside Singapore.
+
+These policies are protected under the  Policy Owners’ Protection Scheme  which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC websites ( www.lia.org.sg  or  www.sdic.org.sg ). This advertisement has not been reviewed by the Monetary Authority of Singapore.
+
+Information is correct as at 9 September 2024.
+
+## Table 1
+
+| Eligible Policies |
+|---|
+| ELASTIQ | GIGANTIQ |
+| eSAVE advance | Dash EasyEarn |
+| Enrich advance | Dash PET* |
+| eSAVE smart |  |
+
+## Table 2
+
+| Eligible Policies | Reward as a percentage of the policy account value of the Eligible Policies as at 12 October 2024 |
+| ELASTIQ | 1.80% p.a. |
+| eSAVE advance | 1.80% p.a. |
+| Enrich advance | 1.80% p.a. |
+| GIGANTIQ | 2.30% p.a. |
+| Dash EasyEarn | 1.80% p.a. |
+| Dash PET* | 2.30% p.a. |
+| eSAVE smart | 1.80% p.a. |

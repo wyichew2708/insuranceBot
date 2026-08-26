@@ -1,0 +1,7 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+travel-insurance,2026,1-000,adult_aged_below_70_years_old,limit,100000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered
+travel-insurance,2026,3-000,adult_aged_below_70_years_old,limit,300000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered
+travel-insurance,2026,1-000,child,limit,50000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered
+travel-insurance,2026,3-000,child,limit,100000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered
+travel-insurance,2026,1-000,home_content_cover,limit,5000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered
+travel-insurance,2026,3-000,home_content_cover,limit,10000,$,raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered

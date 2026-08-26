@@ -44,9 +44,13 @@ services:
       # Read-only: the served corpus is build output, and the container has no
       # business editing it.
       - ./okf:/app/okf:ro
-      # `okf-web` is compiled by `make knowledge` and absent on a fresh
-      # checkout, so it is not mounted by default. Uncomment once you have one,
-      # and set BUNDLE_PATH=okf-web.
+      # The compiled Etiqa/Tiq corpus, committed to the repo. Set
+      # BUNDLE_PATH=okf-real to serve it. `raw/` is mounted with it on
+      # purpose: the numeric-binding gate re-reads the policy wordings to
+      # verify every quoted figure, and refuses the answer if it cannot.
+      - ./okf-real:/app/okf-real:ro
+      # `okf-web` is compiled by `make knowledge` from the synthetic fixture
+      # site and is absent on a fresh checkout, so it is not mounted.
       # - ./okf-web:/app/okf-web:ro
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).status==200 else 1)"]

@@ -1,0 +1,13 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+fire-insurance,2026,1-room-community-care-apartment,premium_for_5_year_term_includes,limit,1.11,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,2-room-2-room-flexi-studio-apartment,premium_for_5_year_term_includes,limit,1.99,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,3-room,premium_for_5_year_term_includes,limit,3.27,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,4-room-s1,premium_for_5_year_term_includes,limit,4.59,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,5-room-s2-3gen,premium_for_5_year_term_includes,limit,5.43,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,executive-multi-generation,premium_for_5_year_term_includes,limit,6.68,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,1-room-community-care-apartment,sum_insured_effective_16_august_2024,limit,37900,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,2-room-2-room-flexi-studio-apartment,sum_insured_effective_16_august_2024,limit,57000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,3-room,sum_insured_effective_16_august_2024,limit,83300,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,4-room-s1,sum_insured_effective_16_august_2024,limit,117000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,5-room-s2-3gen,sum_insured_effective_16_august_2024,limit,144800,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered
+fire-insurance,2026,executive-multi-generation,sum_insured_effective_16_august_2024,limit,176700,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered

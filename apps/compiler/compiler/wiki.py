@@ -32,7 +32,12 @@ from pathlib import Path
 import yaml
 from harness.intent import classify
 from okf.channels import ALL_CHANNELS, channel_for_host
+
+# The compiler writes what the linter checks; sharing the patterns is what
+# stops it from emitting a page the build then rejects.
+from okf.linter import ALLOW_NUMBER, NUMBER_IN_PROSE_RE, ROUTE_RE
 from okf.page import (
+    UNCOMPILED_MARK,
     ChannelBinding,
     Confidence,
     Frontmatter,
@@ -41,9 +46,18 @@ from okf.page import (
     Page,
     PageType,
     Status,
+    parse_page,
     render_page,
 )
 
+from compiler.documents import (
+    COMPILED_ROLES,
+    TIERS,
+    Document,
+    campaign_documents,
+    load_documents,
+    match_documents,
+)
 from compiler.snapshots import Section, Snapshot, Table, load_snapshots, slugify
 
 LEGAL_NAME = "Etiqa Insurance Pte. Ltd."
@@ -273,6 +287,8 @@ class CompileReport:
     tables: dict[str, int] = field(default_factory=dict)
     conflicts: list[SourceConflict] = field(default_factory=list)
     skipped: dict[str, int] = field(default_factory=dict)
+    #: Policy documents read from the wordings and product-summary tiers.
+    documents: int = 0
 
     def skip(self, reason: str) -> None:
         self.skipped[reason] = self.skipped.get(reason, 0) + 1
@@ -539,10 +555,6 @@ def write_benefit_table(dest_root: Path, slug: str, rows: list[BenefitRow]) -> P
     return path
 
 
-NUMBER_IN_PROSE_RE = re.compile(r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)|(?:\b\d+(?:\.\d+)?\s?%)|(?:\b\d{2,}\b)")
-ALLOW_NUMBER = "<!-- okf:allow-number -->"
-
-
 def _grounded(text: str, ref: str, report: CompileReport, allow_number: bool = False) -> str | None:
     """One paragraph, one reference (§C.3 rule 1). A sentence carrying a number
     the compiler could not bind to a table row is dropped rather than
@@ -591,7 +603,8 @@ def _write(config: CompileConfig, page: Page, report: CompileReport) -> None:
     path = config.dest_root / "wiki" / f"{page.id}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(render_page(page))
-    report.pages.append(page.id)
+    if page.id not in report.pages:
+        report.pages.append(page.id)
 
 
 def _common(
@@ -711,10 +724,17 @@ def emit_product(
             if row.benefit_code in seen:
                 continue
             seen.add(row.benefit_code)
-            body.append(
-                f"{benefit_phrase(row.benefit_code, row.attribute)} "
-                f"{{{{table:{row.benefit_code}.{row.attribute}}}}} [src:{row.source_ref}]."
-            )
+            phrase = benefit_phrase(row.benefit_code, row.attribute)
+            # A schedule row headed "Adult aged below 70 years old" or "Sum
+            # insured effective 16 August 2024" names a *band*, not a benefit,
+            # and turning it into a sentence types its digits into prose. The
+            # row keeps its place in the benefit table — only the generated
+            # sentence goes, because there is no wording of it that is both
+            # faithful and number-free.
+            if NUMBER_IN_PROSE_RE.search(phrase):
+                report.skip("benefit label carries a figure — no headline sentence")
+                continue
+            body.append(f"{phrase} {{{{table:{row.benefit_code}.{row.attribute}}}}} [src:{row.source_ref}].")
         body.append(f"Full benefit detail is on the [benefits page](./{group.slug}/benefits.md).")
 
     body.append("## What is not covered")
@@ -839,9 +859,14 @@ def emit_exclusions(
         if grounded:
             body.append(grounded)
     if not body:
+        # Nothing to publish. The sentence still has to be one a customer can
+        # be shown, because retrieval will find this page and the composer
+        # will read from it: "could not be extracted" is an engineering note,
+        # and it was reaching people.
         body = [
             "## Exclusions",
-            f"The published exclusions could not be extracted from the source page [src:{ordered[0].ref()}].",
+            "The exclusions for this product are set out in its policy wording, which is "
+            f"{UNCOMPILED_MARK} [src:{ordered[0].ref()}].",
         ]
     _write(config, _page(fm, body), report)
 
@@ -953,12 +978,24 @@ def emit_faqs(
             intent = classify(question).value
             if intent not in intents:
                 intents.append(intent)
-            body += [
-                f"## {question}",
-                "",
-                f"{answer} [src:raw/faq/{slugify(entry.get('product', ''))}.md]",
-                "",
+            ref = f"raw/faq/{slugify(entry.get('product', ''))}.md"
+            # The insurer's own published answer, reproduced rather than
+            # rewritten — so it goes through the same verbatim path as a
+            # policy wording. Published answers quote figures and hotlines
+            # freely; on this corpus that was 318 of the bundle's 320 lint
+            # errors, every one of them a number the compiler had typed into
+            # prose it did not own.
+            rendered = [
+                line
+                for paragraph in re.split(r"\n\s*\n", answer)
+                # A published FAQ answers "Yes, within the free-look period."
+                # in five words; the document minimum exists to drop
+                # extraction debris, which a curated answer is not.
+                if (line := _verbatim(paragraph, ref, report, min_words=2)) is not None
             ]
+            if not rendered:
+                continue
+            body += [f"## {question}", "", *rendered, ""]
         if not body:
             continue
         fm = _common(
@@ -1391,6 +1428,292 @@ def write_conflicts(config: CompileConfig, report: CompileReport) -> None:
         )
 
 
+# --- the document tiers -----------------------------------------------------
+
+#: Role → (page suffix, page title, alias templates). The suffix is the graph
+#: handle a question traverses to, so it names the *question*, not the
+#: insurer's section title: a customer asks what is excluded, never what
+#: "Section 7 (b)" says.
+DOC_PAGES: dict[str, tuple[str, str, list[str]]] = {
+    "exclusions": (
+        "exclusions",
+        "Exclusions",
+        ["{slug} exclusions", "what is not covered by {slug}", "{slug} not covered"],
+    ),
+    "definitions": (
+        "definitions",
+        "Definitions",
+        ["{slug} definitions", "what does it mean in {slug}", "{slug} glossary"],
+    ),
+    "benefits": (
+        "cover",
+        "What is covered",
+        ["what does {slug} cover", "{slug} coverage", "{slug} benefits explained"],
+    ),
+    "claims": (
+        "claims",
+        "Making a claim",
+        ["how to claim on {slug}", "{slug} claim procedure", "{slug} claim"],
+    ),
+    "eligibility": (
+        "eligibility",
+        "Eligibility",
+        ["who can buy {slug}", "{slug} eligibility", "{slug} entry age"],
+    ),
+    "conditions": (
+        "conditions",
+        "Policy conditions",
+        ["{slug} policy conditions", "{slug} terms", "{slug} free look", "cancel {slug}"],
+    ),
+}
+
+#: A page is a reading unit, not an archive. Past this many paragraphs the
+#: page stops being retrievable — every section scores the same and the
+#: composer picks arbitrarily — so the compiler truncates and *says so* in the
+#: report rather than quietly serving the first half of a contract.
+DOC_PARAGRAPH_CAP = 60
+DOC_MIN_WORDS = 6
+
+#: Two or more bare enumerators in a row, at either end of a paragraph.
+#: Two, because a lone `(30)` is a figure inside a clause, not a label.
+_ENUM_RUN = r"(?:\s*\(?[a-z0-9]{1,2}[).]\s*){2,}"
+_DANGLING_ENUM_RE = re.compile(rf"^{_ENUM_RUN}|{_ENUM_RUN}$", re.I)
+
+
+def _published_sections(config: CompileConfig, page_id: str) -> tuple[list[str], list[str]]:
+    """What an earlier pass of this compile wrote to `page_id`, if anything.
+
+    Read back rather than threaded through, because the web-derived page is
+    produced product by product and the document pass runs over a different
+    grouping entirely. The placeholder is dropped: a page that says the
+    exclusions are not compiled has nothing to preserve.
+    """
+    path = config.dest_root / "wiki" / f"{page_id}.md"
+    if not path.is_file():
+        return [], []
+    try:
+        page = parse_page(path.read_text(encoding="utf-8"))
+    except ValueError:
+        return [], []
+    if UNCOMPILED_MARK in page.body or not page.body.strip():
+        return [], []
+    return [page.body.strip()], list(page.frontmatter.authority)
+
+
+def _verbatim(text: str, locator: str, report: CompileReport, min_words: int = DOC_MIN_WORDS) -> str | None:
+    """One paragraph of a published source, ready to publish.
+
+    Two shapes, and which one applies is decided by the text, not by taste:
+
+    * no figures — ordinary compiled prose carrying its reference, linted like
+      any other claim;
+    * figures — a **verbatim quotation**. The contract's numbers cannot be
+      paraphrased away without changing what was agreed, and they cannot be
+      lifted into a benefit table either (a notice period is not a benefit).
+      Quoting is the honest third option: the wiki reproduces the clause and
+      names the document and page it came from, and the numeric-binding gate
+      re-reads that document to confirm the figure is really there.
+    """
+    text = _normalise_brands(" ".join(text.split()).strip())
+    # A schedule reads "does not cover" on one line and "(a)", "(b)", "(c)" on
+    # the next three; rebuilding the paragraph glues the labels together and
+    # leaves their contents on lines of their own. The stranded run says
+    # nothing, so it goes — and if that is all the paragraph was, so does it.
+    text = _DANGLING_ENUM_RE.sub("", text).strip()
+    if len(text.split()) < min_words:
+        return None
+    # Contact details and deep links vary by distribution route; the renderer
+    # substitutes the session's own. Baking one into a product page is the
+    # merge-over-flattening failure the linter's bare-route rule exists for.
+    if ROUTE_RE.search(text.replace(LEGAL_NAME, "")):
+        report.skip("document paragraph carrying a channel-varying contact — dropped")
+        return None
+    if NUMBER_IN_PROSE_RE.search(text):
+        return f"> {text} [src:{locator}]"
+    return f"{text.rstrip('.')} [src:{locator}]."
+
+
+def _document_body(
+    documents: list[Document], role: str, report: CompileReport
+) -> tuple[list[str], list[str]]:
+    """(body lines, source refs) for one role across a product's documents."""
+    body: list[str] = []
+    refs: list[str] = []
+    seen: set[str] = set()
+    kept = 0
+    dropped = 0
+
+    for document in documents:
+        for section in document.by_role(role):
+            locator = document.locator(section)
+            rendered: list[str] = []
+            for paragraph in section.paragraphs:
+                key = re.sub(r"[^a-z0-9]+", "", paragraph.lower())[:180]
+                if not key or key in seen:
+                    continue
+                line = _verbatim(paragraph, locator, report)
+                if line is None:
+                    continue
+                seen.add(key)
+                if kept + len(rendered) >= DOC_PARAGRAPH_CAP:
+                    dropped += 1
+                    continue
+                rendered.append(line)
+            if not rendered:
+                continue
+            body.append(f"## {section.heading}")
+            body.extend(rendered)
+            kept += len(rendered)
+            if document.ref not in refs:
+                refs.append(document.ref)
+    if dropped:
+        report.skip(f"paragraphs past the {DOC_PARAGRAPH_CAP}-paragraph page cap — not compiled")
+    return body, refs
+
+
+def emit_document_pages(
+    config: CompileConfig,
+    page_id: str,
+    title: str,
+    slug: str,
+    lob: str,
+    documents: list[Document],
+    report: CompileReport,
+    concepts: list[str],
+    version: str | None = None,
+    skip_roles: frozenset[str] = frozenset(),
+) -> list[tuple[str, str]]:
+    """One page per role the documents actually cover, hung off `page_id`."""
+    emitted: list[tuple[str, str]] = []
+    # Deliberately not `report.pages`: the crawl already wrote a placeholder
+    # exclusions page under this id, and replacing it with the contract's own
+    # exclusions is the point of this pass, not a collision to avoid.
+    written: set[str] = set()
+    words = slug.replace("-", " ")
+    for role in COMPILED_ROLES:
+        if role in skip_roles:
+            continue
+        suffix, role_title, alias_forms = DOC_PAGES[role]
+        body, refs = _document_body(documents, role, report)
+        if not body:
+            continue
+        # The crawl may already have written this page — an exclusions page
+        # summarised from the product's own marketing copy. The wording
+        # outranks it (§D.1) but does not refute it, so the crawled sections
+        # are kept *below* the contract's, still carrying their own refs.
+        # Composition reads from the top, so authority becomes page order.
+        carried, carried_refs = _published_sections(config, f"{page_id}/{suffix}")
+        body.extend(carried)
+        refs.extend(r for r in carried_refs if r not in refs)
+        child_id = f"{page_id}/{suffix}"
+        if child_id in written:
+            continue
+        written.add(child_id)
+        fm = _common(
+            config,
+            child_id,
+            f"{title} — {role_title}",
+            PageType.product,
+            refs,
+            lifecycle=Lifecycle.on_sale,
+            underwriter=LEGAL_NAME,
+            line_of_business=lob,
+            aliases=[a.format(slug=words) for a in alias_forms],
+            links=Links(concepts=concepts),
+            # The contract is the source; nothing outranks it.
+            confidence=Confidence.high,
+            **({"version_in_force": version} if version else {}),
+        )
+        _write(config, _page(fm, body), report)
+        emitted.append((child_id, f"{title} — {role_title}"))
+    return emitted
+
+
+def _document_title(documents: list[Document], plan: str) -> str:
+    """A product name a customer would recognise, from the file name.
+
+    The document's own first line is not it: a policy contract opens with
+    "This is a group insurance policy issued to...", and a product summary
+    opens with a disclaimer.
+    """
+    words = plan.replace("-", " ").split()
+    keep = {"ci", "pa", "ii", "iii", "sme", "hdb", "tcm", "ilp", "gio"}
+    titled = " ".join(w.upper() if w in keep else w.capitalize() for w in words)
+    if not re.search(r"insurance|policy|plan|rider|cover|waiver|package", titled, re.I):
+        titled = f"{titled} Insurance"
+    return titled
+
+
+def emit_document_products(
+    config: CompileConfig,
+    documents: list[Document],
+    report: CompileReport,
+    concepts: list[str],
+) -> dict[str, list[tuple[str, str]]]:
+    """Products that exist only as a PDF.
+
+    A third of this insurer's book — commercial fire, contractors' all risks,
+    fidelity guarantee, the rider range — has a policy wording and a product
+    summary but no crawlable product page. Before this, asking about any of
+    them retrieved nothing and the bot said so. The contract is a better
+    source than the marketing page anyway; the only thing missing is a
+    purchase route, and there is no honest way to invent one.
+    """
+    by_plan: dict[str, list[Document]] = {}
+    for document in documents:
+        by_plan.setdefault(document.plan, []).append(document)
+
+    products: dict[str, list[tuple[str, str]]] = {}
+    for plan, found in sorted(by_plan.items()):
+        found.sort(key=lambda d: (TIERS.index(d.tier), -sum(s.words for s in d.sections)))
+        title = _document_title(found, plan)
+        lob = line_of_business(plan, title)
+        page_id = f"product/{lob}/{plan}"
+        if page_id in report.pages:
+            continue
+        summary, refs = _document_body(found, "benefits", report)
+        if not summary:
+            report.skip("document product with no compilable cover section — no page")
+            continue
+        linked = [c for c in concepts if _concept_pattern(c).search(" ".join(summary))]
+        fm = _common(
+            config,
+            page_id,
+            title,
+            PageType.product,
+            refs or [d.ref for d in found],
+            lifecycle=Lifecycle.on_sale,
+            underwriter=LEGAL_NAME,
+            uen=UEN,
+            line_of_business=lob,
+            aliases=sorted({plan.replace("-", " "), title.lower()}),
+            links=Links(concepts=linked),
+            # No crawled page means no marketing claim to cross-check against,
+            # and no channel binding either. High authority, low corroboration.
+            confidence=Confidence.medium,
+        )
+        opening = (
+            f"This product is compiled from its policy documents. The wording is the "
+            f"contract; the sections below quote it [src:{(refs or [d.ref for d in found])[0]}]."
+        )
+        _write(config, _page(fm, [f"## About {title}", opening, *summary]), report)
+        products.setdefault(lob, []).append((page_id, title))
+        products[lob].extend(
+            emit_document_pages(
+                config,
+                page_id,
+                title,
+                plan,
+                lob,
+                found,
+                report,
+                linked,
+                skip_roles=frozenset({"benefits"}),
+            )
+        )
+    return products
+
+
 def compile_bundle(config: CompileConfig) -> CompileReport:
     report = CompileReport()
     snapshots = load_snapshots(config.source_root)
@@ -1473,6 +1796,43 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         )
         if emitted:
             journeys.append((emitted, title))
+
+    # The document tiers, after the web-derived pages they attach to. A
+    # wording outranks every website (§D.1 authority order), so where both
+    # exist the document decides — but it decides on *its own page*, cited to
+    # the PDF and the printed page, rather than by overwriting crawled prose
+    # and losing the provenance that made it trustworthy.
+    documents = load_documents(config.source_root)
+    for _ in campaign_documents(config.source_root):
+        report.skip("campaign paperwork the ingest filed as a wording — not a product")
+    matched, unmatched = match_documents(documents, sorted(groups))
+    report.documents = len(documents)
+    for slug, found in sorted(matched.items()):
+        product_page = product_page_ids.get(slug)
+        if product_page is None:
+            continue
+        group = groups[slug]
+        lob = product_page.split("/")[1]
+        linked = [c for c in concepts if _concept_pattern(c).search(group.text)]
+        # The crawled exclusions page already exists, and on this corpus it
+        # says the exclusions could not be extracted. The wording is where
+        # they actually live, so that role is compiled here in preference.
+        for child_id, child_title in emit_document_pages(
+            config,
+            product_page,
+            group.title,
+            slug,
+            lob,
+            found,
+            report,
+            linked,
+            version=versions.get(slug, str(config.today.year)),
+        ):
+            listing = products.setdefault(lob, [])
+            if (child_id, child_title) not in listing:
+                listing.append((child_id, child_title))
+    for lob, pages in emit_document_products(config, unmatched, report, concepts).items():
+        products.setdefault(lob, []).extend(pages)
 
     # After the product pages, because a FAQ page hangs off one.
     for faq_page in emit_faqs(config, groups, product_page_ids, report):

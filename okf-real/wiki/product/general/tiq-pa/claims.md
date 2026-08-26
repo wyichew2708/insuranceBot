@@ -1,0 +1,58 @@
+---
+okf_version: '0.1'
+id: product/general/tiq-pa/claims
+title: Tiq PA Insurance — Making a claim
+type: product
+status: approved
+lifecycle: on_sale
+underwriter: Etiqa Insurance Pte. Ltd.
+jurisdiction: SG
+line_of_business: general
+regulated_advice: false
+aliases:
+- how to claim on tiq pa
+- tiq pa claim procedure
+- tiq pa claim
+channels: []
+plan_tiers: []
+authority:
+- raw/wordings/tiq-pa-policy-wording-v2-280823.md
+links:
+  concepts: []
+compiled_from_commit: working-tree
+compiled_at: '2026-08-26T00:00:00'
+reviewed_by:
+- UNREVIEWED-eval-only
+review_due: '2026-11-24'
+confidence: high
+---
+
+## 1 ) If Benefit is claimed for
+
+a) Permanent total loss or loss of use of a limb, then no Benefit Amount shall be paid for the loss of parts of that limb. b) Permanent loss of use of parts of a limb, then the total amount payable shall not exceed the Benefit Amount payable for permanent total loss of that limb [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+2) If Benefit is claimed for more than one form of Permanent Disablement sustained in any one (1) Accident, then the total amount payable shall not exceed the Benefit Amount payable for Permanent Total Paralysis or complete insanity or injuries resulting in being permanently bedridden [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+> 3) Before We pay any benefits under Section 2, Permanent Disablement shall have lasted twelve (12) months from the date of the Accident and have been proven to be permanent and without expectation of recovery. 4) Permanent Disablement Benefits shall not be payable in the event of Accidental Death in connection with the same Accident. [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md]
+
+5) If total amount of Benefit has been paid under Section 1 or Section 2 (1) to (4), this Policy shall therefore cease to apply to the Insured on whom the claim was paid. The limit/sub-limit stated in Section 2 for each item is applicable to any one (1) Accident [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+## 1) If Benefit is claimed for
+
+2) If Benefit is claimed for more than one form of Permanent Disablement sustained in any one (1) Accident, then the total amount payable shall not exceed the Benefit Amount payable for Permanent Total Paralysis or injuries resulting in being permanently bedridden [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+> 3) Before We pay any benefits under Section 12, Permanent Disablement shall have lasted fifty-two (52) weeks from the date of diagnosis and have been proven to be permanent and without expectation of recovery. 4) Permanent Disablement Benefits shall not be payable in the event of Death in connection with the same Infectious Disease. [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md]
+
+> 5) If total amount of Benefit has been paid under Section 11 or Section 12 (1 – 4), this Policy shall therefore cease to apply to the Insured on whom the claim was paid. The limit/sub-limit stated in Section 12 for each item is applicable to any one (1) Infectious Disease. [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md]
+
+> We will not pay for the benefit under Section 12 if We have already done so under Section 2. [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md]
+
+## 1 0. Claim Procedures
+
+a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+
+## 11. Incomplete Claims
+
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].

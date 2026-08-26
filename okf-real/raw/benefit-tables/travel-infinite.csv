@@ -1,0 +1,16 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+travel-infinite,2026,deluxe,golf_equipment,limit,1000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,golf_equipment,limit,1500,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,deluxe,golf_hole_in_one,limit,250,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,golf_hole_in_one,limit,250,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,classic,individual,limit,3000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,deluxe,individual,limit,5000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,individual,limit,10000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,classic,limit,limit,100,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,deluxe,limit,limit,200,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,limit,limit,300,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,classic,maximum,limit,6000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,deluxe,maximum,limit,10000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,maximum,limit,20000,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,deluxe,unused_green_fee,limit,250,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered
+travel-infinite,2026,suite,unused_green_fee,limit,250,$,raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered

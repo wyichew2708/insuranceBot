@@ -17,6 +17,13 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 OKF_VERSION = "0.1"
 
+#: Marks a compiled page the sources could not fill. The page still has to
+#: exist — the graph links to it and a gate reads it — and it still has to
+#: read as something a customer can be shown, because retrieval will find
+#: it and the composer will quote it. Anything downstream that must not
+#: treat an empty page as evidence tests for this string.
+UNCOMPILED_MARK = "not part of this compiled bundle"
+
 
 class PageType(str, Enum):
     product = "product"

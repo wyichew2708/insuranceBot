@@ -2,6 +2,7 @@
 generated draft and a customer, so each one is pinned by a test."""
 
 import datetime as dt
+from pathlib import Path
 
 from harness import (
     AuthLevel,
@@ -110,6 +111,62 @@ def test_number_in_prose_without_a_figure_is_blocked(bundle: Bundle) -> None:
     result = gate_numeric_binding(ctx(bundle, a))
     assert result.verdict is Verdict.fail
     assert "4 hours" in result.detail
+
+
+def test_a_quoted_contract_figure_is_bound_by_transcription(bundle: Bundle, tmp_path: Path) -> None:
+    """A wording's numbers cannot become benefit-table rows — a notice period
+    is not a benefit — and cannot be paraphrased without changing what was
+    agreed. Quoting binds them, and the gate checks the quotation."""
+    (tmp_path / "wordings").mkdir(parents=True)
+    (tmp_path / "wordings" / "travel.md").write_text(
+        "You must notify Us within thirty (30) days of the event."
+    )
+    a = GroundedAnswer(
+        answer="You must notify us within thirty (30) days.",
+        figures=[Figure(label="quotation", text="30", quote_ref="raw/wordings/travel.md#p3")],
+    )
+    context = ctx(bundle, a)
+    context.raw_root = tmp_path
+    assert gate_numeric_binding(context).verdict is Verdict.pass_
+
+
+def test_a_quotation_the_source_does_not_contain_is_blocked(bundle: Bundle, tmp_path: Path) -> None:
+    """Otherwise `quote_ref` would be a way to assert any number at all."""
+    (tmp_path / "wordings").mkdir(parents=True)
+    (tmp_path / "wordings" / "travel.md").write_text("You must notify Us within thirty (30) days.")
+    a = GroundedAnswer(
+        answer="You must notify us within 90 days.",
+        figures=[Figure(label="quotation", text="90", quote_ref="raw/wordings/travel.md#p3")],
+    )
+    context = ctx(bundle, a)
+    context.raw_root = tmp_path
+    result = gate_numeric_binding(context)
+    assert result.verdict is Verdict.fail
+    assert "does not contain it" in result.detail
+
+
+def test_a_quotation_is_matched_past_the_extractor_punctuation(bundle: Bundle, tmp_path: Path) -> None:
+    """An extractor writes `S$ 1,000` where the PDF printed `S$1,000`."""
+    (tmp_path / "wordings").mkdir(parents=True)
+    (tmp_path / "wordings" / "travel.md").write_text("the excess is S$ 1,000 per claim")
+    a = GroundedAnswer(
+        answer="The excess is S$1,000.",
+        figures=[Figure(label="quotation", text="S$1,000", quote_ref="raw/wordings/travel.md")],
+    )
+    context = ctx(bundle, a)
+    context.raw_root = tmp_path
+    assert gate_numeric_binding(context).verdict is Verdict.pass_
+
+
+def test_a_quotation_with_nothing_to_check_against_is_not_bound(bundle: Bundle) -> None:
+    """An unverifiable claim of verbatimness is not a binding."""
+    a = GroundedAnswer(
+        answer="You must notify us within 30 days.",
+        figures=[Figure(label="quotation", text="30", quote_ref="raw/wordings/travel.md")],
+    )
+    context = ctx(bundle, a)
+    context.raw_root = None
+    assert gate_numeric_binding(context).verdict is Verdict.fail
 
 
 def test_rendered_hotline_digits_are_bound_by_construction(bundle: Bundle) -> None:

@@ -17,6 +17,11 @@ import re
 from dataclasses import dataclass, field
 
 from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Session
+
+# The composer must find every span the gate will look for. Two copies of
+# this pattern drift, and the drift shows up as a quotation that composes
+# unbound and is refused — so there is one, and this is the one.
+from harness.gates import NUMERIC_SPAN_RE
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, find_tokens
 
@@ -213,6 +218,9 @@ def clean_prose(text: str) -> str:
     """Strip machine markup for display; the bindings live on the contract."""
     text = SOURCE_REF_RE.sub("", text)
     text = text.replace(ALLOW_NUMBER, "")
+    # Quotation markers are how the wiki records that a clause is reproduced
+    # rather than written; the customer reads the clause, not the bookkeeping.
+    text = re.sub(r"^>\s?", "", text, flags=re.M)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
     text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
     text = re.sub(r"[ \t]+", " ", text)
@@ -371,6 +379,31 @@ def compose(
         resolved.text = routed.text
         routed_in_body = routed_in_body or bool(routed.routes)
         unresolved.extend(f"{selection.page.id}:channel:{t}" for t in routed.unresolved)
+
+        # A quoted clause carries the contract's own figures. They are bound
+        # by transcription — the wiki reproduced them from a named document
+        # and page, and the numeric-binding gate re-reads that document to
+        # confirm it. Without this every exclusions and conditions page
+        # compiled from a wording would compose an answer the gate then
+        # refused, which is a worse failure than not having the page at all.
+        for paragraph in _paragraphs(resolved.text):
+            if not paragraph.lstrip().startswith(">"):
+                continue
+            ref = SOURCE_REF_RE.search(paragraph)
+            if ref is None or not ref.group(1).startswith("raw/"):
+                continue
+            locator = ref.group(1) + (f"#{ref.group(2)}" if ref.group(2) else "")
+            for match in NUMERIC_SPAN_RE.finditer(SOURCE_REF_RE.sub("", paragraph)):
+                figures.append(Figure(label="quotation", text=match.group(), quote_ref=locator))
+                figures_detail.append(
+                    {
+                        "label": "quotation",
+                        "value": match.group(),
+                        "row_id": "",
+                        "source_ref": locator,
+                        "page": selection.page.id,
+                    }
+                )
 
         # Promotion facts bind to their effective-dated page, not a table row.
         if selection.page.frontmatter.type == PageType.promotion:

@@ -1,0 +1,797 @@
+---
+source_url: "https://www.etiqa.com.sg/wp-content/uploads/policy_documents_and_forms/policy-wordings/Policy-Wording-Personal-Accident-with-Rider-Plan-Policy-22032016.pdf"
+tier: "wordings"
+pages: 13
+tables: 4
+extractor: "markitdown"
+fetched_at: "2026-08-26"
+last_modified: "Tue, 18 Jul 2017 07:39:00 GMT"
+---
+Personal Accident With Rider Plan Policy
+Personal Accident Policy
+1. This Policy, Schedule, endorsement, application, proposal form, declaration and attached papers together with
+other statement in writing, if any, are evidence of the contract between You and Us and shall hereinafter be referred
+to as the “Policy”. The proposal made to Us in connection with this Insurance shall be the basis and form part of this
+contract.
+2. This Policy, Schedule, endorsement application, proposal form, declaration and attached papers together with other
+statement in writing, if any, are to be read as one document and any word or expression to which a specific meaning
+has been attached in any part shall bear the same meaning wherever it appears.
+3. Provided that you pay the premium in full and We agree to accept it, We shall provide the respective Insurance in the
+terms set out this Policy.
+4. The conditions which appear in this Policy, Schedule and Endorsement, if any, are part of the contract and must be
+complied with. Failure to comply may mean that You shall not be able to claim under this Policy.
+5. Any word denoting a singular pronoun shall also mean to include the plural.
+Eligibility
+For Insured or Insured’s Spouse:
+To be eligible under this Insurance, the Insured or Insured’s Spouse named in the Schedule, must be a Singapore Citizen, or a
+Permanent Resident of Singapore, or Foreigners with valid Work Permit or Employment Pass or Dependant’s Pass or Long-Term
+Visit Pass of at least eighteen (18) years of age and not more than seventy (70) years of age on the Effective Date of Insurance.
+The policy shall be renewed up to the maximum age of eighty (80) years subject to our satisfaction of your state of health.
+For children:
+a) To be eligible under this Insurance, the Legal Child including stepchild and/or legally adopted child:
+b) who is at least 1 year of age and not more than eighteen (18) years of age; and
+c) wholly dependent on You or Your Legal Spouse for financial support; and
+d) unmarried.
+Payment Before Cover Warranty (Applicable To Individual Policyholders Only)
+It is fundamental the absolute special condition of this contract of insurance that the premium due must be paid and received
+by the insurer on or before the inception date of this policy/endorsement/renewal certificate.
+If this condition is not complied with then this contract is automatically cancelled and the insurer shall be entitled to the pro rata
+premium on the period they have been on risk.
+Where the premium payable pursuant to this warranty is received by an authorised agent of the insurer, the payment shall be
+deemed to be received by the insurer for the purposes of this warranty and the onus of proving that the premium payable was
+received by a person, including an insurance agent, who was not authorised to receive such premium shall lie on the insurer.
+Subject otherwise to the terms and conditions of this policy.
+Payment Of Premium (Applicable To Yearly Giro Premium)
+At the time of the issuance of this Policy, you will be required to pay the annual premium payment for new sign up.
+Annual payment means one of a series of consecutive yearly payments.
+Premiums will be debited from your account upon giro approval for subsequent years. First deduction will be deducted one
+month(30th) before expiry date of policy and should deduction fails, second deduction will be on 15th of the following month.
+Should second deduction still fail, policy will be automatically cancelled.
+Policy shall be in force for every successful premium deduction on yearly basis.
+Page 1 of 13
+
+Premium Basis & Adjustment
+Your Premium shall be based upon Your attained age as of the Effective Date of Insurance, yearly renewal date of this Policy
+whichever is applicable. The Premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy
+based on:
+(a) Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30)
+days before Your Premium is increased or varied by Us.
+General Definitions
+You/Your/Insured means the Insured named in the Schedule.
+Us/We/Our means Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K).
+Accident/Accidental means an event of violent, accidental, external and visible nature, occurring during the Period of Insurance,
+which shall independently of any other cause be the sole cause of Bodily Injury or death.
+Benefit means the respective Benefit, as stated in the Policy, Schedule and/or Endorsement payable by Us under the terms,
+exclusions and conditions of this Policy in respect of each event or loss covered by this Policy.
+Bodily Injury means injury sustained by an Insured from an Accident.
+Effective Date of Insurance means the effective date on the Schedule.
+Each day of Hospital Confinement is defined as a day of which the Hospital makes a charge for room and board by You for
+admission as an in-patient for a minimum period of twenty-four (24) hours on the recommendation of a Medical Practitioner.
+Endorsement means written evidence of an agreed change to this Policy.
+Family Member means an Insured’s spouse, parent, parent-in-law, grandparent, child, brother or sister.
+Hospital means any institution which fully meets all of the following criteria:
+a) maintains permanent and full-time facilities for care of overnight resident patients; and
+b) has diagnostic and therapeutic facilities for surgical and medical diagnosis and treatment and care of
+injured and sick persons by or under the supervision of a staff of Medical Practitioners; and
+c) continuously provides 24 hours a day nursing service supervised by qualified nurses; and
+d) is not other than incidentally a mental institution or a place for rest or a place for the aged or for drug
+addicts or for alcoholics.
+Hospital Confinement means an admission or a series of admissions from the same cause except that if admissions from
+the same cause are separated by twelve (12) months or more then each such admission shall constitute a separate Hospital
+Confinement.
+Loss of Hearing and Speech means total and irrecoverable loss of speech and hearing which is beyond remedy by surgical or
+other treatment.
+Loss of Sight means physical loss of an eye or permanent and total loss of sight, which shall be considered as having occurred:
+a) in both eyes if so certified by a registered fully qualified ophthalmic specialist. However, We reserve the
+right to seek a second opinion; or
+b) in one eye if the degree of sight remaining after correction is 1/60 or less on the Snellen Scale (that is
+seeing at one (1) foot what a person should see at sixty (60) feet). However, We reserve the right to seek a
+second opinion.
+Loss of Hand means:
+a) amputation of an entire hand or all four fingers from where the fingers join the palm of the hand; or
+b) total and permanent loss of use of an entire hand or all four fingers.
+Loss of Leg means:
+a) amputation of a foot (at or above the ankle); or
+b) permanent total loss of use of a foot.
+Loss of Limb means loss or physical separation of a hand at or above the wrist or a foot at or above the ankle and shall include
+total and irrecoverable loss of use of hand, arm or leg.
+Medical Practitioner means a legally qualified physician, doctor or surgeon other than Yourself or Your Family Member.
+Medically Necessary shall mean a medical service which is:
+Page 2 of 13
+
+a)  consistent with the diagnosis and customary medical treatment for a covered disability; and
+b)  in accordance with standards of good medical practice, consistent with current standard of professional
+medical care and of proven medical benefits ; and
+c)  not for the convenience of the Insured or the physician, and unable to be reasonably rendered out of
+hospital (if admitted as an inpatient); and
+d)  not of an experimental, investigational or research nature, preventive or screening nature; and
+| e)  | for which the charges are fair, reasonable and customary for the disability  |     |     |     |     |     |     |     |     |     |
+| --- | ---------------------------------------------------------------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+Period of Insurance means the period starting from the Effective Date of Insurance during which the coverage under this Policy
+is effective.
+
+Pre-existing Illness shall mean disabilities that the Insured has reasonable knowledge of. The Insured may be considered to
+have reasonable knowledge of a pre-existing condition where the condition is one for which:
+
+| a)  | the Insured had received or is receiving treatment; or                               |     |     |     |     |     |     |     |     |     |
+| --- | ------------------------------------------------------------------------------------ | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| b)  | medical advice, diagnosis, care or treatment has been recommended; or                |     |     |     |     |     |     |     |     |     |
+| c)  | clear and distinct symptoms are or were evident; or                                  |     |     |     |     |     |     |     |     |     |
+| d)  | its existence would have been apparent to a reasonable person in the circumstances.  |     |     |     |     |     |     |     |     |     |
+
+Specified Illnesses shall mean the following disabilities and its related complications, occurring within the first hundred twenty
+(120) days of Insurance of the Insured:
+
+| a)  | Hypertension, diabetes mellitus and cardiovascular disease; or  |     |     |     |     |     |     |     |     |     |
+| --- | --------------------------------------------------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+b)  All tumours, cancers, cysts, nodules, polyps, stones of the urinary system and biliary system; or
+| c)  | All ear, nose (including sinuses) and throat conditions; or      |     |     |     |     |     |     |     |     |     |
+| --- | ---------------------------------------------------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| d)  | Hernias, haemorrhoids, fistulae, hydrocele, varicocele; or       |     |     |     |     |     |     |     |     |     |
+| e)  | Vertebro-spinal disorders (including disc) and knee conditions.  |     |     |     |     |     |     |     |     |     |
+
+Overseas Trip means travel / trip outside Malaysia, Singapore, Brunei and not being the Insured Person’s home country.
+
+Schedule means the information page that contains the details of the Insured, Benefit, Premium and Period of Insurance
+attached to this Policy.
+
+Table Of Benefits
+|                  |     |     |     |     |         |     |           |     |          |     |
+| ---------------- | --- | --- | --- | --- | ------- | --- | --------- | --- | -------- | --- |
+| Benefits Section |     |     |     |     | Premier |     | Privilege |     | Prestige |     |
+
+Age Band 18-80 yrs old
+
+For Insured and Spouse
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+Section 1 – Accidental Death
+|                              |     |     |     |     |          |     |          |     |          |     |
+| ---------------------------- | --- | --- | --- | --- | -------- | --- | -------- | --- | -------- | --- |
+| Insured Age between 18 to 69 |     |     |     |     | $150,000 |     | $300,000 |     | $500,000 |     |
+|                              |     |     |     |     |          |     |          |     |          |     |
+| Insured Age between 70 to 80 |     |     |     |     | $75,000  |     | $150,000 |     | $250,000 |     |
+We shall pay the Benefit Amount in accordance to the schedule of
+benefits stated under Your plan if during the Period of Insurance, You
+have sustained Bodily Injury which results in Accidental Death within
+| fifty two (52) weeks from the date of Accident. |     |     |     |     |     |     |     |     |     |     |
+| ----------------------------------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+| Section 2 - Permanent Disability due to Accident |     |     |     |     |          |     |          |     |          |     |
+| ------------------------------------------------ | --- | --- | --- | --- | -------- | --- | -------- | --- | -------- | --- |
+|                                                  |     |     |     |     |          |     |          |     |          |     |
+| Insured Age between 18 to 69                     |     |     |     |     | $150,000 |     | $300,000 |     | $500,000 |     |
+|                                                  |     |     |     |     |          |     |          |     |          |     |
+| Insured Age between 70 to 80                     |     |     |     |     | $75,000  |     | $150,000 |     | $250,000 |     |
+If during the Period of Insurance, You have sustained Bodily Injury which
+results in Permanent Disability within fifty two (52) weeks from the date
+of Accident, We shall pay the relevant Benefit Amount in accordance to
+
+the schedule of benefits stated under your plan as specified below:
+a) Permanent Total Paralysis or complete insanity or injuries resulting  $150,000   $300,000   $500,000
+| in being permanently bedridden |     |     |     |     |     |     |     |     |     |     |
+| ------------------------------ | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+b) Permanent Total Loss of sight of both eyes or use of both hands or  $150,000   $300,000   $500,000
+| both feet or combination of these. |     |     |     |     |     |     |     |     |     |     |
+| ---------------------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|                                    |     |     |     |     |     |     |     |     |     |     |
+c) Permanent Total Loss of speech. $150,000 $300,000 $500,000
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+d) Permanent Total Loss of hearing in both ears. $150,000 $300,000 $500,000
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+e) Permanent Total Loss of sight of one eye or use of one limb. $75,000 $150,000 $250,000
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+f)  Permanent Total Loss of hearing in one ear. $30,000 $60,000 $100,000
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+g) Permanent Total Loss of use of a shoulder, elbow, hip, knee, ankle or  $22,500 $45,000 $75,000
+
+wrist.
+|     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+h) Permanent Total Loss of use or loss by amputation of:
+|                |     |     |     |     |         |     |         |     |         |     |
+| -------------- | --- | --- | --- | --- | ------- | --- | ------- | --- | ------- | --- |
+| ii) One Thumb. |     |     |     |     | $22,500 |     | $45,000 |     | $75,000 |     |
+Page 3 of 13
+
+iii) One forefinger. $15,000 $30,000 $50,000
+iv) Any other finger or one big toe. $7,500 $15,000 $25,000
+v) Any other toe. $3,000 $6,000 $10,000
+Conditions applicable to Section 2
+1. If Benefit is claimed for:
+a) Permanent total loss or loss of use of a hand or leg, then no
+Benefit Amount shall be paid for the loss of parts of that hand or
+leg.
+b) Permanent loss of use of parts of a hand or leg, then the total
+amount payable shall not exceed the Benefit Amount payable for
+permanent total loss of that whole hand or leg.
+2. If Benefit is claimed for more than one form of Permanent Disability
+sustained in any one Accident, then the total amount payable shall
+not exceed the Benefit Amount payable for Permanent Total Paralysis
+or injuries resulting in permanently bedridden.
+3. Before We pay Permanent Total Paralysis or other Permanent
+Disability Benefi Total Paralysis or injuries resulting in being
+permanently bedridden or Permanent Disability shall have lasted
+fi ty two (52) weeks and have been proven to be permanent and
+without expectation of recovery.
+4. Permanent Disability Benefits shall not be payable in the event of
+Accidental Death in connection with the same Accident becomes
+payable.
+5. If total amount of Benefi has been paid for Accidental Death
+of Permanent Total Paralysis or Permanent Total Loss of Sight
+of both eyes or use of both hands or both feet or both limbs or
+combination of these or Permanent Total Loss of Hearing in both
+ears or Speech, this Certifi ate shall therefore cease to apply to
+You. Please note that the Sum Insured value will be reduced by half
+from item A to H for those between age 70 to 80.
+Section 3 – Chinese Medical Expenses $50 $150 $300
+We shall pay the cost of seeking treatment in accordance to the
+schedule of benefits stated under Your plan by a certified/registered
+Chinese Medical Practitioner in the event of any accidental bodily injury
+for any one accident subject to original receipt being provided.
+Section 4 – Outpatient Cash Benefi (any one accident) $50 $50 $50
+We shall pay lump sum cash irrespective of amount shown in receipt,
+for Your emergency treatment at a registered clinic/hospital as a result
+of an accident subject to original receipt being provided. This section
+is applicable when Section 3 & 5 is being activated at any one accident
+within the policy period.
+Section 5 – Outpatient Medical Expenses (any one accident) $50 $200 $400
+We will reimburse the amount in accordance to the schedule of benefits
+stated under your plan subject to original receipt being provided.
+Section 6 – Inhospital Medical Expenses (any one accident) $500 $2,250 $4,500
+We shall pay for your Inhospital Medical Expenses when you are
+hospitalised at a registered clinic / hospital as a result of an accident
+(up to a maximum limit shown including cost of medical report). We will
+reimburse the actual cost of medical treatment in accordance to the
+schedule of benefits stated under your plan subject to original receipt
+being provided.
+Section 7 – Hospitalization Allowance as a result of accident injury $50 per day $100 per day $150 per day
+We will pay compensation in accordance to the schedule of benefits
+stated under your plan for each completed 24 hours period that an
+Insured Person is confined in a Hospital as a result of accidental bodily Up to 100 days Up to 100 days Up to 100 days
+injury up to a maximum of 100 days due to any one accident subject to
+medical report and original receipt being provided.
+Section 8 – Snatch Theft $75 $150 $250
+We will pay you up to the limit of benefit stated under your plan for the
+jewellery, money or personal effects carried or worn on and necessary
+expenses incurred for the replacement of the personal identification
+card, driving license, passport, credit cards and/or bank cards stolen
+or damaged by a snatch thief or wayside robbery during the period of
+insurance.
+Page 4 of 13
+
+Section 9 – Ambulance Fees $150 $300 $350
+We shall reimburse You the actual fee incurred for the use of ambulance
+services in accordance to the schedule of benefits stated under Your
+plan, subject to original receipt being provided.
+Section 10 – Kidnap Benefit with validation of police report $1,000 $1,500 $2,500
+We will pay a lump sum payment in accordance to the schedule of
+benefits stated under Your plan on the necessary expenses incurred
+for hiring of a licensed private investigator appointed with Our consent
+incurred by Your family members in the event of being kidnapped. This
+benefit is payable subject to verification and confirmation by the police
+that a kidnap has taken place Provided always that expenses incurred
+under this section shall exclude ransom demanded by the kidnappers
+for the return of the Insured.
+Conditions under this section:
+1. The Insured must keep this insurance cover confidential
+2. The company will not act as an intermediary or negotiator for You nor
+will We offer direct advice on dealing with the kidnapper.
+3. It is necessary for the approved beneficiary/nominees acting on
+Your behalf to:
+a) determine whether you are kidnapped
+b) notify the appropriate law enforcement agency and comply with
+the recommendation and instructions
+c) give Us immediate notification of the kidnapping
+4. If investigation establishes collusion or fraud by the Insured, the
+Insured must reimburse the Company for any payment We have
+made under this section.
+Section 11 – Bereavement Grant as a result of accidental death $2,500 $3,000 $3,500
+We will pay a lump sum payment in accordance to the schedule of
+benefits stated under your plan to your family in the event of an
+accidental death.
+Section 12 – Dental Treatment due to any accident $500 $1,000 $1,500
+We shall reimburse You for the actual cost incurred up to an amount
+in accordance to the schedule of benefits stated under Your plan as a
+result of an Accident in any one annual Period of Insurance, to undergo
+treatment of injury of or damage to sound natural teeth subject to
+presentation of original bills. Such corrective dental treatment must be
+Medically Necessary and performed by a licensed surgeon or licensed
+dentist.
+Section 13 – Child Education Grant (Limit up to 3 Children only) $3,000 $4,000 $5,000
+We will pay a lump sum payment in accordance to the schedule of
+benefits stated under your plan for each legally dependent child (before
+attaining 18 years old and below) up to maximum of 3 surviving children
+at the point of occurrence who is still studying as a full-time student in a
+recognized institution of learning as a result of the Insured’s accidental
+loss of life.
+Section 14 - For Child (Age 1 to 18)
+Section 14a – Accidental Death $20,000
+We will pay compensation in accordance to the schedule of benefits
+stated under your plan if an Insured Person shall sustain injury
+resulting death during the period of insurance. Please refer to the Table
+of Compensation on the percentage of benefit amount payable.
+Section 14b – Permanent Disablement $20,000
+We will pay compensation in accordance to the schedule of benefits
+stated under your plan if an Insured Person shall sustain bodily injury
+resulting in permanent disablement during the period of insurance.
+Please refer to the Table of Compensation on the percentage of benefit
+amount payable.
+Section 14c– Bereavement Grant $1,000
+We will pay a lump sum payment in accordance to the schedule of
+benefits stated under your plan to your family in the event of an
+accidental death.
+Page 5 of 13
+
+Section 14d – Inhospital Medical Expenses $100
+We will pay compensation in accordance to the schedule of benefits
+stated under your plan for the actual cost of medical treatment when
+hospitalized at a registered hospital as a result of any one accident
+subject to original receipt being provided.
+Optional Rider Coverage (Applicable If Specified In The Schedule)
+Coverage and Benefits
+Benefits Section Benefit Amount
+Section 15 – Male Cancer Up to $10,000
+Diagnosis shall mean the definitive diagnosis of cancer made during the Period of Insurance
+by a qualified specialist. This diagnosis made must be supported by histological evidence of
+malignancy and confirmed by an oncologist or pathologist
+Definition of Cover
+Cancer must be positively diagnosed upon the basis of a microscopic examination of fixed
+tissues or preparations from the haemic system and characterized by uncontrollable growth and
+spread of malignant cells and the invasion and destruction of normal tissue. Such diagnosis
+shall be based solely on the accepted criteria of malignancy after a study of the histocytologic
+architecture or pattern of the suspect tumour, tissue or specimen. We shall in addition have the
+right and opportunity to examine the Insured, at Our own expense, when and so often as may
+reasonably be required, pending the outcome of a claim under this Policy.
+The Policy will cease once we pay a claim from this section.
+Male Cancers for the purpose of this section are limited only to primary cancer of the male organs
+limited to Prostate, Testis, Penile and Breast.
+We shall pay the Benefit Amount if You are diagnosed to be suffering from any or a combination
+of Male Cancers (as specified below) and survive for at least thirty (30) days from the date of the
+said diagnosis.
+1. Diagnosis of Prostate Cancer
+Prostate Cancer means a malignant lesion that consists of cancer cells from the prostate
+gland and spreading locally to surrounding tissues or distantly involves lymph nodes and
+other remote organs.
+2. Diagnosis of Testicular Cancer
+Testicular Cancer means a malignant lesion that consists of cancer cells discovered in one or
+both testicles and spreading locally to surrounding tissues or distantly involves lymph nodes
+and other remote organs.
+3. Diagnosis of Penile Cancer
+Penile Cancer means a malignant lesion of cancer cells in the tissues and/or external area of
+the penis and demonstrates the potential to or has spread to local and/or distant tissues and
+organs.
+4. Diagnosis of Breast Cancer
+Breast Cancer means a malignant lesion arising in epithelial or supporting breast tissue and
+spreading locally to surrounding tissues or distantly involves lymph nodes and other remote
+organs.
+The Male Cancer Benefit does not cover any illness or disease caused directly or indirectly by
+any of the following:
+1. All pre-cancer conditions and non-invasive carcinoma in-situ; or
+2. Any covered diseases which are diagnosed within the first hundred and twenty (120) days
+since the Effective Date of Insurance or reinstatement of this Policy; or
+3. Any illness, disease or condition, including illnesses or complications arising from any
+Cancers
+Page 6 of 13
+
+Section 16 – Female Cancer Up to $10,000
+Diagnosis shall mean the definitive diagnosis of cancer made during the Period of Insurance
+by a qualified specialist. This diagnosis made must be supported by histological evidence of
+malignancy and confirmed by an oncologist or pathologist.
+Definition of Cover
+Cancer must be positively diagnosed upon the basis of a microscopic examination of fixed
+tissues or preparations from the haemic system and characterized by uncontrollable growth and
+spread of malignant cells and the invasion and destruction of normal tissue. Such diagnosis
+shall be based solely on the accepted criteria of malignancy after a study of the histocytologic
+architecture or pattern of the suspect tumour, tissue or specimen. We shall in addition have the
+right and opportunity to examine the Insured, at Our own expense, when and so often as may
+reasonably be required, pending the outcome of a claim under this Policy.
+The Policy will cease once we pay a claim from this section.
+Female Cancers for the purpose of this Section are limited only to primary Cancer of the Female
+organs such as Breast, Cervical, Uterine, Ovarian, Fallopian Tubes and Vulva and Vagina. Cervical
+intraepithelial neoplasis and Carcinoma-in-stitu, CIN lesion (regardless of histology, grade or
+classification) and/or secondary Cancer which has originated from other organs and has spread
+to the female genital tract or breast are excluded.
+We shall pay the Benefit Amount if you are diagnosed to be suffering from any or a combination
+of Female Cancers (as specified below) and survive for at least (30) days from the date of the said
+Diagnosis.
+1. Diagnosis of Breast Cancer
+Breast Cancer means a malignant lesion arising in epithelial or supporting breast tissue and
+spreading locally to surrounding tissues or distantly involves lymph nodes and other remote
+organs
+2. Diagnosis of Cervical Cancer
+Cervical Cancer means a malignant lesion which arises within the cervical epithelium but has
+extended into and beyond underlying stromia and demonstrates the potential to or at the
+time of diagnosis has spread to adjacent and/or distant tissues and organs Cervical Cancer
+does not include:
+a. diagnosis of mild, moderate, severe dysplasia (CIN I, CIN II or CIN III, Carcinoma-in-situ)
+b. changes due to Human papilloma virus not demonstrating malignant transformation.
+3. Diagnosis of Uterine Cancer
+Uterine Cancer means a malignant lesion arising in the lining or wall of the uterus and
+demonstrates the potential to or has spread to local and/or distant tissues and organs.
+4. Diagnosis of Ovarian Cancer
+Ovarian Cancer means malignant neoplasms arising in the ovary which demonstrates the
+potential to or has spread to local and/or distant tissues or organs.
+5. Diagnosis of Cancer of the Fallopian Tubes
+Cancer of the Fallopian Tubes means malignant neoplasms arising in the Fallopian Tubes.
+6. Diagnosis of Cancer of the Vulva and Vagina
+Cancers of the Vulva and Vagina means malignant neoplasms arising in the epithelium and
+spreading to involve the underlying supporting tissues and/or distant tissues or organs.
+The Female Cancer Benefit does not cover any illness or disease caused directly or indirectly by
+any of the following:
+1. All pre-cancer conditions and non-invasive carcinoma in-situ; or
+2. Any covered diseases which are diagnosed within the first hundred and twenty (120) days
+since the Effective Date of Insurance or reinstatement of this Policy; or
+3. Any illness, disease or condition, including illnesses or complications arising from any
+Cancers
+Section 17 - Infertility Compassionate Cash (Applicable to Male Only) Up to $10,000
+We shall pay Infertility Compassionate Cash if during the Period of Insurance You have sustained
+injury to the external reproductive organs (penile, scrotum and/or testicles) resulting in total and
+permanent inability to reproduce, as certified by the treating Medical Practitioner.
+We shall not pay this Benefit Amount in connection with the same Accident which Section 1 or 2
+of the main policy is payable.
+This section ceases upon the payment of the full Benefit Amount payable under this section.
+Page 7 of 13
+
+Section 18 - Maternity Complications (Applicable to Female only) $10,000
+We shall pay Maternity Complications Benefit in the event of Your death within 30 days from
+pregnancy complications or miscarriage as a result of an Accident as certified by the treating
+Medical Practitioner.
+Exclusions application to Section 18:
+We shall not pay:
+1. For claims arising from elective termination or abortion other than for pregnancy complications
+or miscarriage as a result of an Accident; or
+2. This benefi Amount for any Accidental Death in connection with the same Accident of
+which the Section 1 or 2 is payable. The Policy ceases upon the payment of the full Benefi
+Amount under this section.
+Section 19 - Facial Reconstructive Surgery $10,000
+We shall reimburse You for the actual cost incurred up to an amount not exceeding $10,000 as a
+result of an Accident in any one annual Period of Insurance, to undergo corrective surgery to the
+head, face and/or neck. Such corrective surgery must be Medically Necessary and performed by
+a licensed surgeon.
+Section 20 - Skin Grafting due to Accident and/or Burns $5,000
+We shall reimburse You up to $5,000 in any one annual Period of Insurance for the actual cost of
+undergoing skin transplantation due to Accident and/or burns subject to presentation of original
+bills.
+Burns shall mean burning (at least 2nd degree) and the surgery must be in the opinion of the
+Medical Practitioner deemed Medically Necessary.
+We shall not pay for claims due to correction of facial disfigurement other than caused by
+Accident and/or burns.
+Section 21 - House Care $5,000
+If any claim is paid under Section 1 for Accidental Death or Section 2 for Permanent Disability due
+to an Accident, We shall pay cash to Your family for HouseCare payment.
+Section 22 - Credit Card(s) Outstanding Balance Up to $3,000
+If any Benefit Amount becomes payable under Section 1 or 2 of the main policy, We shall pay Your
+Credit Card(s) Outstanding Balance as at the date of Accident or the Benefit Amount, whichever
+is lesser.
+The credit card(s) referred to under this section is limited to the credit card(s) held by You as
+principal cardholder.
+We shall pay this benefit provided the insured has no other policy covering them else we will only
+pay the excess amount which is not covered by the other policy.
+Section 23 - Automated Teller Machine (ATM) Cash Withdrawal Protection $2,000
+We shall compensate You for loss of actual cash up to $2,000 in any one annual Period of
+Insurance as a result of unauthorized use of Your bank card for withdrawal of cash by force or
+threat by any unknown person.
+The loss must be reported to the Police and/or Card issuer immediately after the occurrence
+of the incident. Failure to lodge a report to the Police and/or Card issuer immediately shall not
+invalidate Your claims if it can be shown to Our satisfaction that You have reported to them as
+soon as is practicable.
+Exclusions applicable to Section 23:
+We shall not pay for claims arising directly or indirectly from, in respect of or due to:
+a. any carelessness, confiscation, errors or omission in receipts, payments or transfers; or
+b. any dishonest, fraudulent or criminal act of You; or
+c. liability for any debt unless You must upon discovery of any event which may result in a claim
+immediately report to the police and card issuer in accordance with the terms and conditions
+of the issue of the card; or
+d. liability for any debt arising from any supplementary card issued to Your Family member; or
+e. liability for any debt through Your collusion or Your Family member; or
+f. loss resulting from unauthorized use of Your card by Your Family or Household member.
+Page 8 of 13
+
+Section 24 - Family Prosperity Bonus $2,000
+We shall pay lump sum cash of $2,000 limited to one incident in any one annual Period of
+Insurance If You deliver twins or more by natural birth or caesarean section.
+The delivery of twins or more shall be after nine (9) months from the initial Effective Date of
+Insurance of the Policy. The certified true copies of Your newborn baby’s birth certificates and
+a letter from the attending Medical Practitioner confirming the birth of twins or more must be
+submitted to Us.
+We shall not pay for claims if prior to your pregnancy You have sought and/or undergone In-Vitro
+fertilization or embryo transfer or any other fertilization treatment other than natural conception
+to provoke procreation.
+Section 25 – Physiotherapy / Rejuvenation Benefit $1,000
+The Insured Person must be confined in a hospital for a minimum of 5 consecutive days following
+a claim payable under this policy, the Company will pay the applicable sum not exceeding more
+than $1,000 any one accident.
+Confinement must:
+a. Occur within 30 days from the date of the accident causing the relevant bodily injury
+b. Be certified by a licensed Medical Practitioner
+c. Be due to the same or related cause unless their occurrences are separated by at least 12
+consecutive months during which the Insured Person is not at any time confined to a hospital.
+Section 26 - Compassionate Cash for Domestic Violence $1,000
+We shall pay Compassionate Cash for Domestic Violence of $1,000 limited to one incident in any
+one annual Period of Insurance as a result of You suffering personal injuries or financial loss or
+damage to Your property due to Domestic Violence.
+We shall not pay for claims arising directly or indirectly or caused by person(s) other than Your
+Family or Household Member.
+The loss, injury or damage must be reported to the Police immediately after the occurrence of the
+incident. Failure to lodge a report to the Police immediately shall not invalidate Your claims if it
+can be shown to Our satisfaction that You have reported to the Police as soon as is practicable.
+Definitions:
+Domestic Violence shall mean the commission of any of the following acts:
+a. willfully or knowingly placing, or attempting to place, You in fear of physical injury; or
+b. causing physical injury to You by such act, which is known or ought to have been known
+would result in physical injury; or
+c. compelling You by force or threat to engage in any conduct or act, sexual or otherwise, from
+which You have a right to abstain; or
+d. confining or detaining You against your will; or
+e. causing mischief or destruction or damage to property with intent to cause or knowing that
+it is likely to cause distress or annoyance to You.
+Free Policy Extensions
+1. Sedentary Work/Off-Duty Cover
+If You are employed under any of the excluded occupations stated in General Exclusion 11, You shall still be covered
+under this Policy provided that:
+a) You are employed to do sedentary/desk-bound duties only; or
+b You are off-duty at the time of the Accident and the Bodily Injury does not arise in the course of Your
+employment or any activity related to Your employment.
+2. Suffocation by Smoke, Poisonous Fumes, Gas or Drowning
+Any result sustained by You due to suffocation by smoke, poisonous fumes, gas or drowning shall be deemed to
+be Bodily Injury covered under this Policy provided that such Bodily Injury does not arise in the course of Your
+employment or out of Your neglect, wilful or intentional act.
+3. Disappearance
+If You disappear and after a period of twelve (12) consecutive months Your body cannot be found, and sufficient
+evidence is provided that leads Us to believe that You have died as a result of an Accident, We will pay the Accidental
+Death Benefit. If at any time after the payment, this belief is incorrect, then the amount paid must be repaid to Us.
+4. Riot, Strike, Civil Commotion
+This Policy covers death or disablement sustained by the Insured Person as a result of riot, strike, civil commotion,
+Page 9 of 13
+
+hijack, murder or assault. Provided that such injury does not arise out of the Insured Person’s own participation,
+collaboration or provocation of such act.
+5. Peace Time Reservist Training
+This Policy covers injury sustained by the Insured Person in the course of peacetime reservist training within
+Singapore.
+General Exclusions (Applicable To All Sections)
+We shall not pay for any Benefit under this Policy caused by or contributed to by or related to any of the following:
+1. any pre-existing physical defect or infirmity, pregnancy, childbirth, abortion, miscarriage or any complication
+thereof; or
+2. any medical or physical conditions arising within the first thirty (30) days of the Effective Date of Insurance or
+reinstatement date whichever is latest except for Accidental injuries; or
+3. any treatment or surgical operation for Congenital Conditions; or
+4. any condition which is or results from erectile dysfunction and tests or treatment related to impotence or sterilization;
+or
+5. any willful or intentional acts of the Insured, suicide pacts or agreements or complications of suicide or attempted
+suicide, provoked homicide or assault or self-inflicted injury; or
+6. any condition which is or results from intoxication by alcohol or drugs not prescribed by a Medical Practitioner; or
+7. any condition, which is or results from or a complication of infection with Human Deficiency Syndrome (‘HIV’), any
+variance including Acquired Immune Deficiency Syndrome (‘AIDS’), and AIDS Related Complications (‘ARC’), or any
+opportunistic infections and/or malignant neoplasm (tumour) found in the presence of HIV, AIDS or ARC; or
+8. mental and nervous disorders, including but not limited to insanity; or
+9. any condition which is or results from a complication of venereal disease; or
+10. all claims and losses based upon, arising out of, directly or indirectly resulting from or in consequence of, or any way
+involving:
+a) asbestos, or
+b) any actual or alleged asbestos related injury or damage involving the use, presence, existence, detection,
+removal, elimination or avoidance of asbestos or exposure or potential exposure to asbestos; or
+11. any condition sustained whilst engaging in flying or other aerial activities other than in a fully licensed passenger
+carrying power driven aircraft as a passenger but not:
+a) as a member of the crew; or
+b) for the purpose of any trade or technical operation in or on the aircraft.
+12. the Insured taking part in naval, military, air force, police force, fire service department or any armed forces operation
+or any armed occupation; or
+13. the Insured engaging in diving, mining, logging, sawmilling, wood working, underground works, explosive making
+or handling or custodians or blasters, gas manufacturing or whilst on duty as a ship crew or fisherman; or
+14. war, invasion, act of foreign enemy, hostilities or warlike (whether war be declared or not), civil war, rebellion,
+revolution, insurrection, military or usurped power or confiscation, nationalization, requisition or destruction of or
+damage to property under the order of any government, public or local authority or martial law or state of siege or
+any of the events or causes which determine the proclamation or maintenance of martial law or state of siege; or
+15. ionizing radiations or contamination by radio-activity from any nuclear fuel or nuclear waste from the combustion of
+nuclear fuel or nuclear weapons or materials. Solely for the purpose of this exclusion, combustion shall include any
+self sustaining process of nuclear fission; or
+16. the Insured engaging in training or practicing for or taking part in;
+a) any underwater activities involving the use of underwater breathing apparatus or scuba diving; or
+b) climbing or mountaineering necessitating the use of ropes or guides, mountain or off road biking,
+skateboarding or roller skating; or
+Page 10 of 13
+
+c) pot-holing, hiking/trekking in remote areas unless with licensed guides; or
+d) parachuting, hang-gliding, bungee jumping or any diving activities; or
+e) winter sports (excluding curling and skating), hunting, polo-playing, steeple-chasing, water-skiing, or any
+racing activities other than on foot; or
+f) martial arts; or
+g) professional sports of any kind.
+General Conditions (Applicable To All Sections)
+1. Residential Qualification
+In the event of change of residence, the Insured shall notify Us in writing and the Insurance shall be terminated with
+effect from the date he leaves Singapore. For this purpose, change of residence means living or intending to live
+outside Singapore in excess of twelve (12) consecutive calendar months.
+2. Overseas Travel/Medical Treatment
+We shall not pay any Benefit whilst the Insured is outside of Singapore:
+a) if the event which may give rise to claim occurs on the purpose of business, study or vacation for a period
+exceeding three (3) consecutive months in any one annual Period of Insurance; or
+b) to seek medical treatment (even though such treatment shall be upon the requirement of attending
+Medical Practitioner) if such treatment is available locally.
+3. Free Look Period
+If this Policy shall have been issued and for any reason whatsoever You shall decide not to take up the Policy, You
+may return the Policy to Us for cancellation provided such request for cancellation is delivered by You to Us within
+fourteen (14) days from the date of delivery of the Policy. You will be entitled to the return of the full Premium paid
+less deduction of medical expenses incurred By Us in the issue of the Policy, if any.
+4. Cancellation of policy
+You may terminate the Policy anytime prior to expiry by giving us seven (7) days’ notice to Us. You shall be entitled to
+80% of the pro-rata premium for the unexpired period provided you have not made any claim during the then current
+period of insurance.
+5. Period of Cover and Renewal
+This Policy shall become effective as of the date stated in the Schedule. The Policy Renewal shall be one year after the
+effective date and annually thereafter. On each such renewal, the Policy is renewable at the premium rates in effect at
+that time and any change in the renewal premium shall be notified by writing at least thirty (30) days before change
+is effected. The Policy is renewable at Our option.
+6. Disappearance Clause
+If the Insured is travelling and the means of transportation disappears, sinks, crashes, or is wrecked or kidnapped
+or abducted and the Insured has not been found within one (1) year, We shall presume that the Insured has died as a
+result of Bodily Injury and shall pay the Benefit accordingly. If at any time after payment of the Benefit has been made
+by Us, the Insured is found to be alive, such payment shall be immediately refunded to Us.
+7. Misstatement of Age
+If the age of the Insured has been misstated and the premium paid as a result thereof is insufficient, any claim
+payable under this Policy shall be prorated based on the ratio of the actual premium paid to the correct premium
+which should have been charged for the year. Any excess premium, which may have been paid as a result of such
+misstatement of age, shall be refunded without interest.
+8. Misrepresentation/Fraud
+If the proposal or declaration of the Insured is untrue in any respect or if any material fact affecting that risk be
+incorrectly stated herein or omitted therefrom or if this Insurance, or any renewal thereof shall have been obtained
+through any misstatement, misrepresentation or suppression or if any claims made shall be fraudulent or exaggerated
+or if any false declaration or statement shall be made in support thereof then in any of these cases this Insurance
+shall be void.
+9. Portfolio Withdrawal Condition
+We reserve the right to cancel the portfolio as a whole if We decide to discontinue underwriting this Insurance
+product. Cancellation of the portfolio as a whole shall be given by written notice to the Insured at least thirty (30)
+days before the cancellation and We will run off all Policies to expiry of the period of cover within the portfolio.
+10. Payment of Benefit
+Any Benefit payable under this Policy shall be paid to the Insured or his beneficiary, if any, as stated in the Schedule
+or otherwise to his estate. Any receipt by the Insured or his beneficiary or estate of any Benefit payable under this
+Policy shall in all cases be deemed final and complete discharge of all of Our liabilities in respect of such Benefit.
+11. Claim Procedures
+a) All claims must be notified to Us as soon as possible but not later than thirty (30) days after any event
+which may entitle the Insured to claim under this Policy.
+b) Send to us immediately all relevant documents to support Your Claims.
+c) Any documents or evidence required by Us to verify the claim shall be provided by the Insured at his own
+expense. Any medical examination required by Us to verify the claim shall be at Our expense.
+Page 11 of 13
+
+12. Incomplete Claims
+All claims must be submitted to Us within thirty (30) days of completion of the events for which the claim is being
+made. Claims are not deemed complete and eligible Benefits are not payable unless all bills for such claims have
+been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation
+or waiver of the foregoing shall be at Our sole discretion.
+13. Subrogation
+If We shall become liable for any payment under this Insurance, We shall be subrogated to the extent of such payment
+to all the rights and remedies of the Insured against any party and shall be entitled at our own expense to sue in the
+name of the Insured. The Insured shall give or cause to be given to Us all such assistance in his power as We shall
+require to secure the rights and remedies and at Our request shall execute or cause to be executed all documents
+necessary to enable Us to effectively to bring suit in the name of the Insured.
+14. Interest and Currency
+No amount payable under this Policy shall carry any interest. Premium and Benefit payable under this Policy shall be
+in Singapore Dollar (SGD).
+15. Other Insurance
+No person shall be covered under more than one Personal Accident With Rider Policy or its equivalent Insurance
+Certificate issued by Etiqa Group. In the event the Insured is covered under more than one such Policy, We shall
+consider that person to be Insured under the Policy which was issued first (where the Benefit provided under each
+such Policy are identical) or which provides the greatest amount of Benefit and We shall refund any duplicated
+premium payment which may have been made by or on behalf of that Insured.
+16. Notice of Trust or Assignment
+We shall not accept or be affected by notice of any trust or assignment or the like which relates to this Policy.
+17. Arbitration
+All differences arising out of this Policy shall be referred to the decision of an Arbitrator to be appointed in writing by
+the parties in difference or if they cannot agree upon a single Arbitrator to the decision of two Arbitrators one to be
+appointed in writing by each of the parties within one calendar month after having been required to do so by either
+of the parties or in case the Arbitrators do not agree of an Umpire appointed in writing by the Arbitrators before
+entering upon the reference. The Umpire shall sit with the Arbitrators and preside at their meetings and the making
+of an Award shall be a condition precedent to any right of action against the Company.
+18. Legal Proceedings
+No action at law or in equity shall be brought to recover on the Policy prior to expiration of sixty (60) days after written
+proof of loss has been furnished in accordance with the requirements of this Policy. If the Insured shall fail to supply
+the requisite proof of loss as stipulated by the terms, provisions and conditions of this Policy, the Insured may, within
+a grace period of one calendar year from the time that the written proof of loss to be furnished, submit the relevant
+proof of loss to Us with cogent reason(s) for the failure to comply with the Policy terms, provisions and conditions.
+The acceptance of such proof of loss shall be at Our sole and entire discretion. After such grace period has expired,
+We will not accept, for any reason whatsoever, such written proof of loss.
+19. Alterations
+We reserve the right to amend the terms and provisions of this Policy by giving thirty (30) day prior notice in writing
+by ordinary post to the Insured last known address in Our records, and such amendment will be applicable from the
+next renewal of this Policy. No alteration to this Policy shall be valid unless authorised by Us and such approval is
+endorsed thereon.
+20. Contract (Rights of Third Parties) Act 2001
+A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act
+2001 to enforce any of its terms.
+21. Termination of Policy
+a. Termination by the Insured
+If the Insured gives notice in writing to Us to terminate this Insurance, such termination shall become effective on the
+date the notice is received or on the date specified in such notice, whichever is the later.
+b. Automatic Termination
+This Insurance shall be terminated:
+i) upon the death of the Insured; or
+ii) if the Insured ceases to be eligible on the grounds of age, change of occupation and/or Residential
+Qualification; or
+iii) upon payment of Benefit Amount under Sections 1, or 2(a) to 2(d).
+c. Termination by Us
+We may give notice of termination hereof by registered post to the Insured at his last known address. Such termination
+shall become effective after thirty (30) days following the date of such notice.
+Page 12 of 13
+
+d. Premium Position Upon Termination
+In the event of premium having been paid for any period beyond the date of termination of this Policy, the relevant
+proportion thereof shall be refunded to the Insured subject to a minimum premium payment of S$25.00 by the
+Insured. If premium has not been paid for any period up to the date of termination, the Insured shall be liable for the
+payment of such premium. If termination due to Free Look Period, You will be entitled to the return of the full Premium
+paid less deduction of medical expenses incurred By Us in the issue of the Policy, if any.
+e. Effective Time of Termination
+This Policy shall terminate at 12:01am Singapore Time on the relevant date specified in the occurrence date of any
+events specified herein, Schedule or Endorsement.
+Complaint Procedures
+If you make a complaint to us, in order to expedite matters, you need to provide us with your details (name, contact numbers,
+etc), specific nature of your complaint and supporting documents.
+Stage One
+1. Acknowledge your complaint within 3 business days.
+2. If we need additional information we will contact you and request that information within 7 business days of the date of
+your complaint.
+3. We will endeavour to resolve all complaints as soon as possible. If your complaint takes longer to resolve, we will
+contact you and update you on the progress on your complaint within 14 business days of our last communication
+to you.
+Stage Two
+If the outcome of your complaint is not handled to your satisfaction, you can write to the Principal Officer of the insurance
+company to appeal. We will respond to your appeal within 14 business days.
+If you are still dissatisfied with the Principal Officer’s response, we will refer you to a dispute resolution organisation, Financial
+Industry Disputes Resolution Centre Ltd (FIDReC), who acts independently of the insurer.
+Financial Industry Disputes Resolution Centre Ltd (FIDReC)
+Tel: (65) 6327 8878
+Email: info@fidrec.com.sg
+Website: www.fidrec.com.sg
+Policy Owners’ Protection Scheme
+This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance
+Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on
+the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us
+or visit the General Insurance Association (GIA) or SDIC web-sites (www.gia.org.sg or www.sdic.org.sg).
+Personal Data Use
+Any information collected or held by Us whether contained in Your application or otherwise obtained may be used and/or
+disclosed to Our associated individuals/companies or any independent third parties (within or outside Singapore) for any
+matters relating to Your application, any policy issued and to provide advice or information concerning products and services
+which We believe may be of interest to You and to communicate with You for any purpose. Your data may also be used for audit,
+business analysis and reinsurance purposes.
+Important Notice
+In accordance with the Insurance Act, we would remind you that you must disclose to us fully and faithfully all the facts you
+know or could reasonably be expected to know, otherwise you may not receive any benefi from this Policy.
+Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K)
+One Raffles Quay, #22-01 North Tower, Singapore 048583
+T +65 6336 0477 F +65 6339 2109 www.etiqa.com.sg
+Page 13 of 13
+
+## Table 1
+
+| a) | the Insured had received or is receiving treatment; or |  |  |  |  |  |  |  |  |  |
+|---|---|---|---|---|---|---|---|---|---|---|
+| b) | medical advice, diagnosis, care or treatment has been recommended; or |  |  |  |  |  |  |  |  |  |
+| c) | clear and distinct symptoms are or were evident; or |  |  |  |  |  |  |  |  |  |
+| d) | its existence would have been apparent to a reasonable person in the circumstances. |  |  |  |  |  |  |  |  |  |
+
+## Table 2
+
+| c) | All ear, nose (including sinuses) and throat conditions; or |  |  |  |  |  |  |  |  |  |
+|---|---|---|---|---|---|---|---|---|---|---|
+| d) | Hernias, haemorrhoids, fistulae, hydrocele, varicocele; or |  |  |  |  |  |  |  |  |  |
+| e) | Vertebro-spinal disorders (including disc) and knee conditions. |  |  |  |  |  |  |  |  |  |
+
+## Table 3
+
+| Insured Age between 18 to 69 |  |  |  |  | $150,000 |  | $300,000 |  | $500,000 |  |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Insured Age between 70 to 80 |  |  |  |  | $75,000 |  | $150,000 |  | $250,000 |  |
+
+## Table 4
+
+| Section 2 - Permanent Disability due to Accident |  |  |  |  |  |  |  |  |  |  |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Insured Age between 18 to 69 |  |  |  |  | $150,000 |  | $300,000 |  | $500,000 |  |
+| Insured Age between 70 to 80 |  |  |  |  | $75,000 |  | $150,000 |  | $250,000 |  |
