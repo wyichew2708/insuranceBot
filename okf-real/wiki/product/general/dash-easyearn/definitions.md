@@ -34,7 +34,7 @@ Age means the age at next birthday. Account value refers to sum of the single pr
 
 Assignee means any person to whom You have transferred Your rights as the Group Policy Owner and the assignment is registered with Us. Benefit(s) means any payments that We will pay and/or the amount of Premium that We will waive when certain events defined in this policy occur [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
-Endorsement means any written change to the policy which is issued and properly authorised by Us. Freeze period means the Life insured is not allowed to re-apply for a new insurance under this Portfolio starting on the date of the Life insured’s policy cancellation/free look/surrender and ending at the end of 6 months after that date [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+> Endorsement means any written change to the policy which is issued and properly authorised by Us. Freeze period means the Life insured is not allowed to re-apply for a new insurance under this Portfolio starting on the date of the Life insured’s policy cancellation/free look/surrender and ending at the end of 6 months after that date. [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md]
 
 Group Policy Owner is SingCash Pte. Ltd. (Company Registration No. 201106360E). The Group Policy Owner has full rights on the policy. Life insured means the person named in the Certificate of Insurance whom We provide the cover for. Throughout this document, where the context so admits, words embodying the masculine gender shall include the feminine gender and vice-versa. The Life insured does not have ownership of this Group Policy [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 

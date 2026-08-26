@@ -90,7 +90,7 @@ We shall not accept or be affected by notice of any trust or assignment or the l
 
 ## Renewal
 
-This is a monthly renewable Add-on Protection and the policy term is 1 month. At the end of every month policy term, this Add-on Protection will be renewed automatically for another month at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/policy-wording-cyber-insurance.md#p9].
+> This is a monthly renewable Add-on Protection and the policy term is 1 month. At the end of every month policy term, this Add-on Protection will be renewed automatically for another month at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/policy-wording-cyber-insurance.md#p9]
 
 > (a) this Add-on Protection is in force on the expiry date before the renewal; and (b) the insured has not reached Age 100 at the renewal date. [src:raw/wordings/policy-wording-cyber-insurance.md#p9]
 

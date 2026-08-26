@@ -39,7 +39,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## 3.1 Guaranteed Renewability
 
-Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable). At the end of each five (5) years policy term, this policy will be renewed automatically from the renewal date for another five (5) years, without giving Us proof of good health if the following conditions are met: [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md#p2].
+> Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable). At the end of each five (5) years policy term, this policy will be renewed automatically from the renewal date for another five (5) years, without giving Us proof of good health if the following conditions are met: [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md#p2]
 
 > a) This policy is in force on the Expiry date before the renewal; b) The Life insured has not reached Age 81 at the renewal date; c) There are no previously admitted or submitted claims on this policy; and d) The Life insured is insured for the same Sum insured or less. [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md#p2]
 
@@ -99,7 +99,7 @@ We will not be responsible for the validity of any transfer of policy [src:raw/w
 
 ## Guaranteed Renewability
 
-Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable) [src:raw/product-summaries/direct-etiqa-term-life-ii-product-summary.md#p2].
+> Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable). [src:raw/product-summaries/direct-etiqa-term-life-ii-product-summary.md#p2]
 
 At the end of each five (5) years policy term, this policy will be renewed automatically from the renewal date for another five (5) years, without giving Us proof of good health if the following conditions are met: [src:raw/product-summaries/direct-etiqa-term-life-ii-product-summary.md#p2].
 

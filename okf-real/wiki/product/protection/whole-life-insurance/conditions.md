@@ -78,7 +78,7 @@ information page and/or the supplementary terms to find out the exact coverage [
 
 ## 3. Guaranteed Renewability
 
-If you have chosen a policy term of 5 years (renewable), this policy will be renewed automatically from the renewal date for another 5 years at the same sum insured, without giving us proof of good health so long as all of the following conditions are met: [src:raw/wordings/eprotect-whole-life-policy-contract.md].
+> If you have chosen a policy term of 5 years (renewable), this policy will be renewed automatically from the renewal date for another 5 years at the same sum insured, without giving us proof of good health so long as all of the following conditions are met: [src:raw/wordings/eprotect-whole-life-policy-contract.md]
 
 > a) this policy is in force on the expiry date before the renewal; b) the life insured has not reached age 81 at the renewal date; and c) there is no claim on this policy The renewal premium will be calculated based on the prevailing premium rates at the attained age of the life insured and will stay level throughout the renewed term. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
 

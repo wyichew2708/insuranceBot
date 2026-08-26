@@ -33,7 +33,7 @@ faq_intents:
 
 ## What is Tiq 3-Year Endowment Plan?
 
-This is a single premium, non-participating life insurance savings plan. This plan has a policy term of 3 years. A lump sum guaranteed maturity benefit will be paid at the end of the policy term [src:raw/faq/tiq-3-year-endowment-plan.md].
+> This is a single premium, non-participating life insurance savings plan. This plan has a policy term of 3 years. A lump sum guaranteed maturity benefit will be paid at the end of the policy term. [src:raw/faq/tiq-3-year-endowment-plan.md]
 
 ## Who can buy this plan?
 
@@ -69,7 +69,7 @@ You may view your policy status such as your product documents on TiqConnect  [s
 
 ## How to file for a death claim?
 
-To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses [src:raw/faq/tiq-3-year-endowment-plan.md].
+> To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses. [src:raw/faq/tiq-3-year-endowment-plan.md]
 
 ## Are there any useful resources which I can refer to?
 

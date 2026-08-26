@@ -55,7 +55,7 @@ d) A credit in favour of the Insurer or the intermediary is made through an elec
 
 ## The occurrence of Poliomyelitis where the following conditions are met
 
-a) Poliovirus is identified as the cause, b) Paralysis of the limb muscles or respiratory muscles must be present and persist for at least 3 months [src:raw/wordings/eprotect-maid-policy-wording-v10.md].
+> a) Poliovirus is identified as the cause, b) Paralysis of the limb muscles or respiratory muscles must be present and persist for at least 3 months. [src:raw/wordings/eprotect-maid-policy-wording-v10.md]
 
 ## 5. Cancellation
 

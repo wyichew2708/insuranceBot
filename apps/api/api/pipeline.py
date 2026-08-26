@@ -31,6 +31,7 @@ from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
 from api.guardrails import Guard, Screening, guard_for
 from api.llm import Draft, provider_for
+from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
     frontmatter_filter,
@@ -182,7 +183,11 @@ def _finish(
 
 
 def answer_question(
-    bundle: Bundle, question: str, session: Session, settings: Settings
+    bundle: Bundle,
+    question: str,
+    session: Session,
+    settings: Settings,
+    history: list[str] | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     trace = Trace(question=question, session_id=session.session_id, channel=session.channel.value)
     budget = Budget(
@@ -256,6 +261,17 @@ def answer_question(
                 raw_root,
                 [c.source_id for c in listing.claims],
             )
+
+    # What "it" refers to. A turn that names no subject borrows the topic from
+    # the nearest earlier turn that did — "what's the coverages" after "term
+    # life" — and a turn that stands on its own is left exactly as typed, or
+    # "what about car insurance?" gets answered about term life.
+    with trace.stage("reference") as detail:
+        resolution = resolve(question, list(history or []), bundle)
+        if resolution.resolved:
+            detail["carried_from"] = resolution.carried_from
+            detail["resolved"] = resolution.question
+            question = resolution.question
 
     # Spell out the initials before anything scores the words. The tokeniser
     # drops anything under three characters, so "ci" reached retrieval as

@@ -203,6 +203,10 @@ const $ = s => document.querySelector(s);
 const thread = $("#thread"), main = $("#main"), box = $("#q"), send = $("#send");
 const sessionId = "chat-" + Math.random().toString(36).slice(2, 10);
 let busy = false;
+// The customer's own turns, oldest first. The service holds no session state,
+// so the surface that has the transcript is the one that sends it — and it is
+// used only to restore a subject to a turn that names none.
+const history = [];
 
 /* ---- theme ---- */
 const savedTheme = (() => { try { return localStorage.getItem("chat-theme"); } catch { return null; } })();
@@ -349,7 +353,7 @@ async function ask() {
     const res = await fetch("/v1/answer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: q, session }),
+      body: JSON.stringify({ question: q, session, history: history.slice(-6) }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     const env = await res.json();
@@ -383,6 +387,9 @@ async function ask() {
   } catch (err) {
     bubble.innerHTML = `<p class="err">Could not reach the service — ${escapeHtml(String(err))}</p>`;
   } finally {
+    // Recorded whatever happened: the customer said it, and the next turn may
+    // refer to it however this one went.
+    history.push(q);
     busy = false; send.disabled = false;
     main.scrollTop = main.scrollHeight;
     box.focus();

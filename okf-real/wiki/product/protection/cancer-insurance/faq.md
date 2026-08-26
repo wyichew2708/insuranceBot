@@ -27,7 +27,6 @@ reviewed_by:
 review_due: '2026-11-25'
 confidence: medium
 faq_intents:
-- browse
 - coverage
 - eligibility
 - renewal
@@ -108,7 +107,7 @@ For application that does not require further underwriting, you will receive a c
 
 ## How do I file for a claim?
 
-To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem at our expense [src:raw/faq/cancer-insurance.md].
+> To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem at our expense. [src:raw/faq/cancer-insurance.md]
 
 ## Is there any survival period for this plan?
 

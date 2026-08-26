@@ -59,7 +59,7 @@ If the policy has been assigned, the refund amount will be paid to the Assignee.
 
 ## 8.1 Incontestability
 
-We cannot challenge the validity of this policy after 2 years from the Policy commencement date or the latest Reinstatement date. However, if there is fraud, we reserve the rights to void the policy even after 2 years have passed [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+> We cannot challenge the validity of this policy after 2 years from the Policy commencement date or the latest Reinstatement date. However, if there is fraud, we reserve the rights to void the policy even after 2 years have passed. [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md]
 
 When this happens, we will refund all Premiums paid (less any amounts previously paid to you under this policy) without interest and less any amounts owing to us as well as any expenses incurred by us in providing you the policy [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
@@ -97,4 +97,4 @@ Please refer to the Table of Deductions in the Policy Illustration for the cost 
 
 > You may return this policy for cancellation within 14 days after you receive the policy document, for any reason. We will deduct any costs incurred by the company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the premium you paid and refund the balance to you. [src:raw/product-summaries/elastiq-product-summary-7-nov.md]
 
-If your policy document is sent by email, We consider this policy is delivered to you 1 day after the date of emailing [src:raw/product-summaries/elastiq-product-summary-7-nov.md].
+> If your policy document is sent by email, We consider this policy is delivered to you 1 day after the date of emailing. [src:raw/product-summaries/elastiq-product-summary-7-nov.md]

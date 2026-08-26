@@ -81,7 +81,7 @@ You will need to inform Us immediately if there is any change in Your or any rel
 
 > You may return this policy for cancellation within 14 days after You receive the policy document, for any reason. We will deduct any costs incurred by the Company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the Premium You paid and refund the balance to You. [src:raw/wordings/policy-contract-enrich-goal.md#p7]
 
-If Your policy document is sent by post, We consider this policy is delivered to you 7 days after the date of posting. 9.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person [src:raw/wordings/policy-contract-enrich-goal.md#p7].
+> If Your policy document is sent by post, We consider this policy is delivered to you 7 days after the date of posting. 9.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. [src:raw/wordings/policy-contract-enrich-goal.md#p7]
 
 When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee. We will not be responsible for the validity of any transfer of policy [src:raw/wordings/policy-contract-enrich-goal.md#p7].
 

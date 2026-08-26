@@ -76,7 +76,7 @@ If We allege that by reason of this exclusion, any loss, damage, cost or expense
 
 ## For the above definition, the following are excluded
 
-a) Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and b) Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke [src:raw/wordings/tiq-maid-policy-wording.md#p13].
+> a) Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and b) Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke. [src:raw/wordings/tiq-maid-policy-wording.md#p13]
 
 ## We will not pay for
 

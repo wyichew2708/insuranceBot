@@ -114,7 +114,7 @@ Interest is calculated based on daily Account value on a compounded basis. This 
 
 ## What happens if I want to surrender my policy?
 
-Upon full surrender, we will pay the surrender benefit in one lump sum which is equivalent to the Account value, less any amounts owing to us within 7 working days from the date we received your request. We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of your surrender application. You may request for a full surrender any time after the free look period by writing in to our Customer Care at customer.service@etiqa.com.sg. There are no surrender charges for ELASTIQ [src:raw/faq/elastiq.md].
+> Upon full surrender, we will pay the surrender benefit in one lump sum which is equivalent to the Account value, less any amounts owing to us within 7 working days from the date we received your request. We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of your surrender application. You may request for a full surrender any time after the free look period by writing in to our Customer Care at customer.service@etiqa.com.sg. There are no surrender charges for ELASTIQ. [src:raw/faq/elastiq.md]
 
 ## What if I change my mind?
 
@@ -122,7 +122,7 @@ Upon full surrender, we will pay the surrender benefit in one lump sum which is 
 
 ## How to file for a death claim?
 
-To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses [src:raw/faq/elastiq.md].
+> To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event. The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses. [src:raw/faq/elastiq.md]
 
 ## What is a universal life plan?
 

@@ -85,7 +85,7 @@ You must also, as soon as practicable within three (3) months of the change, not
 
 > You may return this policy for cancellation within 14 days after You receive the policy document, for any reason. We will deduct any costs incurred by the Company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the Premium You paid and refund the balance to You. [src:raw/wordings/general-provisions-for-life-insurance.md#p8]
 
-If Your policy document is sent by post, We consider this policy is delivered to You 7 days after the date of posting. 9.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person [src:raw/wordings/general-provisions-for-life-insurance.md#p8].
+> If Your policy document is sent by post, We consider this policy is delivered to You 7 days after the date of posting. 9.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. [src:raw/wordings/general-provisions-for-life-insurance.md#p8]
 
 When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee. We will not be responsible for the validity of any transfer of policy [src:raw/wordings/general-provisions-for-life-insurance.md#p8].
 
@@ -101,6 +101,6 @@ f) the cover expiry date g) Your written request and Our acceptance of the appli
 
 ## 3. Guaranteed Renewability
 
-If you have chosen a policy term of 5 years (renewable), this policy will be renewed automatically from the renewal date for another 5 years at the same sum insured, without giving us proof of good health so long as all of the following conditions are met: [src:raw/wordings/general-provisions-for-life-insurance.md#p12].
+> If you have chosen a policy term of 5 years (renewable), this policy will be renewed automatically from the renewal date for another 5 years at the same sum insured, without giving us proof of good health so long as all of the following conditions are met: [src:raw/wordings/general-provisions-for-life-insurance.md#p12]
 
 > a) this policy is in force on the expiry date before the renewal; b) the life insured has not reached age 81 at the renewal date; and c) there is no claim on this policy The renewal premium will be calculated based on the prevailing premium rates at the attained age of the life insured and will stay level throughout the renewed term. [src:raw/wordings/general-provisions-for-life-insurance.md#p12]

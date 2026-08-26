@@ -44,8 +44,6 @@ Cover, limits and exclusions are identical on every channel; a channel is a rout
 
 ## Headline benefits
 
-The premium for 5 year term includes limit for the plan tier held is {{table:premium_for_5_year_term_includes.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#what-is-covered].
-
 Full benefit detail is on the [benefits page](./fire-insurance/benefits.md).
 
 ## What is not covered

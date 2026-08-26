@@ -195,6 +195,9 @@ def test_every_stage_is_traced(bundle: Bundle, settings: Settings) -> None:
         # will be refused, and nothing ships without the drafted text itself
         # having been read.
         "guardrail-input",
+        # What "it" refers to: a turn naming no subject borrows the topic from
+        # the nearest earlier turn that did.
+        "reference",
         # Initials are spelled out before anything scores the words: the
         # tokeniser drops anything under three characters, so "ci" reached
         # retrieval as nothing at all.

@@ -41,7 +41,7 @@ You may surrender Your policy in full or partially through partial withdrawal [s
 
 Upon full surrender, We will pay the surrender benefit in one lump sum which is equivalent to the Account value, less any amounts owing to Us. You may request for a full surrender any time after the free look period [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p2].
 
-We reserve the right to delay the payment of the surrender benefit for up to a period of 6 months from the date of the surrender request. We will exercise this right when there is a surge in withdrawals within the Portfolio during a very short period of time [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p2].
+> We reserve the right to delay the payment of the surrender benefit for up to a period of 6 months from the date of the surrender request. We will exercise this right when there is a surge in withdrawals within the Portfolio during a very short period of time. [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p2]
 
 ## Maturity Benefit
 

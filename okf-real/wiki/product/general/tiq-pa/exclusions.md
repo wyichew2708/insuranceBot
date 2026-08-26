@@ -29,7 +29,7 @@ confidence: high
 
 ## We will not pay the Temporary Total Disablement Benefit
 
-a) If the period of Temporary Total Disablement is less than 7 consecutive days; b) If the first medical treatment from a Medical Practitioner is not obtained within 7 days from date of accident; c) For more than one Bodily Injury for the same period of time; or d) In the event if Permanent Disablement Benefit due to Accident under Section 2 becomes payable for the same Bodily Injury [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+> a) If the period of Temporary Total Disablement is less than 7 consecutive days; b) If the first medical treatment from a Medical Practitioner is not obtained within 7 days from date of accident; c) For more than one Bodily Injury for the same period of time; or d) In the event if Permanent Disablement Benefit due to Accident under Section 2 becomes payable for the same Bodily Injury. [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md]
 
 ## General Exclusions (Applicable to All Sections)
 

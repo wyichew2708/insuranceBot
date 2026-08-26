@@ -46,7 +46,7 @@ ILP refers to Investment-linked insurance plan. ILP sub-fund manager refers to t
 
 Policy commencement date means the date the policy commences, as shown in the Policy Information Page. Policy issue date means the date We issue the policy. This is shown in the Policy Information Page. Policy owner is the person named as the owner in the Policy Information Page or any Endorsement issued by Us. The Policy owner has full rights on the policy, unless the policy has been transferred to another party [src:raw/wordings/invest-starter-policy-contract.md#p18].
 
-Policy year / Policy anniversary is the 1-year period that starts on the Policy commencement date or any subsequent anniversary of the Policy commencement date. Policy monthiversary is the 1 month period that starts on the Policy commencement date or any subsequent monthiversary of the Policy commencement date [src:raw/wordings/invest-starter-policy-contract.md#p18].
+> Policy year / Policy anniversary is the 1-year period that starts on the Policy commencement date or any subsequent anniversary of the Policy commencement date. Policy monthiversary is the 1 month period that starts on the Policy commencement date or any subsequent monthiversary of the Policy commencement date. [src:raw/wordings/invest-starter-policy-contract.md#p18]
 
 Portfolio fund refers to the list of ILP sub-funds in the policy in which the Premiums are allocated. Portfolio fund manager refers to Etiqa Insurance Pte. Ltd. who manages the Portfolio funds. Premium(s) is an amount that You pay to Us to keep this policy in force [src:raw/wordings/invest-starter-policy-contract.md#p18].
 

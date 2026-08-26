@@ -37,6 +37,8 @@ confidence: medium
 
 ## What this plan is
 
+Head over to our digital channel for fast and direct online purchase of your insurance plans [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-motor-insurance.md#let-us-help-you].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-motor-insurance.md#body].
 
 ## What is not covered

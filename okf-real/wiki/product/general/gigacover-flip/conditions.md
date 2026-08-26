@@ -54,7 +54,7 @@ In respect of insurance coverage with Free Look provision, the policyholder may 
 
 ## Premium Payment Information
 
-At the time of application for this Policy, You will be required to pay the premium upfront. Should You choose to pay the premiums due for subsequent week(s)/month(s)/year(s) using recurring payment arrangement, the premium will be charged to the credit card authorized by You. You can change the chosen payment frequency and recurring payment arrangement by calling or writing the Authorized Representative at least 5 days before the insurance end date [src:raw/wordings/gigacover-flip-insurance-policy-wording.md#p2].
+> At the time of application for this Policy, You will be required to pay the premium upfront. Should You choose to pay the premiums due for subsequent week(s)/month(s)/year(s) using recurring payment arrangement, the premium will be charged to the credit card authorized by You. You can change the chosen payment frequency and recurring payment arrangement by calling or writing the Authorized Representative at least 5 days before the insurance end date. [src:raw/wordings/gigacover-flip-insurance-policy-wording.md#p2]
 
 ## Premium Adjustment
 

@@ -103,7 +103,7 @@ async def chat() -> HTMLResponse:
 
 @app.post("/v1/answer", response_model=AnswerEnvelope)
 async def answer(req: AnswerRequest) -> AnswerEnvelope:
-    envelope, trace = answer_question(bundle(), req.question, req.session, settings())
+    envelope, trace = answer_question(bundle(), req.question, req.session, settings(), history=req.history)
     traces().put(trace)
     return envelope
 

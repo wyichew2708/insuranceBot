@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+Simple and affordable life cover to build a better future [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#term-life-insurance].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#body].
 
 ## What is not covered

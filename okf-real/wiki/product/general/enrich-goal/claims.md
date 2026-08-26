@@ -30,7 +30,7 @@ confidence: high
 
 ## 7 Making Claims from the Policy
 
-7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint [src:raw/wordings/policy-contract-enrich-goal.md#p5].
+> 7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint. [src:raw/wordings/policy-contract-enrich-goal.md#p5]
 
 7.2 Who do We pay Benefits to If the policy has been assigned, the Benefit amount will be paid to the Assignee. If the policy has not been assigned, the Benefit amount will be paid to either You or Your executors, administrators, Nominees or any other Proper claimant if We have proof of the relationship of the person claiming the Benefit [src:raw/wordings/policy-contract-enrich-goal.md#p5].
 

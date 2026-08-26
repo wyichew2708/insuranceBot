@@ -124,7 +124,7 @@ Deterioration of frozen food in the freezer or refrigerator [src:raw/wordings/ep
 
 > We will pay up to $500 for the cost of replacing deteriorated frozen food in Your deep freezer or freezer section of Your refrigerator at Your Home subject to the following; [src:raw/wordings/eprotect-home-policy-wording.md#p4]
 
-the freezer or refrigerator must not be more than 5 years old; the frozen food is damaged due to mechanical breakdown or failure of the freezer or refrigerator [src:raw/wordings/eprotect-home-policy-wording.md#p4].
+> the freezer or refrigerator must not be more than 5 years old; the frozen food is damaged due to mechanical breakdown or failure of the freezer or refrigerator. [src:raw/wordings/eprotect-home-policy-wording.md#p4]
 
 ## Section C: Family Accidental Death Protection
 

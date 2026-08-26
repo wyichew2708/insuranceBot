@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+Being a sandwich generation can be stressful [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#support-for-your-family].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#body].
 
 ## What is not covered

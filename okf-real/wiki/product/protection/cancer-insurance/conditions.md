@@ -36,7 +36,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## 3.3 Guaranteed Renewability
 
-This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically for another 1 year at the same Sum insured and conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p2].
+> This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically for another 1 year at the same Sum insured and conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p2]
 
 > (a) this policy is in force on the expiry date before the renewal; and (b) the life insured has not reached age 85 at the renewal date. The premium that You pay for this policy is guaranteed during the first 1 year policy term. However the renewal premium will be calculated based on the attained age of the life insured using prevailing premium rates at the time of renewal. We reserve the rights to adjust the renewal Premium. We will let You know 30 days in advance if Your renewal Premiums are revised. [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p2]
 
@@ -76,7 +76,7 @@ You will need to inform Us immediately if there is any change in Your or any rel
 
 > You may return this policy for cancellation within 14 days after you receive the policy document, for any reason. We will deduct any costs incurred by Us in assessing the risk under the policy, such as payments for medical check- up and other expenses, from the Premium you paid and refund the balance to You. [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p4]
 
-If Your policy document is sent by post, we consider this policy is delivered to you 7 days after the date of posting. If Your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p4].
+> If Your policy document is sent by post, we consider this policy is delivered to you 7 days after the date of posting. If Your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing. [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p4]
 
 8.2 Transferring the legal right of the policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p4].
 
@@ -116,4 +116,4 @@ As this product has no savings or investment feature, there is no cash value if 
 
 > You may return this policy for cancellation within 14 days after you receive the policy document, for any reason. We will deduct any costs incurred by the company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the Premium you paid and refund the balance to you. [src:raw/product-summaries/product-summary-cancer-insurance.md#p3]
 
-If your policy document is sent by email, We consider this policy is delivered to you 1 day after the date of emailing. If your policy document is sent by post, We consider this policy is delivered to you 7 days after the date of posting [src:raw/product-summaries/product-summary-cancer-insurance.md#p3].
+> If your policy document is sent by email, We consider this policy is delivered to you 1 day after the date of emailing. If your policy document is sent by post, We consider this policy is delivered to you 7 days after the date of posting. [src:raw/product-summaries/product-summary-cancer-insurance.md#p3]

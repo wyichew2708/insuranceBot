@@ -114,7 +114,7 @@ the required Premium(s) is not paid by the expiry date of the Grace Period; the 
 
 ## Premiums
 
-The Premium rate for this plan is level and guaranteed throughout the premium payment term of 2 years. Premiums can only be paid yearly [src:raw/product-summaries/enrich-aspire-vii-product-summary.md#p3].
+> The Premium rate for this plan is level and guaranteed throughout the premium payment term of 2 years. Premiums can only be paid yearly. [src:raw/product-summaries/enrich-aspire-vii-product-summary.md#p3]
 
 > If You have made an Advance Premium on this policy, You will not be allowed to withdraw the Advance Premium paid during the policy term after the fourteen (14) days Free Look Period. [src:raw/product-summaries/enrich-aspire-vii-product-summary.md#p3]
 

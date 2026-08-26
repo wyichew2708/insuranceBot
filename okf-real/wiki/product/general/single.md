@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+You can live life to the fullest while providing assurance to your loved ones with term life insurance [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#get-your-adulting-game-on].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#body].
 
 ## What is not covered

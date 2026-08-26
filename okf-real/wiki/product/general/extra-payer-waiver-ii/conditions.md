@@ -90,7 +90,7 @@ If Your policy document is sent by email, We consider this policy is delivered t
 
 ## The occurrence of Poliomyelitis where the following conditions are met
 
-• Poliovirus is identified as the cause, • Paralysis of the limb muscles or respiratory muscles must be present and persist for at least 3 months. The diagnosis must be confirmed by a consultant neurologist or specialist in the relevant medical field [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md#p18].
+> • Poliovirus is identified as the cause, • Paralysis of the limb muscles or respiratory muscles must be present and persist for at least 3 months. The diagnosis must be confirmed by a consultant neurologist or specialist in the relevant medical field. [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md#p18]
 
 ## 3.2 Reinstatement
 

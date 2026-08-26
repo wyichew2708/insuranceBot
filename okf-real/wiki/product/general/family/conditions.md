@@ -73,7 +73,7 @@ This Policy shall continue to be in force for the Period of Insurance of five (5
 
 ## AUTOMATIC TERMINATION OF COVER
 
-Any cover under this Policy in respect of any particular Policyholder shall terminate on the earliest of the following events:- (i) (ii) Upon the death of such Policyholder. (iii) Upon expiry of the policy at the end of 5 years from Inception Date [src:raw/wordings/policywordings-eprotect-family.md#p7].
+> Any cover under this Policy in respect of any particular Policyholder shall terminate on the earliest of the following events:- (i) (ii) Upon the death of such Policyholder. (iii) Upon expiry of the policy at the end of 5 years from Inception Date. [src:raw/wordings/policywordings-eprotect-family.md#p7]
 
 Upon such Policyholder ceasing to satisfy any of the eligibility requirements set out herein; [src:raw/wordings/policywordings-eprotect-family.md#p7].
 

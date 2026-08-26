@@ -43,7 +43,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## 3.6 Yearly Renewability
 
-This is a yearly renewable rider and the policy term is 1 year. At the end of 1 year policy term, this rider will be renewed automatically from the renewal date for another 1 year at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md#p3].
+> This is a yearly renewable rider and the policy term is 1 year. At the end of 1 year policy term, this rider will be renewed automatically from the renewal date for another 1 year at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md#p3]
 
 > • this rider is in force on the expiry date before the renewal; and • the Life insured has not reached Age 100 at the renewal date. We reserve the right to terminate Your rider by giving You ninety (90) days’ notice. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md#p3]
 

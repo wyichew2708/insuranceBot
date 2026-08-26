@@ -40,7 +40,7 @@ There are certain conditions under which no Benefits will be payable. These cond
 
 • Angina; • Heart attack of indeterminate age; and • A rise in cardiac biomarkers or Troponin T or I following an intra-arterial cardiac procedure including, but not limited to, coronary angiography and coronary angioplasty. Explanatory note: 0.5ng/ml = 0.5ug/L = 500pg/ml 3 Stroke with Permanent Neurological Deficit A cerebrovascular incident including infarction of brain tissue, cerebral and subarachnoid haemorrhage, intracerebral embolism and cerebral thrombosis resulting in permanent neurological deficit. This diagnosis must be supported by all of the following conditions: [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md#p10].
 
-• Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and • Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md#p10].
+> • Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and • Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke. [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md#p10]
 
 ## The following are excluded
 

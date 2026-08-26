@@ -137,6 +137,12 @@ class GroundedAnswer(BaseModel):
 class AnswerRequest(BaseModel):
     question: str = Field(min_length=1, max_length=2000)
     session: Session
+    #: The customer's own earlier turns, oldest first. Supplied by the client
+    #: rather than held server-side, so the service stays stateless and a turn
+    #: is reproducible from its own request. Used only to restore a subject to
+    #: a turn that names none — "what's the coverages" after "term life" — and
+    #: ignored entirely by a turn that stands on its own.
+    history: list[str] = Field(default_factory=list, max_length=20)
 
 
 class AnswerEnvelope(BaseModel):

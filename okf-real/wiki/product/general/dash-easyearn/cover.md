@@ -41,7 +41,7 @@ Your policy covers the Benefit described below while the policy is in force [src
 
 You may surrender Your policy in full or partially through partial withdrawal. Upon surrender, We will pay the surrender benefit in one lump sum which is equivalent to the Account value, less any amounts owing to Us. You may request for a full surrender any time after the free look period [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
-We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of Your surrender request. We will trigger this right when there is a surge in withdrawals (partial or full) within the Portfolio during a very short period of time [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+> We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of Your surrender request. We will trigger this right when there is a surge in withdrawals (partial or full) within the Portfolio during a very short period of time. [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md]
 
 ## 5.8 Maturity Benefit
 

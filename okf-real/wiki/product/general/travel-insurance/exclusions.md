@@ -58,7 +58,7 @@ We shall not indemnify any death claim arising from Illness or infectious diseas
 
 (a) caused directly or indirectly by government regulations or control; (b) caused by cancellation by the Public Conveyance or any other provider of the travel and/or accommodation, (c) that is covered by any other existing insurance scheme or government programme; [src:raw/wordings/eprotect-travel-policy-wording.md].
 
-(d) which will be paid or refunded by a hotel, airline, travel agent or any other provider of travel and/or accommodation; (e) where insolvency occurred, or for which a petition for bankruptcy or similar petition was filed before the purchase of this insurance; and/or (f) should this insurance be purchased less than 3 days before the date of departure (date of departure inclusive) [src:raw/wordings/eprotect-travel-policy-wording.md].
+> (d) which will be paid or refunded by a hotel, airline, travel agent or any other provider of travel and/or accommodation; (e) where insolvency occurred, or for which a petition for bankruptcy or similar petition was filed before the purchase of this insurance; and/or (f) should this insurance be purchased less than 3 days before the date of departure (date of departure inclusive). [src:raw/wordings/eprotect-travel-policy-wording.md]
 
 > This Policy will only pay for any claim under any one of Sections 12 or 13 for the same event but not for more than one of the Sections. [src:raw/wordings/eprotect-travel-policy-wording.md]
 

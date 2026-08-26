@@ -53,7 +53,7 @@ iv. Your children will only be covered if You provide each of the child’s pers
 
 ## 3.4 Yearly Renewability
 
-This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically from the renewal date for another 1 year at the same conditions on the Expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p6].
+> This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically from the renewal date for another 1 year at the same conditions on the Expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p6]
 
 > i. this policy is in force on the Expiry date before the renewal; ii. the Life insured has not reached Age 85 at the renewal date; iii. there are no previously admitted or submitted claims on this policy; and iv. the Life insured is insured for the same Sum insured or less. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p6]
 
@@ -99,7 +99,7 @@ You will need to inform Us immediately if there is any change in Your or any rel
 
 > You may return this policy for cancellation within fourteen (14) days after You receive the policy document, for any reason. We will deduct any costs incurred by the Company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the Premium You paid and the balance will be refunded back to You. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p9]
 
-If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing. 8.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p9].
+> If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing. 8.2 Transferring the Legal Right of the Policy If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p9]
 
 We will not be responsible for the validity of any transfer of policy [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p9].
 
@@ -111,7 +111,7 @@ e) Upon expiry of this policy; or f) Your written request and Our acceptance of 
 
 ## 4.1 Premium
 
-The Premium that You pay for this policy is guaranteed during the first 1 year policy term. The renewal Premium will be calculated based on Your attained age using prevailing Premium rates at the time of renewal [src:raw/wordings/3-plus-critical-illness-policy-contract-v2-25.md#p6].
+> The Premium that You pay for this policy is guaranteed during the first 1 year policy term. The renewal Premium will be calculated based on Your attained age using prevailing Premium rates at the time of renewal. [src:raw/wordings/3-plus-critical-illness-policy-contract-v2-25.md#p6]
 
 > We reserve the rights to adjust the renewal Premium at any time by giving You thirty (30) days’ written notice in advance. . [src:raw/wordings/3-plus-critical-illness-policy-contract-v2-25.md#p6]
 
@@ -141,7 +141,7 @@ As this product has no savings or investment feature, there is no cash value if 
 
 ## Free Look Period
 
-If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing [src:raw/product-summaries/3-plus-critical-illness-product-summary-v1-23.md#p7].
+> If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing. [src:raw/product-summaries/3-plus-critical-illness-product-summary-v1-23.md#p7]
 
 ## Yearly Renewability
 

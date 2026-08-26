@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+Facts about Critical Illness in Singapore [src:raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md#why-choose-tiq-3-plus-critical-illness].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md#body].
 
 ## What is not covered

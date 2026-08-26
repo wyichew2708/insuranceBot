@@ -38,7 +38,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## Guaranteed Renewability
 
-If your basic policy is a 5 years (renewable) DIRECT – Etiqa Insurance Pte. Ltd. term life, this rider will be renewed automatically together with the Basic policy from the renewal date for the same policy term and Sum insured, without giving Us proof of good health so long as all of the following conditions are met: [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
+> If your basic policy is a 5 years (renewable) DIRECT – Etiqa Insurance Pte. Ltd. term life, this rider will be renewed automatically together with the Basic policy from the renewal date for the same policy term and Sum insured, without giving Us proof of good health so long as all of the following conditions are met: [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]
 
 > this rider is in force on the Expiry date before the renewal; the Life insured has not reached Age 61 at the renewal date; and there is no claim on this rider [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]
 

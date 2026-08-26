@@ -115,7 +115,7 @@ A monthly policy statement will be sent to you via email. This document aims to 
 
 ## How to file for a death / terminal illness claim?
 
-We are sorry to learn of the unfortunate event of our Life insured. In order for us to assess your claim, please send us a written notice to nonmotor@etiqa.com.sg within 3 months of the occurrence of the claim event. We are committed to keeping the claim process as swift as we can [src:raw/faq/tiq-invest.md].
+> We are sorry to learn of the unfortunate event of our Life insured. In order for us to assess your claim, please send us a written notice to nonmotor@etiqa.com.sg within 3 months of the occurrence of the claim event. We are committed to keeping the claim process as swift as we can. [src:raw/faq/tiq-invest.md]
 
 ## How is my policy protected?
 

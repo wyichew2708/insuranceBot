@@ -30,7 +30,7 @@ confidence: high
 
 ## 7 . Making Claims from the Policy
 
-7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+> 7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md]
 
 Material facts required under this policy that were not disclosed when required for applying for a new policy may result in Your claim being rejected. When this happens, We will refund all Premiums paid (less any amounts previously paid to You under this policy) without interest and less any amounts owing to Us as well as any expenses incurred by Us in providing You the policy [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 

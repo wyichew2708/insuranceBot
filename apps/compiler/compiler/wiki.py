@@ -73,14 +73,20 @@ SHOPFRONT_NAMES = ("Tiq", "Etiqa")
 # the *same* direct channel — they are front doors, not brands.
 
 # §B.3 product roots. First match wins, so the more specific rules lead.
+# Word boundaries are load-bearing here, not tidiness. Unbounded, `car` matched
+# inside "Essential Cancer **Car**e" and `van` inside "Ad**van**ced CI Rider" —
+# so a cancer plan and a CI rider were both filed under motor, and a customer
+# asking what car insurance we sell was offered them. Where a rule should match
+# a family of words the boundary is on the left only: `\binvest` is meant to
+# catch "investment" and "investment-linked".
 LOB_RULES: list[tuple[re.Pattern[str], str]] = [
-    (re.compile(r"car|motor|vehicle|motorcycle|van|fleet"), "motor"),
-    (re.compile(r"business|sme|commercial|work-injury|employer|employee"), "business"),
-    (re.compile(r"invest|ilp|unit-trust|fund"), "investments"),
-    (re.compile(r"saver|saving|endowment|retirement|annuity|legacy"), "savings-retirement"),
-    (re.compile(r"life|cancer|critical|terminal|protection"), "protection"),
-    (re.compile(r"medical|health|hospital|shield|dental|clinic"), "health-medical"),
-    (re.compile(r"premier|prestige"), "premier"),
+    (re.compile(r"\b(?:car|motor|motorcycle|vehicle|van|fleet|driving)\b"), "motor"),
+    (re.compile(r"\b(?:business|sme|commercial|work-injury|employer|employee|corporate)\b"), "business"),
+    (re.compile(r"\b(?:invest|ilp|unit-trust|fund)"), "investments"),
+    (re.compile(r"\b(?:save|saver|saving|endowment|retirement|annuity|legacy)"), "savings-retirement"),
+    (re.compile(r"\b(?:life|cancer|critical|terminal|protection|ci)\b"), "protection"),
+    (re.compile(r"\b(?:medical|health|hospital|shield|dental|clinic)"), "health-medical"),
+    (re.compile(r"\b(?:premier|prestige)\b"), "premier"),
 ]
 
 ADVICE_RE = re.compile(
@@ -165,6 +171,14 @@ def line_of_business(slug: str, title: str) -> str:
             return root
     return "general"
 
+
+#: Section headings that are page furniture rather than a description of
+#: the product: referral schemes, navigation, and calls to action.
+_OVERVIEW_SKIP_RE = re.compile(
+    r"refer and earn|you might also|related|share this|follow us|sign up|get a quote"
+    r"|start securing|contact us|need help|other products",
+    re.I,
+)
 
 PHRASE = {
     "limit": "The {label} limit for the plan tier held is",
@@ -724,14 +738,37 @@ def emit_product(
         confidence=Confidence.high if len(ordered) > 1 and rows else Confidence.medium,
     )
 
+    # What the plan *is*, in the site's own words. The intro is where that
+    # usually lives, but a product page often opens with a promo banner — Term
+    # Life opens "Get up to S$300 cashback on annual premium!" — and rule 2
+    # drops it for the unbound figure. Falling through to the first section
+    # that says something is the difference between a page that describes the
+    # product and a page whose only content is a note about channels.
     body: list[str] = ["## What this plan is"]
     intro = _grounded(_normalise_brands(_first_sentence(primary.intro)), primary.ref("body"), report)
+    if intro is None:
+        for section in primary.sections:
+            if not section.heading or _OVERVIEW_SKIP_RE.search(section.heading):
+                continue
+            for paragraph in section.paragraphs:
+                intro = _grounded(
+                    _normalise_brands(_first_sentence(paragraph)), primary.ref(section.anchor), report
+                )
+                if intro:
+                    break
+            if intro:
+                break
     if intro:
         body.append(intro)
-    body.append(
-        "Cover, limits and exclusions are identical on every channel; a channel is a "
-        f"route to market rather than a separate product [src:{primary.ref('body')}]."
-    )
+        # A qualifier on the description, not a standalone answer. Where the
+        # crawl gave us nothing to describe, this sentence was the entire
+        # section — so "term life" was answered with a note about channels.
+        body.append(
+            "Cover, limits and exclusions are identical on every channel; a channel is a "
+            f"route to market rather than a separate product [src:{primary.ref('body')}]."
+        )
+    else:
+        report.skip("no publishable description of the product on any host")
 
     if rows:
         body.append("## Headline benefits")
@@ -1730,11 +1767,40 @@ def emit_document_products(
     return products
 
 
+def _clear_compiled_pages(config: CompileConfig) -> None:
+    """Remove pages a previous compile wrote, before this one writes its own.
+
+    The wiki is a build output and a product can move: fixing the
+    line-of-business rules moved Marine Cargo from `motor` to `general`, and
+    the old file stayed where it was — approved, retrievable, and absent from
+    the index the same run rewrote. The bundle then failed its own linter.
+
+    Only pages carrying `compiled_from_commit` are removed. A hand-authored
+    bundle — the seed wiki is written by people, not compiled — has none, so
+    pointing the compiler at one cannot delete anybody's work.
+    """
+    wiki = config.dest_root / "wiki"
+    if not wiki.is_dir():
+        return
+    for path in wiki.rglob("*.md"):
+        try:
+            page = parse_page(path.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            continue
+        if page.frontmatter.compiled_from_commit:
+            path.unlink()
+
+
 def compile_bundle(config: CompileConfig) -> CompileReport:
     report = CompileReport()
     snapshots = load_snapshots(config.source_root)
     if not snapshots:
         return report
+
+    # Before anything is written, not after: the concept pages are emitted a
+    # few lines below, and clearing later deleted them and left 198 broken
+    # links behind.
+    _clear_compiled_pages(config)
 
     hosts = config.authority_hosts or rank_hosts(
         sorted({s.host for s in snapshots}),

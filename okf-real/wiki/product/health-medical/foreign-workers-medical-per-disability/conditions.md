@@ -105,7 +105,7 @@ All notices and communication required under this Policy shall be given in writi
 
 (a) if given personally, then on the date of receipt; (b) if sent by prepaid post, then on the date of sending out; [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md#p12].
 
-(c) if sent by registered mail then 2 days after date of posting; (d) if sent by email, then on the same day it was transmitted [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md#p12].
+> (c) if sent by registered mail then 2 days after date of posting; (d) if sent by email, then on the same day it was transmitted. [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md#p12]
 
 ## IMPORTANT NOTICE
 

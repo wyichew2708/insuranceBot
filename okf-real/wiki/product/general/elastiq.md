@@ -36,7 +36,7 @@ This product is compiled from its policy documents. The wording is the contract;
 
 You may surrender your policy in full or partially through partial withdrawal. Upon full surrender, We will pay the surrender benefit in one lump sum which is equivalent to the Account value, less any amounts owing to us. You may request for a full surrender any time after the free look period [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
-We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of your surrender application [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+> We reserve the right to delay the payment of the surrender value for up to a period of 6 months from the date of your surrender application. [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md]
 
 ## 3.8 Maturity Benefit
 

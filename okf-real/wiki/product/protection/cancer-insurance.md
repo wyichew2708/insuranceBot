@@ -35,6 +35,8 @@ confidence: medium
 
 ## What this plan is
 
+- Coverage for all stages of cancer [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#why-cancer-insurance].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#body].
 
 ## What is not covered

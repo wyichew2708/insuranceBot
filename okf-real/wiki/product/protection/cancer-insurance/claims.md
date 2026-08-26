@@ -34,7 +34,7 @@ confidence: high
 
 ## 6 . Making Claims from the Policy
 
-6.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give us all documents and evidence We ask for to assess the claim. We reserve the right to require the Life insured to be examined by Our panel Doctor [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p3].
+> 6.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give us all documents and evidence We ask for to assess the claim. We reserve the right to require the Life insured to be examined by Our panel Doctor. [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p3]
 
 Material facts required under this policy that were not disclosed when required during policy application may result in Your claim being rejected. When this happens, We will refund all Premiums paid without interest, less any amounts owing to Us as well as any expenses incurred by Us in providing You the Policy [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md#p3].
 

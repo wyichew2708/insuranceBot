@@ -103,7 +103,7 @@ All notices and communication required under this Policy shall be given in writi
 
 ## The date of receipt of notices and communication will be deemed
 
-(a) if given personally by hand, then on the date of receipt; (b) if sent by prepaid post, then on the date of sending out; (c) if sent by registered mail then 2 days after date of posting; (d) if sent by email, then on the same day it was transmitted [src:raw/wordings/foreign-workers-medical-annual-policy-wording-1-july-2025.md#p13].
+> (a) if given personally by hand, then on the date of receipt; (b) if sent by prepaid post, then on the date of sending out; (c) if sent by registered mail then 2 days after date of posting; (d) if sent by email, then on the same day it was transmitted. [src:raw/wordings/foreign-workers-medical-annual-policy-wording-1-july-2025.md#p13]
 
 ## IMPORTANT NOTICE
 
@@ -129,4 +129,4 @@ All notices and communication required under this Policy shall be given in writi
 
 ## The date of receipt of notices and communication will be deemed
 
-(a) if given personally, then on the date of receipt; (b) if sent by prepaid post, then on the date of sending out; (c) if sent by registered mail then 2 days after date of posting; (d) if sent by facsimile transmission or email, then on the same day it was transmitted [src:raw/wordings/foreign-workers-medical-annual-policy-wording-on-and-after-1-july-2023.md].
+> (a) if given personally, then on the date of receipt; (b) if sent by prepaid post, then on the date of sending out; (c) if sent by registered mail then 2 days after date of posting; (d) if sent by facsimile transmission or email, then on the same day it was transmitted. [src:raw/wordings/foreign-workers-medical-annual-policy-wording-on-and-after-1-july-2023.md]

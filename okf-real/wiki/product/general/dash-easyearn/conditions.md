@@ -57,7 +57,7 @@ If the policy has been assigned, the refund amount will be paid to the Assignee.
 
 ## 8.1 Incontestability
 
-We cannot challenge the validity of this policy after 2 years from the policy commencement date. However, if there is fraud, We reserve the rights to void the policy even after 2 years have passed. When this happens, We will refund all [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+> We cannot challenge the validity of this policy after 2 years from the policy commencement date. However, if there is fraud, We reserve the rights to void the policy even after 2 years have passed. When this happens, We will refund all [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md]
 
 Premiums paid (less any amounts previously paid to You under this policy) without interest and less any amounts owing to Us as well as any expenses incurred by Us in providing You the policy [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
@@ -101,7 +101,7 @@ Please refer to the Table of Deductions in the Policy Illustration for the cost 
 
 > You may return this policy for cancellation within 14 days after you receive the policy document, for any reason. We will deduct any costs incurred by the company in assessing the risk under the policy, such as payments for medical check-up and other expenses, and deduct any partial withdrawal(s) amount and partial withdrawal(s) charges from the premium you paid and refund the balance to you. [src:raw/product-summaries/dash-easyearn-lite-product-summary.md#p3]
 
-If your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing [src:raw/product-summaries/dash-easyearn-lite-product-summary.md#p3].
+> If your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing. [src:raw/product-summaries/dash-easyearn-lite-product-summary.md#p3]
 
 ## Assignment
 

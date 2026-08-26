@@ -33,7 +33,7 @@ This product is compiled from its policy documents. The wording is the contract;
 
 ## We will pay the Insured the benefit as shown in the schedule, subject to the following
 
-Insured member’s stay in Hospital is for at least 6 hours; [src:raw/wordings/policy-wording-flep.md#p5].
+> Insured member’s stay in Hospital is for at least 6 hours; [src:raw/wordings/policy-wording-flep.md#p5]
 
 Hospital charges daily room and board after insured’s stay at the hospital ; or c) Surgery performed on insured member at the hospital is a procedure listed in the Ministry of [src:raw/wordings/policy-wording-flep.md#p5].
 

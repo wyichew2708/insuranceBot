@@ -36,7 +36,7 @@ faq_intents:
 
 ## What is Tiq Home Insurance?
 
-It is a home insurance with customizable protection level for homeowners, landlords and official tenants across HDB, Condominium and Landed Property in Singapore. Multi-year plans from 1, 3 and 5 years are available [src:raw/faq/home-insurance.md].
+> It is a home insurance with customizable protection level for homeowners, landlords and official tenants across HDB, Condominium and Landed Property in Singapore. Multi-year plans from 1, 3 and 5 years are available. [src:raw/faq/home-insurance.md]
 
 ## Where can I get a quote or buy Tiq Home insurance?
 
@@ -100,7 +100,7 @@ You may write in to us at customer.service@etiqa.com.sg or via TiqConnect  [src:
 
 ## Am I able to auto-renew my policy via GIRO?
 
-Yes, you may do so for 1,3 and 5 year plans via this form  [src:raw/faq/home-insurance.md].
+> Yes, you may do so for 1,3 and 5 year plans via this form . [src:raw/faq/home-insurance.md]
 
 ## I had just renovated my house. Can I get another Tiq Home Insurance in addition to my existing Tiq Home plan?
 

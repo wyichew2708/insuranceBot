@@ -29,7 +29,7 @@ confidence: high
 
 ## 7 . Making Claims from the Policy
 
-7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give us all documents and evidence we ask for to assess the claim [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+> 7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give us all documents and evidence we ask for to assess the claim. [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md]
 
 Material facts required under this policy that were not disclosed when required for applying for a new policy or reinstatement may result in your claim being rejected. When this happens, we will refund all Premiums paid (less any amounts previously paid to you under this policy) without interest and less any amounts owing to us as well as any expenses incurred by us in providing you the policy [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 

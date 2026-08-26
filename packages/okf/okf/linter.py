@@ -31,8 +31,21 @@ ROUTE_RE = re.compile(
 )
 LEGAL_NAME = "Etiqa Insurance Pte. Ltd."
 
-# Currency amounts, percentages, or any standalone multi-digit quantity.
-NUMBER_IN_PROSE_RE = re.compile(r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)|(?:\b\d+(?:\.\d+)?\s?%)|(?:\b\d{2,}\b)")
+# Currency amounts, percentages, a quantity with a time unit, or any standalone
+# multi-digit number.
+#
+# The time-unit clause has to be here because the numeric-binding gate has it.
+# Without it the two disagreed: "within 3 months" passed the linter, so the
+# compiler wrote it into prose rather than quoting it, and then every answer
+# that quoted the sentence was refused at the gate for an unbound figure. A
+# rule the compiler applies must be at least as wide as the rule the gate
+# enforces, or the corpus is built to fail at answer time.
+NUMBER_IN_PROSE_RE = re.compile(
+    r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)"
+    r"|(?:\b\d+(?:\.\d+)?\s?%)"
+    r"|(?:\b\d+(?:\.\d+)?\s+(?:hours?|days?|weeks?|months?|years?))"
+    r"|(?:\b\d{2,}\b)"
+)
 
 
 class Severity(str, Enum):

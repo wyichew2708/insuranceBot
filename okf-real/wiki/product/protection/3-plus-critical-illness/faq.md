@@ -43,7 +43,7 @@ faq_intents:
 
 ## Is there any policy term selection for me to choose ?
 
-This is a yearly renewable policy and the policy term is 1 year [src:raw/faq/3-plus-critical-illness.md].
+> This is a yearly renewable policy and the policy term is 1 year. [src:raw/faq/3-plus-critical-illness.md]
 
 ## Is my renewal guaranteed and what is the conditions that I must fulfil in order to renew?
 
@@ -63,7 +63,7 @@ No. You will not be required to go for medical checkup upon point of purchase or
 
 ## Is there any survival period that I need to be aware of?
 
-There is a 7 days survival period. We do not pay the critical illness benefit / special condition benefit if You do not survive for 7 days after the date of diagnosis of the critical illness condition or special conditions [src:raw/faq/3-plus-critical-illness.md].
+> There is a 7 days survival period. We do not pay the critical illness benefit / special condition benefit if You do not survive for 7 days after the date of diagnosis of the critical illness condition or special conditions. [src:raw/faq/3-plus-critical-illness.md]
 
 ## How does the Special Conditions Benefit work?
 
@@ -159,7 +159,7 @@ If you are preparing to surrender or terminate any of your existing life insuran
 
 ## How to file for a claim?
 
-To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event . The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses [src:raw/faq/3-plus-critical-illness.md].
+> To file for a claim, written notice must be given to us within 3 months of the occurrence of the claim event . The claimant must supply at his/her own expense, all certificates, information and evidence required by us for assessment of the claim. We reserve the rights to conduct a post-mortem and we will bear the expenses. [src:raw/faq/3-plus-critical-illness.md]
 
 ## How is my policy protected?
 

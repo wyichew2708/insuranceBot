@@ -45,7 +45,7 @@ c) pot-holing, hiking/trekking in remote areas unless with licensed guides; or d
 
 ## We will not pay the Temporary Total Disablement Benefit
 
-(a) if the period of Temporary Total Disablement is less than 7 consecutive days; (b) if the first medical treatment from a Medical Practitioner is not obtained within 7 days from date of [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
+> (a) if the period of Temporary Total Disablement is less than 7 consecutive days; (b) if the first medical treatment from a Medical Practitioner is not obtained within 7 days from date of [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7]
 
 (c) for more than one Bodily Injury for the same period of time; or (d) in the event if Permanent Disablement Benefit due to Accident under Section 2 becomes payable [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
 

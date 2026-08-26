@@ -35,6 +35,6 @@ The Insured must declare and fulfil our definition of Self-Employed Persons (SEP
 
 > The Insured named in the Schedule must be at least twenty-one (21) years of Age and not more than sixty (60) years of Age on the Effective Date of Insurance. [src:raw/wordings/gigacover-flip-insurance-policy-wording.md]
 
-The Insured must declare their last 3 months average earned income at point of purchase or upgrade of benefits [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].
+> The Insured must declare their last 3 months average earned income at point of purchase or upgrade of benefits. [src:raw/wordings/gigacover-flip-insurance-policy-wording.md]
 
 This Policy covers you in Singapore Only [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].

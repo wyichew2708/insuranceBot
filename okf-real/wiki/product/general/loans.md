@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+While you enjoy life’s mini victories and continue to strive for your goals, don’t forget to protect what you’ve already achieved [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#protect-the-life-you-ve-built].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#body].
 
 ## What is not covered

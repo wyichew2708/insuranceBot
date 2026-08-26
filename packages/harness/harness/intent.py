@@ -109,7 +109,10 @@ BROWSE_RE = re.compile(
     # question ends or a possession verb follows. The gap is what keeps "what
     # is not covered by fire insurance?" out: four words of question sit in it,
     # and that turn is *about* a product rather than a request to see the list.
-    rf"^(?:what|which)\s+(?:\w+\s+){{0,2}}{_OFFERING}\s*"
+    # The qualifier may not be a verb: "what life products" is shopping, and
+    # "what is the coverage" is a question about one product that happens to
+    # end on the same noun.
+    rf"^(?:what|which)\s+(?:(?!(?:is|are|was|were|do|does|did|can|will)\b)\w+\s+){{0,2}}{_OFFERING}\s*"
     rf"(?:(?:do|does|are|can|have)\b[\w\s]{{0,20}})?[?.!]?$"
     # Explicit shopping language, anywhere in the turn.
     r"|\b(?:looking|search(?:ing)?|shopping)\s+for\b"
@@ -211,7 +214,14 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             re.I,
         ),
     ),
-    (Intent.coverage, re.compile(r"\b(cover(s|ed|age)?|include(s|d)?|protect(s|ion)?|benefit(s)?)\b", re.I)),
+    # `coverages` is not a word most style guides would allow and is exactly
+    # what customers type. The plural was missing, so "what's the coverages"
+    # classified as unknown and the composer had no signal to prefer the cover
+    # page over the exclusions page beside it.
+    (
+        Intent.coverage,
+        re.compile(r"\b(cover(s|ed|age|ages)?|include(s|d)?|protect(s|ion)?|benefit(s)?)\b", re.I),
+    ),
 )
 
 

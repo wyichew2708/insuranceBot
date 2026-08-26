@@ -36,6 +36,8 @@ confidence: medium
 
 ## What this plan is
 
+*Please refer to the full T&Cs here  [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-pro.md#receive-up-to-20-additional-bonus-top-up-on-1st-year-premium-for-all-eligible-sign-ups-from-6-november-2025].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-pro.md#body].
 
 ## Headline benefits

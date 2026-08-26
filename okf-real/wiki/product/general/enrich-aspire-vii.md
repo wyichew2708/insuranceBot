@@ -35,6 +35,8 @@ confidence: medium
 
 ## What this plan is
 
+Guaranteed issuance with no medical examinations required [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#hassle-free-application].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#body].
 
 ## What is not covered

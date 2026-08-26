@@ -31,7 +31,7 @@ confidence: high
 
 ## 7 Making Claims from the Policy
 
-7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md#p6].
+> 7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint. [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md#p6]
 
 We reserve the rights to reject Your claim if the terms and conditions stated in this General Policy Contract for life insurance are not met. 7.2 Who do We pay Benefits to We may pay the benefits to either You or Your executors, administrators, nominees or any other proper claimant if We have proof of the relationship of the person claiming the benefit [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md#p6].
 

@@ -34,7 +34,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## Yearly Renewability
 
-This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically for another 1 year at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p3].
+> This is a yearly renewable plan and the policy term is 1 year. At the end of 1 year policy term, this policy will be renewed automatically for another 1 year at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p3]
 
 > (a) this policy is in force on the expiry date before the renewal; and (b) the Life insured has not reached Age 100 at the renewal date. [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p3]
 
@@ -64,6 +64,6 @@ As buying a life insurance policy is a long-term commitment, an early terminatio
 
 > You may return this policy for cancellation within 14 days after You receive the policy document, for any reason. We will deduct any costs incurred by the Company in assessing the risk under the policy, such as payments for medical check-up and other expenses, from the Premium You paid. Any partial withdrawal previously paid to You under this policy and transaction fee (if any) will also be deducted. The balance and interest calculated on daily basis (if any) will be refunded to You. [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p5]
 
-If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p5].
+> If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing. [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p5]
 
 Free look period is only applicable for the first time when this policy is issued. It is not applicable to the subsequent re-activation of the policy [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md#p5].

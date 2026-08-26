@@ -37,6 +37,8 @@ confidence: medium
 
 ## What this plan is
 
+Beneficiary nomination ensures that the benefits from a life insurance policy go to the right person, with the right amount [src:raw/web/www.tiq.com.sg/2026-08-25/life-nomination-guide.md#easy-guide-and-forms].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/life-nomination-guide.md#body].
 
 ## What is not covered

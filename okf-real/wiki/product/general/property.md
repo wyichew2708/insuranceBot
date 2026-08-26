@@ -35,6 +35,8 @@ confidence: medium
 
 ## What this plan is
 
+Protect your commercial property against damage or loss due to an accident, fire or other events [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-property.md#property-insurance].
+
 Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-property.md#body].
 
 ## What is not covered

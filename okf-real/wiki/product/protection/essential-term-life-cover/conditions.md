@@ -39,7 +39,7 @@ This policy is protected under the Policy Owners’ Protection Scheme which is a
 
 ## 3.2 Guaranteed Renewability
 
-Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable). At the end of each 5 years policy term, this policy will be renewed automatically from the renewal date for another 5 years, without giving Us proof of good health if the following conditions are met: [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p2].
+> Guaranteed renewability Benefit is only applicable for policy term of 5 years (renewable). At the end of each 5 years policy term, this policy will be renewed automatically from the renewal date for another 5 years, without giving Us proof of good health if the following conditions are met: [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p2]
 
 > a) this policy is in force on the Expiry date before the renewal; b) the Life insured has not reached Age 86 at the renewal date; c) there are no previously admitted or submitted claims on this policy; and d) the Life insured is insured for the same Sum insured or less. [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p2]
 
@@ -47,7 +47,7 @@ If this policy is issued on non-standard terms, the same terms, conditions and e
 
 ## 4.1 Premium
 
-The premium rate for this plan is level and guaranteed throughout the premium term. Premiums are payable for the period of premium payment term and can be paid monthly, quarterly, half-yearly or yearly. For 5 years (renewable) term, renewal premium will be calculated based on the prevailing premium rates at the attained Age of the Life insured and will stay level throughout the renewed term [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p3].
+> The premium rate for this plan is level and guaranteed throughout the premium term. Premiums are payable for the period of premium payment term and can be paid monthly, quarterly, half-yearly or yearly. For 5 years (renewable) term, renewal premium will be calculated based on the prevailing premium rates at the attained Age of the Life insured and will stay level throughout the renewed term. [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p3]
 
 > You will pay the first Premium at the time You apply for this policy. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the policy. If You fail to pay Premiums on time, this policy will end. We will deduct any outstanding Premium from any amount We may be due to pay under this policy. [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md#p3]
 

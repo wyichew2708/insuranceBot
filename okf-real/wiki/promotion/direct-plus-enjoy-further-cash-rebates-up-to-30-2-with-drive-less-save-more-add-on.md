@@ -37,7 +37,7 @@ This add-on is definitely for you if you have encountered any 1 of these: [src:r
 
 Hurry! Switch to us today and enjoy greater savings from your car insurance! [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-hello-new-friends-car-insurance.md#plus-enjoy-further-cash-rebates-up-to-30-2-with-drive-less-save-more-add-on].
 
-1 For new online sign-up. Cashback will be credited to you within 6 weeks from policy effective date. Please refer to T&Cs here for more details [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-hello-new-friends-car-insurance.md#plus-enjoy-further-cash-rebates-up-to-30-2-with-drive-less-save-more-add-on].
+1 For new online sign-up. Cashback will be credited to you within 6 weeks from policy effective date. Please refer to T&Cs here for more details [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-hello-new-friends-car-insurance.md#plus-enjoy-further-cash-rebates-up-to-30-2-with-drive-less-save-more-add-on]. <!-- okf:allow-number -->
 
 2 Up to 30% of the basic premium minus No Claim-Discount and direct discount. Please refer to Drive Less Save More FAQ here for more details [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-hello-new-friends-car-insurance.md#plus-enjoy-further-cash-rebates-up-to-30-2-with-drive-less-save-more-add-on]. <!-- okf:allow-number -->
 

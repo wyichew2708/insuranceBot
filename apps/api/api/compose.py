@@ -22,6 +22,7 @@ from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Sessi
 # this pattern drift, and the drift shows up as a quotation that composes
 # unbound and is refused — so there is one, and this is the one.
 from harness.gates import NUMERIC_SPAN_RE
+from harness.intent import Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, find_tokens
 
@@ -39,6 +40,21 @@ from okf import (
 )
 
 HEADING_RE = re.compile(r"^##\s+(.+)$", re.M)
+#: The open form of a coverage question: what does it cover, what are the
+#: coverages, what is included. No subject of its own beyond the product.
+BROAD_COVERAGE_RE = re.compile(
+    r"^\W*(?:what(?:'?s)?|which)\b[\w\s']{0,24}?"
+    r"\b(?:cover(?:s|ed|age|ages)?|include[sd]?|benefits?)\b\W*$",
+    re.I,
+)
+
+#: Anything that makes a turn a question rather than a name. A turn with
+#: none of these is a noun phrase the customer wants explained.
+NAMES_ONLY_RE = re.compile(
+    r"\b(?:what|which|who|when|where|why|how|is|are|do|does|did|can|could|should|would|will"
+    r"|tell|show|explain|list|need|want|got|have|has)\b|\?",
+    re.I,
+)
 PROMO_NUMBER_RE = re.compile(r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)|(?:\b\d+(?:\.\d+)?\s?%)")
 
 NO_ANSWER = (
@@ -105,6 +121,19 @@ def select_sections(
     concept page outranks the benefits section that actually holds the figure.
     """
     terms = keywords(question)
+    intent = classify(question)
+    # A turn that is just a product name — "term life" — asks nothing, so no
+    # intent fires and every child page competes on lexical overlap alone. The
+    # exclusions page is the wordier of them and won: typing a product's name
+    # was answered with its suicide clause. Naming a product is a request to be
+    # told what it is.
+    names_only = intent is Intent.unknown and not NAMES_ONLY_RE.search(question)
+    # "What does this cover?" wants the cover page. "Are wear and tear
+    # covered?" classifies the same way and wants the *exclusions* page — it
+    # names a subject and asks whether it is in or out. Steering every
+    # coverage question away from exclusions broke six of those, so only the
+    # open form is steered.
+    broad_coverage = intent is Intent.coverage and bool(BROAD_COVERAGE_RE.search(question))
     # Benefit codes the question implied through customer vocabulary — the
     # bridge between "the airline lost my suitcase" and a section headed
     # "Baggage loss". Without it those questions retrieve the right product and
@@ -138,6 +167,16 @@ def select_sections(
             page_relevance += 0.6
         if wants_procedure and page_type == PageType.journey:
             page_relevance += 0.6
+        if names_only:
+            # The product page itself, not one of its children.
+            page_relevance += 0.9 if page.id.count("/") == 2 else -0.4
+        # What is covered and what is not are opposite questions answered by
+        # adjacent pages, and the exclusions page is the wordier of the two —
+        # so "what's the coverages" was answered with the suicide clause.
+        if broad_coverage and page.id.endswith("/exclusions"):
+            page_relevance -= 0.8
+        elif intent is Intent.exclusion and page.id.endswith("/exclusions"):
+            page_relevance += 0.8
 
         for heading, body in split_sections(page):
             if not body.strip():
@@ -168,6 +207,23 @@ def select_sections(
                     section_relevance += 1.0
                     if any(code in heading_token for code in implied):
                         section_relevance += 0.5
+            # And the same at section level. A product page carries a "What is
+            # not covered" section that is a bare pointer to the exclusions
+            # page; it outscored the description when the customer asked what
+            # the plan covers, so the answer opened by telling them where the
+            # exclusions were.
+            # A section whose whole body is a cross-reference — "The complete
+            # list is on the exclusions page" — asserts nothing and yields no
+            # claim, so composing from it spends a slot on a signpost. The
+            # linter exempts these from the source-ref rule for the same
+            # reason: the substance lives on the page they point at.
+            if _is_pointer_only(body):
+                section_relevance -= 1.0
+            heading_is_exclusion = bool(re.search(r"not covered|exclusion|exclude", heading, re.I))
+            if heading_is_exclusion and broad_coverage:
+                section_relevance -= 0.8
+            elif heading_is_exclusion and intent is Intent.exclusion:
+                section_relevance += 0.5
             heading_terms = keywords(heading)
             heading_overlap = len(terms & heading_terms) / len(terms) if terms else 0.0
             if heading_overlap:
@@ -196,6 +252,15 @@ def select_sections(
     # not free: it dilutes the answer and drags the groundedness score down.
     floor = max(0.2, scored[0].score * 0.72)
     return [s for s in scored if s.score >= floor][:limit]
+
+
+def _is_pointer_only(body: str) -> bool:
+    """Is this section nothing but a link to another page?"""
+    stripped = SOURCE_REF_RE.sub("", body).strip()
+    if not stripped or "](" not in stripped:
+        return False
+    residual = re.sub(r"\[([^\]]*)\]\([^)]*\)", " ", stripped)
+    return len(residual.split()) <= 12
 
 
 def _paragraphs(text: str) -> list[str]:

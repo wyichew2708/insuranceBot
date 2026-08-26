@@ -109,7 +109,7 @@ As buying a life insurance policy is a long-term commitment, an early terminatio
 
 Should the free look request be received before 3 p.m. (Singapore time), We will use the unit price for the current Valuation day or else it will be based on the unit price as at the next Valuation day. In the event that the Account value of the Packaged fund of Your policy is more than the Premium paid, We will only refund the Premium You have paid [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md#p7].
 
-If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md#p7].
+> If Your policy document is sent by email, We consider this policy is delivered to You 1 day after the date of emailing. [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md#p7]
 
 ## Impact of Early Surrender
 

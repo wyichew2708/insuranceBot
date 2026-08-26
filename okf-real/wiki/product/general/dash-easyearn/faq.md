@@ -59,7 +59,7 @@ Yes you may! Dash EasyEarn and Dash PET are different policies, so you can save 
 
 ## Can I re-activate my policy if I free-look or surrender the policy?
 
-Once you request for a freelook or surrender on your policy, you will not be able to make another purchase of this policy within a 3 months period [src:raw/faq/dash-pet-12-august-2022.md].
+> Once you request for a freelook or surrender on your policy, you will not be able to make another purchase of this policy within a 3 months period. [src:raw/faq/dash-pet-12-august-2022.md]
 
 ## How do I manage my account?
 
@@ -187,7 +187,7 @@ A monthly policy statement will be sent to you via email. This document aims to 
 
 ## How to file for a death / terminal illness claim?
 
-We are sorry to learn of the unfortunate event of our life insured. In order for us to assess your claim, please send us a written notice to PolicyServicing@etiqa.com.sg within 3 months of the occurrence of the claim event. We are committed to keeping the claim process as swift as we can [src:raw/faq/dash-pet-plus.md].
+> We are sorry to learn of the unfortunate event of our life insured. In order for us to assess your claim, please send us a written notice to PolicyServicing@etiqa.com.sg within 3 months of the occurrence of the claim event. We are committed to keeping the claim process as swift as we can. [src:raw/faq/dash-pet-plus.md]
 
 ## How is my Dash PET Plus protected?
 
