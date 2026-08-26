@@ -42,6 +42,15 @@ uv sync
 make console        # → http://localhost:8080
 ```
 
+To serve the real Etiqa/Tiq corpus in a container instead, and for every
+verification step, configuration knob and failure mode along the way, see
+**[DEPLOYMENT.md](DEPLOYMENT.md)**:
+
+```bash
+BUNDLE_PATH=okf-real make docker-up
+curl -s http://localhost:8080/readyz     # {"status":"ready","pages":768,...}
+```
+
 Three surfaces come out of the same process:
 
 | URL | What it is for |
@@ -55,7 +64,7 @@ out the way it did:
 
 - the **answer**, with every number highlighted and hover-bound to its table row
 - **claims → sources**, each with its page id and raw locator
-- **seven gate verdicts**, and the blocked draft when one refuses delivery
+- **eight gate verdicts**, and the blocked draft when one refuses delivery
 - the **frontmatter filter**: pages admitted *and pages rejected with the reason*
 - **graph traversal**: which pages were reached by following links, and at which hop
 - **RAG fallback**: whether it fired and why
