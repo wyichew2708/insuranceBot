@@ -69,3 +69,21 @@ def test_the_same_turn_without_history_still_refuses(bundle: Bundle, settings: S
     """The resolution is what changed the outcome, not a loosened floor."""
     env, _ = answer_question(bundle, "whats the coverages", make_session(), settings, history=[])
     assert env.answer.handoff
+
+
+def test_the_carried_topic_does_not_disable_the_steering(bundle: Bundle, settings: Settings) -> None:
+    """Reference resolution prepends the topic, so a follow-up reaches
+    composition as "travel insurance whats the coverages" — the interrogative
+    is no longer first. An anchored test for the open coverage form silently
+    stopped firing on exactly the turns it was written for, and the follow-up
+    went back to being answered from the exclusions page."""
+    env, _ = answer_question(
+        bundle,
+        "whats the coverages",
+        make_session(),
+        settings,
+        history=["travel insurance"],
+    )
+    cited = {c.source_id for c in env.answer.claims}
+    assert cited, env.answer.answer
+    assert not all(page.endswith("/exclusions") for page in cited), cited

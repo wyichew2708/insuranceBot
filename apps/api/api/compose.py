@@ -43,7 +43,12 @@ HEADING_RE = re.compile(r"^##\s+(.+)$", re.M)
 #: The open form of a coverage question: what does it cover, what are the
 #: coverages, what is included. No subject of its own beyond the product.
 BROAD_COVERAGE_RE = re.compile(
-    r"^\W*(?:what(?:'?s)?|which)\b[\w\s']{0,24}?"
+    # Not anchored to the start of the string. Reference resolution prepends
+    # the carried topic, so by the time composition sees it the turn reads
+    # "term life whats the coverages" and the interrogative is no longer
+    # first — anchoring here silently disabled the steering for every
+    # follow-up question, which is the case it exists for.
+    r"\b(?:what(?:'?s)?|which)\b[\w\s']{0,24}?"
     r"\b(?:cover(?:s|ed|age|ages)?|include[sd]?|benefits?)\b\W*$",
     re.I,
 )
