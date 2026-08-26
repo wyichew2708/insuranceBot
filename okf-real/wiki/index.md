@@ -13,14 +13,14 @@ aliases: []
 channels: []
 plan_tiers: []
 authority: []
-effective_from: '2026-08-26'
+effective_from: '2026-08-27'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-26T00:00:00'
+compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-24'
+review_due: '2026-11-25'
 confidence: high
 ---
 
@@ -540,10 +540,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/inland-transit/exclusions` — [Inland Transit — Exclusions](./product/general/inland-transit/exclusions.md)
 
-- `product/general/insurance-singapore` — [Blog Tag: Insurance Singapore](./product/general/insurance-singapore.md)
-
-- `product/general/insurance-singapore/exclusions` — [Blog Tag: Insurance Singapore — Exclusions](./product/general/insurance-singapore/exclusions.md)
-
 - `product/general/just-married` — [Just Married](./product/general/just-married.md)
 
 - `product/general/just-married/exclusions` — [Just Married — Exclusions](./product/general/just-married/exclusions.md)
@@ -794,8 +790,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/tiq-travel-covid/exclusions` — [Tiq Travel Covid Insurance — Exclusions](./product/general/tiq-travel-covid/exclusions.md)
 
-- `product/general/travel` — [Blog Tag: Travel](./product/general/travel.md)
-
 - `product/general/travel-infinite` — [Travel Infinite](./product/general/travel-infinite.md)
 
 - `product/general/travel-infinite/benefits` — [Travel Infinite — Benefits](./product/general/travel-infinite/benefits.md)
@@ -844,18 +838,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/travel-takaful/exclusions` — [Travel Takaful — Exclusions](./product/general/travel-takaful/exclusions.md)
 
-- `product/general/travel/claims` — [Blog Tag: Travel — Making a claim](./product/general/travel/claims.md)
-
-- `product/general/travel/conditions` — [Blog Tag: Travel — Policy conditions](./product/general/travel/conditions.md)
-
-- `product/general/travel/cover` — [Blog Tag: Travel — What is covered](./product/general/travel/cover.md)
-
-- `product/general/travel/definitions` — [Blog Tag: Travel — Definitions](./product/general/travel/definitions.md)
-
-- `product/general/travel/eligibility` — [Blog Tag: Travel — Eligibility](./product/general/travel/eligibility.md)
-
-- `product/general/travel/exclusions` — [Blog Tag: Travel — Exclusions](./product/general/travel/exclusions.md)
-
 ## Products — health-medical
 
 - `product/health-medical/accident-health` — [Accident & Health](./product/health-medical/accident-health.md)
@@ -891,10 +873,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/health-medical/foreign-workers-medical-per-disability/eligibility` — [Foreign Workers Medical Per Disability Insurance — Eligibility](./product/health-medical/foreign-workers-medical-per-disability/eligibility.md)
 
 - `product/health-medical/foreign-workers-medical-per-disability/exclusions` — [Foreign Workers Medical Per Disability Insurance — Exclusions](./product/health-medical/foreign-workers-medical-per-disability/exclusions.md)
-
-- `product/health-medical/health` — [Blog Tag: Health](./product/health-medical/health.md)
-
-- `product/health-medical/health/exclusions` — [Blog Tag: Health — Exclusions](./product/health-medical/health/exclusions.md)
 
 ## Products — investments
 
@@ -1288,33 +1266,23 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/protection/etiqa-direct-critical-illness-rider/exclusions` — [Etiqa Direct Critical Illness Rider — Exclusions](./product/protection/etiqa-direct-critical-illness-rider/exclusions.md)
 
-- `product/protection/life` — [Blog Tag: Life](./product/protection/life.md)
+- `product/protection/life` — [Life Insurance](./product/protection/life.md)
 
 - `product/protection/life-critical-illness-protection` — [Life & Critical Illness Protection](./product/protection/life-critical-illness-protection.md)
 
 - `product/protection/life-critical-illness-protection/exclusions` — [Life & Critical Illness Protection — Exclusions](./product/protection/life-critical-illness-protection/exclusions.md)
 
-- `product/protection/life-hacks` — [Blog Tag: Life Hacks](./product/protection/life-hacks.md)
-
-- `product/protection/life-hacks/exclusions` — [Blog Tag: Life Hacks — Exclusions](./product/protection/life-hacks/exclusions.md)
-
 - `product/protection/life-nomination-guide` — [Life Nomination Guide](./product/protection/life-nomination-guide.md)
 
 - `product/protection/life-nomination-guide/exclusions` — [Life Nomination Guide — Exclusions](./product/protection/life-nomination-guide/exclusions.md)
 
-- `product/protection/life-protection` — [Blog Tag: Life Protection](./product/protection/life-protection.md)
+- `product/protection/life/claims` — [Life Insurance — Making a claim](./product/protection/life/claims.md)
 
-- `product/protection/life-protection/exclusions` — [Blog Tag: Life Protection — Exclusions](./product/protection/life-protection/exclusions.md)
+- `product/protection/life/conditions` — [Life Insurance — Policy conditions](./product/protection/life/conditions.md)
 
-- `product/protection/life/claims` — [Blog Tag: Life — Making a claim](./product/protection/life/claims.md)
+- `product/protection/life/definitions` — [Life Insurance — Definitions](./product/protection/life/definitions.md)
 
-- `product/protection/life/conditions` — [Blog Tag: Life — Policy conditions](./product/protection/life/conditions.md)
-
-- `product/protection/life/cover` — [Blog Tag: Life — What is covered](./product/protection/life/cover.md)
-
-- `product/protection/life/definitions` — [Blog Tag: Life — Definitions](./product/protection/life/definitions.md)
-
-- `product/protection/life/exclusions` — [Blog Tag: Life — Exclusions](./product/protection/life/exclusions.md)
+- `product/protection/life/exclusions` — [Life Insurance — Exclusions](./product/protection/life/exclusions.md)
 
 - `product/protection/major-cancer` — [Major Cancer Insurance](./product/protection/major-cancer.md)
 
@@ -1395,10 +1363,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/savings-retirement/enrich-saver/definitions` — [Enrich saver — Definitions](./product/savings-retirement/enrich-saver/definitions.md)
 
 - `product/savings-retirement/enrich-saver/exclusions` — [Enrich saver — Exclusions](./product/savings-retirement/enrich-saver/exclusions.md)
-
-- `product/savings-retirement/savings-plan` — [Blog Tag: Savings Plan](./product/savings-retirement/savings-plan.md)
-
-- `product/savings-retirement/savings-plan/exclusions` — [Blog Tag: Savings Plan — Exclusions](./product/savings-retirement/savings-plan/exclusions.md)
 
 - `product/savings-retirement/savings-retirement` — [Savings & Retirement](./product/savings-retirement/savings-retirement.md)
 

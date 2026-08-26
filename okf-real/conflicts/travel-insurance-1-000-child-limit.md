@@ -1,6 +1,6 @@
 # Website defect — travel-insurance 1-000:child.limit
 
-- opened: 2026-08-26
+- opened: 2026-08-27
 - kept (higher authority): `$50000` from `raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered`
 - contradicted: `$75000` from `raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered`
 

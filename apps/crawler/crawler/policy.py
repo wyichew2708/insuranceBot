@@ -32,7 +32,15 @@ PAGE_TYPE_RULES: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"/(claims?)(/|$)"), "claims"),
     (re.compile(r"/(policy-services|servicing|customer-service|support|help)(/|$)"), "servicing"),
     (re.compile(r"/(privacy|terms|governance|compliance|pdpa|security|disclosure)(/|-|$)"), "governance"),
-    (re.compile(r"/(blog|articles?|stories|guides?|news)(/|$)"), "blog"),
+    # `-` and `_` are boundaries here, not just `/`. Etiqa files its blog under
+    # `/blog_tags/life`, which this rule missed on the underscore — and the
+    # product rule below then matched it on "life", so a blog tag index was
+    # compiled as a product called "Blog Tag: Life" and listed to customers
+    # asking what life products exist.
+    (
+        re.compile(r"/(blog|articles?|stories|guides?|news|tags?|categor(?:y|ies)|authors?)(/|-|_|$)"),
+        "blog",
+    ),
     (re.compile(r"/(faqs?)(/|$)"), "faq"),
     (
         re.compile(

@@ -198,6 +198,15 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
             if spec is not None:
                 bound_text.extend(spec.contact_values())
     bound_text.extend(_channel_values(ctx))
+    # The title of a page the answer cites. A product directory answers "what
+    # life products do you have" by naming products, and one of them is called
+    # "3 Plus Critical Illness" — the digits are the product's name, read from
+    # the frontmatter of a page this answer cites, not a figure it fetched.
+    bound_text.extend(
+        page.frontmatter.title
+        for page in (ctx.bundle.get(c.source_id) for c in ctx.answer.claims)
+        if page is not None
+    )
 
     orphans: list[str] = []
     for match in NUMERIC_SPAN_RE.finditer(ctx.answer.answer):

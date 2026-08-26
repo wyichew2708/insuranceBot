@@ -41,6 +41,7 @@ class Intent(str, Enum):
     coverage = "coverage"  # what does it cover, broadly
     definition = "definition"  # what does <term> mean
     smalltalk = "smalltalk"  # hello, thanks, are you a bot
+    browse = "browse"  # what do you sell, show me your life plans
     unknown = "unknown"
 
 
@@ -92,6 +93,32 @@ def smalltalk_kind(question: str) -> str | None:
             return kind
     return None
 
+
+#: Someone shopping rather than asking. "what life products", "looking for a CI
+#: plan", "do you have pet insurance" — the customer wants to know *what
+#: exists*, and every one of these was answered from a single product page's
+#: prose because retrieval is built to find the best page, not to report that
+#: several are relevant. Measured on the real bundle: "what life products"
+#: returned the Products Liability page, having matched on the word "products".
+#: The noun a shopper names: the category, not a benefit.
+_OFFERING = r"(?:products?|plans?|policies|policy|insurance|cover(?:age)?s?|options?)"
+
+BROWSE_RE = re.compile(
+    # "what life products", "which plans do you have" — at most two words of
+    # qualifier between the interrogative and the noun, and then either the
+    # question ends or a possession verb follows. The gap is what keeps "what
+    # is not covered by fire insurance?" out: four words of question sit in it,
+    # and that turn is *about* a product rather than a request to see the list.
+    rf"^(?:what|which)\s+(?:\w+\s+){{0,2}}{_OFFERING}\s*"
+    rf"(?:(?:do|does|are|can|have)\b[\w\s]{{0,20}})?[?.!]?$"
+    # Explicit shopping language, anywhere in the turn.
+    r"|\b(?:looking|search(?:ing)?|shopping)\s+for\b"
+    r"|\b(?:show|list)\s+me\b"
+    r"|\bdo\s+you\s+(?:have|sell|offer)\b"
+    r"|\bwhat\s+(?:do|can)\s+you\s+(?:sell|offer|insure)\b"
+    rf"|\b(?:any\s+other|what\s+other)\s+{_OFFERING}\b",
+    re.I,
+)
 
 #: Ordered: the first match wins, so the specific patterns precede the broad
 #: ones. `coverage` deliberately sits near the end — "what does X cover" is the
@@ -203,6 +230,11 @@ def classify(question: str) -> Intent:
     # question, and "what is this" as a definition.
     if smalltalk_kind(text):
         return Intent.smalltalk
+    # Before the topic patterns, and after smalltalk. "what plans do you have"
+    # would otherwise be read as coverage and answered from whichever single
+    # page scored highest.
+    if BROWSE_RE.search(text):
+        return Intent.browse
     for intent, pattern in _PATTERNS:
         if pattern.search(text):
             return intent

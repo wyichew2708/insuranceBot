@@ -360,10 +360,26 @@ def versions_from_documents(source_root: Path) -> dict[str, str]:
     return versions
 
 
+#: A URL that is editorial however the crawl labelled it. The recorded
+#: `page_type` is a crawl-time judgement, and a crawl is expensive to repeat —
+#: this is the compile's own read of the same URL, so a classifier fix takes
+#: effect on the next compile instead of the next crawl. Measured: Etiqa files
+#: its blog under `/blog_tags/life`, the crawler's blog rule wanted a `/` where
+#: the underscore is, and the product rule then matched "life" — so a blog tag
+#: index compiled into a product called "Blog Tag: Life" and was offered to
+#: customers asking what life products exist.
+NOT_A_PRODUCT_URL = re.compile(
+    r"/(?:blog|articles?|stories|news|tags?|categor(?:y|ies)|authors?)(?:/|-|_|$)", re.I
+)
+
+
 def group_products(snapshots: list[Snapshot], report: CompileReport) -> dict[str, ProductGroup]:
     groups: dict[str, ProductGroup] = {}
     for snapshot in snapshots:
         if snapshot.page_type != "product":
+            continue
+        if NOT_A_PRODUCT_URL.search(snapshot.url):
+            report.skip("editorial page the crawl labelled a product")
             continue
         if snapshot.slug in SECTION_ROOTS:
             report.skip("section index, not a product")

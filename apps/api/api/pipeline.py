@@ -9,6 +9,8 @@ the pages it considered and rejected.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from harness import (
     AnswerEnvelope,
     AuthLevel,
@@ -21,10 +23,11 @@ from harness import (
     blocked,
     run_gates,
 )
-from harness.intent import smalltalk_kind
+from harness.intent import Intent, classify, smalltalk_kind
 from okf.tables import find_tokens
 
 from api.compose import compose
+from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
 from api.guardrails import Guard, Screening, guard_for
 from api.llm import Draft, provider_for
@@ -38,7 +41,16 @@ from api.retrieval import (
 )
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
-from okf import Bundle, Page, PageType, expand_vocabulary, load_vocabulary, term_idf
+from okf import (
+    Bundle,
+    Page,
+    PageType,
+    expand_abbreviations,
+    expand_vocabulary,
+    load_abbreviations,
+    load_vocabulary,
+    term_idf,
+)
 
 HANDOFF = (
     "I'd rather not answer that from memory. I'm passing you to a colleague who can "
@@ -131,6 +143,44 @@ def _pleasantry(kind: str, bundle: Bundle) -> str:
     return _PLEASANTRIES[kind].format(underwriter=underwriter)
 
 
+def _finish(
+    trace: Trace,
+    answer: GroundedAnswer,
+    bundle: Bundle,
+    session: Session,
+    question: str,
+    raw_root: Path,
+    loaded: list[str],
+) -> tuple[AnswerEnvelope, Trace]:
+    """Gate an answer produced without the retrieve-and-compose path.
+
+    The short-circuits still go through the gates. A greeting will skip every
+    one and a directory listing will pass reference-integrity on the products
+    it named — but a turn that bypassed verification silently would look, on
+    the trace, exactly like one that passed it.
+    """
+    with trace.stage("gates") as detail:
+        results = run_gates(
+            GateContext(
+                answer=answer,
+                bundle=bundle,
+                session=session,
+                question=question,
+                loaded_page_ids=loaded,
+                raw_root=raw_root,
+                today=session.today,
+            )
+        )
+        trace.gates = results
+        detail["failed"] = [g.gate for g in results if g.blocking]
+    delivered = not blocked(results)
+    trace.delivered = delivered
+    return (
+        AnswerEnvelope(answer=answer, gates=results, delivered=delivered, trace_id=trace.trace_id),
+        trace,
+    )
+
+
 def answer_question(
     bundle: Bundle, question: str, session: Session, settings: Settings
 ) -> tuple[AnswerEnvelope, Trace]:
@@ -185,26 +235,38 @@ def answer_question(
         # to check in a reply that asserts nothing — but a turn that silently
         # bypassed verification would be indistinguishable, on the trace, from
         # one that passed it. Skipping on the record is the point.
-        with trace.stage("gates") as detail:
-            results = run_gates(
-                GateContext(
-                    answer=answer,
-                    bundle=bundle,
-                    session=session,
-                    question=question,
-                    loaded_page_ids=[],
-                    raw_root=raw_root,
-                    today=session.today,
-                )
+        return _finish(trace, answer, bundle, session, question, raw_root, [])
+
+    # A shopper, not a questioner. "what life products" and "looking for a CI
+    # plan" ask what exists; retrieval finds the best single page and answers
+    # from its prose, which is how "what life products" came back as Products
+    # Liability. The bundle already knows every product and its line of
+    # business — this reports that rather than ranking it.
+    if classify(question) is Intent.browse:
+        listing = directory_answer(bundle, question)
+        if listing is not None:
+            with trace.stage("directory") as detail:
+                detail["products"] = [c.source_id for c in listing.claims]
+            return _finish(
+                trace,
+                listing,
+                bundle,
+                session,
+                question,
+                raw_root,
+                [c.source_id for c in listing.claims],
             )
-            trace.gates = results
-            detail["failed"] = [g.gate for g in results if g.blocking]
-        delivered = not blocked(results)
-        trace.delivered = delivered
-        return (
-            AnswerEnvelope(answer=answer, gates=results, delivered=delivered, trace_id=trace.trace_id),
-            trace,
-        )
+
+    # Spell out the initials before anything scores the words. The tokeniser
+    # drops anything under three characters, so "ci" reached retrieval as
+    # nothing at all and the turn was scored on "product" alone. Expanded
+    # rather than replaced: the wordings say "covered CI" and the product pages
+    # say "Critical Illness", and an answer has to reach both.
+    with trace.stage("expand") as detail:
+        expanded = expand_abbreviations(question, load_abbreviations(settings.bundle_path))
+        if expanded != question:
+            detail["expanded"] = expanded
+            question = expanded
 
     try:
         with trace.stage("frontmatter-filter") as detail:

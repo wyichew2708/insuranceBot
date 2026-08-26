@@ -20,12 +20,20 @@ whoever owns the retriever.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import yaml
 
 #: `benefit_code` → the words customers use for it.
 Vocabulary = dict[str, list[str]]
+
+#: An abbreviation → the words it stands for. Insurance is written in initials
+#: and customers type them: "ci product", "do you have PA cover", "which ILP".
+#: The tokeniser drops anything under three characters, so "ci" never reached
+#: retrieval at all — a question about critical illness was scored on the word
+#: "product" alone, and matched an investment-linked plan.
+Abbreviations = dict[str, str]
 
 
 def load_vocabulary(bundle_root: Path) -> Vocabulary:
@@ -49,6 +57,46 @@ def load_vocabulary(bundle_root: Path) -> Vocabulary:
         for code, terms in benefits.items()
         if isinstance(terms, list)
     }
+
+
+def load_abbreviations(bundle_root: Path) -> Abbreviations:
+    """Read the `abbreviations` section of `vocabulary.yaml`."""
+    path = Path(bundle_root) / "vocabulary.yaml"
+    if not path.exists():
+        return {}
+    try:
+        raw = yaml.safe_load(path.read_text()) or {}
+    except yaml.YAMLError:
+        return {}
+    entries = raw.get("abbreviations") if isinstance(raw, dict) else None
+    if not isinstance(entries, dict):
+        return {}
+    return {
+        str(short).lower(): str(long).lower()
+        for short, long in entries.items()
+        if str(short).strip() and str(long).strip()
+    }
+
+
+def expand_abbreviations(question: str, abbreviations: Abbreviations) -> str:
+    """The question with every abbreviation spelled out beside its initials.
+
+    Both forms are kept: "ci" is what the customer typed and may appear in the
+    corpus verbatim ("covered CI"), and "critical illness" is what the product
+    pages are titled. Dropping either loses matches.
+
+    Matched only as a whole word — the `ci` in "special" or "decision" is not
+    an abbreviation — and once per abbreviation, so a question that repeats it
+    does not grow a paragraph of expansions.
+    """
+    if not abbreviations:
+        return question
+    text = question or ""
+    for short, long in abbreviations.items():
+        pattern = re.compile(rf"(?<![a-z0-9]){re.escape(short)}(?![a-z0-9])", re.I)
+        if pattern.search(text):
+            text = pattern.sub(f"{short} {long}", text, count=1)
+    return text
 
 
 def expand_vocabulary(question: str, vocabulary: Vocabulary) -> set[str]:

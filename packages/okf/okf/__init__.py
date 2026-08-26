@@ -48,7 +48,14 @@ from okf.tables import (
     find_tokens,
     resolve_transclusions,
 )
-from okf.vocabulary import Vocabulary, expand_vocabulary, load_vocabulary
+from okf.vocabulary import (
+    Abbreviations,
+    Vocabulary,
+    expand_abbreviations,
+    expand_vocabulary,
+    load_abbreviations,
+    load_vocabulary,
+)
 
 __all__ = [
     "ALL_CHANNELS",
@@ -58,6 +65,7 @@ __all__ = [
     "UEN",
     "UNCOMPILED_MARK",
     "UNDERWRITER",
+    "Abbreviations",
     "BenefitTables",
     "Bundle",
     "Channel",
@@ -84,12 +92,14 @@ __all__ = [
     "Vocabulary",
     "brand_for_host",
     "channel_for_host",
+    "expand_abbreviations",
     "expand_vocabulary",
     "find_channel_tokens",
     "find_tokens",
     "foreign_contact_values",
     "lint_bundle",
     "lint_page",
+    "load_abbreviations",
     "load_vocabulary",
     "normalise",
     "parse_page",

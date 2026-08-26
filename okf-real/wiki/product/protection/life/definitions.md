@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/life/definitions
-title: 'Blog Tag: Life — Definitions'
+title: Life Insurance — Definitions
 type: product
 status: approved
 lifecycle: on_sale
@@ -17,14 +17,14 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/general-provisions-for-life-insurance.md
-version_in_force: '2026'
 links:
-  concepts: []
+  concepts:
+  - concept/nomination
 compiled_from_commit: working-tree
-compiled_at: '2026-08-26T00:00:00'
+compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-24'
+review_due: '2026-11-25'
 confidence: high
 ---
 

@@ -38,7 +38,19 @@ def offline_by_default():  # type: ignore[no-untyped-def]
     """
     import os
 
-    pinned = {"LLM_PROVIDER": "deterministic", "GUARDRAILS": "rules"}
+    # The endpoint settings are pinned too, not just the provider name. A
+    # developer who points `.env` at a local model has `VLLM_BASE_URL` set, and
+    # the integrations endpoint then reports vllm as configured — so a test
+    # asserting what is and is not wired up passes or fails depending on whose
+    # machine it runs on. Empty is the "nothing configured" state the suite
+    # assumes.
+    pinned = {
+        "LLM_PROVIDER": "deterministic",
+        "GUARDRAILS": "rules",
+        "VLLM_BASE_URL": "",
+        "VLLM_MODEL": "",
+        "GUARDRAIL_MODEL": "",
+    }
     saved = {key: os.environ.get(key) for key in pinned}
     os.environ.update(pinned)
     yield

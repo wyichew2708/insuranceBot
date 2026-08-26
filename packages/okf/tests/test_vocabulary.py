@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from okf import expand_vocabulary, load_vocabulary
+from okf import expand_abbreviations, expand_vocabulary, load_abbreviations, load_vocabulary
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -56,3 +56,30 @@ def test_terms_are_specific_enough_not_to_fire_on_ordinary_questions() -> None:
     ]
     for question in ordinary:
         assert expand_vocabulary(question, vocabulary) == set(), question
+
+
+# --- abbreviations ---
+
+
+def test_initials_are_expanded_beside_themselves(tmp_path: Path) -> None:
+    """Both forms are kept: the wordings say "covered CI" and the product
+    pages say "Critical Illness", and an answer has to reach both."""
+    (tmp_path / "vocabulary.yaml").write_text(
+        "abbreviations:\n  ci: critical illness\n  pa: personal accident\n"
+    )
+    abbr = load_abbreviations(tmp_path)
+    out = expand_abbreviations("looking for ci product", abbr)
+    assert "ci" in out.split() and "critical illness" in out
+
+
+def test_an_abbreviation_inside_a_word_is_not_one(tmp_path: Path) -> None:
+    """The `ci` in "decision" and "special" is not critical illness."""
+    (tmp_path / "vocabulary.yaml").write_text("abbreviations:\n  ci: critical illness\n")
+    abbr = load_abbreviations(tmp_path)
+    for text in ("a special decision", "specific circumstances"):
+        assert expand_abbreviations(text, abbr) == text
+
+
+def test_a_bundle_without_abbreviations_still_works(tmp_path: Path) -> None:
+    assert load_abbreviations(tmp_path) == {}
+    assert expand_abbreviations("looking for ci", {}) == "looking for ci"
