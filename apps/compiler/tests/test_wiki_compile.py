@@ -179,3 +179,57 @@ def test_snapshots_deduplicate_to_the_newest_date(compiled: Path) -> None:
     snapshots = load_snapshots(compiled)
     urls = [s.url for s in snapshots]
     assert len(urls) == len(set(urls))
+
+
+def test_faq_products_match_across_the_two_front_doors() -> None:
+    """ "ePROTECT maid" and "Tiq Maid" are one product under two brands, which
+    is the whole premise of the channel model, so they normalise together."""
+    from compiler.wiki import _faq_key, _match_faq_product
+
+    slugs = ["maid-insurance", "travel-insurance", "pet-insurance", "motorcycle-insurance"]
+    index = {_faq_key(s): s for s in slugs}
+    assert _match_faq_product("Tiq Travel Insurance", index, slugs) == "travel-insurance"
+    assert _match_faq_product("ePROTECT maid", index, slugs) == "maid-insurance"
+    assert _match_faq_product("ePROTECT motorcycle", index, slugs) == "motorcycle-insurance"
+
+
+def test_an_ambiguous_faq_set_is_left_unmatched_rather_than_guessed() -> None:
+    """ "Dash PET" shares `pet` with Pet Insurance but is a different product
+    sold through a partner app. Attaching its answers to Pet Insurance would be
+    worse than leaving them out, so the token rule needs a single candidate."""
+    from compiler.wiki import _faq_key, _match_faq_product
+
+    slugs = ["pet-insurance", "pet-survey"]
+    index = {_faq_key(s): s for s in slugs}
+    assert _match_faq_product("Dash PET Plus", index, slugs) is None
+
+
+def test_the_richer_page_wins_a_key_collision(tmp_path: Path) -> None:
+    """This corpus carries both `travel` and `travel-insurance` — a thin landing
+    page and the real product, which normalise to one key. First-writer-wins put
+    36 published answers on the stub, where no customer question retrieves them.
+    """
+    from compiler.wiki import ProductGroup, _faq_key
+
+    assert _faq_key("travel") == _faq_key("travel-insurance") == _faq_key("Tiq Travel Insurance")
+
+    def group(slug: str, title: str, body: str) -> ProductGroup:
+        path = tmp_path / f"{slug}.md"
+        path.write_text(
+            f'---\nsource_url: "https://www.etiqa.com.sg/{slug}"\nhost: "www.etiqa.com.sg"\n'
+            f'title: "{title}"\npage_type: "product"\n---\n\n# {title}\n\n{body}\n'
+        )
+        g = ProductGroup(slug=slug, title=title)
+        g.product["www.etiqa.com.sg"] = parse_snapshot(path, tmp_path)
+        return g
+
+    groups = {
+        "travel": group("travel", "Travel", "short"),
+        "travel-insurance": group("travel-insurance", "Travel Insurance", "plenty of body " * 40),
+    }
+    assert len(groups["travel-insurance"].text) > len(groups["travel"].text)
+
+    index: dict[str, str] = {}
+    for slug in sorted(groups, key=lambda s: -len(groups[s].text)):
+        index.setdefault(_faq_key(slug), slug)
+    assert index[_faq_key("Tiq Travel Insurance")] == "travel-insurance"

@@ -1,0 +1,63 @@
+# Customer words for benefits the corpus names differently.
+#
+# A page carries `aliases` because the name a customer uses is rarely the name a
+# product page uses. This is the same idea one level down: a customer whose
+# suitcase went missing says "suitcase", and the benefit is `baggage_loss`.
+#
+# These matter most in the questions where somebody describes what happened
+# rather than naming a benefit — which is what a customer mid-loss actually
+# does, and the phrasing the eval suite finds hardest.
+#
+# Matching is substring and case-insensitive, so multi-word phrases work and
+# should be preferred where a single word would be too broad ("fire" alone
+# would fire on "fire insurance").
+
+benefits:
+  baggage_loss:
+    - suitcase
+    - luggage
+    - my bag
+    - bags were
+    - airline lost
+    - lost my case
+  travel_delay:
+    - flight was delayed
+    - delayed overnight
+    - stuck at the airport
+    - flight home was delayed
+    - missed my connection
+  medical_expenses:
+    - hospitalised
+    - in hospital
+    - saw a doctor
+    - fell ill
+    - taken ill
+    - ambulance
+  trip_cancellation:
+    - call off my trip
+    - cancel my trip
+    - had to cancel
+    - could not travel
+  contents:
+    - broken into
+    - burgled
+    - things were taken
+    - stolen from my home
+    - my belongings
+  alternative_accommodation:
+    - somewhere to live
+    - cannot live in
+    - nowhere to stay
+    - uninhabitable
+    - put me up
+  own_damage:
+    - scraped my car
+    - dented
+    - reversed into
+    - hit a pillar
+    - repair my car
+  ncd:
+    - no claims for
+    - not claimed in
+    - claim-free years
+    - discount for not claiming

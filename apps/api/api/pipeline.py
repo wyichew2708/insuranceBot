@@ -37,7 +37,7 @@ from api.retrieval import (
 )
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
-from okf import Bundle, Page, PageType, term_idf
+from okf import Bundle, Page, PageType, expand_vocabulary, load_vocabulary, term_idf
 
 HANDOFF = (
     "I'd rather not answer that from memory. I'm passing you to a colleague who can "
@@ -159,6 +159,18 @@ def answer_question(
                     must_include=unsupported_term(bundle, question, admitted),
                 )
             starved = reason.startswith(NO_MATCH_PREFIXES) and not trace.rag_hits
+            # A situational phrasing scores badly on lexical overlap — "my place
+            # was broken into" shares almost nothing with a page about contents
+            # cover — so the confidence floor calls it starved and the composer
+            # stops before it ever looks at a section. But if the question named
+            # a benefit in the customer's own words, and a page we loaded can
+            # produce that benefit, the corpus plainly does hold the answer.
+            implied = expand_vocabulary(question, load_vocabulary(settings.bundle_path))
+            if starved and implied:
+                servable = {b for page in pages for b, _ in find_tokens(page.body)} & implied
+                if servable:
+                    starved = False
+                    detail["vocabulary_rescued"] = sorted(servable)
             detail["starved"] = starved
 
         # Customer-specific data only ever comes from the system of record.
@@ -201,6 +213,7 @@ def answer_question(
                 advice_required=needs_advice,
                 top_score=top_score,
                 idf=term_idf(bundle),
+                benefits=expand_vocabulary(question, load_vocabulary(settings.bundle_path)),
                 no_confident_match=starved,
             )
             draft = composition.answer

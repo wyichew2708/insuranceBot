@@ -266,9 +266,12 @@ def test_unentailed_claim_is_blocked(bundle: Bundle) -> None:
 # --- suite ---
 
 
-def test_all_seven_gates_run(bundle: Bundle) -> None:
+def test_every_gate_runs_regardless_of_earlier_failures(bundle: Bundle) -> None:
+    """The console shows the full picture, so a failure never short-circuits the
+    rest. Eight now: the seventh was the last of the provenance checks, and
+    `answerability` is the first that compares the answer to the question."""
     results = run_gates(ctx(bundle, GroundedAnswer(answer="x", handoff=True)))
-    assert len(results) == 7
+    assert len(results) == 8
     assert {r.gate for r in results} == {
         "reference-integrity",
         "numeric-binding",
@@ -277,6 +280,7 @@ def test_all_seven_gates_run(bundle: Bundle) -> None:
         "exclusion-completeness",
         "advice-boundary",
         "groundedness",
+        "answerability",
     }
 
 

@@ -100,6 +100,23 @@ def cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_faqs(args: argparse.Namespace) -> int:
+    """Published FAQs into `raw/faq/`."""
+    from crawler.faqs import fetch, write
+
+    pairs = []
+    for host in args.allowlist:
+        found = fetch(host, rps=args.rps)
+        print(f"  {host:24} {len(found):4} pairs" + ("" if found else "   (no REST FAQ endpoint)"))
+        pairs.extend(found)
+    if not pairs:
+        print("no published FAQs found on any allowlisted host")
+        return 0
+    stats = write(pairs, args.out / "faq")
+    print(f"wrote {stats['pairs']} pairs across {stats['products']} products -> {args.out / 'faq'}")
+    return 0
+
+
 def cmd_documents(args: argparse.Namespace) -> int:
     from crawler.documents import backend_for, ingest
 
@@ -192,6 +209,20 @@ def main() -> None:
     )
     docs.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
     docs.set_defaults(func=cmd_documents)
+
+    faq = sub.add_parser(
+        "faqs",
+        help="fetch published FAQ question/answer pairs (WordPress REST API)",
+        description=(
+            "The FAQs are a custom post type in no sitemap, displayed by a "
+            "client-rendered page, so the ordinary crawl cannot see them. This "
+            "reads them from the REST API where a host serves one."
+        ),
+    )
+    faq.add_argument("--allowlist", nargs="+", default=["www.tiq.com.sg"])
+    faq.add_argument("--out", type=Path, default=Path("okf/raw"))
+    faq.add_argument("--rps", type=float, default=1.0)
+    faq.set_defaults(func=cmd_faqs)
 
     args = parser.parse_args()
     raise SystemExit(args.func(args))

@@ -24,11 +24,13 @@ explicit sign-off, because an approved page is one a human has read.
 from __future__ import annotations
 
 import datetime as dt
+import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+from harness.intent import classify
 from okf.channels import ALL_CHANNELS, channel_for_host
 from okf.page import (
     ChannelBinding,
@@ -42,7 +44,7 @@ from okf.page import (
     render_page,
 )
 
-from compiler.snapshots import Section, Snapshot, load_snapshots, slugify
+from compiler.snapshots import Section, Snapshot, Table, load_snapshots, slugify
 
 LEGAL_NAME = "Etiqa Insurance Pte. Ltd."
 UEN = "201331905K"
@@ -163,8 +165,34 @@ def benefit_phrase(code: str, attribute: str) -> str:
     return PHRASE.get(attribute, PHRASE["value"]).format(label=label)
 
 
+#: Leading enumeration on a schedule row — "1.", "(a)", "8)". Part of the
+#: layout, not part of the benefit's name.
+_ENUMERATION_RE = re.compile(r"^\s*[\(\[]?\s*(\d{1,2}|[a-z])\s*[\)\].]\s+", re.I)
+
+#: Trailing qualification a schedule attaches to a benefit name: "excess $200
+#: for each and every claim except fire". The benefit is what precedes it.
+_QUALIFIER_RE = re.compile(r"\s+(?:\(|-\s|,\s)?(?:excess|except|including|subject to|per\b|up to)\b.*$", re.I)
+
+
 def benefit_code(label: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", label.lower()).strip("_")
+    """A row label reduced to the benefit it names.
+
+    Real schedules number their rows and qualify their benefits inline, so the
+    raw label is "9. Product Liability (a) accidental bodily injury to or
+    illness of any person (b) accidental loss of or damage to property…". All
+    of that is one benefit — product liability — wearing its policy wording.
+    Taken verbatim it became a 250-character identifier that no question could
+    ever match.
+    """
+    label = _ENUMERATION_RE.sub("", label.strip())
+    label = _QUALIFIER_RE.sub("", label)
+    # A bare number is a row index, not a benefit. "1 | 14 km | 30%" is a
+    # ranking table whose first column counts the rows.
+    if re.fullmatch(r"[\d\W]*", label):
+        return ""
+    code = re.sub(r"[^a-z0-9]+", "_", label.lower()).strip("_")
+    # Keep it to something a question could plausibly contain.
+    return "_".join(code.split("_")[:6])
 
 
 def parse_cell(cell: str) -> tuple[str, str, str] | None:
@@ -351,6 +379,64 @@ def rank_hosts(hosts: list[str], order: list[str]) -> list[str]:
     return sorted(hosts, key=key)
 
 
+#: A column header that names a measure rather than a plan tier. When most of
+#: them do, the table is transposed: its rows are variants (flat types, age
+#: bands) and its columns are the attributes.
+MEASURE_HEADER_RE = re.compile(
+    r"premium|sum insured|limit|excess|benefit|amount|coverage|payout|rate\b|price|cost|fee|charge",
+    re.I,
+)
+
+#: The longest a row label can be and still name a benefit. Beyond this it is a
+#: sentence from a policy schedule, and `1_all_risks_excess_200_for_each_every_
+#: claim_except_f` is what came of accepting one.
+MAX_LABEL_WORDS = 6
+
+
+def looks_like_a_benefit_table(table: Table) -> bool:
+    """Whether this table states benefit values at all.
+
+    The compiler used to take the largest table on the page. On these sites the
+    largest table is routinely a blog comparison grid ("An EV may suit you
+    if…"), a fund price list, or a promotion ladder — and trying to read benefit
+    rows out of one produced most of the 258 uninterpretable cells and 143
+    ragged rows the compile reported, plus benefit codes that were whole
+    sentences.
+
+    A benefit table is recognisable: its value cells are mostly *values*, and
+    its row labels are short enough to name something. Both have to hold, since
+    a fund price list passes the first test on its own.
+    """
+    if len(table.header) < 2 or not table.rows:
+        return False
+    values = parseable = 0
+    for cells in table.rows:
+        for cell in cells[1:]:
+            if not cell.strip():
+                continue
+            values += 1
+            if parse_cell(cell) is not None:
+                parseable += 1
+    if values < 2 or parseable / values < 0.6:
+        return False
+    labels = [cells[0] for cells in table.rows if cells and cells[0].strip()]
+    if not labels:
+        return False
+    usable = sum(1 for label in labels if len(label.split()) <= MAX_LABEL_WORDS)
+    return usable / len(labels) >= 0.6
+
+
+def pick_benefit_table(tables: list[Table]) -> Table | None:
+    """The best benefit table on a page, or none.
+
+    Largest-wins was the bug. Among tables that actually state benefits, more
+    rows is still the right tie-break — but a page with no benefit table should
+    contribute no benefit rows rather than its blog grid.
+    """
+    candidates = [t for t in tables if looks_like_a_benefit_table(t)]
+    return max(candidates, key=lambda t: len(t.rows)) if candidates else None
+
+
 def benefit_rows(
     group: ProductGroup, version: str, hosts: list[str], report: CompileReport
 ) -> list[BenefitRow]:
@@ -360,18 +446,27 @@ def benefit_rows(
         snapshot = group.product.get(host)
         if snapshot is None or not snapshot.tables:
             continue
-        table = max(snapshot.tables, key=lambda t: len(t.rows))
-        if len(table.header) < 2:
-            report.skip("table without a value column")
+        table = pick_benefit_table(snapshot.tables)
+        if table is None:
+            report.skip("no table on the page states benefit values")
             continue
-        tiers = ["ALL"] if len(table.header) == 2 else [slugify(h) for h in table.header[1:]]
-        if not group.tiers and tiers != ["ALL"]:
+        columns = table.header[1:]
+        # Transposed: the rows are variants and the columns are the measures.
+        # "Flat Types | Premium | Sum Insured" reads the other way round from
+        # "Benefit | Basic | Premier", and reading it the wrong way made the
+        # flat type the benefit and the premium column the plan tier.
+        transposed = sum(1 for c in columns if MEASURE_HEADER_RE.search(c)) > len(columns) / 2
+        tiers = ["ALL"] if len(table.header) == 2 else [slugify(h) for h in columns]
+        if not group.tiers and tiers != ["ALL"] and not transposed:
             group.tiers = tiers
         for cells in table.rows:
             if len(cells) != len(table.header):
                 report.skip("ragged table row")
                 continue
             label = cells[0]
+            if len(label.split()) > MAX_LABEL_WORDS:
+                report.skip("row label is a sentence, not a benefit name")
+                continue
             code = benefit_code(label)
             if not code:
                 continue
@@ -381,6 +476,14 @@ def benefit_rows(
                     report.skip("uninterpretable table cell")
                     continue
                 value, unit, attribute = parsed
+                if transposed:
+                    # The column names the measure; the row names the variant.
+                    code, tier, attribute = (
+                        benefit_code(columns[tiers.index(tier)]),
+                        slugify(label),
+                        attribute,
+                    )
+                    code = code or "benefit"
                 row = BenefitRow(
                     product=group.slug,
                     version=version,
@@ -741,6 +844,143 @@ def emit_exclusions(
             f"The published exclusions could not be extracted from the source page [src:{ordered[0].ref()}].",
         ]
     _write(config, _page(fm, body), report)
+
+
+# --- published FAQs ---------------------------------------------------------
+
+#: Words that identify the seller rather than the product. "Tiq Travel
+#: Insurance" and "Travel" are the same thing on two front doors, which is the
+#: whole premise of the channel model, so they have to normalise together.
+_FAQ_NOISE = re.compile(r"\b(tiq|etiqa|eprotect|insurance|plan|cover|singapore|the)\b", re.I)
+
+
+def _faq_key(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", _FAQ_NOISE.sub(" ", text.lower()))
+
+
+def _match_faq_product(name: str, index: dict[str, str], slugs: list[str]) -> str | None:
+    """Which compiled product a published FAQ set belongs to.
+
+    Exact on the normalised name, then a single distinctive token — "ePROTECT
+    maid" and "Tiq Maid" are one product under two brands, and `maid` is enough
+    to say so. The token rule requires exactly one candidate: "Dash PET" shares
+    `pet` with `pet-insurance` but is a different product sold through a partner
+    app, and attaching its answers to Pet Insurance would be worse than leaving
+    them out.
+    """
+    key = _faq_key(name)
+    if key in index:
+        return index[key]
+    tokens = [t for t in re.findall(r"[a-z0-9]{4,}", _FAQ_NOISE.sub(" ", name.lower()))]
+    for token in tokens:
+        hits = [s for s in slugs if token in s]
+        if len(hits) == 1:
+            return hits[0]
+    return None
+
+
+def emit_faqs(
+    config: CompileConfig,
+    groups: dict[str, ProductGroup],
+    page_ids: dict[str, str],
+    report: CompileReport,
+) -> list[str]:
+    """Published question/answer pairs, one page per product.
+
+    These are the only questions in the corpus a customer actually asked. They
+    are also the only ones that arrive with the insurer's own answer attached,
+    which makes them the sole source here with real ground truth.
+
+    Each question becomes its own `##` section, because that is the unit the
+    retriever scores — a customer asking "can I apply if I am over 70" should
+    match the published heading that says almost exactly that.
+
+    Numbers in these answers stay prose. The compiler already drops a prose
+    figure with no table row behind it, and that is the right treatment: a
+    policy wording owns limits and a marketing FAQ does not, however
+    conveniently it states one.
+    """
+    # `source_root` is the bundle root, so raw/ is explicit here — the FAQ
+    # index sits beside the web snapshots the rest of the compiler reads.
+    source = config.source_root / "raw" / "faq" / "faq-pairs.json"
+    if not source.exists():
+        return []
+    try:
+        pairs = json.loads(source.read_text())
+    except json.JSONDecodeError:
+        report.skip("faq index is not readable JSON")
+        return []
+
+    # Two slugs can normalise to one key — this corpus carries both `travel`
+    # and `travel-insurance`, a thin landing page and the real product. First
+    # writer wins would attach 36 published answers to whichever sorted first,
+    # and the FAQ would sit on a page no customer question retrieves. So the
+    # richer page wins: more source text is the one the crawl actually found
+    # something on.
+    index: dict[str, str] = {}
+    for slug, group in sorted(groups.items(), key=lambda kv: -len(kv[1].text)):
+        index.setdefault(_faq_key(slug), slug)
+        index.setdefault(_faq_key(group.title), slug)
+    slugs = sorted(groups, key=lambda s: -len(groups[s].text))
+
+    by_product: dict[str, list[dict[str, str]]] = {}
+    unmatched: dict[str, int] = {}
+    for pair in pairs:
+        matched = _match_faq_product(pair.get("product", ""), index, slugs)
+        if matched is None:
+            unmatched[pair.get("product", "?")] = unmatched.get(pair.get("product", "?"), 0) + 1
+            continue
+        by_product.setdefault(matched, []).append(pair)
+
+    for name, count in sorted(unmatched.items(), key=lambda kv: -kv[1]):
+        report.skip(f"published FAQ for {name!r} matches no compiled product ({count} pairs)")
+
+    written: list[str] = []
+    for slug, group in sorted(groups.items()):
+        entries = by_product.get(slug)
+        page_id = page_ids.get(slug)
+        if not entries or not page_id:
+            continue
+        seen: set[str] = set()
+        body: list[str] = []
+        intents: list[str] = []
+        for entry in entries:
+            question = (entry.get("question") or "").strip()
+            answer = (entry.get("answer") or "").strip()
+            if not question or not answer or question.lower() in seen:
+                continue
+            seen.add(question.lower())
+            intent = classify(question).value
+            if intent not in intents:
+                intents.append(intent)
+            body += [
+                f"## {question}",
+                "",
+                f"{answer} [src:raw/faq/{slugify(entry.get('product', ''))}.md]",
+                "",
+            ]
+        if not body:
+            continue
+        fm = _common(
+            config,
+            f"{page_id}/faq",
+            f"{group.title} — Published FAQs",
+            PageType.product,
+            [f"raw/faq/{slugify(entries[0].get('product', ''))}.md"],
+            lifecycle=Lifecycle.on_sale,
+            underwriter=LEGAL_NAME,
+            line_of_business=line_of_business(group.slug, group.title),
+            aliases=[f"{group.slug} faq", f"{group.slug} questions", f"common questions about {group.slug}"],
+            effective_from=config.today,
+            # Recorded so the intents this page answers are visible without
+            # reading it — a wording owns limits, and this owns the questions a
+            # wording never addresses.
+            faq_intents=sorted(intents),
+            confidence=Confidence.medium,
+        )
+        _write(config, _page(fm, body), report)
+        written.append(f"{page_id}/faq")
+    return written
 
 
 def _snapshot_date(snapshot: Snapshot) -> dt.date:
@@ -1167,6 +1407,18 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
 
     products: dict[str, list[tuple[str, str]]] = {}
     journeys: list[tuple[str, str]] = []
+    product_page_ids: dict[str, str] = {}
+
+    # Benefit tables are build output keyed by product. A product that stops
+    # producing rows — because its "table" turned out to be a blog comparison
+    # grid — must stop having a CSV, or the bundle keeps loading figures no
+    # source still supports. Measured: a compile reporting 12 products and 151
+    # rows loaded as 19 products and 233 rows, and the extra 82 were read as
+    # current by every gate and every eval.
+    tables_dir = config.dest_root / "raw" / "benefit-tables"
+    if tables_dir.exists():
+        for stale in tables_dir.glob("*.csv"):
+            stale.unlink()
 
     for slug in sorted(groups):
         group = groups[slug]
@@ -1181,6 +1433,7 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
 
         page_id = emit_product(config, group, version, group_hosts, rows, linked, report)
         lob = page_id.split("/")[1]
+        product_page_ids[slug] = page_id
         products.setdefault(lob, []).append((page_id, group.title))
         if rows:
             emit_benefits(config, group, page_id, version, group_hosts, rows, report)
@@ -1220,6 +1473,12 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         )
         if emitted:
             journeys.append((emitted, title))
+
+    # After the product pages, because a FAQ page hangs off one.
+    for faq_page in emit_faqs(config, groups, product_page_ids, report):
+        lob = faq_page.split("/")[1]
+        title = groups[next(s for s in groups if product_page_ids.get(s) == faq_page.rsplit("/", 1)[0])].title
+        products.setdefault(lob, []).append((faq_page, f"{title} — Published FAQs"))
 
     channels = emit_channels(config, groups, hosts, snapshots, report)
     promotions = emit_promotions(config, snapshots, report)

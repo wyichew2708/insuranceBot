@@ -1,8 +1,8 @@
 {
-  "_comment": "Findings the generated suite reports against the seed bundle. Each entry is one defect, not one case: the suite asks every fact many ways, so a single bug fails every phrasing it touches. test_pipeline_e2e asserts both directions -- nothing may fail outside this list, and nothing in it may start passing without the list shrinking to say so.",
+  "_comment": "Findings the generated suite reports against the seed bundle. Each entry is one defect, not one case. test_pipeline_e2e asserts both directions -- nothing may fail outside this list, and nothing in it may start passing without the list shrinking to say so.",
   "findings": {
     "advice-boundary-misses-recommendation-phrasings": {
-      "note": "The advice gate catches 'which plan should I buy' and misses 'what do you recommend' and 'is this enough cover for me'. Same regulated request, different verb.",
+      "note": "The advice gate catches 'which plan should I buy' and misses 'what do you recommend' and 'is this enough cover for me'. Same regulated request, different verb. The model screening layer closes it (6/6 live); the deterministic path cannot.",
       "count": 6,
       "cases": [
         "adv-product-general-home-enough",
@@ -14,66 +14,44 @@
       ]
     },
     "situational-phrasing-does-not-reach-the-benefit": {
-      "note": "'The airline lost my suitcase' does not retrieve the baggage limit, so the bot hands off. Safe, and the single most valuable question it could answer.",
-      "count": 13,
+      "note": "Cut from 13 to 7 by the benefit vocabulary in okf/vocabulary.yaml, which bridges 'my place was broken into' to `contents`. What remains are phrasings no authored term covers yet \u2014 the file is corpus content and grows by being edited.",
+      "count": 7,
       "cases": [
-        "fig-home-2026-1-all-alternative-accommodation-limit-scenario",
-        "fig-home-2026-1-all-contents-excess-scenario",
-        "fig-home-2026-1-all-contents-limit-scenario",
         "fig-travel-2026-1-all-baggage-loss-per-item-limit-scenario",
         "fig-travel-2026-1-tier-1-baggage-loss-limit-scenario",
         "fig-travel-2026-1-tier-1-medical-expenses-limit-scenario",
-        "fig-travel-2026-1-tier-1-trip-cancellation-limit-scenario",
         "fig-travel-2026-1-tier-2-baggage-loss-limit-scenario",
         "fig-travel-2026-1-tier-2-medical-expenses-limit-scenario",
-        "fig-travel-2026-1-tier-2-trip-cancellation-limit-scenario",
         "fig-travel-2026-1-tier-3-baggage-loss-limit-scenario",
-        "fig-travel-2026-1-tier-3-medical-expenses-limit-scenario",
-        "fig-travel-2026-1-tier-3-trip-cancellation-limit-scenario"
+        "fig-travel-2026-1-tier-3-medical-expenses-limit-scenario"
       ]
     },
     "unanswerable-question-answered-with-off-topic-prose": {
-      "note": "Premium, renewal, document-request and cooling-off questions have no answer in this corpus. Rather than handing off, the composer returns whatever the retriever surfaced -- a travel-delay threshold in reply to 'how much does it cost a year'. Nothing is fabricated; it is confidently off-topic.",
-      "count": 32,
+      "note": "Cut from 32 by the answerability gate. What remains are claim and buy probes on products whose journey pages the corpus does carry, where a cited journey page satisfies the gate but the answer still misses.",
+      "count": 15,
       "cases": [
         "gap-product-general-home-buy",
         "gap-product-general-home-buy-1",
         "gap-product-general-home-claim",
         "gap-product-general-home-claim-1",
-        "gap-product-general-home-document",
-        "gap-product-general-home-document-1",
         "gap-product-general-home-freelook",
         "gap-product-general-home-freelook-1",
-        "gap-product-general-home-premium",
-        "gap-product-general-home-premium-1",
-        "gap-product-general-home-renewal",
-        "gap-product-general-home-renewal-1",
-        "gap-product-general-travel-document",
-        "gap-product-general-travel-document-1",
         "gap-product-general-travel-freelook",
         "gap-product-general-travel-freelook-1",
-        "gap-product-general-travel-premium",
-        "gap-product-general-travel-premium-1",
         "gap-product-general-travel-renewal",
-        "gap-product-general-travel-renewal-1",
         "gap-product-motor-private-car-buy",
         "gap-product-motor-private-car-buy-1",
         "gap-product-motor-private-car-claim",
         "gap-product-motor-private-car-claim-1",
-        "gap-product-motor-private-car-document",
-        "gap-product-motor-private-car-document-1",
         "gap-product-motor-private-car-freelook",
-        "gap-product-motor-private-car-freelook-1",
-        "gap-product-motor-private-car-premium",
-        "gap-product-motor-private-car-premium-1",
-        "gap-product-motor-private-car-renewal",
-        "gap-product-motor-private-car-renewal-1"
+        "gap-product-motor-private-car-freelook-1"
       ]
     },
     "underwriter-named-obliquely-not-verbatim": {
-      "note": "Asked which legal entity a claim is against, the answer says 'the same licensed underwriter' without naming Etiqa Insurance Pte. Ltd.",
-      "count": 1,
+      "note": "Asked which legal entity a claim is against, the answer says 'the same licensed underwriter' without naming Etiqa Insurance Pte. Ltd. A second phrasing joined when section scoring began weighting heading overlap.",
+      "count": 2,
       "cases": [
+        "ent-product-general-travel-insurer",
         "ent-product-general-travel-legal"
       ]
     }

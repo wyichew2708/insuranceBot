@@ -261,7 +261,7 @@ def test_the_output_screen_is_reported_beside_the_gates(bundle: Bundle) -> None:
     envelope, _ = _ask(bundle, "What is the baggage limit on Travel Insurance?")
     names = [g.gate for g in envelope.gates]
     assert names[0] == "guardrail-output"
-    assert len(names) == 8
+    assert len(names) == 9
     # Gates legitimately return `skip` when they have nothing to check; what
     # matters is that none of them refused.
     assert not any(g.verdict is Verdict.fail for g in envelope.gates)

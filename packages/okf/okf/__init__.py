@@ -47,6 +47,7 @@ from okf.tables import (
     find_tokens,
     resolve_transclusions,
 )
+from okf.vocabulary import Vocabulary, expand_vocabulary, load_vocabulary
 
 __all__ = [
     "ALL_CHANNELS",
@@ -78,13 +79,16 @@ __all__ = [
     "TableRow",
     "Transclusion",
     "Violation",
+    "Vocabulary",
     "brand_for_host",
     "channel_for_host",
+    "expand_vocabulary",
     "find_channel_tokens",
     "find_tokens",
     "foreign_contact_values",
     "lint_bundle",
     "lint_page",
+    "load_vocabulary",
     "normalise",
     "parse_page",
     "render_page",

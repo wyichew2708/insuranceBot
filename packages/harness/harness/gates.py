@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from harness.contracts import Channel, GateResult, GroundedAnswer, Session, Verdict
+from harness.intent import REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
 # Currency amounts, percentages, quantities with a time unit, or any bare
@@ -466,6 +467,87 @@ def _foreign_contacts(ctx: GateContext, channel: Channel) -> list[tuple[str, str
     return out
 
 
+# --- 8. answerability -------------------------------------------------------
+
+
+def gate_answerability(ctx: GateContext) -> GateResult:
+    """Does this answer address what was asked?
+
+    The other seven gates are provenance checks. Every one of them passes on an
+    answer about travel-delay thresholds given to a customer who asked what the
+    policy costs a year, because the thresholds really did come from a page we
+    really did load. Measured on the real corpus, that is the largest failure
+    class there is: of 3,130 failing cases, 1,177 were answered when nothing in
+    the corpus could answer them.
+
+    So this gate compares the question's intent against what the answer shows.
+    It is deliberately hard to trip:
+
+      * an unrecognised intent passes — most questions are broad, and refusing
+        one for being broad is worse than answering it broadly;
+      * `coverage` and `definition` carry no requirement at all;
+      * a handoff passes, because refusing is already the safe outcome;
+      * and a requirement is satisfied by *any* of its clauses, not all.
+
+    What is left is the narrow case worth refusing: the customer asked for a
+    limit and the answer carries no bound figure, asked how to claim and nothing
+    cited is a claims page, asked the price of a policy whose price is nowhere
+    in the corpus. In those the honest answer is that we do not know, and the
+    expensive mistake is the fluent paragraph about something adjacent.
+    """
+    name = "answerability"
+    if ctx.answer.handoff:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="handoff")
+
+    intent = classify(ctx.question)
+    requirement = REQUIREMENTS.get(intent)
+    if requirement is None:
+        return GateResult(gate=name, verdict=Verdict.skip, detail=f"{intent.value}: unconstrained")
+
+    text = ctx.answer.answer.lower()
+    cited = [c.source_id for c in ctx.answer.claims]
+
+    if requirement.needs_figure and any(f.is_bound for f in ctx.answer.figures):
+        return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: bound figure")
+    if requirement.satisfied_by_unresolved and ctx.answer.unresolved:
+        return GateResult(
+            gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: accounted for as unresolved"
+        )
+    if requirement.needs_page_suffix and any(
+        page_id.endswith(requirement.needs_page_suffix) for page_id in cited
+    ):
+        return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: cited the right page")
+    if requirement.needs_page_type:
+        for page_id in cited:
+            page = ctx.bundle.get(page_id)
+            if page is not None and page.frontmatter.type.value in requirement.needs_page_type:
+                return GateResult(
+                    gate=name,
+                    verdict=Verdict.pass_,
+                    detail=f"{intent.value}: cited a {page.frontmatter.type.value} page",
+                )
+    if requirement.needs_any_term and any(term in text for term in requirement.needs_any_term):
+        return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: on subject")
+    # A page that declares it answers this intent settles the question without
+    # the answer having to use any particular word. This is what the compiled
+    # `faq_intents` are for: a published eligibility answer reads "Singaporean,
+    # PR, Work Pass holder" and contains none of "eligible", "age" or "qualify",
+    # and refusing it for that would be refusing the insurer's own answer.
+    for page_id in cited:
+        page = ctx.bundle.get(page_id)
+        declared = (page.frontmatter.model_extra or {}).get("faq_intents") if page else None
+        if declared and intent.value in declared:
+            return GateResult(
+                gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: cited a page that answers it"
+            )
+
+    return GateResult(
+        gate=name,
+        verdict=Verdict.fail,
+        detail=f"asked for {intent.value}; the answer shows none of it",
+    )
+
+
 ALL_GATES = [
     gate_reference_integrity,
     gate_numeric_binding,
@@ -474,11 +556,12 @@ ALL_GATES = [
     gate_exclusion_completeness,
     gate_advice_boundary,
     gate_groundedness,
+    gate_answerability,
 ]
 
 
 def run_gates(ctx: GateContext) -> list[GateResult]:
-    """All seven run regardless of earlier failures — the debug console shows
+    """All of them run regardless of earlier failures — the debug console shows
     the full picture, and partial verdicts hide root causes."""
     return [gate(ctx) for gate in ALL_GATES]
 

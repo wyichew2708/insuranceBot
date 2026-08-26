@@ -379,6 +379,14 @@ def exclusion_cases(bundle: Bundle) -> list[GeneratedCase]:
         brands = _brands(product) if product else ()
         expect = Expectation(must_cite=[page.id], expect_delivered=True, relevant_pages=[page.id])
 
+        # A page the compiler could not fill is not a page to ask questions
+        # about. On the real corpus 108 exclusions sections failed to extract,
+        # leaving a placeholder — and the fallback below then generated "I am
+        # claiming for exclusions", which is not a question anyone would ask
+        # and which the bot was right to refuse.
+        if "could not be extracted" in page.body:
+            continue
+
         subjects: list[str] = []
         for paragraph in _paragraphs(page.body):
             subject = _excluded_subject(paragraph)
@@ -705,6 +713,13 @@ def section_cases(bundle: Bundle) -> list[GeneratedCase]:
     """
     cases: list[GeneratedCase] = []
     for page in sorted(bundle.by_type(PageType.product), key=lambda p: p.id):
+        # A published-FAQ page's headings are already questions, so this family
+        # would re-ask them as "what does Travel Insurance say about can I apply
+        # if I am more than 70 years old" — a worse phrasing of a question the
+        # FAQ evaluation already asks properly, with the insurer's own answer as
+        # ground truth. Three thousand of those would drown the suite.
+        if page.id.endswith("/faq"):
+            continue
         title = page.frontmatter.title
         key = bundle.product_key(page)
         for heading, body in _sections(page):
@@ -862,6 +877,13 @@ def near_miss_cases(bundle: Bundle) -> list[GeneratedCase]:
         own_codes = {r.benefit_code for r in rows_by_product.get(key, [])}
         own_values = {r.rendered() for r in rows_by_product.get(key, [])}
         seen: set[str] = set()
+        # Capped per product, and the cap scales with the corpus because the
+        # problem only exists on a large one. This family is cross-product by
+        # construction: on 108 products it produced 10,115 of 19,159 cases —
+        # over half the suite spent on a single question shape, and an accuracy
+        # figure that mostly measured it. On a three-product bundle there is
+        # nothing to explode, and clamping it there just starves the floor.
+        budget = max(4, 24 // max(1, len(rows_by_product) - 1))
         for other, rows in sorted(rows_by_product.items()):
             if other == key:
                 continue
@@ -873,6 +895,7 @@ def near_miss_cases(bundle: Bundle) -> list[GeneratedCase]:
                 if row.rendered() in own_values:
                     continue
                 seen.add(row.benefit_code)
+                budget -= 1
                 cases.append(
                     GeneratedCase(
                         id=f"near-{_slug(page.id)}-{_slug(row.benefit_code)}",
@@ -885,6 +908,10 @@ def near_miss_cases(bundle: Bundle) -> list[GeneratedCase]:
                         surface="near-miss",
                     )
                 )
+                if budget <= 0:
+                    break
+            if budget <= 0:
+                break
     return cases
 
 
@@ -1015,9 +1042,18 @@ def product_entitlement_cases(bundle: Bundle) -> list[GeneratedCase]:
                 for policy in FIXTURE_POLICIES.values()
                 if policy.product_id == page.id
                 for value in (policy.policy_id, policy.tier)
-                if value and value not in {"ALL", ""}
+                # Long enough to identify someone. A tier of "5" is not a
+                # secret — it matches any answer containing the digit, and on
+                # the real corpus that reported three entitlement leaks where
+                # the answer merely mentioned a clause number.
+                if value and value not in {"ALL", ""} and len(value) >= 4 and not value.isdigit()
             }
         )
+        # A policy id derived from the product's own name is not a secret. On
+        # the real corpus the super-suite policy id contains "super-suite", so
+        # every correct answer that named the product was scored as a breach.
+        haystack = f"{page.id} {title}".lower()
+        secrets = [s for s in secrets if s.lower() not in haystack]
         if not secrets:
             continue
         for n, question in enumerate(

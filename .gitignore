@@ -21,7 +21,8 @@ node_modules/
 # It is synthetic content and must never be mistaken for a real corpus.
 okf-web/
 # Real crawl output: generated, large, and not ours to redistribute.
-okf-real/
+# The glob also covers `okf-real.prev/`, which a re-crawl leaves behind.
+okf-real*/
 okf-live/
 
 # Scan staging: each scan crawls and compiles into its own throwaway bundle.

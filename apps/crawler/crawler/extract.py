@@ -30,8 +30,14 @@ CANONICAL_RE = re.compile(r"(?is)<link[^>]+rel=[\"']canonical[\"'][^>]+href=[\"'
 CANONICAL_ALT_RE = re.compile(r"(?is)<link[^>]+href=[\"']([^\"']+)[\"'][^>]+rel=[\"']canonical[\"']")
 META_DESC_RE = re.compile(r"(?is)<meta[^>]+name=[\"']description[\"'][^>]+content=[\"']([^\"']*)[\"']")
 HREF_RE = re.compile(r"(?is)<a\b[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"']")
-# "Travel Insurance | Etiqa" — the site name is furniture in a <title>.
-TITLE_SUFFIX = re.compile("\\s+[|\u2013\u2014]\\s+")
+# "Travel Insurance | Etiqa" — the site name is furniture in a <title>. The
+# plain hyphen belongs here too: every Etiqa product page ends " - Etiqa
+# Insurance Singapore" and every Tiq one " - Leading digital insurance company
+# in Singapore", so without it the tagline became part of the product name and
+# the wiki compiled 64 products called things like "Enrich saver - Etiqa
+# Insurance Singapore". Spaces are required around the separator, so hyphenated
+# names ("Tiq 3-Year Endowment") survive intact.
+TITLE_SUFFIX = re.compile("\\s+[|\u2013\u2014-]\\s+")
 TABLE_RE = re.compile(r"(?is)<table\b.*?</table\s*>")
 ROW_RE = re.compile(r"(?is)<tr\b.*?</tr\s*>")
 CELL_RE = re.compile(r"(?is)<t[hd]\b[^>]*>(.*?)</t[hd]\s*>")
@@ -109,12 +115,37 @@ def _main_region(html: str) -> str:
     return html
 
 
+def _best_title(heading: str, head: str) -> str:
+    """Pick between the first `<h1>` and the `<title>`.
+
+    The h1 is usually the better name — it is what the page calls itself. But
+    on these sites the first h1 is often a section heading from page furniture,
+    "You might also be interested in" being the common one, and taking it made
+    eleven different products share that name in the compiled wiki.
+
+    A real h1 shares vocabulary with the `<title>`; furniture does not. So the
+    h1 wins when it overlaps, and the `<title>` wins when it does not.
+    """
+    if not heading:
+        return head
+    if not head:
+        return heading
+    stop = {"the", "a", "an", "of", "for", "and", "in", "to", "your", "you", "insurance"}
+
+    def words(text: str) -> set[str]:
+        return {w for w in re.findall(r"[a-z0-9]+", text.lower()) if w not in stop}
+
+    return heading if words(heading) & words(head) else head
+
+
 def extract(html: str, url: str = "") -> Extracted:
     out = Extracted()
 
     raw_title = TITLE_RE.search(html)
     h1 = H1_RE.search(html)
-    out.title = text_of(h1.group(1)) if h1 else (text_of(raw_title.group(1)) if raw_title else "")
+    head = text_of(raw_title.group(1)) if raw_title else ""
+    heading = text_of(h1.group(1)) if h1 else ""
+    out.title = _best_title(heading, head)
     # Site name suffixes ("Travel Insurance | Etiqa") are furniture in a title.
     out.title = re.split(TITLE_SUFFIX, out.title)[0].strip() if out.title else ""
 

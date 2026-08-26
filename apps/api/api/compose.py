@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 
 from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Session
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
-from okf.tables import TOKEN_RE
+from okf.tables import TOKEN_RE, find_tokens
 
 from api.retrieval import keywords, score_page
 from okf import (
@@ -92,6 +92,7 @@ def select_sections(
     question: str,
     limit: int = 3,
     idf: dict[str, float] | None = None,
+    benefits: set[str] | None = None,
 ) -> list[Selection]:
     """Relevance is page relevance times section match, where page relevance is the
     *lexical* score only. The alias boost belongs to retrieval — deciding which
@@ -99,6 +100,12 @@ def select_sections(
     concept page outranks the benefits section that actually holds the figure.
     """
     terms = keywords(question)
+    # Benefit codes the question implied through customer vocabulary — the
+    # bridge between "the airline lost my suitcase" and a section headed
+    # "Baggage loss". Without it those questions retrieve the right product and
+    # then fail to find the right section, which is the commonest way a
+    # situational phrasing dies.
+    implied = benefits or set()
     wants_quantity = bool(QUANTITY_RE.search(question))
     wants_definition = bool(DEFINITION_RE.search(question))
     wants_procedure = bool(PROCEDURE_RE.search(question))
@@ -134,9 +141,32 @@ def select_sections(
             if not section_terms or not terms:
                 continue
             section_relevance = len(terms & section_terms) / len(terms)
-            # A heading hit is a strong signal that this is the right section.
-            if terms & keywords(heading):
-                section_relevance += 0.35
+            # A heading hit is a strong signal that this is the right section,
+            # and *how much* of the question the heading covers matters. A flat
+            # bonus cannot tell "shares one word" from "is the same sentence" —
+            # and a published FAQ heading is literally the customer's question,
+            # so on those the overlap approaches one. Without the scaling term
+            # the compiled FAQ pages were retrieved, admitted, and then never
+            # selected, because a product page's opening section outscored the
+            # heading that answered the question word for word.
+            if implied:
+                # Match the transclusion tokens in the body, not the heading.
+                # A heading is whatever the compiler called the section — the
+                # seed bundle files every figure under "Headline benefits" —
+                # whereas `{{table:contents.limit}}` names the benefit exactly,
+                # and it marks the section that can actually produce the number.
+                present = {benefit for benefit, _ in find_tokens(body)}
+                if present & implied:
+                    heading_token = re.sub(r"[^a-z0-9]+", "_", heading.lower()).strip("_")
+                    # As strong as a heading hit, because that is what it is:
+                    # the customer named the benefit, in their own words.
+                    section_relevance += 1.0
+                    if any(code in heading_token for code in implied):
+                        section_relevance += 0.5
+            heading_terms = keywords(heading)
+            heading_overlap = len(terms & heading_terms) / len(terms) if terms else 0.0
+            if heading_overlap:
+                section_relevance += 0.35 + 0.9 * heading_overlap
             # A quantitative question is answered by the section that can
             # actually produce the number.
             if wants_quantity and TOKEN_RE.search(body):
@@ -273,9 +303,10 @@ def compose(
     advice_required: bool,
     top_score: float,
     idf: dict[str, float] | None = None,
+    benefits: set[str] | None = None,
     no_confident_match: bool = False,
 ) -> Composition:
-    selections = select_sections(pages, question, idf=idf)
+    selections = select_sections(pages, question, idf=idf, benefits=benefits)
     if no_confident_match:
         # Nothing cleared the confidence floor and the raw corpus had nothing
         # either. Composing from the least-bad pages is how an assistant
