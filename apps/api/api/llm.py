@@ -77,7 +77,9 @@ not a percentage, not an excess. If the customer asked for one that is absent, \
 put it in `unresolved` instead of estimating it.
 3. Make no claim the facts do not support. Do not add context you happen to \
 know about insurance generally.
-4. Keep the customer's own words for the product where the facts allow it.
+4. Keep the customer's own words for the product where the facts allow it. \
+Where a PRODUCT line is given, name that product in the answer: a customer \
+reading a follow-up should not have to remember which plan they asked about.
 5. Answer at the length the question needs — usually two or three sentences. \
 No preamble, no restating the question, no closing offer of further help.
 
@@ -96,6 +98,16 @@ class Draft:
     claims: list[Claim] = field(default_factory=list)
     figures: list[Figure] = field(default_factory=list)
     unresolved: list[str] = field(default_factory=list)
+    #: The product this turn resolved to, by its wiki title. The claims name
+    #: page *ids*; a model asked to write for a customer needs the name the
+    #: customer would recognise, and without it a follow-up came back as "The
+    #: coverages exclude suicide within one (1) year" — accurate, grounded,
+    #: and never once saying which plan it was about.
+    product: str | None = None
+    #: What an elliptical turn borrowed from earlier in the conversation.
+    #: Passed so the model can see that "whats the coverages" is a question
+    #: about term life rather than a fragment, and answer it as one.
+    carried_from: str | None = None
 
     def accepts(self, answer: str) -> bool:
         """Whether `answer` is a faithful rewrite of this draft.
@@ -111,7 +123,14 @@ class Draft:
         return all(text in answer for text in required)
 
     def facts_block(self) -> str:
-        lines = [f"QUESTION: {self.question}", "", "FACTS ESTABLISHED:"]
+        lines: list[str] = []
+        if self.product:
+            lines.append(f"PRODUCT: {self.product}")
+        if self.carried_from:
+            # Stated rather than spliced into the question, so the model can
+            # tell what the customer typed from what the system inferred.
+            lines.append(f'CARRIED FROM AN EARLIER TURN: "{self.carried_from}"')
+        lines += [f"QUESTION: {self.question}", "", "FACTS ESTABLISHED:"]
         for claim in self.claims:
             locator = f" [{claim.locator}]" if claim.locator else ""
             lines.append(f"- {claim.text}  (source: {claim.source_id}{locator})")

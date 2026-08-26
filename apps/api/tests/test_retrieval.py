@@ -1,6 +1,14 @@
 import datetime as dt
 
-from api.retrieval import frontmatter_filter, keywords, needs_rag, rag_search, score_page, wiki_read
+from api.retrieval import (
+    focus_product,
+    frontmatter_filter,
+    keywords,
+    needs_rag,
+    rag_search,
+    score_page,
+    wiki_read,
+)
 from harness import Budget, Channel, Trace
 
 from conftest import TODAY, make_session
@@ -117,3 +125,30 @@ def test_an_unknown_channel_may_read_every_route(bundle: Bundle) -> None:
     frontmatter_filter(bundle, "how do I buy insurance?", session, trace, 0.08)
     reasons = [c.reason for c in trace.candidates if c.page_id.startswith("channel/")]
     assert not any("different channel" in r for r in reasons)
+
+
+def test_focus_prefers_the_product_the_question_names(bundle: Bundle) -> None:
+    """On the real corpus, "cancer insurance" tied the pet-insurance FAQ with
+    the cancer product page — the FAQ mentions the words, the product is
+    called them — and an alphabetical tiebreak handed the focus to pet
+    insurance, which then excluded the cancer page as "a different product".
+
+    A page carrying the name in its title is not equal evidence to one that
+    mentions it in passing.
+    """
+    scored = {page.id: 1.0 for page in bundle.pages.values()}
+    focus = focus_product(bundle, scored, keywords("travel insurance"))
+    assert focus is not None
+    assert "travel" in focus
+
+
+def test_focus_prefers_the_product_page_over_its_children(bundle: Bundle) -> None:
+    scored = {
+        "product/general/travel": 1.0,
+        "product/general/travel/exclusions": 1.0,
+    }
+    assert focus_product(bundle, scored, keywords("travel")) is not None
+
+
+def test_no_product_shaped_match_leaves_the_question_alone(bundle: Bundle) -> None:
+    assert focus_product(bundle, {"index": 1.0}, keywords("anything")) is None

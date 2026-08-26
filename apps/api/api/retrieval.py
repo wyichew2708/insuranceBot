@@ -201,7 +201,7 @@ def frontmatter_filter(
         page.id: score_page(page, terms, question, ambiguous, idf) + (0.5 if page.id in alias_hits else 0.0)
         for page in bundle.pages.values()
     }
-    focus = focus_product(bundle, scored)
+    focus = focus_product(bundle, scored, terms)
     product_keys = known_product_keys(bundle)
 
     for page in sorted(bundle.pages.values(), key=lambda p: p.id):
@@ -267,12 +267,23 @@ def known_product_keys(bundle: Bundle) -> set[str]:
     }
 
 
-def focus_product(bundle: Bundle, scored: dict[str, float]) -> str | None:
+def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | None = None) -> str | None:
     """The product the question is about: the highest-scoring page that belongs
     to a product family. Returns None when nothing product-shaped matched, so
-    concept-only and cross-product questions are left alone."""
+    concept-only and cross-product questions are left alone.
+
+    Ties are broken by *name*, then by canonical depth, and only then
+    alphabetically. That order matters more than it looks. On "cancer
+    insurance" the pet-insurance FAQ and the cancer product page scored
+    identically — the FAQ mentions the words, the product is called them — and
+    the alphabetical tiebreak handed the focus to pet insurance, which then
+    excluded the cancer page from retrieval as "a different product". The
+    customer named the product; a page that carries that name in its title is
+    not equal evidence to a page that mentions it in passing.
+    """
     product_keys = known_product_keys(bundle)
-    best: tuple[float, str] | None = None
+    wanted = terms or set()
+    best: tuple[float, int, int, str] | None = None
     for page_id, value in scored.items():
         page = bundle.get(page_id)
         if page is None or value <= 0:
@@ -280,11 +291,15 @@ def focus_product(bundle: Bundle, scored: dict[str, float]) -> str | None:
         key = bundle.product_key(page)
         if key not in product_keys:
             continue
-        if best is None or value > best[0] or (value == best[0] and page_id < best[1]):
-            best = (value, page_id)
+        named = len(wanted & keywords(f"{page.frontmatter.title} {' '.join(page.frontmatter.aliases)}"))
+        # Depth 2 is the product page itself; its children describe one facet.
+        canonical = 1 if page_id.count("/") == 2 else 0
+        rank = (value, named, canonical, page_id)
+        if best is None or rank[:3] > best[:3] or (rank[:3] == best[:3] and page_id < best[3]):
+            best = rank
     if best is None:
         return None
-    page = bundle.get(best[1])
+    page = bundle.get(best[3])
     return bundle.product_key(page) if page else None
 
 

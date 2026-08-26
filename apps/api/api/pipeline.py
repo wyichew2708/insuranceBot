@@ -391,6 +391,8 @@ def answer_question(
                     claims=draft.claims,
                     figures=draft.figures,
                     unresolved=list(draft.unresolved),
+                    product=product.frontmatter.title if product is not None else None,
+                    carried_from=resolution.carried_from,
                 )
                 rewrite = provider.rewrite(draft_facts)
                 fell_back = ""
