@@ -42,14 +42,24 @@ uv sync
 make console        # → http://localhost:8080
 ```
 
-To serve the real Etiqa/Tiq corpus in a container instead, and for every
-verification step, configuration knob and failure mode along the way, see
-**[DEPLOYMENT.md](DEPLOYMENT.md)**:
+To serve the real Etiqa/Tiq corpus in a container instead:
 
 ```bash
 BUNDLE_PATH=okf-real make docker-up
 curl -s http://localhost:8080/readyz     # {"status":"ready","pages":768,...}
 ```
+
+Three step-by-step guides sit alongside this README. Each was written by
+running it, and every output they quote is what the command printed:
+
+| | |
+|---|---|
+| **[DEPLOYMENT.md](DEPLOYMENT.md)** | serve it — configure, start, verify in four ordered checks, operate, and what it is not ready for |
+| **[CORPUS.md](CORPUS.md)** | build the corpus — crawl, parse the PDFs, read the FAQs, compile, lint, review |
+| **[EVALUATION.md](EVALUATION.md)** | measure it — six suites, what each tests, and how to read a failure |
+
+The rest of this README is the design: what the system is and why it is shaped
+this way.
 
 Three surfaces come out of the same process:
 
