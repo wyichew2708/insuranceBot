@@ -338,6 +338,44 @@ LLM_PROVIDER=anthropic ANTHROPIC_API_KEY=sk-... make console
 LLM_PROVIDER=vllm VLLM_BASE_URL=http://localhost:8000 VLLM_MODEL=llama-3.1-8b-instruct make console
 ```
 
+### What a local model actually costs
+
+Qwen3.6-35B-A3B at 4-bit on Apple Silicon, against the deterministic composer,
+same 604-case suite and same 100-conversation suite:
+
+| | deterministic | Qwen3.6-35B-A3B (4-bit) |
+|---|---|---|
+| accuracy | 95.0% | **94.2%** |
+| citation F1 | 0.958 | 0.958 |
+| figure exact match | 96.9% | 96.9% |
+| numeric binding | 100.0%, 0 unbound | 100.0%, 0 unbound |
+| entitlement leaks | 0 | 0 |
+| merge consistency | 6/6 | 6/6 |
+| recall@1 / @3 / MRR | 0.59 / 0.97 / 0.82 | 0.59 / 0.97 / 0.82 |
+| conversations (whole / turns) | 96.0% / 98.8% | 96.0% / 98.8% |
+| latency p50 / p95 | 3.9 / 4.3 ms | 3,342 / 5,331 ms |
+
+Everything except accuracy and latency is **identical**, and that is the point
+rather than a coincidence: none of those rows is the model's to decide.
+Retrieval picks the pages, the transclusion pass resolves each figure against a
+benefit-table row or a verified quotation, and the model is handed prose to
+write. Three orders of magnitude of latency buys a different runtime, not a
+different answer contract.
+
+The accuracy difference is exactly five cases, and they are all the same shape:
+
+    qwen only   gap-*-document, gap-*-document-1, gap-*-premium ×2,
+                gap-*-premium-1, gap-*-renewal
+    det only    gap-*-buy-1
+
+Every one is a `gap-*` case — a question the corpus genuinely cannot answer
+("How much does Travel Insurance cost me a year?"). The expected behaviour is a
+handoff. The deterministic composer refuses flatly; Qwen writes something
+fluent around the hole and never sets `handoff`. Nothing unbound or leaked got
+through — the gates saw to that — but a non-answer delivered as an answer is
+the softer version of the same failure, and it is the one a local model
+introduces.
+
 Two things guard the rewrite, and they catch opposite failures. A figure the
 model **invents** is caught by `numeric-binding`, which blocks any digit that
 traces to no row. A figure it silently **drops** would slip past — an answer
