@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/policywordings-eprotect-family/conditions
-title: Policywordings Eprotect Family — Policy conditions
+id: product/general/family/conditions
+title: Family — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,14 +10,15 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- policywordings eprotect family policy conditions
-- policywordings eprotect family terms
-- policywordings eprotect family free look
-- cancel policywordings eprotect family
+- family policy conditions
+- family terms
+- family free look
+- cancel family
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policywordings-eprotect-family.md
+version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree

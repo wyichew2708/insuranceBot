@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018/eligibility
-title: Eprotect Personal Mobility Wording2018 Insurance — Eligibility
+id: product/general/eprotect-personal-mobility-2018/eligibility
+title: Eprotect Personal Mobility 2018 Insurance — Eligibility
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- who can buy eprotect personal mobility wording2018
-- eprotect personal mobility wording2018 eligibility
-- eprotect personal mobility wording2018 entry age
+- who can buy eprotect personal mobility 2018
+- eprotect personal mobility 2018 eligibility
+- eprotect personal mobility 2018 entry age
 channels: []
 plan_tiers: []
 authority:

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/business/businessenterprisesolutionpolicywordings/exclusions
-title: Businessenterprisesolutionpolicywordings — Exclusions
+id: product/business/businessenterprisesolution/exclusions
+title: Businessenterprisesolution Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
-- businessenterprisesolutionpolicywordings exclusions
-- what is not covered by businessenterprisesolutionpolicywordings
-- businessenterprisesolutionpolicywordings not covered
+- businessenterprisesolution exclusions
+- what is not covered by businessenterprisesolution
+- businessenterprisesolution not covered
 channels: []
 plan_tiers: []
 authority:

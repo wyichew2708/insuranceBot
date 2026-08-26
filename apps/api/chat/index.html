@@ -1,0 +1,389 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Etiqa SG — Ask about your cover</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+/* The customer-facing surface. The debug console at / shows the machinery;
+   this shows only what a person asking about their insurance would need —
+   the answer, where it came from, and an honest signal when the bot is
+   handing them to a human. Everything else stays behind the trace. */
+:root{
+  --bg:#0f1419; --bg-2:#161c23; --bg-3:#1d252e; --line:#2a3540;
+  --fg:#e6edf3; --fg-dim:#8b98a5; --fg-mute:#5c6b7a;
+  --accent:#2dd4bf; --accent-dim:#134e4a; --accent-ink:#062e2b;
+  --bubble-me:#1f6feb; --bubble-me-fg:#fff;
+  --warn:#d29922; --warn-dim:#3a2d10; --fail:#f85149;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --radius:16px;
+}
+:root[data-theme="light"]{
+  --bg:#f6f8fa; --bg-2:#fff; --bg-3:#eef2f6; --line:#d9e0e8;
+  --fg:#1c2128; --fg-dim:#57606a; --fg-mute:#8c959f;
+  --accent:#0d9488; --accent-dim:#ccfbf1; --accent-ink:#042f2e;
+  --warn-dim:#fef3c7;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans);
+     -webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+button,input,select,textarea{font:inherit;color:inherit}
+
+/* ---- chrome ---- */
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--bg-2);
+       border-bottom:1px solid var(--line);flex:0 0 auto}
+.mark{width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);
+      display:grid;place-items:center;font-weight:800;font-size:14px;flex:0 0 auto}
+.who{min-width:0;flex:1 1 auto}
+.who h1{margin:0;font-size:14px;font-weight:650;letter-spacing:.2px;white-space:nowrap}
+.who p{margin:0;font-size:11.5px;color:var(--fg-dim);display:flex;align-items:center;gap:5px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+       cursor:pointer;font-size:12px;color:var(--fg-dim);white-space:nowrap}
+.ghost:hover{border-color:var(--accent);color:var(--fg)}
+.ghost[aria-pressed="true"]{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+
+/* ---- settings drawer ---- */
+.drawer{display:none;gap:14px;padding:12px 16px;background:var(--bg-3);
+        border-bottom:1px solid var(--line);flex-wrap:wrap;align-items:flex-end}
+.drawer.open{display:flex}
+.field{display:flex;flex-direction:column;gap:4px;min-width:150px}
+.field label{font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--fg-mute)}
+.field select{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:13px}
+.hint{font-size:11.5px;color:var(--fg-dim);max-width:34ch;line-height:1.45}
+
+/* ---- transcript ---- */
+main{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain}
+.thread{max-width:760px;margin:0 auto;padding:22px 16px 8px;display:flex;flex-direction:column;gap:18px}
+
+.hello{text-align:center;padding:32px 8px 12px}
+.hello .mark{width:46px;height:46px;border-radius:14px;font-size:20px;margin:0 auto 14px}
+.hello h2{margin:0 0 6px;font-size:19px;font-weight:650}
+.hello p{margin:0 auto;max-width:44ch;color:var(--fg-dim);font-size:13.5px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chip{background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;
+      font-size:13px;cursor:pointer;color:var(--fg-dim);text-align:left}
+.chip:hover{border-color:var(--accent);color:var(--fg)}
+
+.turn{display:flex;gap:10px;align-items:flex-start}
+.turn.me{justify-content:flex-end}
+.avatar{width:26px;height:26px;border-radius:8px;background:var(--accent);color:var(--accent-ink);
+        display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 auto;margin-top:2px}
+.bubble{border-radius:var(--radius);padding:11px 15px;max-width:min(78%,600px);
+        word-wrap:break-word;overflow-wrap:anywhere}
+.me .bubble{background:var(--bubble-me);color:var(--bubble-me-fg);border-bottom-right-radius:5px}
+.bot .bubble{background:var(--bg-2);border:1px solid var(--line);border-bottom-left-radius:5px}
+.bubble p{margin:0 0 9px}
+.bubble p:last-child{margin:0}
+.bubble a{color:var(--accent);word-break:break-all}
+
+/* A figure the system bound to a source. Marked so it reads as retrieved,
+   not as something the model produced. */
+.fig{color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:5px 10px;
+     border-radius:8px;margin-bottom:9px;font-weight:600}
+.tag.handoff{background:var(--warn-dim);color:var(--warn)}
+.tag.blocked{background:var(--warn-dim);color:var(--fail)}
+
+/* ---- sources ---- */
+details.src{margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
+details.src summary{cursor:pointer;font-size:11.5px;color:var(--fg-dim);list-style:none;
+                    display:flex;align-items:center;gap:6px}
+details.src summary::-webkit-details-marker{display:none}
+details.src summary::before{content:"▸";font-size:9px;transition:transform .15s}
+details.src[open] summary::before{transform:rotate(90deg)}
+details.src summary:hover{color:var(--accent)}
+.srcs{margin:9px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.srcs li{font-size:12px;color:var(--fg-dim);line-height:1.5;padding-left:11px;
+         border-left:2px solid var(--line)}
+.srcs code{font:11px var(--mono);color:var(--accent);background:var(--accent-dim);
+           padding:1px 5px;border-radius:4px}
+
+.typing{display:flex;gap:4px;padding:4px 2px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--fg-mute);animation:b 1.3s infinite}
+.typing i:nth-child(2){animation-delay:.18s}
+.typing i:nth-child(3){animation-delay:.36s}
+@keyframes b{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+.err{color:var(--fail);font-size:13px}
+
+/* ---- composer ---- */
+footer{flex:0 0 auto;background:var(--bg-2);border-top:1px solid var(--line);
+       padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.composer{max-width:760px;margin:0 auto;display:flex;gap:9px;align-items:flex-end}
+textarea{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:14px;
+         padding:11px 14px;resize:none;max-height:150px;min-height:44px;line-height:1.5;font-size:15px}
+textarea:focus{outline:none;border-color:var(--accent)}
+.send{background:var(--accent);color:var(--accent-ink);border:none;border-radius:50%;
+      width:44px;height:44px;flex:0 0 auto;cursor:pointer;font-size:17px;font-weight:700}
+.send:disabled{opacity:.4;cursor:not-allowed}
+.foot{max-width:760px;margin:9px auto 0;font-size:11px;color:var(--fg-mute);text-align:center;line-height:1.5}
+
+@media(max-width:600px){
+  .bubble{max-width:86%}
+  .thread{padding-top:14px}
+  /* Three controls and a wordmark do not fit a phone header. The corpus line
+     and the console link are for whoever is testing, not for the customer,
+     so they are what goes. */
+  .who p, .tools a.ghost{display:none}
+  .who h1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  header{gap:9px;padding:10px 12px}
+}
+</style>
+
+<header>
+  <div class="mark">E</div>
+  <div class="who">
+    <h1>Etiqa Singapore</h1>
+    <p><span class="dot"></span><span id="corpus">connecting…</span></p>
+  </div>
+  <div class="tools">
+    <button class="ghost" id="settings-btn" aria-pressed="false">Session</button>
+    <button class="ghost" id="theme-btn" title="Light or dark">◐</button>
+    <a class="ghost" href="/" style="text-decoration:none">Debug&nbsp;console</a>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <div class="field">
+    <label for="channel">How they reached us</label>
+    <select id="channel">
+      <option value="channel/direct" selected>Direct — bought online</option>
+      <option value="channel/bancassurance">Bancassurance — bank partner</option>
+      <option value="channel/agency">Agency — tied agent</option>
+      <option value="channel/broker">Broker</option>
+      <option value="channel/ifa">IFA — financial adviser</option>
+      <option value="unknown">Unknown — e.g. WhatsApp</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="auth">Who we know they are</label>
+    <select id="auth">
+      <option value="L0" selected>L0 — anonymous</option>
+      <option value="L1">L1 — identified</option>
+      <option value="L2">L2 — authenticated</option>
+    </select>
+  </div>
+  <div class="field" style="min-width:230px">
+    <label for="policy">Policy in force</label>
+    <select id="policy"><option value="">— none —</option></select>
+  </div>
+  <p class="hint">The route decides which contact details an answer may carry.
+     A policy pins the answer to that customer's version and plan tier — pick one
+     whose version matches this corpus, or leave it empty.</p>
+</div>
+
+<main id="main">
+  <div class="thread" id="thread">
+    <div class="hello" id="hello">
+      <div class="mark">E</div>
+      <h2>Ask about your cover</h2>
+      <p>Answers come from the policy wordings and product pages, with a source
+         for every one. When we can't answer from those, we say so.</p>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="composer">
+    <textarea id="q" rows="1" placeholder="Ask about cover, exclusions, claims…"
+              autocomplete="off"></textarea>
+    <button class="send" id="send" title="Send">↑</button>
+  </div>
+  <p class="foot">General product information, not financial advice.
+     Underwritten by Etiqa Insurance Pte. Ltd. (UEN 201331905K).</p>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const thread = $("#thread"), main = $("#main"), box = $("#q"), send = $("#send");
+const sessionId = "chat-" + Math.random().toString(36).slice(2, 10);
+let busy = false;
+
+/* ---- theme ---- */
+const savedTheme = (() => { try { return localStorage.getItem("chat-theme"); } catch { return null; } })();
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$("#theme-btn").onclick = () => {
+  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("chat-theme", next); } catch {}
+};
+
+$("#settings-btn").onclick = e => {
+  const open = $("#drawer").classList.toggle("open");
+  e.currentTarget.setAttribute("aria-pressed", String(open));
+};
+
+/* ---- what this bundle actually holds ---- */
+(async () => {
+  try {
+    const r = await fetch("/readyz").then(r => r.json());
+    $("#corpus").textContent = `${r.pages} pages · ${r.table_rows} benefit rows`;
+  } catch { $("#corpus").textContent = "offline"; }
+})();
+
+/* Starter questions drawn from the bundle's own product pages, so they are
+   answerable in whichever corpus is mounted rather than hard-coded to one. */
+const FALLBACK = [
+  "What is not covered by fire insurance?",
+  "How do I make a claim?",
+  "What is the free-look period?",
+  "Which plan should I buy?",
+];
+(async () => {
+  let qs = FALLBACK;
+  try {
+    const ids = (await fetch("/v1/bundle").then(r => r.json())).page_ids || [];
+    // Only products whose *contract* compiled into a page. A product with an
+    // exclusions or claims child can answer that question from its wording;
+    // one without would send the customer straight into a refusal, which is a
+    // poor thing to put on the welcome screen.
+    const withChild = suffix => [...new Set(ids
+      .filter(id => id.endsWith("/" + suffix))
+      .map(id => id.slice(0, -(suffix.length + 1)))
+      .filter(id => /^product\/[^/]+\/[^/]+$/.test(id))
+      .map(id => id.split("/").pop().replace(/-/g, " ")))];
+    const exc = withChild("exclusions"), clm = withChild("claims"), cov = withChild("cover");
+    const pick = (a, n) => a.length ? a[Math.floor(n * a.length)] : null;
+    const built = [
+      pick(exc, 0.17) && `What is not covered by ${pick(exc, 0.17)}?`,
+      pick(clm, 0.43) && `How do I make a claim on ${pick(clm, 0.43)}?`,
+      pick(cov, 0.71) && `What does ${pick(cov, 0.71)} cover?`,
+      "What is the free-look period?",
+    ].filter(Boolean);
+    if (built.length >= 3) qs = built;
+  } catch {}
+  $("#chips").innerHTML = "";
+  for (const q of qs) {
+    const c = document.createElement("button");
+    c.className = "chip"; c.textContent = q;
+    c.onclick = () => { box.value = q; ask(); };
+    $("#chips").append(c);
+  }
+})();
+
+/* ---- policies from the system of record ---- */
+(async () => {
+  try {
+    const { policies = [] } = await fetch("/v1/fixtures").then(r => r.json());
+    for (const p of policies) {
+      const o = document.createElement("option");
+      o.value = JSON.stringify(p);
+      o.textContent = `${p.policy_id} · ${p.tier} · v${p.version}`;
+      $("#policy").append(o);
+    }
+  } catch {}
+})();
+
+/* ---- composer ---- */
+box.addEventListener("input", () => {
+  box.style.height = "auto";
+  box.style.height = Math.min(box.scrollHeight, 150) + "px";
+});
+box.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(); }
+});
+send.onclick = ask;
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* Mark the spans the harness bound to a source, so a figure reads as
+   retrieved rather than as something the prose invented. Escape first —
+   the answer is text, and it is never trusted as markup. */
+function render(text, figures) {
+  let html = escapeHtml(text);
+  const seen = new Set();
+  for (const f of figures || []) {
+    const v = (f.text || "").trim();
+    if (!v || seen.has(v)) continue;
+    seen.add(v);
+    html = html.replace(
+      new RegExp(escapeHtml(v).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+      `<span class="fig">$&</span>`);
+  }
+  html = html.replace(/(https?:\/\/[^\s<)]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  return html.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+}
+
+function turn(who) {
+  const el = document.createElement("div");
+  el.className = `turn ${who}`;
+  if (who === "bot") el.innerHTML = '<div class="avatar">E</div>';
+  const b = document.createElement("div");
+  b.className = "bubble";
+  el.append(b);
+  thread.append(el);
+  main.scrollTop = main.scrollHeight;
+  return b;
+}
+
+async function ask() {
+  const q = box.value.trim();
+  if (!q || busy) return;
+  busy = true; send.disabled = true;
+  $("#hello")?.remove();
+
+  turn("me").textContent = q;
+  box.value = ""; box.style.height = "auto";
+
+  const bubble = turn("bot");
+  bubble.innerHTML = '<div class="typing"><i></i><i></i><i></i></div>';
+
+  const session = {
+    session_id: sessionId,
+    channel: $("#channel").value,
+    auth_level: $("#auth").value,
+  };
+  const pol = $("#policy").value;
+  if (pol) session.policy = JSON.parse(pol);
+
+  try {
+    const res = await fetch("/v1/answer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, session }),
+    });
+    if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
+    const env = await res.json();
+    const a = env.answer || {};
+
+    let head = "";
+    if (!env.delivered) {
+      // A blocked answer is not shown. The customer gets the refusal, and
+      // the reason lives in the trace where it belongs.
+      head = '<div class="tag blocked">Checked and held back — passing you to a colleague</div>';
+    } else if (a.handoff) {
+      head = '<div class="tag handoff">Passing you to a colleague</div>';
+    } else if (a.advice_flag) {
+      head = '<div class="tag handoff">This needs a licensed adviser</div>';
+    }
+
+    const claims = a.claims || [];
+    const sources = claims.length
+      ? `<details class="src"><summary>${claims.length} source${claims.length > 1 ? "s" : ""}</summary>
+           <ul class="srcs">${[...new Map(claims.map(c =>
+             [c.locator || c.source_id, c])).values()].map(c =>
+               `<li>${escapeHtml((c.text || "").slice(0, 190))}
+                  <code>${escapeHtml(c.locator || c.source_id)}</code></li>`).join("")}
+           </ul></details>`
+      : "";
+
+    bubble.innerHTML = head + render(a.answer || "", a.figures) + sources;
+  } catch (err) {
+    bubble.innerHTML = `<p class="err">Could not reach the service — ${escapeHtml(String(err))}</p>`;
+  } finally {
+    busy = false; send.disabled = false;
+    main.scrollTop = main.scrollHeight;
+    box.focus();
+  }
+}
+box.focus();
+</script>

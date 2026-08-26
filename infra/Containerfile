@@ -33,14 +33,20 @@ COPY apps/evalgen/pyproject.toml apps/evalgen/
 # `--no-dev` sync installs an empty environment and the image builds cleanly
 # with no application in it. Naming the member pulls it and its transitive
 # workspace deps (okf, harness) and leaves the test and lint tooling out.
+# `--extra anthropic` because the compose file passes ANTHROPIC_API_KEY through
+# and the README documents LLM_PROVIDER=anthropic against this image. Without
+# it the SDK is absent, the provider resolves to "unavailable", and every
+# answer silently comes from the deterministic composer — a configured key that
+# can never be used, visible only as `degraded` in a trace. The vLLM route
+# needs no extra: it is an OpenAI-compatible HTTP call over httpx.
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --package api --no-install-project --no-dev
+    uv sync --frozen --package api --extra anthropic --no-install-project --no-dev
 
 COPY packages/ packages/
 # Only what the serve loop needs; the compiler, crawler and eval harness are
 # developer tools and have no business in a serving image.
 COPY apps/api/ apps/api/
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --package api --no-dev
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --package api --extra anthropic --no-dev
 
 # Non-root: the process only ever reads the bundle, and the content API's write
 # path is mounted read-write explicitly where it is wanted.

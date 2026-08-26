@@ -169,6 +169,12 @@ _KIND_TOKENS = re.compile(
     r"|final|clean|onwards|utd|draft|updated|new|copy|insurance)$",
     re.I,
 )
+#: The kind words again, but glued to the plan name with no separator —
+#: `policywordings-eprotect-family`, `businessenterprisesolutionpolicywordings`.
+#: Filenames are typed by people, and a missing hyphen should not put
+#: "Policywordings Eprotect Family" in front of a customer.
+_GLUED_KIND_RE = re.compile(r"(?:policy)?(?:wordings?|contracts?|summary|summaries)|productsummary", re.I)
+
 #: Version and date fragments: `v1-25`, `2023-02`, `28052020`, `1-nov-2020`.
 _VERSION_RE = re.compile(
     r"(?:^|-)(?:v\d[\w.]*"
@@ -241,6 +247,10 @@ def normalise_plan(stem: str) -> str:
         slug = stripped
     tokens = [t for t in slug.split("-") if t]
     tokens = [t for t in tokens if not _KIND_TOKENS.fullmatch(t)]
+    # Strip a glued kind word from whatever survived, then drop anything that
+    # was nothing else. `businessenterprisesolutionpolicywordings` is a plan
+    # name with a suffix, not a plan called that.
+    tokens = [t for t in (_GLUED_KIND_RE.sub("", t) for t in tokens) if t]
     while tokens and _RANGE_TOKENS.fullmatch(tokens[-1]):
         tokens.pop()
     while tokens and _RANGE_TOKENS.fullmatch(tokens[0]):

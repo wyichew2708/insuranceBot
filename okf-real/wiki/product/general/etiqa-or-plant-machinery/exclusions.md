@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractor-plant-machinery/exclusions
-title: Etiqa Contractor Plant Machinery — Exclusions
+id: product/general/etiqa-or-plant-machinery/exclusions
+title: Etiqa Or Plant Machinery — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractor plant machinery exclusions
-- what is not covered by etiqa contractor plant machinery
-- etiqa contractor plant machinery not covered
+- etiqa or plant machinery exclusions
+- what is not covered by etiqa or plant machinery
+- etiqa or plant machinery not covered
 channels: []
 plan_tiers: []
 authority:

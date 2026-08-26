@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/business/businessenterprisesolutionpolicywordings/conditions
-title: Businessenterprisesolutionpolicywordings — Policy conditions
+id: product/business/businessenterprisesolution/conditions
+title: Businessenterprisesolution Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,10 +10,10 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
-- businessenterprisesolutionpolicywordings policy conditions
-- businessenterprisesolutionpolicywordings terms
-- businessenterprisesolutionpolicywordings free look
-- cancel businessenterprisesolutionpolicywordings
+- businessenterprisesolution policy conditions
+- businessenterprisesolution terms
+- businessenterprisesolution free look
+- cancel businessenterprisesolution
 channels: []
 plan_tiers: []
 authority:

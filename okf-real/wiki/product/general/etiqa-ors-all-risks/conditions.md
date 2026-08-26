@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractors-all-risks/conditions
-title: Etiqa Contractors All Risks Insurance — Policy conditions
+id: product/general/etiqa-ors-all-risks/conditions
+title: Etiqa Ors All Risks Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,10 +10,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractors all risks policy conditions
-- etiqa contractors all risks terms
-- etiqa contractors all risks free look
-- cancel etiqa contractors all risks
+- etiqa ors all risks policy conditions
+- etiqa ors all risks terms
+- etiqa ors all risks free look
+- cancel etiqa ors all risks
 channels: []
 plan_tiers: []
 authority:

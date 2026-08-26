@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractors-all-risks/definitions
-title: Etiqa Contractors All Risks Insurance — Definitions
+id: product/general/etiqa-ors-all-risks/definitions
+title: Etiqa Ors All Risks Insurance — Definitions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractors all risks definitions
-- what does it mean in etiqa contractors all risks
-- etiqa contractors all risks glossary
+- etiqa ors all risks definitions
+- what does it mean in etiqa ors all risks
+- etiqa ors all risks glossary
 channels: []
 plan_tiers: []
 authority:

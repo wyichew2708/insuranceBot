@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/business/businessenterprisesolutionpolicywordings/claims
-title: Businessenterprisesolutionpolicywordings — Making a claim
+id: product/business/businessenterprisesolution/claims
+title: Businessenterprisesolution Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
-- how to claim on businessenterprisesolutionpolicywordings
-- businessenterprisesolutionpolicywordings claim procedure
-- businessenterprisesolutionpolicywordings claim
+- how to claim on businessenterprisesolution
+- businessenterprisesolution claim procedure
+- businessenterprisesolution claim
 channels: []
 plan_tiers: []
 authority:

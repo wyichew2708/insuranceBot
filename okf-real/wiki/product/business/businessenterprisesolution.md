@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/business/businessenterprisesolutionpolicywordings
-title: Businessenterprisesolutionpolicywordings
+id: product/business/businessenterprisesolution
+title: Businessenterprisesolution Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,8 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
-- businessenterprisesolutionpolicywordings
+- businessenterprisesolution
+- businessenterprisesolution insurance
 channels: []
 plan_tiers: []
 authority:
@@ -26,7 +27,7 @@ review_due: '2026-11-24'
 confidence: medium
 ---
 
-## About Businessenterprisesolutionpolicywordings
+## About Businessenterprisesolution Insurance
 
 This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 

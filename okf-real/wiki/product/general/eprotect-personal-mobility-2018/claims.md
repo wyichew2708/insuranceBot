@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018/claims
-title: Eprotect Personal Mobility Wording2018 Insurance — Making a claim
+id: product/general/eprotect-personal-mobility-2018/claims
+title: Eprotect Personal Mobility 2018 Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- how to claim on eprotect personal mobility wording2018
-- eprotect personal mobility wording2018 claim procedure
-- eprotect personal mobility wording2018 claim
+- how to claim on eprotect personal mobility 2018
+- eprotect personal mobility 2018 claim procedure
+- eprotect personal mobility 2018 claim
 channels: []
 plan_tiers: []
 authority:

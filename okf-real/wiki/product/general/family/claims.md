@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/policywordings-eprotect-family/claims
-title: Policywordings Eprotect Family — Making a claim
+id: product/general/family/claims
+title: Family — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,13 +10,14 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- how to claim on policywordings eprotect family
-- policywordings eprotect family claim procedure
-- policywordings eprotect family claim
+- how to claim on family
+- family claim procedure
+- family claim
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policywordings-eprotect-family.md
+version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree

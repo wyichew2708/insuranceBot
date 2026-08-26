@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018/conditions
-title: Eprotect Personal Mobility Wording2018 Insurance — Policy conditions
+id: product/general/eprotect-personal-mobility-2018/conditions
+title: Eprotect Personal Mobility 2018 Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,10 +10,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- eprotect personal mobility wording2018 policy conditions
-- eprotect personal mobility wording2018 terms
-- eprotect personal mobility wording2018 free look
-- cancel eprotect personal mobility wording2018
+- eprotect personal mobility 2018 policy conditions
+- eprotect personal mobility 2018 terms
+- eprotect personal mobility 2018 free look
+- cancel eprotect personal mobility 2018
 channels: []
 plan_tiers: []
 authority:

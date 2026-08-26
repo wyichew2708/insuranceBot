@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractors-all-risks/claims
-title: Etiqa Contractors All Risks Insurance — Making a claim
+id: product/general/etiqa-ors-all-risks/claims
+title: Etiqa Ors All Risks Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- how to claim on etiqa contractors all risks
-- etiqa contractors all risks claim procedure
-- etiqa contractors all risks claim
+- how to claim on etiqa ors all risks
+- etiqa ors all risks claim procedure
+- etiqa ors all risks claim
 channels: []
 plan_tiers: []
 authority:

@@ -1,21 +1,23 @@
 ---
 okf_version: '0.1'
-id: product/general/policywordings-eprotect-family
-title: Policywordings Eprotect Family
+id: product/general/family/cover
+title: Family — What is covered
 type: product
 status: approved
 lifecycle: on_sale
 underwriter: Etiqa Insurance Pte. Ltd.
-uen: 201331905K
 jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- policywordings eprotect family
+- what does family cover
+- family coverage
+- family benefits explained
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policywordings-eprotect-family.md
+version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
@@ -23,12 +25,8 @@ compiled_at: '2026-08-26T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-11-24'
-confidence: medium
+confidence: high
 ---
-
-## About Policywordings Eprotect Family
-
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/policywordings-eprotect-family.md].
 
 ## The liability of the Company for any Benefit under this Policy is conditional upon
 

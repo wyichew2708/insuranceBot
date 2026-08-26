@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/policywordings-eprotect-family/definitions
-title: Policywordings Eprotect Family — Definitions
+id: product/general/family/definitions
+title: Family — Definitions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,13 +10,14 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- policywordings eprotect family definitions
-- what does it mean in policywordings eprotect family
-- policywordings eprotect family glossary
+- family definitions
+- what does it mean in family
+- family glossary
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policywordings-eprotect-family.md
+version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018/definitions
-title: Eprotect Personal Mobility Wording2018 Insurance — Definitions
+id: product/general/eprotect-personal-mobility-2018/definitions
+title: Eprotect Personal Mobility 2018 Insurance — Definitions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- eprotect personal mobility wording2018 definitions
-- what does it mean in eprotect personal mobility wording2018
-- eprotect personal mobility wording2018 glossary
+- eprotect personal mobility 2018 definitions
+- what does it mean in eprotect personal mobility 2018
+- eprotect personal mobility 2018 glossary
 channels: []
 plan_tiers: []
 authority:

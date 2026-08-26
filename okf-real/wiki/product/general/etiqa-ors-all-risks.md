@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractors-all-risks
-title: Etiqa Contractors All Risks Insurance
+id: product/general/etiqa-ors-all-risks
+title: Etiqa Ors All Risks Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,8 +11,8 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractors all risks
-- etiqa contractors all risks insurance
+- etiqa ors all risks
+- etiqa ors all risks insurance
 channels: []
 plan_tiers: []
 authority:
@@ -27,7 +27,7 @@ review_due: '2026-11-24'
 confidence: medium
 ---
 
-## About Etiqa Contractors All Risks Insurance
+## About Etiqa Ors All Risks Insurance
 
 This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 

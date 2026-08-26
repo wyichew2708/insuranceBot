@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018
-title: Eprotect Personal Mobility Wording2018 Insurance
+id: product/general/eprotect-personal-mobility-2018
+title: Eprotect Personal Mobility 2018 Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,8 +11,8 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- eprotect personal mobility wording2018
-- eprotect personal mobility wording2018 insurance
+- eprotect personal mobility 2018
+- eprotect personal mobility 2018 insurance
 channels: []
 plan_tiers: []
 authority:
@@ -28,7 +28,7 @@ review_due: '2026-11-24'
 confidence: medium
 ---
 
-## About Eprotect Personal Mobility Wording2018 Insurance
+## About Eprotect Personal Mobility 2018 Insurance
 
 This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 

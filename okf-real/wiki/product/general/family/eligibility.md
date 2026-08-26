@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/policywordings-eprotect-family/eligibility
-title: Policywordings Eprotect Family — Eligibility
+id: product/general/family/eligibility
+title: Family — Eligibility
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,13 +10,14 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- who can buy policywordings eprotect family
-- policywordings eprotect family eligibility
-- policywordings eprotect family entry age
+- who can buy family
+- family eligibility
+- family entry age
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policywordings-eprotect-family.md
+version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree

@@ -26,6 +26,7 @@ app = FastAPI(title="Etiqa SG knowledge layer", version="0.2.0")
 UI_ROOT = Path(__file__).parent.parent
 CONSOLE = UI_ROOT / "console" / "index.html"
 STUDIO = UI_ROOT / "studio" / "index.html"
+CHAT = UI_ROOT / "chat" / "index.html"
 
 _state: dict[str, Any] = {"bundle": None, "settings": None, "traces": TraceStore()}
 
@@ -87,6 +88,17 @@ async def studio() -> HTMLResponse:
     if not STUDIO.exists():
         raise HTTPException(status_code=404, detail="studio not built")
     return HTMLResponse(STUDIO.read_text())
+
+
+@app.get("/chat", response_class=HTMLResponse)
+async def chat() -> HTMLResponse:
+    """The customer-facing surface. The console at `/` shows the machinery;
+    this shows what a person asking about their insurance would need — the
+    answer, where it came from, and an honest signal when the bot is handing
+    them over. Same `/v1/answer` contract underneath, no privileged path."""
+    if not CHAT.exists():
+        raise HTTPException(status_code=404, detail="chat UI not built")
+    return HTMLResponse(CHAT.read_text())
 
 
 @app.post("/v1/answer", response_model=AnswerEnvelope)

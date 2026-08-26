@@ -38,15 +38,15 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/business/business-owners-super-suite/exclusions` — [Business Owners Super Suite — Exclusions](./product/business/business-owners-super-suite/exclusions.md)
 
-- `product/business/businessenterprisesolutionpolicywordings` — [Businessenterprisesolutionpolicywordings](./product/business/businessenterprisesolutionpolicywordings.md)
+- `product/business/businessenterprisesolution` — [Businessenterprisesolution Insurance](./product/business/businessenterprisesolution.md)
 
-- `product/business/businessenterprisesolutionpolicywordings/claims` — [Businessenterprisesolutionpolicywordings — Making a claim](./product/business/businessenterprisesolutionpolicywordings/claims.md)
+- `product/business/businessenterprisesolution/claims` — [Businessenterprisesolution Insurance — Making a claim](./product/business/businessenterprisesolution/claims.md)
 
-- `product/business/businessenterprisesolutionpolicywordings/conditions` — [Businessenterprisesolutionpolicywordings — Policy conditions](./product/business/businessenterprisesolutionpolicywordings/conditions.md)
+- `product/business/businessenterprisesolution/conditions` — [Businessenterprisesolution Insurance — Policy conditions](./product/business/businessenterprisesolution/conditions.md)
 
-- `product/business/businessenterprisesolutionpolicywordings/definitions` — [Businessenterprisesolutionpolicywordings — Definitions](./product/business/businessenterprisesolutionpolicywordings/definitions.md)
+- `product/business/businessenterprisesolution/definitions` — [Businessenterprisesolution Insurance — Definitions](./product/business/businessenterprisesolution/definitions.md)
 
-- `product/business/businessenterprisesolutionpolicywordings/exclusions` — [Businessenterprisesolutionpolicywordings — Exclusions](./product/business/businessenterprisesolutionpolicywordings/exclusions.md)
+- `product/business/businessenterprisesolution/exclusions` — [Businessenterprisesolution Insurance — Exclusions](./product/business/businessenterprisesolution/exclusions.md)
 
 - `product/business/corporate-employee-scheme` — [Corporate Employee Scheme](./product/business/corporate-employee-scheme.md)
 
@@ -314,17 +314,17 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/eprotect-mortgage/exclusions` — [ePROTECT mortgage — Exclusions](./product/general/eprotect-mortgage/exclusions.md)
 
-- `product/general/eprotect-personal-mobility-wording2018` — [Eprotect Personal Mobility Wording2018 Insurance](./product/general/eprotect-personal-mobility-wording2018.md)
+- `product/general/eprotect-personal-mobility-2018` — [Eprotect Personal Mobility 2018 Insurance](./product/general/eprotect-personal-mobility-2018.md)
 
-- `product/general/eprotect-personal-mobility-wording2018/claims` — [Eprotect Personal Mobility Wording2018 Insurance — Making a claim](./product/general/eprotect-personal-mobility-wording2018/claims.md)
+- `product/general/eprotect-personal-mobility-2018/claims` — [Eprotect Personal Mobility 2018 Insurance — Making a claim](./product/general/eprotect-personal-mobility-2018/claims.md)
 
-- `product/general/eprotect-personal-mobility-wording2018/conditions` — [Eprotect Personal Mobility Wording2018 Insurance — Policy conditions](./product/general/eprotect-personal-mobility-wording2018/conditions.md)
+- `product/general/eprotect-personal-mobility-2018/conditions` — [Eprotect Personal Mobility 2018 Insurance — Policy conditions](./product/general/eprotect-personal-mobility-2018/conditions.md)
 
-- `product/general/eprotect-personal-mobility-wording2018/definitions` — [Eprotect Personal Mobility Wording2018 Insurance — Definitions](./product/general/eprotect-personal-mobility-wording2018/definitions.md)
+- `product/general/eprotect-personal-mobility-2018/definitions` — [Eprotect Personal Mobility 2018 Insurance — Definitions](./product/general/eprotect-personal-mobility-2018/definitions.md)
 
-- `product/general/eprotect-personal-mobility-wording2018/eligibility` — [Eprotect Personal Mobility Wording2018 Insurance — Eligibility](./product/general/eprotect-personal-mobility-wording2018/eligibility.md)
+- `product/general/eprotect-personal-mobility-2018/eligibility` — [Eprotect Personal Mobility 2018 Insurance — Eligibility](./product/general/eprotect-personal-mobility-2018/eligibility.md)
 
-- `product/general/eprotect-personal-mobility-wording2018/exclusions` — [Eprotect Personal Mobility Wording2018 Insurance — Exclusions](./product/general/eprotect-personal-mobility-wording2018/exclusions.md)
+- `product/general/eprotect-personal-mobility-2018/exclusions` — [Eprotect Personal Mobility 2018 Insurance — Exclusions](./product/general/eprotect-personal-mobility-2018/exclusions.md)
 
 - `product/general/eprotect-safety` — [Eprotect Safety Insurance](./product/general/eprotect-safety.md)
 
@@ -354,22 +354,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/etiqa-autolab-package-wic/exclusions` — [Etiqa Autolab Package Wic — Exclusions](./product/general/etiqa-autolab-package-wic/exclusions.md)
 
-- `product/general/etiqa-contractor-plant-machinery` — [Etiqa Contractor Plant Machinery](./product/general/etiqa-contractor-plant-machinery.md)
-
-- `product/general/etiqa-contractor-plant-machinery/conditions` — [Etiqa Contractor Plant Machinery — Policy conditions](./product/general/etiqa-contractor-plant-machinery/conditions.md)
-
-- `product/general/etiqa-contractor-plant-machinery/exclusions` — [Etiqa Contractor Plant Machinery — Exclusions](./product/general/etiqa-contractor-plant-machinery/exclusions.md)
-
-- `product/general/etiqa-contractors-all-risks` — [Etiqa Contractors All Risks Insurance](./product/general/etiqa-contractors-all-risks.md)
-
-- `product/general/etiqa-contractors-all-risks/claims` — [Etiqa Contractors All Risks Insurance — Making a claim](./product/general/etiqa-contractors-all-risks/claims.md)
-
-- `product/general/etiqa-contractors-all-risks/conditions` — [Etiqa Contractors All Risks Insurance — Policy conditions](./product/general/etiqa-contractors-all-risks/conditions.md)
-
-- `product/general/etiqa-contractors-all-risks/definitions` — [Etiqa Contractors All Risks Insurance — Definitions](./product/general/etiqa-contractors-all-risks/definitions.md)
-
-- `product/general/etiqa-contractors-all-risks/exclusions` — [Etiqa Contractors All Risks Insurance — Exclusions](./product/general/etiqa-contractors-all-risks/exclusions.md)
-
 - `product/general/etiqa-eprotect-home` — [Etiqa Eprotect Home Insurance](./product/general/etiqa-eprotect-home.md)
 
 - `product/general/etiqa-eprotect-home/claims` — [Etiqa Eprotect Home Insurance — Making a claim](./product/general/etiqa-eprotect-home/claims.md)
@@ -391,6 +375,22 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/general/etiqa-homeowners-enhanced/conditions` — [Etiqa Homeowners Enhanced Insurance — Policy conditions](./product/general/etiqa-homeowners-enhanced/conditions.md)
 
 - `product/general/etiqa-homeowners-enhanced/exclusions` — [Etiqa Homeowners Enhanced Insurance — Exclusions](./product/general/etiqa-homeowners-enhanced/exclusions.md)
+
+- `product/general/etiqa-or-plant-machinery` — [Etiqa Or Plant Machinery](./product/general/etiqa-or-plant-machinery.md)
+
+- `product/general/etiqa-or-plant-machinery/conditions` — [Etiqa Or Plant Machinery — Policy conditions](./product/general/etiqa-or-plant-machinery/conditions.md)
+
+- `product/general/etiqa-or-plant-machinery/exclusions` — [Etiqa Or Plant Machinery — Exclusions](./product/general/etiqa-or-plant-machinery/exclusions.md)
+
+- `product/general/etiqa-ors-all-risks` — [Etiqa Ors All Risks Insurance](./product/general/etiqa-ors-all-risks.md)
+
+- `product/general/etiqa-ors-all-risks/claims` — [Etiqa Ors All Risks Insurance — Making a claim](./product/general/etiqa-ors-all-risks/claims.md)
+
+- `product/general/etiqa-ors-all-risks/conditions` — [Etiqa Ors All Risks Insurance — Policy conditions](./product/general/etiqa-ors-all-risks/conditions.md)
+
+- `product/general/etiqa-ors-all-risks/definitions` — [Etiqa Ors All Risks Insurance — Definitions](./product/general/etiqa-ors-all-risks/definitions.md)
+
+- `product/general/etiqa-ors-all-risks/exclusions` — [Etiqa Ors All Risks Insurance — Exclusions](./product/general/etiqa-ors-all-risks/exclusions.md)
 
 - `product/general/extra-payer-waiver` — [Extra Payer Waiver](./product/general/extra-payer-waiver.md)
 
@@ -433,6 +433,16 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/general/extra-secure-waiver/exclusions` — [Extra Secure Waiver — Exclusions](./product/general/extra-secure-waiver/exclusions.md)
 
 - `product/general/family` — [Family](./product/general/family.md)
+
+- `product/general/family/claims` — [Family — Making a claim](./product/general/family/claims.md)
+
+- `product/general/family/conditions` — [Family — Policy conditions](./product/general/family/conditions.md)
+
+- `product/general/family/cover` — [Family — What is covered](./product/general/family/cover.md)
+
+- `product/general/family/definitions` — [Family — Definitions](./product/general/family/definitions.md)
+
+- `product/general/family/eligibility` — [Family — Eligibility](./product/general/family/eligibility.md)
 
 - `product/general/family/exclusions` — [Family — Exclusions](./product/general/family/exclusions.md)
 
@@ -651,18 +661,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/general/plate-glass/conditions` — [Plate Glass — Policy conditions](./product/general/plate-glass/conditions.md)
 
 - `product/general/plate-glass/exclusions` — [Plate Glass — Exclusions](./product/general/plate-glass/exclusions.md)
-
-- `product/general/policywordings-eprotect-family` — [Policywordings Eprotect Family](./product/general/policywordings-eprotect-family.md)
-
-- `product/general/policywordings-eprotect-family/claims` — [Policywordings Eprotect Family — Making a claim](./product/general/policywordings-eprotect-family/claims.md)
-
-- `product/general/policywordings-eprotect-family/conditions` — [Policywordings Eprotect Family — Policy conditions](./product/general/policywordings-eprotect-family/conditions.md)
-
-- `product/general/policywordings-eprotect-family/definitions` — [Policywordings Eprotect Family — Definitions](./product/general/policywordings-eprotect-family/definitions.md)
-
-- `product/general/policywordings-eprotect-family/eligibility` — [Policywordings Eprotect Family — Eligibility](./product/general/policywordings-eprotect-family/eligibility.md)
-
-- `product/general/policywordings-eprotect-family/exclusions` — [Policywordings Eprotect Family — Exclusions](./product/general/policywordings-eprotect-family/exclusions.md)
 
 - `product/general/products-liability` — [Products liability](./product/general/products-liability.md)
 

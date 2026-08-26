@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractor-plant-machinery/conditions
-title: Etiqa Contractor Plant Machinery — Policy conditions
+id: product/general/etiqa-or-plant-machinery/conditions
+title: Etiqa Or Plant Machinery — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,10 +10,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractor plant machinery policy conditions
-- etiqa contractor plant machinery terms
-- etiqa contractor plant machinery free look
-- cancel etiqa contractor plant machinery
+- etiqa or plant machinery policy conditions
+- etiqa or plant machinery terms
+- etiqa or plant machinery free look
+- cancel etiqa or plant machinery
 channels: []
 plan_tiers: []
 authority:

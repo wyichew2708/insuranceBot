@@ -2,13 +2,18 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "knowledge-layer-docker",
+      "url": "http://localhost:8080",
+      "port": 8080
+    },
+    {
       "name": "knowledge-layer",
       "runtimeExecutable": "sh",
       "runtimeArgs": [
         "-c",
-        "BUNDLE_PATH=okf-web exec .venv/bin/uvicorn api.main:app --reload --port 8080"
+        "BUNDLE_PATH=okf-web exec .venv/bin/uvicorn api.main:app --reload --port 8082"
       ],
-      "port": 8080
+      "port": 8082
     },
     {
       "name": "knowledge-layer-seed",

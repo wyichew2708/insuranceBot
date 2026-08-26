@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/eprotect-personal-mobility-wording2018/exclusions
-title: Eprotect Personal Mobility Wording2018 Insurance — Exclusions
+id: product/general/eprotect-personal-mobility-2018/exclusions
+title: Eprotect Personal Mobility 2018 Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- eprotect personal mobility wording2018 exclusions
-- what is not covered by eprotect personal mobility wording2018
-- eprotect personal mobility wording2018 not covered
+- eprotect personal mobility 2018 exclusions
+- what is not covered by eprotect personal mobility 2018
+- eprotect personal mobility 2018 not covered
 channels: []
 plan_tiers: []
 authority:

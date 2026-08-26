@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/business/businessenterprisesolutionpolicywordings/definitions
-title: Businessenterprisesolutionpolicywordings — Definitions
+id: product/business/businessenterprisesolution/definitions
+title: Businessenterprisesolution Insurance — Definitions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
-- businessenterprisesolutionpolicywordings definitions
-- what does it mean in businessenterprisesolutionpolicywordings
-- businessenterprisesolutionpolicywordings glossary
+- businessenterprisesolution definitions
+- what does it mean in businessenterprisesolution
+- businessenterprisesolution glossary
 channels: []
 plan_tiers: []
 authority:

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractors-all-risks/exclusions
-title: Etiqa Contractors All Risks Insurance — Exclusions
+id: product/general/etiqa-ors-all-risks/exclusions
+title: Etiqa Ors All Risks Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractors all risks exclusions
-- what is not covered by etiqa contractors all risks
-- etiqa contractors all risks not covered
+- etiqa ors all risks exclusions
+- what is not covered by etiqa ors all risks
+- etiqa ors all risks not covered
 channels: []
 plan_tiers: []
 authority:

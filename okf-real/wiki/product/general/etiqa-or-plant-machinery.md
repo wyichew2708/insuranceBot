@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/etiqa-contractor-plant-machinery
-title: Etiqa Contractor Plant Machinery
+id: product/general/etiqa-or-plant-machinery
+title: Etiqa Or Plant Machinery
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,7 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- etiqa contractor plant machinery
+- etiqa or plant machinery
 channels: []
 plan_tiers: []
 authority:
@@ -26,7 +26,7 @@ review_due: '2026-11-24'
 confidence: medium
 ---
 
-## About Etiqa Contractor Plant Machinery
+## About Etiqa Or Plant Machinery
 
 This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/etiqa-contractor-plant-machinery-policy-wording-2023-02.md].
 
