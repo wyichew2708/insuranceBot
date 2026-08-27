@@ -39,8 +39,6 @@ confidence: medium
 
 The financial burden you leave behind can be just as devastating as the loss of a loved one [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#protect-the-life-you-ve-built].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./term-life-insurance/exclusions.md).

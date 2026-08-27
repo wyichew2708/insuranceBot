@@ -17,9 +17,6 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md
-- raw/wordings/3-plus-critical-illness-policy-contract-v2-25.md
-- raw/product-summaries/3-plus-critical-illness-product-summary-v1-23.md
-- raw/product-summaries/tiq-product-summary-3-plus-critical-illness.md
 version_in_force: '2026'
 links:
   concepts:
@@ -32,26 +29,36 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## The following are excluded
-
-• Brain damage due to an accident [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p5].
-
-> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage critical illnesses (Version 2019). These critical illnesses falls under Version 2019. You may refer to www.lia.org.sg for the standard Definitions (Version 2019). For critical Illnesses that do not fall under Version 2019, the definitions are determined by Us. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p5]
-
 ## 5. What is Not Covered?
 
-There are certain conditions under which no Benefits will be payable [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md#p7].
+There are certain conditions under which no Benefits will be payable [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
 
-## The following are excluded
+## 5.2 Complimentary Cover for Children
 
-> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage Critical Illnesses (Version 2024). These Critical Illnesses fall under Version 2024. You may refer to www.lia.org.sg for the standard Definitions (Version 2024). [src:raw/wordings/3-plus-critical-illness-policy-contract-v2-25.md#p5]
+We do not pay the complimentary child death cover if the death of the child of the Life insured is directly or indirectly, wholly or partly caused by: [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
 
-## The following are excluded
+> - i. intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the start of the Complimentary cover for children. - ii. Pre-existing condition within the first twelve (12) months from the start of the Complimentary cover for children. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md]
 
-• Vascular disease affecting the eye [src:raw/product-summaries/3-plus-critical-illness-product-summary-v1-23.md#p4].
+## 5.4 Waiting Period
 
-> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage Critical Illnesses (Version 2024). These critical illness falls under Version 2024. You may refer to www.lia.org.sg for the standard Definitions (Version 2024). [src:raw/product-summaries/3-plus-critical-illness-product-summary-v1-23.md#p4]
+We do not pay the covered critical illness Benefit if: [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
 
-## The following are excluded
+- Cancer or Heart Attack of Specified Severity is diagnosed; or - The date of diagnosis of the condition leading to the performance of the following surgeries: Mastectomy or Hysterectomy due to Cancer is; [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
 
-> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage Critical Illnesses (Version 2019). These critical illness falls under Version 2019. You may refer to www.lia.org.sg for the standard Definitions (Version 2019). [src:raw/product-summaries/tiq-product-summary-3-plus-critical-illness.md]
+> within ninety (90) days from the Policy issue date or effective date of the last increase in Sum insured, whichever is later. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md]
+
+## 5.5 Survival Period
+
+> We do not pay any Benefits if the Life insured did not survive for 7 days after the date of diagnosis of the critical illness or special conditions. [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md]
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our Letter of Conditional Acceptance. When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this policy) without interest, less any outstanding amounts owing to Us [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
+
+## 7.7 Prohibited Person Limitation and Exclusion
+
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
+
+- a) We are entitled not to accept the application; and - b) if any policy is issued, We are entitled to end/terminate the policy, not pay any Benefits or not allow any transaction to be carried out under the policy. We will not refund any unutilised Premium when the policy is ended/terminated [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
+
+You will need to inform Us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
+
+Our decision in respect of this exclusion will be final [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].

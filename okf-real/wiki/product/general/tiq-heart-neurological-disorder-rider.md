@@ -28,8 +28,6 @@ confidence: medium
 
 ## About Tiq Heart Neurological Disorder Rider
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].
-
 ## Heart and Neurological Disorder Benefit
 
 This rider pays the Heart and Neurological Disorder Benefit as an advancement of the Sum insured of the Basic policy if the Life insured is diagnosed with Heart and Neurological Disorder while the rider is in force [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].
@@ -40,8 +38,6 @@ This rider pays the Heart and Neurological Disorder Benefit as an advancement of
 
 ## Heart and Neurological Disorder Benefit
 
-We do not pay the Benefits if the Heart and Neurological Disorder Benefit is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md#p4].
+We do not pay the Benefits if the Heart and Neurological Disorder Benefit is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].
 
-Intentional acts (sane or insane) such as self-harm or attempted suicide; [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md#p4].
-
-• A Pre-existing condition; • • Effects of drug or alcohol addiction; or • Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md#p4].
+- A Pre-existing condition; - Intentional acts (sane or insane) such as self-harm or attempted suicide; - Effects of drug or alcohol addiction; or - Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].

@@ -28,8 +28,6 @@ confidence: medium
 
 ## About Tiq Heart Neurological Disorders Benefit Rider
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].
-
 ## Product Summary: Heart and Neurological Disorder Benefit Rider
 
 This Product Summary is for illustrative purposes only and shall not constitute a contract. The following is a simplified description of the key product features. The exact terms can be found in the Policy Contract. The quotation is based on standard life [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].
@@ -46,6 +44,4 @@ This rider pays the Heart and Neurological Disorder Benefit as an advancement of
 
 We do not pay the Benefits if the Heart and Neurological Disorder Benefit is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].
 
-Intentional acts (sane or insane) such as self-harm or attempted suicide; [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].
-
- A Pre-existing condition;   Effects of drug or alcohol addiction; or  Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].
+-  A Pre-existing condition; -  Intentional acts (sane or insane) such as self-harm or attempted suicide; -  Effects of drug or alcohol addiction; or -  Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md].

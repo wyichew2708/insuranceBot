@@ -29,8 +29,6 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## 6. Total and permanent disability definition is defined as follow
+## 11. What Do We Mean With These Words?
 
-> For ages between 19 and 65, Total and permanent disability means any of the two situations: 1. The life insured, due to accident or sickness, is disabled to such an extent as to be rendered totally unable to engage in any occupation, business or activity for income, remuneration or profit; and The disability must continue uninterrupted for at least 6 consecutive months from the time when disability started; and The disability must, in the view of a medical examiner appointed by the company, be deemed permanent with no possibility of improvement in the foreseeable future. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-2. The life insured, due to accident or sickness, suffers total and irrecoverable loss of use of: a) the entire sight in both eyes; or b) any two limbs at or above the wrist or ankle; or c) the entire sight in one eye and any one limb at or above the wrist or ankle [src:raw/wordings/eprotect-whole-life-policy-contract.md].
+Accident means a sudden, unforeseen and unplanned event causing bodily injury that is violent, external and visible in nature. It is not caused by sickness, disease or gradual physical or mental changes [src:raw/wordings/eprotect-whole-life-policy-contract.md].

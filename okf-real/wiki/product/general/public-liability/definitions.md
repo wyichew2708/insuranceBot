@@ -31,4 +31,4 @@ confidence: high
 
 ## INTERPRETATION
 
-This policy and the schedule shall be read together as one contract and any word or expression to which a specific meaning has been attached in any part of this policy or of the schedule shall bear such specific meaning wherever it may appear [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+- This policy and the schedule shall be read together as one contract and any word or expression to which a specific meaning has been attached in any part of this policy or of the schedule shall bear such specific meaning wherever it may appear [src:raw/wordings/etiqa-public-liability-policy-wording.md].

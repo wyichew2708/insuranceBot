@@ -46,8 +46,6 @@ confidence: high
 
 We are your travel buddy [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
-
 ## Headline benefits
 
 The child limit for the plan tier held is {{table:child.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].

@@ -37,8 +37,6 @@ confidence: medium
 
 Specially tailored to cater to the needs of small to medium size business for various trades [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./business-insurance/exclusions.md).

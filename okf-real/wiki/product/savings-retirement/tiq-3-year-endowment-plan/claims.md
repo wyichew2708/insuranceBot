@@ -30,8 +30,14 @@ confidence: high
 
 ## 7. Making Claims From the Policy
 
-7.1 How to make a Claim We must be informed in writing within three (3) months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p3].
+## 7.1 How to make a Claim [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].
 
-We reserve the rights to reject Your claim if the terms and conditions stated in this Policy Contract are not met. 7.2 Who do we pay Benefits to If the policy has been assigned, the Benefit amount will be paid to the Assignee. If the policy has not been assigned, the Benefit amount will be paid to either You or Your executors, administrators, [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p3].
+We must be informed in writing within three (3) months of the event giving rise to the claim. At the Proper claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].
 
-Nominees or any other Proper claimant if We have proof of the relationship of the person claiming the Benefit. Before We pay any Benefit, We will deduct any amount You owe on this policy from the Benefit. By paying out the Benefit, it will end Our legal responsibility on this policy [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p3].
+We reserve the rights to reject Your claim if the terms and conditions stated in this Policy Contract are not met [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].
+
+## 7.2 Who do we pay Benefits to [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].
+
+If the policy has been assigned, the Benefit amount will be paid to the Assignee. If the policy has not been assigned, the Benefit amount will be paid to either You or Your executors, administrators, Nominees or any other Proper claimant if We have proof of the relationship of the person claiming the Benefit [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].
+
+Before We pay any Benefit, We will deduct any amount You owe on this policy from the Benefit. By paying out the Benefit, it will end Our legal responsibility on this policy [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md#p2].

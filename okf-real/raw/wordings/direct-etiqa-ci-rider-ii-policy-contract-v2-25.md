@@ -6,6 +6,7 @@ tables: 4
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Thu, 23 Oct 2025 13:29:34 GMT"
+also_at: "https://www.tiq.com.sg/wp-content/uploads/2023/10/Policy-Contract-DIRECT-Etiqa-CI-rider-II.pdf"
 ---
 ## DIRECT Etiqa CI rider II POLICY CONTRACT
 

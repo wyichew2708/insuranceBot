@@ -38,8 +38,6 @@ confidence: medium
 
 Your hassle-free digital Investment-Linked Plan (ILP) for maximum financial flexibility [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md#low-cost-more-wealth-there-s-a-plan-for-that-tiq-invest].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiqinvest/exclusions.md).

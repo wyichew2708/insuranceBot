@@ -18,8 +18,7 @@ plan_tiers: []
 authority:
 - raw/wordings/general-provisions-for-life-insurance.md
 links:
-  concepts:
-  - concept/nomination
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
@@ -30,6 +29,18 @@ confidence: high
 
 ## 7 Making Claims from the Policy
 
-> 7.1 How to make a Claim We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint. [src:raw/wordings/general-provisions-for-life-insurance.md#p6]
+## 7.1 How to make a Claim [src:raw/wordings/general-provisions-for-life-insurance.md].
 
-We reserve the rights to reject Your claim if the terms and conditions stated in this Provisions are not met. 7.2 Who do We pay Benefits to We may pay the benefits to either You or Your executors, administrators, nominees or any other proper claimant if We have proof of the relationship of the person claiming the benefit [src:raw/wordings/general-provisions-for-life-insurance.md#p6].
+> We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint. [src:raw/wordings/general-provisions-for-life-insurance.md]
+
+We reserve the rights to reject Your claim if the terms and conditions stated in this Provisions are not met [src:raw/wordings/general-provisions-for-life-insurance.md].
+
+## 7.2 Who do We pay Benefits to [src:raw/wordings/general-provisions-for-life-insurance.md].
+
+We may pay the benefits to either You or Your executors, administrators, nominees or any other proper claimant if We have proof of the relationship of the person claiming the benefit [src:raw/wordings/general-provisions-for-life-insurance.md].
+
+Before We pay any benefit, We will deduct: [src:raw/wordings/general-provisions-for-life-insurance.md].
+
+-  any amount You owe on this policy from the Benefit; and -  any future instalment premiums which are necessary to make up the full year's premium [src:raw/wordings/general-provisions-for-life-insurance.md].
+
+By paying any benefit to You, Your executors, administrators, nominees or any other proper claimants, it will end Our legal responsibility on that payment [src:raw/wordings/general-provisions-for-life-insurance.md].

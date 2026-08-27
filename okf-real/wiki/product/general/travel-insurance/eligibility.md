@@ -30,8 +30,10 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## To be eligible under this Policy
+## Eligibility
 
-> (a) The Insured Person(s) named in the Schedule must be a Singapore citizen, a permanent resident of Singapore or a foreigner with a valid Work Pass, Student Pass, Dependant’s Pass or Long-Term Visit Pass. (b) The Insured Person(s) named in the Schedule must be at least eighteen (18) years of age on the Effective Date of Insurance. [src:raw/wordings/eprotect-travel-policy-wording.md]
+Payment shall be deemed to have been effected to the Insurer or the intermediary when one of the following acts takes place: [src:raw/wordings/eprotect-travel-policy-wording.md].
 
-> (c) Any child(ren) named as an Insured Person under the Policy must be Your Legal Child. The Policy Owner must be at least eighteen (18) years of age. [src:raw/wordings/eprotect-travel-policy-wording.md]
+- (a) Cash or honoured cheque for the premium is handed over to the Insurer or the intermediary; - (b) A credit or debit card transaction for the premium is approved by the issuing bank; - (c) A payment through an electronic medium including the internet is approved by the relevant party; [src:raw/wordings/eprotect-travel-policy-wording.md].
+
+- (d) A credit in favour of the Insurer or the intermediary is made through an electronic medium including the internet. 2. In the event that the total premium due is not paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/eprotect-travel-policy-wording.md].

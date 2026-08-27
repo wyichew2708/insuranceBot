@@ -38,8 +38,6 @@ confidence: medium
 
 Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-universal-life-insurance-elastiq.md#high-guaranteed-rate-with-flexible-withdrawals].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-universal-life-insurance-elastiq.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./universal-life-insurance-elastiq/exclusions.md).

@@ -28,8 +28,18 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## The liability of the Company for any Benefit under this Policy is conditional upon
+## COVERAGE
 
-the truth of the statements and information as provided to the Company by the Policyholders; and [src:raw/wordings/policywordings-eprotect-family.md#p7].
+Applicable to Sections 4 and 6: For the avoidance of doubt, in the event You become entitled to a reimbursement of all or part of such expenses from any other source, or if there is in place any other insurance against the events covered under these sections, We will only be liable for the excess of the amount recoverable from such other source of insurance [src:raw/wordings/policywordings-eprotect-family.md].
 
-the due observance and fulfilment of the terms and conditions of this Policy insofar as they relate lo anything to be done or complied with by the Policyholders [src:raw/wordings/policywordings-eprotect-family.md#p7].
+## GENERAL EXTENSION (PRESUMPTIONS)
+
+1. For the avoidance of doubt, this Policy shall cover, but otherwise subject to the terms and conditions of this Policy, to the following: [src:raw/wordings/policywordings-eprotect-family.md].
+
+Death or Bodily Injury which was the result of Riot, Strike, Civil Commotion, hijack, murder, assault or Terrorism, provided that such event did not arise as a result of or in connection with an Policyholder's collaboration or provocation of such act and death or Bodily Injury as a [src:raw/wordings/policywordings-eprotect-family.md].
+
+- Riot, Strike, Civil Commotion, Hijack, Murder, Assault and Terrorism consequence of such act could not reasonably have been avoided by such Policyholder [src:raw/wordings/policywordings-eprotect-family.md].
+
+Death or Bodily Injury which was the result of suffocation by smoke, poisonous fumes, gas or drowning, provided that such event did not arise as a result of an Policyholder's wilful and intentional act and death or Bodily Injury as a consequence of such event could not [src:raw/wordings/policywordings-eprotect-family.md].
+
+- (b) Suffocation by Smoke, Poisonous Fumes, Gas and Drowning reasonably have been avoided by such Policyholder [src:raw/wordings/policywordings-eprotect-family.md].

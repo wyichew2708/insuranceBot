@@ -16,7 +16,6 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md
 - raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md
 - raw/product-summaries/direct-etiqa-ci-rider-product-summary.md
 links:
@@ -31,58 +30,28 @@ confidence: high
 
 ## 5. What is Not Covered?
 
-There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions. W hen there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p5].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p5].
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-## For the above definition, the following are excluded
+When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-a) Angina; b) Heart attack of indeterminate age; and c) A rise in cardiac biomarkers or Troponin T or I following an intra-arterial cardiac procedure including, but not limited to, coronary angiography and coronary angioplasty. Explanatory note: 0.5ng/ml = 0.5ug/L = 500pg/ml 3 Stroke with Permanent Neurological Deficit A cerebrovascular incident including infarction of brain tissue, cerebral and subarachnoid haemorrhage, intracerebral embolism and cerebral thrombosis resulting in permanent neurological deficit. This diagnosis must be supported by all of the following conditions: [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p11].
+## 7.7 Prohibited Person Limitation and Exclusion
 
-> a) Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and b) Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke. [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p11]
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-## The following are excluded
+- (i) We are entitled not to accept the application; and - (ii) If any policy is issued, We are entitled to end/terminate the policy, not pay any benefit or not allow any transaction to be carried out under the policy. We will not refund any unutilised premium when the policy is ended/terminated [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-a) Transient Ischaemic Attacks; b) Brain damage due to an accident or injury, infection, vasculitis, and inflammatory disease; c) Vascular disease affecting the eye or optic nerve; d) Ischaemic disorders of the vestibular system; and e) Secondary haemorrhage within a pre-existing cerebral lesion [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p11].
+You will need to inform us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
-## For the above definition, the following operation or procedures are excluded
-
-• The operation or procedure performed via endoscopic or keyhole surgery. • The operation or procedure performed via catheterisation [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p13].
-
-## The following are excluded
-
-a) Non-organic diseases such as neurosis and psychiatric illnesses; and b) Alcohol related brain damage [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p14].
-
-## The following are excluded
-
-b) Abscess; c) Angioma; d) Granulomas; e) Vascular Malformations; f) Haematomas; and g) Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p15].
-
-## The following are excluded
-
-• Spinal cord injury; and • Head injury due to any other causes [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-v2-25.md#p17].
-
-## The following are excluded
-
-a) Cysts; b) Abscess; c) Angioma; d) Granulomas; e) Vascular Malformations; [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md#p13].
-
-f) Haematomas; and g) Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md#p13].
+Our decision in respect of this exclusion will be final [src:raw/wordings/direct-etiqa-ci-rider-policy-contract-09-nov-2023-to-12-mar-2025.md].
 
 ## Exclusions
 
-1) There are certain conditions under which no Benefit will be payable. These conditions are [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
+- 1) There are certain conditions under which no Benefit will be payable. These conditions are stated as 'exclusions' in the policy contract. The categories of exclusions that are common to all life insurers for CI Benefit relate to: - a) A Waiting period - b) Pre-existing medical conditions [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md].
 
-stated as “exclusions” in the policy contract. The categories of exclusions that are common to all life insurers for CI Benefit relate to: a) A Waiting period b) Pre-existing medical conditions [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
+> - 2) In addition to the above common categories of exclusions, life insurers may impose other exclusions. - 3) For this rider, the following exclusions apply: - a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the Policy Issue date or the latest Reinstatement date, whichever is later; [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md]
 
-When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
+- b) Effects of drug or alcohol addiction; - c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV; - d) Any Pre-existing condition; or - e) The CI is diagnosed during the Waiting period, which is applicable to 'Major Cancer', 'Coronary Artery By-pass Surgery', 'Heart Attack of Specified Severity' and 'Angioplasty &amp; Other Invasive Treatment For Coronary Artery'  [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md].
 
-2) In addition to the above common categories of exclusions, life insurers may impose other [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
-
-## 3) For this rider, the following exclusions apply
-
-> a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the Policy Issue date or the latest Reinstatement date, whichever is later; [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3]
-
-b) Effects of drug or alcohol addiction; c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV; [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
-
-d) Any Pre-existing condition; or e) The CI is diagnosed during the Waiting period, which is applicable to ‘Major Cancer’, ‘Coronary Artery By-pass Surgery’, ‘Heart Attack of Specified Severity’ and ‘Angioplasty & Other Invasive Treatment For Coronary Artery’  [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
-
-4) The definitions of the exclusions are stated in the policy contract. Please refer to the policy [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md#p3].
+- 4) The definitions of the exclusions are stated in the policy contract. Please refer to the policy contract [src:raw/product-summaries/direct-etiqa-ci-rider-product-summary.md].

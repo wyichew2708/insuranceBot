@@ -18,7 +18,8 @@ plan_tiers: []
 authority:
 - raw/wordings/policy-wording-flep.md
 links:
-  concepts: []
+  concepts:
+  - concept/excess
 compiled_from_commit: working-tree
 compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
@@ -27,14 +28,12 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Claim Procedures
+## 10. Claim Procedures
 
-> All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. [src:raw/wordings/policy-wording-flep.md#p8]
+> - (a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. - (b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense and submitted via claims online. [src:raw/wordings/policy-wording-flep.md]
 
-Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense and submitted via claims online [src:raw/wordings/policy-wording-flep.md#p8].
+- (c) Any medical examination if required by Us to verify the claim shall be at Our expense [src:raw/wordings/policy-wording-flep.md].
 
-Any medical examination if required by Us to verify the claim shall be at Our expense [src:raw/wordings/policy-wording-flep.md#p8].
+## 11. Incomplete Claims
 
-## Incomplete Claims
-
-Claims are not deemed complete and eligible benefits are not payable unless all relevant supporting documents for such claims have been submitted and agreed by Us. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/policy-wording-flep.md#p8].
+Claims are not deemed complete and eligible benefits are not payable unless all relevant supporting documents for such claims have been submitted and agreed by Us. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/policy-wording-flep.md].

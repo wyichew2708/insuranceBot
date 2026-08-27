@@ -16,7 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/personal-cyber-insurance-policy-wording.md
+- raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md
 version_in_force: '2026'
 links:
   concepts:
@@ -31,4 +31,6 @@ confidence: high
 
 ## 4.1 Sum Insured and Deductible
 
-Our maximum liability for each and every loss and all loss in the aggregate under this policy shall not exceed the Sum Insured stated in the Schedule. We shall only be liable for that part of each and every loss which is in excess of the Deductible stated in the Schedule [src:raw/wordings/personal-cyber-insurance-policy-wording.md#p7].
+Our maximum liability for each and every loss and all loss in the aggregate under this policy shall not exceed the Sum Insured stated in the Schedule [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
+
+We shall only be liable for that part of each and every loss which is in excess of the Deductible stated in the Schedule [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].

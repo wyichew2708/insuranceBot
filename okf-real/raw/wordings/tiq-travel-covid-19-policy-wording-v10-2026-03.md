@@ -6,6 +6,7 @@ tables: 13
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Thu, 12 Mar 2026 10:25:25 GMT"
+also_at: "https://www.etiqa.com.sg/wp-content/uploads/2026/06/Tiq-Travel-Covid-19-Policy-Wording_v10.pdf"
 ---
 <!-- image -->
 

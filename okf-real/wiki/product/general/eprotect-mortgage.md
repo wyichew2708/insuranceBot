@@ -37,8 +37,6 @@ confidence: medium
 
 A home insured for your family ePROTECT mortgage ensures that your remaining home loan will be taken care of, in the event you no longer can [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-eprotect-mortgage.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-eprotect-mortgage.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./eprotect-mortgage/exclusions.md).

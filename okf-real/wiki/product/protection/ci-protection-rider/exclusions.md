@@ -30,40 +30,26 @@ confidence: high
 
 ## 4 What is Not Covered?
 
-There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p3].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-## We will not pay any Benefit if
+## 4.2 Waiting Period
 
-• Major Cancer, Heart Attack of Specified Severity, as well as Other Serious Coronary Artery Disease is diagnosed; or • The date of diagnosis of Coronary Artery disease leading to the performance of Coronary Artery By-Pass Surgery or Angioplasty and Other Invasive Treatments for Coronary Artery is; [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p3].
+We will not pay any Benefit if: [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-## For the above definition, the following are excluded
+- Major Cancer, Heart Attack of Specified Severity, as well as Other Serious Coronary Artery Disease is diagnosed; or - The date of diagnosis of Coronary Artery disease leading to the performance of Coronary Artery By-Pass Surgery or Angioplasty and Other Invasive Treatments for Coronary Artery is; [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-• Angina; • Heart attack of indeterminate age; and • A rise in cardiac biomarkers or Troponin T or I following an intra-arterial cardiac procedure including, but not limited to, coronary angiography and coronary angioplasty. Explanatory note: 0.5ng/ml = 0.5ug/L = 500pg/ml 3 Stroke with Permanent Neurological Deficit A cerebrovascular incident including infarction of brain tissue, cerebral and subarachnoid haemorrhage, intracerebral embolism and cerebral thrombosis resulting in permanent neurological deficit. This diagnosis must be supported by all of the following conditions: [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p9].
+> within ninety (90) days from the: [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md]
 
-> • Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and • Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke. [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p9]
+- Rider issue date; - Rider commencement date; - Effective date of the increase of the rider's Sum insured; or - Latest Reinstatement date [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-## The following are excluded
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our Letter of Conditional Acceptance. When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-• Transient Ischaemic Attacks; • Brain damage due to an accident or injury, infection, vasculitis, and inflammatory disease; • Vascular disease affecting the eye or optic nerve; • Ischaemic disorders of the vestibular system; and • Secondary haemorrhage within a pre-existing cerebral lesion [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p9].
+## 6.7 Prohibited Person Limitation and Exclusion
 
-## For the above definition, the following operation or procedures are excluded
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-> • The operation or procedure performed via endoscopic or keyhole surgery • The operation or procedure performed via catheterisation 12 Irreversible Loss of Speech Total and irreversible loss of the ability to speak as a result of injury or disease to the vocal cords. The inability to speak must be established for a continuous period of 12 months. This diagnosis must be supported by medical evidence furnished by an Ear, Nose, Throat (ENT) specialist. [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p11]
+- a) We are entitled not to accept the application; and - b) if any policy is issued, We are entitled to end/terminate the policy, not pay any Benefits or not allow any transaction to be carried out under the policy. We will not refund any unutilised Premium when the policy is ended/terminated [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-All psychiatric related causes are excluded [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p11].
+You will need to inform Us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].
 
-## The following are excluded
-
-• Non-organic diseases such as neurosis and psychiatric illnesses; and • Alcohol related brain damage [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p12].
-
-## The following are excluded
-
-• Cysts; • Abscess; • Angioma; • Granulomas; • Vascular Malformations; • Haematomas; and • Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p14].
-
-## The following are excluded
-
-• Spinal cord injury; and • Head injury due to any other causes [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p15].
-
-## The following are excluded
-
-• Localised scleroderma (linear scleroderma or morphea); • Eosinophilic fascitis; and • CREST syndrome [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md#p15].
+Our decision in respect of this exclusion will be final [src:raw/wordings/policy-contract-for-ci-protection-rider-v1-23.md].

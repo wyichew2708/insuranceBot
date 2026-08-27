@@ -32,9 +32,9 @@ confidence: high
 
 ## 6. Claims Procedures
 
-> (a) All claims and relevant supporting documents must be given to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured Person(s) to claim under this Policy. (b) Any document or evidence required by Us to verify the claim shall be provided by the Insured Person(s) at His own expense. [src:raw/wordings/eprotect-travel-policy-wording.md]
+> - (a) All claims and relevant supporting documents must be given to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured Person(s) to claim under this Policy. - (b) Any document or evidence required by Us to verify the claim shall be provided by the Insured Person(s) at His own expense. [src:raw/wordings/eprotect-travel-policy-wording.md]
 
-(c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-travel-policy-wording.md].
+- (c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-travel-policy-wording.md].
 
 ## 7. Incomplete Claims
 

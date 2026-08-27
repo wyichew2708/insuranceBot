@@ -40,8 +40,6 @@ confidence: medium
 
 Some things in life are beyond our control [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#a-plan-you-can-count-on-till-old-age].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./whole-life-insurance/exclusions.md).

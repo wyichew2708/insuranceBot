@@ -37,8 +37,6 @@ confidence: medium
 
 Prepare for the future and ensure peace of mind with comprehensive riders and multiplier benefits [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-lifetime-secure.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-lifetime-secure.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-lifetime-secure/exclusions.md).

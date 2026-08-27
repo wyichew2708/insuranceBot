@@ -30,6 +30,6 @@ confidence: high
 
 ## 5.1 How To Make A Claim
 
-We must be informed in writing within three (3) months of the event giving rise to the claim. At the Proper claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint [src:raw/wordings/extra-secure-waiver-policy-contract.md#p3].
+We must be informed in writing within three (3) months of the event giving rise to the claim. At the Proper claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint [src:raw/wordings/extra-secure-waiver-policy-contract.md].
 
-We reserve the rights to reject Your claim if the terms and conditions stated in this Policy Contract are not met [src:raw/wordings/extra-secure-waiver-policy-contract.md#p3].
+We reserve the rights to reject Your claim if the terms and conditions stated in this Policy Contract are not met [src:raw/wordings/extra-secure-waiver-policy-contract.md].

@@ -30,26 +30,26 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Important Notice
-
-> In accordance to Section 23(5) Insurance Act 1966, we would remind you that you must disclose to us fully and faithfully all the facts you know or could reasonably be expected to know, otherwise you may not receive any benefit from this policy. [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md]
-
-## NOTICES
+## 2. NOTICES
 
 Every notice or communication to be given or made under this policy shall be delivered in writing to the company [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
 
-## SUBROGATION
+## 6. SUBROGATION
 
 All salvage glass shall be the property of the company, and must be carefully preserved. The company shall in respect of anything insured under this policy be entitled to use the name of the insured, including the bringing, defending, enforcing or settling of legal proceedings for the benefit of the company [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
 
-## CANCELLATION
+## 7. CANCELLATION
 
 The company may give notice in writing to the insured, under registered letter to his last known address, cancelling this policy at any time, paying on demand a proportion of the premium corresponding to the unexpired period of the policy [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
 
-## ARBITRATION
+## 9. ARBITRATION
 
 All differences arising out of this policy shall be referred to the decision of an arbitrator to be appointed in writing by the parties in difference or if they cannot agree upon a single arbitrator to the decision of two arbitrators one to be appointed in writing by each of the parties within one calendar month after having been required in writing so to do by either of the parties or in case the arbitrators do not agree of an umpire appointed in writing by the arbitrators before entering upon the reference. The umpire shall sit with the arbitrators and preside at their meetings and the making of an award shall be a condition precedent to any right of action against the company [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
 
+If the company shall disclaim liability to the insured for any claim hereunder and such claim shall not within twelve calendar months from the date of such disclaimer have been referred to arbitration under the provisions herein contained then the claim shall for all purposes be deemed to have been abandoned and shall not [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
+
 ## Personal Data Use
 
-Any information collected or held by us whether contained in your application or otherwise obtained may be used and/or disclosed to our associated individuals/companies or any independent third parties (within or outside Singapore) for anymatters relating to your application, any policy issued and to provide advice or information concerning products and services which we believe may be of interest to you and to communicate with you for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
+Any information collected or held by us whether contained in your application or otherwise obtained may be used and/or disclosed to our associated individuals/companies or any independent third parties (within or outside Singapore) for anymatte rs relating to your application, any policy issued and to provide advice or information concerning products and services which we believe may be of interest to you and to communicate with you for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
+
+> 10. ABANDONMENT OF CLAIM thereafter be recoverable hereunder. [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md]

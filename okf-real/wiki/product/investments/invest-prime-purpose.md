@@ -39,8 +39,6 @@ confidence: medium
 
 Grow with principles, invest with purpose [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-prime-purpose.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-prime-purpose.md#body].
-
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-prime-purpose.md#what-is-covered].

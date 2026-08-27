@@ -31,50 +31,50 @@ confidence: high
 
 ## 4 What is Not Covered?
 
-There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p3].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## We will not pay any Benefit if
+## 4.1 Death
 
-• Major Cancer, Heart Attack of Specified Severity, as well as Other Serious Coronary Artery Disease is diagnosed; or • The date of diagnosis of Coronary Artery disease leading to the performance of Coronary Artery By-Pass Surgery is; [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p3].
+> We will not pay any Benefit if the death is directly or indirectly, wholly or partly caused by intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the Policy Issue date or the latest Reinstatement date, whichever is later. [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md]
 
-## For the above definition, the following are excluded
+## 4.2 Total And Permanent Disability (TPD)
 
-• Angina; • Heart attack of indeterminate age; and • A rise in cardiac biomarkers or Troponin T or I following an intra-arterial cardiac procedure including, but not limited to, coronary angiography and coronary angioplasty. Explanatory note: 0.5ng/ml = 0.5ug/L = 500pg/ml 3 Stroke with Permanent Neurological Deficit A cerebrovascular incident including infarction of brain tissue, cerebral and subarachnoid haemorrhage, intracerebral embolism and cerebral thrombosis resulting in permanent neurological deficit. This diagnosis must be supported by all of the following conditions: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p9].
+We will not pay any Benefit if the TPD is directly or indirectly, wholly or partly caused by: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-> • Evidence of permanent clinical neurological deficit confirmed by a neurologist at least 6 weeks after the event; and • Findings on Magnetic Resonance Imaging, Computerised Tomography, or other reliable imaging techniques consistent with the diagnosis of a new stroke. [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p9]
+- a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - b) Criminal acts, war (declared or not), terrorism and chemical warfare; - c) Participating in aviation (except as fare-paying passenger or member crew of a commercial airline), any dangerous or hazardous sport or hobby such as (but not limited to) steeple chasing, polo, horse racing, underwater diving, hunting, motor vehicular racing, mountaineering or potholing, or aerial sports such as skydiving, parachuting, bungee jumping; [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## The following are excluded
+- d) Effects of drug or alcohol addiction; or - e) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Transient Ischaemic Attacks; • Brain damage due to an accident or injury, infection, vasculitis, and inflammatory disease; • Vascular disease affecting the eye or optic nerve; • Ischaemic disorders of the vestibular system; and • Secondary haemorrhage within a pre-existing cerebral lesion [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p10].
+## 4.3 Critical Illness (CI)
 
-## For the above definition, the following operation or procedures are excluded
+We will not pay any Benefit if the CI is directly or indirectly, wholly or partly caused by: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-> • The operation or procedure performed via endoscopic or keyhole surgery • The operation or procedure performed via catheterisation 12 Irreversible Loss of Speech Total and irreversible loss of the ability to speak as a result of injury or disease to the vocal cords. The inability to speak must be established for a continuous period of 12 months. This diagnosis must be supported by medical evidence furnished by an Ear, Nose, Throat (ENT) specialist. [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p12]
+- a) A Pre-existing condition; - b) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - c) Effects of drug or alcohol addiction; or - d) AIDS, AIDS-related conditions or infection in the presence of HIV except HIV due to blood transfusion and occupationally acquired HIV [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-All psychiatric related causes are excluded [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p12].
+## 4.4 Waiting Period
 
-## The following are excluded
+We will not pay any Benefit if: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Non-organic diseases such as neurosis and psychiatric illnesses; and • Alcohol related brain damage [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p13].
+- Major Cancer, Heart Attack of Specified Severity, as well as Other Serious Coronary Artery Disease is diagnosed; or - The date of diagnosis of Coronary Artery disease leading to the performance of Coronary Artery By-Pass Surgery is; [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## The following are excluded
+> within ninety (90) days from the: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md]
 
-• Cysts; • Abscess; • Angioma; • Granulomas; • Vascular Malformations; [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p14].
+- Rider issue date; - Rider commencement date; or - Latest Reinstatement date [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Haematomas; and • Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p14].
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our Letter of Conditional Acceptance. When any of the exclusion happens, We will return the total Premiums [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## The following are excluded
+paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Spinal cord injury; and • Head injury due to any other causes [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p15].
+## 6.7 Prohibited Person Limitation and Exclusion
 
-## The following are excluded
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Localised scleroderma (linear scleroderma or morphea); • Eosinophilic fascitis; and • CREST syndrome [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md#p16].
+- a) We are entitled not to accept the application; and - b) if any policy is issued, We are entitled to end/terminate the policy, not pay any Benefits or not allow any transaction to be carried out under the policy. We will not refund any unutilised Premium when the policy is ended/terminated [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## For the above definition, the following are excluded
+You will need to inform Us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-• Heart attack of indeterminate age; and • A rise in cardiac biomarkers or Troponin T or I following an intra-arterial cardiac procedure including, but not limited to, coronary angiography and coronary angioplasty. Explanatory note: 0.5ng/ml = 0.5ug/L = 500pg/ml 3 Stroke with Permanent Neurological Deficit A cerebrovascular incident including infarction of brain tissue, cerebral and subarachnoid haemorrhage, intracerebral embolism and cerebral thrombosis resulting in permanent neurological deficit. This diagnosis must be supported by all of the following conditions: [src:raw/wordings/extra-payer-waiver-policy-contract.md#p9].
+Our decision in respect of this exclusion will be final [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## The following are excluded
+## 4.4 Waiting Period
 
-• Cysts; • Abscess; • Angioma; • Granulomas; • Vascular Malformations; • Haematomas; and • Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/extra-payer-waiver-policy-contract.md#p14].
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our Letter of Conditional Acceptance. When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/extra-payer-waiver-policy-contract.md].

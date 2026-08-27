@@ -37,8 +37,6 @@ confidence: medium
 
 Your financial journey deserves more than growth [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-wealth-ii.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-wealth-ii.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-flex-wealth-ii/exclusions.md).

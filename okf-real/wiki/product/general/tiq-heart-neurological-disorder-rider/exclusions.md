@@ -29,4 +29,4 @@ confidence: high
 
 ## Exclusions
 
-There are certain conditions under which no Benefits will be payable [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md#p4].
+There are certain conditions under which no Benefits will be payable [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].

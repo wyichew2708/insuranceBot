@@ -30,6 +30,6 @@ confidence: high
 
 ## 3.7 Making Claims from the Policy
 
-We must be informed in writing within three (3) months of the event giving rise to the claim. At the claimant’s own expense, he/she must give Us all documents and evidence We ask for to assess the claim [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md#p4].
+We must be informed in writing within three (3) months of the event giving rise to the claim. At the claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
 
-Material facts that were not disclosed when required for application may result in the Life Insured claim being rejected [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md#p4].
+Material facts that were not disclosed when required for application may result in the Life Insured claim being rejected [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].

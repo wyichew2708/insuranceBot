@@ -40,8 +40,6 @@ confidence: medium
 
 Protect what belongs to you Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./home-insurance/exclusions.md).

@@ -29,36 +29,32 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Section I - Property Damage
-
-If during the period of insurance the property insured or any part thereof shall be accidentally, physically lost destroyed or damaged by any cause other than those specified in the general exclusions the company will pay to the insured the value of the property at the time of the happening of the loss or destruction or the amount of such damage or at its option reinstate or replace such property or any part thereof [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
-
 ## Section II - Business Interruption
 
-insurance any building or other property or any part thereof used by the insured at the If during the period of situation for the purpose of the business be accidentally lost, destroyed or damaged by any cause insured under section I of the policy (hereinafter termed damage) and the business carried on by the insured at the situation be in consequence thereof interrupted or interfered with the company will pay to the insured in respect of each item in the schedule the amount of loss resulting from such interruption or interference in accordance with the provisions as contained in the specification to section II [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+If during the period of insurance any building or other property or any part thereof used by the insured at the situation for the purpose of the business be accidentally lost, destroyed or damaged by any cause insured under section I of the policy (hereinafter termed damage) and the business carried on by the insured at the situation be in consequence thereof interrupted or interfered with the company will pay to the insured in respect of each item in the schedule the amount of loss resulting from such interruption or interference in accordance with the provisions as contained in the specification to section II [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-## BURGLARY EXTENSION
+Provided that at the time of the happening of the damage there shall be in force an insurance covering the interest of the insured in the property at the situation against such damage and that payment shall have been made or liability admitted thereof under such insurance [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+## 16 BURGLARY EXTENSION
 
 The company agrees that, subject to the terms, exclusions, limits and conditions contained herein, if during the period of insurance [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-any of the property insured while within the premises shall be lost or damaged as a result of theft and/or criminal trespass involving entry to or exit from the premises by forcible and violent means the premises shall sustain damage for which the insured is responsible as the result of theft involving entry to or exit from the premises by forcible and violent means or any attempt thereat then the company will by payment or at its option by repair, reinstatement or replacement indemnify the insured in respect of such loss or damage, which in any event will not exceed the sum insured stated in the schedule of this policy [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+1. any of the property insured while within the premises shall be lost or damaged as a result of theft and/or criminal trespass involving entry to or exit from the premises by forcible and violent means 2. the premises shall sustain damage for which the insured is responsible as the result of theft involving entry to or exit from the premises by forcible and violent means or any attempt thereat then the company will by payment or at its option by repair, reinstatement or replacement indemnify the insured in respect of such loss or damage, which in any event will not exceed the sum insured stated in the schedule of this policy [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-## FULL THEFT EXTENSION
+Provided always that the company shall not be liable for: [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+- 1) loss or damage due to theft or to any attempt thereat by or in collusion with any of the insured's family, directors, employees, domestic servants or any person lawfully on the premises - 2) damage to plate, float, toughened, laminated or stained glass or any decoration or lettering thereon or any glass otherwise insured - 3) loss of or damage to coin and similarly operated machines - 4) loss or damage resulting from a safe or strongroom being opened by a key obtained through its having been left on the premises whilst closed for business [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+If any event giving rise to or likely to give rise to a claim under this extension comes to their knowledge the insured shall give immediate notice to the police and take all practicable steps to discover the thieves and recover any missing property [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+## 33 FULL THEFT EXTENSION
 
 The company agrees that, subject to the terms, exclusions, limits and conditions contained herein, if during the period of insurance any of the property insured while within the premises shall be lost or damaged as a result of theft then the company will by payment or at its option by repair, reinstatement or replacement indemnify the insured in respect of such loss or damage, which in any event will not exceed the sum insured stated in the schedule of this policy [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-## The amount recoverable under this extension shall not include
+- 1) loss or damage due to theft or to any attempt thereat by or in collusion with any of the insured's family, directors, employees, domestic servants or any person lawfully on the premises. - 2) loss or damage arising while the premises are in the occupation of a sub-tenant [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-the cost incurred in complying with any of the aforesaid regulations or bye-laws :- (i) (ii) (iii) [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+- 3) loss or damage resulting from a safe or strongroom being opened by a key obtained through its having been left on the premises whilst closed for business. - 4) unexplained loss, mysterious disappearance or loss or shortage upon taking inventory [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
 
-in respect of destruction or damage occurring prior to the granting of this extension, in respect of destruction or damage not insured by the policy, under which notice has been served upon the insured prior to the happening of the destruction or damage, in respect of undamaged property or undamaged portions of property [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+> - 5) the first S$250 of each and every loss or damage by theft other than theft involving forcible and violent entry to or exit from the premises. [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md]
 
-(iv) the additional cost that would have been required to make good the property damaged or destroyed to a condition, equal to its condition when new, had the necessity to comply with any of the aforesaid regulations or bye-laws not arisen; [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
-
-the amount of any rate, tax, duty, development or other charge or assessment arising out of capital appreciation which may be payable in respect of the property by the owner thereof by reason of compliance with any of the aforesaid regulations or bye-laws [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
-
-> The work of reinstatement must be commenced and carried out with reasonable despatch and in any case must be completed within 12 months after the destruction or damage or within such further time as the company may (during the said 12 months) in writing allow and may be carried out wholly or partially upon another site (if the aforesaid regulations or bye-laws so necessitate) subject to the liability of the company under this extension not being thereby increased. [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md]
-
-If the liability of the company under (any item of) the policy apart from this extension shall be reduced by the application of any of the terms and conditions of the policy then the liability of the company under this extension (in respect of any such item) shall be reduced in like proportion [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
-
-The total amount recoverable under any item of the policy shall not exceed the sum insured thereby. All the conditions of the policy except insofar as they may be hereby expressly varied shall apply as if they had been incorporated herewith [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+If any event giving rise to or likely to give to a claim under this extension comes to their knowledge the insured shall give immediate notice to the police and take all practicable steps to discover the thieves and recover any missing property [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].

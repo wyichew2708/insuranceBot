@@ -16,7 +16,6 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md
 - raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md
 - raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md
 links:
@@ -31,44 +30,28 @@ confidence: high
 
 ## 5. What is Not Covered?
 
-There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions. When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p5].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p5].
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-## For the above definition, the following operation or procedures are excluded
+When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this rider) without interest, less any amounts owing to Us [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-• The operation or procedure performed via endoscopic or keyhole surgery. • The operation or procedure performed via catheterisation [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p13].
+## 7.7 Prohibited Person Limitation and Exclusion
 
-## The following are excluded
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-a) Non-organic diseases such as neurosis and psychiatric illnesses; and b) Alcohol related brain damage [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p14].
+- (i) We are entitled not to accept the application; and - (ii) If any policy is issued, We are entitled to end/terminate the policy, not pay any benefit or not allow any transaction to be carried out under the policy. We will not refund any unutilised premium when the policy is ended/terminated [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-## The following are excluded
+You will need to inform us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
-a) Cysts; b) Abscess; c) Angioma; d) Granulomas; e) Vascular Malformations; f) Haematomas; and g) Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p16].
-
-## The following are excluded
-
-a) Spinal cord injury; and b) Head injury due to any other causes [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v2-25.md#p17].
-
-## The following are excluded
-
-b) Abscess; c) Angioma; d) Granulomas; e) Vascular Malformations; f) Haematomas; and g) Tumours of the pituitary gland, spinal cord and skull base [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p15].
+Our decision in respect of this exclusion will be final [src:raw/wordings/direct-etiqa-ci-rider-ii-policy-contract-v1-25.md#p2].
 
 ## Exclusions
 
-1) There are certain conditions which no Benefit will be payable. These conditions are stated as “exclusions” in the policy contract. The categories of exclusions that are common to all life insurers for CI Benefit relate to: a) A Waiting period b) Pre-existing medical conditions [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
+- 1) There are certain conditions which no Benefit will be payable. These conditions are stated as 'exclusions' in the policy contract. The categories of exclusions that are common to all life insurers for CI Benefit relate to: - a) A Waiting period - b) Pre-existing medical conditions [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md].
 
-When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
+> - 2) In addition to the above common categories of exclusions, life insurers may impose other exclusions. - 3) For this rider, the following exclusions apply: - a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the Policy Issue date or the latest Reinstatement date, whichever is later; [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md]
 
-2) In addition to the above common categories of exclusions, life insurers may impose other [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
+- b) Effects of drug or alcohol addiction; - c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV; - d) Any Pre-existing condition; or - e) The CI is diagnosed during the Waiting period, which is applicable to 'Major Cancer', 'Coronary Artery By-pass Surgery', 'Heart Attack of Specified Severity' and 'Angioplasty &amp; Other Invasive Treatment For Coronary Artery' [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md].
 
-## 3) For this rider, the following exclusions apply
-
-> a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first twelve (12) months from the Policy Issue date or the latest Reinstatement date, whichever is later; [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3]
-
-b) Effects of drug or alcohol addiction; c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV; [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
-
-d) Any Pre-existing condition; or e) The CI is diagnosed during the Waiting period, which is applicable to ‘Major Cancer’, ‘Coronary Artery By-pass Surgery’, ‘Heart Attack of Specified Severity’ and ‘Angioplasty & Other Invasive Treatment For Coronary Artery’ [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
-
-4) The definitions of the exclusions are stated in the policy contract. Please refer to the policy [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md#p3].
+- 4) The definitions of the exclusions are stated in the policy contract. Please refer to the policy contract [src:raw/product-summaries/direct-etiqa-ci-rider-ii-product-summary.md].

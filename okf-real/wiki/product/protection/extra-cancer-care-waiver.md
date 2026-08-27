@@ -28,7 +28,17 @@ confidence: medium
 
 ## About Extra Cancer Care Waiver
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
+## 2 Our Responsibilities
+
+This is a regular Premium, Non-participating rider that waives the Premium of the Basic policy and any attaching supplementary Benefit if the Life insured is diagnosed with Major Cancer. At the rider Expiry date, if We have not paid out any claims, this rider will end and no Benefits will be payable [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
+
+> This rider is attached to the Basic policy at policy application for Life insured with entry Age from 17 to 60. [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md]
+
+Your policy covers the Benefit described below [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
+
+## 2.1 Extra cancer care waiver [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
+
+Extra cancer care waiver allows You to continue the Basic policy and any attaching supplementary Benefit without paying Premiums from the next Premium due date following the Life insured's diagnosis of Major Cancer for the first time during the policy term. The Major Cancer must be diagnosed by a Doctor. The Premium will be waived up to the Expiry date of this rider [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
 
 ## Benefit Limitation
 

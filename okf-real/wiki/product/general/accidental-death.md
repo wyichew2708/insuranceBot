@@ -30,8 +30,6 @@ confidence: medium
 
 ## About Accidental Death Insurance
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].
-
 ## Accidental Death Benefit
 
 Upon accidental death of the Life insured while the rider is in force, We will pay the Sum insured less any amounts owing to Us. When We make this payment, the rider ends [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].

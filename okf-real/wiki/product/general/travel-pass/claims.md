@@ -30,6 +30,6 @@ confidence: high
 
 ## 7.6. No Claims Cashback
 
-> Members who reach Platinum Tier will enjoy a 5% cashback on eligible Etiqa Insurance Pte. Ltd. Travel Insurance policies, provided that no claims have been made on the policy. This cashback applies only to policies purchased after meeting the Platinum Qualifications (Clause 8.1(d) below) and during the Platinum Tier’s Validity Period (Clause 9.1 below). [src:raw/wordings/travel-pass-terms-conditions.md#p2]
+> Members who reach Platinum Tier will enjoy a 5% cashback on eligible Etiqa Insurance Pte. Ltd. Travel Insurance policies, provided that no claims have been made on the policy. This cashback applies only to policies purchased after meeting the Platinum Qualifications (Clause 8.1(d) below) and during the Platinum Tier's Validity Period (Clause 9.1 below). [src:raw/wordings/travel-pass-terms-conditions.md]
 
-> Policies purchased prior to attaining Platinum Tier are not eligible for the cashback. The cashback will be credited 45 days after the policy end date to the Member’s Etiqa Insurance Pte. Ltd. eWallet in the App. [src:raw/wordings/travel-pass-terms-conditions.md#p2]
+> Policies purchased prior to attaining Platinum Tier are not eligible for the cashback. The cashback will be credited 45 days after the policy end date to the Member's Etiqa Insurance Pte. Ltd. eWallet in the App. [src:raw/wordings/travel-pass-terms-conditions.md]

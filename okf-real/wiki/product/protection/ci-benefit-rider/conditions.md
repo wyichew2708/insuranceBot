@@ -28,17 +28,29 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Policy Owners’ Protection Scheme
+## Policy Owners' Protection Scheme
 
-This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+
+## Nature and Objective of the Plan: [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+
+> This is a whole of life Participating rider that accelerates the death Benefit of the Basic policy if the Life insured is diagnosed with any one of the covered 63 severe-stage critical illnesses while the rider is in force. This rider does not have any surrender value. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
+
+> This rider has a Non-participating multiplier Benefit which allows you to increase the Rider sum insured by multiplying a factor of 2 times, 3 times, 4 times or 5 times, up to the selected multiplier expiry Age of Age next birthday 66, 71, 76, 81 or 86. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
+
+This rider consists of a participating component and a non-participating component which provides the additional coverage [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+
+## Termination
+
+Your rider will end when one of these events happens first: [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+
+- a) Termination of the Basic policy; - b) Rider Expiry date; - c) We paid out the rider Benefit in full; - d) Premium is not paid on time and there is insufficient Surrender value in the Basic policy; or - e) Your written request and Our acceptance of the application to terminate this rider. If You write to Us to terminate Your rider, there will not be any prorated refund of Premium and Your rider will terminate from the Premium due date immediately following the date We accept Your written request for termination; or - f) any other cause of termination as permitted under or any change of laws or regulatory requirements, including court orders [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
 
 ## Premiums
 
 > The Premium that You pay for this rider is not guaranteed and may change depending on the claims experience. We will write to You to tell You the new Premiums at least thirty (30) days before We make any changes to Your Premium. Premium are payable during the premium term and can be paid monthly, quarterly, half-yearly or yearly. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
 
-> You will pay the first Premium at the time You apply for this rider. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the rider. If You fail to pay Premiums before the due date, We will pay the Premiums for You so that the rider can continue. We can only do so if the Basic policy has accumulated a Surrender value which is enough to pay for the Premiums. This is a loan (automatic Premium loan) from Us and We will charge You interest. Interest accrues on a daily basis. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
-
-If there is insufficient Surrender value in the Basic policy, this rider will end. We will deduct any outstanding Premium from any amount We may be due to pay under this rider [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+> You will pay the first Premium at the time You apply for this rider. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the rider. If You fail to pay Premiums before the due date, We will pay the Premiums for You so that the rider can continue. We can only do so if the Basic policy has accumulated a Surrender value which is enough to pay for the Premiums. This is a loan (automatic Premium loan) from Us and We will charge You interest. Interest accrues on a daily basis. If there is insufficient Surrender value in the Basic policy, this rider will end. We will deduct any outstanding Premium from any amount We may be due to pay under this rider. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
 
 ## Free Look Period
 

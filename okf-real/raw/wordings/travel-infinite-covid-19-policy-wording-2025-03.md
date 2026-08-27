@@ -6,6 +6,7 @@ tables: 6
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Tue, 11 Mar 2025 07:35:23 GMT"
+also_at: "https://www.etiqa.com.sg/wp-content/uploads/2023/06/Travel-Infinite-COVID-19-Policy-Wording.pdf"
 ---
 ## Travel Infinite
 

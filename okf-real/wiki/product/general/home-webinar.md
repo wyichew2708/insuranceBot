@@ -37,8 +37,6 @@ confidence: medium
 
 Here’s the webinar zoom link [src:raw/web/www.tiq.com.sg/2026-08-25/home-webinar.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/home-webinar.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./home-webinar/exclusions.md).

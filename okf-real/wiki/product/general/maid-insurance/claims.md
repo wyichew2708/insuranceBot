@@ -16,7 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/eprotect-maid-policy-wording-v10.md
+- raw/wordings/tiq-maid-policy-wording.md
 version_in_force: '2026'
 links:
   concepts: []
@@ -30,10 +30,10 @@ confidence: high
 
 ## 8. Claims Procedure
 
-> a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense. [src:raw/wordings/eprotect-maid-policy-wording-v10.md]
+> - a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense. [src:raw/wordings/tiq-maid-policy-wording.md]
 
-c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-maid-policy-wording-v10.md].
+- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-maid-policy-wording.md].
 
 ## 9. Incomplete Claims
 
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/eprotect-maid-policy-wording-v10.md].
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-maid-policy-wording.md].

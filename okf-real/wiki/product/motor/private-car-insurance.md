@@ -40,8 +40,6 @@ confidence: medium
 
 Not driving much these days? No problem [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#why-private-car-insurance].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./private-car-insurance/exclusions.md).

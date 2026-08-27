@@ -28,19 +28,13 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Cost of Recompiling Records and Claims Preparation
+## 6. Cost of Recompiling Records and Claims Preparation
 
-This Section extends to cover a. Costs of recompiling records but only for the value of the materials used together with the costs of clerical [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
-
-labour expended in producing such records and [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
-
-b. Reasonable charges incurred by the Insured for producing and certifying any information as may be required by the [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
-
-Company under the terms of General Condition 7 of this Policy [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
+- a. Costs of recompiling records but only for the value of the materials used together with the costs of clerical labour expended in producing such records and - b. Reasonable charges incurred by the Insured for producing and certifying any information as may be required by the Company under the terms of General Condition 7 of this Policy [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
 > Provided that the Company's liability under this extension shall not in the aggregate exceed S$500. [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md]
 
-## Claims Procedure
+## 1. Claims Procedure
 
 Written notice shall be given to the Company as soon as possible and in any event within one (1) calendar month of the occurrence of any bodily injury, which may give rise to a claim under this Section [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
@@ -48,22 +42,16 @@ All certificates information and evidence required by the Company shall be suppl
 
 The Company shall in the case of death of the Insured Person be entitled to have a post-mortem performed at its own expense where it is not forbidden by law [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-## NOTIFICATION OF CLAIMS
+## 7. NOTIFICATION OF CLAIMS
 
-On the happening of any loss or damage, which may give rise to a claim under this Policy the Insured shall [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+On the happening of any loss or damage, which may give rise to a claim under this Policy the Insured shall [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-a. Give immediate notice in writing to the Company with full particula [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+- a. Give immediate notice in writing to the Company with full particulars. - b. In respect of loss or damage by theft or any attempt thereat or acts by malicious persons also to give immediate notice to the police and co-operate with the Company in securing the conviction of the offender [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-In respect of loss or damage by theft or any attempt thereat or acts by malicious persons also to give immediate notice to the police and co-operate with the Company in securing the conviction of the offender [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+- c. Make no admission of liability, offer promise or payment without the Company's written consent. - d. Inform the Company immediately of any impending prosecution inquest or fatal inquiry or civil proceedings and send to the Company immediately upon receipt every relevant document [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-c. Make no admission of liability, offer promise or payment without the Company's written conse [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+- e. Declare to the Company particulars of all other insurances if any. - f. Deliver the claim to the Company within seven (7) days of the event at his own expense in writing with such detailed particulars and proofs as may be reasonably required and (if demanded) a statutory declaration of the truth of the claim [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-Inform the Company immediately of any impending prosecution inquest or fatal inquiry or civil proceedings and send to the Company immediately upon receipt every relevant document [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+## 8. FRAUDULENT CLAIMS
 
-e. Declare to the Company particulars of all other insurances if a [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
-
-Deliver the claim to the Company within seven (7) days of the event at his own expense in writing with such detailed particulars and proofs as may be reasonably required and (if demanded) a statutory declaration of the truth of the claim [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
-
-## FRAUDULENT CLAIMS
-
-This Policy shall be voidable in the event of misdescription, misrepresentation or non-disclosure of any material particulars or facts [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md#p23].
+This Policy shall be voidable in the event of misdescription, misrepresentation or non-disclosure of any material particulars or facts [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].

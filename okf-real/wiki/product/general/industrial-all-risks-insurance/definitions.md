@@ -29,6 +29,16 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## DEFINITION
+## DEFINITIONS GROSS PROFIT
+
+The amount by which the sum of the turnover and the amount of the closing stock shall exceed the sum of the amount of the opening stock and the amount of the specified working expenses [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+For the purpose of this definition the amounts of the opening and closing stocks shall be arrived at in accordance with the insured's usual accounting methods due provision being made for depreciation [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+Specified working expenses... as shown in the schedule [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+The words and expressions used in this definition (other than wages) shall have the meaning usually attached to them in the books and accounts of the insured [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].
+
+## 1. DEFINITION
 
 This policy and the schedule shall be read together as one contract and any word or expression to which a specific meaning has been attached in any part of this policy or of the schedule shall bear such meaning wherever it may appear [src:raw/wordings/etiqa-industrial-all-risks-insurance-policy-wording-2023-02.md].

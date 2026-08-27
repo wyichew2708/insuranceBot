@@ -29,10 +29,10 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## EXCLUDED CONTINGENCIES
+## 4. EXCLUDED CONTINGENCIES
 
 The company shall not be liable [src:raw/wordings/etiqa-fidelity-guarantee-policy-wording-2023-02.md].
 
-for the Excess stated in the Schedule in respect of each claim arising out of any act or acts of fraud or dishonesty by any one Employee. for stock losses discovered during stock taking or routine stock check unless it can be clearly established that an act of fraud or dishonesty has been committed by an Employee or Employees of the Insured and that all other obligations imposed upon the insured hereunder are fulfilled [src:raw/wordings/etiqa-fidelity-guarantee-policy-wording-2023-02.md].
+- (i) for the Excess stated in the Schedule in respect of each claim arising out of any act or acts of fraud or dishonesty by any one Employee. - (ii) for stock losses discovered during stock taking or routine stock check unless it can be clearly established that an act of fraud or dishonesty has been committed by an Employee or Employees of the Insured and that all other obligations imposed upon the insured hereunder are fulfilled [src:raw/wordings/etiqa-fidelity-guarantee-policy-wording-2023-02.md].
 
-to pay more than one claim in respect of any Employee [src:raw/wordings/etiqa-fidelity-guarantee-policy-wording-2023-02.md].
+- (iii) to pay more than one claim in respect of any Employee [src:raw/wordings/etiqa-fidelity-guarantee-policy-wording-2023-02.md].

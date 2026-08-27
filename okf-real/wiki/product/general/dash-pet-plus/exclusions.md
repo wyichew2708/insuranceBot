@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md
 - raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md
 links:
   concepts: []
@@ -27,12 +28,32 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## We will not pay the covered Benefits for the following
+## 5. What is Not Covered
 
-> We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: • Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; or • Pre-existing conditions within the first twelve (12) months from the Rider Issue date. [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md#p10]
+We will not pay the covered Benefits for the following: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-When death exclusion happens, We will return the Rider account value calculated based on the next Valuation day following Our receipt of Your death notification, less any amounts owing to Us from this rider. We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md#p10].
+## 7.7 Prohibited Person Limitation and Exclusion
 
-> • Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; • Pre-existing conditions within the first twelve (12) months from the Rider issue date; or • Acquired Immunodeficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV infection due to blood transfusion and occupationally acquired HIV. [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md#p10]
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-When TI exclusion happens, You have the option to either continue with this rider or to surrender the rider. When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance and the Endorsement [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md#p10].
+- a) We are entitled not to accept the application; and - b) if any policy is issued, We are entitled to end/terminate the policy, not pay any Benefits or not allow any transaction to be carried out under the policy. We will not refund any unutilised Premium when the policy is ended/terminated [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+You will need to inform Us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Our decision in respect of this exclusion will be final [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## Exclusion
+
+We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
+
+> - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; or - Pre-existing conditions within the first twelve (12) months from the Rider Issue date. [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md]
+
+When death exclusion happens, We will return the Rider account value calculated based on the next Valuation day following Our receipt of Your death notification, less any amounts owing to Us from this rider [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
+
+We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
+
+> - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - Pre-existing conditions within the first twelve (12) months from the Rider issue date; or - Acquired Immunodeficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV infection due to blood transfusion and occupationally acquired HIV. [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md]
+
+When TI exclusion happens, You have the option to either continue with this rider or to surrender the rider [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance and the Endorsement [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].

@@ -18,8 +18,7 @@ plan_tiers: []
 authority:
 - raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 links:
-  concepts:
-  - concept/excess
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
@@ -28,6 +27,8 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## To be eligible under this Policy
+## Eligibility
 
-> (a) The Insured and/or Policy Owner named in the Schedule must be a Singapore citizen, a permanent resident of Singapore or a foreigner with a valid Work Pass, Student Pass, Dependant’s Pass or Long-Term Visit Pass. (b) The Insured named in the Schedule must be at least eight (8) years of Age and not more than sixty-five (65) years of Age on the Effective Date of Insurance. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+> - (c) If the Insured is younger than eighteen (18) years of Age on the Effective Date of Insurance, the Insured must be: - I. a legal child including stepchild and/or legally adopted child of the Policy Owner; - II. wholly dependent on the Policy Owner for financial support and not gainfully employed in any way; and III. unmarried. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+> The Policy Owner must be at least eighteen (18) years of Age. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]

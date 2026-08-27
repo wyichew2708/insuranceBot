@@ -30,4 +30,4 @@ confidence: high
 
 ## 9. Notice of Claim
 
-> A claim must be notified to us as soon as possible and in any case within thirty (30) days after the occurrence of any event which may give rise to a claim. To report a claim, please call 9695 1338 or 8218 8521. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md#p13]
+> A claim must be notified to us as soon as possible and in any case within thirty (30) days after the occurrence of any event which may give rise to a claim. To report a claim, please call 9695 1338 or 8218 8521. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]

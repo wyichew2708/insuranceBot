@@ -39,8 +39,6 @@ confidence: medium
 
 Embark on ethical investing with Invest vista, Etiqa Insurance Pte. Ltd.’s values-based insurance solution that is designed for investing with a vision [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-vista.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-vista.md#body].
-
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-vista.md#what-is-covered].

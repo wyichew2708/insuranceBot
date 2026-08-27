@@ -28,6 +28,10 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
+## Eligibility
+
+You are eligible to sign up for this cover if: [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
+
 ## 3.3 Errors in Age / Eligibility / Country of Residence
 
-Based on the correct age, eligibility and/or country of residence, if You are not eligible to apply for this cover, We will not pay any Benefits and the policy will be terminated [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md#p4].
+Based on the correct age, eligibility and/or country of residence, if You are not eligible to apply for this cover, We will not pay any Benefits and the policy will be terminated [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].

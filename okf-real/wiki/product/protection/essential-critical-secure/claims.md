@@ -30,4 +30,4 @@ confidence: high
 
 ## c) Maximum Claim Limit
 
-> We will only provide a maximum aggregate amount of S$2,000,000 per Life insured for early, intermediate and severe stages of CI (including premiums to be waived under this policy), subject to a cap of S$350,000 per Life insured for early or intermediate stages of CI, for all policies and riders issued by Us and other insurance companies on the same Life insured. [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md#p3]
+> We will only provide a maximum aggregate amount of S$2,000,000 per Life insured for early, intermediate and severe stages of CI (including premiums to be waived under this policy), subject to a cap of S$350,000 per Life insured for early or intermediate stages of CI, for all policies and riders issued by Us and other insurance companies on the same Life insured. [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md]

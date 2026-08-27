@@ -38,8 +38,6 @@ confidence: medium
 
 Your cash rebate will be credited to your TiqConnect eWallet within 3 working days [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance-drive-less-save-more.md#enjoy-cash-rebate].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance-drive-less-save-more.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./drive-less-save-more/exclusions.md).

@@ -31,8 +31,6 @@ confidence: high
 
 ## NOTIFCATION OF A CLAIM
 
-Loss / damage arising from theft, fire, accidental loss, malicious damage or vandalism - report to police immediately. Then, notify us within seven (7) days [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md].
+> - 1) Loss / damage arising from theft, fire, accidental loss, malicious damage or vandalism - report to police immediately. Then, notify us within seven (7) days. - Legal liability for the injury or damage - notify us immediately and provide full details in writing within twenty-one (21) days. Send us immediately any writ, summons or other legal document served on you or your family. [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md]
 
-> Legal liability for the injury or damage - notify us immediately and provide full details in writing within twenty-one (21) days. Send us immediately any writ, summons or other legal document served on you or your family. Any other claims - notify us within twenty-one (21) days. [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md]
-
-All the details and evidence which we ask for concerning and amount of any loss, damage or injury shall be provided by you at your own expenses [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md].
+> - Any other claims - notify us within twenty-one (21) days. - 2) All the details and evidence which we ask for concerning and amount of any loss, damage or injury shall be provided by you at your own expenses. [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md]

@@ -17,6 +17,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/policy-wording-cyber-insurance.md
+- raw/product-summaries/product-summary-cyber-insurance.md
 links:
   concepts:
   - concept/excess
@@ -30,10 +31,12 @@ confidence: medium
 
 ## About Cyber Insurance
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/wordings/policy-wording-cyber-insurance.md].
+## 4.1 Sum Insured and Deductible
 
-## Sum Insured and Deductible
+Our maximum liability for each and every loss and all loss in the aggregate under this policy shall not exceed the Sum Insured stated in the Schedule [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-Our maximum liability for each and every loss and all loss in the aggregate under this policy shall not exceed the Sum Insured stated in the Schedule [src:raw/wordings/policy-wording-cyber-insurance.md#p7].
+We shall only be liable for that part of each and every loss which is in excess of the Deductible stated in the Schedule [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-We shall only be liable for that part of each and every loss which is in excess of the Deductible stated in the Schedule [src:raw/wordings/policy-wording-cyber-insurance.md#p7].
+## Plan Benefit
+
+Please refer to policy wording for full details of plan benefit [src:raw/product-summaries/product-summary-cyber-insurance.md].

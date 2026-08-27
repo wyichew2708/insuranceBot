@@ -48,7 +48,7 @@ If any claim be in any respect fraudulent or if any fraudulent means or devices 
 
 ## CANCELLATION
 
-The company may cancel this policy by sending seven days notice by registered letter to the insured at his last known address and in such event the insured shall be entitled to the return of a proportionate part of the premium corresponding to the unexpired period of insurance. The policy may be cancelled at any time by the insured by giving seven days’ notice to the company and provided no claim has arisen during the then current period of insurance the insured shall be entitled to a return of premium subject to the company’s short period rates for the period the policy has been in force [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md].
+The company may cancel this policy by sending seven days notice by registered letter to the insured at his last known address and in such event the insured shall be entitled to the return of a proportionate part of the premium corresponding to the unexpired period of insurance. The policy may be cancelled at any time by the insured by giving seven days' notice to the company and provided no claim has arisen during the then current period of insurance the insured shall be entitled to a return of premium subject to the company's short period rates for the period the policy has been in force [src:raw/wordings/policy-wording-money-insurance-01122015-2023-02.md].
 
 ## ARBITRATION
 

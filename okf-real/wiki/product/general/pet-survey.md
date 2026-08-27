@@ -37,8 +37,6 @@ confidence: medium
 
 Answer a few simple questions below to receive sure-win goodies* from Etiqa Insurance Pte. Ltd. by Etiqa Insurance Pte. Ltd. Pet Insurance! By filling up the form below, you are indicating that you have read and understood the terms and conditions, agree to participate in the Spin and Win, and to be legally bound by the terms and conditions [src:raw/web/www.tiq.com.sg/2026-08-25/pet-survey.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/pet-survey.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./pet-survey/exclusions.md).

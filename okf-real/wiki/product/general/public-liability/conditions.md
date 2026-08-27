@@ -30,13 +30,9 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Jurisdiction Clause
-
-The indemnity shall not apply in respect of judgments which are not in the first instance delivered by or obtained from a court of competent jurisdiction within the Republic of Singapore [src:raw/wordings/etiqa-public-liability-policy-wording.md].
-
 ## RENEWAL OR CANCELLATION
 
-The company shall neither be bound to send any notice of a renewal premium becoming due, nor to renew this policy. The company may cancel this policy by sending fourteen days’ notice by registered letter to the insured at his last known address provided that the company shall in that event on demand return to the insured a proportionate part of the premium corresponding to the unexpired period of insurance [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+The company shall neither be bound to send any notice of a renewal premium becoming due, nor to renew this policy. The company may cancel this policy by sending fourteen days' notice by registered letter to the insured at his last known address provided that the company shall in that event on demand return to the insured a proportionate part of the premium corresponding to the unexpired period of insurance [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
 ## NOTICE OF ACCIDENT
 
@@ -44,11 +40,11 @@ In the event of any occurrence which may give rise to a claim for indemnity unde
 
 ## PREMIUM ADJUSTMENT
 
-If the premium for this policy has been calculated on any estimates furnished by the insured, the insured shall keep an accurate record containing all particulars relative thereto and shall at all times allow the company to inspect such record. The insured shall within one month from the expiry of each period of insurance furnish to the company such particulars and information as the company may require. The premium for such period shall thereupon be adjusted and the difference paid by or allowed to the insured as the case may be [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+- If the premium for this policy has been calculated on any estimates furnished by the insured, the insured shall keep an accurate record containing all particulars relative thereto and shall at all times allow the company to inspect such record. The insured shall within one month from the expiry of each period of insurance furnish to the company such particulars and information as the company may require. The premium for such period shall thereupon be adjusted and the difference paid by or allowed to the insured as the case may be [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
 ## ARBITRATION
 
-All differences arising out of this policy shall be referred to the decision of an arbitrator to be appointed in writing by the parties in difference or if they cannot agree upon a single arbitrator to the decision of two arbitrators one to be appointed in writing by each of the parties within one calendar month after having been required in writing so to do by either of the parties or in case the arbitrators do not agree of an umpire appointed in writing by the arbitrators before entering upon the reference. The umpire shall sit with the arbitrators and preside at their meetings and the making of an award shall be a condition precedent to any right of action against the company [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+> 10. All differences arising out of this policy shall be referred to the decision of an arbitrator to be appointed in writing by the parties in difference or if they cannot agree upon a single arbitrator to the decision of two arbitrators one to be appointed in writing by each of the parties within one calendar month after having been required in writing so to do by either of the parties or in case the arbitrators do not agree of an umpire appointed in writing by the arbitrators before entering upon the reference. The umpire shall sit with the arbitrators and preside at their meetings and the making of an award shall be a condition precedent to any right of action against the company. [src:raw/wordings/etiqa-public-liability-policy-wording.md]
 
 ## CONTRACTS (RIGHTS OF THIRD PARTIES) ACT 2001
 

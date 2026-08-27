@@ -28,6 +28,6 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Age Limit
+## 3. Age Limit
 
 > This Section shall not cover persons under the age of sixteen (16) years or over the age of seventy (70) years. [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md]

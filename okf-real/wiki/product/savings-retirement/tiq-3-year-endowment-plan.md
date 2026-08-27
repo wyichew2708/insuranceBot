@@ -38,8 +38,6 @@ confidence: medium
 
 Thank you for your support! Etiqa Insurance Pte. Ltd. 3-Year Endowment Plan is now fully subscribed [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiq-3-year-endowment-plan/exclusions.md).

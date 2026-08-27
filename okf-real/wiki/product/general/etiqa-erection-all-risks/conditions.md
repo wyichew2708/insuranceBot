@@ -28,23 +28,11 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## General Conditions
-
-The due observance and fulfilment of the terms of this policy in so far as they relate to anything to be done or complied with by the insured and the truth of the statements and answers in the questionnaire and proposal made by the insured shall be a condition precedent to any liability of the company [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
-
-The schedule and the section(s) shall be deemed to be incorporated in and form part of this policy and the expression “this policy” wherever used in this contract shall be read as including the schedule and the section(s). Any word or expression to which a specific meaning has been attached in any part of this policy or of the schedule or of the section(s) shall bear such meaning wherever it may appear [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
-
-The insured shall at his own expense take all reasonable precautions and comply with all reasonable recommendations of to prevent loss, damage or liability and comply with statutory requirements and manufacturers’ recommendations [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
-
-Representatives of the company shall at any reasonable time have the right to inspect and examine the risk and the insured shall provide the representatives of the company with all details and information necessary for the assessment of the risk [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
-
-The insured shall immediately notify the company by telegram and in writing of any material change in the risk and cause at his own expense such additional precautions to be taken as circumstances may require, and the scope of cover and/or premium shall, if necessary, be adjusted accordingly [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
-
 ## Special Conditions Applying to Section II
 
-No admission, offer, promise, payment or indemnity shall be made or given by or on behalf of the insured without the written consent of the company who shall be entitled, if they so desire, to take over and conduct in the name of the insured the defence or settlement of any claim or to prosecute for their own benefit in the name of the insured any claim for indemnity or damages or otherwise and shall have full discretion in the conduct of any proceedings or in the settlement of any claim and the insured shall give all such information and assistance as the company may require [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+1. No admission, offer, promise, payment or indemnity shall be made or given by or on behalf of the insured without the written consent of the company who shall be entitled, if they so desire, to take over and conduct in the name of the insured the defence or settlement of any claim or to prosecute for their own benefit in the name of the insured any claim for indemnity or damages or otherwise and shall have full discretion in the conduct of any proceedings or in the settlement of any claim and the insured shall give all such information and assistance as the company may require [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
 
-The company may so far as any accident is concerned pay to the insured the limit of indemnity for any one accident (but deducting therefrom in such case any sum or sums already paid as compensation in respect thereof) or any lesser sum for which the claim or claims arising from such accident can be settled and the company shall thereafter be under no further liability in respect of such accident under this section [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+2. The company may so far as any accident is concerned pay to the insured the limit of indemnity for any one accident (but deducting therefrom in such case any sum or sums already paid as compensation in respect thereof) or any lesser sum for which the claim or claims arising from such accident can be settled and the company shall thereafter be under no further liability in respect of such accident under this section [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
 
 ## Personal Data Use
 

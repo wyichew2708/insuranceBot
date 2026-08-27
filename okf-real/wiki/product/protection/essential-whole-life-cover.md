@@ -37,8 +37,6 @@ confidence: medium
 
 Whatever life throws in your way, Etiqa Insurance Pte. Ltd.’s comprehensive whole life insurance ensures financial security for you and your loved ones [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-whole-life-cover.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-whole-life-cover.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-whole-life-cover/exclusions.md).

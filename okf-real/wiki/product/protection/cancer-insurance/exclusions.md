@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/cancer-insurance-policy-contract-v1-25.md
 - raw/product-summaries/product-summary-cancer-insurance.md
 version_in_force: '2026'
 links:
@@ -28,6 +29,28 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
+## 5. What is Not Covered?
+
+We will not pay any Benefit for the following: [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+## 5.1 Waiting Period
+
+> If You experience first symptoms of Cancer within the first 90 days from the Policy issue date or date of Endorsement, whichever is later, We will not pay the Cancer Benefit. When this happens, we will refund the Premiums paid without interest, less any outstanding amounts owing to us from this policy. [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md]
+
+## 5.2 Suicide
+
+This policy becomes invalid if You commit intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide during the policy term. When this happens, we will refund the Premiums paid during the policy term without interest, less any outstanding amounts owing to us from this policy [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+## 7.4 Prohibited Person Limitation and Exclusion
+
+If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+- a) We are entitled not to accept the application; and - b) if any policy is issued, We are entitled to end/terminate the policy, not pay any Benefits or not allow any transaction to be carried out under the policy. We will not refund any unutilised Premium when the policy is ended/terminated [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+You will need to inform Us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+Our decision in respect of this exclusion will be final [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
 ## Exclusions
 
-There are certain conditions under which no Benefit will be payable. We will not pay any Benefit for the following: [src:raw/product-summaries/product-summary-cancer-insurance.md#p2].
+There are certain conditions under which no Benefit will be payable. We will not pay any Benefit for the following: [src:raw/product-summaries/product-summary-cancer-insurance.md].

@@ -27,8 +27,10 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## We will not pay any Benefit if
+## 7. Exclusions
 
-a) Major Cancer, Heart Attack of Specified Severity, as well as Other Serious Coronary Artery Disease is diagnosed; b) The date of diagnosis of Coronary Artery disease leading to the performance of Coronary Artery By-Pass Surgery is; or c) The date of diagnosis of the condition leading to the performance of the following surgeries: [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
 
-Mastectomy or Hysterectomy due to Cancer is; [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our letter of conditional acceptance [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
+
+When any of the exclusion happens, We will return the total Premiums paid (less any amounts previously paid to You under this policy) without interest less any amounts owing to Us [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].

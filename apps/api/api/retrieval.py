@@ -389,7 +389,13 @@ def focus_candidates(
         if key not in product_keys:
             continue
         named = len(wanted & keywords(f"{page.frontmatter.title} {' '.join(page.frontmatter.aliases)}"))
-        canonical = 1 if page_id.count("/") == 2 else 0
+        # The product's own root page, which needs the *type* as well as the
+        # depth. `journey/claim/plate-glass` also has two slashes, and
+        # `product_key` resolves it to `plate-glass` — a real product — so on
+        # slash count alone a claims journey outranked every actual product
+        # page and became the focus for the whole corpus. That is how "how do
+        # i make a claim" was answered about Plate Glass.
+        canonical = 1 if page_id.count("/") == 2 and page.frontmatter.type == PageType.product else 0
         rank = (value, named, canonical, page_id)
         current = best_by_key.get(key)
         if current is None or rank[:3] > current[:3] or (rank[:3] == current[:3] and page_id < current[3]):

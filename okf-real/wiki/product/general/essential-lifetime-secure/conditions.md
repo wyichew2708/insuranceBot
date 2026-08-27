@@ -29,19 +29,35 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Policy Owners’ Protection Scheme
+## Policy Owners' Protection Scheme
 
-This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
-## Your policy will end when one of these events happens first
+## Nature and Objective of the Plan: [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
-> a) Death of the Life insured; b) We paid out 100% of the Benefit amount for the covered events; c) Full surrender of the policy; d) Premium is not paid on time and there is insufficient Surrender value; e) The loan amount on this policy owing to Us exceeds the Surrender value; or f) Your written request and Our acceptance of the application to terminate the policy. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
+This is a limited pay regular Premium, whole life plan that provides You with whole of life protection against death, Terminal illness and Total and permanent disability. It also provides retirement option, premium relief benefit and guaranteed insurability benefit [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
-g) any other cause of termination as permitted under or any change of laws or regulatory requirements, including court orders [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+> This plan has a Non-participating multiplier Benefit which allows you to increase the Basic sum insured by multiplying a factor of 2 times, 3 times, 4 times or 5 times, up to the selected multiplier expiry Age of Age next birthday 66, 71, 76, 81 or 86. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
+
+This plan participates in the performance of the Participating fund in the form of bonuses that are not guaranteed and contains a Non-participating component that provides high coverage [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
+## Termination
+
+Your policy will end when one of these events happens first: [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
+> - a) Death of the Life insured; - b) We paid out 100% of the Benefit amount for the covered events; - c) Full surrender of the policy; - d) Premium is not paid on time and there is insufficient Surrender value; [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
+
+- e) The loan amount on this policy owing to Us exceeds the Surrender value; or - f) Your written request and Our acceptance of the application to terminate the policy. - g) any other cause of termination as permitted under or any change of laws or regulatory requirements, including court orders [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 ## Premiums
 
-> The premium rate for this plan is level and guaranteed throughout the premium term. Premiums are payable during the premium term and can be paid monthly, quarterly, half-yearly or yearly. You will pay the first Premium at the time You apply for this policy. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the policy. If You fail to pay Premiums on time, We will pay the Premiums for You so that the policy can continue. We can only do so if the policy has accumulated a Surrender value which is enough to pay for the Premiums. This is a loan (automatic Premium loan) from Us and We will charge You interest. Interest accrues on a daily basis. If there is not enough Surrender value, this policy will end. We will deduct these loans and interest from any amount We may be due to pay under this policy. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
+The premium rate for this plan is level and guaranteed throughout the premium term. Premiums are payable during the premium term and can be paid monthly, quarterly, half-yearly or yearly [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
+> You will pay the first Premium at the time You apply for this policy. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the policy. If You fail to pay Premiums on time, We will pay the Premiums for You so that the policy can continue. We can only do so if the policy has accumulated a Surrender value which is enough to pay for the Premiums. This is a loan (automatic Premium loan) from Us and We will charge You interest. Interest accrues on a daily basis. If there is not enough Surrender value, this policy will end. We will deduct these loans and interest from any amount We may be due to pay under this policy. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
+
+## Select additional benefits according to your need(s): [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
+With additional Premiums, You may add supplementary benefits to this policy for extra protection. For more details on the riders, please refer to the riders' product summary [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 ## Impact of Early Surrender
 

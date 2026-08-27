@@ -6,6 +6,7 @@ tables: 5
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Tue, 11 Mar 2025 07:34:06 GMT"
+also_at: "https://www.tiq.com.sg/wp-content/uploads/2023/08/Tiq-Personal-Accident-Policy-Wording-Final-V2.0-28082023.pdf"
 ---
 <!-- image -->
 

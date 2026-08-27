@@ -37,8 +37,6 @@ confidence: medium
 
 Looking to make your wealth work harder and planning for your key milestones? Whether you have been investing for a while, or are just starting, we can help you find the right investment-linked plan (ILP) to reach your goals [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./investments/exclusions.md).

@@ -37,8 +37,6 @@ confidence: medium
 
 You have lived a life of distinction [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-premier-solutions.md#curating-a-lasting-legacy].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-premier-solutions.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./premier-solutions/exclusions.md).

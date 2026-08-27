@@ -18,8 +18,7 @@ plan_tiers: []
 authority:
 - raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 links:
-  concepts:
-  - concept/excess
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
@@ -28,21 +27,11 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## 1. If Benefit is claimed for
-
-(a) Permanent total loss or loss of use of a limb, then no Benefit Amount shall be paid for the loss of parts of that limb. (b) Permanent loss of use of parts of a limb, then the total amount payable shall not exceed the Benefit Amount payable for permanent total loss of that limb [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
-
-2. If Benefit is claimed for more than one form of Permanent Disablement sustained in any one Accident, then the total amount payable shall not exceed the Benefit Amount payable for Permanent Total Paralysis or injuries resulting in being permanently bedridden [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
-
-> 3. Before We pay any benefits under Benefit 2, Permanent Disablement shall have lasted fifty-two (52) weeks from the date of the Accident and have been proven to be permanent and without expectation of recovery. 4. Permanent Disablement Benefits shall not be payable in the event of Accidental Death in connection with the same Accident. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
-
-5. If total amount of Benefit has been paid under Benefit 1 or Benefit 2 (a-d), this Policy shall therefore cease to apply to the Insured on whom the claim was paid. The limit/sub-limit stated in Benefit 2 for each item is applicable to any one Accident [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
-
 ## 8. Claim Procedures
 
-> (a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. (b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+> - (a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. - (b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
 
-(c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+- (c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 ## 9. Incomplete Claims
 

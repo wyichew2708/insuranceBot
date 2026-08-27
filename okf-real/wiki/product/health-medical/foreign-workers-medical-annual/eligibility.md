@@ -27,6 +27,8 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Persons eligible for cover under this policy are
+## 1. Eligibility
 
-> The Insured Persons must be residents of Singapore defined as foreigners holding a valid work permit, ‘S’ pass or special pass, including foreign domestic workers and within the age limit of 65 and below. [src:raw/wordings/foreign-workers-medical-annual-policy-wording-1-july-2025.md#p8]
+Persons eligible for cover under this policy are: [src:raw/wordings/foreign-workers-medical-annual-policy-wording-1-july-2025.md].
+
+> The Insured Persons must be residents of Singapore defined as foreigners holding a valid work permit, 'S' pass or special pass, including foreign domestic workers and within the age limit of 65 and below. [src:raw/wordings/foreign-workers-medical-annual-policy-wording-1-july-2025.md]

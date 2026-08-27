@@ -6,6 +6,7 @@ tables: 3
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Wed, 06 Aug 2025 03:49:48 GMT"
+also_at: "https://www.etiqa.com.sg/wp-content/uploads/2023/06/Travel-Infinite-COVID-19-Product-Brochure.pdf"
 ---
 <!-- image -->
 

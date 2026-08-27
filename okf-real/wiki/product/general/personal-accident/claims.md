@@ -16,8 +16,8 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/tiq-personal-accident-policy-wording.md
+- raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
 version_in_force: '2026'
 links:
@@ -30,72 +30,42 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## We shall not pay for claims arising directly or indirectly from, in respect of or due to
-
-a. any carelessness, confiscation, errors or omission in receipts, payments or transfers; or b. any dishonest, fraudulent or criminal act of You; or c. liability for any debt unless You must upon discovery of any event which may result in a claim immediately report to the police and card issuer in accordance with the terms and conditions of the issue of the card; or d. liability for any debt arising from any supplementary card issued to Your Family member; or e. liability for any debt through Your collusion or Your Family member; or f. loss resulting from unauthorized use of Your card by Your Family or Household member [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md#p8].
-
-## 11. Claim Procedures
-
-> a) All claims must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured to claim under this Policy. b) Send to us immediately all relevant documents to support Your Claims. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md#p11]
-
-c) Any documents or evidence required by Us to verify the claim shall be provided by the Insured at his own expense. Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md#p11].
-
-## 12. Incomplete Claims
-
-> All claims must be submitted to Us within thirty (30) days of completion of the events for which the claim is being made. Claims are not deemed complete and eligible Benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md#p12]
-
-## 1) If Benefit is claimed for
-
-a) Permanent total loss or loss of use of a limb, then no Benefit Amount shall be paid for the loss [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-b) Permanent loss of use of parts of a limb, then the total amount payable shall not exceed the [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-Benefit Amount payable for permanent total loss of that limb [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-2) If Benefit is claimed for more than one form of Permanent Disablement sustained in any one (1) Accident, then the total amount payable shall not exceed the Benefit Amount payable for Permanent Total Paralysis or complete insanity or injuries resulting in being permanently bedridden [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-> 3) Before We pay any benefits under Section 2, Permanent Disablement shall have lasted twelve (12) months from the date of the Accident and have been proven to be permanent and without expectation of recovery. [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7]
-
-4) Permanent Disablement Benefits shall not be payable in the event of Accidental Death in connection [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-5) If total amount of Benefit has been paid under Section 1 or Section 2 (1) to (4), this Policy shall [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-therefore cease to apply to the Insured on whom the claim was paid [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-The limit/sub-limit stated in Section 2 for each item is applicable to any one (1) Accident [src:raw/wordings/tiq-personal-accident-policy-wording.md#p7].
-
-## 1) If Benefit is claimed for
-
-Percentage of sum insured as shown under Section 2 in the Table of Benefits of Your Plan [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10].
-
-2) If Benefit is claimed for more than one form of Permanent Disablement sustained in any one (1) Accident, then the total amount payable shall not exceed the Benefit Amount payable for Permanent Total Paralysis or injuries resulting in being permanently bedridden [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10].
-
-> 3) Before We pay any benefits under Section 12, Permanent Disablement shall have lasted fifty-two (52) weeks from the date of diagnosis and have been proven to be permanent and without expectation of recovery. [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10]
-
-4) Permanent Disablement Benefits shall not be payable in the event of Death in connection with the [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10].
-
-> 5) If total amount of Benefit has been paid under Section 11 or Section 12 (1 – 4), this Policy shall [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10]
-
-> The limit/sub-limit stated in Section 12 for each item is applicable to any one (1) Infectious Disease. [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10]
-
-> We will not pay for the benefit under Section 12 if We have already done so under Section 2. [src:raw/wordings/tiq-personal-accident-policy-wording.md#p10]
-
 ## 10. Claim Procedures
 
-a) All claims and relevant supporting documents must be notified to Us as soon as possible but not [src:raw/wordings/tiq-personal-accident-policy-wording.md#p15].
+- a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-personal-accident-policy-wording.md].
 
-later than seven (7) days after any event which may entitle You to claim under this Policy [src:raw/wordings/tiq-personal-accident-policy-wording.md#p15].
-
-b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own [src:raw/wordings/tiq-personal-accident-policy-wording.md#p15].
-
-c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-personal-accident-policy-wording.md#p15].
+- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-personal-accident-policy-wording.md].
 
 ## 11. Incomplete Claims
 
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-personal-accident-policy-wording.md#p15].
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-personal-accident-policy-wording.md].
+
+## 11. Claim Procedures
+
+> - a) All claims must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured to claim under this Policy. - b) Send to us immediately all relevant documents to support Your Claims. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+- c) Any documents or evidence required by Us to verify the claim shall be provided by the Insured at his own expense. Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
+
+> 12. Incomplete Claims All claims must be submitted to Us within thirty (30) days of completion of the events for which the claim is being made. Claims are not deemed complete and eligible Benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+> 13. Subrogation If We shall become liable for any payment under this Insurance, We shall be subrogated to the extent of such payment to all the rights and remedies of the Insured against any party and shall be entitled at our own expense to sue in the name of the Insured. The Insured shall give or cause to be given to Us all such assistance in his power as We shall require to secure the rights and remedies and at Our request shall execute or cause to be executed all documents necessary to enable Us to effectively to bring suit in the name of the Insured. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+> 14. Interest and Currency No amount payable under this Policy shall carry any interest. Premium and Benefit payable under this Policy shall be in Singapore Dollar (SGD). 15. Other Insurance No person shall be covered under more than one Personal Accident With Rider Policy or its equivalent Insurance Certificate issued by Etiqa Insurance Pte. Ltd. Group. In the event the Insured is covered under more than one such Policy, We shall consider that person to be Insured under the Policy which was issued first (where the Benefit provided under each such Policy are identical) or which provides the greatest amount of Benefit and We shall refund any duplicated premium payment which may have been made by or on behalf of that Insured. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+> 16. Notice of Trust or Assignment We shall not accept or be affected by notice of any trust or assignment or the like which relates to this Policy. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+All differences arising out of this Policy shall be referred to the decision of an Arbitrator to be appointed in writing by the parties in difference or if they cannot agree upon a single Arbitrator to the decision of two Arbitrators one to be appointed in writing by each of the parties within one calendar month after having been required to do so by either of the parties or in case the Arbitrators do not agree of an Umpire appointed in writing by the Arbitrators before entering upon the reference. The Umpire shall sit with the Arbitrators and preside at their meetings and the making [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
+
+> 17. Arbitration of an Award shall be a condition precedent to any right of action against the Company. 18. Legal Proceedings No action at law or in equity shall be brought to recover on the Policy prior to expiration of sixty (60) days after written proof of loss has been furnished in accordance with the requirements of this Policy. If the Insured shall fail to supply the requisite proof of loss as stipulated by the terms, provisions and conditions of this Policy, the Insured may, within a grace period of one calendar year from the time that the written proof of loss to be furnished, submit the relevant proof of loss to Us with cogent reason(s) for the failure to comply with the Policy terms, provisions and conditions. The acceptance of such proof of loss shall be at Our sole and entire discretion. After such grace period has expired, We will not accept, for any reason whatsoever, such written proof of loss. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+> 19. Alterations We reserve the right to amend the terms and provisions of this Policy by giving thirty (30) day prior notice in writing by ordinary post to the Insured last known address in Our records, and such amendment will be applicable from the next renewal of this Policy. No alteration to this Policy shall be valid unless authorised by Us and such approval is endorsed thereon. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
+
+> 20. Contract (Rights of Third Parties) Act 2001 A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act 2001 to enforce any of its terms. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
 
 ## CLAIMS PROCEDURE
 
-7. Written notice shall be given to the Company as soon as possible and in any event within one calendar month of the occurrence of any bodily injury which may give rise to a claim under this policy. All certificates information and evidence required by the Company shall be supplied free of expense to the Company in the form precribed by the Company. The Insured shall as often as required submit to medical examination on behalf of and at the expense of the Company in connection with any claim [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md#p3].
+7. Written notice shall be given to the Company as soon as possible and in any event within one calendar month of the occurrence of any bodily injury which may give rise to a claim under this policy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
-The Company shall in the case of death of the Insured be entitled to have a postmortem at its own expense [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md#p3].
+All certificates information and evidence required by the Company shall be supplied free of expense to the Company in the form precribed by the Company. The Insured shall as often as required submit to medical examination on behalf of and at the expense of the Company in connection with any claim [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
+
+The Company shall in the case of death of the Insured be entitled to have a postmortem at its own expense [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].

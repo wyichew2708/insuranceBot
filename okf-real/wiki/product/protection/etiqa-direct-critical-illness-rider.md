@@ -28,16 +28,18 @@ confidence: medium
 
 ## About Etiqa Direct Critical Illness Rider
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
-
 ## Critical Illness Benefit
 
-DIRECT – Etiqa Insurance Pte. Ltd. CI rider pays either part (for angioplasty & other invasive treatment for coronary artery) or all of the Sum insured plus accumulated bonuses (if any) that have been added to the Basic policy if the Life insured is diagnosed with a critical illness for the first time during the rider policy term [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
+DIRECT - Etiqa Insurance Pte. Ltd. CI rider pays either part (for angioplasty &amp; other invasive treatment for coronary artery) or all of the Sum insured plus accumulated bonuses (if any) that have been added to the Basic policy if the Life insured is diagnosed with a critical illness for the first time during the rider policy term [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
 
 Our payment on this supplementary rider contract will proportionately reduce the Sum insured of the Basic policy [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
 
 We pay this benefit only for one critical illness, except when the first critical illness is Angioplasty and Other Invasive Treatment for Coronary Artery, then We will pay the remaining Sum insured plus accumulated bonuses (if any) on the next critical illness diagnosed that is not Angioplasty and Other Invasive Treatment for Coronary Artery. The remaining Sum insured is the original Sum insured less the amount first claimed for Angioplasty and Other Invasive Treatment for Coronary Artery [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
 
-> Angioplasty’s benefit is 10% of the Sum insured under this rider, subject to a maximum limitation of S$25,000. [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]
+> Angioplasty's benefit is 10% of the Sum insured under this rider, subject to a maximum limitation of S$25,000. [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]
 
 Once the total critical illness Benefit is paid, the Basic policy will automatically terminate [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md].
+
+> The 30 Critical Illnesses are listed below: [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]
+
+> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage Critical Illnesses (Version 2019). These Critical Illnesses fall under Version 2019. You may refer to www.lia.org.sg for the standard Definitions (Version 2019). [src:raw/product-summaries/etiqa-direct-critical-illness-rider-product-summary.md]

@@ -801,13 +801,15 @@ def emit_product(
                 break
     if intro:
         body.append(intro)
-        # A qualifier on the description, not a standalone answer. Where the
-        # crawl gave us nothing to describe, this sentence was the entire
-        # section — so "term life" was answered with a note about channels.
-        body.append(
-            "Cover, limits and exclusions are identical on every channel; a channel is a "
-            f"route to market rather than a separate product [src:{primary.ref('body')}]."
-        )
+        # The channel note used to be appended here as a qualifier, on 104
+        # pages. An emission-time guard cannot make a sentence subordinate:
+        # retrieval selects spans, not paragraphs-in-context, so it surfaced
+        # on its own — "Being a sandwich generation can be stressful, and
+        # cover, limits and exclusions are identical on every channel since a
+        # channel is a route to market rather than a separate product" was a
+        # real answer to "which plan is best for my family". It is a fact about
+        # distribution, it belongs on the channel pages, and `channel/*.md`
+        # already carries it.
     else:
         report.skip("no publishable description of the product on any host")
 
@@ -1786,11 +1788,12 @@ def emit_document_products(
             # and no channel binding either. High authority, low corroboration.
             confidence=Confidence.medium,
         )
-        opening = (
-            f"This product is compiled from its policy documents. The wording is the "
-            f"contract; the sections below quote it [src:{(refs or [d.ref for d in found])[0]}]."
-        )
-        _write(config, _page(fm, [f"## About {title}", opening, *summary]), report)
+        # No compiled-from preamble. It described the build rather than the
+        # product, promised "the sections below" that live on other pages, and
+        # on 50 products it was the whole answer: asked simply "insurance", the
+        # bot replied "This product is compiled from its policy documents. The
+        # wording is the contract; the sections below quote it."
+        _write(config, _page(fm, [f"## About {title}", *summary]), report)
         products.setdefault(lob, []).append((page_id, title))
         products[lob].extend(
             emit_document_pages(

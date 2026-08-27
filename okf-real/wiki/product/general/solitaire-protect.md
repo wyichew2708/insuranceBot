@@ -41,8 +41,6 @@ confidence: medium
 
 The true value of life protection If you’re forgoing life protection to save money in the short-term, you need to read this! Amid our evolving pandemic environment, it seems more people are placing greater importance… [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-solitaire-protect.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-solitaire-protect.md#body].
-
 ## Headline benefits
 
 The section 1 limit for the plan tier held is {{table:section_1.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-solitaire-protect.md#what-is-covered].

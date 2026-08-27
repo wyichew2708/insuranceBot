@@ -100,7 +100,7 @@ ROLE_RULES: list[tuple[str, re.Pattern[str]]] = [
     (
         "exclusions",
         re.compile(
-            r"exclusion|not\s+covered|do\s+not\s+cover|we\s+will\s+not\s+pay"
+            r"exclusion|not\s+covered|do\s+not\s+cover|we\s+will\s+not\s+pay|^exceptions?$"
             r"|excluded|what\s+is\s+not|limitation\s+of\s+(?:cover|liability)",
             re.I,
         ),
@@ -128,6 +128,7 @@ ROLE_RULES: list[tuple[str, re.Pattern[str]]] = [
         "benefits",
         re.compile(
             r"benefit|what\s+is\s+covered|what\s+we\s+cover|scope\s+of\s+cover|coverage"
+            r"|our\s+responsibilit|covered\s+events|what\s+you\s+are\s+covered|family\s+plan"
             r"|sum\s+(?:assured|insured)|schedule\s+of\s+cover|extension"
             r"|^section\s+[\divxlc]+\b|scale\s+of\s+compensation|summary\s+of\s+cover"
             r"|list\s+of\s+critical\s+illness",
@@ -143,7 +144,7 @@ ROLE_RULES: list[tuple[str, re.Pattern[str]]] = [
             r"|duty\s+of\s+disclosure|misrepresentation|fraud|arbitration|subrogation"
             r"|rights\s+of\s+third\s+parties|governing|jurisdiction|important\s+not"
             r"|incontestab|taxation|change\s+of\s+address|prohibited\s+person"
-            r"|general\s+terms|policy\s+will\s+end|warranty|assignment|notice"
+            r"|general\s+terms|policy\s+will\s+end|your\s+policy\s+end|the\s+agreement|warranty|assignment|notice"
             r"|payment|instal(?:l)?ment|refund|excess|deductible|co-?insurance",
             re.I,
         ),
@@ -278,6 +279,17 @@ def _clean(line: str) -> str:
     return re.sub(r"[ \t\u00a0\u2009\u202f]+", " ", line).strip()
 
 
+#: Verbs that make a line a statement rather than a label. A heading names a
+#: part of the contract; these introduce or assert something, and a contract
+#: writes them in prose that happens to be short.
+_SENTENCE_VERB_RE = re.compile(
+    r"\b(?:means|shall\s+mean|refers?\s+to|is\s+defined|are\s+defined|will\s+not\s+be"
+    r"|shall\s+not\s+be|we\s+will\s+not|are\s+as\s+follows|is\s+as\s+follows"
+    r"|includes?\s+the\s+following|are\s+the\s+following)\b",
+    re.I,
+)
+
+
 def looks_like_heading(text: str) -> bool:
     """Shape alone: short, title-cased or explicitly punctuated as a label,
     and not the tail of a sentence."""
@@ -286,11 +298,24 @@ def looks_like_heading(text: str) -> bool:
         return False
     if text.endswith((".", ",", ";")):
         return False
+    # A sentence, however it ends. Contracts define their terms in prose —
+    # "Hospital means any institution which fully meets all of the following:"
+    # — and reading that as a heading opened a section whose body was the
+    # definition, classified it as nothing, and dropped 6,000 words of
+    # definitions on that phrase alone.
+    if _SENTENCE_VERB_RE.search(text):
+        return False
     # A consumer-drafted contract labels its sections with a question:
     # "What do we mean with these words?" opens 40,000 words of definitions on
     # this corpus, and sentence case would otherwise disqualify it.
-    if text.endswith((":", "?")):
+    if text.endswith("?"):
         return True
+    # A trailing colon is permission to end without a full stop, not a licence
+    # to skip the tests below. Taken as a licence it made a heading of every
+    # list lead-in in the corpus: "We will not be liable for:" opened a section
+    # and the exclusions it introduced became a sibling of it, so a customer
+    # asking what was excluded got the lead-in and nothing under it.
+    text = text.rstrip(":")
     words = text.split()
     if len(words) > HEADING_MAX_WORDS:
         return False
@@ -382,22 +407,58 @@ def is_heading(lines: list[str]) -> bool:
     return len(lines) == 1 and looks_like_heading(lines[0])
 
 
+#: The enumeration a contract numbers its parts with: "3", "3.8", "3.8.2",
+#: "23.", "(4)". This is the hierarchy — markdown levels do not survive the
+#: PDF extractors, and `##` and `###` arrive indistinguishable.
+_ENUMERATION_RE = re.compile(r"^\(?(\d+(?:\.\d+)*)\)?[.)]?\s+")
+
+
+def _enumeration(heading: str) -> tuple[int, ...]:
+    match = _ENUMERATION_RE.match(heading.strip())
+    return tuple(int(n) for n in match.group(1).split(".")) if match else ()
+
+
 def segment(body: str) -> list[DocSection]:
     """Split a parsed document into classified sections.
 
     Text before the first heading is the front matter every insurer opens
     with — the plan provider's address, the protection-scheme notice — and is
     kept under a synthetic heading so it can be classified like the rest.
+
+    A section that names no role of its own takes its parent's. Contracts
+    number their parts and only label the chapter: "3.8.2 Available ILP
+    Sub-Fund" says nothing a rule can match, and "23 HIV Due to Blood
+    Transfusion" is the twenty-third item under a heading that already said
+    "List of Critical Illnesses". Classifying every heading from scratch made
+    orphans of all of them — 48% of the wordings never reached the bundle, and
+    the cancer exclusions page ended up holding one sentence and no exclusions.
     """
     sections: list[DocSection] = []
     current = DocSection(heading="Preamble", role="other", page=None)
+    # (enumeration, role) for each open ancestor, outermost first.
+    chapters: list[tuple[tuple[int, ...], str]] = []
 
     for block in _blocks(body):
         if block.heading:
             if current.paragraphs:
                 sections.append(current)
             heading = re.sub(r"^#+\s*", "", block.text).strip().rstrip(":")
-            current = DocSection(heading=heading, role=role_for(heading), page=block.page)
+            number = _enumeration(heading)
+            role = role_for(heading)
+            # Close every chapter this heading is not inside. An unnumbered
+            # chapter has an empty enumeration, which is a prefix of anything,
+            # so it stays open until a *classified* heading replaces it.
+            chapters = [
+                (num, r) for num, r in chapters if len(num) < len(number) and num == number[: len(num)]
+            ]
+            if role == "other":
+                role = next((r for _, r in reversed(chapters) if r in COMPILED_ROLES), "other")
+            elif not number:
+                # A classified heading with no number opens a fresh chapter and
+                # ends the last one, rather than nesting inside it.
+                chapters = []
+            chapters.append((number, role))
+            current = DocSection(heading=heading, role=role, page=block.page)
             continue
         if current.page is None:
             current.page = block.page

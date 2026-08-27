@@ -30,6 +30,8 @@ confidence: high
 
 ## 18. Exclusions
 
-There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions. When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our letter of conditional acceptance [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+There are certain conditions under which no Benefits will be payable. These conditions are stated as exclusions [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our letter of conditional acceptance [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 When any of the exclusion happens, We will return the higher of either the total Premiums paid (less any amounts previously paid to You under this policy) without interest, or the Surrender value (if any) less any amounts owing to Us [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].

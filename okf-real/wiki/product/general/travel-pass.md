@@ -37,8 +37,6 @@ confidence: medium
 
 Travel Pass is where travel meets perks [src:raw/web/www.tiq.com.sg/2026-08-25/travel-pass.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/travel-pass.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./travel-pass/exclusions.md).

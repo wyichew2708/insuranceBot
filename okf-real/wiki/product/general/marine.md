@@ -37,8 +37,6 @@ confidence: medium
 
 You can protect your business with Marine Insurance that secures your cargo from loss or damage while in transit [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-marine.md#marine-insurance].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-marine.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./marine/exclusions.md).

@@ -27,6 +27,6 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## Definition
+## - 2 Definition
 
-> Normal action of the sea means the state of the sea, which manifests itself up to No. 8 on the Beaufort scale, or the state of the tides, current and wave action of the sea, which must be statistically expected to occur once during a 20 year period, whichever is the more onerous. [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md#p8]
+> - 2.1 Normal action of the sea means the state of the sea, which manifests itself up to No. 8 on the Beaufort scale, or the state of the tides, current and wave action of the sea, which must be statistically expected to occur once during a 20 year period, whichever is the more onerous. [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md]

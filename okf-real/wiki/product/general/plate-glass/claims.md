@@ -29,10 +29,6 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
-## NOTICE OF CLAIM
+## 5. NOTICE OF CLAIM
 
 In case of breakage of any of the glass herein mentioned, the insured shall immediately give notice thereof in writing to the company and shall furnish the particulars of such breakage and how sustained, and make proof of the same by the production of evidence as the company may reasonably require within seven days from the happening of such breakage. The insured upon becoming aware of any breakage in respect of which a claim is or may be made shall at his own expense take all practicable steps to discover the person who is liable for such breakage [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].
-
-## ABANDONMENT OF CLAIM
-
-If the company shall disclaim liability to the insured for any claim hereunder and such claim shall not within twelve calendar months from the date of such disclaimer have been referred to arbitration under the provisions herein contained then the claim shall for all purposes be deemed to have been abandoned and shall not thereafter be recoverable hereunder [src:raw/wordings/etiqa-plate-glass-insurance-policy-wording-2023-02.md].

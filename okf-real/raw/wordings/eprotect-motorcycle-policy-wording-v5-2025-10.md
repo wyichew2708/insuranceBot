@@ -6,6 +6,7 @@ tables: 2
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Wed, 15 Oct 2025 06:31:04 GMT"
+also_at: "https://www.etiqa.com.sg/wp-content/uploads/2025/10/ePROTECT-Motorcycle-Policy-Wording-V5.pdf"
 ---
 <!-- image -->
 

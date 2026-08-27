@@ -37,8 +37,6 @@ confidence: medium
 
 Get Apple Watch Ultra 3 / SE 3 with min [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./cashsaver/exclusions.md).

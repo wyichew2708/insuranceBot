@@ -31,6 +31,6 @@ confidence: high
 
 ## WORLDWIDE EXTENSION FOR EXECUTIVES ON TRAVEL ENDORSEMENT
 
-It is hereby declared and agreed that this policy extends to indemnify the insured for all sums which the insured shall become legally liable to pay as compensation for accidental bodily injury to any person or damage to property caused by the fault or negligence of the insured’s executives whilst engaged on the insured’s business anywhere in the world [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+It is hereby declared and agreed that this policy extends to indemnify the insured for all sums which the insured shall become legally liable to pay as compensation for accidental bodily injury to any person or damage to property caused by the fault or negligence of the insured's executives whilst engaged on the insured's business anywhere in the world [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
 > Provided always that the liability of the company under this endorsement shall not exceed the limits of indemnity under this policy except in respect of U.S.A. and Canada, the liability of the company is limited to S$100,000/- anyone accident and in the aggregate. [src:raw/wordings/etiqa-public-liability-policy-wording.md]

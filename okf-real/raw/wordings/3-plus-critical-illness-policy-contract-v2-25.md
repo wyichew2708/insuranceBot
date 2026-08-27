@@ -6,6 +6,7 @@ tables: 6
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Thu, 23 Oct 2025 13:29:55 GMT"
+also_at: "https://www.tiq.com.sg/wp-content/uploads/2024/01/3-Plus-Critical-Illness-Policy-Contract-V1.23.pdf"
 ---
 ## 3 Plus Critical Illness POLICY CONTRACT
 

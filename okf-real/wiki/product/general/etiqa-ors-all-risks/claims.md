@@ -29,10 +29,8 @@ confidence: high
 
 ## COST OF RECOMPILING RECORDS AND PREPARING CLAIMS CLAUSE
 
-The insurance under the Policy is extended to cover the following:- 1 [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
+The insurance under the Policy is extended to cover the following:- [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
-cost of recompiling records but only for the value of the materials together with the cost of clerical labour expended in producing such records and, [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
-
-reasonable charges incurred by the Insured for producing and certifying any information as may be required by the Insured under the items of General Condition II of the Policy [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
+1. cost of recompiling records but only for the value of the materials together with the cost of clerical labour expended in producing such records and, 2. reasonable charges incurred by the Insured for producing and certifying any information as may be required by the Insured under the items of General Condition II of the Policy [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
 It is further understood that the Company shall not be liable under this extension for an amount in excess of the limit specified in the Schedule [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].

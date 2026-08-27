@@ -29,12 +29,6 @@ confidence: medium
 
 ## About Death Tpd Insurance
 
-This product is compiled from its policy documents. The wording is the contract; the sections below quote it [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md].
-
-## Product Summary: Death & Total and Permanent Disability Benefit
-
-This Product Summary is for general information only. It is not a contract of insurance. It is a simplified description of the product features applicable to this plan and is not exhaustive. Please refer to the Policy Contract for all terms, conditions and exclusions. For the avoidance of doubt, only the terms, conditions and exclusions as set out in the Policy Contract will bind the policy owner and Us [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md].
-
 ## Death Benefit
 
 Upon death of the Life insured while the rider is in force, We will pay the Sum insured less any amounts owing to Us. When We make this payment, the rider ends [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md].
@@ -45,8 +39,10 @@ Upon death of the Life insured while the rider is in force, We will pay the Sum 
 
 > Total and permanent disability is a disability that lasts continuously for at least 180 days, which the Doctor considers permanent and expects it to last throughout the lifetime of the Life insured. This means one of the following: [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md]
 
-> i. A disability where the Life insured whose Age is between 17 and 65 cannot perform any work or [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md]
+> - i. A disability where the Life insured whose Age is between 17 and 65 cannot perform any work or occupation, or - ii. A disability where the Life insured suffers from any of these: - Total and irrecoverable loss of sight in both eyes; or - Loss of two or more limbs, each above the wrist or ankle; or - Total and irrecoverable loss of sight in one eye and loss of one limb at or above the wrist or ankle. [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md]
+
+- iii. A disability where the Life insured cannot do at least 3 out of 6 Activities of Daily Living without physical help from another person or mechanical equipment [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md].
 
 ## Benefit Limitation
 
-> We will only provide a maximum aggregate amount of S$4.0 million per Life insured for all policies and riders issued by Us with TPD benefits. [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md#p2]
+> We will only provide a maximum aggregate amount of S$4.0 million per Life insured for all policies and riders issued by Us with TPD benefits. [src:raw/product-summaries/product-summary-death-tpd-26-oct-2020-clean.md]

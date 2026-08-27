@@ -6,6 +6,7 @@ tables: 1
 extractor: "docling"
 fetched_at: "2026-08-27"
 last_modified: "Thu, 23 Oct 2025 13:30:01 GMT"
+also_at: "https://www.tiq.com.sg/wp-content/uploads/2024/01/Cancer-Insurance-Policy-Contract.pdf"
 ---
 <!-- image -->
 

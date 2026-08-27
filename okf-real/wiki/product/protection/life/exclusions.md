@@ -18,8 +18,7 @@ plan_tiers: []
 authority:
 - raw/wordings/general-provisions-for-life-insurance.md
 links:
-  concepts:
-  - concept/nomination
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-08-27T00:00:00'
 reviewed_by:
@@ -30,12 +29,8 @@ confidence: high
 
 ## 6 What is Not Covered?
 
-We will not pay the covered Benefits in certain instances [src:raw/wordings/general-provisions-for-life-insurance.md#p5].
+We will not pay the covered Benefits in certain instances [src:raw/wordings/general-provisions-for-life-insurance.md].
 
-## We will not pay the terminal illness benefit if it is due to
+## 6.1 Suicide
 
-i. Intentional acts (sane or insane) such as self-harm or attempted suicide ii. AIDS, AIDS-related conditions or infection in the presence of HIV except HIV due to blood transfusion and occupationally acquired HIV [src:raw/wordings/general-provisions-for-life-insurance.md#p5].
-
-## We will not pay the TPD Benefit or waive any premiums if TPD occurs due to
-
-i. Intentional acts (sane or insane) such as self-harm or attempted suicide ii. Criminal acts, war (declared or not), terrorism and chemical warfare iii. Participating in aviation (except as fare- paying passenger or member crew of a commercial airline), any dangerous or hazardous sport or hobby such as (but not limited to) steeple chasing, polo, horse racing, underwater diving, hunting, motor vehicular racing, mountaineering or potholing, or aerial sports such as skydiving, parachuting, bungee jumping iv. Effects of drug or alcohol addiction v. HIV infection, Acquired Immune Deficiency Syndrome (AIDS) and any AIDS related conditions [src:raw/wordings/general-provisions-for-life-insurance.md#p5].
+> This policy becomes invalid if the Life insured or You (for payer premium waiver riders) commit or attempted suicide within the first 12 months from the Policy issue date or date of last reinstatement. When this happens, We will return the total premiums paid without interest. [src:raw/wordings/general-provisions-for-life-insurance.md]

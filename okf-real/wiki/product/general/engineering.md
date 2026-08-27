@@ -37,8 +37,6 @@ confidence: medium
 
 Safeguard against risks during an ongoing construction or installation project, by getting coverage for your machines, equipment and stock [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-engineering.md#body].
 
-Cover, limits and exclusions are identical on every channel; a channel is a route to market rather than a separate product [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-engineering.md#body].
-
 ## What is not covered
 
 The complete list is on the [exclusions page](./engineering/exclusions.md).

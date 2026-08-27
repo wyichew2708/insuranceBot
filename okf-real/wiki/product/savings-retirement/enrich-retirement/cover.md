@@ -28,48 +28,78 @@ review_due: '2026-11-25'
 confidence: high
 ---
 
+## 3 Our Responsibilities
+
+This plan is a regular Premium endowment plan that is designed to help in Your retirement planning. It provides a monthly Retirement Income, which consists of a guaranteed and a non-guaranteed amount, throughout the Income Payout Period. Payments of the monthly Retirement Income will start one month after the Policy anniversary upon the Life insured reaching their selected Retirement Age [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+This is a Participating life insurance policy. It allows You to participate in the performance of the Participating fund in the form of bonuses that are not guaranteed [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+## 3.1 Covered Events
+
+If Your policy is valid and a covered event happens, We will pay You the Benefits less any amounts You owe Us on this policy. The covered events of Your policy are written on the Policy Information Page [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+## 3.2 Retirement Income
+
+We will pay the monthly Retirement Income throughout the Income Payout Period starting one month after the Policy anniversary upon the Life insured reaching their selected Retirement Age. The Retirement Income consists of a guaranteed amount ('Guaranteed Monthly Retirement Income') and a nonguaranteed amount ('Non-guaranteed Monthly Retirement Income'). There are two types of Retirement Income to be selected [src:raw/wordings/policy-contract-enrich-retirement.md].
+
 ## 3.3 Surrender Benefit
 
-Upon surrender, the surrender Benefit is paid in one lump sum. The total surrender Benefit payable is the sum of the following: a) guaranteed Surrender value; b) reversionary bonus (if any); c) performance bonus (if any); and d) any Retirement Income accumulated with Us (if any) plus interest accrued up to the date of surrender; [src:raw/wordings/policy-contract-enrich-retirement.md#p3].
+Upon surrender, the surrender Benefit is paid in one lump sum. The total surrender Benefit payable is the sum of the following: [src:raw/wordings/policy-contract-enrich-retirement.md].
 
-less any outstanding amounts that You owe Us on this policy. Surrender Benefit will be payable upon surrender from the end of the third Policy year after the Premiums have been paid for three years [src:raw/wordings/policy-contract-enrich-retirement.md#p3].
+- a) guaranteed Surrender value; - b) reversionary bonus (if any); - c) performance bonus (if any); and - d) any Retirement Income accumulated with Us (if any) plus interest accrued up to the date of surrender; [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+less any outstanding amounts that You owe Us on this policy [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+Surrender Benefit will be payable upon surrender from the end of the third Policy year after the Premiums have been paid for three years [src:raw/wordings/policy-contract-enrich-retirement.md].
 
 ## 3.4 Maturity Benefit
 
-On the Maturity date, while the policy is still in force and the Life insured survives, You will receive a lump sum maturity Benefit which consists of: a) the last Retirement Income payment if You have chosen to receive the Retirement Income; [src:raw/wordings/policy-contract-enrich-retirement.md#p3].
+On the Maturity date, while the policy is still in force and the Life insured survives, You will receive a lump sum maturity Benefit which consists of: [src:raw/wordings/policy-contract-enrich-retirement.md].
 
-b) reversionary bonus (if any); c) performance bonus (if any); and d) any accumulated total Retirement Income plus any non-guaranteed interest; less any outstanding amounts that You owe Us on this policy [src:raw/wordings/policy-contract-enrich-retirement.md#p3].
+- a) the last Retirement Income payment if You have chosen to receive the Retirement Income; - b) reversionary bonus (if any); - c) performance bonus (if any); and - d) any accumulated total Retirement Income plus any non-guaranteed interest; [src:raw/wordings/policy-contract-enrich-retirement.md].
 
 ## 5 What is Covered?
 
-Your policy covers the Benefits described below while the policy is inforce [src:raw/wordings/policy-contract-enrich-retirement.md#p4].
+Your policy covers the Benefits described below while the policy is inforce [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+## 5.1 Death Benefit
+
+Upon death of the Life insured while the policy is in force: [src:raw/wordings/policy-contract-enrich-retirement.md].
 
 ## 5.2 Terminal Illness (TI) Benefit
 
-> If the Life insured has a Terminal illness while the policy is in force, We will pay the death Benefit in one lump sum. The maximum aggregate amount payable is Five Million Singapore Dollars (SGD 5,000,000) per Life insured for all policies and riders issued by Us with Terminal illness Benefit. [src:raw/wordings/policy-contract-enrich-retirement.md#p5]
+If the Life insured has a Terminal illness while the policy is in force, We will pay the death Benefit in one lump sum [src:raw/wordings/policy-contract-enrich-retirement.md].
 
-If the Terminal illness Benefit payable is lesser than the death Benefit, the death Benefit will be automatically reduced by the amount paid for the Terminal illness. The policy remains in force and the remaining death Benefit is the original death Benefit less the amount paid for Terminal illness [src:raw/wordings/policy-contract-enrich-retirement.md#p5].
+> The maximum aggregate amount payable is Five Million Singapore Dollars (SGD 5,000,000) per Life insured for all policies and riders issued by Us with Terminal illness Benefit. [src:raw/wordings/policy-contract-enrich-retirement.md]
 
-If the Terminal illness Benefit payable is the same as the death Benefit, the policy ends when We make this payment [src:raw/wordings/policy-contract-enrich-retirement.md#p5].
+If the Terminal illness Benefit payable is lesser than the death Benefit, the death Benefit will be automatically reduced by the amount paid for the Terminal illness. The policy remains in force and the remaining death Benefit is the original death Benefit less the amount paid for Terminal illness [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+If the Terminal illness Benefit payable is the same as the death Benefit, the policy ends when We make this payment [src:raw/wordings/policy-contract-enrich-retirement.md].
 
 ## 5.3 Special Conditions Benefit
 
-> During the policy term, if the Life insured is diagnosed with a covered special condition for the first time, We will pay a lump sum Benefit equivalent to SGD 10,000 per special condition. Before Our payment, any amounts owing to Us will first be deducted. [src:raw/wordings/policy-contract-enrich-retirement.md#p5]
+> During the policy term, if the Life insured is diagnosed with a covered special condition for the first time, We will pay a lump sum Benefit equivalent to SGD 10,000 per special condition. Before Our payment, any amounts owing to Us will first be deducted. [src:raw/wordings/policy-contract-enrich-retirement.md]
 
-Each special condition can only be paid once and a maximum of two (2) claims can be made under this Benefit. Our payment on the special condition will not reduce the death Benefit of the policy [src:raw/wordings/policy-contract-enrich-retirement.md#p5].
+Each special condition can only be paid once and a maximum of two (2) claims can be made under this Benefit. Our payment on the special condition will not reduce the death Benefit of the policy [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+> *The Life Insurance Association Singapore (LIA) has standard Definitions for 37 severe-stage Critical Illnesses (Version 2024). These Critical Illnesses fall under Version 2024. You may refer to www.lia.org.sg for the standard Definitions (Version 2024). [src:raw/wordings/policy-contract-enrich-retirement.md]
 
 ## 6.1 Death Benefit
 
-> We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later; [src:raw/wordings/policy-contract-enrich-retirement.md#p7]
+We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: [src:raw/wordings/policy-contract-enrich-retirement.md].
 
-> or b) Pre-existing conditions within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later. [src:raw/wordings/policy-contract-enrich-retirement.md#p7]
+> - a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later; or - b) Pre-existing conditions within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later. [src:raw/wordings/policy-contract-enrich-retirement.md]
 
 ## 6.2 Terminal Illness (TI) Benefit
 
-> We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; b) Pre-existing conditions within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later; or c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV. [src:raw/wordings/policy-contract-enrich-retirement.md#p7]
+We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+> - a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - b) Pre-existing conditions within the first 12 months from the Policy Issue date or the latest Reinstatement date, whichever is later; or - c) Acquired Immune Deficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV due to blood transfusion and occupationally acquired HIV. [src:raw/wordings/policy-contract-enrich-retirement.md]
 
 ## 6.3 Special Conditions Benefit
 
-We do not pay the Special Conditions Benefit if the special condition is directly or indirectly, wholly or partly caused by: a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; b) Pre-existing conditions; c) Effects of drug or alcohol addiction; or d) AIDS, AIDS-related conditions or infection in the presence of HIV except HIV due to blood transfusion and occupationally acquired HIV [src:raw/wordings/policy-contract-enrich-retirement.md#p7].
+We do not pay the Special Conditions Benefit if the special condition is directly or indirectly, wholly or partly caused by: [src:raw/wordings/policy-contract-enrich-retirement.md].
 
-When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement. When any of the exclusion happens, We will return the higher of either the total Premiums paid (less any amounts previously paid to You under this policy) without interest or the Surrender value (if any), less any amounts owing to Us [src:raw/wordings/policy-contract-enrich-retirement.md#p7].
+- a) Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - b) Pre-existing conditions; - c) Effects of drug or alcohol addiction; or - d) AIDS, AIDS-related conditions or infection in the presence of HIV except HIV due to blood transfusion and occupationally acquired HIV [src:raw/wordings/policy-contract-enrich-retirement.md].
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement. When any of the exclusion happens, We will return the higher of either the total Premiums paid (less any amounts previously paid to You under this policy) without interest or the Surrender value (if any), less any amounts owing to Us [src:raw/wordings/policy-contract-enrich-retirement.md].
