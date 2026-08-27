@@ -258,6 +258,11 @@ class Requirement:
 
     #: A figure bound to a benefit-table row or an SOR field.
     needs_figure: bool = False
+    #: ...and labelled as one of these. Without it, *any* figure satisfies the
+    #: clause: "how much does travel insurance cost a year" passed on a `$350`
+    #: quoted out of a policy wording about lost passports. A price question is
+    #: settled by a premium, not by a number.
+    needs_figure_label: tuple[str, ...] = ()
     #: A cited page whose id ends in one of these.
     needs_page_suffix: tuple[str, ...] = ()
     #: A cited page of one of these types.
@@ -339,10 +344,26 @@ REQUIREMENTS: dict[Intent, Requirement] = {
     # Nothing in this corpus carries a premium, a renewal date or a downloadable
     # document. These are not gaps to paper over with the nearest page — they
     # are the questions where improvising is most convincing and most costly.
-    Intent.price: Requirement(needs_any_term=("premium", "cost", "price")),
+    # A premium is a figure, and this corpus carries none — so requiring the
+    # *word* let "We will indemnify the Insured Person(s) for cost incurred up
+    # to the limit..." answer "how much does travel insurance cost a year".
+    # The word appeared; the price did not. Requiring a bound figure, and
+    # refusing to accept an unresolved marker in its place, makes the refusal
+    # honest: there is no premium here to fetch.
+    Intent.price: Requirement(
+        needs_figure=True,
+        needs_figure_label=("premium", "price", "cost"),
+        needs_any_term=("premium", "price"),
+    ),
     Intent.renewal: Requirement(
         needs_any_term=("renew", "expire", "cancel", "free-look", "cooling"),
         holds_answer=("/conditions",),
     ),
-    Intent.document: Requirement(needs_any_term=("wording", "policy document", "download", "contract")),
+    # "contract" and "premium" appear in almost every wording, so the loose
+    # form passed "send me the policy wording" on an answer about renewal
+    # notices. These are the words an answer that actually points at a document
+    # would use.
+    Intent.document: Requirement(
+        needs_any_term=("policy wording", "product summary", "download", "policy document")
+    ),
 }

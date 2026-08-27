@@ -596,8 +596,15 @@ def gate_answerability(ctx: GateContext) -> GateResult:
     text = ctx.answer.answer.lower()
     cited = [c.source_id for c in ctx.answer.claims]
 
-    if requirement.needs_figure and any(f.is_bound for f in ctx.answer.figures):
-        return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: bound figure")
+    if requirement.needs_figure:
+        wanted = requirement.needs_figure_label
+        bound = [
+            f
+            for f in ctx.answer.figures
+            if f.is_bound and (not wanted or any(w in f.label.lower() for w in wanted))
+        ]
+        if bound:
+            return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: bound figure")
     if requirement.satisfied_by_unresolved and ctx.answer.unresolved:
         return GateResult(
             gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: accounted for as unresolved"
@@ -634,7 +641,7 @@ def gate_answerability(ctx: GateContext) -> GateResult:
     # and the bundle has them. A caller can then load those and *recompose* —
     # the answer has to be formed in their presence, not merely gated beside
     # them.
-    wanted = [
+    settles = [
         page_id
         for suffix in requirement.holds_answer
         for page_id in [f"{_product_root(ctx)}{suffix}"]
@@ -644,7 +651,7 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         gate=name,
         verdict=Verdict.fail,
         detail=f"asked for {intent.value}; the answer shows none of it",
-        missing=sorted(set(wanted) - set(ctx.loaded_page_ids)),
+        missing=sorted(set(settles) - set(ctx.loaded_page_ids)),
     )
 
 

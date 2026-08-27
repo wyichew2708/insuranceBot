@@ -67,6 +67,59 @@ NO_ANSWER = (
     "Let me pass you to a colleague who can confirm it."
 )
 
+#: What a refusal can say instead, per intent, when the product is known.
+#:
+#: A customer told *why* can act. A customer told "I could not establish that"
+#: can only ask again, differently, and get the same sentence — which is the
+#: refusal this system gives most often. Each of these is true of this corpus:
+#: no premium is published anywhere in it, no document is downloadable through
+#: it, and a limit genuinely does depend on a plan tier the anonymous session
+#: does not know.
+SHORTFALL: dict[Intent, str] = {
+    Intent.price: (
+        "I do not have premiums for {product} — they are not published in the "
+        "product documents I answer from, and a price depends on your details. "
+        "You will see one when you start an application."
+    ),
+    Intent.document: (
+        "I cannot send documents. The policy wording and product summary for "
+        "{product} are published on the product page, and a colleague can send "
+        "your own policy documents."
+    ),
+    Intent.limit: (
+        "The limits for {product} vary by plan tier, and I do not know yours. "
+        "Sign in or tell me your tier and I can give you the exact figure."
+    ),
+    Intent.eligibility: (
+        "I do not have the eligibility rules for {product} in the documents I "
+        "answer from. A colleague can confirm whether you qualify."
+    ),
+    Intent.claim: ("I do not have the claim steps for {product}. A colleague can take you through it."),
+    Intent.application: (
+        "I do not have the application steps for {product}. The product page "
+        "has the route to buy, and a colleague can take you through it."
+    ),
+}
+
+
+def shortfall(question: str, product: Page | None) -> str:
+    """The most specific refusal this turn can honestly give.
+
+    Falls back to the generic one where the intent is unrecognised or no
+    product was resolved — saying something precise and wrong is worse than
+    saying something vague and true.
+    """
+    if product is None:
+        return NO_ANSWER
+    template = SHORTFALL.get(classify(question))
+    if template is None:
+        return NO_ANSWER
+    # The product's own name, never a child page's. `_product_page` can settle
+    # on `.../conditions`, whose title is "Public liability — Policy
+    # conditions" — which is not a product anybody bought.
+    name = product.frontmatter.title.split(" — ")[0]
+    return template.format(product=name)
+
 
 @dataclass
 class Selection:
@@ -440,7 +493,7 @@ def compose(
         # invents a product it does not sell (§F.1) — say so and hand off.
         return Composition(
             answer=GroundedAnswer(
-                answer=NO_ANSWER,
+                answer=shortfall(question, product),
                 handoff=True,
                 advice_flag=advice_required,
                 confidence=0.0,
@@ -449,7 +502,7 @@ def compose(
         )
     if not selections:
         answer = GroundedAnswer(
-            answer=NO_ANSWER,
+            answer=shortfall(question, product),
             handoff=True,
             advice_flag=advice_required,
             confidence=0.0,

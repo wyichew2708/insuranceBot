@@ -26,7 +26,7 @@ from harness import (
 from harness.intent import Intent, classify, smalltalk_kind
 from okf.tables import find_tokens
 
-from api.compose import compose
+from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
 from api.guardrails import Guard, Screening, guard_for
@@ -513,9 +513,16 @@ def answer_question(
         trace.blocked_draft = draft.answer
         trace.delivered = False
         trace.note("delivery blocked by a verification gate")
+        # `answerability` means precisely "nothing loaded settles this", which
+        # is a thing the customer can be told. Every other gate means "we
+        # caught a problem with the draft", which is not — a customer told the
+        # premium is not published can go and get a quote; a customer told that
+        # about a groundedness failure has been told something false.
+        failed = {r.gate for r in results if r.blocking}
+        refusal = shortfall(question, product) if failed == {"answerability"} else HANDOFF
         envelope = AnswerEnvelope(
             answer=GroundedAnswer(
-                answer=HANDOFF,
+                answer=refusal,
                 handoff=True,
                 # Preserve what the turn established: an advice question that
                 # gets blocked still needs the adviser handoff downstream.

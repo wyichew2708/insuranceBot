@@ -229,7 +229,7 @@ Two additions worth building alongside:
 |---|---|---|---|
 | 1 | ~~Requirements drive retrieval (4.2)~~ **built** | low | data exists and is already trusted; no model needed |
 | 2 | ~~Repair loop (4.4)~~ **not needed** | low | prevention removed the failures it targeted — see below |
-| 3 | Sufficiency check (4.3) | low | turns generic refusals into specific ones |
+| 3 | ~~Sufficiency check (4.3)~~ **built** | low | turns generic refusals into specific ones |
 | 4 | Model-based resolution (4.1) | medium | new dependency; falls back to today's path |
 | 5 | Clarifying questions (4.5) | medium | needs the conversation surface to carry a pending question |
 
@@ -279,6 +279,27 @@ injection attempt, an advice question, and one genuine miss.
 The loop stays unbuilt until a failure appears that it would actually fix.
 Building machinery with no failures left to catch is how a system acquires
 parts nobody can justify.
+
+**Step 3 is built.** A refusal now names what is missing where the intent makes
+that knowable — no premium is published in this corpus, no document is
+deliverable through it, a limit depends on a plan tier an anonymous session
+does not know. Only the `answerability` gate earns this treatment: it means
+"nothing loaded settles this", which a customer can act on. Every other gate
+means "we caught a problem with the draft", and dressing that up as a missing
+premium would be false.
+
+Building it found two clauses passing on coincidence, both of which had been
+delivering wrong answers rather than refusals:
+
+* "how much does travel insurance cost a year" was answered from a wording
+  about lost passports, because `needs_figure` was satisfied by *any* bound
+  figure and the section quoted `$350`. A price question is settled by a
+  premium, not by a number — `needs_figure_label` now says which;
+* "send me the policy wording" passed because the answer contained the words
+  "contract" and "premium", which appear in almost every wording.
+
+Answered fell 98 → 96 in the simulation, and that is the improvement: both of
+the turns it lost were wrong answers that are now honest refusals.
 
 1–3 need no model and should land first. They are also the ones that make 4
 safe, because a resolution the model gets wrong is caught by a sufficiency
