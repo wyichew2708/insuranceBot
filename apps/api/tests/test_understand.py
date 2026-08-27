@@ -124,3 +124,26 @@ def test_an_ambiguous_resolution_asks_rather_than_picks(bundle: Bundle, settings
     assert "did you mean" in env.answer.answer.lower()
     assert "clarify" in [s.name for s in trace.stages]
     assert not [g for g in env.gates if g.verdict is Verdict.fail]
+
+
+def test_earlier_turns_reach_the_model(bundle: Bundle) -> None:
+    """`api.reference` carries a topic only when an earlier turn names
+    something the corpus is *called* — word matching wearing a different hat.
+    "I want cover for my house" names no product, because nothing in this
+    bundle is called "house". A model needs no rule to know house is home, and
+    adding one only moves the next gap to "flat", "condo", "HDB", "my place".
+    """
+    provider = _Provider({"product_ids": [], "ambiguous": False})
+    understand(bundle, "how do i buy", provider, history=["i want cover for my house"])
+    assert "i want cover for my house" in provider.seen["user"]
+    assert "QUESTION: how do i buy" in provider.seen["user"]
+
+
+def test_a_shortlist_is_built_per_turn_not_per_conversation(bundle: Bundle) -> None:
+    """Joining the turns dilutes them: "i want cover for my house" ranks home
+    products on its own and ranks nothing once "what does it exclude how do i
+    buy" is stirred in. A turn that can name candidates contributes them."""
+    provider = _Provider({"product_ids": [], "ambiguous": False})
+    understand(bundle, "how do i buy", provider, history=["travel insurance"])
+    offered = provider.seen["user"]
+    assert "product/general/travel" in offered

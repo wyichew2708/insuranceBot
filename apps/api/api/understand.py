@@ -55,6 +55,13 @@ separate them, return all of them and set `ambiguous` true. A customer asked \
 which one they meant is better served than one given a guess.
 4. If the question is about no product on the list — a general question, a \
 greeting, something off-topic — return an empty list.
+5. Earlier turns are context, not the question. Use them only when the \
+question alone does not say which product — "how do I buy" after "I want \
+cover for my house" is about home insurance. A question that names its own \
+product ignores them.
+
+Customers describe things rather than naming them: a house is home insurance, \
+a break-in is burglary cover, a helper is maid insurance.
 
 You are identifying a subject, not answering. Say nothing about cover, \
 limits, exclusions or price.
@@ -128,8 +135,17 @@ def _catalogue(pages: list[Page]) -> str:
     return "\n".join(lines)
 
 
-def understand(bundle: Bundle, question: str, provider: Any) -> Understanding:
+def understand(
+    bundle: Bundle, question: str, provider: Any, history: list[str] | None = None
+) -> Understanding:
     """Resolve the question to product ids, or explain why it could not.
+
+    The earlier turns go in too. `api.reference` carries a topic forward only
+    when a previous turn names something the corpus is *called*, which is word
+    matching wearing a different hat: "I want cover for my house" names no
+    product, because nothing in this bundle is called "house". A model needs
+    no rule to know that house is home — and adding one would only move the
+    next gap to "flat", "condo", "HDB", "my place".
 
     Never raises. Every failure path returns an empty `Understanding` with
     `degraded` set, and the caller carries on with lexical retrieval.
@@ -138,14 +154,31 @@ def understand(bundle: Bundle, question: str, provider: Any) -> Understanding:
     if classify is None or getattr(provider, "name", "") == "deterministic":
         return Understanding(degraded="no model")
 
-    candidates = shortlist(bundle, question)
+    # One shortlist per turn, unioned — not one shortlist for all the turns
+    # joined together. Joining dilutes: "i want cover for my house" ranks home
+    # products on its own and ranks nothing once "what does it exclude how do
+    # i buy" is stirred in with it. A turn that can name candidates should
+    # contribute them whatever the turns around it look like.
+    candidates: list[Page] = []
+    seen: set[str] = set()
+    for text in [question, *reversed((history or [])[-2:])]:
+        for page in shortlist(bundle, text, limit=SHORTLIST):
+            if page.id not in seen:
+                seen.add(page.id)
+                candidates.append(page)
+    candidates = candidates[: SHORTLIST * 2]
     if not candidates:
         return Understanding(degraded="no products to choose from")
+
+    earlier = ""
+    if history:
+        said = "\n".join(f"- {turn}" for turn in history[-3:])
+        earlier = f"EARLIER IN THIS CONVERSATION, THE CUSTOMER SAID:\n{said}\n\n"
 
     try:
         payload = classify(
             SYSTEM_PROMPT,
-            f"PRODUCTS:\n{_catalogue(candidates)}\n\nQUESTION: {question}",
+            f"PRODUCTS:\n{_catalogue(candidates)}\n\n{earlier}QUESTION: {question}",
             SCHEMA,
             max_tokens=256,
         )

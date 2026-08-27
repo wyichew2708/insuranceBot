@@ -297,7 +297,7 @@ def answer_question(
     # model" on every offline turn is noise in the one trace people read most.
     if settings.resolve_with_model and provider.name != "deterministic" and worth_resolving(question):
         with trace.stage("understand") as detail:
-            understanding = understand(bundle, question, provider)
+            understanding = understand(bundle, question, provider, history=list(history or []))
             detail["products"] = understanding.product_ids
             if understanding.ambiguous:
                 detail["ambiguous"] = True
