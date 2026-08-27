@@ -195,12 +195,16 @@ def lookup(bundle: Bundle, question: str) -> Directory:
 
     if line:
         in_line = [p for p in listable if p.frontmatter.line_of_business == line]
-        # A name match inside the named line leads; the rest of the line
-        # follows, so "what life products" is answered by the whole line and
-        # "critical illness plans" leads with the ones actually called that.
         named = [p for p in by_name if p in in_line]
-        rest = sorted((p for p in in_line if p not in named), key=lambda p: p.frontmatter.title)
-        return Directory(line=line, products=[*named, *rest])
+        # Naming a product is not the same request as naming a line. "Show me
+        # pet insurance" was answered with Pet Insurance, Dash Pet Plus — and
+        # then Accidental Death, Burglary and every other general product,
+        # because the line was used to pad the list. Where the customer named
+        # something, the things called that *are* the answer.
+        if named:
+            return Directory(line=line, products=named)
+        rest = sorted(in_line, key=lambda p: p.frontmatter.title)
+        return Directory(line=line, products=rest)
     return Directory(line=None, products=by_name)
 
 

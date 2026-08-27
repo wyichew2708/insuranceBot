@@ -7,6 +7,7 @@ from api.retrieval import (
     needs_rag,
     rag_search,
     score_page,
+    subject_terms,
     wiki_read,
 )
 from harness import Budget, Channel, Trace
@@ -152,3 +153,26 @@ def test_focus_prefers_the_product_page_over_its_children(bundle: Bundle) -> Non
 
 def test_no_product_shaped_match_leaves_the_question_alone(bundle: Bundle) -> None:
     assert focus_product(bundle, {"index": 1.0}, keywords("anything")) is None
+
+
+def test_the_speech_act_does_not_choose_the_product(bundle: Bundle) -> None:
+    """Measured on the real corpus: `want` scores 0.791 against `cancer` at
+    0.408, because a conversational verb is rare in a corpus of contracts. So
+    "want to buy cancer insurance" ranked the home-insurance FAQ first — its
+    headings are full of "I want to buy" — and the page actually called Cancer
+    Insurance came nowhere. Rarity is not informativeness about the subject."""
+    assert "want" not in subject_terms("want to buy travel insurance")
+    assert "travel" in subject_terms("want to buy travel insurance")
+
+
+def test_a_turn_that_is_all_speech_act_still_has_terms() -> None:
+    """ "I need help" is nothing but the speech act, and ranking against an
+    empty set scores the whole corpus zero."""
+    assert subject_terms("i need help") == keywords("i need help")
+
+
+def test_buy_still_selects_a_section(bundle: Bundle) -> None:
+    """ "buy" says nothing about which plan and everything about which section
+    of it. Dropping it from `keywords` outright broke "how do I buy travel
+    insurance", which is found by that very word."""
+    assert "buy" in keywords("how do i buy travel insurance")

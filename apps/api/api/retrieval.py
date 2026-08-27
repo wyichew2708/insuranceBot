@@ -90,6 +90,56 @@ STOPWORDS = {
 }
 
 
+#: The speech act, not the subject. These are what a customer says *around* the
+#: thing they want, and IDF cannot tell the difference: measured on the real
+#: corpus `want` scores 0.791 and `cancer` scores 0.408, because a
+#: conversational verb is rare in a corpus of contracts. So "want to buy cancer
+#: insurance" ranked the home-insurance FAQ first — its headings are full of
+#: "I want to buy" — and the page actually called Cancer Insurance came nowhere.
+#:
+#: Dropped when ranking *products*, kept everywhere else. "buy" says nothing
+#: about which plan the customer means and everything about which section of it
+#: they want, so removing it outright broke "how do I buy travel insurance",
+#: which is found by that very word.
+SPEECH_ACT = frozenset(
+    [
+        "want",
+        "wants",
+        "wanted",
+        "need",
+        "needs",
+        "needed",
+        "looking",
+        "look",
+        "interested",
+        "please",
+        "tell",
+        "show",
+        "give",
+        "help",
+        "know",
+        "find",
+        "take",
+        "make",
+        "let",
+        "hi",
+        "hello",
+        "thanks",
+        "thank",
+    ]
+)
+
+
+def subject_terms(text: str) -> set[str]:
+    """Question terms with the speech act removed, for ranking products.
+
+    Falls back to the full set when nothing else is left: "I need help" is all
+    speech act, and ranking against an empty set scores the whole corpus zero.
+    """
+    terms = keywords(text)
+    return (terms - SPEECH_ACT) or terms
+
+
 def keywords(text: str) -> set[str]:
     return {w for w in re.findall(r"[a-z0-9]+", text.lower()) if w not in STOPWORDS and len(w) > 2}
 
@@ -190,7 +240,9 @@ def frontmatter_filter(
 ) -> list[tuple[Page, float]]:
     """The pre-read filter. Every rejection is recorded with its reason —
     that log is how you discover the taxonomy is wrong (§F.4)."""
-    terms = keywords(question)
+    # Ranking *products*, so the speech act is dropped. Composition keeps it:
+    # "buy" says nothing about which plan and everything about which section.
+    terms = subject_terms(question)
     ambiguous = benefit_phrases(bundle)
     idf = term_idf(bundle)
     alias_hits = set(bundle.resolve_aliases(question))
