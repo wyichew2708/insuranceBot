@@ -42,6 +42,7 @@ from api.retrieval import (
 )
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
+from api.understand import Understanding, understand, worth_resolving
 from okf import (
     Bundle,
     Page,
@@ -284,9 +285,32 @@ def answer_question(
             detail["expanded"] = expanded
             question = expanded
 
+    # Which product this is about, read rather than counted. Falls through to
+    # lexical ranking on absence, timeout, malformed output, or an id that does
+    # not resolve — so it can improve selection and cannot degrade it.
+    understanding = Understanding(degraded="not attempted")
+    # No stage at all on the deterministic path: opening one that reports "no
+    # model" on every offline turn is noise in the one trace people read most.
+    if settings.resolve_with_model and provider.name != "deterministic" and worth_resolving(question):
+        with trace.stage("understand") as detail:
+            understanding = understand(bundle, question, provider)
+            detail["products"] = understanding.product_ids
+            if understanding.ambiguous:
+                detail["ambiguous"] = True
+            if understanding.degraded:
+                detail["degraded"] = understanding.degraded
+
+    focus_override = None
+    if understanding.resolved and not understanding.ambiguous:
+        resolved_page = bundle.get(understanding.product_ids[0])
+        if resolved_page is not None:
+            focus_override = bundle.product_key(resolved_page)
+
     try:
         with trace.stage("frontmatter-filter") as detail:
-            admitted = frontmatter_filter(bundle, question, session, trace, settings.candidate_floor)
+            admitted = frontmatter_filter(
+                bundle, question, session, trace, settings.candidate_floor, focus_override
+            )
             detail["admitted"] = len(admitted)
             detail["rejected"] = len(trace.candidates) - len(admitted)
 

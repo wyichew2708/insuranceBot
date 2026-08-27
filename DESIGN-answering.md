@@ -230,7 +230,7 @@ Two additions worth building alongside:
 | 1 | ~~Requirements drive retrieval (4.2)~~ **built** | low | data exists and is already trusted; no model needed |
 | 2 | ~~Repair loop (4.4)~~ **not needed** | low | prevention removed the failures it targeted — see below |
 | 3 | ~~Sufficiency check (4.3)~~ **built** | low | turns generic refusals into specific ones |
-| 4 | Model-based resolution (4.1) | medium | new dependency; falls back to today's path |
+| 4 | ~~Model-based resolution (4.1)~~ **built** | medium | new dependency; falls back to today's path |
 | 5 | Clarifying questions (4.5) | medium | needs the conversation surface to carry a pending question |
 
 **Step 1 is built.** `Requirement` gained `holds_answer` — the page suffixes
@@ -300,6 +300,31 @@ delivering wrong answers rather than refusals:
 
 Answered fell 98 → 96 in the simulation, and that is the improvement: both of
 the turns it lost were wrong answers that are now honest refusals.
+
+**Step 4 is built.** `api/understand.py` hands the model a shortlist of product
+ids that exist in this bundle and asks which the question is about. It selects
+from a closed set and never asserts — an id it was not offered is discarded,
+because a model answering with a product it was not shown has not selected, it
+has recalled.
+
+Every failure path falls through to lexical ranking: no model, a timeout,
+malformed output, an unresolvable id. There is no configuration in which this
+makes retrieval worse than it was, and `DeterministicProvider.classify` returns
+nothing, so CI and the suites still measure the offline path.
+
+Measured against Qwen on the questions lexical ranking got wrong:
+
+| question | lexical | resolved |
+|---|---|---|
+| want to buy cancer insurance | home-insurance FAQ | `product/protection/cancer-insurance` |
+| i want cover for my house | nothing | `product/general/complimentary-home` |
+| my place was broken into | nothing | `product/general/burglary` |
+| send me the policy wording | public liability | *declined to pick* — fell through |
+
+The last row is the one worth noting. Asked about something the shortlist could
+not settle, the model returned no id rather than the nearest one, and the turn
+carried on exactly as it does today. That is the property the whole design
+rests on.
 
 1–3 need no model and should land first. They are also the ones that make 4
 safe, because a resolution the model gets wrong is caught by a sufficiency

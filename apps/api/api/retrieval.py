@@ -23,6 +23,10 @@ from okf import Bundle, Page, PageType, Status, term_idf
 # The body is corroborating evidence, not the primary signal: frontmatter is
 # the curated surface and should still dominate.
 BODY_WEIGHT = 0.35
+#: Added to every page of a product something resolved the question to.
+#: Enough to clear the confidence floor on its own, because the point is
+#: that this product no longer has to win a word-count contest.
+FOCUS_PIN = 1.0
 
 # A contiguous phrase match is identity evidence, not vocabulary overlap. Bags
 # of words cannot tell "the personal accident limit on Maid Insurance" from a
@@ -236,7 +240,12 @@ def score_page(
 
 
 def frontmatter_filter(
-    bundle: Bundle, question: str, session: Session, trace: Trace, floor: float
+    bundle: Bundle,
+    question: str,
+    session: Session,
+    trace: Trace,
+    floor: float,
+    focus_override: str | None = None,
 ) -> list[tuple[Page, float]]:
     """The pre-read filter. Every rejection is recorded with its reason —
     that log is how you discover the taxonomy is wrong (§F.4)."""
@@ -253,7 +262,17 @@ def frontmatter_filter(
         page.id: score_page(page, terms, question, ambiguous, idf) + (0.5 if page.id in alias_hits else 0.0)
         for page in bundle.pages.values()
     }
-    focus = focus_product(bundle, scored, terms)
+    # A resolved product decides the focus outright. Lexical ranking is what
+    # got "want to buy cancer insurance" onto the home-insurance FAQ; where
+    # something read the question properly, its answer is not one more score
+    # to compare.
+    focus = focus_override or focus_product(bundle, scored, terms)
+    if focus_override:
+        # And its pages score as if they had won on merit, so the confidence
+        # floor does not then discard the product we just identified.
+        for page in bundle.pages.values():
+            if bundle.product_key(page) == focus_override:
+                scored[page.id] = max(scored.get(page.id, 0.0), floor) + FOCUS_PIN
     product_keys = known_product_keys(bundle)
 
     for page in sorted(bundle.pages.values(), key=lambda p: p.id):

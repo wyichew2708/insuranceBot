@@ -38,6 +38,13 @@ class Settings(BaseSettings):
     vllm_api_key: str = ""
     vllm_max_tokens: int = 1024
 
+    # Ask the model which product a question is about, instead of ranking
+    # words. Off makes the turn behave exactly as it did before — the lexical
+    # path is still there and still the fallback for every failure of this one.
+    # Costs one extra call per turn on a configured provider, and nothing at
+    # all on the deterministic one, which returns no verdict.
+    resolve_with_model: bool = True
+
     # --- Guardrails (§F.4) ----------------------------------------------
     # A second screen either side of the loop, complementing the deterministic
     # gates with a semantic one. The rule layer always runs and is not
