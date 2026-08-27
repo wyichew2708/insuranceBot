@@ -57,6 +57,7 @@ running it, and every output they quote is what the command printed:
 | **[DEPLOYMENT.md](DEPLOYMENT.md)** | serve it — configure, start, verify in four ordered checks, operate, and what it is not ready for |
 | **[CORPUS.md](CORPUS.md)** | build the corpus — crawl, parse the PDFs, read the FAQs, compile, lint, review |
 | **[EVALUATION.md](EVALUATION.md)** | measure it — six suites, what each tests, and how to read a failure |
+| **[DESIGN-answering.md](DESIGN-answering.md)** | a proposal, not yet built — why selection is the weak half and what would replace it |
 
 The rest of this README is the design: what the system is and why it is shaped
 this way.
