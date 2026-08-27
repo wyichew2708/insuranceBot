@@ -228,7 +228,7 @@ Two additions worth building alongside:
 | # | change | risk | why this order |
 |---|---|---|---|
 | 1 | ~~Requirements drive retrieval (4.2)~~ **built** | low | data exists and is already trusted; no model needed |
-| 2 | Repair loop (4.4) | low | gates unchanged, bounded, recovers named failures |
+| 2 | ~~Repair loop (4.4)~~ **not needed** | low | prevention removed the failures it targeted — see below |
 | 3 | Sufficiency check (4.3) | low | turns generic refusals into specific ones |
 | 4 | Model-based resolution (4.1) | medium | new dependency; falls back to today's path |
 | 5 | Clarifying questions (4.5) | medium | needs the conversation surface to carry a pending question |
@@ -253,6 +253,32 @@ recording because they are the shape of this kind of change:
   tear covered?" falls into, and that question wants the exclusions page.
 
 Simulation after: 105 turns, 95 answered, 4 smalltalk, 6 refused.
+
+**Step 2 was not built, and should not be.** The repair loop was designed to
+recover `exclusion-completeness` failures by loading the page the gate named
+and recomposing. Building it started by making the gates report what they
+wanted in a typed field rather than in English — worth having, and kept — and
+that immediately showed the failures all had one cause.
+
+Only `product/<line>/<slug>` carries `links`; its `/faq`, `/conditions` and
+`/cover` children carry none. A turn that retrieved a child page and not the
+parent reached no exclusions page at all, asserted coverage from the child,
+and was refused. Traversal now follows the typed edges of the product a page
+*belongs to*, so the exclusions load before composition and the answer is
+formed in their presence.
+
+That is the honest version of the same idea. A repair loop that loaded the
+page and re-gated without recomposing would have made the check vacuous —
+the gate exists so coverage is asserted *in the presence of* the exclusions,
+not merely alongside them. Prevention gets the property the gate is protecting;
+repair would have got the green tick.
+
+Simulation after: 105 turns, **98 answered**, 4 smalltalk, 3 refused — the
+injection attempt, an advice question, and one genuine miss.
+
+The loop stays unbuilt until a failure appears that it would actually fix.
+Building machinery with no failures left to catch is how a system acquires
+parts nobody can justify.
 
 1–3 need no model and should land first. They are also the ones that make 4
 safe, because a resolution the model gets wrong is caught by a sufficiency

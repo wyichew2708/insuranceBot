@@ -108,6 +108,12 @@ class GateResult(BaseModel):
     gate: str
     verdict: Verdict
     detail: str = ""
+    #: Page ids that would let this gate pass, where the gate knows them.
+    #: Typed rather than parsed back out of `detail`: a caller that repairs a
+    #: failure should not have to read English to find out what was wanted.
+    #: Loading these is necessary and never sufficient — the answer has to be
+    #: *recomposed* in their presence and re-gated, or the check goes vacuous.
+    missing: list[str] = Field(default_factory=list)
 
     @property
     def blocking(self) -> bool:

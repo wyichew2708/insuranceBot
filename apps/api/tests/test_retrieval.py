@@ -176,3 +176,26 @@ def test_buy_still_selects_a_section(bundle: Bundle) -> None:
     of it. Dropping it from `keywords` outright broke "how do I buy travel
     insurance", which is found by that very word."""
     assert "buy" in keywords("how do i buy travel insurance")
+
+
+def test_typed_edges_are_followed_from_the_product_a_page_belongs_to(bundle: Bundle) -> None:
+    """Only `product/<line>/<slug>` carries `links`; its `/faq`, `/conditions`
+    and `/cover` children carry none. A turn that retrieved a child and not the
+    parent reached no exclusions page at all, asserted coverage from the child,
+    and was refused — three of six refusals in one simulation, each a product
+    whose exclusions sat one hop away and unreachable."""
+    from api.retrieval import _product_root
+
+    child = bundle.get("product/general/travel/benefits")
+    assert child is not None
+    owner = _product_root(bundle, child.id)
+    assert owner is not None and owner.id == "product/general/travel"
+    assert owner.frontmatter.links.exclusions
+
+    # The root of a root is None — nothing to climb to.
+    assert _product_root(bundle, "product/general/travel") is None
+    assert _product_root(bundle, "concept/excess") is None
+
+    trace, budget = Trace(question="q"), Budget()
+    loaded = wiki_read(bundle, [(child, 1.0)], trace, budget, limit=6, today=TODAY)
+    assert any(page.id.endswith("/exclusions") for page in loaded), [page.id for page in loaded]

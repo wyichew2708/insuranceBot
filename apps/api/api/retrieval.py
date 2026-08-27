@@ -355,6 +355,19 @@ def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | No
     return bundle.product_key(page) if page else None
 
 
+def _product_root(bundle: Bundle, page_id: str) -> Page | None:
+    """The `product/<line>/<slug>` page a child page belongs to.
+
+    `product/general/travel/faq` belongs to `product/general/travel`, which is
+    where the typed edges live. Returns None for a page that is already the
+    root, or is not a product page at all.
+    """
+    parts = page_id.split("/")
+    if parts[0] != "product" or len(parts) < 4:
+        return None
+    return bundle.get("/".join(parts[:3]))
+
+
 def wiki_read(
     bundle: Bundle,
     seeds: list[tuple[Page, float]],
@@ -390,8 +403,17 @@ def wiki_read(
     # exclusion-completeness gate will refuse to deliver that assertion unless
     # the exclusions page was actually read — so it is not just another
     # neighbour competing for the last slot with a concept page (§E.1, §F.2).
+    #
+    # The edges are followed from the *product* a page belongs to, not only
+    # from the page itself. Only `product/<line>/<slug>` carries `links`; its
+    # `/faq`, `/conditions` and `/cover` children carry none. A turn that
+    # retrieved the FAQ and not the parent therefore reached no exclusions
+    # page at all, asserted coverage from the FAQ, and was refused — three of
+    # six refusals in the last simulation, every one of them a product whose
+    # exclusions were sitting one hop away and unreachable.
     for seed in list(pages):
-        for ref in (seed.frontmatter.links.exclusions, seed.frontmatter.links.benefits):
+        owner = _product_root(bundle, seed.id) or seed
+        for ref in (owner.frontmatter.links.exclusions, owner.frontmatter.links.benefits):
             if not ref:
                 continue
             linked = bundle.get(ref)

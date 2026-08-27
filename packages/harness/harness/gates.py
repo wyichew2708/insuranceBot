@@ -362,6 +362,7 @@ def gate_exclusion_completeness(ctx: GateContext) -> GateResult:
             gate=name,
             verdict=Verdict.fail,
             detail=f"coverage asserted without reading {sorted(set(missing))}",
+            missing=sorted(set(missing)),
         )
     return GateResult(gate=name, verdict=Verdict.pass_, detail="exclusion pages read")
 
@@ -547,6 +548,15 @@ def _foreign_contacts(ctx: GateContext, channel: Channel) -> list[tuple[str, str
 # --- 8. answerability -------------------------------------------------------
 
 
+def _product_root(ctx: GateContext) -> str:
+    """The `product/<line>/<slug>` this turn is about, from what it loaded."""
+    for page_id in ctx.loaded_page_ids:
+        parts = page_id.split("/")
+        if parts[0] == "product" and len(parts) >= 3:
+            return "/".join(parts[:3])
+    return ""
+
+
 def gate_answerability(ctx: GateContext) -> GateResult:
     """Does this answer address what was asked?
 
@@ -620,10 +630,21 @@ def gate_answerability(ctx: GateContext) -> GateResult:
                 gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: cited a page that answers it"
             )
 
+    # Name the pages that would settle it, where the requirement knows them
+    # and the bundle has them. A caller can then load those and *recompose* —
+    # the answer has to be formed in their presence, not merely gated beside
+    # them.
+    wanted = [
+        page_id
+        for suffix in requirement.holds_answer
+        for page_id in [f"{_product_root(ctx)}{suffix}"]
+        if _product_root(ctx) and ctx.bundle.get(page_id) is not None
+    ]
     return GateResult(
         gate=name,
         verdict=Verdict.fail,
         detail=f"asked for {intent.value}; the answer shows none of it",
+        missing=sorted(set(wanted) - set(ctx.loaded_page_ids)),
     )
 
 
