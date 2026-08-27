@@ -30,7 +30,7 @@ from api.clarify import clarification, lexical_clarification
 from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
-from api.guardrails import Guard, Screening, guard_for
+from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency
 from api.llm import Draft, LLMProvider, provider_for
 from api.reference import resolve
 from api.retrieval import (
@@ -314,6 +314,24 @@ def answer_question(
                 detail["ambiguous"] = True
             if understanding.degraded:
                 detail["degraded"] = understanding.degraded
+
+    # Before anything is retrieved, and before any product can be named. Asked
+    # about chest pain and a numb arm, this answered "I cannot provide medical
+    # advice regarding your symptoms, but our Cancer Insurance..." — the
+    # disclaimer turned into a hinge for a pitch. Nothing downstream would stop
+    # that, because the pitch was accurate and properly cited.
+    if medical_emergency(question):
+        with trace.stage("medical-emergency") as detail:
+            detail["routed"] = "care"
+        return _finish(
+            trace,
+            GroundedAnswer(answer=MEDICAL_EMERGENCY, smalltalk=True, confidence=1.0),
+            bundle,
+            session,
+            question,
+            raw_root,
+            [],
+        )
 
     # Not a question about insurance. Every gate downstream verifies that an
     # answer is faithful to the corpus; none asks whether the question was ours,

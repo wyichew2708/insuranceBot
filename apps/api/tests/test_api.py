@@ -1,6 +1,7 @@
 import httpx
 import pytest
 from api.main import app
+from harness.gates import ALL_GATES
 
 
 @pytest.fixture
@@ -54,9 +55,9 @@ async def test_answer_then_fetch_its_trace(client: httpx.AsyncClient) -> None:
     assert trace["figures_resolved"]
     assert trace["rejected"], "the console needs rejected candidates"
     names = [g["gate"] for g in trace["gates"]]
-    # The eight verification gates, plus the output screen reported alongside
-    # them so one list decides whether an answer ships.
-    assert len(names) == 9
+    # Every verification gate, plus the output screen reported alongside them
+    # so one list decides whether an answer ships.
+    assert len(names) == len(ALL_GATES) + 1
     assert "guardrail-output" in names
 
 

@@ -19,6 +19,7 @@ from harness import (
     run_gates,
 )
 from harness.gates import (
+    ALL_GATES,
     gate_advice_boundary,
     gate_channel_coherence,
     gate_exclusion_completeness,
@@ -325,11 +326,14 @@ def test_unentailed_claim_is_blocked(bundle: Bundle) -> None:
 
 def test_every_gate_runs_regardless_of_earlier_failures(bundle: Bundle) -> None:
     """The console shows the full picture, so a failure never short-circuits the
-    rest. Eight now: the seventh was the last of the provenance checks, and
-    `answerability` is the first that compares the answer to the question."""
+    rest. Counted from `ALL_GATES` rather than written down: the number has
+    changed twice — `answerability` was the first to compare the answer to the
+    question, and `entitlement-assertion` the first to weigh it against who is
+    asking — and a hardcoded count only records when someone last edited it."""
     results = run_gates(ctx(bundle, GroundedAnswer(answer="x", handoff=True)))
-    assert len(results) == 8
+    assert len(results) == len(ALL_GATES)
     assert {r.gate for r in results} == {
+        "entitlement-assertion",
         "reference-integrity",
         "numeric-binding",
         "version-coherence",
