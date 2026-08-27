@@ -9,19 +9,30 @@ from __future__ import annotations
 
 from typing import Any
 
+from api.settings import Settings
 from api.understand import SHORTLIST, understand, worth_resolving
+from harness import Verdict
 
+from conftest import make_session
 from okf import Bundle
 
 
 class _Provider:
-    """A provider whose verdict the test dictates."""
+    """A provider whose verdict the test dictates.
+
+    Satisfies the full `LLMProvider` protocol: `rewrite` returns None, which
+    is what a provider that cannot phrase anything is supposed to do — the
+    composer's own prose stands.
+    """
 
     name = "stub"
 
     def __init__(self, payload: Any) -> None:
         self.payload = payload
         self.seen: dict[str, Any] = {}
+
+    def rewrite(self, draft: Any) -> None:
+        return None
 
     def classify(self, system: str, user: str, schema: dict[str, Any], **kw: Any) -> Any:
         self.seen = {"system": system, "user": user, "schema": schema}
@@ -94,3 +105,22 @@ def test_an_empty_turn_is_not_worth_resolving() -> None:
     assert not worth_resolving("")
     assert not worth_resolving("???")
     assert worth_resolving("travel")
+
+
+def test_an_ambiguous_resolution_asks_rather_than_picks(bundle: Bundle, settings: Settings) -> None:
+    """End to end: the model says it cannot separate two products, and the
+    turn becomes a question back to the customer instead of a confident answer
+    about whichever one happened to rank first."""
+    from api.pipeline import answer_question
+
+    provider = _Provider(
+        {"product_ids": ["product/general/travel", "product/general/home"], "ambiguous": True}
+    )
+    env, trace = answer_question(
+        bundle, "cover for my trip and my house", make_session(), settings, provider=provider
+    )
+    assert env.delivered
+    assert env.answer.clarifying
+    assert "did you mean" in env.answer.answer.lower()
+    assert "clarify" in [s.name for s in trace.stages]
+    assert not [g for g in env.gates if g.verdict is Verdict.fail]

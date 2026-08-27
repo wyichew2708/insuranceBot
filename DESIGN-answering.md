@@ -1,6 +1,8 @@
 # Redesigning the answering loop
 
-A proposal. Step 1 of §7 is now built; everything else is unbuilt.
+All five items of §7 are resolved: four built, one deliberately not.
+The diagnosis in §§1–3 is what the rest of the document rests on and is
+kept as written.
 
 The question is how to make answering accurate enough to put in front of
 customers. The short version: **the verification half of this system is good
@@ -231,7 +233,7 @@ Two additions worth building alongside:
 | 2 | ~~Repair loop (4.4)~~ **not needed** | low | prevention removed the failures it targeted — see below |
 | 3 | ~~Sufficiency check (4.3)~~ **built** | low | turns generic refusals into specific ones |
 | 4 | ~~Model-based resolution (4.1)~~ **built** | medium | new dependency; falls back to today's path |
-| 5 | Clarifying questions (4.5) | medium | needs the conversation surface to carry a pending question |
+| 5 | ~~Clarifying questions (4.5)~~ **built** | medium | needs the conversation surface to carry a pending question |
 
 **Step 1 is built.** `Requirement` gained `holds_answer` — the page suffixes
 that carry the answer, read *before* composing rather than after — and the
@@ -325,6 +327,20 @@ The last row is the one worth noting. Asked about something the shortlist could
 not settle, the model returned no id rather than the nearest one, and the turn
 carried on exactly as it does today. That is the property the whole design
 rests on.
+
+**Step 5 is built.** Where the model reports it cannot separate two products,
+the turn becomes a question back to the customer with each option a tap in the
+chat surface. It is a real answer and not a special case: it names products,
+carries a claim per option bound to the page it came from, and goes through the
+same eight gates. What it does not do is assert anything about cover, so the
+coverage gates find nothing to check — correctly, because nothing has been
+claimed about cover yet.
+
+The tiebreak that caused the original failure is fixed, but the shape of that
+mistake is not fixable: a system that must always choose will sometimes choose
+wrong and say so with complete confidence. A clarifying question costs the
+customer one tap and cannot mislead them, which is why this is the item worth
+having most and the one the system could not perform at all.
 
 1–3 need no model and should land first. They are also the ones that make 4
 safe, because a resolution the model gets wrong is caught by a sufficiency

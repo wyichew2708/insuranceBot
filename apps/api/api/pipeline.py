@@ -26,11 +26,12 @@ from harness import (
 from harness.intent import Intent, classify, smalltalk_kind
 from okf.tables import find_tokens
 
+from api.clarify import clarification
 from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
 from api.guardrails import Guard, Screening, guard_for
-from api.llm import Draft, provider_for
+from api.llm import Draft, LLMProvider, provider_for
 from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
@@ -189,6 +190,7 @@ def answer_question(
     session: Session,
     settings: Settings,
     history: list[str] | None = None,
+    provider: LLMProvider | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     trace = Trace(question=question, session_id=session.session_id, channel=session.channel.value)
     budget = Budget(
@@ -205,7 +207,9 @@ def answer_question(
     # One provider for the turn, shared by the two screens and the rewrite.
     # Same credentials by construction — there is no separate guardrail key —
     # and one client rather than two for what may be three calls.
-    provider = provider_for(settings)
+    # Injectable so a test can dictate a verdict without a network or a key.
+    # The guardrail layer already takes one for the same reason.
+    provider = provider or provider_for(settings)
     guard: Guard = guard_for(settings, provider)
     with trace.stage("guardrail-input") as detail:
         incoming = guard.screen_input(question)
@@ -299,6 +303,16 @@ def answer_question(
                 detail["ambiguous"] = True
             if understanding.degraded:
                 detail["degraded"] = understanding.degraded
+
+    # Two products, and nothing in the question to separate them. Ask.
+    if understanding.ambiguous:
+        asked = clarification(bundle, understanding.product_ids)
+        if asked is not None:
+            with trace.stage("clarify") as detail:
+                detail["options"] = [c.source_id for c in asked.claims]
+            return _finish(
+                trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+            )
 
     focus_override = None
     if understanding.resolved and not understanding.ambiguous:

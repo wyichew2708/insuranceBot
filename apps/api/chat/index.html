@@ -88,6 +88,13 @@ main{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain}
 .tag.handoff{background:var(--warn-dim);color:var(--warn)}
 .tag.blocked{background:var(--warn-dim);color:var(--fail)}
 
+/* Options for a question the bot asked back. Clickable, because asking should
+   cost the customer a tap and not a sentence. */
+.options{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.options button{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent);
+                border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;font-weight:600}
+.options button:hover{background:var(--accent);color:var(--accent-ink)}
+
 /* ---- sources ---- */
 details.src{margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
 details.src summary{cursor:pointer;font-size:11.5px;color:var(--fg-dim);list-style:none;
@@ -359,6 +366,15 @@ async function ask() {
     const env = await res.json();
     const a = env.answer || {};
 
+    // A question back to the customer, with its options as one tap each.
+    let options = "";
+    if (a.clarifying && (a.claims || []).length) {
+      options =
+        '<div class="options">' +
+        a.claims.map(c => `<button data-pick="${escapeHtml(c.text)}">${escapeHtml(c.text)}</button>`).join("") +
+        "</div>";
+    }
+
     let head = "";
     if (a.smalltalk) {
       // A greeting is not a handoff and must not be dressed as one.
@@ -383,7 +399,10 @@ async function ask() {
            </ul></details>`
       : "";
 
-    bubble.innerHTML = head + render(a.answer || "", a.figures) + sources;
+    bubble.innerHTML = head + render(a.answer || "", a.figures) + options + sources;
+    for (const pick of bubble.querySelectorAll("[data-pick]")) {
+      pick.onclick = () => { box.value = pick.dataset.pick; ask(); };
+    }
   } catch (err) {
     bubble.innerHTML = `<p class="err">Could not reach the service — ${escapeHtml(String(err))}</p>`;
   } finally {

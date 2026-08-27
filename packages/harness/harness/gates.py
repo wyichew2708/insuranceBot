@@ -587,6 +587,11 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         return GateResult(gate=name, verdict=Verdict.skip, detail="handoff")
     if ctx.answer.smalltalk:
         return GateResult(gate=name, verdict=Verdict.skip, detail="not a question about the product")
+    if ctx.answer.clarifying:
+        # Asking which product was meant is not a failed attempt to answer.
+        # Refusing it for showing no limit would punish the one behaviour here
+        # that cannot mislead anybody.
+        return GateResult(gate=name, verdict=Verdict.skip, detail="asked which product was meant")
 
     intent = classify(ctx.question)
     requirement = REQUIREMENTS.get(intent)

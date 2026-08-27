@@ -138,6 +138,11 @@ class GroundedAnswer(BaseModel):
     # answer than the greeting they expected. Like a handoff it carries no
     # claims, so the provenance gates have nothing to check and skip.
     smalltalk: bool = False
+    # Set when the turn is a question back to the customer — two products were
+    # plausible and the question did not separate them. It asserts nothing
+    # about cover, so the coverage gates have nothing to check, but it does
+    # name products and carries a claim for each, so provenance still applies.
+    clarifying: bool = False
 
 
 class AnswerRequest(BaseModel):
