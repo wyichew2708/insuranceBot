@@ -129,7 +129,25 @@ Real corpus detail:
 ```
 
 The real corpus has no gate because it is not a regression suite — it is a
-measurement of a corpus that is still being built. It takes **~2 hours**.
+measurement of a corpus that is still being built. It takes **~2 hours**, so
+run it in batches:
+
+```bash
+uv run python scripts/eval_batches.py --bundle okf-real \
+  --suite .eval-reports/real-suite.json --batch-size 1000
+uv run python scripts/eval_batches.py --bundle okf-real --report-only
+```
+
+Each batch is written to `.eval-reports/batches/batch-NNNN.json` the moment it
+finishes and prints its own pass rate, a running total and an ETA. A rerun
+skips what is already on disk, so a kill costs one batch rather than two
+hours — which had already happened three times before this existed. The score
+is computed from the files rather than from memory, so `--report-only`
+reproduces it after a crash, on another machine, or a week later.
+
+Deterministic and pinned to it: a configured model would make this three API
+calls per case, about 78,000 for one pass, which is not a thing to start by
+accident. `--live` opts in.
 
 ### Reading the numbers
 
