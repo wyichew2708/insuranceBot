@@ -22,7 +22,7 @@ from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Sessi
 # this pattern drift, and the drift shows up as a quotation that composes
 # unbound and is refused — so there is one, and this is the one.
 from harness.gates import NUMERIC_SPAN_RE
-from harness.intent import Intent, classify
+from harness.intent import REQUIREMENTS, Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, find_tokens
 
@@ -113,12 +113,46 @@ QUANTITY_RE = re.compile(
 )
 
 
+#: How much a page the requirement asked for outranks one that merely scored.
+#: Large enough to beat a lexical near-miss, and still additive, so a named
+#: page with nothing relevant in it does not win by fiat.
+EVIDENCE_BONUS = 1.5
+
+
+def evidence_pages(intent: Intent, product: Page | None, loaded: set[str]) -> frozenset[str]:
+    """The page ids this intent's requirement says hold the answer.
+
+    Empty when the intent is unconstrained or no product is in hand, which
+    leaves selection exactly as it was — this can steer, never starve.
+    """
+    requirement = REQUIREMENTS.get(intent)
+    if requirement is None or product is None or not requirement.holds_answer:
+        return frozenset()
+    root = product.id
+    named = {f"{root}{suffix}" for suffix in requirement.holds_answer}
+    # Only pages that were actually loaded. A suffix the bundle does not carry
+    # — the seed bundle has no `/cover` child — must not steer anything.
+    return frozenset(named & loaded)
+
+
+def evidence_types(intent: Intent) -> frozenset[str]:
+    """Page *types* the requirement accepts, as a second axis.
+
+    "How do I buy this through an agency?" is answered by a channel page,
+    which does not live under the product root — so suffixes alone cannot
+    name it, and boosting only the product page pushed the channel page out.
+    """
+    requirement = REQUIREMENTS.get(intent)
+    return frozenset(requirement.needs_page_type) if requirement else frozenset()
+
+
 def select_sections(
     pages: list[Page],
     question: str,
     limit: int = 3,
     idf: dict[str, float] | None = None,
     benefits: set[str] | None = None,
+    product: Page | None = None,
 ) -> list[Selection]:
     """Relevance is page relevance times section match, where page relevance is the
     *lexical* score only. The alias boost belongs to retrieval — deciding which
@@ -139,6 +173,14 @@ def select_sections(
     # coverage question away from exclusions broke six of those, so only the
     # open form is steered.
     broad_coverage = intent is Intent.coverage and bool(BROAD_COVERAGE_RE.search(question))
+    # The pages this intent's requirement says hold the answer, resolved
+    # against the product in hand. This is the one place the requirement table
+    # is read *before* an answer exists rather than after it — everything else
+    # consults it to reject. Without it "how to buy" was answered from three
+    # FAQ entries that repeat the word "buy", while the product's own "How to
+    # buy" section sat unread on a page that was already loaded.
+    answer_pages = evidence_pages(intent, product, {p.id for p in pages})
+    answer_types = evidence_types(intent)
     # Benefit codes the question implied through customer vocabulary — the
     # bridge between "the airline lost my suitcase" and a section headed
     # "Baggage loss". Without it those questions retrieve the right product and
@@ -172,6 +214,13 @@ def select_sections(
             page_relevance += 0.6
         if wants_procedure and page_type == PageType.journey:
             page_relevance += 0.6
+        # A page the requirement named outranks a page that merely shares words
+        # with the question. A bonus and never a penalty: docking everything
+        # else starved the benefits page on any coverage question and took
+        # about a hundred generated cases with it. Steering is adding weight to
+        # the right evidence, not removing it from the rest.
+        if page.id in answer_pages or page.frontmatter.type.value in answer_types:
+            page_relevance += EVIDENCE_BONUS
         if names_only:
             # The product page itself, not one of its children.
             page_relevance += 0.9 if page.id.count("/") == 2 else -0.4
@@ -384,7 +433,7 @@ def compose(
     benefits: set[str] | None = None,
     no_confident_match: bool = False,
 ) -> Composition:
-    selections = select_sections(pages, question, idf=idf, benefits=benefits)
+    selections = select_sections(pages, question, idf=idf, benefits=benefits, product=product)
     if no_confident_match:
         # Nothing cleared the confidence floor and the raw corpus had nothing
         # either. Composing from the least-bad pages is how an assistant

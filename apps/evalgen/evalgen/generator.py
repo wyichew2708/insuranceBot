@@ -24,7 +24,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from api.sor import FIXTURE_POLICIES, policy_for
-from okf.linter import CHANNEL_VARIANT_RE
+from okf.linter import CHANNEL_VARIANT_RE, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, TableRow
 
 from evalgen.schema import Category, Expectation, GeneratedCase, MergeCase, SessionSpec, Suite
@@ -704,6 +704,30 @@ def entity_cases(bundle: Bundle) -> list[GeneratedCase]:
     return cases
 
 
+#: Section headings that duplicate a dedicated child page.
+_SECTION_CHILD = (
+    (re.compile(r"not covered|exclusion", re.I), "/exclusions"),
+    (re.compile(r"how to claim|making a claim", re.I), "/claims"),
+    (re.compile(r"definition", re.I), "/definitions"),
+)
+
+
+def _has_child_for(bundle: Bundle, page: Page, heading: str) -> bool:
+    return any(
+        pattern.search(heading) and bundle.get(f"{page.id}{suffix}") is not None
+        for pattern, suffix in _SECTION_CHILD
+    )
+
+
+def _is_pointer_only(body: str) -> bool:
+    """Is this section nothing but a link to another page?"""
+    stripped = SOURCE_REF_RE.sub("", body).strip()
+    if not stripped or "](" not in stripped:
+        return False
+    residual = re.sub(r"\[([^\]]*)\]\([^)]*\)", " ", stripped)
+    return len(residual.split()) <= 12
+
+
 def section_cases(bundle: Bundle) -> list[GeneratedCase]:
     """Every section a product page publishes under its own heading.
 
@@ -724,6 +748,20 @@ def section_cases(bundle: Bundle) -> list[GeneratedCase]:
         key = bundle.product_key(page)
         for heading, body in _sections(page):
             if not body.strip():
+                continue
+            # A section whose whole body is a cross-reference — "The complete
+            # list is on the exclusions page" — is a signpost, and asking what
+            # it says tests the signpost rather than the answer. The composer
+            # deprioritises these for the same reason; generating a case that
+            # asserts one *must* be cited pins the old behaviour in place.
+            if _is_pointer_only(body):
+                continue
+            # A product page summarises "What is not covered" and links to the
+            # exclusions page that holds it. Asking what the summary says, and
+            # demanding the *parent* be cited, pins routing we deliberately
+            # changed: an exclusion question is now answered from the
+            # exclusions page. The child page's own cases still cover it.
+            if _has_child_for(bundle, page, heading):
                 continue
             cases.extend(
                 _expand(

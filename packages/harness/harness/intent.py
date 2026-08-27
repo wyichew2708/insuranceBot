@@ -157,7 +157,7 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # pay?" is asking whether something is covered, not how to lodge a
             # claim — reading it as process sent exclusion questions to a gate
             # that wanted a claims page cited.
-            r"\b(how (do|can) i claim|make a claim|file a claim|submit a claim"
+            r"\b(how (?:(?:do|can) i |to )claim|make a claim|file a claim|submit a claim"
             r"|claim (process|procedure|form|status)"
             r"|what (do|documents) .{0,24}(need|submit|send).{0,24}claim)\b",
             re.I,
@@ -166,7 +166,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.application,
         re.compile(
-            r"\b(how (do|can) i (buy|purchase|apply|take out|sign up)|steps to (buy|take out|apply)"
+            r"\b(how (?:(?:do|can) i |to )(buy|purchase|apply|take out|sign up)"
+            r"|steps to (buy|take out|apply)"
             r"|walk me through buying|where (do|can) i buy"
             # "Can I get Home Insurance from a broker?" asks which route sells
             # it, not whether the customer qualifies — without this it read as
@@ -263,6 +264,17 @@ class Requirement:
     needs_page_type: tuple[str, ...] = ()
     #: Words the answer must contain to be about the right subject at all.
     needs_any_term: tuple[str, ...] = ()
+    #: Page-id suffixes that *hold* the answer, as opposed to `needs_page_suffix`
+    #: which says what a cited page must look like for the gate to be satisfied.
+    #:
+    #: The difference is the direction. Everything else on this class is read
+    #: after an answer is written, to reject it. This is read before, to go and
+    #: fetch what the question needs — which is the gap that let "how to buy"
+    #: be answered from three FAQ entries that happened to repeat the word
+    #: "buy", while the product's own "How to buy" section sat unread on a page
+    #: that was already loaded.
+    holds_answer: tuple[str, ...] = ()
+
     #: Whether naming what could not be established counts as answering.
     #:
     #: For a limit it does. An anonymous customer asking the medical expenses
@@ -275,28 +287,62 @@ class Requirement:
     #: unresolved marker there is not an explanation, just an absence.
     satisfied_by_unresolved: bool = False
 
+    @property
+    def checkable(self) -> bool:
+        """Does this requirement demand anything of an answer?
+
+        `holds_answer` steers retrieval and asks nothing of the result, so an
+        entry carrying only that must not make the gate refuse. `coverage` and
+        `definition` are in the table for steering alone and are deliberately
+        unconstrained — refusing a customer for asking broadly is worse than
+        answering them broadly. Adding them without this property failed about
+        a hundred generated cases with "asked for coverage; the answer shows
+        none of it".
+        """
+        return bool(
+            self.needs_figure or self.needs_page_suffix or self.needs_page_type or self.needs_any_term
+        )
+
 
 #: What each intent demands. Intents absent from this table are unconstrained —
 #: `coverage`, `definition` and `unknown` are answerable from ordinary prose and
 #: demanding structure of them would refuse customers for asking broadly.
 REQUIREMENTS: dict[Intent, Requirement] = {
-    Intent.limit: Requirement(needs_figure=True, satisfied_by_unresolved=True),
+    Intent.limit: Requirement(needs_figure=True, satisfied_by_unresolved=True, holds_answer=("/benefits",)),
     Intent.exclusion: Requirement(
         needs_page_suffix=("/exclusions",),
         needs_any_term=("exclud", "not covered", "exclusion"),
+        holds_answer=("/exclusions",),
     ),
-    Intent.claim: Requirement(needs_page_type=("journey",), needs_any_term=("claim",)),
+    Intent.claim: Requirement(
+        needs_page_type=("journey",),
+        needs_any_term=("claim",),
+        holds_answer=("/claims",),
+    ),
     Intent.application: Requirement(
         needs_page_type=("journey", "channel"),
         needs_any_term=("buy", "purchase", "apply", "quote", "online"),
+        # The product page's own "How to buy" section carries the channel
+        # table; the empty suffix means the product page itself.
+        holds_answer=("",),
     ),
     Intent.eligibility: Requirement(
-        needs_any_term=("eligib", "age", "resident", "citizen", "pass holder", "qualify", "who can")
+        needs_any_term=("eligib", "age", "resident", "citizen", "pass holder", "qualify", "who can"),
+        holds_answer=("/eligibility",),
     ),
+    Intent.definition: Requirement(holds_answer=("/definitions",)),
+    # `coverage` deliberately steers nothing. It is the catch-all a dozen
+    # sharper questions fall into — "are wear and tear covered?" classifies
+    # here and wants the *exclusions* page — so naming a page for it sends the
+    # narrow cases to the wrong one. The open form ("what does it cover") is
+    # steered in the composer, where the phrasing is still visible.
     # Nothing in this corpus carries a premium, a renewal date or a downloadable
     # document. These are not gaps to paper over with the nearest page — they
     # are the questions where improvising is most convincing and most costly.
     Intent.price: Requirement(needs_any_term=("premium", "cost", "price")),
-    Intent.renewal: Requirement(needs_any_term=("renew", "expire", "cancel", "free-look", "cooling")),
+    Intent.renewal: Requirement(
+        needs_any_term=("renew", "expire", "cancel", "free-look", "cooling"),
+        holds_answer=("/conditions",),
+    ),
     Intent.document: Requirement(needs_any_term=("wording", "policy document", "download", "contract")),
 }

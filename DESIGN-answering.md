@@ -1,6 +1,6 @@
 # Redesigning the answering loop
 
-A proposal, not a change. Nothing here is built yet.
+A proposal. Step 1 of §7 is now built; everything else is unbuilt.
 
 The question is how to make answering accurate enough to put in front of
 customers. The short version: **the verification half of this system is good
@@ -227,11 +227,32 @@ Two additions worth building alongside:
 
 | # | change | risk | why this order |
 |---|---|---|---|
-| 1 | Requirements drive retrieval (4.2) | low | data exists and is already trusted; no model needed |
+| 1 | ~~Requirements drive retrieval (4.2)~~ **built** | low | data exists and is already trusted; no model needed |
 | 2 | Repair loop (4.4) | low | gates unchanged, bounded, recovers named failures |
 | 3 | Sufficiency check (4.3) | low | turns generic refusals into specific ones |
 | 4 | Model-based resolution (4.1) | medium | new dependency; falls back to today's path |
 | 5 | Clarifying questions (4.5) | medium | needs the conversation surface to carry a pending question |
+
+**Step 1 is built.** `Requirement` gained `holds_answer` — the page suffixes
+that carry the answer, read *before* composing rather than after — and the
+composer boosts those pages. It was prompted by "how to buy" being answered
+from three FAQ entries that repeat the word "buy" while the product's own
+"How to buy" section sat unread on a page that was already loaded.
+
+Three things went wrong building it, all caught by the suites, all worth
+recording because they are the shape of this kind of change:
+
+* a **penalty** on un-named pages starved the benefits page on every coverage
+  question — about a hundred cases. Steering is adding weight to the right
+  evidence, never removing it from the rest;
+* adding `coverage` and `definition` to the requirement table to carry a
+  suffix made the answerability gate demand something of them, and it had been
+  deliberate that those two demand nothing. A requirement with no checkable
+  clause now cannot refuse;
+* steering `coverage` at all was wrong — it is the catch-all that "are wear and
+  tear covered?" falls into, and that question wants the exclusions page.
+
+Simulation after: 105 turns, 95 answered, 4 smalltalk, 6 refused.
 
 1–3 need no model and should land first. They are also the ones that make 4
 safe, because a resolution the model gets wrong is caught by a sufficiency

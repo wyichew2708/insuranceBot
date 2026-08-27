@@ -580,7 +580,7 @@ def gate_answerability(ctx: GateContext) -> GateResult:
 
     intent = classify(ctx.question)
     requirement = REQUIREMENTS.get(intent)
-    if requirement is None:
+    if requirement is None or not requirement.checkable:
         return GateResult(gate=name, verdict=Verdict.skip, detail=f"{intent.value}: unconstrained")
 
     text = ctx.answer.answer.lower()

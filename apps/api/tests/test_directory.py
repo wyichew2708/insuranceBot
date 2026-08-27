@@ -110,3 +110,43 @@ def test_a_directory_answer_is_gated_like_any_other(bundle: Bundle, settings: Se
     verdicts = {g.gate: g.verdict for g in env.gates}
     assert verdicts["reference-integrity"] is Verdict.pass_
     assert verdicts["groundedness"] is Verdict.pass_
+
+
+# --- requirements drive retrieval (DESIGN-answering.md §4.2) ---
+
+
+def test_the_requirement_fetches_the_page_that_holds_the_answer(bundle: Bundle, settings: Settings) -> None:
+    """ "how to buy" was answered from three FAQ entries that repeat the word
+    "buy", while the product's own "How to buy" section sat unread on a page
+    that was already loaded. `REQUIREMENTS` knew which page settles an
+    application question and was only ever consulted to reject."""
+    from api.compose import evidence_pages
+    from harness.intent import Intent
+
+    product = bundle.get("product/general/travel")
+    assert product is not None
+    named = evidence_pages(Intent.application, product, {"product/general/travel"})
+    assert "product/general/travel" in named
+
+
+def test_an_intent_the_bundle_cannot_serve_steers_nothing(bundle: Bundle) -> None:
+    """A suffix the bundle does not carry must not steer. The seed bundle has
+    no `/cover` child, and boosting a page that does not exist while docking
+    every page that does starved the benefits page on any coverage question."""
+    from api.compose import evidence_pages
+    from harness.intent import Intent
+
+    product = bundle.get("product/general/travel")
+    assert product is not None
+    assert evidence_pages(Intent.definition, product, {"product/general/travel"}) == frozenset()
+
+
+def test_a_requirement_that_demands_nothing_cannot_refuse() -> None:
+    """`holds_answer` steers retrieval and asks nothing of the result. An
+    entry carrying only that must not make the answerability gate refuse —
+    adding one failed about a hundred cases with "asked for coverage; the
+    answer shows none of it"."""
+    from harness.intent import REQUIREMENTS, Intent, Requirement
+
+    assert not Requirement(holds_answer=("/x",)).checkable
+    assert REQUIREMENTS[Intent.exclusion].checkable
