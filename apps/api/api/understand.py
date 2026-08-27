@@ -60,8 +60,15 @@ else, however the customer phrased the request around it.
 3. If two or more products are genuinely plausible and the question does not \
 separate them, return all of them and set `ambiguous` true. A customer asked \
 which one they meant is better served than one given a guess.
-4. If the question is about no product on the list — a general question, a \
-greeting, something off-topic — return an empty list.
+4. If the question is about no product on the list, return an empty list and \
+say which kind of question it is in `subject`:
+   - `general_insurance` — about insurance, or about us, but not about one \
+particular product: what an excess is, how to reach us, what a free-look \
+period means, what products you sell.
+   - `off_topic` — not something an insurer answers at all: the weather, \
+general knowledge, cooking, politics, another company's products, a \
+government scheme we do not administer.
+   Use `product` whenever you return any ids.
 5. Earlier turns are context, not the question. Use them only when the \
 question alone does not say which product — "how do I buy" after "I want \
 cover for my house" is about home insurance. A question that names its own \
@@ -77,7 +84,7 @@ limits, exclusions or price.
 SCHEMA: dict[str, Any] = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["product_ids", "ambiguous"],
+    "required": ["product_ids", "ambiguous", "subject"],
     "properties": {
         "product_ids": {
             "type": "array",
@@ -89,6 +96,11 @@ SCHEMA: dict[str, Any] = {
             "type": "boolean",
             "description": "True when the question does not separate the ids returned.",
         },
+        "subject": {
+            "type": "string",
+            "enum": ["product", "general_insurance", "off_topic"],
+            "description": "What kind of question this is. See rule 4.",
+        },
     },
 }
 
@@ -99,6 +111,14 @@ class Understanding:
 
     product_ids: list[str] = field(default_factory=list)
     ambiguous: bool = False
+    #: `product`, `general_insurance` or `off_topic` — empty when no model ran.
+    #:
+    #: Worth the extra field because the two empty cases are opposites. "What
+    #: is an excess" and "what is the capital of france" both resolve to no
+    #: product, and only one of them should be answered; before this they were
+    #: indistinguishable, so the corpus answered both — the trivia question
+    #: with a page of dismemberment definitions.
+    subject: str = ""
     #: Why this is empty, when it is. Recorded on the trace so a turn that fell
     #: back to lexical says which of the ways it did so.
     degraded: str = ""
@@ -197,9 +217,17 @@ def understand(
         for value in payload.get("product_ids", [])
         if isinstance(value, str) and value.strip() in offered
     ]
+    subject = payload.get("subject")
+    subject = subject if subject in {"product", "general_insurance", "off_topic"} else ""
     if not ids:
-        return Understanding(degraded="no id resolved")
-    return Understanding(product_ids=ids, ambiguous=bool(payload.get("ambiguous")))
+        # No product, but *why* matters: an off-topic question should be
+        # declined, and a general one about insurance should still be answered.
+        return Understanding(subject=subject, degraded="no id resolved")
+    return Understanding(
+        product_ids=ids,
+        ambiguous=bool(payload.get("ambiguous")),
+        subject=subject or "product",
+    )
 
 
 #: A question that names no product at all — a greeting, an off-topic aside —

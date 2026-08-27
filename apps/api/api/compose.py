@@ -442,20 +442,52 @@ def lead_with_heading(heading: str, prose: str) -> str:
 #: and customers were shown "The child limit for the plan tier held is
 #: [unavailable]". The turn already appends the "sign in for tier-specific
 #: limits" caveat, which is the honest half of this; the holed sentence is not.
-UNRESOLVED_SENTENCE_RE = re.compile(r"[^.!?\n]*\[unavailable\][^.!?\n]*[.!?]?", re.I)
+#: The two shapes a tier-varying figure takes in the corpus. Predicate first —
+#: "The child limit for the plan tier held is [unavailable]" — then the figure
+#: used as a noun mid-sentence: "Reimbursed up to [unavailable] for the plan
+#: tier held, and emergency dental treatment ... is included".
+_TIER_PREDICATE_RE = re.compile(r"\s*(?:for the plan tier held)?\s*(?:is|are)\s*\[unavailable\]", re.I)
+_TIER_NOUN_RE = re.compile(r"\[unavailable\](?:\s*for the plan tier held)?", re.I)
+#: Anything still holding a placeholder after both — no template to work with,
+#: so the sentence goes rather than shipping the hole.
+_UNRESOLVED_SENTENCE_RE = re.compile(r"[^.!?\n]*\[unavailable\][^.!?\n]*[.!?]?", re.I)
 
 
 def drop_unresolved(text: str) -> str:
-    """Remove sentences carrying an unresolved figure, keeping the rest."""
+    """Say what the sentence was for, rather than showing the hole in it.
+
+    Deleting the sentence was the first attempt and it lost the citation: on a
+    tier-varying benefit that sentence is the *only* one the benefits page
+    contributes, so removing it removed the page from the answer's sources. The
+    page is still where "this benefit exists, and its limit depends on your
+    tier" comes from, and a customer is better served knowing that than shown
+    either a placeholder or nothing.
+
+    Rewritten clause by clause, not sentence by sentence. One sentence can
+    carry two of these — "the child limit ... is [unavailable] and the home
+    content cover limit ... is [unavailable]" — and replacing the sentence
+    wholesale dropped the second benefit. Worse, the figure is often just a
+    noun in the middle of a sentence that goes on to say something real:
+    deleting "Reimbursed up to [unavailable] for the plan tier held, and
+    emergency dental treatment following an accident is included" threw away
+    the dental cover along with the missing number, and with it the only claim
+    the benefits page contributed — so the page stopped being cited at all.
+    """
     if "[unavailable]" not in text:
         return text
-    return UNRESOLVED_SENTENCE_RE.sub("", text)
+    text = _TIER_PREDICATE_RE.sub(" depends on your plan tier", text)
+    text = _TIER_NOUN_RE.sub("an amount that depends on your plan tier", text)
+    return _UNRESOLVED_SENTENCE_RE.sub("", text) if "[unavailable]" in text else text
 
 
 def clean_prose(text: str) -> str:
     """Strip machine markup for display; the bindings live on the contract."""
-    text = drop_unresolved(text)
+    # Source refs come out first. They contain dots — `www.tiq.com.sg/2026-08-25`
+    # — and `drop_unresolved` splits on sentence punctuation, so running it
+    # first cut a ref in half and left the tail in the prose, where its digits
+    # read as unbound numbers and the numeric-binding gate refused the answer.
     text = SOURCE_REF_RE.sub("", text)
+    text = drop_unresolved(text)
     text = text.replace(ALLOW_NUMBER, "")
     # Quotation markers are how the wiki records that a clause is reproduced
     # rather than written; the customer reads the clause, not the bookkeeping.

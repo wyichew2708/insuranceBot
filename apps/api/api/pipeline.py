@@ -68,6 +68,17 @@ REFUSED = (
     "I'm happy to take it — otherwise I can put you through to a colleague."
 )
 
+#: A question that is not about insurance. Declines and says what is on offer,
+#: rather than refusing flatly: a customer who wandered off topic is still a
+#: customer, and the useful half of the reply is the redirect. Claimless and
+#: marked `smalltalk`, because it asserts nothing about any product — the same
+#: shape a greeting takes, and for the same reason.
+OFF_TOPIC = (
+    "That one's outside what I can help with, I'm afraid — I only answer from "
+    "our policy documents. If there's something you'd like to know about your "
+    "cover, a claim, or one of our products, ask away."
+)
+
 
 def _refusal(trace: Trace, screening: Screening, gate: str, budget_note: str) -> tuple[AnswerEnvelope, Trace]:
     """End the turn on a guardrail verdict, by the same route a failed gate
@@ -303,6 +314,28 @@ def answer_question(
                 detail["ambiguous"] = True
             if understanding.degraded:
                 detail["degraded"] = understanding.degraded
+
+    # Not a question about insurance. Every gate downstream verifies that an
+    # answer is faithful to the corpus; none asks whether the question was ours,
+    # so retrieval would find *something* and ground an answer in it perfectly
+    # — which is how "what is the capital of france" was answered with the
+    # definitions of Loss of Sight and Permanent Total Disablement.
+    #
+    # Only on the model's explicit `off_topic`. A question that merely resolves
+    # to no product is usually a general one about insurance — "what is an
+    # excess", "how do I contact you" — and those must still be answered.
+    if understanding.subject == "off_topic":
+        with trace.stage("off-topic") as detail:
+            detail["declined"] = True
+        return _finish(
+            trace,
+            GroundedAnswer(answer=OFF_TOPIC, smalltalk=True, confidence=1.0),
+            bundle,
+            session,
+            question,
+            raw_root,
+            [],
+        )
 
     # Two products, and nothing in the question to separate them. Ask.
     if understanding.ambiguous:
