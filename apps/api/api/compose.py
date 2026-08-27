@@ -386,6 +386,55 @@ def _paragraphs(text: str) -> list[str]:
     return blocks
 
 
+#: A heading that *governs* the text beneath it rather than labelling it.
+#:
+#: The distinction is not cosmetic. Asked what travel insurance covers, the bot
+#: answered "Travel Insurance covers you upon the death of the Insured
+#: Person(s)" — a faithful rendering of a list it was handed as established
+#: fact, whose heading, `This Insurance shall be cancelled`, had been dropped.
+#: The list said when cover *ends*. Without the heading there is nothing in the
+#: words to say so, and no model could recover it.
+#:
+#: This corpus is full of them: "What is not covered" heads 101 sections, "The
+#: following are excluded" 47, "We will not pay for" 24, "Your policy will end
+#: when one of these events happens first" 38. Matching contract polarity
+#: language is narrow and stable in a way that matching customer vocabulary is
+#: not — these phrases are drafting convention, not the words people improvise.
+GOVERNING_HEADING_RE = re.compile(
+    r"\b(?:we (?:will|shall) not|will not (?:pay|be)|not covered|no benefit|not be payable"
+    r"|are excluded|is excluded|following are|shall be cancelled|be cancelled|will end"
+    r"|shall cease|ceases?|does not cover|do not cover|excluded from|if you are|prohibited)\b",
+    re.I,
+)
+
+
+def under_heading(heading: str, text: str) -> str:
+    """A fact stated together with the heading that governs it.
+
+    Applied to every claim, not only the governing ones: the claims are what
+    the model is told have been established, and a heading is free context
+    there. It is the customer-facing prose that has to be selective.
+    """
+    heading = (heading or "").strip()
+    if not heading or heading.lower() in text[: len(heading) + 8].lower():
+        return text
+    return f"{heading}: {text}"
+
+
+def lead_with_heading(heading: str, prose: str) -> str:
+    """Prose led by its heading where the heading carries the polarity.
+
+    A label — "Premium", "General Definitions" — adds nothing a reader needs
+    and makes the answer read like a table of contents, so it stays off.
+    """
+    heading = (heading or "").strip()
+    if not heading or not GOVERNING_HEADING_RE.search(heading):
+        return prose
+    if heading.lower() in prose[: len(heading) + 8].lower():
+        return prose
+    return f"{heading.rstrip(':.')}: {prose}"
+
+
 #: A sentence whose figure did not resolve. `resolve_transclusions` writes
 #: `[unavailable]` rather than inventing the number, which is right — but the
 #: sentence around it says nothing and reads as a broken template. Anonymous
@@ -625,11 +674,17 @@ def compose(
             # to nothing. An empty claim asserts nothing and cites a page for it.
             if not text:
                 continue
-            claims.append(Claim(text=text, source_id=selection.page.id, locator=locator))
+            claims.append(
+                Claim(
+                    text=under_heading(selection.heading, text),
+                    source_id=selection.page.id,
+                    locator=locator,
+                )
+            )
 
         prose = clean_prose(resolved.text)
         if prose:
-            paragraphs.append(prose)
+            paragraphs.append(lead_with_heading(selection.heading, prose))
 
     render = render_channel(bundle, product, session)
     body = "\n\n".join(paragraphs)
