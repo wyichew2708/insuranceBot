@@ -469,7 +469,15 @@ def answer_question(
             draft.handoff = True
             trace.note("distress flagged on the incoming turn — routed to a person")
 
-        if tier == "UNKNOWN" and product is not None and _tier_specific(product, bundle):
+        # Not on a handoff: "limits vary by plan tier" tacked onto "let me pass
+        # you to a colleague" offers a figure the turn never had, and the same
+        # sentence was landing on refusals where there is no limit to vary.
+        if (
+            tier == "UNKNOWN"
+            and product is not None
+            and not draft.handoff
+            and _tier_specific(product, bundle)
+        ):
             draft.unresolved.append("plan tier unknown — sign in for tier-specific limits")
             draft.answer += (
                 "\n\nLimits vary by plan tier, so sign in or tell me your tier and "

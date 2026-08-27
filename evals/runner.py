@@ -51,11 +51,28 @@ def _session(spec: dict[str, Any], case_id: str) -> Session:
     )
 
 
-def _check(case: dict[str, Any], envelope: Any, trace: Any) -> list[str]:
+def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | None = None) -> list[str]:
     expect = case.get("expect") or {}
     failures: list[str] = []
     answer = envelope.answer
     text = answer.answer.lower()
+
+    # Asserting a *product* rather than a page id. A field-test case cares that
+    # a burglary question was answered about home insurance, not about which of
+    # the product's five child pages happened to carry the sentence — pinning
+    # the page id would make the suite fail on an improvement.
+    wanted_product = expect.get("cite_product")
+    if wanted_product and bundle is not None:
+        cited = set()
+        for claim in answer.claims:
+            page = bundle.get(claim.source_id)
+            if page is not None:
+                cited.add(bundle.product_key(page))
+        if wanted_product not in cited:
+            failures.append(f"cited products {sorted(cited) or '[]'}, expected {wanted_product!r}")
+
+    if "clarifying" in expect and answer.clarifying != expect["clarifying"]:
+        failures.append(f"clarifying={answer.clarifying}, expected {expect['clarifying']}")
 
     if "delivered" in expect and envelope.delivered != expect["delivered"]:
         failures.append(f"delivered={envelope.delivered}, expected {expect['delivered']}")
@@ -108,8 +125,17 @@ def _check(case: dict[str, Any], envelope: Any, trace: Any) -> list[str]:
 
 def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> dict[str, Any]:
     session = _session(case.get("session") or {}, str(case["id"]))
-    envelope, trace = answer_question(bundle, case["question"], session, settings)
-    failures = _check(case, envelope, trace)
+    # `turns` is one conversation; `expect` is asserted against the last turn.
+    # Half of what the field test found only appears on a follow-up — a subject
+    # carried from an earlier turn, or lost by it — and a suite that can only
+    # ask one question cannot see any of it.
+    turns = [str(t) for t in (case.get("turns") or [])] or [case["question"]]
+    history: list[str] = []
+    envelope = trace = None
+    for turn in turns:
+        envelope, trace = answer_question(bundle, turn, session, settings, history=list(history))
+        history.append(turn)
+    failures = _check(case, envelope, trace, bundle)
     return {
         "id": case["id"],
         "passed": not failures,

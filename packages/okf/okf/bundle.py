@@ -120,6 +120,28 @@ class Bundle:
                 ordered.append(page_id)
         return ordered
 
+    def alias_fanout(self, text: str) -> dict[str, int]:
+        """Page id → how many pages the alias that matched it also matches.
+
+        An alias is only evidence to the extent it separates one page from the
+        others. The compiler stamps every promotion page with "discount" and
+        every journey page with "claim", so those two words each resolve to
+        dozens of pages at once — a hit that says nothing about which. The
+        caller weights the bonus by this, which is IDF wearing a different hat.
+
+        Where several aliases matched one page, the sharpest one wins.
+        """
+        haystack = normalise(text)
+        fanout: dict[str, int] = {}
+        for alias, page_ids in self._alias_index.items():
+            if not alias or alias not in haystack:
+                continue
+            for page_id in page_ids:
+                current = fanout.get(page_id)
+                if current is None or len(page_ids) < current:
+                    fanout[page_id] = len(page_ids)
+        return fanout
+
     def aliases_of(self, page_id: str) -> list[str]:
         page = self.pages.get(page_id)
         return list(page.frontmatter.aliases) if page else []

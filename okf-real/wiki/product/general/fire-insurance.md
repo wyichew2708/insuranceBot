@@ -17,7 +17,6 @@ channels:
   name: Direct
   purchase: direct_online
   landing: https://www.etiqa.com.sg/personal/fire-insurance
-  hotline: +65 9695 1338
   surfaces: []
 plan_tiers: []
 authority:

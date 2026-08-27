@@ -12,6 +12,7 @@ wrong coverage answers.
 from __future__ import annotations
 
 import datetime as dt
+import math
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -23,6 +24,10 @@ from okf import Bundle, Page, PageType, Status, term_idf
 # The body is corroborating evidence, not the primary signal: frontmatter is
 # the curated surface and should still dominate.
 BODY_WEIGHT = 0.35
+#: The most an alias hit can be worth, earned only by one that resolves to a
+#: single page. Scaled down by fan-out from there — see `_alias_bonus`.
+ALIAS_BONUS = 0.5
+
 #: Added to every page of a product something resolved the question to.
 #: Enough to clear the confidence floor on its own, because the point is
 #: that this product no longer has to win a word-count contest.
@@ -256,10 +261,22 @@ def frontmatter_filter(
     idf = term_idf(bundle)
     alias_hits = set(bundle.resolve_aliases(question))
     trace.entities = sorted(alias_hits)
+    # A flat bonus treats "discount" — which the compiler stamped on all 63
+    # promotion pages — as evidence as strong as a product's own name. It is
+    # not evidence at all: it lifts every one of them at once and separates
+    # none. Weight by how much the matching alias narrows the corpus.
+    fanout = bundle.alias_fanout(question)
+    total_pages = max(2, len(bundle.pages))
     admitted: list[tuple[Page, float]] = []
 
+    def _alias_bonus(page_id: str) -> float:
+        n = fanout.get(page_id, 0)
+        if not n:
+            return 0.0
+        return ALIAS_BONUS * math.log(total_pages / n) / math.log(total_pages)
+
     scored = {
-        page.id: score_page(page, terms, question, ambiguous, idf) + (0.5 if page.id in alias_hits else 0.0)
+        page.id: score_page(page, terms, question, ambiguous, idf) + _alias_bonus(page.id)
         for page in bundle.pages.values()
     }
     # A resolved product decides the focus outright. Lexical ranking is what

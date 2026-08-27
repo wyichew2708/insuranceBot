@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
@@ -205,6 +206,17 @@ def _json_object(payload: str) -> dict[str, Any] | None:
     return data if isinstance(data, dict) else None
 
 
+#: A model writing JSON sometimes escapes a newline twice, so `json.loads`
+#: hands back a real backslash followed by `n` rather than a line break. It
+#: reaches the customer verbatim — the chat client turns real newlines into
+#: `<br>` and paints this pair as the two characters they are.
+_ESCAPED_BREAK_RE = re.compile(r"\\+([nrt])")
+
+
+def _unescape(text: str) -> str:
+    return _ESCAPED_BREAK_RE.sub(lambda m: {"n": "\n", "r": "\n", "t": " "}[m.group(1)], text)
+
+
 def _parsed(payload: str) -> tuple[str, list[str]] | None:
     try:
         data = json.loads(payload)
@@ -214,7 +226,7 @@ def _parsed(payload: str) -> tuple[str, list[str]] | None:
     if not isinstance(answer, str) or not answer.strip():
         return None
     unresolved = [str(u) for u in data.get("unresolved", []) if str(u).strip()]
-    return answer.strip(), unresolved
+    return _unescape(answer).strip(), unresolved
 
 
 #: Models observed to reject `output_config.effort`. Discovered at runtime

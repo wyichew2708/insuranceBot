@@ -34,7 +34,7 @@ purchase: direct_online
 landing: https://www.etiqa.com.sg/
 surfaces:
 - https://www.tiq.com.sg/
-hotline: +65 9695 1338
+hotline: +65 6887 8777
 ---
 
 ## How to reach us

@@ -386,8 +386,26 @@ def _paragraphs(text: str) -> list[str]:
     return blocks
 
 
+#: A sentence whose figure did not resolve. `resolve_transclusions` writes
+#: `[unavailable]` rather than inventing the number, which is right — but the
+#: sentence around it says nothing and reads as a broken template. Anonymous
+#: sessions carry `tier = "UNKNOWN"`, so every tier-varying figure lands here
+#: and customers were shown "The child limit for the plan tier held is
+#: [unavailable]". The turn already appends the "sign in for tier-specific
+#: limits" caveat, which is the honest half of this; the holed sentence is not.
+UNRESOLVED_SENTENCE_RE = re.compile(r"[^.!?\n]*\[unavailable\][^.!?\n]*[.!?]?", re.I)
+
+
+def drop_unresolved(text: str) -> str:
+    """Remove sentences carrying an unresolved figure, keeping the rest."""
+    if "[unavailable]" not in text:
+        return text
+    return UNRESOLVED_SENTENCE_RE.sub("", text)
+
+
 def clean_prose(text: str) -> str:
     """Strip machine markup for display; the bindings live on the contract."""
+    text = drop_unresolved(text)
     text = SOURCE_REF_RE.sub("", text)
     text = text.replace(ALLOW_NUMBER, "")
     # Quotation markers are how the wiki records that a clause is reproduced
@@ -458,7 +476,13 @@ def render_channel(bundle: Bundle, product: Page | None, session: Session) -> Ch
                 purchase=binding.purchase,
                 intermediary=spec.intermediary if spec else None,
                 landing=binding.landing,
-                hotline=binding.hotline,
+                # A product need not carry its own number, and where the crawl
+                # offered only a claims-only or emergency-assistance line the
+                # compiler now declines to bind one at all. The channel's
+                # general contact is the right answer then — better than the
+                # travel emergency-assistance hotline, which is what a customer
+                # asking to *buy* travel insurance used to be given.
+                hotline=binding.hotline or (spec.hotline if spec else None),
                 surfaces=list(binding.surfaces),
             )
     return ChannelRender(
@@ -596,7 +620,12 @@ def compose(
             if not ref:
                 continue
             locator = ref.group(1) + (f"#{ref.group(2)}" if ref.group(2) else "")
-            claims.append(Claim(text=clean_prose(paragraph), source_id=selection.page.id, locator=locator))
+            text = clean_prose(paragraph)
+            # A paragraph that was nothing but an unresolved figure cleans down
+            # to nothing. An empty claim asserts nothing and cites a page for it.
+            if not text:
+                continue
+            claims.append(Claim(text=text, source_id=selection.page.id, locator=locator))
 
         prose = clean_prose(resolved.text)
         if prose:

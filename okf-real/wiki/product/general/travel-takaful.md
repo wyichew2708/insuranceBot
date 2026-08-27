@@ -16,7 +16,6 @@ channels:
   name: Direct
   purchase: direct_online
   landing: https://www.etiqa.com.sg/personal/travel-insurance/travel-takaful
-  hotline: +65 6415 8694
   surfaces: []
 plan_tiers: []
 authority:

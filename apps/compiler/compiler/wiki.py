@@ -94,6 +94,47 @@ ADVICE_RE = re.compile(
 )
 ALIAS_RE = re.compile(r"also known as ([^.]+)\.", re.I)
 PHONE_RE = re.compile(r"\+65[\s-]?\d{4}[\s-]?\d{4}")
+
+#: A number the page presents as something *other* than a general contact.
+#: Publishing one of these as the channel hotline sends every customer down a
+#: line reserved for something else — the direct channel shipped
+#: `+65 9695 1338` for months, which the corpus names as "HDB Basic Fire Claims
+#: Only" and attributes to two loss adjusters by name.
+NOT_A_HOTLINE_RE = re.compile(
+    r"claims only|fire claims|emergency|assistance hotline|24[\s-]?hours? helpline"
+    r"|loss adjuster|surveyor|\(\s*[A-Z][a-z]+ [A-Z][a-z]+",
+    re.I,
+)
+#: ...and one it presents as exactly that.
+IS_A_HOTLINE_RE = re.compile(
+    r"customer (care|service)|general enquir|contact us|hotline|switchboard|^t\b", re.I
+)
+#: Singapore numbering: mobile lines begin 8 or 9, fixed lines 6. A hotline a
+#: company publishes is a fixed line, so this alone separates a switchboard
+#: from somebody's handphone.
+LANDLINE_RE = re.compile(r"\+65[\s-]?6")
+
+
+def _hotline(texts: list[str]) -> str | None:
+    """The best general contact number in these pages, or None.
+
+    Ranked rather than first-found. `next(PHONE_RE.search(...))` reads whichever
+    number the crawler happened to reach first, which is how a claims-only
+    mobile became the number on every direct-channel answer.
+    """
+    best: tuple[int, str] | None = None
+    for text in texts:
+        for match in PHONE_RE.finditer(text):
+            window = text[max(0, match.start() - 120) : match.end() + 120]
+            if NOT_A_HOTLINE_RE.search(window):
+                continue
+            score = 2 if LANDLINE_RE.match(match.group()) else 0
+            score += 1 if IS_A_HOTLINE_RE.search(window) else 0
+            if best is None or score > best[0]:
+                best = (score, match.group())
+    return best[1] if best else None
+
+
 CURRENCY_RE = re.compile(r"^(S?\$)\s?([\d,]+(?:\.\d+)?)$")
 PERCENT_RE = re.compile(r"^([\d.]+)\s?%$")
 QUANTITY_RE = re.compile(r"^([\d,.]+)\s?([A-Za-z][A-Za-z ]*)$")
@@ -698,7 +739,7 @@ def emit_product(
         by_channel.setdefault(channel_id, []).append(snapshot)
     for channel_id, snaps in by_channel.items():
         name, _, purchase = channel_for(snaps[0].host)
-        phone = next((PHONE_RE.search(s.text) for s in snaps if PHONE_RE.search(s.text)), None)
+        phone = _hotline([s.text for s in snaps])
         landings = list(dict.fromkeys(s.url for s in snaps))
         channels.append(
             ChannelBinding(
@@ -706,7 +747,7 @@ def emit_product(
                 name=name,
                 purchase=purchase,
                 landing=landings[0],
-                hotline=phone.group() if phone else None,
+                hotline=phone,
                 surfaces=landings[1:],
             )
         )
@@ -1171,7 +1212,7 @@ def emit_channels(
         snaps = [g.product[h] for g in groups.values() for h in channel_hosts if h in g.product]
         if not snaps:
             continue
-        phone = next((PHONE_RE.search(s.text) for s in snaps if PHONE_RE.search(s.text)), None)
+        phone = _hotline([s.text for s in snaps])
         landings = [f"https://{h}/" for h in channel_hosts]
         slug = channel_id.split("/")[-1]
         fm = _common(
@@ -1186,7 +1227,7 @@ def emit_channels(
             purchase=purchase,
             landing=landings[0],
             surfaces=landings[1:],
-            hotline=phone.group() if phone else None,
+            hotline=phone,
         )
         surface_rows = [f"| {landing} | {{{{channel.{slug}.hotline}}}} |" for landing in landings]
         body = [

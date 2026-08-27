@@ -17,7 +17,6 @@ channels:
   name: Direct
   purchase: direct_online
   landing: https://www.etiqa.com.sg/personal/travel-insurance
-  hotline: +65 6415 8694
   surfaces:
   - https://www.tiq.com.sg/product/travel-insurance
 plan_tiers:
