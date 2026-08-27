@@ -600,7 +600,9 @@
   # Won by the model in 215a107; nothing in the corpus is called "house".
   turns: ["i want cover for my house", "what does it exclude"]
   expect:
-    cite_product: complimentary-home
+    # Any of the home products serves this; the point is that "house" reached
+    # one at all, when nothing in the corpus is called a house.
+    cite_product: [complimentary-home, home-insurance, tiq-home-insurance, etiqa-eprotect-home]
 
 - id: ft-hold-helper-is-maid
   turns: ["my helper hurt herself", "how do i claim"]

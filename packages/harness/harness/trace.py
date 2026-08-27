@@ -62,6 +62,10 @@ class Trace(BaseModel):
     created_at: float = Field(default_factory=time.time)
 
     entities: list[str] = Field(default_factory=list)
+    #: Product keys the lexical layer could not choose between. Recorded rather
+    #: than resolved: a tie broken alphabetically is a fact about the alphabet,
+    #: and the caller is better placed to decide whether to ask the customer.
+    ambiguous_products: list[str] = Field(default_factory=list)
     candidates: list[Candidate] = Field(default_factory=list)
     loaded: list[LoadedPage] = Field(default_factory=list)
     rag_used: bool = False

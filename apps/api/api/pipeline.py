@@ -26,7 +26,7 @@ from harness import (
 from harness.intent import Intent, classify, smalltalk_kind
 from okf.tables import find_tokens
 
-from api.clarify import clarification
+from api.clarify import clarification, lexical_clarification
 from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
 from api.gates_ext import advice_required
@@ -323,10 +323,41 @@ def answer_question(
     try:
         with trace.stage("frontmatter-filter") as detail:
             admitted = frontmatter_filter(
-                bundle, question, session, trace, settings.candidate_floor, focus_override
+                bundle,
+                question,
+                session,
+                trace,
+                settings.candidate_floor,
+                focus_override,
+                settings.confidence_floor,
             )
             detail["admitted"] = len(admitted)
             detail["rejected"] = len(trace.candidates) - len(admitted)
+            if trace.ambiguous_products:
+                detail["ambiguous"] = trace.ambiguous_products[:8]
+
+        # Nothing read the question well enough to name a product, and the
+        # lexical layer did not either — it produced a tie. Ask, rather than
+        # let an alphabetical tiebreak answer on the customer's behalf: this is
+        # how "how do i make a claim", which ties 87 products, was answered
+        # about Plate Glass.
+        # ...but not where the customer named a product line we do not carry.
+        # "What does your crop insurance cover?" ties three products on the word
+        # "cover" alone, and offering the customer a choice between home, travel
+        # and car implies one of them is what they asked for. `unsupported_term`
+        # already knows better; it just runs later, so it is consulted here.
+        # A misspelt product we *do* carry does not reach this — the model
+        # resolves "trvael insurance" and sets a focus long before the tie.
+        missing_line = unsupported_term(bundle, question, admitted)
+        if not focus_override and not missing_line and len(trace.ambiguous_products) >= 2:
+            asked = lexical_clarification(bundle, trace.ambiguous_products)
+            if asked is not None:
+                with trace.stage("clarify") as detail:
+                    detail["from"] = "lexical tie"
+                    detail["options"] = trace.ambiguous_products[:8]
+                return _finish(
+                    trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+                )
 
         with trace.stage("wiki-read") as detail:
             pages = wiki_read(bundle, admitted, trace, budget, settings.wiki_read_limit, session.today)

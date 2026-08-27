@@ -122,6 +122,12 @@ def gate_reference_integrity(ctx: GateContext) -> GateResult:
             return GateResult(gate=name, verdict=Verdict.skip, detail="handoff carries no claims")
         if ctx.answer.smalltalk:
             return GateResult(gate=name, verdict=Verdict.skip, detail="greeting carries no claims")
+        if ctx.answer.clarifying:
+            # Asking which product is meant, without naming any — the reply to
+            # a question that tied dozens of them, where naming three would be
+            # arbitrary. It cites nothing because it claims nothing. The
+            # *listed* form does carry claims, and is checked like any answer.
+            return GateResult(gate=name, verdict=Verdict.skip, detail="asks without asserting")
         return GateResult(gate=name, verdict=Verdict.fail, detail="factual answer with no claims")
     problems: list[str] = []
     for claim in ctx.answer.claims:
@@ -406,6 +412,14 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
         # gate below would fail it for loading no evidence pages, which is
         # true and beside the point.
         return GateResult(gate=name, verdict=Verdict.skip, detail="greeting asserts nothing")
+    if ctx.answer.clarifying:
+        # A clarifying question's claims are product *names*, and the only thing
+        # asserted is that a product exists and is called that — which
+        # reference-integrity checks properly, by resolving the page. Lexical
+        # entailment is the wrong instrument: "Cancer Insurance with No Claim
+        # Discount" scored 0.50 against its own page, because a title is a name
+        # rather than a sentence the body repeats.
+        return GateResult(gate=name, verdict=Verdict.skip, detail="names products, asserts nothing")
     evidence = _tokens(ctx.loaded_text())
     if not evidence:
         return GateResult(gate=name, verdict=Verdict.fail, detail="no evidence pages were loaded")

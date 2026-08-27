@@ -63,13 +63,17 @@ def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | Non
     # the page id would make the suite fail on an improvement.
     wanted_product = expect.get("cite_product")
     if wanted_product and bundle is not None:
+        # A list means any of them will do. Several questions have more than one
+        # right answer — a flooded flat is served by any of the home products —
+        # and naming one of them turns an improvement into a failure.
+        wanted = {wanted_product} if isinstance(wanted_product, str) else set(wanted_product)
         cited = set()
         for claim in answer.claims:
             page = bundle.get(claim.source_id)
             if page is not None:
                 cited.add(bundle.product_key(page))
-        if wanted_product not in cited:
-            failures.append(f"cited products {sorted(cited) or '[]'}, expected {wanted_product!r}")
+        if not (cited & wanted):
+            failures.append(f"cited products {sorted(cited) or '[]'}, expected one of {sorted(wanted)}")
 
     if "clarifying" in expect and answer.clarifying != expect["clarifying"]:
         failures.append(f"clarifying={answer.clarifying}, expected {expect['clarifying']}")

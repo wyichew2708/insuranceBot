@@ -251,6 +251,7 @@ def frontmatter_filter(
     trace: Trace,
     floor: float,
     focus_override: str | None = None,
+    confidence_floor: float = 0.45,
 ) -> list[tuple[Page, float]]:
     """The pre-read filter. Every rejection is recorded with its reason —
     that log is how you discover the taxonomy is wrong (§F.4)."""
@@ -283,7 +284,12 @@ def frontmatter_filter(
     # got "want to buy cancer insurance" onto the home-insurance FAQ; where
     # something read the question properly, its answer is not one more score
     # to compare.
-    focus = focus_override or focus_product(bundle, scored, terms)
+    candidates = focus_candidates(bundle, scored, terms)
+    focus = focus_override or (candidates[0][0] if candidates else None)
+    if not focus_override:
+        # Only where nothing read the question properly. A resolved product is
+        # an answer, not one more score in a tie.
+        trace.ambiguous_products = ambiguous_focus(candidates, confidence_floor)
     if focus_override:
         # And its pages score as if they had won on merit, so the confidence
         # floor does not then discard the product we just identified.
@@ -355,23 +361,26 @@ def known_product_keys(bundle: Bundle) -> set[str]:
     }
 
 
-def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | None = None) -> str | None:
-    """The product the question is about: the highest-scoring page that belongs
-    to a product family. Returns None when nothing product-shaped matched, so
-    concept-only and cross-product questions are left alone.
+#: How close the runner-up has to be before the lead stops meaning anything.
+#: Measured rather than guessed: "how do i make a claim" puts 99 pages on an
+#: identical 1.350 and "what is covered" puts 213, so on the questions people
+#: actually ask the gap is routinely exactly zero.
+FOCUS_MARGIN = 0.08
 
-    Ties are broken by *name*, then by canonical depth, and only then
-    alphabetically. That order matters more than it looks. On "cancer
-    insurance" the pet-insurance FAQ and the cancer product page scored
-    identically — the FAQ mentions the words, the product is called them — and
-    the alphabetical tiebreak handed the focus to pet insurance, which then
-    excluded the cancer page from retrieval as "a different product". The
-    customer named the product; a page that carries that name in its title is
-    not equal evidence to a page that mentions it in passing.
+
+def focus_candidates(
+    bundle: Bundle, scored: dict[str, float], terms: set[str] | None = None
+) -> list[tuple[str, tuple[float, int, int, str]]]:
+    """Product keys the question could be about, best first.
+
+    `focus_product` returns only the winner, and the winner of a 99-way tie
+    broken alphabetically is not a finding about the question — it is a finding
+    about the alphabet. The runner-up is already computed; keeping it is what
+    lets the caller notice there was no real contest.
     """
     product_keys = known_product_keys(bundle)
     wanted = terms or set()
-    best: tuple[float, int, int, str] | None = None
+    best_by_key: dict[str, tuple[float, int, int, str]] = {}
     for page_id, value in scored.items():
         page = bundle.get(page_id)
         if page is None or value <= 0:
@@ -380,15 +389,64 @@ def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | No
         if key not in product_keys:
             continue
         named = len(wanted & keywords(f"{page.frontmatter.title} {' '.join(page.frontmatter.aliases)}"))
-        # Depth 2 is the product page itself; its children describe one facet.
         canonical = 1 if page_id.count("/") == 2 else 0
         rank = (value, named, canonical, page_id)
-        if best is None or rank[:3] > best[:3] or (rank[:3] == best[:3] and page_id < best[3]):
-            best = rank
-    if best is None:
-        return None
-    page = bundle.get(best[3])
-    return bundle.product_key(page) if page else None
+        current = best_by_key.get(key)
+        if current is None or rank[:3] > current[:3] or (rank[:3] == current[:3] and page_id < current[3]):
+            best_by_key[key] = rank
+    return sorted(best_by_key.items(), key=lambda kv: (-kv[1][0], -kv[1][1], -kv[1][2], kv[1][3]))
+
+
+def ambiguous_focus(
+    candidates: list[tuple[str, tuple[float, int, int, str]]], floor: float = 0.45
+) -> list[str]:
+    """Every product key within `FOCUS_MARGIN` of the leader, or [] if one leads.
+
+    A tie only means "several products match" when the tied score is high. Down
+    near zero it means the opposite — nothing matches, and the products are
+    level because they are all equally irrelevant. "How do I reach the direct
+    channel?" ties three products at 0.212 and is not a product question at
+    all; "how do i make a claim" ties eighty-seven at 1.350 and is. Asking the
+    customer to choose a product for the first would be a worse answer than the
+    one it replaced, so the tie has to clear the same floor a confident answer
+    would.
+
+    The whole tie is returned, not a display-sized slice of it, because how
+    *wide* it is decides what the customer should be asked. Two or three near
+    ties are a choice worth offering; eighty-seven means the question named no
+    product at all and the honest reply is to ask which one, not to print a
+    menu. The caller makes that call — see `api.clarify`.
+    """
+    if len(candidates) < 2 or candidates[0][1][0] < floor:
+        return []
+    top = candidates[0][1]
+    close = [key for key, rank in candidates if top[0] - rank[0] <= FOCUS_MARGIN]
+    # A clear winner on the tiebreaks is not a tie, even at an equal score: a
+    # product the customer *named* is not level with one that mentions the word
+    # in passing. This is the distinction that stopped "cancer insurance" being
+    # answered from the pet-insurance FAQ.
+    if len(close) < 2 or candidates[0][1][1] > candidates[1][1][1]:
+        return []
+    return close
+
+
+def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | None = None) -> str | None:
+    """The product the question is about, or None when nothing product-shaped
+    matched — so concept-only and cross-product questions are left alone.
+
+    Delegates to `focus_candidates` so the winner here and the tie set the
+    caller inspects can never disagree about who won.
+
+    Ties break by *name*, then canonical depth, then alphabetically, and that
+    order matters more than it looks. On "cancer insurance" the pet-insurance
+    FAQ and the cancer product page scored identically — the FAQ mentions the
+    words, the product is called them — and an alphabetical tiebreak handed the
+    focus to pet insurance, which then excluded the cancer page as "a different
+    product". A page carrying the name in its title is not equal evidence to
+    one that mentions it in passing.
+    """
+    candidates = focus_candidates(bundle, scored, terms)
+    return candidates[0][0] if candidates else None
 
 
 def _product_root(bundle: Bundle, page_id: str) -> Page | None:

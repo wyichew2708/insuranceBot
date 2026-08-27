@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 from api.settings import Settings
-from api.understand import SHORTLIST, understand, worth_resolving
+from api.understand import CATALOGUE_LIMIT, understand, worth_resolving
 from harness import Verdict
 
 from conftest import make_session
@@ -86,7 +86,7 @@ def test_the_model_only_ever_sees_ids_that_exist(bundle: Bundle) -> None:
         if line.startswith("- ")
     ]
     assert offered
-    assert len(offered) <= SHORTLIST
+    assert len(offered) <= CATALOGUE_LIMIT
     assert all(bundle.get(page_id) is not None for page_id in offered)
 
 

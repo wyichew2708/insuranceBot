@@ -35,10 +35,17 @@ from typing import Any
 
 from okf import Bundle, Page, PageType, Status
 
-#: How many products to offer the model. Enough that the right one is almost
-#: always present, small enough that the prompt stays cheap and the model is
-#: choosing rather than searching.
-SHORTLIST = 25
+#: A ceiling, not a shortlist. The whole approved catalogue goes to the model —
+#: 151 products on the real bundle, about 2,300 tokens — and this exists only so
+#: a pathologically large corpus cannot blow the prompt.
+#:
+#: It used to be 25, filled by lexical rank, and that was the bug. The lexical
+#: scorer is what this module exists to correct, so using it to decide what the
+#: model may consider hands the deciding vote back to it: "insurence for my
+#: bike" never reached the motorcycle product because "bike" appears nowhere in
+#: its text, so the model was asked to choose between 25 wrong answers and
+#: picked Casualty. A model cannot select what it was not shown.
+CATALOGUE_LIMIT = 400
 
 SYSTEM_PROMPT = """\
 You match an insurance customer's question to the products it is about.
@@ -101,12 +108,13 @@ class Understanding:
         return bool(self.product_ids)
 
 
-def shortlist(bundle: Bundle, question: str, limit: int = SHORTLIST) -> list[Page]:
-    """Products worth offering the model, best lexical guesses first.
+def shortlist(bundle: Bundle, question: str, limit: int = CATALOGUE_LIMIT) -> list[Page]:
+    """Every approved product, best lexical guesses first.
 
-    The lexical layer is poor at *picking* and perfectly adequate at
-    *narrowing*: the right product was in the top 25 in every failure this
-    module exists to fix — it was ranked second, or sixth, not absent.
+    Ranking is kept — a model reads an ordered list more reliably than a
+    scrambled one, and the lexical layer is a decent hint even where it is a
+    poor judge. Truncation is not: the hint decides nothing, so a product it
+    ranks last is still on the page and can still be chosen.
     """
     from api.retrieval import score_page, subject_terms
     from okf import term_idf
@@ -122,7 +130,9 @@ def shortlist(bundle: Bundle, question: str, limit: int = SHORTLIST) -> list[Pag
     if not terms:
         return sorted(products, key=lambda p: p.id)[:limit]
     idf = term_idf(bundle)
-    ranked = sorted(products, key=lambda p: (-score_page(p, terms, idf=idf), p.id))
+    # `question` was missing here, so `phrase_score` scored every page zero and
+    # the ordering lost the one signal that identifies a product by name.
+    ranked = sorted(products, key=lambda p: (-score_page(p, terms, question, idf=idf), p.id))
     return ranked[:limit]
 
 
@@ -154,19 +164,10 @@ def understand(
     if classify is None or getattr(provider, "name", "") == "deterministic":
         return Understanding(degraded="no model")
 
-    # One shortlist per turn, unioned — not one shortlist for all the turns
-    # joined together. Joining dilutes: "i want cover for my house" ranks home
-    # products on its own and ranks nothing once "what does it exclude how do
-    # i buy" is stirred in with it. A turn that can name candidates should
-    # contribute them whatever the turns around it look like.
-    candidates: list[Page] = []
-    seen: set[str] = set()
-    for text in [question, *reversed((history or [])[-2:])]:
-        for page in shortlist(bundle, text, limit=SHORTLIST):
-            if page.id not in seen:
-                seen.add(page.id)
-                candidates.append(page)
-    candidates = candidates[: SHORTLIST * 2]
+    # One ordered catalogue. The earlier turns used to need their own shortlists
+    # unioned in, so that a subject named two turns ago could still be reached
+    # past a 25-product cut; with nothing cut there is nothing to reach past.
+    candidates = shortlist(bundle, question)
     if not candidates:
         return Understanding(degraded="no products to choose from")
 
