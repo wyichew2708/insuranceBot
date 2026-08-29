@@ -22,11 +22,13 @@ which is not a thing to start by accident.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures as cf
 import datetime as dt
 import json
 import os
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +51,18 @@ def main() -> int:
         help="score the batches already on disk and stop — no cases are run",
     )
     parser.add_argument("--live", action="store_true", help="use whatever .env configures, and pay for it")
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help=(
+            "cases to run at once. A local MLX server batches concurrent requests, so this is "
+            "throughput rather than parallelism: measured 0.57 req/s at one worker and 0.93 at "
+            "twelve. Serial is the right default — it keeps the run reproducible and leaves the "
+            "machine usable — but the full real-corpus suite is 24,732 cases, and at one worker "
+            "that is days rather than hours."
+        ),
+    )
     args = parser.parse_args()
 
     if not args.live:
@@ -87,6 +101,13 @@ def main() -> int:
         register_bundle_policies(bundle)
         started = time.perf_counter()
         done_cases = 0
+        # Which engine actually answered. A local model server that dies mid-run
+        # takes every later case with it *silently*: `provider_for` degrades to
+        # the deterministic composer per case, the run gets ~70x faster, and the
+        # score it prints is a real number for a system nobody is shipping. That
+        # happened here — a 3.5-day run turned into a 4-minute one and the only
+        # tell was the clock.
+        composers: Counter[str] = Counter()
 
         for number, batch in enumerate(batches):
             path = args.out / f"batch-{number:04d}.json"
@@ -95,7 +116,16 @@ def main() -> int:
                 done_cases += len(batch)
                 continue
             batch_started = time.perf_counter()
-            results = [run_case(bundle, settings, case)[0] for case in batch]
+            if args.workers > 1:
+                # Order is restored below: a batch file that depended on thread
+                # scheduling would make two runs of the same suite diff against
+                # each other for no reason.
+                with cf.ThreadPoolExecutor(max_workers=args.workers) as pool:
+                    pairs = list(pool.map(lambda c: run_case(bundle, settings, c), batch))
+            else:
+                pairs = [run_case(bundle, settings, case) for case in batch]
+            results = [r for r, _ in pairs]
+            composers.update(t.composer or "unknown" for _, t in pairs)
             # Written before the next batch starts, so a kill costs one batch.
             path.write_text(
                 json.dumps(
@@ -119,6 +149,19 @@ def main() -> int:
                 f"cumulative {done_cases}/{len(cases)}  eta {left / 60:.0f}m",
                 flush=True,
             )
+            if not args.live:
+                continue
+            served = sum(n for engine, n in composers.items() if not engine.startswith("deterministic"))
+            if done_cases >= 100 and served / done_cases < 0.5:
+                print(
+                    f"\nSTOPPED: {done_cases - served} of {done_cases} cases were answered by the "
+                    f"deterministic composer, not the configured model.\n"
+                    f"  composers so far: {dict(composers)}\n"
+                    f"  The model is probably down. Scoring this would report a number for a "
+                    f"system nobody is running.",
+                    file=sys.stderr,
+                )
+                return 1
 
     # Scored from the files, never from memory: the same command reproduces the
     # number after a crash, on another machine, or a week later.
