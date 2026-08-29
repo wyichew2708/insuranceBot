@@ -713,7 +713,13 @@ ENTITLEMENT_ASSERTION_RE = re.compile(
     r"\byour (?:discount|claim|policy|cover|premium|application|account|rate)\s+"
     r"(?:is|are|has been|have been|will be)\s+"
     r"(?:confirmed|approved|active|in force|covered|accepted|granted|guaranteed|waived)"
-    r"|\byou\s*(?:'re|are|have been)\s+(?:approved|pre-?approved|entitled|eligible)\b"
+    # Not `entitled` or `eligible`. A contract addresses its reader as "You"
+    # throughout — "While the Policy is in force, You are entitled to a
+    # Premium-Free Period" is the wording quoted verbatim, and reading it as a
+    # personal confirmation refused 13 sound answers in a 550-case sample. The
+    # verbs kept are ones a contract never uses about the reader's standing
+    # today; they only appear when something has been decided about them.
+    r"|\byou\s*(?:'re|are|have been)\s+(?:approved|pre-?approved)\b"
     r"|\byour claim will be (?:paid|approved|accepted|honoured|honored)\b"
     r"|\b(?:discount|underwriting|medical check(?:s)?) (?:is|are|has been) (?:confirmed|waived)\b",
     re.IGNORECASE,
