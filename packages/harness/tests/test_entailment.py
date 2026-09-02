@@ -40,9 +40,23 @@ def test_neutral_on_a_load_bearing_claim_fails(bundle: Bundle) -> None:
     def judge(system: str, user: str, schema: dict[str, Any]) -> dict[str, Any]:
         return {"verdicts": [{"claim": 0, "verdict": "neutral"}]}
 
-    result = gate_groundedness(_ctx(bundle, "Cover ends within 30 days of a claim.", judge))
+    # A money figure the judge will not vouch for is a hard fail; a bare
+    # integer would defer to overlap instead.
+    result = gate_groundedness(_ctx(bundle, "Cover pays up to S$30,000 for a claim.", judge))
     assert result.blocking
     assert "does not settle" in result.detail
+
+
+def test_neutral_on_a_descriptive_claim_defers_to_overlap(bundle: Bundle) -> None:
+    # No figure in the claim: "not settled" is the judge being careful, not a
+    # missing number. The lexical test decides, and here the words are on the
+    # page so it passes.
+    def judge(system: str, user: str, schema: dict[str, Any]) -> dict[str, Any]:
+        return {"verdicts": [{"claim": 0, "verdict": "neutral"}]}
+
+    result = gate_groundedness(_ctx(bundle, "War, civil commotion and unlawful acts are excluded.", judge))
+    assert not result.blocking
+    assert "settled by overlap" in result.detail
 
 
 def test_an_entailed_claim_passes(bundle: Bundle) -> None:
@@ -51,7 +65,7 @@ def test_an_entailed_claim_passes(bundle: Bundle) -> None:
 
     result = gate_groundedness(_ctx(bundle, "Cover ends on the death of the insured person.", judge))
     assert not result.blocking
-    assert "entailed" in result.detail
+    assert "judged: 1 entailed" in result.detail
 
 
 def test_a_silent_judge_falls_back_to_overlap_and_says_so(bundle: Bundle) -> None:

@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from harness.contracts import Channel, Figure, GateResult, GroundedAnswer, Session, Verdict
+from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
 from harness.intent import REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
@@ -555,6 +555,70 @@ _ENTAILMENT_SCHEMA: dict[str, Any] = {
 }
 
 
+#: Load-bearing claims judged per answer, and evidence characters per section.
+#: Together they bound one judge call to a few thousand tokens. An answer with
+#: more load-bearing claims than this leads with the ones judged; the rest are
+#: still word-checked below.
+_MAX_JUDGED = 8
+_EVIDENCE_CHARS = 1500
+#: An amount or a rate. The class of figure a wrong answer misleads with.
+_MONEY_OR_RATE_RE = re.compile(r"S?\$\s?\d|\d+(?:\.\d+)?\s?%")
+
+
+#: A claim that is a transcribed list item — "- (c) continuously provides
+#: twenty four (24) hours a day nursing service" — rather than a statement the
+#: answer makes. The composer emits one claim per paragraph and a bulleted
+#: definition becomes one claim per bullet, each torn from its lead-in
+#: ("Hospital means an institution which…"). Such a fragment is not a
+#: proposition the evidence can settle, and the judge rightly says so; but
+#: its figures are already quotation-bound, and it is not the answer asserting
+#: a limit. So `neutral` on a fragment defers to overlap. `contradicts` still
+#: fails: a fragment that reverses its source is wrong however it is shaped.
+#: (That the composer emits fragments at all is a defect in its own right.)
+_LIST_FRAGMENT_RE = re.compile(r"^\s*(?:[-•*]\s*)?\(?(?:[a-z]|[ivx]{1,4}|\d{1,2})[).]\s", re.I)
+
+
+def _is_list_fragment(text: str) -> bool:
+    body = text.split(":", 1)[1] if ":" in text[:80] else text
+    return bool(_LIST_FRAGMENT_RE.match(body))
+
+
+def _evidence_for(section: str, claims: list[Claim]) -> str:
+    """The paragraphs of `section` these claims were written from.
+
+    Not the section's head. A section can run to 15,000 characters — the
+    travel Family Plan definitions do — and a head-truncated block showed the
+    judge nothing of the sentence a claim came from, so it said "not settled"
+    about a claim that was sitting 8,000 characters further down. Each claim
+    is located by its own opening words; the paragraph around it goes in. A
+    claim that cannot be located gets the head as a fallback.
+    """
+    paragraphs = [p.strip() for p in re.split(r"\n\s*\n", section) if p.strip()]
+    chosen: list[str] = []
+    for claim in claims:
+        text = claim.text.split(":", 1)[1].strip() if ":" in claim.text else claim.text
+        probe = " ".join(text.split()[:8]).lower()
+        hit = next(
+            (p for p in paragraphs if probe and probe in " ".join(p.split()).lower()),
+            None,
+        )
+        if hit and hit not in chosen:
+            chosen.append(hit)
+    if not chosen:
+        return section[:_EVIDENCE_CHARS]
+    out = "\n\n".join(chosen)
+    return out[: _EVIDENCE_CHARS * 3]
+
+
+def _section_of(ctx: GateContext, claim: Claim) -> str:
+    """The `##` heading a claim was written under, if its text names one."""
+    page = ctx.bundle.get(claim.source_id)
+    if page is None or ":" not in claim.text:
+        return ""
+    candidate = claim.text.split(":", 1)[0].strip()
+    return candidate if page.section(candidate) is not None else ""
+
+
 def _judge_entailment(ctx: GateContext) -> GateResult | None:
     """Ask the judge about every load-bearing claim in one call.
 
@@ -567,14 +631,29 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     bearing = [(i, c) for i, c in enumerate(ctx.answer.claims) if _LOAD_BEARING_RE.search(c.text)]
     if not bearing:
         return None
-    evidence_by_page: dict[str, str] = {}
-    for pid in ctx.loaded_page_ids:
-        page = ctx.bundle.get(pid)
-        evidence_by_page[pid] = page.body if page else ""
+    # Amounts and rates first: under the cap, those are the claims worth a
+    # verdict, and a model judges eight claims more precisely than twelve.
+    bearing.sort(key=lambda ic: 0 if _MONEY_OR_RATE_RE.search(ic[1].text) else 1)
+    # One evidence block per *section*, claims grouped under it. The first
+    # draft sent every claim its whole page: a coverage answer carries ~50
+    # claims, 25 of them load-bearing, from three sections — and sent 60,000
+    # characters, which no local model answers inside the provider timeout.
+    # The judge was silent on every real turn and the gate fell back to word
+    # overlap without anyone noticing except the trace. Claims name their
+    # section in their own text ("Heading: …", from `under_heading`), so the
+    # section is recoverable, and a section is the unit the claim was
+    # written from — the right evidence as well as the small one.
+    grouped: dict[tuple[str, str], list[tuple[int, Claim]]] = {}
+    for i, claim in bearing[:_MAX_JUDGED]:
+        grouped.setdefault((claim.source_id, _section_of(ctx, claim)), []).append((i, claim))
     blocks = []
-    for i, claim in bearing:
-        source = evidence_by_page.get(claim.source_id) or ctx.loaded_text()
-        blocks.append(f"CLAIM {i}: {claim.text}\nEVIDENCE {i}:\n{source[:2400]}\n")
+    for (page_id, heading), members in grouped.items():
+        page = ctx.bundle.get(page_id)
+        body = (page.section(heading) if page and heading else None) or (page.body if page else "")
+        evidence = _evidence_for(body, [claim for _, claim in members])
+        head = f"EVIDENCE ({page_id}{'#' + heading if heading else ''}):\n{evidence}\n"
+        lines = [f"CLAIM {i}: {claim.text}" for i, claim in members]
+        blocks.append(head + "\n".join(lines) + "\n")
     try:
         payload = ctx.judge(_ENTAILMENT_SYSTEM, "\n".join(blocks), _ENTAILMENT_SCHEMA)
     except Exception:
@@ -585,12 +664,51 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     if not any(i in verdicts for i, _ in bearing):
         return None
     contradicted = [c.text[:60] for i, c in bearing if verdicts.get(i) == "contradicts"]
-    unsupported = [c.text[:60] for i, c in bearing if verdicts.get(i) == "neutral"]
     if contradicted:
         return GateResult(gate=name, verdict=Verdict.fail, detail=f"evidence contradicts: {contradicted}")
-    if unsupported:
-        return GateResult(gate=name, verdict=Verdict.fail, detail=f"evidence does not settle: {unsupported}")
-    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{len(bearing)} load-bearing claims entailed")
+    # `neutral` is a hard fail only where the claim states a figure: "not
+    # settled" then means the number is not in the evidence, which is the
+    # thing this gate exists to stop. On a descriptive or conditional claim
+    # the judge says neutral when it is being careful about a long block, and
+    # the first calibration run blocked "what does travel insurance cover"
+    # over a Family Plan definition it would not vouch for. Those fall back to
+    # the word-overlap test, and the detail says which were not vouched for.
+    # The figure that misleads is an amount or a rate — "S$150,000", "5%".
+    # A bare integer or a spelled-out duration inside a definition ("twelve
+    # (12) months") is not a limit the answer is asserting, and the judge
+    # returned neutral on one whose evidence contained it verbatim. So only
+    # money and percentages make `neutral` a hard fail; the rest defer.
+    unsettled_figures = [
+        c.text[:60]
+        for i, c in bearing
+        if verdicts.get(i) == "neutral" and _MONEY_OR_RATE_RE.search(c.text) and not _is_list_fragment(c.text)
+    ]
+    if unsettled_figures:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail=f"evidence does not settle the figure: {unsettled_figures}",
+        )
+    # Neutral on a descriptive claim is not silence — the judge spoke and
+    # would not vouch. Those are settled by word overlap here, and the detail
+    # says so, so a run where the judge engaged is never counted as one where
+    # it did not.
+    deferred = [c for i, c in bearing if verdicts.get(i) == "neutral"]
+    evidence = _tokens(ctx.loaded_text())
+    weak = []
+    for claim in deferred:
+        toks = _tokens(claim.text)
+        if toks and len(toks & evidence) / len(toks) < 0.6:
+            weak.append(claim.text[:50])
+    if weak:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail=f"judge would not vouch and overlap is weak: {weak}",
+        )
+    entailed = len(bearing) - len(deferred)
+    by_overlap = f", {len(deferred)} settled by overlap" if deferred else ""
+    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"judged: {entailed} entailed{by_overlap}")
 
 
 def _product_chain(ctx: GateContext, page_id: str) -> list[Any]:

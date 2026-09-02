@@ -108,6 +108,7 @@ def main() -> int:
         # happened here — a 3.5-day run turned into a 4-minute one and the only
         # tell was the clock.
         composers: Counter[str] = Counter()
+        judged: Counter[str] = Counter()
 
         for number, batch in enumerate(batches):
             path = args.out / f"batch-{number:04d}.json"
@@ -126,6 +127,15 @@ def main() -> int:
                 pairs = [run_case(bundle, settings, case) for case in batch]
             results = [r for r, _ in pairs]
             composers.update(t.composer or "unknown" for _, t in pairs)
+            # Whether meaning was judged or merely word-matched. The
+            # groundedness gate asks the model on a live run and falls back to
+            # overlap when the model is silent — which it is under enough
+            # concurrent load to hit the 30s timeout. A run that reports
+            # "entailment-judged" while 40% of turns fell back is not that.
+            for _, t in pairs:
+                for gate in t.gates:
+                    if gate.gate == "groundedness":
+                        judged["silent" if "judge silent" in gate.detail else "judged"] += 1
             # Written before the next batch starts, so a kill costs one batch.
             path.write_text(
                 json.dumps(
@@ -151,6 +161,13 @@ def main() -> int:
             )
             if not args.live:
                 continue
+            if judged:
+                total_g = judged["judged"] + judged["silent"]
+                print(
+                    f"           groundedness judged {judged['judged']}/{total_g}  "
+                    f"(silent → lexical: {judged['silent']})",
+                    flush=True,
+                )
             served = sum(n for engine, n in composers.items() if not engine.startswith("deterministic"))
             if done_cases >= 100 and served / done_cases < 0.5:
                 print(
