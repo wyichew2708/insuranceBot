@@ -1,4 +1,4 @@
-.PHONY: index install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
+.PHONY: index llm-wiki install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
         guardrail-backtest autoeval-live evals-live \
         docker-build docker-up docker-down docker-logs \
         crawl crawl-fixture wiki knowledge autoeval-web studio studio-web ci console clean
@@ -117,6 +117,13 @@ docker-logs:
 # CI need no database. Needs PGVECTOR_DSN and EMBED_BASE_URL in .env.
 index:
 	uv run python scripts/index_pgvector.py --bundle okf-real
+
+# The LLM WIKI tier: one plain-language page per product, written by the
+# configured model from the compiled pages, every sentence source-bound and
+# figure-checked, all `draft`. Needs a model in .env. Lint after.
+llm-wiki:
+	uv run python -m compiler.cli --bundle okf-real llm-wiki
+	uv run python -m compiler.cli --bundle okf-real lint
 
 lint-bundle:
 	uv run python scripts/lint_bundle.py

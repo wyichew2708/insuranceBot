@@ -3,7 +3,7 @@ name = "compiler"
 version = "0.2.0"
 description = "Loop 2 — compile raw sources into wiki pages, detect source conflicts"
 requires-python = ">=3.11"
-dependencies = ["okf", "harness", "pyyaml>=6"]
+dependencies = ["okf", "harness", "api", "pyyaml>=6"]
 
 [build-system]
 requires = ["hatchling"]

@@ -55,6 +55,10 @@ class Bundle:
     load_errors: list[str] = field(default_factory=list)
     _alias_index: dict[str, list[str]] = field(default_factory=dict, repr=False)
     _idf: dict[str, float] = field(default_factory=dict, repr=False)
+    #: (product, benefit_code, attribute) triples the compiler filed a conflict
+    #: ticket for. The wiki carries the higher-authority value; a figure bound
+    #: to one of these rows is delivered with that said.
+    contested: frozenset[tuple[str, str, str]] = frozenset()
 
     @classmethod
     def load(cls, root: Path) -> Bundle:
@@ -76,6 +80,12 @@ class Bundle:
         tables_dir = root / "raw" / "benefit-tables"
         tables = BenefitTables.from_dir(tables_dir) if tables_dir.is_dir() else BenefitTables([])
         bundle = cls(root=root, manifest=manifest, pages=pages, tables=tables, load_errors=errors)
+        # Figures the compiler filed a conflict on: two published sources
+        # disagree about the same benefit. Twenty small tickets on the real
+        # bundle. Read here rather than at answer time so every caller —
+        # including the composer — can ask whether a row is contested without
+        # touching the filesystem on the request path.
+        bundle.contested = _contested(root / "conflicts")
         bundle._build_alias_index()
         return bundle
 
@@ -233,3 +243,30 @@ def term_idf(bundle: Bundle) -> dict[str, float]:
         ceiling = math.log(1 + total)
         bundle._idf = {t: math.log(1 + total / c) / ceiling for t, c in frequency.items()}
     return bundle._idf
+
+
+_CONFLICT_TITLE_RE = re.compile(
+    r"^#\s*Website defect\s+—\s+(\S+)\s+[A-Za-z0-9_-]*:([a-z0-9_]+)\.([a-z0-9_]+)", re.M
+)
+
+
+def _contested(conflicts_dir: Path) -> frozenset[tuple[str, str, str]]:
+    """Read the compiler's conflict tickets into (product, benefit, attribute).
+
+    The ticket title is the coordinate: `# Website defect — maid-insurance
+    ALL:waiver_of_co_insurance.limit`. Anything that does not parse is
+    ignored — a malformed ticket is a content-ops problem, not a reason to
+    fail a bundle load.
+    """
+    found: set[tuple[str, str, str]] = set()
+    if not conflicts_dir.is_dir():
+        return frozenset()
+    for path in sorted(conflicts_dir.glob("*.md")):
+        try:
+            head = path.read_text(errors="ignore")[:400]
+        except OSError:
+            continue
+        m = _CONFLICT_TITLE_RE.search(head)
+        if m:
+            found.add((m.group(1), m.group(2), m.group(3)))
+    return frozenset(found)

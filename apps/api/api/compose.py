@@ -619,6 +619,8 @@ def compose(
     claims: list[Claim] = []
     figures: list[Figure] = []
     figures_detail: list[dict[str, str]] = []
+    contested_notes: list[str] = []
+    contested_shown: set[str] = set()
     unresolved: list[str] = []
     product_key = bundle.product_key(product) if product else ""
     # Set once any channel-variant block rendered a route: the page has already
@@ -636,6 +638,7 @@ def compose(
                     table_row_id=figure.row_id,
                 )
             )
+            contested = (product_key or "", figure.benefit_code, figure.attribute) in bundle.contested
             figures_detail.append(
                 {
                     "label": f"{figure.benefit_code}.{figure.attribute}",
@@ -643,8 +646,20 @@ def compose(
                     "row_id": figure.row_id,
                     "source_ref": figure.source_ref,
                     "page": selection.page.id,
+                    "contested": "true" if contested else "",
                 }
             )
+            if contested and figure.text not in contested_shown:
+                # The compiler filed a ticket: two published sources disagree
+                # on this figure, and the wiki carries the higher-authority
+                # value. Nothing at answer time knew that. A customer can read
+                # either surface, so the answer says which this is rather than
+                # presenting a disputed number as settled.
+                contested_shown.add(figure.text)
+                contested_notes.append(
+                    f"Our published pages differ on the {figure.benefit_code.replace('_', ' ')} figure; "
+                    f"{figure.text} is the value from the policy wording, which takes precedence."
+                )
         unresolved.extend(f"{selection.page.id}:{token}" for token in resolved.unresolved)
 
         # Routes are substituted from the page's own bindings, falling back to
@@ -719,6 +734,8 @@ def compose(
             paragraphs.append(lead_with_heading(selection.heading, prose))
 
     render = render_channel(bundle, product, session)
+    if contested_notes:
+        paragraphs.append(" ".join(contested_notes))
     body = "\n\n".join(paragraphs)
 
     if routed_in_body:

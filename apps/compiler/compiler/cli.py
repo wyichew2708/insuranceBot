@@ -17,7 +17,7 @@ from pathlib import Path
 from compiler.conflicts import scan, write_conflicts
 from compiler.facts import SourceDoc, extract_facts
 from compiler.impact import impact_set
-from compiler.wiki import CompileConfig, compile_bundle
+from compiler.wiki import CompileConfig, CompileReport, compile_bundle
 from okf import Bundle, lint_bundle
 
 
@@ -101,6 +101,35 @@ def cmd_wiki(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_llm_wiki(args: argparse.Namespace) -> int:
+    """Write the LLM WIKI tier. Needs a model — reads LLM_PROVIDER from .env —
+    and writes every page as `draft`, so nothing it produces is retrievable
+    until a human reviews it. Run `lint` after."""
+    from api.llm import provider_for
+    from api.settings import Settings
+
+    from compiler.llmwiki import write_llm_wiki
+
+    config = CompileConfig(
+        source_root=args.bundle, dest_root=args.bundle, today=args.today, review_months=args.review_months
+    )
+    bundle = Bundle.load(args.bundle)
+    report = CompileReport()
+    drafts = write_llm_wiki(config, bundle, provider_for(Settings(bundle_path=args.bundle)), report)
+    print(f"llm-wiki: wrote {len(drafts)} plain-language pages under {args.bundle / 'wiki'} (all draft)")
+    kept = sum(d.kept for d in drafts)
+    dropped = sum(d.dropped_unsourced + d.dropped_unknown_source + d.dropped_figure for d in drafts)
+    print(
+        f"  sentences kept {kept} · dropped {dropped} "
+        f"(unsourced {sum(d.dropped_unsourced for d in drafts)}, "
+        f"unknown source {sum(d.dropped_unknown_source for d in drafts)}, "
+        f"figure not in source {sum(d.dropped_figure for d in drafts)})"
+    )
+    for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):
+        print(f"  skipped {count:4}  {reason}")
+    return 0 if drafts else 1
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="compile")
     parser.add_argument("--bundle", type=Path, default=Path("okf"))
@@ -130,6 +159,12 @@ def main() -> None:
     p_fac = sub.add_parser("facts", help="extract typed facts from one source")
     p_fac.add_argument("source")
     p_fac.set_defaults(func=cmd_facts)
+
+    p_llm = sub.add_parser("llm-wiki", help="write the LLM WIKI tier: plain-language pages, draft, gated")
+    p_llm.add_argument("--bundle", type=Path, default=Path("okf"))
+    p_llm.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
+    p_llm.add_argument("--review-months", type=int, default=3)
+    p_llm.set_defaults(func=cmd_llm_wiki)
 
     p_lint = sub.add_parser("lint", help="lint the bundle")
     p_lint.set_defaults(func=cmd_lint)
