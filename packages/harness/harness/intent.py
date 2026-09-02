@@ -42,6 +42,7 @@ class Intent(str, Enum):
     definition = "definition"  # what does <term> mean
     smalltalk = "smalltalk"  # hello, thanks, are you a bot
     browse = "browse"  # what do you sell, show me your life plans
+    entity = "entity"  # who underwrites this, which legal entity
     unknown = "unknown"
 
 
@@ -130,6 +131,22 @@ BROWSE_RE = re.compile(
 #: for a definition that happens to name a limit word, not a request for a
 #: number.
 _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
+    # Before price: "who is the insurer" carries no price word, but "which
+    # legal entity am I claiming against" carries "claim", and the claim
+    # pattern would otherwise take it. Unclassified, these fell to `unknown`,
+    # which the answerability gate treats as unconstrained — so "Who is the
+    # insurer behind Etiqa Autolab Package Wic?" was answered with a fire-peril
+    # clause and every gate passed. 14 of 79 unsafe cases on the real corpus.
+    (
+        Intent.entity,
+        re.compile(
+            r"\b(who (?:is|are) (?:the )?(?:insurer|underwriter|company|provider)|who underwrites"
+            r"|underwritten by|which (?:legal )?(?:entity|company|insurer)|legal entity"
+            r"|(?:insurer|underwriter) behind|who (?:do i|am i|would i) (?:claim|claiming) (?:against|from)"
+            r"|who (?:backs|issues|stands behind))\b",
+            re.I,
+        ),
+    ),
     (
         Intent.price,
         re.compile(
@@ -350,11 +367,27 @@ REQUIREMENTS: dict[Intent, Requirement] = {
     # The word appeared; the price did not. Requiring a bound figure, and
     # refusing to accept an unresolved marker in its place, makes the refusal
     # honest: there is no premium here to fetch.
+    # No `needs_any_term` here, and the absence is the point. The clauses of a
+    # Requirement are OR'd — any one satisfies the gate — so listing the word
+    # "premium" reopened the hole the figure requirement closed: "What is the
+    # premium for life insurance?" was answered with "If Your Age, gender,
+    # smoker status ... is not correctly stated such that the Premium paid is
+    # wrong, We reserve the rights to adjust" — a clause *about* premiums,
+    # containing the word, containing no price. Every gate passed. On a
+    # 1,000-case sample this was the single largest unsafe class. A price
+    # question is settled by a bound premium figure or by the honest shortfall
+    # ("premiums are not published in the documents I answer from"), and by
+    # nothing in between.
     Intent.price: Requirement(
         needs_figure=True,
         needs_figure_label=("premium", "price", "cost"),
-        needs_any_term=("premium", "price"),
     ),
+    # A backstop behind the deterministic entity answer in `api.entity`: if a
+    # bundle declares no single underwriter and the turn reaches the composer,
+    # the answer must at least cite the entity page. A product's own conditions
+    # page contains the word "insurer" a hundred times and says nothing about
+    # who that is.
+    Intent.entity: Requirement(needs_page_type=("entity",)),
     Intent.renewal: Requirement(
         needs_any_term=("renew", "expire", "cancel", "free-look", "cooling"),
         holds_answer=("/conditions",),

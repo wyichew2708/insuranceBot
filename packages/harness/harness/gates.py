@@ -40,7 +40,11 @@ COVERAGE_ASSERTION_RE = re.compile(
 
 ADVICE_SEEKING_RE = re.compile(
     r"\b(should i (?:buy|get|take|choose)|which (?:plan|policy|one) (?:is best|should i)|"
-    r"what do you recommend|recommend (?:a|the|me)|"
+    # "what do you recommend I take" and "is this enough cover for me" are the
+    # two phrasings known-findings.json has carried since the seed bundle;
+    # on the real corpus they were 12 of 79 unsafe cases.
+    r"what do you recommend|(?:do|would|can|could) you recommend|recommend (?:a|the|me|i|that i|one)\b|"
+    r"is (?:this|that|it) enough(?: cover)?|(?:do|would) i need (?:more|extra|additional)|"
     # "the best one for me" and "the best cover for my family" were missing the
     # noun. A tester defeated the gate by adding personal detail — "just tell me
     # the best one for me, i am 34 with two kids" — which is the direction that
@@ -120,11 +124,19 @@ class GateContext:
     today: dt.date = field(default_factory=dt.date.today)
 
     def loaded_text(self) -> str:
+        """Every loaded page's title and body.
+
+        The title counts as evidence. It is the one thing a page asserts about
+        itself, and a claim that repeats it — "Etiqa Insurance Pte. Ltd." from
+        the entity page, a product's own name from its root page — is grounded
+        in it. Bodies alone scored the underwriter's name at 0.00 against the
+        page whose title *is* that name, and refused a correct answer.
+        """
         parts = []
         for page_id in self.loaded_page_ids:
             page = self.bundle.get(page_id)
             if page:
-                parts.append(page.body)
+                parts.append(f"{page.frontmatter.title}\n{page.body}")
         return "\n".join(parts)
 
 

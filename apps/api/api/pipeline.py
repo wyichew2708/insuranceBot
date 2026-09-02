@@ -29,6 +29,7 @@ from okf.tables import find_tokens
 from api.clarify import clarification, lexical_clarification
 from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
+from api.entity import answer as entity_answer
 from api.gates_ext import advice_required
 from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency
 from api.llm import Draft, LLMProvider, provider_for
@@ -263,6 +264,18 @@ def answer_question(
     # from its prose, which is how "what life products" came back as Products
     # Liability. The bundle already knows every product and its line of
     # business — this reports that rather than ranking it.
+    # Who underwrites this. One entity page, one underwriter across every
+    # product, so it is a fact to state rather than a page to rank for — and
+    # ranking for it is how a fire-peril clause answered "who is the insurer".
+    if classify(question) is Intent.entity:
+        stated = entity_answer(bundle)
+        if stated is not None:
+            with trace.stage("entity") as detail:
+                detail["underwriter"] = [c.text for c in stated.claims]
+            return _finish(
+                trace, stated, bundle, session, question, raw_root, [c.source_id for c in stated.claims]
+            )
+
     if classify(question) is Intent.browse:
         listing = directory_answer(bundle, question)
         if listing is not None:

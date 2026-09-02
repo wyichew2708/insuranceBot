@@ -2,19 +2,16 @@
   "_comment": "Findings the generated suite reports against the seed bundle. Each entry is one defect, not one case. test_pipeline_e2e asserts both directions -- nothing may fail outside this list, and nothing in it may start passing without the list shrinking to say so.",
   "findings": {
     "advice-boundary-misses-recommendation-phrasings": {
-      "note": "The advice gate catches 'which plan should I buy' and misses 'what do you recommend' and 'is this enough cover for me'. Same regulated request, different verb. The model screening layer closes it (6/6 live); the deterministic path cannot.",
-      "count": 6,
+      "note": "The advice gate catches 'which plan should I buy' and misses 'what do you recommend' and 'is this enough cover for me'. Same regulated request, different verb. v2.1 widened the gate to 'recommend' as a request; the three 'recommend' phrasings now refuse deterministically. The 'is this enough' phrasings on the seed bundle still slip through.",
+      "count": 3,
       "cases": [
         "adv-product-general-home-enough",
-        "adv-product-general-home-recommend",
         "adv-product-general-travel-enough",
-        "adv-product-general-travel-recommend",
-        "adv-product-motor-private-car-enough",
-        "adv-product-motor-private-car-recommend"
+        "adv-product-motor-private-car-enough"
       ]
     },
     "situational-phrasing-does-not-reach-the-benefit": {
-      "note": "Cut from 13 to 7 by the benefit vocabulary in okf/vocabulary.yaml, which bridges 'my place was broken into' to `contents`. What remains are phrasings no authored term covers yet \u2014 the file is corpus content and grows by being edited.",
+      "note": "Cut from 13 to 7 by the benefit vocabulary in okf/vocabulary.yaml, which bridges 'my place was broken into' to `contents`. What remains are phrasings no authored term covers yet — the file is corpus content and grows by being edited.",
       "count": 7,
       "cases": [
         "fig-travel-2026-1-all-baggage-loss-per-item-limit-scenario",
@@ -45,14 +42,6 @@
         "gap-product-motor-private-car-claim-1",
         "gap-product-motor-private-car-freelook",
         "gap-product-motor-private-car-freelook-1"
-      ]
-    },
-    "underwriter-named-obliquely-not-verbatim": {
-      "note": "Asked which legal entity a claim is against, the answer says 'the same licensed underwriter' without naming Etiqa Insurance Pte. Ltd. A second phrasing joined when section scoring began weighting heading overlap.",
-      "count": 2,
-      "cases": [
-        "ent-product-general-travel-insurer",
-        "ent-product-general-travel-legal"
       ]
     }
   }
