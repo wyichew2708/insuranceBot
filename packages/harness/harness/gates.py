@@ -634,6 +634,7 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # Amounts and rates first: under the cap, those are the claims worth a
     # verdict, and a model judges eight claims more precisely than twelve.
     bearing.sort(key=lambda ic: 0 if _MONEY_OR_RATE_RE.search(ic[1].text) else 1)
+    judged_set = bearing[:_MAX_JUDGED]
     # One evidence block per *section*, claims grouped under it. The first
     # draft sent every claim its whole page: a coverage answer carries ~50
     # claims, 25 of them load-bearing, from three sections — and sent 60,000
@@ -644,7 +645,7 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # section is recoverable, and a section is the unit the claim was
     # written from — the right evidence as well as the small one.
     grouped: dict[tuple[str, str], list[tuple[int, Claim]]] = {}
-    for i, claim in bearing[:_MAX_JUDGED]:
+    for i, claim in judged_set:
         grouped.setdefault((claim.source_id, _section_of(ctx, claim)), []).append((i, claim))
     blocks = []
     for (page_id, heading), members in grouped.items():
@@ -661,9 +662,9 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     if not isinstance(payload, dict) or not isinstance(payload.get("verdicts"), list):
         return None
     verdicts = {v.get("claim"): v.get("verdict") for v in payload["verdicts"] if isinstance(v, dict)}
-    if not any(i in verdicts for i, _ in bearing):
+    if not any(i in verdicts for i, _ in judged_set):
         return None
-    contradicted = [c.text[:60] for i, c in bearing if verdicts.get(i) == "contradicts"]
+    contradicted = [c.text[:60] for i, c in judged_set if verdicts.get(i) == "contradicts"]
     if contradicted:
         return GateResult(gate=name, verdict=Verdict.fail, detail=f"evidence contradicts: {contradicted}")
     # `neutral` is a hard fail only where the claim states a figure: "not
@@ -680,7 +681,7 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # money and percentages make `neutral` a hard fail; the rest defer.
     unsettled_figures = [
         c.text[:60]
-        for i, c in bearing
+        for i, c in judged_set
         if verdicts.get(i) == "neutral" and _MONEY_OR_RATE_RE.search(c.text) and not _is_list_fragment(c.text)
     ]
     if unsettled_figures:
@@ -693,7 +694,13 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # would not vouch. Those are settled by word overlap here, and the detail
     # says so, so a run where the judge engaged is never counted as one where
     # it did not.
-    deferred = [c for i, c in bearing if verdicts.get(i) == "neutral"]
+    # Every claim the judge did not vouch for is checked by overlap — the
+    # neutral ones, the load-bearing ones past the cap, and the descriptive
+    # ones that were never load-bearing. Without this the judged path checked
+    # eight claims and waved the rest through, which the lexical gate it
+    # replaced never did.
+    entailed_ids = {i for i, _ in judged_set if verdicts.get(i) == "entails"}
+    deferred = [c for i, c in enumerate(ctx.answer.claims) if i not in entailed_ids]
     evidence = _tokens(ctx.loaded_text())
     weak = []
     for claim in deferred:
@@ -706,7 +713,7 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
             verdict=Verdict.fail,
             detail=f"judge would not vouch and overlap is weak: {weak}",
         )
-    entailed = len(bearing) - len(deferred)
+    entailed = len(entailed_ids)
     by_overlap = f", {len(deferred)} settled by overlap" if deferred else ""
     return GateResult(gate=name, verdict=Verdict.pass_, detail=f"judged: {entailed} entailed{by_overlap}")
 
