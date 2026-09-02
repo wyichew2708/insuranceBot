@@ -24,6 +24,7 @@ from harness import (
     blocked,
     run_gates,
 )
+from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import Intent, classify, smalltalk_kind
 from okf.tables import find_tokens
 
@@ -41,6 +42,7 @@ from api.retrieval import (
     keywords,
     named_products,
     needs_rag,
+    product_family,
     rag_search,
     unsupported_term,
     wiki_read,
@@ -382,8 +384,15 @@ def answer_question(
             [],
         )
 
+    # A request for advice is answered by the adviser handoff, never by a menu
+    # of products: "should I cancel my Great Eastern policy and move to Etiqa"
+    # clarified between Term Life and Whole Life, which is the recommendation
+    # the boundary exists to prevent, dressed as a question. Both clarifying
+    # paths defer to it.
+    seeking_advice = bool(ADVICE_SEEKING_RE.search(question))
+
     # Two products, and nothing in the question to separate them. Ask.
-    if understanding.ambiguous:
+    if understanding.ambiguous and not seeking_advice:
         asked = clarification(bundle, understanding.product_ids)
         if asked is not None:
             with trace.stage("clarify") as detail:
@@ -397,6 +406,22 @@ def answer_question(
         resolved_page = bundle.get(understanding.product_ids[0])
         if resolved_page is not None:
             focus_override = bundle.product_key(resolved_page)
+            # "Cancer insurance" is a family with three members, and the
+            # model now picks one where it used to flag all three. The
+            # customer's phrase is a *substring* of several titles — that is
+            # what a family is — and a single pick from it is a guess wearing
+            # a confident id. Deterministic backstop: where the phrase the
+            # customer used sits inside two or more product titles, ask.
+            family = product_family(bundle, question, resolved_page)
+            if len(family) >= 2 and not seeking_advice:
+                asked = clarification(bundle, [pg.id for pg in family])
+                if asked is not None:
+                    with trace.stage("clarify") as detail:
+                        detail["from"] = "product family"
+                        detail["options"] = [pg.id for pg in family]
+                    return _finish(
+                        trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+                    )
 
     # A product named in full, in the customer's own words, is not one more
     # candidate — it is the answer to "which product", given by the person
@@ -409,7 +434,7 @@ def answer_question(
                 f"focus {focus_override!r} overruled by the product named in the question: {named[0]!r}"
             )
         focus_override = named[0]
-    elif len(named) >= 2:
+    elif len(named) >= 2 and not seeking_advice:
         # Two full titles in one question: "Early CI Benefit Rider" is not a
         # substring case (those are folded), so the customer really did name
         # two products. Ask which, rather than pick.
@@ -487,7 +512,12 @@ def answer_question(
         # A misspelt product we *do* carry does not reach this — the model
         # resolves "trvael insurance" and sets a focus long before the tie.
         missing_line = unsupported_term(bundle, question, admitted)
-        if not focus_override and not missing_line and len(trace.ambiguous_products) >= 2:
+        if (
+            not focus_override
+            and not missing_line
+            and not seeking_advice
+            and len(trace.ambiguous_products) >= 2
+        ):
             asked = lexical_clarification(bundle, trace.ambiguous_products)
             if asked is not None:
                 with trace.stage("clarify") as detail:

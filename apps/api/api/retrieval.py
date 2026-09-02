@@ -232,6 +232,45 @@ def named_products(bundle: Bundle, question: str) -> list[str]:
     return [key for _, key in kept]
 
 
+def product_family(bundle: Bundle, question: str, chosen: Page) -> list[Page]:
+    """Products whose titles all contain the phrase the customer used.
+
+    Where "cancer insurance" sits inside "Cancer Insurance with No Claim
+    Discount", "Major Cancer Insurance" and "Essential Cancer Care", the
+    customer named a family and one member is a guess. Returns the family
+    (chosen first, then the rest, longest titles first) when there are two or
+    more; an empty list when the phrase picks out the chosen product alone.
+    The phrase is the longest run of two or more question words that appears
+    in the chosen title — the same test `named_products` uses, run backwards.
+    """
+    q = " ".join(question.lower().split())
+    title = " ".join(chosen.frontmatter.title.lower().split())
+    words = q.split()
+    phrase = ""
+    for n in range(len(words), 1, -1):
+        for i in range(len(words) - n + 1):
+            cand = " ".join(words[i : i + n])
+            if len(cand) >= 6 and cand in title:
+                phrase = cand
+                break
+        if phrase:
+            break
+    if not phrase:
+        return []
+    members = [
+        page
+        for page in bundle.pages.values()
+        if page.frontmatter.type == PageType.product
+        and page.frontmatter.status == Status.approved
+        and page.id.count("/") == 2
+        and phrase in " ".join(page.frontmatter.title.lower().split())
+    ]
+    if len(members) < 2:
+        return []
+    members.sort(key=lambda pg: (pg.id != chosen.id, -len(pg.frontmatter.title)))
+    return members
+
+
 def phrase_score(page: Page, question: str, ambiguous: frozenset[str] = frozenset()) -> float:
     """Length of the longest title/alias phrase occurring verbatim in the
     question, with titles weighted above aliases."""
