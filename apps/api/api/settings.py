@@ -82,6 +82,34 @@ class Settings(BaseSettings):
     candidate_floor: float = 0.08
     confidence_floor: float = 0.45
 
+    # --- Retrieval: vectors (v2.1) --------------------------------------
+    # Dense retrieval over pgvector, fused with the lexical rank. Recall only:
+    # a chunk found by similarity is a candidate under the same frontmatter
+    # filter, the same composition and the same gates as one found by words.
+    # It exists because the lexical scorer ties 87-213 pages on the questions
+    # customers actually ask, and no coefficient fixes a tie.
+    #   auto | on | off
+    # `auto` resolves from the DSN: empty means lexical only, and no stage is
+    # opened. `on` fails the turn if the database is unreachable — for testing
+    # the path. `off` never opens a connection.
+    pgvector: str = "auto"
+    pgvector_dsn: str = ""
+    # An OpenAI-compatible /v1/embeddings endpoint. TEI serving bge-m3 on the
+    # GPU host; the API embeds only the *question* at request time — pages are
+    # embedded offline by `make index`, never on the request path.
+    embed_base_url: str = ""
+    embed_model: str = "BAAI/bge-m3"
+    # Optional cross-encoder over the fused top-20. Off when empty.
+    rerank_base_url: str = ""
+    # What an unreachable database is worth. Open by default, like the
+    # guardrail screen: an outage degrades recall to the lexical path rather
+    # than the service — and the trace says which path served the turn.
+    pgvector_fail_closed: bool = False
+    # Below this cosine similarity a vector candidate is not admitted at all —
+    # the dense analogue of RAG_FLOOR: a hit made of corpus-wide vocabulary is
+    # the shape of every document. Calibrated on the suites, not a default.
+    vector_floor: float = 0.55
+
 
 def get_settings() -> Settings:
     return Settings()

@@ -12,6 +12,10 @@ dependencies = [
 # provider speaks plain HTTP over the httpx dependency above.
 [project.optional-dependencies]
 anthropic = ["anthropic>=0.40"]
+# Dense retrieval over Postgres. Behind an extra for the same reason as
+# anthropic: the lexical path is the always-present fallback, and `make evals`
+# must run on a machine with no database.
+pgvector = ["psycopg[binary]>=3.1", "pgvector>=0.3"]
 
 [build-system]
 requires = ["hatchling"]

@@ -19,6 +19,7 @@ from pathlib import Path
 
 from harness import Budget, Candidate, Channel, LoadedPage, RagHit, Session, Trace
 
+from api.vectors import VectorHits
 from okf import Bundle, Page, PageType, Status, term_idf
 
 # The body is corroborating evidence, not the primary signal: frontmatter is
@@ -27,6 +28,12 @@ BODY_WEIGHT = 0.35
 #: The most an alias hit can be worth, earned only by one that resolves to a
 #: single page. Scaled down by fan-out from there — see `_alias_bonus`.
 ALIAS_BONUS = 0.5
+
+#: The most a vector hit can add, earned at similarity 1.0 and scaled down to
+#: nothing at `vector_floor`. Comparable to FOCUS_PIN on purpose: a page the
+#: words missed entirely should be able to clear the confidence floor on a
+#: strong similarity, and no more than that.
+VECTOR_WEIGHT = 1.0
 
 #: Added to every page of a product something resolved the question to.
 #: Enough to clear the confidence floor on its own, because the point is
@@ -289,6 +296,8 @@ def frontmatter_filter(
     floor: float,
     focus_override: str | None = None,
     confidence_floor: float = 0.45,
+    vector: VectorHits | None = None,
+    vector_floor: float = 0.55,
 ) -> list[tuple[Page, float]]:
     """The pre-read filter. Every rejection is recorded with its reason —
     that log is how you discover the taxonomy is wrong (§F.4)."""
@@ -317,6 +326,25 @@ def frontmatter_filter(
         page.id: score_page(page, terms, question, ambiguous, idf) + _alias_bonus(page.id)
         for page in bundle.pages.values()
     }
+    # Dense recall, fused here and nowhere else. This dict is what
+    # `focus_candidates`, the seven-clause filter ladder and the rejected-
+    # candidate log all read from, so a page lifted by similarity is subject
+    # to every one of them. Fused as a bonus in the lexical scale — the same
+    # shape as the alias and focus bonuses — rather than replacing the score:
+    # a page the words already found keeps what the words gave it, and a page
+    # the words missed can rise above the confidence floor on similarity
+    # alone, which is the whole point.
+    #
+    # Two lexical semantics survive on this side. `must_include` is applied
+    # by the caller as a post-filter, not here. And the floor: below
+    # `vector_floor` a hit is the shape of every document in the bundle —
+    # the dense analogue of RAG_FLOOR — and earns nothing.
+    if vector is not None and vector.hits:
+        for page_id, similarity in vector.by_page.items():
+            if similarity < vector_floor or page_id not in scored:
+                continue
+            lift = VECTOR_WEIGHT * (similarity - vector_floor) / max(1e-6, 1.0 - vector_floor)
+            scored[page_id] += lift
     # A resolved product decides the focus outright. Lexical ranking is what
     # got "want to buy cancer insurance" onto the home-insurance FAQ; where
     # something read the question properly, its answer is not one more score

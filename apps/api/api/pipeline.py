@@ -38,6 +38,7 @@ from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
     frontmatter_filter,
+    keywords,
     named_products,
     needs_rag,
     rag_search,
@@ -47,6 +48,7 @@ from api.retrieval import (
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
 from api.understand import Understanding, understand, worth_resolving
+from api.vectors import searcher_for
 from okf import (
     Bundle,
     Page,
@@ -421,6 +423,30 @@ def answer_question(
             )
 
     try:
+        # Dense recall, where an index is configured. No stage at all on the
+        # lexical path, for the reason `understand` gives: a stage that
+        # reports "not configured" on every offline turn is noise in the one
+        # trace people read most. Where it is configured and fails, the turn
+        # carries on lexically and the trace says why — unless fail-closed,
+        # which is what an unreachable index is worth in a deployment that
+        # would rather refuse than degrade.
+        vector = None
+        searcher = searcher_for(settings)
+        if searcher is not None:
+            with trace.stage("vector-search") as detail:
+                vector = searcher.search(bundle, question, session.today)
+                detail["hits"] = len(vector.hits)
+                if vector.degraded:
+                    detail["degraded"] = vector.degraded
+                    trace.vector_degraded = vector.degraded
+                    if searcher.fail_closed or searcher.mode == "on":
+                        # The defined exit (§F.3): a handoff, with the reason on
+                        # the trace. `limit=0` — there was no budget here, only
+                        # a dependency that was asked for and did not answer.
+                        raise BudgetExhausted(f"vector index: {vector.degraded}", 0)
+                else:
+                    trace.retrieval_mode = "hybrid"
+
         with trace.stage("frontmatter-filter") as detail:
             admitted = frontmatter_filter(
                 bundle,
@@ -430,7 +456,19 @@ def answer_question(
                 settings.candidate_floor,
                 focus_override,
                 settings.confidence_floor,
+                vector,
+                settings.vector_floor,
             )
+            # `must_include` semantics on the dense side: a vector candidate
+            # that does not contain the product-shaped word the corpus has
+            # never seen is the nearest neighbour, which is the failure.
+            if vector is not None and vector.hits:
+                missing = unsupported_term(bundle, question, admitted)
+                if missing:
+                    lifted = set(vector.by_page)
+                    admitted = [
+                        (pg, sc) for pg, sc in admitted if pg.id not in lifted or missing in keywords(pg.body)
+                    ]
             detail["admitted"] = len(admitted)
             detail["rejected"] = len(trace.candidates) - len(admitted)
             if trace.ambiguous_products:

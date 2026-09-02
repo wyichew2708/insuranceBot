@@ -109,6 +109,29 @@ def registry(settings: Settings) -> list[Integration]:
             ],
         ),
         Integration(
+            name="pgvector",
+            label="pgvector — dense retrieval (self-hosted)",
+            direction="outbound",
+            purpose=(
+                "Vector search over the compiled wiki sections, fused with the lexical "
+                "rank. Recall only: a chunk found by similarity goes through the same "
+                "frontmatter filter, composition and gates as one found by words."
+            ),
+            configured=bool(settings.pgvector_dsn) and settings.pgvector.lower() != "off",
+            required=False,
+            endpoint=_redact_dsn(settings.pgvector_dsn) if settings.pgvector_dsn else "(unset)",
+            fallback="Lexical retrieval — the offline path, and what every turn ran on before v2.1.",
+            probe="pgvector",
+            fields=[
+                {"key": "PGVECTOR", "value": settings.pgvector},
+                {"key": "PGVECTOR_DSN", "value": "set" if settings.pgvector_dsn else ""},
+                {"key": "EMBED_BASE_URL", "value": settings.embed_base_url or ""},
+                {"key": "EMBED_MODEL", "value": settings.embed_model},
+                {"key": "RERANK_BASE_URL", "value": settings.rerank_base_url or ""},
+                {"key": "PGVECTOR_FAIL_CLOSED", "value": str(settings.pgvector_fail_closed).lower()},
+            ],
+        ),
+        Integration(
             name="langfuse",
             label="Langfuse — trace export",
             direction="outbound",
@@ -229,6 +252,22 @@ async def probe(name: str, settings: Settings) -> dict[str, Any]:
             return await done(False, "not configured — the deterministic composer is in use")
         return await done(*await _http_ok(f"{settings.vllm_base_url.rstrip('/')}/v1/models"))
 
+    if name == "pgvector":
+        if not settings.pgvector_dsn or settings.pgvector.lower() == "off":
+            return await done(False, "not configured — lexical retrieval is in use")
+        # The database's own words, verbatim. Rounding "password authentication
+        # failed" up to "unavailable" is how a wrong DSN gets mistaken for a
+        # network problem.
+        ok, detail = await asyncio.to_thread(
+            _pgvector_probe, settings.pgvector_dsn, str(settings.bundle_path)
+        )
+        embed = ""
+        if settings.embed_base_url:
+            e_ok, e_detail = await _http_ok(f"{settings.embed_base_url.rstrip('/')}/models")
+            embed = f"; embeddings {'ok' if e_ok else 'FAILED: ' + e_detail}"
+            ok = ok and e_ok
+        return await done(ok, detail + embed)
+
     if name == "langfuse":
         if not (settings.langfuse_host and settings.langfuse_public_key):
             return await done(False, "not configured — traces stay in the in-process store")
@@ -280,3 +319,32 @@ async def _http_ok(url: str, headers: dict[str, str] | None = None) -> tuple[boo
         # Verbatim. "403 to CONNECT" is a policy decision someone made, and
         # rounding it to "unreachable" sends the reader hunting for a bug.
         return False, f"{url} → {type(exc).__name__}: {exc}"
+
+
+def _redact_dsn(dsn: str) -> str:
+    """The DSN with its password removed, for a page anyone on the team reads."""
+    if "@" in dsn and "://" in dsn:
+        scheme, rest = dsn.split("://", 1)
+        creds, host = rest.rsplit("@", 1)
+        user = creds.split(":", 1)[0]
+        return f"{scheme}://{user}:***@{host}"
+    return dsn
+
+
+def _pgvector_probe(dsn: str, bundle: str) -> tuple[bool, str]:
+    """Connect, and read the index fingerprint for this bundle. Synchronous —
+    run under `asyncio.to_thread` by the caller."""
+    try:
+        import psycopg
+    except ImportError:
+        return False, "psycopg not installed — install the api package's `pgvector` extra"
+    try:
+        with psycopg.connect(dsn, connect_timeout=int(PROBE_TIMEOUT_S)) as conn:
+            row = conn.execute(
+                "SELECT chunks, fingerprint FROM chunk_fingerprint WHERE bundle = %s", (bundle,)
+            ).fetchone()
+    except Exception as exc:
+        return False, f"{type(exc).__name__}: {exc}"
+    if row is None:
+        return False, f"connected; no index for bundle {bundle!r} — run `make index`"
+    return True, f"connected; {row[0]} chunks indexed for {bundle!r} (fingerprint {str(row[1])[:12]}...)"

@@ -1,4 +1,4 @@
-.PHONY: install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
+.PHONY: index install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
         guardrail-backtest autoeval-live evals-live \
         docker-build docker-up docker-down docker-logs \
         crawl crawl-fixture wiki knowledge autoeval-web studio studio-web ci console clean
@@ -93,6 +93,8 @@ guardrail-backtest:
 # `--project-directory .` is what makes the repo-root .env the source of
 # settings and the relative volume paths resolve from the repo root.
 COMPOSE = docker compose --project-directory . -f infra/docker-compose.yml
+# Which service `docker-logs` follows. There are four under the gpu profile.
+SERVICE ?= api
 
 docker-build:
 	$(COMPOSE) build
@@ -107,9 +109,15 @@ docker-down:
 	$(COMPOSE) down
 
 docker-logs:
-	$(COMPOSE) logs -f api
+	$(COMPOSE) logs -f $(SERVICE)
 
 # Loop 2 — the knowledge gates.
+# Build the vector index over the served bundle. Offline and incremental —
+# keyed by content hash — and never part of Bundle.load, so `make evals` and
+# CI need no database. Needs PGVECTOR_DSN and EMBED_BASE_URL in .env.
+index:
+	uv run python scripts/index_pgvector.py --bundle okf-real
+
 lint-bundle:
 	uv run python scripts/lint_bundle.py
 

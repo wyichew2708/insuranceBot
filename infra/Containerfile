@@ -40,13 +40,13 @@ COPY apps/evalgen/pyproject.toml apps/evalgen/
 # can never be used, visible only as `degraded` in a trace. The vLLM route
 # needs no extra: it is an OpenAI-compatible HTTP call over httpx.
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --package api --extra anthropic --no-install-project --no-dev
+    uv sync --frozen --package api --extra anthropic --extra pgvector --no-install-project --no-dev
 
 COPY packages/ packages/
 # Only what the serve loop needs; the compiler, crawler and eval harness are
 # developer tools and have no business in a serving image.
 COPY apps/api/ apps/api/
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --package api --extra anthropic --no-dev
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --package api --extra anthropic --extra pgvector --no-dev
 
 # Non-root: the process only ever reads the bundle, and the content API's write
 # path is mounted read-write explicitly where it is wanted.

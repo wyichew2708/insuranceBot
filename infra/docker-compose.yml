@@ -4,11 +4,16 @@
 #                             #        -f infra/docker-compose.yml up --build
 #     open http://localhost:8080
 #
-# One service, because that is what the system is. An earlier draft of this
-# file carried postgres, redis, langfuse and five microservices; none of them
-# exist in this design — the corpus is a directory of Markdown and CSV, the
-# trace store is an in-memory ring buffer, and the system of record is a
-# fixture. Keeping them would have described an architecture nobody runs.
+# One service by default, because that is what the system is. An earlier draft
+# carried postgres, redis, langfuse and five microservices for an architecture
+# nobody ran, and they were removed. Postgres is back, under the `gpu` profile
+# only, for exactly one job: pgvector over the compiled wiki sections. It is
+# recall, not authority — a chunk found by similarity goes through the same
+# frontmatter filter, composition and gates as one found by words — and with
+# the profile off the API runs precisely as before. The `gpu` profile is the
+# Linux/NVIDIA host: vLLM for generation, TEI for embeddings and reranking,
+# Postgres for the index. On the Mac, none of it runs and the model is MLX on
+# the host (see the foot of this file).
 #
 # `--project-directory .` is what makes the repo-root `.env` the source of
 # settings, and makes the relative paths below resolve from the repo root
@@ -40,6 +45,13 @@ services:
       GUARDRAILS: ${GUARDRAILS:-auto}
       GUARDRAIL_MODEL: ${GUARDRAIL_MODEL:-}
       GUARDRAIL_FAIL_CLOSED: ${GUARDRAIL_FAIL_CLOSED:-false}
+      # Vectors. Empty DSN under `auto` means lexical only — the default.
+      PGVECTOR: ${PGVECTOR:-auto}
+      PGVECTOR_DSN: ${PGVECTOR_DSN:-}
+      EMBED_BASE_URL: ${EMBED_BASE_URL:-}
+      EMBED_MODEL: ${EMBED_MODEL:-BAAI/bge-m3}
+      RERANK_BASE_URL: ${RERANK_BASE_URL:-}
+      PGVECTOR_FAIL_CLOSED: ${PGVECTOR_FAIL_CLOSED:-false}
     volumes:
       # Read-only: the served corpus is build output, and the container has no
       # business editing it.
@@ -60,7 +72,81 @@ services:
       start_period: 30s
     restart: unless-stopped
 
-# A locally hosted model is deliberately not a service here. On Apple Silicon
+  # ---- gpu profile: the Linux/NVIDIA host ---------------------------------
+  # `docker compose --profile gpu up`. None of these start without the flag.
+  postgres:
+    profiles: ["gpu"]
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: okf
+      POSTGRES_USER: okf
+      POSTGRES_PASSWORD: ${PGVECTOR_PASSWORD:-okf}
+    ports: ["${PGVECTOR_PORT:-5432}:5432"]
+    volumes:
+      # The one named volume in this file. The corpus mounts above are
+      # read-only build output; an index is state the database owns.
+      - pgvector-data:/var/lib/postgresql/data
+      - ./infra/pgvector/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U okf -d okf"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  embed:
+    profiles: ["gpu"]
+    # Text Embeddings Inference, serving bge-m3 on the GPU. OpenAI-compatible
+    # /v1/embeddings. 1024 dimensions; the schema's vector(1024) is this model.
+    image: ghcr.io/huggingface/text-embeddings-inference:1.5
+    command: ["--model-id", "${EMBED_MODEL:-BAAI/bge-m3}", "--max-client-batch-size", "64"]
+    ports: ["${EMBED_PORT:-8080}:80"]
+    volumes: ["hf-cache:/data"]
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: 1, capabilities: [gpu] }]
+    restart: unless-stopped
+
+  rerank:
+    profiles: ["gpu"]
+    # Optional cross-encoder over the fused top-20. Leave RERANK_BASE_URL empty
+    # to run without it; the fused ranking then stands.
+    image: ghcr.io/huggingface/text-embeddings-inference:1.5
+    command: ["--model-id", "BAAI/bge-reranker-v2-m3"]
+    ports: ["${RERANK_PORT:-8081}:80"]
+    volumes: ["hf-cache:/data"]
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: 1, capabilities: [gpu] }]
+    restart: unless-stopped
+
+  vllm:
+    profiles: ["gpu"]
+    # Generation on the GPU host. Must honour `response_format: json_schema`;
+    # vLLM does. Point VLLM_BASE_URL at it and VLLM_MODEL at the served name.
+    image: vllm/vllm-openai:latest
+    command:
+      - "--model"
+      - "${VLLM_HF_MODEL:-Qwen/Qwen3-32B-AWQ}"
+      - "--served-model-name"
+      - "${VLLM_MODEL:-qwen3-32b}"
+      - "--max-model-len"
+      - "16384"
+    ports: ["${VLLM_PORT:-8000}:8000"]
+    volumes: ["hf-cache:/root/.cache/huggingface"]
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: 1, capabilities: [gpu] }]
+    restart: unless-stopped
+
+volumes:
+  pgvector-data:
+  hf-cache:
+
+# On the Mac a locally hosted model is deliberately not a service here. On Apple Silicon
 # it runs on Metal, which Docker Desktop does not pass through to containers —
 # a containerised MLX server would fall back to CPU and be unusably slow. Run
 # it on the host and point the container at it:
@@ -72,5 +158,5 @@ services:
 #   VLLM_BASE_URL=http://host.docker.internal:8090 \
 #   VLLM_MODEL=qwen3.6-35b-a3b GUARDRAIL_MODEL= make docker-up
 #
-# On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer and
-# belongs here as a second service.
+# On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer,
+# and it is the `vllm` service under the `gpu` profile above.

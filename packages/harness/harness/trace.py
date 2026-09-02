@@ -70,6 +70,13 @@ class Trace(BaseModel):
     loaded: list[LoadedPage] = Field(default_factory=list)
     rag_used: bool = False
     rag_reason: str = ""
+    #: Which retrieval served the turn: `lexical` or `hybrid`. Recorded so an
+    #: evaluation can refuse to score a "hybrid" run that was served lexically
+    #: because the database was down — the same refusal the batch runner makes
+    #: for a dead model.
+    retrieval_mode: str = "lexical"
+    #: Why the vector layer did not run, when it was configured and did not.
+    vector_degraded: str = ""
     rag_hits: list[RagHit] = Field(default_factory=list)
     sor_calls: list[str] = Field(default_factory=list)
 
