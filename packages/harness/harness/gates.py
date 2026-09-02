@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import datetime as dt
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -113,6 +114,11 @@ STOPWORDS = {
 }
 
 
+#: A judging call: (system, user, schema) → a dict under `schema`, or None.
+#: The shape of `LLMProvider.classify`, so a provider can be handed straight in.
+Judge = Callable[[str, str, dict[str, Any]], dict[str, Any] | None]
+
+
 @dataclass
 class GateContext:
     answer: GroundedAnswer
@@ -122,6 +128,11 @@ class GateContext:
     loaded_page_ids: list[str] = field(default_factory=list)
     raw_root: Path | None = None
     today: dt.date = field(default_factory=dt.date.today)
+    #: Optional. Where a model is configured, groundedness asks it whether each
+    #: load-bearing claim is *entailed* by its evidence rather than measuring
+    #: word overlap. None on the deterministic path, where the lexical test
+    #: stands — and the gate never raises because of it.
+    judge: Judge | None = None
 
     def loaded_text(self) -> str:
         """Every loaded page's title and body.
@@ -466,6 +477,21 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
     evidence = _tokens(ctx.loaded_text())
     if not evidence:
         return GateResult(gate=name, verdict=Verdict.fail, detail="no evidence pages were loaded")
+
+    # Meaning first, where something can read it. Word overlap cannot tell
+    # "cover ends on the death of the insured" from "covers you on the death of
+    # the insured": same tokens, opposite sense. That inversion reached a
+    # customer and this gate passed it. A judge is asked one closed question
+    # per load-bearing claim — entails, neutral or contradicts — and a
+    # contradiction is a hard fail. Nothing the judge says reaches the
+    # customer; it only decides whether the answer does.
+    if ctx.judge is not None:
+        judged = _judge_entailment(ctx)
+        if judged is not None:
+            return judged
+        # A judge that returned nothing is recorded, not trusted: the lexical
+        # test below still runs, and the detail says the model was silent.
+
     weak: list[str] = []
     scores: list[float] = []
     for claim in ctx.answer.claims:
@@ -477,11 +503,94 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
         if score < threshold:
             weak.append(f"{claim.text[:50]!r} ({score:.2f})")
     mean = sum(scores) / len(scores) if scores else 0.0
+    silent = "; judge silent, lexical fallback" if ctx.judge is not None else ""
     if weak:
         return GateResult(
-            gate=name, verdict=Verdict.fail, detail=f"claims not entailed by loaded pages: {weak}"
+            gate=name, verdict=Verdict.fail, detail=f"claims not entailed by loaded pages: {weak}{silent}"
         )
-    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"mean entailment {mean:.2f}")
+    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"mean entailment {mean:.2f}{silent}")
+
+
+#: A claim whose truth-value carries weight: it states a figure, an exclusion
+#: or a condition. Those are judged; a claim that merely describes ("Travel
+#: Insurance is a single-trip plan") is checked by overlap as before.
+_LOAD_BEARING_RE = re.compile(
+    r"\d|not covered|excluded?|exclusion|will not pay|shall not|unless|provided that|"
+    r"subject to|only if|must|within|cancel|terminat|cease|\bends?\b|no longer|continues?\b",
+    re.IGNORECASE,
+)
+
+_ENTAILMENT_SYSTEM = """\
+You check whether an insurance answer is supported by its source.
+
+For each CLAIM you are given the EVIDENCE it was written from. Decide:
+- entails: the evidence states this, in substance. Rewording is fine.
+- contradicts: the evidence says the opposite, or the claim reverses who pays, \
+what is covered, or when cover applies.
+- neutral: the evidence does not settle it either way.
+
+Read for sense, not for shared words. "Cover ends on the death of the insured" \
+and "covers you on the death of the insured" share every word and contradict \
+each other. Judge only from the evidence given.
+"""
+
+_ENTAILMENT_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["verdicts"],
+    "properties": {
+        "verdicts": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["claim", "verdict"],
+                "properties": {
+                    "claim": {"type": "integer"},
+                    "verdict": {"type": "string", "enum": ["entails", "neutral", "contradicts"]},
+                },
+            },
+        }
+    },
+}
+
+
+def _judge_entailment(ctx: GateContext) -> GateResult | None:
+    """Ask the judge about every load-bearing claim in one call.
+
+    None when the judge returned nothing usable — the caller falls back to
+    lexical overlap and says so. Never raises: a provider fault is a silent
+    judge, not a failed turn.
+    """
+    name = "groundedness"
+    assert ctx.judge is not None
+    bearing = [(i, c) for i, c in enumerate(ctx.answer.claims) if _LOAD_BEARING_RE.search(c.text)]
+    if not bearing:
+        return None
+    evidence_by_page: dict[str, str] = {}
+    for pid in ctx.loaded_page_ids:
+        page = ctx.bundle.get(pid)
+        evidence_by_page[pid] = page.body if page else ""
+    blocks = []
+    for i, claim in bearing:
+        source = evidence_by_page.get(claim.source_id) or ctx.loaded_text()
+        blocks.append(f"CLAIM {i}: {claim.text}\nEVIDENCE {i}:\n{source[:2400]}\n")
+    try:
+        payload = ctx.judge(_ENTAILMENT_SYSTEM, "\n".join(blocks), _ENTAILMENT_SCHEMA)
+    except Exception:
+        return None
+    if not isinstance(payload, dict) or not isinstance(payload.get("verdicts"), list):
+        return None
+    verdicts = {v.get("claim"): v.get("verdict") for v in payload["verdicts"] if isinstance(v, dict)}
+    if not any(i in verdicts for i, _ in bearing):
+        return None
+    contradicted = [c.text[:60] for i, c in bearing if verdicts.get(i) == "contradicts"]
+    unsupported = [c.text[:60] for i, c in bearing if verdicts.get(i) == "neutral"]
+    if contradicted:
+        return GateResult(gate=name, verdict=Verdict.fail, detail=f"evidence contradicts: {contradicted}")
+    if unsupported:
+        return GateResult(gate=name, verdict=Verdict.fail, detail=f"evidence does not settle: {unsupported}")
+    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{len(bearing)} load-bearing claims entailed")
 
 
 def _product_chain(ctx: GateContext, page_id: str) -> list[Any]:
@@ -709,8 +818,7 @@ def gate_answerability(ctx: GateContext) -> GateResult:
                     gate=name,
                     verdict=Verdict.fail,
                     detail=(
-                        f"{intent.value}: asked about {sorted(asked)}, "
-                        f"but every figure binds to {off_topic}"
+                        f"{intent.value}: asked about {sorted(asked)}, but every figure binds to {off_topic}"
                     ),
                 )
         if bound:

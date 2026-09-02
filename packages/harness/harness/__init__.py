@@ -15,7 +15,7 @@ from harness.contracts import (
     Session,
     Verdict,
 )
-from harness.gates import ALL_GATES, GateContext, blocked, run_gates
+from harness.gates import ALL_GATES, GateContext, Judge, blocked, run_gates
 from harness.trace import Candidate, LoadedPage, RagHit, StageTiming, Trace, TraceStore
 
 __all__ = [
@@ -33,6 +33,7 @@ __all__ = [
     "GateContext",
     "GateResult",
     "GroundedAnswer",
+    "Judge",
     "LoadedPage",
     "PolicyContext",
     "RagHit",

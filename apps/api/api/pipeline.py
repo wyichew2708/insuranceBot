@@ -18,6 +18,7 @@ from harness import (
     BudgetExhausted,
     GateContext,
     GroundedAnswer,
+    Judge,
     Session,
     Trace,
     blocked,
@@ -167,6 +168,7 @@ def _finish(
     question: str,
     raw_root: Path,
     loaded: list[str],
+    judge: Judge | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     """Gate an answer produced without the retrieve-and-compose path.
 
@@ -185,6 +187,7 @@ def _finish(
                 loaded_page_ids=loaded,
                 raw_root=raw_root,
                 today=session.today,
+                judge=judge,
             )
         )
         trace.gates = results
@@ -673,6 +676,12 @@ def answer_question(
             loaded_page_ids=[p.id for p in pages],
             raw_root=raw_root,
             today=session.today,
+            # Meaning is judged where a model is configured; on the
+            # deterministic path the lexical test stands.
+            # `getattr`, as `understand` does: a provider that writes but cannot
+            # judge is legitimate, and a missing judge means the lexical test
+            # stands rather than the turn failing.
+            judge=getattr(provider, "classify", None) if provider.name != "deterministic" else None,
         )
         # Guardrail verdicts are already on the trace; extending rather than
         # replacing keeps them in the list `blocked()` reads, so an output the
