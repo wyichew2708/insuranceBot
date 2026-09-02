@@ -42,6 +42,7 @@ __all__ = [
     "Trace",
     "TraceStore",
     "Verdict",
+    "asked_benefits",
     "blocked",
     "run_gates",
 ]

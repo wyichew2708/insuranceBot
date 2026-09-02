@@ -100,7 +100,7 @@ ROLE_RULES: list[tuple[str, re.Pattern[str]]] = [
     (
         "exclusions",
         re.compile(
-            r"exclusion|not\s+covered|do\s+not\s+cover|we\s+will\s+not\s+pay|^exceptions?$"
+            r"exclusion|not\s+covered|not\s+insured|do\s+not\s+cover|we\s+will\s+not\s+pay|^exceptions?$"
             r"|excluded|what\s+is\s+not|limitation\s+of\s+(?:cover|liability)",
             re.I,
         ),
@@ -145,7 +145,11 @@ ROLE_RULES: list[tuple[str, re.Pattern[str]]] = [
             r"|rights\s+of\s+third\s+parties|governing|jurisdiction|important\s+not"
             r"|incontestab|taxation|change\s+of\s+address|prohibited\s+person"
             r"|general\s+terms|policy\s+will\s+end|your\s+policy\s+end|the\s+agreement|warranty|assignment|notice"
-            r"|payment|instal(?:l)?ment|refund|excess|deductible|co-?insurance",
+            r"|payment|instal(?:l)?ment|refund|excess|deductible|co-?insurance"
+            # "Basis Of Settlement" is how a property wording labels the terms
+            # on which a claim is paid; it went to "other" and, with no cover
+            # section either, the whole product was dropped.
+            r"|basis\s+of\s+settlement|settlement",
             re.I,
         ),
     ),

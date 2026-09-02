@@ -851,16 +851,20 @@ def _benefit_of(figure: Figure) -> str | None:
     return tail.split(".", 1)[0] or None
 
 
-def _asked_benefits(ctx: GateContext) -> set[str]:
+def asked_benefits(bundle: Bundle, question: str) -> set[str]:
     """Benefit codes the question names — through the bundle's vocabulary
     ("suitcase" → `baggage_loss`) or a section number ("section 6" →
-    `section_6`). Empty where the question names none, which leaves the
-    figure test as it was."""
+    `section_6`). Empty where the question names none. Shared with the
+    composer, which uses it to say when a named benefit was never found."""
     from okf import expand_vocabulary, load_vocabulary
 
-    asked = set(expand_vocabulary(ctx.question, load_vocabulary(ctx.bundle.root)))
-    asked.update(f"section_{m.group(1).lower()}" for m in _SECTION_RE.finditer(ctx.question or ""))
+    asked = set(expand_vocabulary(question, load_vocabulary(bundle.root)))
+    asked.update(f"section_{m.group(1).lower()}" for m in _SECTION_RE.finditer(question or ""))
     return asked
+
+
+def _asked_benefits(ctx: GateContext) -> set[str]:
+    return asked_benefits(ctx.bundle, ctx.question)
 
 
 # --- 8. answerability -------------------------------------------------------

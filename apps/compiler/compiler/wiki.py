@@ -1769,7 +1769,18 @@ def emit_document_products(
             continue
         summary, refs = _document_body(found, "benefits", report)
         if not summary:
-            report.skip("document product with no compilable cover section — no page")
+            # A wording with no cover section is still a product. Etiqa
+            # Homeowners Enhanced has exclusions, conditions and a basis of
+            # settlement and never says "what is covered" in so many words;
+            # requiring one dropped the product from the bundle. Open with the
+            # first compiled role that has content, and say what it is.
+            for role in ("conditions", "exclusions", "claims", "eligibility", "definitions"):
+                summary, refs = _document_body(found, role, report)
+                if summary:
+                    report.skip(f"document product opened from its {role} section — no cover section")
+                    break
+        if not summary:
+            report.skip("document product with no compilable section at all — no page")
             continue
         linked = [c for c in concepts if _concept_pattern(c).search(" ".join(summary))]
         fm = _common(

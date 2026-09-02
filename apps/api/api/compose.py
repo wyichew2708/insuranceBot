@@ -21,7 +21,7 @@ from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Sessi
 # The composer must find every span the gate will look for. Two copies of
 # this pattern drift, and the drift shows up as a quotation that composes
 # unbound and is refused — so there is one, and this is the one.
-from harness.gates import NUMERIC_SPAN_RE
+from harness.gates import NUMERIC_SPAN_RE, asked_benefits
 from harness.intent import REQUIREMENTS, Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, find_tokens
@@ -119,6 +119,11 @@ def shortfall(question: str, product: Page | None) -> str:
     # conditions" — which is not a product anybody bought.
     name = product.frontmatter.title.split(" — ")[0]
     return template.format(product=name)
+
+
+def product_name(page: Page) -> str:
+    """The product's own name, never a child page's heading."""
+    return page.frontmatter.title.split(" — ")[0]
 
 
 @dataclass
@@ -736,6 +741,36 @@ def compose(
     render = render_channel(bundle, product, session)
     if contested_notes:
         paragraphs.append(" ".join(contested_notes))
+    # True, cited, and misleading by omission: an answer about travel cover
+    # that never mentions the baggage the customer asked about is grounded
+    # and passes every gate. Where the question names a benefit and no
+    # selected section mentions it, say so — a statement about what was *not*
+    # found, which the composer already knows and the customer cannot.
+    named = asked_benefits(bundle, question) if product is not None else set()
+    if named and paragraphs:
+        from okf import load_vocabulary
+
+        # Judged against every page that was *loaded*, not only the sections
+        # selected: "is my luggage covered" was composed from the exclusions
+        # page while the benefits page — loaded, and headed "Baggage" — went
+        # unselected, and the line then claimed the pages did not address
+        # baggage. That is a selection defect, not an absence, and the scope
+        # line must not turn the one into the other.
+        shown = " ".join(f"{p.frontmatter.title} {p.body}" for p in pages).lower()
+        vocabulary = load_vocabulary(bundle.root)
+
+        def addressed(code: str) -> bool:
+            # A benefit is addressed if the pages use any of its customer
+            # words ("luggage", "suitcase") or its own name's words
+            # ("baggage"); "baggage_loss" is never spelled out on a page.
+            terms = [t.lower() for t in vocabulary.get(code, [])]
+            words = [w for w in code.replace("_", " ").split() if len(w) >= 4]
+            return any(t in shown for t in terms) or (bool(words) and all(w in shown for w in words))
+
+        unaddressed = sorted(code for code in named if not addressed(code))
+        if unaddressed:
+            what = ", ".join(code.replace("_", " ") for code in unaddressed)
+            paragraphs.append(f"The pages I answer from do not address {what} for {product_name(product)}.")
     body = "\n\n".join(paragraphs)
 
     if routed_in_body:
