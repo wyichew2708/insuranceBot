@@ -188,6 +188,43 @@ def phrase_words(page: Page, question: str) -> int:
     return best
 
 
+def named_products(bundle: Bundle, question: str) -> list[str]:
+    """Product keys whose *title* appears verbatim in the question, longest
+    match first, with any title that is merely a substring of a longer match
+    dropped.
+
+    This exists because a customer who types a product's name has answered
+    the "which product" question themselves, and nothing else should overrule
+    them. In a 1,000-case sample, eleven answers cited a different product from
+    the one named in the question — a rider's exclusions read out as another
+    rider's, at 0.99 confidence — and in every one the question carried the
+    right product's full title. The model's catalogue pick had been pinned as
+    the focus and the named product was filtered out as "a different product".
+
+    Substring subsumption is the one subtlety: "CI Benefit Rider" occurs inside
+    "Early CI Benefit Rider". The longer title is the one the customer typed;
+    the shorter one is a different product that happens to be a suffix of it.
+    Titles under two words are ignored — "Life" or "Travel" alone is
+    vocabulary, not identity.
+    """
+    haystack = " ".join(question.lower().split())
+    hits: list[tuple[str, str]] = []
+    for page in bundle.pages.values():
+        fm = page.frontmatter
+        if fm.type != PageType.product or page.id.count("/") != 2:
+            continue
+        title = " ".join(fm.title.lower().split())
+        if len(title.split()) >= 2 and title in haystack:
+            hits.append((title, bundle.product_key(page)))
+    hits.sort(key=lambda h: -len(h[0]))
+    kept: list[tuple[str, str]] = []
+    for title, key in hits:
+        if any(title in longer for longer, _ in kept):
+            continue
+        kept.append((title, key))
+    return [key for _, key in kept]
+
+
 def phrase_score(page: Page, question: str, ambiguous: frozenset[str] = frozenset()) -> float:
     """Length of the longest title/alias phrase occurring verbatim in the
     question, with titles weighted above aliases."""

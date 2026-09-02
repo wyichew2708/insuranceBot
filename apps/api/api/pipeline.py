@@ -37,6 +37,7 @@ from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
     frontmatter_filter,
+    named_products,
     needs_rag,
     rag_search,
     unsupported_term,
@@ -383,6 +384,31 @@ def answer_question(
         resolved_page = bundle.get(understanding.product_ids[0])
         if resolved_page is not None:
             focus_override = bundle.product_key(resolved_page)
+
+    # A product named in full, in the customer's own words, is not one more
+    # candidate — it is the answer to "which product", given by the person
+    # entitled to give it. It overrules the model's pick and the lexical rank
+    # alike. Eleven answers in a 1,000-case sample cited a sibling rider of
+    # the one the question named in full, all at 0.99; this is why.
+    named = named_products(bundle, question)
+    if len(named) == 1:
+        if focus_override and focus_override != named[0]:
+            trace.note(
+                f"focus {focus_override!r} overruled by the product named in the question: {named[0]!r}"
+            )
+        focus_override = named[0]
+    elif len(named) >= 2:
+        # Two full titles in one question: "Early CI Benefit Rider" is not a
+        # substring case (those are folded), so the customer really did name
+        # two products. Ask which, rather than pick.
+        asked = lexical_clarification(bundle, named)
+        if asked is not None:
+            with trace.stage("clarify") as detail:
+                detail["from"] = "two products named"
+                detail["options"] = named[:8]
+            return _finish(
+                trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+            )
 
     try:
         with trace.stage("frontmatter-filter") as detail:
