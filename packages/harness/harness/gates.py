@@ -602,6 +602,33 @@ def _foreign_contacts(ctx: GateContext, channel: Channel) -> list[tuple[str, str
     return out
 
 
+_SECTION_RE = re.compile(r"\bsection\s+(\d+[a-z]?)\b", re.I)
+
+
+def _benefit_of(figure: Figure) -> str | None:
+    """The benefit code a table-bound figure belongs to.
+
+    Row ids read `product:version:tier:benefit_code.attribute`; the benefit
+    is the last colon-separated part with its attribute stripped.
+    """
+    if not figure.table_row_id:
+        return None
+    tail = figure.table_row_id.rsplit(":", 1)[-1]
+    return tail.split(".", 1)[0] or None
+
+
+def _asked_benefits(ctx: GateContext) -> set[str]:
+    """Benefit codes the question names — through the bundle's vocabulary
+    ("suitcase" → `baggage_loss`) or a section number ("section 6" →
+    `section_6`). Empty where the question names none, which leaves the
+    figure test as it was."""
+    from okf import expand_vocabulary, load_vocabulary
+
+    asked = set(expand_vocabulary(ctx.question, load_vocabulary(ctx.bundle.root)))
+    asked.update(f"section_{m.group(1).lower()}" for m in _SECTION_RE.finditer(ctx.question or ""))
+    return asked
+
+
 # --- 8. answerability -------------------------------------------------------
 
 
@@ -665,6 +692,27 @@ def gate_answerability(ctx: GateContext) -> GateResult:
             for f in ctx.answer.figures
             if f.is_bound and (not wanted or any(w in f.label.lower() for w in wanted))
         ]
+        # A bound figure is not enough when the question named the benefit.
+        # "Is there a limit on section 6 under Etiqa Solitaire Protect?" was
+        # answered "S$150,000" — a real, bound figure, from another row of the
+        # same table; the truth for section 6 was S$20,000. Numeric-binding
+        # passed it because the number came from a row. This asks whether it
+        # came from the *right* row: where the question names a benefit, at
+        # least one figure must bind to that benefit's row, or the answer is
+        # about something the customer did not ask.
+        asked = _asked_benefits(ctx)
+        if bound and asked:
+            on_topic = [f for f in bound if _benefit_of(f) in asked]
+            off_topic = sorted({_benefit_of(f) for f in bound if _benefit_of(f)} - asked)
+            if not on_topic and off_topic:
+                return GateResult(
+                    gate=name,
+                    verdict=Verdict.fail,
+                    detail=(
+                        f"{intent.value}: asked about {sorted(asked)}, "
+                        f"but every figure binds to {off_topic}"
+                    ),
+                )
         if bound:
             return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: bound figure")
     if requirement.satisfied_by_unresolved and ctx.answer.unresolved:

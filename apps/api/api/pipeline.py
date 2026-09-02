@@ -296,6 +296,14 @@ def answer_question(
     # the nearest earlier turn that did — "what's the coverages" after "term
     # life" — and a turn that stands on its own is left exactly as typed, or
     # "what about car insurance?" gets answered about term life.
+    # Read from the customer's own words, before anything rewrites them. The
+    # abbreviation pass turns "Tiq PA Insurance" into "Tiq Personal Accident
+    # Insurance" — which is no longer this product's title and *is* a
+    # different product's — so a name check run after it answered from the
+    # wrong policy. A product name is the one thing in a question that must
+    # not be normalised.
+    named = named_products(bundle, question)
+
     with trace.stage("reference") as detail:
         resolution = resolve(question, list(history or []), bundle)
         if resolution.resolved:
@@ -390,7 +398,6 @@ def answer_question(
     # entitled to give it. It overrules the model's pick and the lexical rank
     # alike. Eleven answers in a 1,000-case sample cited a sibling rider of
     # the one the question named in full, all at 0.99; this is why.
-    named = named_products(bundle, question)
     if len(named) == 1:
         if focus_override and focus_override != named[0]:
             trace.note(
