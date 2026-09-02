@@ -202,6 +202,7 @@ def main() -> int:
     print(f"  numeric binding       {r.numeric_binding_integrity:.1%}   ({r.unbound_figure_count} unbound)")
     print(f"  entitlement leaks     {r.entitlement_leaks}")
     print(f"  failure shape         {r.unsafe_failures} unsafe / {r.miss_failures} safe misses")
+    print(f"  wrong product         {r.wrong_product}   (delivered, cited another product)")
     print(f"  recall@1 / @3 / MRR   {r.recall_at_1:.2f} / {r.recall_at_3:.2f} / {r.mrr:.2f}")
     print(f"  corpus reach          {r.page_reach_rate:.1%}   (rows {r.row_coverage:.1%})")
     print(f"\n  {summary}")

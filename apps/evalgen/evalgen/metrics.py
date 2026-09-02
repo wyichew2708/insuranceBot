@@ -37,6 +37,12 @@ def f1(precision: float, recall: float) -> float:
     return 0.0 if precision + recall == 0 else 2 * precision * recall / (precision + recall)
 
 
+def _product_of(page_id: str) -> str | None:
+    """The product a page id belongs to — `product/<lob>/<slug>/…` → slug."""
+    parts = page_id.split("/")
+    return parts[2] if len(parts) >= 3 and parts[0] == "product" else None
+
+
 class CaseResult(BaseModel):
     case_id: str
     category: str
@@ -109,9 +115,28 @@ class CaseResult(BaseModel):
             return "miss"
         # Delivered an answer that did not carry the figure or the citation the
         # corpus holds: wrong content, not a refusal.
-        return (
-            "unsafe" if any(f.startswith("missing ") for f in self.failures) and not self.handoff else "miss"
-        )
+        #
+        # `did not cite` belongs here and was missing. Without it a confident
+        # answer built on the *wrong page* fell through to "miss" and was
+        # scored safe — on a 1,000-case sample that hid 35 delivered failures,
+        # 11 of them a rider's exclusions read out as another rider's at 0.99
+        # confidence. Against the goal of never delivering a wrong answer,
+        # that is the worst class there is, and the metric was congratulating
+        # it.
+        wrong_content = any(f.startswith(("missing ", "did not cite ")) for f in self.failures)
+        return "unsafe" if wrong_content else "miss"
+
+    @property
+    def wrong_product(self) -> bool:
+        """Delivered, and cited a different product from the one the case
+        expects. Reported on its own because it is the failure a customer
+        cannot detect: the answer is fluent, cited, and about a policy they
+        do not hold."""
+        if not self.delivered or self.handoff or not self.expected_cites:
+            return False
+        expected = {_product_of(p) for p in self.expected_cites} - {None}
+        cited = {_product_of(p) for p in self.cited} - {None}
+        return bool(expected and cited and not (expected & cited))
 
     def recall_at(self, k: int) -> float | None:
         if not self.relevant_pages:
@@ -179,6 +204,10 @@ class Report(BaseModel):
     # failure shape — see CaseResult.severity
     unsafe_failures: int = 0
     miss_failures: int = 0
+    #: Delivered answers citing a different product from the one expected. A
+    #: subset of unsafe, broken out because it is the failure a customer
+    #: cannot detect.
+    wrong_product: int = 0
     failures_by_surface: dict[str, list[int]] = Field(default_factory=dict)
     accuracy_by_product: dict[str, float] = Field(default_factory=dict)
     counts_by_product: dict[str, int] = Field(default_factory=dict)
@@ -266,6 +295,7 @@ def score(
 
     report.unsafe_failures = sum(r.severity == "unsafe" for r in results)
     report.miss_failures = sum(r.severity == "miss" for r in results)
+    report.wrong_product = sum(r.wrong_product for r in results)
 
     by_product: dict[str, list[CaseResult]] = {}
     for r in results:
