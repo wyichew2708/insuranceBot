@@ -46,9 +46,11 @@ Two further findings from reading all 155 failures:
   is the premium for life insurance?"* answered with a true clause *about*
   premiums.
 
-Field test (104 customer-phrased turns, v2): 40.4% → 75.0% across the v2
-fixes. The v2.1 figures for both suites are being measured live as this is
-written and will be appended to EVALUATION.md.
+Field test (104 customer-phrased turns): 40.4% → 75.0% across the v2 fixes,
+**76.9% (80/104) on v2.1**, live on Qwen. A modest move on that suite is
+expected — it was v2's own instrument and most of its cases were already
+closed; v2.1's target is the unsafe count on the generated sample, which is
+being measured as this is written and will be appended to EVALUATION.md.
 
 ## What changed, by layer
 
@@ -167,8 +169,9 @@ safe miss — never by editing a suite.
 
 ## What is not done
 
-- **Verification numbers for v2.1** — running as this is written; EVALUATION.md
-  will carry them. The v2 figures above are final.
+- **The 1,000-case sample on v2.1** — running as this is written; EVALUATION.md
+  will carry unsafe / wrong-product / misses. The field-test figure above is
+  final; the v2 figures are final.
 - **The recompile** for the homeowners fix — held until the run finishes.
 - **The LLM WIKI tier has not been generated** on the real bundle; the
   generator is built and tested against the contract, and the first run needs
