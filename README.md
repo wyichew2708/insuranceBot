@@ -740,10 +740,14 @@ Not built:
 - **Durable scan jobs.** The registry is in-process, so a restart loses a
   running scan's suggestions. The shape — submit, poll, act — is what a queue
   would keep.
-- **pgvector dense retrieval.** `§J.1` recommends grep + frontmatter filter
-  until measured recall degrades; that is what this implements, and the
-  rejected-candidate log is how you would detect the degradation. The
-  auto-eval reports recall@k and MRR, so "measured" is now literal.
+- **pgvector dense retrieval — now present, off by default.** `§J.1`
+  recommended grep + frontmatter filter until measured recall degraded. It
+  did: the field test found the lexical scorer tying 87–213 pages on ordinary
+  customer questions, and "my flat got flooded" reaching a different product
+  from "my home got flooded". v2.1 adds a pgvector index over the compiled
+  wiki sections as a recall layer only — fused into the lexical rank before
+  the frontmatter filter runs, so it cannot admit what the filter rejects —
+  behind `PGVECTOR=auto|on|off`. See DEPLOYMENT.md §8a.
 - **Conversational memory.** A session carries channel, auth and policy;
   it does not carry what was said. Measured cost above — context-dependent
   turns fall from 96.8% to 48.4% as the corpus grows from 3 products to 108,

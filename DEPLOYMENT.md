@@ -5,8 +5,14 @@ every output shown is what it printed. Where a step can fail, the failure is
 written down next to it.
 
 The system is **one FastAPI process reading a directory of Markdown and CSV**.
-No database, no cache, no queue, no vector store. That is not a simplification
+No cache, no queue, and by default no database. That is not a simplification
 for the guide — it is the architecture, and it is why deployment is short.
+
+Since v2.1 there is one optional addition: a Postgres/pgvector index over the
+compiled wiki sections, for *recall* on customer vocabulary the lexical scorer
+cannot reach ("my flat got flooded"). It is off unless `PGVECTOR_DSN` is set,
+it never bypasses the frontmatter filter or the gates, and the API runs
+exactly as before without it. See §8a.
 
 ---
 
@@ -350,8 +356,46 @@ Expect p50 latency around 3.3 s against 4 ms deterministic. The model receives
 the same JSON schema the Anthropic provider does, so moving between them
 changes the runtime, not the answer contract.
 
-On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer and
-belongs in the compose file as a second service.
+On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer,
+and it is the `vllm` service under the compose `gpu` profile (§8a).
+
+## 8a. The GPU host: vectors, embeddings, reranking
+
+Everything the API depends on is a URL, so the Mac and the GPU host differ by
+a `.env`, and both can be tested against the same code.
+
+    docker compose --profile gpu up -d        # postgres, embed, rerank, vllm
+    make index                                # embed the served bundle, once
+
+    PGVECTOR=auto
+    PGVECTOR_DSN=postgresql://okf:okf@gpu-host:5432/okf
+    EMBED_BASE_URL=http://gpu-host:8080/v1    # TEI serving BAAI/bge-m3
+    RERANK_BASE_URL=http://gpu-host:8081      # optional cross-encoder
+    VLLM_BASE_URL=http://gpu-host:8000        # or the Mac's MLX server
+
+What it is, and is not. A chunk found by similarity is a *candidate* — under
+the same frontmatter filter, composition and gates as one found by words. It
+is fused into the lexical rank as a bonus, so a page the words missed can rise
+above the confidence floor, and a draft or expired chunk cannot win on
+similarity. The index is the wiki, not `raw/`, because wiki sections carry the
+frontmatter the filter needs. It is built offline by `make index`, keyed by
+content hash so a recompile re-embeds what changed, and never inside
+`Bundle.load` — the evaluators and CI need no database. At request time the
+API embeds only the question.
+
+Failure is a mode, not an outage. `PGVECTOR=auto` degrades to the lexical
+path when the database or the embedder is unreachable, records why on the
+trace as `vector_degraded`, and marks the turn `retrieval_mode: lexical`. An
+evaluation refuses to score a "hybrid" run served that way. `PGVECTOR=on`
+fails the turn instead, for testing the path; `off` never opens a connection.
+`/v1/integrations` probes the database and reports its own error verbatim.
+
+Why the earlier guide said "no vector store". Grep with a frontmatter filter
+beats embeddings on precision at this bundle size, and still does. What it
+loses is recall on the words customers use, which became a measured failure
+in the field test. The vectors are bounded to recall by design; every admitted
+chunk still carries a page id and a source ref, and the rejected-candidate log
+still explains every rejection.
 
 ---
 

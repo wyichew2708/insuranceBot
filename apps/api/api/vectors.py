@@ -74,12 +74,52 @@ class VectorHits:
 class VectorSearch:
     """A resolved searcher: the mode decided, the endpoints known."""
 
-    def __init__(self, dsn: str, embed_url: str, embed_model: str, mode: str, fail_closed: bool) -> None:
+    def __init__(
+        self,
+        dsn: str,
+        embed_url: str,
+        embed_model: str,
+        mode: str,
+        fail_closed: bool,
+        rerank_url: str = "",
+    ) -> None:
         self.dsn = dsn
         self.embed_url = embed_url.rstrip("/")
         self.embed_model = embed_model
         self.mode = mode
         self.fail_closed = fail_closed
+        self.rerank_url = rerank_url.rstrip("/")
+
+    def rerank(self, question: str, hits: list[VectorHit], texts: dict[str, str]) -> list[VectorHit]:
+        """Re-score the top hits with a cross-encoder, where one is configured.
+
+        A bi-encoder ranks "cooling-off period on car insurance" and the
+        contribution clause close together because both are about the same
+        policy; a cross-encoder reads question and section *together* and is
+        far better at "does this section answer this". Optional: with no
+        `rerank_url` the fused ranking stands. A fault leaves the order as it
+        was — reranking improves precision and is never allowed to remove it.
+        """
+        if not self.rerank_url or not hits:
+            return hits
+        keyed = [h for h in hits if f"{h.page_id}#{h.heading}" in texts]
+        if not keyed:
+            return hits
+        try:
+            response = httpx.post(
+                f"{self.rerank_url}/rerank",
+                json={"query": question, "texts": [texts[f"{h.page_id}#{h.heading}"] for h in keyed]},
+                timeout=QUERY_TIMEOUT_S,
+            )
+            response.raise_for_status()
+            scored = {int(r["index"]): float(r["score"]) for r in response.json()}
+        except Exception:
+            return hits
+        reranked = [
+            VectorHit(h.page_id, h.heading, scored.get(i, h.similarity), h.product_key)
+            for i, h in enumerate(keyed)
+        ]
+        return sorted(reranked, key=lambda h: -h.similarity)
 
     @property
     def enabled(self) -> bool:
@@ -121,7 +161,7 @@ class VectorSearch:
         # the Python pass is what the trace explains; this is what keeps a
         # stale chunk from ever being the nearest neighbour.
         sql = """
-            SELECT page_id, heading, product_key, 1 - (embedding <=> %(v)s) AS similarity
+            SELECT page_id, heading, product_key, 1 - (embedding <=> %(v)s) AS similarity, content
             FROM chunk
             WHERE bundle = %(bundle)s
               AND status = 'approved'
@@ -152,7 +192,8 @@ class VectorSearch:
             for r in rows
             if bundle.get(r[0]) is not None  # the index may be ahead of or behind the bundle
         ]
-        return VectorHits(hits=hits)
+        texts = {f"{r[0]}#{r[1]}": str(r[4]) for r in rows}
+        return VectorHits(hits=self.rerank(question, hits, texts))
 
 
 def searcher_for(settings: Any) -> VectorSearch | None:
@@ -173,4 +214,5 @@ def searcher_for(settings: Any) -> VectorSearch | None:
         embed_model=getattr(settings, "embed_model", "BAAI/bge-m3") or "BAAI/bge-m3",
         mode="on" if mode == "on" else "auto",
         fail_closed=bool(getattr(settings, "pgvector_fail_closed", False)),
+        rerank_url=getattr(settings, "rerank_base_url", "") or "",
     )
