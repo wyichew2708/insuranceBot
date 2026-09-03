@@ -93,6 +93,14 @@ def cmd_wiki(args: argparse.Namespace) -> int:
         print(f"  website defects filed: {len(report.conflicts)} (see {config.dest_root / 'conflicts'})")
     for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):
         print(f"  skipped {count:4}  {reason}")
+    # What reached a page, per source. Written beside the conflict tickets
+    # and printed largest-loss first, so the review starts where it matters.
+    from compiler.coverage import audit, describe, write_report
+
+    sources = audit(config.dest_root)
+    out = write_report(config.dest_root, sources)
+    print(describe(sources))
+    print(f"  full report: {out}")
     if not args.sign_off:
         print(
             "\npages are `draft`: nothing is retrievable until a human reviews them.\n"

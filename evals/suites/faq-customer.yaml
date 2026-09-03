@@ -1,0 +1,2621 @@
+# Customer-phrased suite, generated from the site's own FAQs by
+# scripts/faq_suite.py. Do not edit by hand; regenerate after a compile.
+#
+# Every question here was asked by a real customer, in their words, about
+# a product they named. The expectation is that the answer is delivered
+# and cites that product — nothing about the wording, since a better answer
+# from a wording page is an improvement over the FAQ's own text.
+#
+# 395 cases from okf-real
+
+- id: faq-cashsaver-01
+  question: What is Tiq CashSaver?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-02
+  turns:
+  - Tiq CashSaver
+  - How can I benefit from this plan?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-03
+  turns:
+  - Tiq CashSaver
+  - What are my premium payment options?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-04
+  turns:
+  - Tiq CashSaver
+  - Can I make changes to my policy after I buy it?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-05
+  turns:
+  - Tiq CashSaver
+  - What happens if I my endowment plan before the maturity date?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-06
+  turns:
+  - Tiq CashSaver
+  - What is the yearly cash benefit and how does it benefit me?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-07
+  turns:
+  - Tiq CashSaver
+  - Is the yearly cash benefit guaranteed?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-08
+  turns:
+  - Tiq CashSaver
+  - Can I accumulate my yearly cash benefit?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-09
+  turns:
+  - Tiq CashSaver
+  - Can I withdraw the accumulated yearly cash benefit?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-10
+  turns:
+  - Tiq CashSaver
+  - I have selected to withdraw my yearly cash benefit during application. How can I receive it?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-11
+  turns:
+  - Tiq CashSaver
+  - What if I did not select the option to withdraw my yearly cash benefit during application?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-12
+  turns:
+  - Tiq CashSaver
+  - Can I change the yearly cash payout benefit option after application?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-13
+  turns:
+  - Tiq CashSaver
+  - What is the non-guaranteed yearly cash benefit?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-14
+  turns:
+  - Tiq CashSaver
+  - Can I accumulate or withdraw the non-guaranteed yearly cash benefit?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-15
+  turns:
+  - Tiq CashSaver
+  - Will my endowment plan provide coverage in case of death?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-16
+  turns:
+  - Tiq CashSaver
+  - What happens to my endowment plan if I am diagnosed with a Terminal Illness (“TI”) during my policy term?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-17
+  turns:
+  - Tiq CashSaver
+  - What is considered a Terminal Illness?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-18
+  turns:
+  - Tiq CashSaver
+  - What happens to my endowment plan if I meet with an Accidental Death?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-19
+  turns:
+  - Tiq CashSaver
+  - What happens to my endowment plan if I become totally and permanently disabled during the premium term?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-20
+  turns:
+  - Tiq CashSaver
+  - What is considered a Total and Permanent Disability?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-21
+  turns:
+  - Tiq CashSaver
+  - Who can apply for this plan?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-22
+  turns:
+  - Tiq CashSaver
+  - Do I need to declare any health conditions for this plan?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-23
+  turns:
+  - Tiq CashSaver
+  - How many policies can I buy?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-24
+  turns:
+  - Tiq CashSaver
+  - How can I pay the premium?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-25
+  turns:
+  - Tiq CashSaver
+  - When do I have to make payment for my policy if I choose the Pay Later option?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-26
+  turns:
+  - Tiq CashSaver
+  - How can I make payment for renewals?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-27
+  turns:
+  - Tiq CashSaver
+  - When will eGIRO deductions be made for the second year premium?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-28
+  turns:
+  - Tiq CashSaver
+  - What happens if I miss a premium payment or stop paying premiums?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-29
+  turns:
+  - Tiq CashSaver
+  - How does the Extended Grace Period option work?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-30
+  turns:
+  - Tiq CashSaver
+  - How do I exercise the Extended Grace Period option?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-31
+  turns:
+  - Tiq CashSaver
+  - How do I know if my premium payment was successful and that the application has been completed?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-32
+  turns:
+  - Tiq CashSaver
+  - How can I view my policy status?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-33
+  turns:
+  - Tiq CashSaver
+  - How do I check the status of my requests via TiqConnect?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-34
+  turns:
+  - Tiq CashSaver
+  - I am still not sure if I need this product. What should I do?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-35
+  turns:
+  - Tiq CashSaver
+  - What is Selected Client and Trusted Individual?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-36
+  turns:
+  - Tiq CashSaver
+  - I would like to nominate beneficiaries for my policy. How can I go about doing it?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-37
+  turns:
+  - Tiq CashSaver
+  - What if I change my mind?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-38
+  turns:
+  - Tiq CashSaver
+  - How do I file for a Death Claim?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-39
+  turns:
+  - Tiq CashSaver
+  - Who is Etiqa?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-cashsaver-40
+  turns:
+  - Tiq CashSaver
+  - Who should I contact if I have further questions?
+  expect:
+    cite_product: cashsaver
+    delivered: true
+- id: faq-dash-easyearn-01
+  turns:
+  - Dash EasyEarn
+  - What is Dash PET?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-02
+  turns:
+  - Dash EasyEarn
+  - What are the benefits of Dash PET?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-03
+  turns:
+  - Dash EasyEarn
+  - Dash PET is a yearly renewable policy. What does this mean?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-04
+  turns:
+  - Dash EasyEarn
+  - What are the returns for Dash PET and how are they calculated?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-05
+  turns:
+  - Dash EasyEarn
+  - My Dash PET policy started before 12 August 2022. What is my rate of returns?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-06
+  turns:
+  - Dash EasyEarn
+  - What is Dash PET insurance coverage?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-07
+  turns:
+  - Dash EasyEarn
+  - Who can sign up for Dash PET?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-08
+  question: I already have Dash EasyEarn. Can I sign up for Dash PET?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-09
+  turns:
+  - Dash EasyEarn
+  - Can I re-activate my policy if I free-look or surrender the policy?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-10
+  turns:
+  - Dash EasyEarn
+  - How do I manage my account?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-11
+  turns:
+  - Dash EasyEarn
+  - How do I grow my Dash PET?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-12
+  turns:
+  - Dash EasyEarn
+  - How do I top up my account?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-13
+  turns:
+  - Dash EasyEarn
+  - What are the ways to make a partial withdrawal?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-14
+  turns:
+  - Dash EasyEarn
+  - How much can I withdraw?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-15
+  turns:
+  - Dash EasyEarn
+  - What are the add-on protection plans available, and their benefits?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-16
+  turns:
+  - Dash EasyEarn
+  - How do I pay for the daily premiums for my add-on protection?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-17
+  turns:
+  - Dash EasyEarn
+  - Can I change my add-on protection coverage (sum assured)?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-18
+  turns:
+  - Dash EasyEarn
+  - Am I eligible for the complimentary add-on protection plan?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-20
+  turns:
+  - Dash EasyEarn
+  - What happens if I want to surrender my policy or file a death claim?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-22
+  turns:
+  - Dash EasyEarn
+  - How is Dash PET policy protected?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-23
+  turns:
+  - Dash EasyEarn
+  - Who is Etiqa Insurance?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-dash-easyearn-24
+  turns:
+  - Dash EasyEarn
+  - I have further queries on my Dash PET policy, who should I contact?
+  expect:
+    cite_product: dash-easyearn
+    delivered: true
+- id: faq-home-insurance-01
+  question: What is Tiq Home Insurance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-02
+  question: Where can I get a quote or buy Tiq Home insurance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-03
+  question: Who should buy Tiq Home insurance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-04
+  turns:
+  - Home Insurance
+  - What information do I need to provide to get a quote?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-05
+  question: When will my Tiq Home Insurance coverage commence?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-06
+  turns:
+  - Home Insurance
+  - How will I know if my online purchase is successful?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-07
+  question: What documents will I receive after purchasing Tiq Home Insurance successfully?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-08
+  turns:
+  - Home Insurance
+  - Is there a ‘free look’ period for this policy?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-09
+  turns:
+  - Home Insurance
+  - Can I get a refund if I cancel my plans after the ‘free look’ period?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-10
+  question: Can I pay the home insurance premium by instalments?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-11
+  turns:
+  - Home Insurance
+  - Do I need to inform Etiqa if I shift residential premise?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-12
+  turns:
+  - Home Insurance
+  - I entered my details wrongly. What should I do?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-13
+  question: Do I still need to buy Tiq Home insurance if I already have basic fire insurance from HDB or from another insurer?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-14
+  turns:
+  - Home Insurance
+  - Do I need to buy building cover if I live in a condominium and the management corporation has a fire insurance policy in place?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-15
+  question: I live overseas but own a property in Singapore. Can I buy Tiq Home Insurance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-16
+  turns:
+  - Home Insurance
+  - If I sell off my property, how do I cancel my policy?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-17
+  turns:
+  - Home Insurance
+  - Am I able to auto-renew my policy via GIRO?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-18
+  question: I had just renovated my house. Can I get another Tiq Home Insurance in addition to my existing Tiq Home plan?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-19
+  question: Can I buy two Tiq Home Insurance policies to protect the same residential address so that I can claim twice?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-20
+  question: What is covered under Tiq Home Insurance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-21
+  turns:
+  - Home Insurance
+  - What is covered under Building?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-22
+  turns:
+  - Home Insurance
+  - What is covered under Renovation?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-23
+  turns:
+  - Home Insurance
+  - What is covered under Home Contents?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-24
+  turns:
+  - Home Insurance
+  - What are the circumstances are my Building, Renovation and Contents will be covered?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-25
+  turns:
+  - Home Insurance
+  - Can I choose the amount of cover to the amount I want?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-26
+  turns:
+  - Home Insurance
+  - How do I get the Emergency Cash Allowance?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-27
+  turns:
+  - Home Insurance
+  - What can I use the Emergency Cash Allowance for?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-28
+  turns:
+  - Home Insurance
+  - What is Emergency Home Assistance (EHA) service solution?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-29
+  turns:
+  - Home Insurance
+  - What does Emergency Home Assistance (EHA) cover?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-30
+  turns:
+  - Home Insurance
+  - What should I do to use the Emergency Home Assistance (EHA)?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-31
+  turns:
+  - Home Insurance
+  - I am a tenant of the residence. Am I covered if I damaged my landlord’s property?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-32
+  turns:
+  - Home Insurance
+  - I have expensive jewellery, artworks, and watches, are these items covered in full?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-33
+  turns:
+  - Home Insurance
+  - What happens if my building or contents are underinsured?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-34
+  turns:
+  - Home Insurance
+  - I would like to know more about Personal Cyber Insurance, where can I refer?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-35
+  turns:
+  - Home Insurance
+  - How do I file for a claim?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-home-insurance-36
+  turns:
+  - Home Insurance
+  - What documents do I need to make a claim?
+  expect:
+    cite_product: home-insurance
+    delivered: true
+- id: faq-maid-insurance-01
+  turns:
+  - Maid Insurance
+  - What is the Enhanced Medical Insurance for Foreign Employees about?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-02
+  question: What if I do not wish to upgrade my ePROTECT maid insurance to the medical insurance limit of S$60,000?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-03
+  question: What does Tiq Maid insurance cover?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-04
+  turns:
+  - Maid Insurance
+  - How does the Hospitalisation & Surgical Expenses work?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-05
+  turns:
+  - Maid Insurance
+  - How does the Termination / Re-hiring Expenses work?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-06
+  turns:
+  - Maid Insurance
+  - Will my maid be covered when she returns to her home country for holiday?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-07
+  question: Why do I need 14/26 months of maid insurance coverage and bond when my maid’s work permit is only for 12/24 months?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-08
+  question: Does the maid insurance coverage start immediately?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-09
+  turns:
+  - Maid Insurance
+  - How does Alternative Maid Services work?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-10
+  turns:
+  - Maid Insurance
+  - How does Wages & Levy Reimbursement work?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-11
+  turns:
+  - Maid Insurance
+  - What is the difference between Medical Expenses benefit and Hospitalisation & Surgical Expenses benefit?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-12
+  turns:
+  - Maid Insurance
+  - Do I need to purchase a special performance bond to employ maids from Indonesia?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-13
+  turns:
+  - Maid Insurance
+  - I want to limit my liability on the S$5,000 Security Bond. What additional coverage can I get?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-14
+  turns:
+  - Maid Insurance
+  - How does the Letter of Guarantee work?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-15
+  turns:
+  - Maid Insurance
+  - I want to waive off the 25% co-payment needed for Hospitalisation & Surgical Expenses incurred. Is there an option for this?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-16
+  turns:
+  - Maid Insurance
+  - How do I locate my new maid’s FIN number?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-17
+  question: What is the entry age of the maid insurance policy?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-18
+  question: Why do I need maid insurance?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-19
+  question: Where can I get a quote and buy Tiq Maid insurance?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-20
+  turns:
+  - Maid Insurance
+  - When should I buy Tiq Maid and when is the insurance policy start date?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-21
+  turns:
+  - Maid Insurance
+  - What is the Ministry of Manpower (MOM)’s insurance requirement for hiring a foreign domestic worker (FDW)?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-22
+  question: Can the maid insurance policy be cancelled?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-23
+  turns:
+  - Maid Insurance
+  - Do I get a discount when buying Tiq Maid?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-24
+  turns:
+  - Maid Insurance
+  - How do I make a claim?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-maid-insurance-25
+  turns:
+  - Maid Insurance
+  - Is there a free-look period?
+  expect:
+    cite_product: maid-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-01
+  question: What is Personal Cyber Insurance?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-02
+  question: Where can I get a quote or buy Personal Cyber Insurance?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-03
+  question: Who should buy Personal Cyber insurance?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-05
+  question: When will my Personal Cyber Insurance coverage commence?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-07
+  question: What documents will I receive after purchasing Personal Cyber Insurance successfully?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-10
+  question: Can I pay the Personal Cyber Insurance premium by installments?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-11
+  turns:
+  - Personal Cyber Insurance
+  - Do I need to inform Etiqa if I shift residential premises?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-13
+  question: Do I need to buy Personal Cyber Insurance if I already have home insurance in place?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-15
+  question: What is covered under Personal Cyber Insurance?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-16
+  turns:
+  - Personal Cyber Insurance
+  - What is covered under Cyber Fraud?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-17
+  turns:
+  - Personal Cyber Insurance
+  - What is covered under Restoration Costs?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-18
+  turns:
+  - Personal Cyber Insurance
+  - What is covered under Identity Theft ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-19
+  question: Who is covered under Personal Cyber Insurance?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-20
+  turns:
+  - Personal Cyber Insurance
+  - Do I have to provide a list of all these devices for Etiqa’s prior approval ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-21
+  question: What is not covered under Personal Cyber Insurance ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-22
+  turns:
+  - Personal Cyber Insurance
+  - Can I choose the amount of cover ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-23
+  question: Is a Deductible applied to the Personal Cyber Insurance Policy ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-24
+  turns:
+  - Personal Cyber Insurance
+  - How do I file a claim under the policy ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-25
+  turns:
+  - Personal Cyber Insurance
+  - Who are Crawford ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-26
+  turns:
+  - Personal Cyber Insurance
+  - What is the claims process if I discover money has been taken from my personal bank account?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-27
+  turns:
+  - Personal Cyber Insurance
+  - What is the claims process if I discover that my computer has been locked down and a ransom is being demanded to restore my computer ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-28
+  turns:
+  - Personal Cyber Insurance
+  - What is the claims process if I discover someone is fraudulently using my identity?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-29
+  turns:
+  - Personal Cyber Insurance
+  - What happens if I shop online and the goods I have paid for do not arrive or are faulty?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-personal-cyber-insurance-30
+  turns:
+  - Personal Cyber Insurance
+  - Do I have a claim if I find out that my personal data has been stolen from a bank, hospital, or another institution that I have dealings with ?
+  expect:
+    cite_product: personal-cyber-insurance
+    delivered: true
+- id: faq-pet-insurance-01
+  question: What does Pet Insurance Cover?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-02
+  turns:
+  - Pet Insurance
+  - What is Surgical Illness Cover ?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-03
+  turns:
+  - Pet Insurance
+  - What is Non-Surgical Illness Cover?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-04
+  turns:
+  - Pet Insurance
+  - What is Accidental Injury Cover?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-05
+  turns:
+  - Pet Insurance
+  - What is Funeral Expenses Cover ?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-06
+  turns:
+  - Pet Insurance
+  - What is Third Party Liability Cover ?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-07
+  turns:
+  - Pet Insurance
+  - What is the complimentary Congenital and Hereditary cover ?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-08
+  turns:
+  - Pet Insurance
+  - How do I know when my pet(s) complimentary Congenital and Hereditary Conditions coverage is effective?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-09
+  turns:
+  - Pet Insurance
+  - What is required in the Clinical Examination Form to qualify my pet for the complimentary Congenital and Hereditary conditions coverage?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-10
+  turns:
+  - Pet Insurance
+  - Which biochemistry test in the Clinical Examination Form is required for the blood test?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-11
+  turns:
+  - Pet Insurance
+  - Is Televet/online Vet consultation covered?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-12
+  turns:
+  - Pet Insurance
+  - What are the required/standard vaccination required for my pet(s) to be eligible for the insurance?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-13
+  turns:
+  - Pet Insurance
+  - Is X-ray screening considered as a form of Diagnostic test and will it be covered?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-14
+  turns:
+  - Pet Insurance
+  - Will the blood test of the heartworm medication be covered?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-15
+  turns:
+  - Pet Insurance
+  - What is Multi-Pet Discount?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-16
+  turns:
+  - Pet Insurance
+  - What is No-Claim Discount (NCD)?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-17
+  turns:
+  - Pet Insurance
+  - What are the types of expenses which are not covered?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-18
+  turns:
+  - Pet Insurance
+  - How does Deductible and Co-Insurance work?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-19
+  turns:
+  - Pet Insurance
+  - What are the breeds covered?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-20
+  turns:
+  - Pet Insurance
+  - Can I insure multiple pets under the same policy?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-21
+  turns:
+  - Pet Insurance
+  - Can I insure for more than three (3) dogs?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-22
+  turns:
+  - Pet Insurance
+  - Can I insure for more than three (3) cats?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-23
+  turns:
+  - Pet Insurance
+  - Can I insure my cat if I stay in a HDB?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-24
+  turns:
+  - Pet Insurance
+  - Can I insure a dog in a HDB flat which is non-HDB approved?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-25
+  question: Can pet insurance policy be cancelled?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-26
+  turns:
+  - Pet Insurance
+  - Is it claimable for injury caused by fights between pets or other animals?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-27
+  turns:
+  - Pet Insurance
+  - Is it claimable if someone abuses my pet (victim of abuse) & causes it to be injured or dead?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-28
+  turns:
+  - Pet Insurance
+  - Is it claimable if my pet dies of old age?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-29
+  turns:
+  - Pet Insurance
+  - Is chemotherapy/physiotherapy covered due to cancer?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-pet-insurance-30
+  turns:
+  - Pet Insurance
+  - Can I claim for the blood test required for the complimentary congenital and hereditary conditions coverage?
+  expect:
+    cite_product: pet-insurance
+    delivered: true
+- id: faq-tiq-personal-accident-01
+  question: Who is eligible to purchase Tiq Personal Accident?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-02
+  turns:
+  - Tiq Personal Accident
+  - Who should purchase this plan?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-03
+  question: Can I buy Tiq Personal Accident for my spouse and children?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-04
+  question: Can I buy Tiq Personal Accident for my children who are younger than 17 years old?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-05
+  turns:
+  - Tiq Personal Accident
+  - How long is the Period of Cover?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-07
+  question: What is covered under Tiq Personal Accident?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-08
+  question: What are the plans available under Tiq Personal Accident?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-09
+  question: What are the coverage/benefits available under Tiq Personal Accident?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-10
+  question: Are there any exclusions under the Tiq Personal Accident?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-11
+  turns:
+  - Tiq Personal Accident
+  - How can I pay for the policy premium?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-12
+  turns:
+  - Tiq Personal Accident
+  - What should I do if I missed my premium payment due date?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-13
+  turns:
+  - Tiq Personal Accident
+  - What is the payment frequency for this plan?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-14
+  turns:
+  - Tiq Personal Accident
+  - What happens if I stop paying the premium?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-15
+  turns:
+  - Tiq Personal Accident
+  - How do I know if my credit card payment is successful and the application has been completed?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-16
+  turns:
+  - Tiq Personal Accident
+  - What documents will I receive upon successful payment of my plan?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-17
+  turns:
+  - Tiq Personal Accident
+  - Is there a free look period?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-tiq-personal-accident-18
+  turns:
+  - Tiq Personal Accident
+  - Can I get a refund if I cancel my plan after the free look period?
+  expect:
+    cite_product: tiq-personal-accident
+    delivered: true
+- id: faq-travel-insurance-01
+  question: Who can buy Tiq Travel Insurance?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-02
+  question: Can I apply for Tiq Travel Insurance if I am more than 70 years old?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-03
+  question: Can my child be covered by travel insurance on his/her own?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-04
+  question: Can I buy travel insurance while I am abroad?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-05
+  turns:
+  - Travel Insurance
+  - How can I get emergency travel assistance when I am overseas?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-06
+  question: Are there any exclusions under Tiq Travel?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-07
+  turns:
+  - Travel Insurance
+  - Do your plans cover pre-existing medical conditions?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-08
+  turns:
+  - Travel Insurance
+  - What is the definition of “pre-existing medical conditions”?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-09
+  turns:
+  - Travel Insurance
+  - Will I be covered if I am going overseas for medical treatment?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-10
+  turns:
+  - Travel Insurance
+  - What is a group plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-11
+  turns:
+  - Travel Insurance
+  - Can we purchase a group policy if one of the travellers is a child who is unrelated to us?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-12
+  turns:
+  - Travel Insurance
+  - What is a family plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-13
+  turns:
+  - Travel Insurance
+  - Do family members have to travel together under the annual family plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-14
+  turns:
+  - Travel Insurance
+  - What is a couple plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-15
+  turns:
+  - Travel Insurance
+  - Who is a transit traveller?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-16
+  turns:
+  - Travel Insurance
+  - What are the types of plans available?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-17
+  turns:
+  - Travel Insurance
+  - What is an annual multi-trip plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-18
+  turns:
+  - Travel Insurance
+  - Can I purchase insurance for a one-way trip?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-19
+  turns:
+  - Travel Insurance
+  - Can I choose to only cover a portion of my trip if I am doing a multi-city trip?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-20
+  turns:
+  - Travel Insurance
+  - Should the travel policy end date be the date I board the plane or my arrival date in Singapore?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-21
+  turns:
+  - Travel Insurance
+  - Am I covered for my Airbnb accommodation?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-22
+  question: What kinds of leisure activities are covered under Tiq Travel Insurance?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-23
+  turns:
+  - Travel Insurance
+  - Can I purchase this insurance if I am going on a Cruise to Nowhere?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-24
+  turns:
+  - Travel Insurance
+  - If I decide not to proceed with my trip, can I recover the premium paid for my policy?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-25
+  turns:
+  - Travel Insurance
+  - Can I extend the period of cover if I decide to extend my trip whilst overseas?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-26
+  turns:
+  - Travel Insurance
+  - Can I change my travel commencement date?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-27
+  turns:
+  - Travel Insurance
+  - I am travelling to multiple countries, which country should I select?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-28
+  question: Can I buy travel insurance if I forgot to purchase prior to my departure?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-29
+  turns:
+  - Travel Insurance
+  - Can I purchase a Pre-Ex plan together with a non Pre-Ex plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-30
+  turns:
+  - Travel Insurance
+  - Can I buy add-ons for a child?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-31
+  turns:
+  - Travel Insurance
+  - Why do you ask for my flight details during application?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-32
+  turns:
+  - Travel Insurance
+  - Will my transit flights be covered in the plan?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-33
+  question: What if I do not have my flight details while applying for travel insurance?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-34
+  turns:
+  - Travel Insurance
+  - What modes of payment do you accept?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-travel-insurance-36
+  turns:
+  - Travel Insurance
+  - How does the automated flight delay benefit work?
+  expect:
+    cite_product: travel-insurance
+    delivered: true
+- id: faq-tiqinvest-01
+  question: What is Tiq Invest ?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-02
+  turns:
+  - Tiq Invest
+  - How is the Account value calculated?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-03
+  turns:
+  - Tiq Invest
+  - What is the minimum / maximum amount that I can start investing?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-04
+  turns:
+  - Tiq Invest
+  - Is there a minimum account value to maintain?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-05
+  turns:
+  - Tiq Invest
+  - How many Packaged funds can I select?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-06
+  turns:
+  - Tiq Invest
+  - Can I switch between Packaged funds?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-07
+  turns:
+  - Tiq Invest
+  - What are the protection benefits cover for this policy?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-08
+  turns:
+  - Tiq Invest
+  - What happens when the policy reaches maturity?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-09
+  turns:
+  - Tiq Invest
+  - What are the applicable fees and charges?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-11
+  turns:
+  - Tiq Invest
+  - Why do I need to complete the Customer Knowledge Assessment (CKA)?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-12
+  turns:
+  - Tiq Invest
+  - What does the Customer Knowledge Assessment (CKA) result means to me?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-13
+  turns:
+  - Tiq Invest
+  - What is the minimum / maximum initial Single Premium amount?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-14
+  turns:
+  - Tiq Invest
+  - What are the accepted payment methods?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-15
+  turns:
+  - Tiq Invest
+  - What type of Top-up(s) are available?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-16
+  turns:
+  - Tiq Invest
+  - What happens when my account value is zero or less than zero?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-17
+  turns:
+  - Tiq Invest
+  - Can I withdraw money from my policy?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-19
+  turns:
+  - Tiq Invest
+  - How can I request to reinstate my policy?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-20
+  turns:
+  - Tiq Invest
+  - How do I check the status of my requests or view my policy status?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-21
+  turns:
+  - Tiq Invest
+  - Will there be any monthly policy statements sent to me?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-22
+  turns:
+  - Tiq Invest
+  - How to file for a death / terminal illness claim?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-tiqinvest-23
+  turns:
+  - Tiq Invest
+  - How is my policy protected?
+  expect:
+    cite_product: tiqinvest
+    delivered: true
+- id: faq-motorcycle-insurance-01
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - How can I buy ePROTECT motorcycle ?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-02
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - When do I need to buy insurance for my motorcycle?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-03
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - What is covered under ePROTECT motorcycle?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-04
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - Do you cover everyone who uses my motorcycle?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-05
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - What should I do if my motorcycle is stolen?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-06
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - Does your insurance cover me for riding in Malaysia and/or Thailand?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-07
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - Do you cover the accessories and spare parts on my motorcycle?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-08
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - Do you cover any modifications done to my motorcycle?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-motorcycle-insurance-09
+  turns:
+  - Motorcycle Insurance with up to $500,000 coverage
+  - What is the excess amount under my policy?
+  expect:
+    cite_product: motorcycle-insurance
+    delivered: true
+- id: faq-private-car-insurance-01
+  question: How can I buy Private Car Insurance?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-02
+  question: When do I need to buy Private Car Insurance?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-03
+  question: Who can buy Private Car Insurance?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-04
+  turns:
+  - Car Insurance
+  - Can I cancel my policy at any time?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-05
+  turns:
+  - Car Insurance
+  - How does the On-the-go windscreen repair service work?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-06
+  turns:
+  - Car Insurance
+  - How does the 30-minutes claim approval work?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-07
+  question: What is covered under Private Car Insurance?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-08
+  turns:
+  - Car Insurance
+  - Am I able to choose my excess amount to suit my needs?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-09
+  turns:
+  - Car Insurance
+  - Do you cover my car’s sun/moon/sky roof?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-10
+  turns:
+  - Car Insurance
+  - Do you cover my car’s solar film?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-11
+  turns:
+  - Car Insurance
+  - Is there any warranty if my car is repaired at one of your authorised workshops?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-12
+  turns:
+  - Car Insurance
+  - Do you cover for damage to my car due to a flood or fallen tree?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-13
+  turns:
+  - Car Insurance
+  - Does your insurance cover me for driving in Malaysia and/or Thailand?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-14
+  turns:
+  - Car Insurance
+  - Am I covered for modifications/accessories to my car?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-15
+  turns:
+  - Car Insurance
+  - How do you define a “young, elderly and/or inexperienced driver” and what is the excess?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-16
+  turns:
+  - Car Insurance
+  - Can I protect my No Claims Discount (NCD)?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-17
+  turns:
+  - Car Insurance
+  - Where can I get my car repaired when my car is damaged due to an accident?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-18
+  turns:
+  - Car Insurance
+  - What happens if my windscreen is damaged because of an accident?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-19
+  turns:
+  - Car Insurance
+  - How do I get the free coverage for child car seat?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-private-car-insurance-20
+  turns:
+  - Car Insurance
+  - How many child car seats are covered?
+  expect:
+    cite_product: private-car-insurance
+    delivered: true
+- id: faq-3-plus-critical-illness-01
+  question: What is 3 Plus Critical Illness and why do I need it?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-02
+  turns:
+  - 3 Plus Critical Illness
+  - What is the sum insured range that I can choose ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-03
+  turns:
+  - 3 Plus Critical Illness
+  - Is there any policy term selection for me to choose ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-04
+  turns:
+  - 3 Plus Critical Illness
+  - Is my renewal guaranteed and what is the conditions that I must fulfil in order to renew?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-05
+  turns:
+  - 3 Plus Critical Illness
+  - Will the premium remain the same if I renew my policy ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-06
+  turns:
+  - 3 Plus Critical Illness
+  - Will I need to go for medical checkup ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-07
+  turns:
+  - 3 Plus Critical Illness
+  - Am I covered for the Critical Illness Benefit immediately after I purchase the plan ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-08
+  turns:
+  - 3 Plus Critical Illness
+  - Is there any survival period that I need to be aware of?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-09
+  turns:
+  - 3 Plus Critical Illness
+  - How does the Special Conditions Benefit work?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-10
+  turns:
+  - 3 Plus Critical Illness
+  - Is the death benefit payout equivalent to the coverage range selection?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-11
+  turns:
+  - 3 Plus Critical Illness
+  - How does the complimentary cover for child works?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-12
+  turns:
+  - 3 Plus Critical Illness
+  - What are the criteria to register my child under the complimentary cover for child?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-13
+  turns:
+  - 3 Plus Critical Illness
+  - When will the complimentary cover for child expires?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-14
+  question: If both parents were to purchase the 3 Plus Critical Illness and decide to cover the same child under the complimentary cover for child, how would the payout be?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-15
+  question: If I hold multiple 3 Plus Critical Illness policies, what will be the treatment for death and complimentary cover for child?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-16
+  question: Can I buy 3 Plus Critical Illness for any of my family members?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-19
+  turns:
+  - 3 Plus Critical Illness
+  - How can I pay my initial premium ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-20
+  turns:
+  - 3 Plus Critical Illness
+  - How can I pay my subsequent premium payments ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-21
+  turns:
+  - 3 Plus Critical Illness
+  - What should I do if I missed my premium payment due date ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-22
+  turns:
+  - 3 Plus Critical Illness
+  - What is the payment frequency for this plan ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-23
+  turns:
+  - 3 Plus Critical Illness
+  - When will Giro deductions be made for the renewal premium ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-24
+  turns:
+  - 3 Plus Critical Illness
+  - What will happen if I stop paying the premium ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-25
+  turns:
+  - 3 Plus Critical Illness
+  - How do I know if my application is successful ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-26
+  turns:
+  - 3 Plus Critical Illness
+  - How can I view my policy status ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-27
+  turns:
+  - 3 Plus Critical Illness
+  - Can I reduce / increase my coverage after I purchase the plan ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-28
+  turns:
+  - 3 Plus Critical Illness
+  - What if I change my mind ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-29
+  turns:
+  - 3 Plus Critical Illness
+  - If my policy lapsed, am I allowed to reinstate back the policy ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-30
+  turns:
+  - 3 Plus Critical Illness
+  - Are there any useful resources which I can refer to ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-31
+  turns:
+  - 3 Plus Critical Illness
+  - What is Selected Client and Trusted Individual ?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-32
+  turns:
+  - 3 Plus Critical Illness
+  - Switching / Replacement of Policy?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-3-plus-critical-illness-33
+  turns:
+  - 3 Plus Critical Illness
+  - How to file for a claim?
+  expect:
+    cite_product: 3-plus-critical-illness
+    delivered: true
+- id: faq-cancer-insurance-01
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - What is Cancer Insurance?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-02
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - What cancer(s) are covered?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-03
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - How does the yearly savings/no claim discount work?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-04
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - How does yearly renewable work?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-05
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Will the premium remain the same if I renew my policy?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-06
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Am I covered for cancer immediately after I purchase the plan?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-07
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Can I reduce/increase my coverage after I purchased the plan?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-08
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Do I have to go for a medical check-up to be eligible for this Cancer Insurance?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-09
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - If i have recovered/am recovering from cancer, can I still purchase this plan?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-10
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Who is eligible to purchase this plan?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-11
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - How many policies can I purchase?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-16
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - When will GIRO deductions be made for the renewal premium?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-17
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - What happen if I stop paying the premium?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-19
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - What should I do if I change my mind?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-21
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Is there any survival period for this plan?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-22
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Can I go to any hospital for my cancer treatment?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-23
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Should i purchase Cancer Insurance if I already have a critical illness insurancce or rider?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-24
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Should I purchase Cancer Insurance if I have MediSave and MediShield Life?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-25
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - How do I know if my application is successful?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-27
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - I am still unsure if I need this product. What should I do?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-cancer-insurance-28
+  turns:
+  - Cancer Insurance with No Claim Discount
+  - Are there any useful resources which I can refer to?
+  expect:
+    cite_product: cancer-insurance
+    delivered: true
+- id: faq-term-life-insurance-01
+  question: Do I get a discount when buying a term life plan?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-02
+  turns:
+  - Term Life Insurance
+  - What is Direct Purchase Insurance (DPI)?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-03
+  turns:
+  - Term Life Insurance
+  - What are the types of DPI offered?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-04
+  question: What is the difference between a term life DPI and a whole life DPI?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-05
+  question: What are the different coverage periods offered for term life DPI and how do I choose among them?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-06
+  turns:
+  - Term Life Insurance
+  - Should I buy a critical illness rider for my DPI?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-07
+  turns:
+  - Term Life Insurance
+  - What are the 30 critical illnesses covered under DIRECT – Etiqa CI rider II ?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-08
+  turns:
+  - Term Life Insurance
+  - How much DPI insurance coverage can I buy?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-09
+  turns:
+  - Term Life Insurance
+  - Will I still be covered when I move to a different country?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-10
+  turns:
+  - Term Life Insurance
+  - I am still not sure what type of DPI to buy and how much coverage I need. What should I do?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-11
+  question: What is ePROTECT term life ?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-12
+  question: What are the different coverage periods for ePROTECT term life offered and how do I choose among them?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-13
+  turns:
+  - Term Life Insurance
+  - Am I eligible to apply?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-14
+  turns:
+  - Term Life Insurance
+  - How can I pay my initial premium?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-16
+  turns:
+  - Term Life Insurance
+  - How do I know if my payment is successful and the application has been completed?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-17
+  turns:
+  - Term Life Insurance
+  - How much insurance coverage do I need?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-18
+  question: Can I buy a DIRECT – Etiqa term life II or ePROTECT term life policy for any of my family members?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-19
+  turns:
+  - Term Life Insurance
+  - What do I need to disclose in my application?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-20
+  question: Is medical examination required in order to purchase a term life insurance?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-22
+  turns:
+  - Term Life Insurance
+  - What is Policy Owners’ Protection Scheme?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-term-life-insurance-23
+  turns:
+  - Term Life Insurance
+  - Where can I channel my feedback regarding the product(s)?
+  expect:
+    cite_product: term-life-insurance
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-01
+  question: What is ELASTIQ?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-02
+  question: How can I benefit from ELASTIQ?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-04
+  question: What are the differences between ELASTIQ, GIGANTIQ and Dash EasyEarn?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-05
+  turns:
+  - ELASTIQ
+  - Who can buy this plan?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-07
+  question: What is the single premium amount offered for ELASTIQ?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-09
+  turns:
+  - ELASTIQ
+  - How do I know if my application has been completed?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-12
+  turns:
+  - ELASTIQ
+  - How can I make a top-up?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-13
+  turns:
+  - ELASTIQ
+  - Can I request for a change of recurring top-up amount?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-14
+  turns:
+  - ELASTIQ
+  - Are there any charges for top-up(s) made?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-15
+  turns:
+  - ELASTIQ
+  - When will deductions be made for recurring top-up(s)?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-16
+  turns:
+  - ELASTIQ
+  - What is the age restriction for top-up(s)?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-17
+  turns:
+  - ELASTIQ
+  - How can I withdraw money from my policy?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-18
+  turns:
+  - ELASTIQ
+  - What is a service fee and when will it be charged?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-19
+  turns:
+  - ELASTIQ
+  - Are there any charges for withdrawal(s) made?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-20
+  turns:
+  - ELASTIQ
+  - If I make a withdrawal or top-up, how is pro-rated interest calculated?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-21
+  turns:
+  - ELASTIQ
+  - What happens if I want to surrender my policy?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-23
+  turns:
+  - ELASTIQ
+  - How to file for a death claim?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-24
+  turns:
+  - ELASTIQ
+  - What is a universal life plan?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-25
+  turns:
+  - ELASTIQ
+  - Where is my premium invested?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-universal-life-insurance-elastiq-27
+  turns:
+  - ELASTIQ
+  - Am I allowed to change the Life insured under this plan?
+  expect:
+    cite_product: universal-life-insurance-elastiq
+    delivered: true
+- id: faq-whole-life-insurance-01
+  question: Do I get a discount when buying a whole life plan?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-05
+  question: What are the different premium payment periods offered for whole life DPI and how do I choose between them?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-07
+  turns:
+  - Whole Life Insurance
+  - What are the 30 critical illnesses covered under DIRECT – Etiqa CI rider?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-08
+  turns:
+  - Whole Life Insurance
+  - How much insurance coverage can I buy?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-09
+  turns:
+  - Whole Life Insurance
+  - What if I wish to have higher coverage?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-17
+  question: Can I buy a DIRECT – Etiqa whole life policy for any of my family members?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-whole-life-insurance-19
+  question: Is medical examination required in order to purchase a whole life insurance?
+  expect:
+    cite_product: whole-life-insurance
+    delivered: true
+- id: faq-eeasy-savepro-01
+  question: What is eEASY savepro ?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-eeasy-savepro-06
+  turns:
+  - eEASY savepro
+  - How do I pay my subsequent premium payments?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-eeasy-savepro-07
+  turns:
+  - eEASY savepro
+  - What are the terms and conditions for the first year premium discount?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-eeasy-savepro-08
+  turns:
+  - eEASY savepro
+  - What will happen if I stop paying premium?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-eeasy-savepro-10
+  turns:
+  - eEASY savepro
+  - What is the difference between a participating and a non-participating policy?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-eeasy-savepro-16
+  question: Where can I channel my feedback on eEASY savepro ?
+  expect:
+    cite_product: eeasy-savepro
+    delivered: true
+- id: faq-tiq-3-year-endowment-plan-01
+  question: What is Tiq 3-Year Endowment Plan?
+  expect:
+    cite_product: tiq-3-year-endowment-plan
+    delivered: true
+- id: faq-tiq-3-year-endowment-plan-05
+  turns:
+  - Tiq 3-Year Endowment Plan
+  - When do I have to make payment for my policy when I choose the Pay Later option?
+  expect:
+    cite_product: tiq-3-year-endowment-plan
+    delivered: true
+- id: faq-tiq-easy-save-01
+  question: What is Tiq Easy Save ?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-07
+  turns:
+  - Tiq Easy Save
+  - What is the annual premium amount limit?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-10
+  turns:
+  - Tiq Easy Save
+  - When will GIRO deductions be made for the second year premium?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-11
+  turns:
+  - Tiq Easy Save
+  - What are the benefits and terms & conditions for paying lump sum?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-13
+  turns:
+  - Tiq Easy Save
+  - How do I know if my premium payment is successful and the application has been completed?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-16
+  turns:
+  - Tiq Easy Save
+  - What is Market Value Adjustment (MVA) and how does it work?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-17
+  turns:
+  - Tiq Easy Save
+  - How can I request for a partial withdrawal?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true
+- id: faq-tiq-easy-save-21
+  turns:
+  - Tiq Easy Save
+  - I would like to nominate beneficiaries for my policy, how should I go about doing it?
+  expect:
+    cite_product: tiq-easy-save
+    delivered: true

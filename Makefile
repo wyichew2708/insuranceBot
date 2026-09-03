@@ -1,4 +1,4 @@
-.PHONY: index llm-wiki install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
+.PHONY: customer-suite faq-suite coverage index llm-wiki install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
         guardrail-backtest autoeval-live evals-live \
         docker-build docker-up docker-down docker-logs \
         crawl crawl-fixture wiki knowledge autoeval-web studio studio-web ci console clean
@@ -141,6 +141,25 @@ evals:
 # The curated suite against whatever .env configures. The runner exits 2 if any
 # case silently fell back to the deterministic composer — a case served by the
 # fallback measured the fallback, not the model.
+# The two suites written the way customers write, against the configured
+# model: the hand-written field test and the FAQ suite generated from the
+# site's own questions. These are the suites that saw the four failures the
+# generated suite could not — run them on every build that touches the
+# question side.
+customer-suite:
+	uv run python evals/runner.py --suite field-test --gate 0 --allow-fallback
+	uv run python evals/runner.py --suite faq-customer --gate 0 --allow-fallback
+
+faq-suite:
+	uv run python scripts/faq_suite.py --bundle okf-real --out evals/suites/faq-customer.yaml
+
+# Per source, how much of it reached a wiki page. Also printed by every
+# `corpus-compile`; this is the report on its own.
+coverage:
+	uv run python -c "import sys; sys.path[:0]=['apps/compiler','packages/okf','packages/harness']; \
+	from pathlib import Path; from compiler.coverage import audit, describe, write_report; \
+	s=audit(Path('okf-real')); print(describe(s, 25)); print(write_report(Path('okf-real'), s))"
+
 evals-live:
 	uv run python -m evals.runner --gate 1.0
 
