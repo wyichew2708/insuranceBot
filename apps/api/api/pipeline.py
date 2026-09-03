@@ -680,7 +680,12 @@ def _answer_turn(
                 ]
                 held = {p.id for p in pages}
                 has_product = any(p.id.startswith(ask.product_page) for p in pages)
-                for page_id in wanted if not has_product else wanted[:1]:
+                # The root and the FAQ always; the rest only when nothing of
+                # the product was loaded. The first cut kept the root alone
+                # once any product page was in hand, and the FAQ — the short
+                # published answer — stopped arriving.
+                always = [ask.product_page, f"{ask.product_page}/faq"]
+                for page_id in wanted if not has_product else always:
                     extra = bundle.get(page_id)
                     if extra is not None and extra.id not in held:
                         pages.append(extra)
