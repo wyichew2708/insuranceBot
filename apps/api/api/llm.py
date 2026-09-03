@@ -376,6 +376,10 @@ class VllmProvider:
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.timeout_s = timeout_s
+        #: Why the last call returned None — a timeout, a 4xx, malformed
+        #: output. Read by batch jobs that would otherwise report "the model
+        #: returned nothing" thirty-five times without saying why.
+        self.last_error: str = ""
         #: Overridable in tests; otherwise a pooled client is built on first use.
         self._transport: httpx.BaseTransport | None = None
         self._http: httpx.Client | None = None
@@ -412,7 +416,8 @@ class VllmProvider:
             response = self._client().post("/v1/chat/completions", json=payload)
             response.raise_for_status()
             body = response.json()
-        except Exception:
+        except Exception as exc:
+            self.last_error = f"{type(exc).__name__}: {str(exc)[:160]}"
             return None
         try:
             text = body["choices"][0]["message"]["content"]
@@ -447,7 +452,8 @@ class VllmProvider:
             response.raise_for_status()
             body = response.json()
             return _json_object(body["choices"][0]["message"]["content"])
-        except Exception:
+        except Exception as exc:
+            self.last_error = f"{type(exc).__name__}: {str(exc)[:160]}"
             return None
 
 

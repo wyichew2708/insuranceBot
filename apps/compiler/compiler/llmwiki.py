@@ -43,6 +43,20 @@ SOURCE_ROLES = ("", "/cover", "/benefits", "/exclusions", "/claims", "/eligibili
 #: first sections and the report says so.
 SOURCE_CHARS = 24_000
 
+#: The page is written in three calls, not one. On the Mac the local model
+#: decodes at a few tokens a second, and a 24,000-character prompt with a
+#: 2,048-token reply never finished inside the server's 300-second cap: all
+#: thirty-seven products came back "model returned nothing". Each part sees
+#: only the pages it is written from, and a reply is short enough to land.
+PARTS: tuple[tuple[str, tuple[str, ...], int], ...] = (
+    # Token caps measured on the local model: the first part used 725 tokens
+    # in 28 seconds; at 600 it was cut off and the reply was not JSON.
+    ("## In plain terms\n## What it covers", ("", "/cover", "/benefits"), 1000),
+    ("## What it does not cover", ("/exclusions", ""), 900),
+    ("## How to claim\n## Questions people ask", ("/claims", "/faq", "/eligibility", ""), 1000),
+)
+PART_CHARS = 6_000
+
 SYSTEM_PROMPT = """\
 You rewrite an insurance product's compiled policy pages in plain language, \
 for a customer who has never read a policy.
@@ -73,6 +87,22 @@ Insured Person(s)". Short sentences.
 5. "Questions people ask": five questions a customer would type, each answered \
 in one or two cited sentences.
 """
+
+
+def _part_prompt(headings: str) -> str:
+    """The system prompt for one part: the same rules, only these headings."""
+    wanted = [h for h in headings.splitlines()]
+    return (
+        SYSTEM_PROMPT.replace(
+            "Write four \\\nparts, in this order, with these exact headings:\n\n## In plain terms\n## What it covers\n"
+            "## What it does not cover\n## How to claim\n## Questions people ask\n",
+            "Write ONLY these parts, in this order, with these exact headings:\n\n"
+            + "\n".join(wanted)
+            + "\n",
+        )
+        + "\nKeep each part short: at most six sentences, or six bullets, or five questions.\n"
+    )
+
 
 SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -190,6 +220,27 @@ def _sources_for(bundle: Bundle, product: Page) -> dict[str, str]:
     return out
 
 
+def _shown_for(sources: dict[str, str], product: Page, roles: tuple[str, ...]) -> dict[str, str]:
+    """The sections for one part, in role order, under the per-call budget."""
+    shown: dict[str, str] = {}
+    total = 0
+    for role in roles:
+        page_id = f"{product.id}{role}"
+        for key, text in sources.items():
+            if key.split("#", 1)[0] != page_id:
+                continue
+            block = len(key) + len(text) + 20
+            if total + block > PART_CHARS:
+                break
+            shown[key] = text
+            total += block
+    return shown
+
+
+def _loose(key: str) -> str:
+    return re.sub(r"[\s\-–_]+", "", key.lower())
+
+
 def _verify(markdown: str, sources: dict[str, str], draft: Draft) -> str:
     """Keep only sentences that cite a shown section and whose figures are in it."""
     kept_lines: list[str] = []
@@ -208,8 +259,17 @@ def _verify(markdown: str, sources: dict[str, str], draft: Draft) -> str:
             key = f"{ref.group(1)}#{ref.group(2)}" if ref and ref.group(2) else (ref.group(1) if ref else "")
             source = sources.get(key)
             if source is None:
-                draft.dropped_unknown_source += 1
-                continue
+                # The model copies ids imperfectly — "Section 1 -Renovation"
+                # for "Section 1 - Renovation" — so a ref is matched with
+                # spaces, hyphens and case ignored, and rewritten to the true
+                # id so the page cites what exists.
+                loose = _loose(key)
+                match = next((k for k in sources if _loose(k) == loose), None)
+                if match is None:
+                    draft.dropped_unknown_source += 1
+                    continue
+                sentence = sentence.replace(key, match)
+                source = sources[match]
             digits_ok = all(
                 span in source for span in NUMERIC_SPAN_RE.findall(SOURCE_REF_RE.sub("", sentence))
             )
@@ -246,29 +306,51 @@ def write_llm_wiki(
         if len(sources) < 2:
             report.skip("llm-wiki: product has fewer than two compiled sections — not written")
             continue
-        shown: list[str] = []
-        total = 0
-        for key, text in sources.items():
-            block = f"SECTION `{key}`:\n{text}\n"
-            if total + len(block) > SOURCE_CHARS:
-                break
-            shown.append(block)
-            total += len(block)
-        user = f"PRODUCT: {product.frontmatter.title}\n\n" + "\n".join(shown)
-        try:
-            payload = classify(SYSTEM_PROMPT, user, SCHEMA, max_tokens=2048)
-        except Exception as exc:
-            report.skip(f"llm-wiki: provider fault ({type(exc).__name__}) — not written")
+        parts_markdown: list[str] = []
+        shown_all: dict[str, str] = {}
+        failed = ""
+        for headings, roles, max_tokens in PARTS:
+            shown = _shown_for(sources, product, roles)
+            if not shown:
+                continue
+            shown_all.update(shown)
+            user = f"PRODUCT: {product.frontmatter.title}\n\n" + "\n".join(
+                f"SECTION `{k}`:\n{v}\n" for k, v in shown.items()
+            )
+            payload = None
+            for attempt in range(2):
+                try:
+                    payload = classify(_part_prompt(headings), user, SCHEMA, max_tokens=max_tokens)
+                except Exception as exc:
+                    report.skip(f"llm-wiki: provider fault ({type(exc).__name__})")
+                    payload = None
+                text = (payload or {}).get("markdown") if isinstance(payload, dict) else None
+                if isinstance(text, str) and text.strip():
+                    # The local model returns its line breaks as the two
+                    # characters backslash-n inside the JSON string, so the
+                    # whole part arrived as one "heading" line and no
+                    # sentence was ever seen.
+                    parts_markdown.append(text.replace("\\n", "\n").strip())
+                    break
+                # A second try with half the source: a reply cut off at the
+                # token cap is not JSON, and a shorter prompt leaves room.
+                user = user[: len(user) // 2]
+            else:
+                failed = getattr(provider, "last_error", "") or "empty reply"
+                report.skip(f"llm-wiki: part {headings.splitlines()[0]!r} returned nothing ({failed})")
+        if not parts_markdown:
+            report.skip("llm-wiki: model returned nothing for every part — not written")
             continue
-        markdown = (payload or {}).get("markdown") if isinstance(payload, dict) else None
-        if not isinstance(markdown, str) or not markdown.strip():
-            report.skip("llm-wiki: model returned nothing — not written")
-            continue
+        markdown = "\n\n".join(parts_markdown)
+        shown_sources = shown_all
         draft = Draft(product=product, body="")
-        shown_sources = {k: v for k, v in sources.items() if any(k in s for s in shown)}
         draft.body = _verify(markdown, shown_sources, draft)
         if draft.kept < 4:
-            report.skip("llm-wiki: fewer than four sentences survived verification — not written")
+            report.skip(
+                "llm-wiki: fewer than four sentences survived verification — not written "
+                f"(kept {draft.kept}, unsourced {draft.dropped_unsourced}, unknown source "
+                f"{draft.dropped_unknown_source}, figure {draft.dropped_figure})"
+            )
             continue
         # Provenance proven; now sense, against the product page's own sections.
         draft.body = _crosscheck(draft.body, shown_sources, classify, draft)

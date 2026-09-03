@@ -279,7 +279,7 @@ def digest(
         return None
     if len(selections) == 1:
         # One long section: its opening, and the whole of it a tap away.
-        page_id, heading, body = selections[0]
+        _page_id, heading, body = selections[0]
         return _opening(text, product, friendly_heading(heading, section_titles(bundle, product)))
     name = product.frontmatter.title.split(" — ")[0]
     titles = section_titles(bundle, product)
