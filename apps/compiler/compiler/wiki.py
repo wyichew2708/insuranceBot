@@ -954,10 +954,17 @@ def _cover_sentence(text: str) -> str:
         # protection!" matched on "protection" and became what Home
         # Insurance covers. An exclamation, or fewer than six words, is a
         # tagline.
-        if sentence.endswith("!") or len(sentence.split()) < 6:
+        if len(sentence.split()) < 6:
+            continue
+        # An exclamation is a slogan unless it says something: "Save more with
+        # longer protection!" is five words; "Be covered for travel delays
+        # starting from just 3 hours, instead of the usual 6 hours!" is the
+        # product page's own statement of the cover, and the owner's rule is
+        # that the product page is the reference.
+        if sentence.endswith("!") and len(sentence.split()) < 9:
             continue
         if _COVER_PROSE_RE.search(sentence):
-            kept.append(sentence)
+            kept.append(sentence.rstrip("!") + ".")
         # Two at most. "Why Tiq Home Insurance?" says what fire insurance
         # does *not* cover in its first sentence and what this plan covers in
         # its second; one sentence gave the customer the wrong half.

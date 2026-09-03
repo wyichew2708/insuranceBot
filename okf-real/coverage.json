@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123681,
+  "reached": 123705,
   "share": 0.048
  },
  "sources": {
@@ -6928,8 +6928,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md": {
    "words": 4993,
-   "reached": 187,
-   "share": 0.037,
+   "reached": 211,
+   "share": 0.042,
    "pages": [
     "product/general/travel-insurance",
     "product/general/travel-insurance/benefits"

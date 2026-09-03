@@ -53,6 +53,8 @@ This applies to travel to Israel, Iraq, Iran, Jordan, Lebanon, Egypt, Bahrain, K
 
 Medical expenses in Singapore and overseas: Whether it's a GP, specialist, or TCM, you're covered [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#medical-expenses-in-singapore-and-overseas].
 
+Travel delay cover from just 3 hours: Be covered for travel delays starting from just 3 hours, instead of the usual 6 hours [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#travel-delay-cover-from-just-3-hours]. <!-- okf:allow-number -->
+
 Pre-existing medical conditions coverage: Get covered for overseas medical bills, emergency evacuation, and even travel hiccups [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#pre-existing-medical-conditions-coverage].
 
 Flexible add-ons: Customise your protection with add-on options like COVID-19, rental car excess, pet hotel, child education and sports equipment protection from just $0.64 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#flexible-add-ons]. <!-- okf:allow-number -->

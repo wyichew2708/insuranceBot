@@ -43,7 +43,7 @@ Should I purchase Cancer Insurance if I already have a critical illness insuranc
 
 ## What it covers
 
-Cancer Insurance: Enhanced coverage for all stages of cancer, including early stage, with full payout and 6% yearly savings upon renewal. Limited Offer: 30% OFF and More Covers all stages of cancer, with 6% yearly savings upon renewal [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#cancer-insurance]. <!-- okf:allow-number -->
+Cancer Insurance: Enhanced coverage for all stages of cancer, including early stage, with full payout and 6% yearly savings upon renewal.. Limited Offer: 30% OFF and More Covers all stages of cancer, with 6% yearly savings upon renewal [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#cancer-insurance]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Cancer Benefit; Death Benefit; Covered Events; Monthly Payout Benefit [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
 

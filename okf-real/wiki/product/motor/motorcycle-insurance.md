@@ -47,7 +47,7 @@ ePROTECT motorcycle insurance provides the assurance you need before hitting the
 
 ePROTECT motorcycle Promo: 10% off: Safeguard your ride with our comprehensive coverage [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#eprotect-motorcycle-promo-10-off]. <!-- okf:allow-number -->
 
-Ride Fun, Ride Safe: Choose from comprehensive, third-party fire & theft and third party only coverage types. Coverage for vehicle theft whilst overseas Up to $500,000 coverage for loss and/or damage to third-party property [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#ride-fun-ride-safe]. <!-- okf:allow-number -->
+Ride Fun, Ride Safe: Choose from comprehensive, third-party fire & theft and third party only coverage types.. Coverage for vehicle theft whilst overseas Up to $500,000 coverage for loss and/or damage to third-party property [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#ride-fun-ride-safe]. <!-- okf:allow-number -->
 
 ## What is not covered
 

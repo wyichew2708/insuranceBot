@@ -47,7 +47,7 @@ confidence: medium
 
 ## What it covers
 
-Etiqa Insurance Pte. Ltd. Personal Accident Promo: 30% off: Stay covered for life’s unexpected moments. Enjoy 30% off Etiqa Insurance Pte. Ltd. PA plan with protection for accidental death, disability, and injuries [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#tiq-personal-accident-promo-30-off]. <!-- okf:allow-number -->
+Etiqa Insurance Pte. Ltd. Personal Accident Promo: 30% off: Stay covered for life’s unexpected moments.. Enjoy 30% off Etiqa Insurance Pte. Ltd. PA plan with protection for accidental death, disability, and injuries [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#tiq-personal-accident-promo-30-off]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease; Physiotherapy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
