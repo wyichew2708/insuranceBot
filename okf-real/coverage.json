@@ -2,8 +2,8 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 266606,
-  "share": 0.103
+  "reached": 254014,
+  "share": 0.098
  },
  "sources": {
   "raw/brochures/2023-05-etiqa-ilp-sub-fund-factsheets-all-portfolios.md": {
@@ -681,7 +681,7 @@
    "reached": 500,
    "share": 0.452,
    "pages": [
-    "product/general/tiq-personal-accident/faq"
+    "product/general/personal-accident/faq"
    ]
   },
   "raw/faq/tiq-travel-insurance.md": {
@@ -1110,11 +1110,10 @@
   },
   "raw/product-summaries/tiq-cashsaver-product-summary.md": {
    "words": 5718,
-   "reached": 530,
-   "share": 0.093,
+   "reached": 265,
+   "share": 0.046,
    "pages": [
-    "product/general/cashsaver/conditions",
-    "product/general/tiq-cashsaver/conditions"
+    "product/general/cashsaver/conditions"
    ]
   },
   "raw/product-summaries/tiq-easy-save-product-summary.md": {
@@ -1132,9 +1131,9 @@
    "reached": 256,
    "share": 0.056,
    "pages": [
-    "product/investments/tiq-invest/conditions",
-    "product/investments/tiq-invest/cover",
-    "product/investments/tiq-invest/exclusions"
+    "product/investments/tiqinvest/conditions",
+    "product/investments/tiqinvest/cover",
+    "product/investments/tiqinvest/exclusions"
    ]
   },
   "raw/product-summaries/tiq-product-summary-3-plus-critical-illness.md": {
@@ -3520,16 +3519,14 @@
    "reached": 6,
    "share": 0.012,
    "pages": [
-    "product/general/tiq-home-insurance"
+    "product/general/home-insurance"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md": {
    "words": 159,
-   "reached": 31,
-   "share": 0.195,
-   "pages": [
-    "product/general/home-insurance"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-prime-ii.md": {
    "words": 1647,
@@ -3620,7 +3617,7 @@
    "reached": 6,
    "share": 0.012,
    "pages": [
-    "product/investments/tiq-invest"
+    "product/investments/tiqinvest"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments.md": {
@@ -3710,16 +3707,14 @@
    "reached": 6,
    "share": 0.012,
    "pages": [
-    "product/general/tiq-personal-accident"
+    "product/general/personal-accident"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md": {
    "words": 166,
-   "reached": 26,
-   "share": 0.157,
-   "pages": [
-    "product/general/personal-accident"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-cyber-insurance-personal-cyber-insurance.md": {
    "words": 486,
@@ -3834,7 +3829,7 @@
    "reached": 6,
    "share": 0.012,
    "pages": [
-    "product/general/tiq-cashsaver"
+    "product/general/cashsaver"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement.md": {
@@ -7008,8 +7003,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md": {
    "words": 3205,
-   "reached": 30,
-   "share": 0.009,
+   "reached": 19,
+   "share": 0.006,
    "pages": [
     "product/general/cashsaver"
    ]
@@ -7158,11 +7153,9 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md": {
    "words": 2298,
-   "reached": 13,
-   "share": 0.006,
-   "pages": [
-    "product/investments/tiqinvest"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md": {
    "words": 4993,
@@ -7719,15 +7712,12 @@
   },
   "raw/wordings/eprotect-home-policy-wording.md": {
    "words": 8076,
-   "reached": 998,
-   "share": 0.124,
+   "reached": 499,
+   "share": 0.062,
    "pages": [
     "product/general/home-insurance/claims",
     "product/general/home-insurance/definitions",
-    "product/general/home-insurance/exclusions",
-    "product/general/tiq-home-insurance/claims",
-    "product/general/tiq-home-insurance/definitions",
-    "product/general/tiq-home-insurance/exclusions"
+    "product/general/home-insurance/exclusions"
    ]
   },
   "raw/wordings/eprotect-maid-policy-wording-v10.md": {
@@ -8760,15 +8750,12 @@
   },
   "raw/wordings/policy-wording-home-insurance.md": {
    "words": 7143,
-   "reached": 1898,
-   "share": 0.266,
+   "reached": 949,
+   "share": 0.133,
    "pages": [
     "product/general/home-insurance/conditions",
     "product/general/home-insurance/definitions",
-    "product/general/home-insurance/exclusions",
-    "product/general/tiq-home-insurance/conditions",
-    "product/general/tiq-home-insurance/definitions",
-    "product/general/tiq-home-insurance/exclusions"
+    "product/general/home-insurance/exclusions"
    ]
   },
   "raw/wordings/policy-wording-money-insurance-01122015-2023-02.md": {
@@ -8784,18 +8771,13 @@
   },
   "raw/wordings/policy-wording-personal-accident-policy-22032016.md": {
    "words": 2371,
-   "reached": 934,
-   "share": 0.394,
+   "reached": 378,
+   "share": 0.159,
    "pages": [
     "product/general/personal-accident/claims",
     "product/general/personal-accident/cover",
     "product/general/personal-accident/definitions",
-    "product/general/personal-accident/exclusions",
-    "product/general/tiq-personal-accident/claims",
-    "product/general/tiq-personal-accident/conditions",
-    "product/general/tiq-personal-accident/cover",
-    "product/general/tiq-personal-accident/definitions",
-    "product/general/tiq-personal-accident/exclusions"
+    "product/general/personal-accident/exclusions"
    ]
   },
   "raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md": {
@@ -8937,19 +8919,14 @@
   },
   "raw/wordings/tiq-cashsaver-policy-contract.md": {
    "words": 6125,
-   "reached": 5302,
-   "share": 0.866,
+   "reached": 2651,
+   "share": 0.433,
    "pages": [
     "product/general/cashsaver/claims",
     "product/general/cashsaver/conditions",
     "product/general/cashsaver/cover",
     "product/general/cashsaver/definitions",
-    "product/general/cashsaver/exclusions",
-    "product/general/tiq-cashsaver/claims",
-    "product/general/tiq-cashsaver/conditions",
-    "product/general/tiq-cashsaver/cover",
-    "product/general/tiq-cashsaver/definitions",
-    "product/general/tiq-cashsaver/exclusions"
+    "product/general/cashsaver/exclusions"
    ]
   },
   "raw/wordings/tiq-ces-cocacola-tncs.md": {
@@ -8987,19 +8964,14 @@
   },
   "raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md": {
    "words": 10158,
-   "reached": 9008,
-   "share": 0.887,
+   "reached": 4504,
+   "share": 0.443,
    "pages": [
     "product/general/home-insurance/claims",
     "product/general/home-insurance/conditions",
     "product/general/home-insurance/cover",
     "product/general/home-insurance/definitions",
-    "product/general/home-insurance/exclusions",
-    "product/general/tiq-home-insurance/claims",
-    "product/general/tiq-home-insurance/conditions",
-    "product/general/tiq-home-insurance/cover",
-    "product/general/tiq-home-insurance/definitions",
-    "product/general/tiq-home-insurance/exclusions"
+    "product/general/home-insurance/exclusions"
    ]
   },
   "raw/wordings/tiq-home-promotion-terms-and-conditions-grc-2026.md": {
@@ -9019,11 +8991,11 @@
    "reached": 2181,
    "share": 0.294,
    "pages": [
-    "product/investments/tiq-invest/claims",
-    "product/investments/tiq-invest/conditions",
-    "product/investments/tiq-invest/cover",
-    "product/investments/tiq-invest/definitions",
-    "product/investments/tiq-invest/exclusions"
+    "product/investments/tiqinvest/claims",
+    "product/investments/tiqinvest/conditions",
+    "product/investments/tiqinvest/cover",
+    "product/investments/tiqinvest/definitions",
+    "product/investments/tiqinvest/exclusions"
    ]
   },
   "raw/wordings/tiq-maid-policy-wording.md": {
@@ -9072,27 +9044,21 @@
    "reached": 3311,
    "share": 0.38,
    "pages": [
-    "product/general/tiq-personal-accident/claims",
-    "product/general/tiq-personal-accident/conditions",
-    "product/general/tiq-personal-accident/cover",
-    "product/general/tiq-personal-accident/definitions",
-    "product/general/tiq-personal-accident/eligibility",
-    "product/general/tiq-personal-accident/exclusions"
-   ]
-  },
-  "raw/wordings/tiq-personal-accident-policy-wording.md": {
-   "words": 8680,
-   "reached": 3156,
-   "share": 0.364,
-   "pages": [
     "product/general/personal-accident/claims",
     "product/general/personal-accident/conditions",
     "product/general/personal-accident/cover",
     "product/general/personal-accident/definitions",
     "product/general/personal-accident/eligibility",
-    "product/general/personal-accident/exclusions",
-    "product/general/tiq-personal-accident/cover",
-    "product/general/tiq-personal-accident/definitions"
+    "product/general/personal-accident/exclusions"
+   ]
+  },
+  "raw/wordings/tiq-personal-accident-policy-wording.md": {
+   "words": 8680,
+   "reached": 69,
+   "share": 0.008,
+   "pages": [
+    "product/general/personal-accident/cover",
+    "product/general/personal-accident/definitions"
    ]
   },
   "raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md": {

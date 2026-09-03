@@ -16,12 +16,13 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/tiq-personal-accident-policy-wording.md
+- raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md
 - raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
 version_in_force: '2026'
 links:
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -32,13 +33,13 @@ confidence: high
 
 ## 10. Claim Procedures
 
-- a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-personal-accident-policy-wording.md].
+- a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
 
-- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-personal-accident-policy-wording.md].
+- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
 
 ## 11. Incomplete Claims
 
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-personal-accident-policy-wording.md].
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
 
 ## 11. Claim Procedures
 

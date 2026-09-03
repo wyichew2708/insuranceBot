@@ -16,16 +16,19 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.tiq.com.sg/product/cashsaver
-  surfaces: []
+  landing: https://www.etiqa.com.sg/personal/savings-retirement/tiq-cashsaver
+  surfaces:
+  - https://www.tiq.com.sg/product/cashsaver
 plan_tiers: []
 authority:
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/cashsaver/exclusions
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -36,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-Get Apple Watch Ultra 3 / SE 3 with min [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#body].
+Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md#find-out-more].
 
 ## What it covers
 

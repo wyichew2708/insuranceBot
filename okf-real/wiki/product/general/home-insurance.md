@@ -13,22 +13,25 @@ regulated_advice: false
 aliases:
 - home
 - home insurance
+- tiq home
+- tiq home insurance
 channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/home-insurance
+  landing: https://www.etiqa.com.sg/personal/home-insurance/tiq-home-insurance
   surfaces:
   - https://www.tiq.com.sg/product/home-insurance
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-tiq-home-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/home-insurance/exclusions
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -39,7 +42,7 @@ confidence: medium
 
 ## What this plan is
 
-Protect what belongs to you Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
+Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-tiq-home-insurance.md#find-out-more].
 
 ## What it covers
 

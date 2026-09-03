@@ -16,17 +16,20 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.tiq.com.sg/product/tiqinvest
+  landing: https://www.etiqa.com.sg/personal/investments/tiq-invest
   hotline: +65 6887 8777
-  surfaces: []
+  surfaces:
+  - https://www.tiq.com.sg/product/tiqinvest
 plan_tiers: []
 authority:
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/investments/tiqinvest/exclusions
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -37,7 +40,7 @@ confidence: medium
 
 ## What this plan is
 
-Your hassle-free digital Investment-Linked Plan (ILP) for maximum financial flexibility [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md#low-cost-more-wealth-there-s-a-plan-for-that-tiq-invest].
+Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md#find-out-more].
 
 ## What is not covered
 

@@ -109,11 +109,28 @@ two-turn conversations, product first, and the expectation applies to the
 last turn. `make customer-suite` runs it with the field test; `make
 faq-suite` regenerates it after a compile.
 
-First deterministic run: **332 / 395**. Among the failures, nine Home
-Insurance questions were answered from `product/general/tiq-home-insurance`
-— the etiqa.com.sg site lists the product a second time under its shopfront
-name and the compiler built a second product from it. That is a corpus
-finding, recorded below.
+Deterministic runs, in order:
+
+| build | passed | what changed |
+|---|---|---|
+| Ask landed | 332 / 395 | — |
+| + product carried from the earlier turn | 349 / 395 | the two-turn cases resolve without a model |
+| + duplicate products folded at compile time | **380 / 395** | 29 failures were one corpus defect |
+
+The corpus defect: the same product listed under two URL slugs — etiqa.com.sg
+lists Home Insurance twice, and spells the investment product `tiq-invest`
+where tiq.com.sg spells it `tiqinvest`. Grouped by slug, six products were
+compiled twice, and a customer asking about one was answered from the other.
+`merge_duplicate_groups` in the compiler folds two listings whose titles
+agree once the brand and the category word are taken off; four pairs fold on
+the web path. The two that remain (`elastiq`, `heart-neurological-disorder-
+rider`) are a wordings-path listing beside a web listing and need the same
+rule on that path.
+
+Of the 15 still failing deterministically: four cite no product, three are
+not delivered, two are the `elastiq` pair, and the rest are single cases. The
+live run on Qwen is queued behind the baseline (`.eval-reports/v22-baseline/
+customer-suite.log`).
 
 **`okf-real/coverage.json`** — per raw source, words in and words a wiki
 sentence cites, written by every `corpus-compile` (`make coverage` on its
@@ -141,9 +158,14 @@ completes.
   travel-delay threshold (product page 3 hours, schedule 6). LLM WIKI drafts
   written from a contested source repeat the contest; they land as `draft`
   and stay unretrievable until reviewed.
-- **Same product compiled twice**: `home-insurance` and
-  `tiq-home-insurance`. Decide whether the second etiqa.com.sg listing is an
-  alias or a product.
+- **Same product compiled twice, wordings path**: `elastiq` beside
+  `universal-life-insurance-elastiq`, and the Heart & Neurological Disorder
+  Rider beside its `tiq-` listing. The web-path fold does not reach these;
+  the product-summary and wording documents need the same identity rule.
+- **Which slug survives a fold** is chosen for plainness (no brand prefix,
+  then shorter), which kept `tiqinvest` over `tiq-invest`. Harmless — both
+  names are aliases — but if the readable slug is wanted, that is a one-line
+  preference.
 - **LLM WIKI review**: `make llm-wiki` output, all `draft`, one product at a
   time.
 - **GPU deployment** (plan step 7): vLLM, pgvector, TEI on the Linux box —

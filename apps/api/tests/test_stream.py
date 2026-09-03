@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Any
 
 import pytest
 from api import main as api_main
@@ -24,8 +25,8 @@ def client() -> Iterator[TestClient]:
     api_main._state["bundle"] = None
 
 
-def _events(body: str) -> list[tuple[str, dict]]:
-    out: list[tuple[str, dict]] = []
+def _events(body: str) -> list[tuple[str, dict[str, Any]]]:
+    out: list[tuple[str, dict[str, Any]]] = []
     for frame in body.split("\n\n"):
         event, data = "message", ""
         for line in frame.split("\n"):

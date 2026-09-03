@@ -21,7 +21,8 @@ authority:
 - raw/product-summaries/tiq-cashsaver-product-summary.md
 version_in_force: '2026'
 links:
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:

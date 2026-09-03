@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
-id: product/general/tiq-personal-accident/faq
-title: Tiq Personal Accident — Published FAQs
+id: product/general/personal-accident/faq
+title: Personal Accident — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- tiq-personal-accident faq
-- tiq-personal-accident questions
-- common questions about tiq-personal-accident
+- personal-accident faq
+- personal-accident questions
+- common questions about personal-accident
 channels: []
 plan_tiers: []
 authority:

@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiq-invest/claims
+id: product/investments/tiqinvest/claims
 title: Tiq Invest — Making a claim
 type: product
 status: approved
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- how to claim on tiq invest
-- tiq invest claim procedure
-- tiq invest claim
+- how to claim on tiqinvest
+- tiqinvest claim procedure
+- tiqinvest claim
 channels: []
 plan_tiers: []
 authority:

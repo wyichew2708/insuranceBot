@@ -640,6 +640,8 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/personal-accident/exclusions` — [Personal Accident — Exclusions](./product/general/personal-accident/exclusions.md)
 
+- `product/general/personal-accident/faq` — [Personal Accident — Published FAQs](./product/general/personal-accident/faq.md)
+
 - `product/general/personal-cyber-insurance` — [Personal Cyber Insurance](./product/general/personal-cyber-insurance.md)
 
 - `product/general/personal-cyber-insurance/claims` — [Personal Cyber Insurance — Making a claim](./product/general/personal-cyber-insurance/claims.md)
@@ -748,18 +750,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/solitaire-protect/exclusions` — [Etiqa Solitaire Protect — Exclusions](./product/general/solitaire-protect/exclusions.md)
 
-- `product/general/tiq-cashsaver` — [Tiq CashSaver](./product/general/tiq-cashsaver.md)
-
-- `product/general/tiq-cashsaver/claims` — [Tiq CashSaver — Making a claim](./product/general/tiq-cashsaver/claims.md)
-
-- `product/general/tiq-cashsaver/conditions` — [Tiq CashSaver — Policy conditions](./product/general/tiq-cashsaver/conditions.md)
-
-- `product/general/tiq-cashsaver/cover` — [Tiq CashSaver — What is covered](./product/general/tiq-cashsaver/cover.md)
-
-- `product/general/tiq-cashsaver/definitions` — [Tiq CashSaver — Definitions](./product/general/tiq-cashsaver/definitions.md)
-
-- `product/general/tiq-cashsaver/exclusions` — [Tiq CashSaver — Exclusions](./product/general/tiq-cashsaver/exclusions.md)
-
 - `product/general/tiq-heart-neurological-disorder-rider` — [Tiq Heart Neurological Disorder Rider](./product/general/tiq-heart-neurological-disorder-rider.md)
 
 - `product/general/tiq-heart-neurological-disorder-rider/conditions` — [Tiq Heart Neurological Disorder Rider — Policy conditions](./product/general/tiq-heart-neurological-disorder-rider/conditions.md)
@@ -776,18 +766,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/tiq-home-fire-safety-event/conditions` — [Tiq Home Fire Safety Event Insurance — Policy conditions](./product/general/tiq-home-fire-safety-event/conditions.md)
 
-- `product/general/tiq-home-insurance` — [Tiq Home Insurance](./product/general/tiq-home-insurance.md)
-
-- `product/general/tiq-home-insurance/claims` — [Tiq Home Insurance — Making a claim](./product/general/tiq-home-insurance/claims.md)
-
-- `product/general/tiq-home-insurance/conditions` — [Tiq Home Insurance — Policy conditions](./product/general/tiq-home-insurance/conditions.md)
-
-- `product/general/tiq-home-insurance/cover` — [Tiq Home Insurance — What is covered](./product/general/tiq-home-insurance/cover.md)
-
-- `product/general/tiq-home-insurance/definitions` — [Tiq Home Insurance — Definitions](./product/general/tiq-home-insurance/definitions.md)
-
-- `product/general/tiq-home-insurance/exclusions` — [Tiq Home Insurance — Exclusions](./product/general/tiq-home-insurance/exclusions.md)
-
 - `product/general/tiq-pa` — [Tiq PA Insurance](./product/general/tiq-pa.md)
 
 - `product/general/tiq-pa-pa30` — [Tiq PA Pa30 Insurance](./product/general/tiq-pa-pa30.md)
@@ -803,22 +781,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/general/tiq-pa/eligibility` — [Tiq PA Insurance — Eligibility](./product/general/tiq-pa/eligibility.md)
 
 - `product/general/tiq-pa/exclusions` — [Tiq PA Insurance — Exclusions](./product/general/tiq-pa/exclusions.md)
-
-- `product/general/tiq-personal-accident` — [Tiq Personal Accident](./product/general/tiq-personal-accident.md)
-
-- `product/general/tiq-personal-accident/claims` — [Tiq Personal Accident — Making a claim](./product/general/tiq-personal-accident/claims.md)
-
-- `product/general/tiq-personal-accident/conditions` — [Tiq Personal Accident — Policy conditions](./product/general/tiq-personal-accident/conditions.md)
-
-- `product/general/tiq-personal-accident/cover` — [Tiq Personal Accident — What is covered](./product/general/tiq-personal-accident/cover.md)
-
-- `product/general/tiq-personal-accident/definitions` — [Tiq Personal Accident — Definitions](./product/general/tiq-personal-accident/definitions.md)
-
-- `product/general/tiq-personal-accident/eligibility` — [Tiq Personal Accident — Eligibility](./product/general/tiq-personal-accident/eligibility.md)
-
-- `product/general/tiq-personal-accident/exclusions` — [Tiq Personal Accident — Exclusions](./product/general/tiq-personal-accident/exclusions.md)
-
-- `product/general/tiq-personal-accident/faq` — [Tiq Personal Accident — Published FAQs](./product/general/tiq-personal-accident/faq.md)
 
 - `product/general/tiq-travel-covid` — [Tiq Travel Covid Insurance](./product/general/tiq-travel-covid.md)
 
@@ -1042,19 +1004,15 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/investments/investments/exclusions` — [Investments — Exclusions](./product/investments/investments/exclusions.md)
 
-- `product/investments/tiq-invest` — [Tiq Invest](./product/investments/tiq-invest.md)
-
-- `product/investments/tiq-invest/claims` — [Tiq Invest — Making a claim](./product/investments/tiq-invest/claims.md)
-
-- `product/investments/tiq-invest/conditions` — [Tiq Invest — Policy conditions](./product/investments/tiq-invest/conditions.md)
-
-- `product/investments/tiq-invest/cover` — [Tiq Invest — What is covered](./product/investments/tiq-invest/cover.md)
-
-- `product/investments/tiq-invest/definitions` — [Tiq Invest — Definitions](./product/investments/tiq-invest/definitions.md)
-
-- `product/investments/tiq-invest/exclusions` — [Tiq Invest — Exclusions](./product/investments/tiq-invest/exclusions.md)
-
 - `product/investments/tiqinvest` — [Tiq Invest](./product/investments/tiqinvest.md)
+
+- `product/investments/tiqinvest/claims` — [Tiq Invest — Making a claim](./product/investments/tiqinvest/claims.md)
+
+- `product/investments/tiqinvest/conditions` — [Tiq Invest — Policy conditions](./product/investments/tiqinvest/conditions.md)
+
+- `product/investments/tiqinvest/cover` — [Tiq Invest — What is covered](./product/investments/tiqinvest/cover.md)
+
+- `product/investments/tiqinvest/definitions` — [Tiq Invest — Definitions](./product/investments/tiqinvest/definitions.md)
 
 - `product/investments/tiqinvest/exclusions` — [Tiq Invest — Exclusions](./product/investments/tiqinvest/exclusions.md)
 

@@ -11,21 +11,25 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- personal accident
+- tiq personal accident
 channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/personal-accident
-  surfaces: []
+  landing: https://www.etiqa.com.sg/personal/personal-accident/tiq-personal-accident
+  hotline: +65 6887 8777
+  surfaces:
+  - https://www.tiq.com.sg/product/tiq-personal-accident
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-tiq-personal-accident.md
+- raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/personal-accident/exclusions
-  concepts: []
+  concepts:
+  - concept/policy-schedule
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -36,7 +40,7 @@ confidence: medium
 
 ## What this plan is
 
-Protect yourself against unexpected accidents and events Protect yourself against unexpected accidents and events Don’t let unexpected medical bills be an additional source of stress [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md#body].
+Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-tiq-personal-accident.md#find-out-more].
 
 ## What is not covered
 

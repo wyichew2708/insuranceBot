@@ -445,15 +445,83 @@ def group_products(snapshots: list[Snapshot], report: CompileReport) -> dict[str
         if not group.title or len(snapshot.title) < len(group.title):
             group.title = snapshot.title
 
+    folded = merge_duplicate_groups(groups, report)
+
     for snapshot in snapshots:
-        attached = groups.get(snapshot.slug)
+        attached = groups.get(folded.get(snapshot.slug, snapshot.slug))
         if attached is None or snapshot.slug in SECTION_ROOTS:
             continue
         if snapshot.page_type == "claims":
-            attached.claims[snapshot.host] = snapshot
+            attached.claims.setdefault(snapshot.host, snapshot)
         elif snapshot.page_type == "faq":
-            attached.faq[snapshot.host] = snapshot
+            attached.faq.setdefault(snapshot.host, snapshot)
     return groups
+
+
+#: The words a shopfront puts in front of a product's name. Stripped, not
+#: folded into the legal name as `_normalise_brands` does for prose: this
+#: is identity, and "Tiq Home Insurance" and "Home Insurance" are one product.
+_BRAND_PREFIX_RE = re.compile(r"\b(?:tiq|etiqa)\b", re.I)
+_GENERIC_SUFFIX_RE = re.compile(r"\b(?:insurance|plan|policy)\b", re.I)
+
+
+def product_identity(title: str) -> str:
+    """What a product is called once the brand and the category word are
+    taken off — the key two listings of one product share."""
+    bare = _GENERIC_SUFFIX_RE.sub(" ", _BRAND_PREFIX_RE.sub(" ", title))
+    return re.sub(r"[^a-z0-9]+", "", bare.lower())
+
+
+def merge_duplicate_groups(groups: dict[str, ProductGroup], report: CompileReport) -> dict[str, str]:
+    """Fold the same product listed under two slugs into one group.
+
+    etiqa.com.sg lists Home Insurance twice — `personal-home-insurance` and
+    `personal-home-insurance-tiq-home-insurance` — and tiq.com.sg spells the
+    investment product `tiqinvest` where etiqa.com.sg spells it `tiq-invest`.
+    Grouped by slug, each pair became two products: two pages, two benefit
+    tables, two sets of aliases, and a customer asking about one was answered
+    from the other. Six products were compiled twice on the real bundle, and
+    twenty-nine of the FAQ suite's failures were exactly that.
+
+    Two groups are one product when their titles agree once the brand and
+    the category word are taken off. The group whose slug is the plainer one
+    — no brand prefix, then shorter — keeps its slug and page id; the other's
+    listings join it as further sources, one per host, the longer listing
+    kept where a host already has one. Returns the slugs folded away, mapped
+    to the slug that absorbed them.
+    """
+    by_identity: dict[str, list[str]] = {}
+    for slug, group in groups.items():
+        identity = product_identity(group.title or slug)
+        if identity:
+            by_identity.setdefault(identity, []).append(slug)
+
+    def plainness(slug: str) -> tuple[bool, int, str]:
+        return (bool(_BRAND_PREFIX_RE.match(slug.replace("-", " "))), len(slug), slug)
+
+    folded: dict[str, str] = {}
+    for slugs in by_identity.values():
+        if len(slugs) < 2:
+            continue
+        keep, *others = sorted(slugs, key=plainness)
+        target = groups[keep]
+        for slug in others:
+            other = groups.pop(slug)
+            for host, snapshot in other.product.items():
+                current = target.product.get(host)
+                if current is None or len(snapshot.text) > len(current.text):
+                    target.product[host] = snapshot
+                else:
+                    report.skip("duplicate listing of a product on the same host — the longer one kept")
+            for host, snapshot in other.claims.items():
+                target.claims.setdefault(host, snapshot)
+            for host, snapshot in other.faq.items():
+                target.faq.setdefault(host, snapshot)
+            if not target.title or (other.title and len(other.title) < len(target.title)):
+                target.title = other.title
+            folded[slug] = keep
+            report.skip(f"same product listed under two slugs — {slug} folded into {keep}")
+    return folded
 
 
 def rank_hosts(hosts: list[str], order: list[str]) -> list[str]:

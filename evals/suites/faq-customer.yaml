@@ -827,6 +827,111 @@
   expect:
     cite_product: maid-insurance
     delivered: true
+- id: faq-personal-accident-01
+  question: Who is eligible to purchase Tiq Personal Accident?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-02
+  turns:
+  - Personal Accident
+  - Who should purchase this plan?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-03
+  question: Can I buy Tiq Personal Accident for my spouse and children?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-04
+  question: Can I buy Tiq Personal Accident for my children who are younger than 17 years old?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-05
+  turns:
+  - Personal Accident
+  - How long is the Period of Cover?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-07
+  question: What is covered under Tiq Personal Accident?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-08
+  question: What are the plans available under Tiq Personal Accident?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-09
+  question: What are the coverage/benefits available under Tiq Personal Accident?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-10
+  question: Are there any exclusions under the Tiq Personal Accident?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-11
+  turns:
+  - Personal Accident
+  - How can I pay for the policy premium?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-12
+  turns:
+  - Personal Accident
+  - What should I do if I missed my premium payment due date?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-13
+  turns:
+  - Personal Accident
+  - What is the payment frequency for this plan?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-14
+  turns:
+  - Personal Accident
+  - What happens if I stop paying the premium?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-15
+  turns:
+  - Personal Accident
+  - How do I know if my credit card payment is successful and the application has been completed?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-16
+  turns:
+  - Personal Accident
+  - What documents will I receive upon successful payment of my plan?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-17
+  turns:
+  - Personal Accident
+  - Is there a free look period?
+  expect:
+    cite_product: personal-accident
+    delivered: true
+- id: faq-personal-accident-18
+  turns:
+  - Personal Accident
+  - Can I get a refund if I cancel my plan after the free look period?
+  expect:
+    cite_product: personal-accident
+    delivered: true
 - id: faq-personal-cyber-insurance-01
   question: What is Personal Cyber Insurance?
   expect:
@@ -1178,111 +1283,6 @@
   - Can I claim for the blood test required for the complimentary congenital and hereditary conditions coverage?
   expect:
     cite_product: pet-insurance
-    delivered: true
-- id: faq-tiq-personal-accident-01
-  question: Who is eligible to purchase Tiq Personal Accident?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-02
-  turns:
-  - Tiq Personal Accident
-  - Who should purchase this plan?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-03
-  question: Can I buy Tiq Personal Accident for my spouse and children?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-04
-  question: Can I buy Tiq Personal Accident for my children who are younger than 17 years old?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-05
-  turns:
-  - Tiq Personal Accident
-  - How long is the Period of Cover?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-07
-  question: What is covered under Tiq Personal Accident?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-08
-  question: What are the plans available under Tiq Personal Accident?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-09
-  question: What are the coverage/benefits available under Tiq Personal Accident?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-10
-  question: Are there any exclusions under the Tiq Personal Accident?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-11
-  turns:
-  - Tiq Personal Accident
-  - How can I pay for the policy premium?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-12
-  turns:
-  - Tiq Personal Accident
-  - What should I do if I missed my premium payment due date?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-13
-  turns:
-  - Tiq Personal Accident
-  - What is the payment frequency for this plan?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-14
-  turns:
-  - Tiq Personal Accident
-  - What happens if I stop paying the premium?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-15
-  turns:
-  - Tiq Personal Accident
-  - How do I know if my credit card payment is successful and the application has been completed?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-16
-  turns:
-  - Tiq Personal Accident
-  - What documents will I receive upon successful payment of my plan?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-17
-  turns:
-  - Tiq Personal Accident
-  - Is there a free look period?
-  expect:
-    cite_product: tiq-personal-accident
-    delivered: true
-- id: faq-tiq-personal-accident-18
-  turns:
-  - Tiq Personal Accident
-  - Can I get a refund if I cancel my plan after the free look period?
-  expect:
-    cite_product: tiq-personal-accident
     delivered: true
 - id: faq-travel-insurance-01
   question: Who can buy Tiq Travel Insurance?
