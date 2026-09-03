@@ -177,6 +177,53 @@ QUANTITY_RE = re.compile(
 )
 
 
+#: Enough to put a promotion below the product's own pages without removing it
+#: from the answer entirely — a customer asking about cover may still like to
+#: know an offer exists, at the end.
+PROMOTION_PENALTY = 1.2
+
+#: A noun phrase asking for the whole product: "Tiq travel insurance
+#: coverage", "maid insurance benefits". Deliberately narrower than "a
+#: coverage question with no question word in it" — an elliptical follow-up
+#: like "and the baggage limit?" has no question word either, and steering it
+#: to the overview took its figure away.
+SUMMARY_PHRASE_RE = re.compile(r"^[\w\s'&-]{0,50}\b(?:cover|coverage|benefits?|summary)\s*[.?]?\s*$", re.I)
+
+#: The sections that describe a product rather than one corner of it.
+OVERVIEW_HEADING_RE = re.compile(
+    r"^(?:what this plan is|about\b|overview|headline benefits|summary|key benefits|at a glance)", re.I
+)
+
+#: A question that is actually about an offer. Only then does a promotion lead.
+OFFER_RE = re.compile(r"\b(promo|promotion|discount|offer|deal|voucher|cashback|rebate|sale)\b", re.I)
+
+#: How much of one section can reach the answer. The median section is 531
+#: characters and the 90th percentile 1,545, but "Family Plan" on the travel
+#: cover page is 14,708 and the corpus maximum is 53,480 — a definitions dump
+#: the segmenter filed under a benefit heading. One of those produced a
+#: 1,927-word answer carrying 53 claims, and at that size the rewrite cannot
+#: keep every figure, so `Draft.accepts` rejected it and the raw concatenation
+#: shipped: the longer the answer, the more certain it stays unreadable.
+#: Longer sections are cut at a paragraph boundary — the customer gets the
+#: opening, which is where a wording states its rule, and the page is cited so
+#: nothing is concealed.
+SECTION_BODY_CHARS = 1800
+
+
+def _capped(body: str) -> str:
+    """The opening of a section, whole paragraphs only."""
+    if len(body) <= SECTION_BODY_CHARS:
+        return body
+    kept: list[str] = []
+    total = 0
+    for paragraph in re.split(r"\n\s*\n", body):
+        if total + len(paragraph) > SECTION_BODY_CHARS and kept:
+            break
+        kept.append(paragraph)
+        total += len(paragraph)
+    return "\n\n".join(kept) if kept else body[:SECTION_BODY_CHARS]
+
+
 #: The heading that carries the answer to a procedural question. A customer
 #: asking how to buy wants the buying section, not the best-scoring one.
 PROCEDURAL_HEADINGS: dict[Intent, re.Pattern[str]] = {
@@ -244,7 +291,14 @@ def select_sections(
     # names a subject and asks whether it is in or out. Steering every
     # coverage question away from exclusions broke six of those, so only the
     # open form is steered.
-    broad_coverage = intent is Intent.coverage and bool(BROAD_COVERAGE_RE.search(question))
+    # A customer who types "Tiq travel insurance coverage" is asking the same
+    # thing as one who types "what does travel insurance cover" — the first is
+    # a noun phrase, and `BROAD_COVERAGE_RE` wants an interrogative, so the
+    # summary steering never fired for it and the answer led with the Family
+    # Plan group-composition rule. A coverage question with no question word in
+    # it is a request for the overview.
+    broad_coverage = wants_overview(question, intent)
+    asks_about_offer = bool(OFFER_RE.search(question))
     # The pages this intent's requirement says hold the answer, resolved
     # against the product in hand. This is the one place the requirement table
     # is read *before* an answer exists rather than after it — everything else
@@ -293,6 +347,12 @@ def select_sections(
         # the right evidence, not removing it from the rest.
         if page.id in answer_pages or page.frontmatter.type.value in answer_types:
             page_relevance += EVIDENCE_BONUS
+        # An offer is not cover. "Tiq travel insurance coverage" opened with
+        # "55% off Single trip, 30% off Annual multi-trip" because a promotion
+        # page outscored the product's own benefits. A promotion answers a
+        # question about a promotion and leads nothing else.
+        if page_type == PageType.promotion and not asks_about_offer:
+            page_relevance -= PROMOTION_PENALTY
         if names_only:
             # The product page itself, not one of its children.
             page_relevance += 0.9 if page.id.count("/") == 2 else -0.4
@@ -359,6 +419,18 @@ def select_sections(
             # leads; the rest still carry the citations.
             procedural = PROCEDURAL_HEADINGS.get(intent)
             leads = procedural is not None and bool(procedural.search(heading))
+            # The overview sections, for a request that wants the overview.
+            # "What this plan is" is 101 characters and scores near nothing on
+            # word overlap, so without this the deepest subsection wins a
+            # question that asked for the shape of the product.
+            # `broad_coverage` only — not every turn without a question word.
+            # "travel baggage per-item sub-limit" has none either, and it names
+            # a specific benefit; boosting the overview there took the Baggage
+            # section's figure out of the answer.
+            #
+            # A lead, not a score: scoring it inflates the relative floor below
+            # and cuts the cover page the overview is supposed to introduce.
+            leads = leads or (broad_coverage and bool(OVERVIEW_HEADING_RE.search(heading)))
             heading_is_exclusion = bool(re.search(r"not covered|exclusion|exclude", heading, re.I))
             if heading_is_exclusion and broad_coverage:
                 section_relevance -= 0.8
@@ -375,7 +447,9 @@ def select_sections(
             score = page_relevance + section_relevance
             if score > 0 or leads:
                 scored.append(
-                    Selection(page=page, heading=heading, body=body, score=round(score, 3), lead=leads)
+                    Selection(
+                        page=page, heading=heading, body=_capped(body), score=round(score, 3), lead=leads
+                    )
                 )
 
     # The procedural section leads whatever it scored — a "How to buy" section
@@ -408,6 +482,38 @@ def _is_pointer_only(body: str) -> bool:
         return False
     residual = re.sub(r"\[([^\]]*)\]\([^)]*\)", " ", stripped)
     return len(residual.split()) <= 12
+
+
+def wants_overview(question: str, intent: Intent) -> bool:
+    """The customer asked for the shape of the product, not for a figure.
+
+    Two forms: the interrogative ("what does travel insurance cover") and the
+    bare noun phrase ("Tiq travel insurance coverage"), which carries no
+    question word at all and so matched neither of the older tests.
+    """
+    return intent is Intent.coverage and bool(
+        BROAD_COVERAGE_RE.search(question) or SUMMARY_PHRASE_RE.search(question)
+    )
+
+
+TIER_PLACEHOLDER = "depends on your plan tier"
+#: The compiler's own pointer at the foot of a headline-benefits section
+#: (`wiki.py`). It is a cross-reference, not a statement about the product, so
+#: it does not make a paragraph of tier stand-ins substantive.
+CROSS_REFERENCE_RE = re.compile(r"^full benefit detail is on the benefits page\.?$", re.I)
+
+
+def placeholder_only(paragraph: str) -> bool:
+    """Every clause here is a stand-in for a figure this session cannot see.
+
+    `drop_unresolved` keeps such a sentence so the page stays cited, and that
+    is right. But a paragraph made of nothing else says only "there is a
+    number and I cannot show it to you", and a summary that opens with two of
+    them tells the customer nothing about the product. Order it last; it is
+    still an answer, just not the first thing to say.
+    """
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", paragraph) if s.strip()]
+    return bool(sentences) and all(TIER_PLACEHOLDER in s or CROSS_REFERENCE_RE.match(s) for s in sentences)
 
 
 def _paragraphs(text: str) -> list[str]:
@@ -786,6 +892,23 @@ def compose(
         prose = clean_prose(resolved.text)
         if prose:
             paragraphs.append(lead_with_heading(selection.heading, prose))
+
+    # Drop the tier stand-ins when anything substantive survives them: the
+    # trailing "limits vary by plan tier" line already tells the customer
+    # exactly this, and ordering them last was not enough — the model rewrites
+    # the facts freely and put them back at the front of the summary. When
+    # they are all there is, they stay: then they are the answer, and the
+    # page they cite is the only page the turn has.
+    # Only for a summary, and only when something substantive survives. Asked
+    # for the shape of a product, "the child limit depends on your plan tier"
+    # says nothing the trailing tier line does not already say, and the model
+    # put it first however the facts were ordered. Asked about a specific
+    # benefit, that same sentence is the answer — dropping it there cost the
+    # trip-cancellation page its only claim and the turn its delivery.
+    if wants_overview(question, classify(question)):
+        substantive = [p for p in paragraphs if not placeholder_only(p)]
+        if substantive:
+            paragraphs = substantive
 
     render = render_channel(bundle, product, session)
     if contested_notes:
