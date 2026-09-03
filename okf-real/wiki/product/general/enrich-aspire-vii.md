@@ -38,7 +38,7 @@ confidence: medium
 
 ## What this plan is
 
-This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC) [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#featured-articles].
+Coverage for your policy is automatic and no further action is required from you [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#featured-articles].
 
 ## What it covers
 

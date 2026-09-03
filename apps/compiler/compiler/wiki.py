@@ -916,7 +916,8 @@ _COVER_NOISE_RE = re.compile(
     r"\||thank you for your support|fully subscribed|privacy policy|terms (?:of use|and conditions|& conditions)"
     r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in|i consent to|marketing consent"
     r"|^- |leave your contacts|by submitting|buy online|buy now|promo code|launches|available for signup"
-    r"|^\d+ in \d+|get in touch|it is usually detrimental|underwritten by",
+    r"|^\d+ in \d+|get in touch|it is usually detrimental|underwritten by|protection scheme|protected under"
+    r"|:\s*$",
     re.I,
 )
 #: The tile has to actually say the product covers something. Marketing that

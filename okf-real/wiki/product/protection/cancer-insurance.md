@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-You can purchase Cancer Insurance for yourself if you fulfill the following criteria: [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#frequently-asked-questions].
+Should I purchase Cancer Insurance if I already have a critical illness insurance or rider? [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#frequently-asked-questions].
 
 ## What it covers
 

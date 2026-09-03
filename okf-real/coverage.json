@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123261,
+  "reached": 123236,
   "share": 0.048
  },
  "sources": {
@@ -1699,8 +1699,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md": {
    "words": 481,
-   "reached": 21,
-   "share": 0.044,
+   "reached": 15,
+   "share": 0.031,
    "pages": [
     "product/health-medical/accident-health"
    ]
@@ -6778,8 +6778,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md": {
    "words": 1195,
-   "reached": 14,
-   "share": 0.012,
+   "reached": 1,
+   "share": 0.001,
    "pages": [
     "product/protection/cancer-insurance"
    ]
@@ -6808,8 +6808,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md": {
    "words": 753,
-   "reached": 21,
-   "share": 0.028,
+   "reached": 15,
+   "share": 0.02,
    "pages": [
     "product/general/enrich-aspire-vii"
    ]

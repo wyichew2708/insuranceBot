@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC) [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
+Coverage for your policy is automatic and no further action is required from you [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
 
 ## What is not covered
 
