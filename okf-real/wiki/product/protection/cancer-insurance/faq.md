@@ -29,7 +29,6 @@ confidence: medium
 faq_intents:
 - coverage
 - eligibility
-- offer
 - renewal
 - unknown
 ---
