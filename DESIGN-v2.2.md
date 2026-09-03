@@ -242,8 +242,23 @@ first.
 
 **Baseline on the current build** (plan step 1): `.eval-reports/v22-baseline/`
 — the field test and the 1,000-case sample on live Qwen, at commit
-`c2b0d88`, before the Ask landed. Numbers are appended here when the run
-completes.
+`c2b0d88`, before the Ask landed.
+
+| measure | c2b0d88 (pre-Ask) | v2.1 (`4177480`) |
+|---|---|---|
+| field test | 83 / 109 | 80 / 104 |
+| sample accuracy | 86.9% | 82.6% |
+| unsafe / safe misses | 78 / 53 | 71 / — |
+| wrong product | 2 | 2 |
+| unbound figures | 0 | 0 |
+| entitlement leaks | 0 | 0 |
+
+Caveat on the sample: the entailment judge was silent on 536 of 1,000 turns
+and the gate fell back to word overlap, because the run shared the Mac with
+recompiles and test runs all evening. Unsafe is therefore an upper bound on
+what the judge would have refused, not a measurement of it. The sample was
+generated from the 156-product corpus; it must be regenerated before the
+next run, and the next run must have the machine to itself.
 
 ## Four decisions from the owner (2026-09-03, evening)
 
