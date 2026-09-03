@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123242,
+  "reached": 123261,
   "share": 0.048
  },
  "sources": {
@@ -1699,8 +1699,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md": {
    "words": 481,
-   "reached": 17,
-   "share": 0.035,
+   "reached": 21,
+   "share": 0.044,
    "pages": [
     "product/health-medical/accident-health"
    ]
@@ -1795,8 +1795,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md": {
    "words": 794,
-   "reached": 21,
-   "share": 0.026,
+   "reached": 25,
+   "share": 0.031,
    "pages": [
     "product/business/corporate-travel"
    ]
@@ -3351,8 +3351,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md": {
    "words": 1696,
-   "reached": 74,
-   "share": 0.044,
+   "reached": 85,
+   "share": 0.05,
    "pages": [
     "product/general/fire-insurance",
     "product/general/fire-insurance/benefits"
@@ -6769,8 +6769,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md": {
    "words": 3265,
-   "reached": 91,
-   "share": 0.028,
+   "reached": 88,
+   "share": 0.027,
    "pages": [
     "channel/direct",
     "product/protection/3-plus-critical-illness"
@@ -6778,8 +6778,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md": {
    "words": 1195,
-   "reached": 24,
-   "share": 0.02,
+   "reached": 14,
+   "share": 0.012,
    "pages": [
     "product/protection/cancer-insurance"
    ]
@@ -6800,16 +6800,16 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md": {
    "words": 1514,
-   "reached": 32,
-   "share": 0.021,
+   "reached": 33,
+   "share": 0.022,
    "pages": [
     "product/savings-retirement/eeasy-savepro"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md": {
    "words": 753,
-   "reached": 18,
-   "share": 0.024,
+   "reached": 21,
+   "share": 0.028,
    "pages": [
     "product/general/enrich-aspire-vii"
    ]
@@ -6831,8 +6831,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md": {
    "words": 941,
-   "reached": 12,
-   "share": 0.013,
+   "reached": 13,
+   "share": 0.014,
    "pages": [
     "product/motor/motorcycle-insurance"
    ]
@@ -6900,8 +6900,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md": {
    "words": 1010,
-   "reached": 10,
-   "share": 0.01,
+   "reached": 6,
+   "share": 0.006,
    "pages": [
     "product/savings-retirement/tiq-3-year-endowment-plan"
    ]
@@ -6945,8 +6945,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md": {
    "words": 1984,
-   "reached": 38,
-   "share": 0.019,
+   "reached": 50,
+   "share": 0.025,
    "pages": [
     "product/protection/whole-life-insurance"
    ]

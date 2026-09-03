@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Some things in life are beyond our control [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#a-plan-you-can-count-on-till-old-age].
+DIRECT – Etiqa Insurance Pte. Ltd. whole life Insurance provides lifetime assurance that your loved ones will be financially secured if anything happens to you [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#a-plan-you-can-count-on-till-old-age].
 
 ## What it covers
 

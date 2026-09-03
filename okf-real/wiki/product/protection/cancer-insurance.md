@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-By submitting your details, you allow us to get in touch with the latest promotions, marketing updates and how to switch to us [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#don-t-worry-we-ll-wait-for-you].
+You can purchase Cancer Insurance for yourself if you fulfill the following criteria: [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#frequently-asked-questions].
 
 ## What it covers
 

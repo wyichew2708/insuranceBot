@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Buy online today and enjoy extra savings with Promo Code 'BIKE10’ [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#eprotect-motorcycle-promo-10-off].
+ePROTECT motorcycle insurance provides the assurance you need before hitting the road [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#ride-fun-ride-safe].
 
 ## What is not covered
 

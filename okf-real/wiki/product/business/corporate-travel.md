@@ -38,7 +38,7 @@ confidence: medium
 
 ## What this plan is
 
-BUY NOW VIA ETIQA’S PANEL OF PARTNERING TRAVEL AGENTS [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#pricing].
+You can simply purchase this product via any of our partnering Travel Agents  [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#pricing].
 
 ## What it covers
 

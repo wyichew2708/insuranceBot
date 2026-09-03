@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-It is usually detrimental to replace an existing accident and health plan with a new one [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
+This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC) [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
 
 ## What is not covered
 

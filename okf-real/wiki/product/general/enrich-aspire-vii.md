@@ -38,7 +38,7 @@ confidence: medium
 
 ## What this plan is
 
-Etiqa Insurance Pte. Ltd. Insurance Singapore Launches Enrich Index Income that Combines Index-Linked Growth Potential with Capital Protection at Maturity [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#featured-articles].
+This policy is protected under the Policy Owners’ Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC) [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#featured-articles].
 
 ## What it covers
 

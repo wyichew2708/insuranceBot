@@ -915,7 +915,8 @@ _COVER_SKIP_RE = re.compile(r"advisory|about us|sitemap|overview of|apply (?:for
 _COVER_NOISE_RE = re.compile(
     r"\||thank you for your support|fully subscribed|privacy policy|terms (?:of use|and conditions|& conditions)"
     r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in|i consent to|marketing consent"
-    r"|^- ",
+    r"|^- |leave your contacts|by submitting|buy online|buy now|promo code|launches|available for signup"
+    r"|^\d+ in \d+|get in touch|it is usually detrimental|underwritten by",
     re.I,
 )
 #: The tile has to actually say the product covers something. Marketing that
@@ -1126,10 +1127,33 @@ def _sentences(text: str) -> list[str]:
     return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
 
 
+#: Words a product name shares with every other product name.
+_NAME_STOPWORDS = frozenset(
+    [
+        "insurance",
+        "plan",
+        "policy",
+        "etiqa",
+        "direct",
+        "personal",
+        "claim",
+        "discount",
+        "cover",
+        "coverage",
+        "protection",
+        "insure",
+    ]
+)
+
+
 def _describes_plan(sentence: str, names: set[str]) -> bool:
     """A sentence that says what the plan is: eight words or more, no page
-    furniture, and either a cover verb or the product's own name in it."""
+    furniture, not shouted, and either a cover verb or the product's own
+    name in it."""
     if len(sentence.split()) < 8 or sentence.endswith("!") or ALIAS_RE.match(sentence):
+        return False
+    letters = [c for c in sentence if c.isalpha()]
+    if letters and sum(c.isupper() for c in letters) / len(letters) > 0.5:
         return False
     if _COVER_NOISE_RE.search(sentence) or NUMBER_IN_PROSE_RE.search(sentence):
         return False
@@ -1258,12 +1282,9 @@ def emit_product(
     # reminder — and excluding each shape by name never converged. A
     # sentence describes the plan when it is long enough to say something
     # and either uses a cover verb or names the product.
-    names = {w for n in (group.title, *group.names) for w in re.findall(r"[a-z]{4,}", n.lower())} - {
-        "insurance",
-        "plan",
-        "policy",
-        "etiqa",
-    }
+    names = {
+        w for n in (group.title, *group.names) for w in re.findall(r"[a-z]{5,}", n.lower())
+    } - _NAME_STOPWORDS
     intro = None
     for snapshot in ordered:
         candidates = [snapshot.intro] + [

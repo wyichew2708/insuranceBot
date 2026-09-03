@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Appointed Insurer for the HDB Fire Insurance Scheme [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#body].
+Covers damage caused by fire to the building, structures, fixtures, and fittings provided by HDB and its approved developers [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#covers-damages-to-building-structure].
 
 ## What it covers
 
