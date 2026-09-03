@@ -38,6 +38,9 @@ class Entry:
     aliases: tuple[str, ...] = ()
     #: Name keys matched against a document's plan name (`normalise_plan`).
     documents: tuple[str, ...] = ()
+    #: Withdrawn products this one replaced. Their names are aliases of this
+    #: entry, and the answer says the product was replaced.
+    replaces: tuple[str, ...] = ()
 
     @property
     def legacy(self) -> bool:
@@ -117,6 +120,7 @@ def load_catalogue(bundle_root: Path) -> Catalogue | None:
                 urls=tuple(str(u) for u in raw.get("urls", [])),
                 aliases=tuple(str(a) for a in raw.get("aliases", [])),
                 documents=tuple(str(d) for d in raw.get("documents", [])),
+                replaces=tuple(str(r) for r in raw.get("replaces", [])),
             )
         )
     return Catalogue(entries)

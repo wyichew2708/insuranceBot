@@ -20,6 +20,13 @@ class Settings(BaseSettings):
     # composer, which is what keeps CI and the eval suites offline.
     #   auto | deterministic | anthropic | vllm
     llm_provider: str = "auto"
+    # Conversation memory: one JSON file per session under `state_dir/sessions`,
+    # a one-line summary per turn. `on` writes it; `auto` is `on` in the API
+    # server and `off` in tests and batch evaluation, which construct Settings
+    # directly and must stay stateless; `off` relies on the client's `history`.
+    #   auto | on | off
+    memory: str = "auto"
+    state_dir: Path = Path(".state")
     llm_timeout_s: float = 30.0
 
     # Anthropic. An empty key still works if `ant auth login` has been run —

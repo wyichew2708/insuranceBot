@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/tiq-pa-policy-wording-v2-280823.md
@@ -29,6 +30,16 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## 8. Claim Procedures
+
+> - (a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than thirty (30) days after any event which may entitle You to claim under this Policy. - (b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+- (c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 9. Incomplete Claims
+
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 ## CLAIMS PROCEDURE
 
@@ -63,9 +74,3 @@ All differences arising out of this Policy shall be referred to the decision of 
 ## 10. Claim Procedures
 
 - a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
-
-- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
-
-## 11. Incomplete Claims
-
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].

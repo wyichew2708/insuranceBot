@@ -11,9 +11,13 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- eprotect personal mobility
 - pa insurance
 - personal accident
 - personal accident insurance
+- personal mobility
+- personal mobility insurance
+- pmd insurance
 - tiq pa
 - tiq personal accident
 channels:
@@ -39,17 +43,17 @@ reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-12-02'
 confidence: medium
+replaces:
+- ePROTECT personal mobility
 ---
 
 ## What this plan is
 
-3 Plus Critical Illness Term Life Insurance Whole Life Insurance Etiqa Insurance Pte. Ltd. Personal Accident [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#have-questions-we-re-here-to-help].
+Coverage for your policy is automatic and no further action is required from you [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#featured-articles].
 
 ## What it covers
 
-Etiqa Insurance Pte. Ltd. Personal Accident Promo: 30% off: Stay covered for life’s unexpected moments.. Enjoy 30% off Etiqa Insurance Pte. Ltd. PA plan with protection for accidental death, disability, and injuries [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#tiq-personal-accident-promo-30-off]. <!-- okf:allow-number -->
-
-The policy wording sets out cover under: Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease; Physiotherapy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
+The policy wording sets out cover under: Payment of Benefit; Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 ## What is not covered
 

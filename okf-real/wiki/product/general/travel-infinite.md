@@ -43,7 +43,7 @@ confidence: medium
 
 ## What this plan is
 
-Flight delays, lost baggage or caught a bug during your travel? [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#body].
+The Ministry of Foreign Affairs has put up a travel advisory against non-essential travel to Israel and Palestinian Territories in view of the ongoing conflict [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#body].
 
 ## What it covers
 

@@ -921,6 +921,14 @@ def compose(
         if substantive:
             paragraphs = substantive
 
+    # A withdrawn product's name resolves to the product that replaced it,
+    # and the answer says so first: a customer asking about ePROTECT personal
+    # mobility is told Tiq Personal Accident replaced it.
+    replaced = (product.frontmatter.model_extra or {}).get("replaces") if product is not None else None
+    if product is not None and isinstance(replaced, list) and replaced and paragraphs:
+        named = " and ".join(str(r) for r in replaced)
+        paragraphs.insert(0, f"{product_name(product)} replaced {named}, which is no longer sold.")
+
     # A legacy product is still answered — a policyholder has questions — but
     # never as though it could be bought. The catalogue says which these are.
     if (

@@ -140,6 +140,10 @@ textarea:focus{outline:none;border-color:var(--accent)}
   header{gap:9px;padding:10px 12px}
 }
   .stage { font-size: 12px; opacity: .65; margin-top: 4px; }
+  .bubble ul { margin: 4px 0 8px 18px; padding: 0; }
+  .bubble li { margin: 2px 0; }
+  .bubble .lead { margin-bottom: 4px; }
+  .options.next button { border-style: dashed; }
 </style>
 
 <header>
@@ -322,7 +326,18 @@ function render(text, figures) {
   }
   html = html.replace(/(https?:\/\/[^\s<)]+)/g,
     '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-  return html.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
+  // The presentation layer writes **bold** and "- " bullets; nothing else.
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  return html.split(/\n{2,}/).map(p => {
+    const lines = p.split("\n");
+    const bullets = lines.filter(l => l.startsWith("- "));
+    if (bullets.length && bullets.length >= lines.length - 1) {
+      const head = lines.find(l => !l.startsWith("- "));
+      return (head ? `<p class="lead">${head}</p>` : "") +
+        `<ul>${bullets.map(l => `<li>${l.slice(2)}</li>`).join("")}</ul>`;
+    }
+    return `<p>${p.replace(/\n/g, "<br>")}</p>`;
+  }).join("");
 }
 
 /* Server-sent events over a POST body: `EventSource` is GET-only, so the
@@ -443,7 +458,16 @@ async function ask() {
            </ul></details>`
       : "";
 
-    bubble.innerHTML = head + render(a.answer || "", a.figures) + options + sources;
+    // What the customer might ask next, one tap each. Built server-side from
+    // what was just asked and what the corpus holds for the product.
+    let next = "";
+    if (!a.clarifying && (a.suggestions || []).length) {
+      next =
+        '<div class="options next">' +
+        a.suggestions.map(s => `<button data-pick="${escapeHtml(s)}">${escapeHtml(s)}</button>`).join("") +
+        "</div>";
+    }
+    bubble.innerHTML = head + render(a.answer || "", a.figures) + options + next + sources;
     for (const pick of bubble.querySelectorAll("[data-pick]")) {
       pick.onclick = () => { box.value = pick.dataset.pick; ask(); };
     }

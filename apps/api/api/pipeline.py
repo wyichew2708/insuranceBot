@@ -38,8 +38,10 @@ from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
 from api.entity import answer as entity_answer
 from api.gates_ext import advice_required
-from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency
+from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency, redact_pii
 from api.llm import Draft, LLMProvider, provider_for
+from api.memory import SessionMemory
+from api.present import present_overview
 from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
@@ -52,6 +54,7 @@ from api.retrieval import (
 )
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
+from api.suggest import closing_question, suggest_next
 from api.understand import Understanding, understand, worth_resolving
 from api.vectors import searcher_for
 from okf import (
@@ -216,6 +219,9 @@ def _finish(
     it named — but a turn that bypassed verification silently would look, on
     the trace, exactly like one that passed it.
     """
+    if not answer.handoff:
+        focus = bundle.get(ask.product_page) if ask is not None and ask.product_page else None
+        answer.suggestions = suggest_next(bundle, ask, focus, clarifying=answer.clarifying)
     with trace.stage("gates") as detail:
         results = run_gates(
             GateContext(
@@ -240,6 +246,32 @@ def _finish(
     )
 
 
+#: What the rewrite is asked for when the customer asked for the shape of a
+#: product. The deterministic presentation layer produces the same shape, so
+#: the two paths read alike.
+OVERVIEW_STYLE = (
+    "This is a product introduction. Open with one sentence saying what the plan is, "
+    "then a short bulleted list headed 'What it covers:' (one bullet per cover item, "
+    "keep the wording of the facts), then the route to buy if given, and end with one "
+    "question offering the customer two or three things to ask next (what is not "
+    "covered, how to claim, promotions, how to buy). Friendly, plain, no marketing."
+)
+
+_MEMORIES: dict[str, SessionMemory] = {}
+
+
+def memory_for(settings: Settings) -> SessionMemory:
+    """One memory per state directory, for the life of the process."""
+    # `auto` is on in the API server and off everywhere else: a test or a
+    # batch evaluation constructs Settings directly and must stay stateless,
+    # or one case's question would carry into the next. `main.py` resolves
+    # `auto` to `on` when it loads settings for the served process.
+    key = f"{settings.state_dir}|{settings.memory.lower()}"
+    if key not in _MEMORIES:
+        _MEMORIES[key] = SessionMemory(settings.state_dir, enabled=settings.memory.lower() == "on")
+    return _MEMORIES[key]
+
+
 def answer_question(
     bundle: Bundle,
     question: str,
@@ -247,6 +279,56 @@ def answer_question(
     settings: Settings,
     history: list[str] | None = None,
     provider: LLMProvider | None = None,
+    on_stage: StageListener | None = None,
+) -> tuple[AnswerEnvelope, Trace]:
+    """One turn, remembered.
+
+    The client's `history` is believed when it sends one; a client that sends
+    nothing gets the session's own earlier questions from memory, so the
+    subject carries forward either way. Every turn leaves a one-line summary
+    behind it, and the summary rides back on the envelope.
+    """
+    memory = memory_for(settings)
+    # Redacted here, before the memory or the trace can see it — the inner
+    # turn redacts again for callers that reach it directly. The first live
+    # run stored "my nric is S1234567A" in the session file; this is why.
+    question, _ = redact_pii(question)
+    recalled = memory.recall(session.session_id)
+    turns = list(history) if history else recalled.questions
+    provider = provider or provider_for(settings)
+    envelope, trace = _answer_turn(bundle, question, session, settings, turns, provider, on_stage)
+    ask = _ask_from_trace(trace)
+    envelope.summary = memory.remember(session.session_id, question, envelope, ask)
+    if envelope.delivered and not envelope.answer.smalltalk:
+        memory.refine_later(session.session_id, question, envelope.answer.answer, provider)
+    return envelope, trace
+
+
+def _ask_from_trace(trace: Trace) -> Ask | None:
+    """The Ask the turn recorded, rebuilt for the memory line."""
+    for stage in trace.stages:
+        if stage.name == "ask":
+            detail = stage.detail
+            try:
+                intent = Intent(detail.get("intent", "unknown"))
+            except ValueError:
+                intent = Intent.unknown
+            return Ask(
+                question=trace.question,
+                intent=intent,
+                product=detail.get("product"),
+                scope=detail.get("scope", "specific"),
+            )
+    return None
+
+
+def _answer_turn(
+    bundle: Bundle,
+    question: str,
+    session: Session,
+    settings: Settings,
+    history: list[str] | None,
+    provider: LLMProvider,
     on_stage: StageListener | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     trace = Trace(question=question, session_id=session.session_id, channel=session.channel.value)
@@ -287,6 +369,13 @@ def answer_question(
             detail["scores"] = [str(sc) for sc in incoming.scores]
     if incoming.blocked or _fail_closed(incoming, settings):
         return _refusal(trace, incoming, "guardrail-input", "refused by the input guardrail")
+
+    # Personal identifiers leave the turn here, before the Ask, the model,
+    # the trace or the memory sees them. The customer's NRIC has no bearing on
+    # what a policy covers.
+    question, redacted = redact_pii(question)
+    if redacted:
+        trace.note(f"personal data redacted from the turn: {', '.join(redacted)}")
 
     # One reading of the question, before anything rewrites it. The product
     # name is read from the customer's own words — the abbreviation pass
@@ -715,6 +804,7 @@ def answer_question(
                     unresolved=list(draft.unresolved),
                     product=product.frontmatter.title if product is not None else None,
                     carried_from=resolution.carried_from,
+                    style=OVERVIEW_STYLE if ask.scope == "overview" else "",
                 )
                 rewrite = provider.rewrite(draft_facts)
                 fell_back = ""
@@ -746,6 +836,19 @@ def answer_question(
                         budget.charge_tokens(rewrite.tokens)
                         detail["tokens"] = rewrite.tokens
 
+        # The presentation layer: the same verified sentences, organised. An
+        # introduction gets an opening line, "What it covers" as a list, the
+        # route, and a closing question built from the same chips it offers.
+        # Every other answer keeps its shape and gets the chips alone.
+        if not draft.handoff and draft.answer:
+            draft.suggestions = suggest_next(bundle, ask, product, clarifying=draft.clarifying)
+            if ask.scope == "overview" and product is not None:
+                with trace.stage("present") as detail:
+                    draft.answer = present_overview(
+                        draft.answer, product, closing_question(draft.suggestions)
+                    )
+                    detail["shape"] = "introduction"
+
         if incoming.acted_on("distress"):
             # Routed to a person rather than answered. What a customer in
             # crisis should actually be told is a compliance decision, not one
@@ -760,6 +863,7 @@ def answer_question(
             tier == "UNKNOWN"
             and product is not None
             and not draft.handoff
+            and ask.scope != "overview"
             and _tier_specific(product, bundle)
         ):
             draft.unresolved.append("plan tier unknown — sign in for tier-specific limits")

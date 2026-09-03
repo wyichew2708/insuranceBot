@@ -223,7 +223,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.exclusion,
         re.compile(
-            r"\b(exclu(de|ded|sion|sions)|not covered|won'?t (you )?(pay|cover)|is .{0,30} covered)\b", re.I
+            r"\b(exclu(de|ded|sion|sions)|not cover(?:ed|s)?|won'?t (you )?(pay|cover)|is .{0,30} covered)\b",
+            re.I,
         ),
     ),
     (

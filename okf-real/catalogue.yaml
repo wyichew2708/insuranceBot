@@ -19,6 +19,8 @@
 #   aliases   other names customers use for it
 #   documents name keys that identify this product's wordings, summaries and
 #             brochures in raw/ (matched against the file's plan name)
+#   replaces  names of withdrawn products this one replaced; their names are
+#             aliases here and the answer says the product was replaced
 
 products:
   # ---------------------------------------------------------------- Tiq — Protection
@@ -64,8 +66,19 @@ products:
     urls:
       - https://www.tiq.com.sg/product/tiq-personal-accident
       - https://www.etiqa.com.sg/personal/personal-accident
-    aliases: [Personal Accident Insurance, Tiq PA, PA insurance, personal accident]
-    documents: [tiq-pa, personal-accident]
+    aliases:
+      - Personal Accident Insurance
+      - Tiq PA
+      - PA insurance
+      - personal accident
+      # ePROTECT personal mobility was withdrawn and replaced by this product
+      # (owner, 2026-09-03); its names resolve here and the answer says so.
+      - ePROTECT personal mobility
+      - personal mobility insurance
+      - PMD insurance
+      - personal mobility
+    replaces: [ePROTECT personal mobility]
+    documents: [tiq-pa, personal-accident, eprotect-personal-mobility, personal-mobility]
 
   # ---------------------------------------------------------------- Tiq — Home & Maid
   - slug: home-insurance
@@ -121,14 +134,6 @@ products:
       - https://www.etiqa.com.sg/personal/pet-insurance
     aliases: [Tiq Pet Insurance, Tiq Pet, pet cover, dog insurance, cat insurance]
     documents: [pet-insurance, dash-pet, pet]
-  - slug: personal-mobility-insurance
-    name: ePROTECT personal mobility
-    brand: tiq
-    category: Travel & Lifestyle
-    status: active
-    urls: [https://www.tiq.com.sg/product/personal-mobility-insurance]
-    aliases: [personal mobility insurance, PMD insurance, e-scooter insurance, personal mobility]
-    documents: [eprotect-personal-mobility, personal-mobility]
 
   # ---------------------------------------------------------------- Tiq — Motor
   - slug: private-car-insurance

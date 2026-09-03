@@ -40,11 +40,9 @@ confidence: medium
 
 ## What this plan is
 
-Designed for Singapore residents who appreciate fuss-free protection for the home that you’re working hard for [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#rated-1-home-insurance-seedly-oct-2021].
+Most fire insurance offer only basic protection for the structure, permanent fixtures and fittings of your home in the event of fire [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#why-tiq-home-insurance].
 
 ## What it covers
-
-Rated #1 Home Insurance (Seedly, Oct 2021): Designed for Singapore residents who appreciate fuss-free protection for the home that you’re working hard for [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#rated-1-home-insurance-seedly-oct-2021]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Renovation; Home Contents; Personal Legal Liability (Worldwide); Building & Renovation; Household Contents; Personal Legal Liability; Tenant's Liability; Family Accidental Death Protection; Multi-appliances Home Protector [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
 

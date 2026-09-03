@@ -143,6 +143,10 @@ class GroundedAnswer(BaseModel):
     # about cover, so the coverage gates have nothing to check, but it does
     # name products and carries a claim for each, so provenance still applies.
     clarifying: bool = False
+    #: Questions the customer could ask next, offered as taps. Built from what
+    #: was just asked and what the corpus holds for the product; never a
+    #: question the corpus cannot answer.
+    suggestions: list[str] = Field(default_factory=list)
 
 
 class AnswerRequest(BaseModel):
@@ -163,3 +167,6 @@ class AnswerEnvelope(BaseModel):
     gates: list[GateResult] = Field(default_factory=list)
     delivered: bool = True
     trace_id: str = ""
+    #: One line remembered about this turn — product, intent, what was asked,
+    #: what was answered — and the same line is what the session memory holds.
+    summary: str = ""

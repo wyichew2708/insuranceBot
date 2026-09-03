@@ -82,7 +82,9 @@ know about insurance generally.
 Where a PRODUCT line is given, name that product in the answer: a customer \
 reading a follow-up should not have to remember which plan they asked about.
 5. Answer at the length the question needs — usually two or three sentences. \
-No preamble, no restating the question, no closing offer of further help.
+No preamble, no restating the question, no closing offer of further help — \
+unless a STYLE line asks for a structure, in which case follow it exactly: \
+keep its headings and bullets, and end on the question it asks for.
 6. If the facts do not answer the question that was actually asked, say so in \
 one sentence and put the question in `unresolved`. Do not answer a \
 neighbouring question instead: a clause *about* premiums is not a premium, \
@@ -114,6 +116,9 @@ class Draft:
     #: Passed so the model can see that "whats the coverages" is a question
     #: about term life rather than a fragment, and answer it as one.
     carried_from: str | None = None
+    #: How the answer should be shaped, where the question calls for a shape:
+    #: an introduction is a line, a list and a question, not a paragraph.
+    style: str = ""
 
     def accepts(self, answer: str) -> bool:
         """Whether `answer` is a faithful rewrite of this draft.
@@ -136,6 +141,8 @@ class Draft:
             # Stated rather than spliced into the question, so the model can
             # tell what the customer typed from what the system inferred.
             lines.append(f'CARRIED FROM AN EARLIER TURN: "{self.carried_from}"')
+        if self.style:
+            lines.append(f"STYLE: {self.style}")
         lines += [f"QUESTION: {self.question}", "", "FACTS ESTABLISHED:"]
         for claim in self.claims:
             locator = f" [{claim.locator}]" if claim.locator else ""

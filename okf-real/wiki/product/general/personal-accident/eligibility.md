@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 - raw/wordings/tiq-pa-policy-wording-v2-280823.md
 - raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md
 version_in_force: '2026'
@@ -28,6 +29,12 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## Eligibility
+
+> - (c) If the Insured is younger than eighteen (18) years of Age on the Effective Date of Insurance, the Insured must be: - I. a legal child including stepchild and/or legally adopted child of the Policy Owner; - II. wholly dependent on the Policy Owner for financial support and not gainfully employed in any way; and III. unmarried. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+> The Policy Owner must be at least eighteen (18) years of Age. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
 
 ## Eligibility
 

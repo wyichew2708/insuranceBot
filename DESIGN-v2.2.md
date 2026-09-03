@@ -283,6 +283,55 @@ and `.env` switches the URLs; nothing in the code changes. It is optional —
 the bot works without it — and it only matters when the wait per answer
 matters. If there is no GPU machine, skip it.
 
+## The four enhancements (2026-09-03, night)
+
+**Personal mobility → Tiq Personal Accident.** The catalogue entry is gone;
+its names are aliases of Tiq Personal Accident and the entry carries
+`replaces: [ePROTECT personal mobility]`, so a customer asking about the old
+product is told, first, that Tiq Personal Accident replaced it.
+
+**1. A presentation layer** — `apps/api/api/present.py`. The composer
+establishes facts and the gates verify them; neither cares how the result
+reads, and "tiq home" came back as the wording's section list, then the
+site's intro, then a stray FAQ answer, then a link. For an introduction
+(`Ask.scope == "overview"`) the same verified sentences are now reordered
+and labelled: an opening line, "What it covers" as a list, the route to buy,
+and a closing question built from the next-question chips. It adds no fact
+and changes no figure — every sentence out is a sentence in — so the gates
+that run after it see the same claims. The model rewrite receives a `STYLE`
+line asking for the same shape, so both paths read alike. The "limits vary by
+plan tier" nudge is not appended to an introduction.
+
+**2. Conversation memory** — `apps/api/api/memory.py`. One JSON file per
+session under `state_dir/sessions/`; a one-line summary per turn — product,
+intent, what was asked, the answer's first sentence — and a rolling summary
+of the last five. A client that sends `history` is believed; one that sends
+nothing gets the session's own earlier questions, so "what does it not
+cover" after "tiq home" is about Tiq Home. The summary rides back on the
+envelope (`summary`) and `GET /v1/sessions/{id}` returns the record. Where a
+model is configured, a background thread replaces the deterministic line
+with a one-sentence model summary after the turn has been answered; the
+turn never waits on it. `MEMORY=auto` is on in the API server and off in
+tests and batch evaluation, which construct settings directly and must stay
+stateless.
+
+**3. Next-question suggestions** — `apps/api/api/suggest.py`. Up to four
+chips per answer, phrased in the product's own name so the next turn resolves
+without a model, chosen by what was just asked (after exclusions, not
+exclusions again) and by what the corpus holds for the product (no "how do
+I claim" where there is no claims page; no "is there a promotion" where there
+is none). A clarifying answer keeps its own chips. The introduction's closing
+question is built from the same list, so the words and the taps agree.
+
+**4. Guardrails, both ways.** In: NRIC/FIN, payment-card numbers, emails and
+passport numbers are redacted from the turn before the Ask, the model, the
+trace or the memory sees it, and flagged (`pii`) — never a refusal. Abuse in
+the turn is flagged by the rules layer as well as the model. Out: personal
+data in the answer is `leakage` (rules now have standing to block it), a link
+anywhere but etiqa.com.sg or tiq.com.sg is `external-link`, abuse is
+`toxicity`; all three block on the rules alone and the model may raise them
+too. The model-layer screens (`GUARDRAILS=model`) run on top as before.
+
 ## Open — needs a person
 
 - **20 conflict tickets** in `okf-real/conflicts/`: places the website

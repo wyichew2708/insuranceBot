@@ -915,7 +915,9 @@ _COVER_END_RE = re.compile(
 #: A heading that describes something other than the cover, above that line.
 #: "Apply for business insurance today" is a call to action, not a benefit,
 #: and it was compiled onto eight pages as what the product covers.
-_COVER_SKIP_RE = re.compile(r"advisory|about us|sitemap|overview of|apply (?:for|now)|start your", re.I)
+_COVER_SKIP_RE = re.compile(
+    r"advisory|about us|sitemap|overview of|apply (?:for|now)|start your|\brated\b|award|#1|winner", re.I
+)
 #: Sentence-level noise the tile shape does not exclude: a navigation bar the
 #: extractor flattened into prose ("Coverage | Resources | FAQs"), and a
 #: closure notice, which is a fact about the *shopfront* and not about cover.
@@ -924,6 +926,7 @@ _COVER_NOISE_RE = re.compile(
     r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in|i consent to|marketing consent"
     r"|^- |leave your contacts|by submitting|buy online|buy now|promo code|launches|available for signup"
     r"|^\d+ in \d+|get in touch|it is usually detrimental|underwritten by|protection scheme|protected under"
+    r"|\bpromo\b|% off|promotion"
     r"|:\s*$",
     re.I,
 )
@@ -1174,10 +1177,16 @@ def _describes_plan(sentence: str, names: set[str]) -> bool:
     """A sentence that says what the plan is: eight words or more, no page
     furniture, not shouted, and either a cover verb or the product's own
     name in it."""
-    if len(sentence.split()) < 8 or sentence.endswith("!") or ALIAS_RE.match(sentence):
+    if len(sentence.split()) < 8 or sentence.endswith(("!", "?")) or ALIAS_RE.match(sentence):
         return False
     letters = [c for c in sentence if c.isalpha()]
     if letters and sum(c.isupper() for c in letters) / len(letters) > 0.5:
+        return False
+    # A flattened navigation bar — "3 Plus Critical Illness Term Life
+    # Insurance Whole Life Insurance …" — is a run of capitalised words with
+    # no sentence in it.
+    words = sentence.split()
+    if sum(1 for w in words if w[:1].isupper()) / len(words) >= 0.6:
         return False
     if _COVER_NOISE_RE.search(sentence) or NUMBER_IN_PROSE_RE.search(sentence):
         return False
@@ -1279,6 +1288,11 @@ def emit_product(
         line_of_business=lob,
         regulated_advice=regulated,
         aliases=aliases,
+        **(
+            {"replaces": list(group.entry.replaces)}
+            if group.entry is not None and group.entry.replaces
+            else {}
+        ),
         channels=channels,
         plan_tiers=tiers,
         version_in_force=version,
@@ -1311,18 +1325,16 @@ def emit_product(
     } - _NAME_STOPWORDS
     intro = None
     for snapshot in ordered:
-        candidates = [snapshot.intro] + [
-            p
+        # Not the advisory, the awards, the referral scheme or the footer: a
+        # section that does not describe the product cannot open its page.
+        usable = [
+            s
             for s in snapshot.sections
-            if s.heading and not _OVERVIEW_SKIP_RE.search(s.heading)
-            for p in s.paragraphs
+            if s.heading and not _OVERVIEW_SKIP_RE.search(s.heading) and not _COVER_SKIP_RE.search(s.heading)
         ]
-        anchors = ["body"] + [
-            s.anchor
-            for s in snapshot.sections
-            if s.heading and not _OVERVIEW_SKIP_RE.search(s.heading)
-            for _ in s.paragraphs
-        ]
+        candidates = [snapshot.intro] + [p for s in usable for p in s.paragraphs]
+        anchors = ["body"] + [s.anchor for s in usable for _ in s.paragraphs]
+
         for text, anchor in zip(candidates, anchors):
             for sentence in _sentences(text):
                 if not _describes_plan(sentence, names):

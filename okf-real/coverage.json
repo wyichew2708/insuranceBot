@@ -2,8 +2,8 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123705,
-  "share": 0.048
+  "reached": 122276,
+  "share": 0.047
  },
  "sources": {
   "raw/brochures/2023-05-etiqa-ilp-sub-fund-factsheets-all-portfolios.md": {
@@ -572,10 +572,10 @@
   },
   "raw/faq/eprotect-personal-mobility.md": {
    "words": 1159,
-   "reached": 381,
-   "share": 0.329,
+   "reached": 359,
+   "share": 0.31,
    "pages": [
-    "product/general/personal-mobility-insurance/faq"
+    "product/general/personal-accident/faq"
    ]
   },
   "raw/faq/eprotect-safety.md": {
@@ -3626,8 +3626,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md": {
    "words": 3269,
-   "reached": 148,
-   "share": 0.045,
+   "reached": 174,
+   "share": 0.053,
    "pages": [
     "product/general/travel-infinite",
     "product/general/travel-infinite/benefits"
@@ -6770,8 +6770,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md": {
    "words": 1195,
-   "reached": 19,
-   "share": 0.016,
+   "reached": 24,
+   "share": 0.02,
    "pages": [
     "product/protection/cancer-insurance"
    ]
@@ -6808,8 +6808,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md": {
    "words": 1499,
-   "reached": 43,
-   "share": 0.029,
+   "reached": 23,
+   "share": 0.015,
    "pages": [
     "product/general/home-insurance"
    ]
@@ -6912,7 +6912,7 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md": {
    "words": 1333,
-   "reached": 14,
+   "reached": 15,
    "share": 0.011,
    "pages": [
     "product/general/personal-accident"
@@ -6928,8 +6928,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md": {
    "words": 4993,
-   "reached": 211,
-   "share": 0.042,
+   "reached": 196,
+   "share": 0.039,
    "pages": [
     "product/general/travel-insurance",
     "product/general/travel-insurance/benefits"
@@ -7510,15 +7510,16 @@
   },
   "raw/wordings/eprotect-personal-mobility-policy-wording2018.md": {
    "words": 8836,
-   "reached": 2621,
-   "share": 0.297,
+   "reached": 2670,
+   "share": 0.302,
    "pages": [
-    "product/general/personal-mobility-insurance",
-    "product/general/personal-mobility-insurance/claims",
-    "product/general/personal-mobility-insurance/conditions",
-    "product/general/personal-mobility-insurance/definitions",
-    "product/general/personal-mobility-insurance/eligibility",
-    "product/general/personal-mobility-insurance/exclusions"
+    "product/general/personal-accident",
+    "product/general/personal-accident/claims",
+    "product/general/personal-accident/conditions",
+    "product/general/personal-accident/cover",
+    "product/general/personal-accident/definitions",
+    "product/general/personal-accident/eligibility",
+    "product/general/personal-accident/exclusions"
    ]
   },
   "raw/wordings/eprotect-personal-mobility-tnc-2023-promotion-01-oct-to-31-oct-2023.md": {
@@ -8299,10 +8300,9 @@
   },
   "raw/wordings/policy-wording-personal-accident-policy-22032016.md": {
    "words": 2371,
-   "reached": 635,
-   "share": 0.268,
+   "reached": 588,
+   "share": 0.248,
    "pages": [
-    "product/general/personal-accident",
     "product/general/personal-accident/claims",
     "product/general/personal-accident/conditions",
     "product/general/personal-accident/cover",
@@ -8312,8 +8312,8 @@
   },
   "raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md": {
    "words": 12069,
-   "reached": 1670,
-   "share": 0.138,
+   "reached": 820,
+   "share": 0.068,
    "pages": [
     "product/general/personal-accident/claims",
     "product/general/personal-accident/conditions",
@@ -8528,8 +8528,8 @@
   },
   "raw/wordings/tiq-pa-policy-wording-v2-280823.md": {
    "words": 8688,
-   "reached": 1752,
-   "share": 0.202,
+   "reached": 1220,
+   "share": 0.14,
    "pages": [
     "product/general/personal-accident/claims",
     "product/general/personal-accident/cover",
@@ -8546,8 +8546,8 @@
   },
   "raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md": {
    "words": 8708,
-   "reached": 343,
-   "share": 0.039,
+   "reached": 319,
+   "share": 0.037,
    "pages": [
     "product/general/personal-accident/definitions",
     "product/general/personal-accident/eligibility",

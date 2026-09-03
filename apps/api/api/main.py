@@ -36,7 +36,11 @@ _state: dict[str, Any] = {"bundle": None, "settings": None, "traces": TraceStore
 
 def settings() -> Settings:
     if _state["settings"] is None:
-        _state["settings"] = get_settings()
+        loaded = get_settings()
+        if loaded.memory.lower() == "auto":
+            # The served process is the one with sessions to remember.
+            loaded.memory = "on"
+        _state["settings"] = loaded
     current: Settings = _state["settings"]
     return current
 
@@ -203,6 +207,15 @@ async def answer_stream(req: AnswerRequest) -> StreamingResponse:
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
+
+
+@app.get("/v1/sessions/{session_id}")
+async def session_memory(session_id: str) -> dict[str, Any]:
+    """What this session has asked and been told, one summary line per turn,
+    and the rolling summary a later turn falls back on."""
+    from api.pipeline import memory_for
+
+    return memory_for(settings()).record(session_id)
 
 
 class TraceSummary(BaseModel):

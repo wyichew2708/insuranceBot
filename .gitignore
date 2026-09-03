@@ -33,3 +33,5 @@ okf-live/
 
 # Scan staging: each scan crawls and compiles into its own throwaway bundle.
 .scan/
+# conversation memory, per session
+.state/

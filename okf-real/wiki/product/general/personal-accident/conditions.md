@@ -17,6 +17,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 version_in_force: '2026'
@@ -29,6 +30,144 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## Important Notice
+
+In accordance with the Insurance Act, We would remind You that You must disclose to Us fully and faithfully all the facts You know or could reasonably be expected to know, otherwise You may not receive any Benefit from this Policy [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## General Terms
+
+1. This Policy, Schedule, Endorsement, application, proposal form, declaration and attached papers together with other statements in writing, if any, are evidence of the contract between You and Us and shall hereinafter be referred to as the 'Policy'. The proposal made to Us in connection with this Insurance shall be the basis and forms part of this contract [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+2. This Policy, Schedule, Endorsement, application, proposal form, declaration and attached papers together with other statements in writing, if any, are to be read as one document and any word or expression to which a specific meaning has been attached in any part shall bear the same meaning wherever it appears [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+3. Provided that You pay the premium in full and We agree to accept it, We shall provide the respective Insurance in the terms set out in this Policy. 4. The conditions which appear in this Policy, Schedule and Endorsement, if any, are part of the contract and must be complied with. Failure to comply may mean that You shall not be able to claim under this Policy [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+5. Any word denoting a singular pronoun shall also mean to include the plural. 6. Throughout this Policy, where the context so admits, words embodying the masculine gender shall include the feminine gender and vice-versa [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## Payment Before Cover Warranty (Applicable to Individual Policyholders Only)
+
+1. The premium due must be paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date ('the inception date') or the renewal date of the coverage. Payment shall be deemed to have been effected to the Insurer or the intermediary when one of the following acts takes place: [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+Cash or honoured cheque for the premium is handed over to the Insurer or the intermediary; 3. (b) A credit or debit card transaction for the premium is approved by the issuing bank; 4. (c) A payment through an electronic medium including the internet is approved by the relevant party; [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+A credit in favour of the Insurer or the intermediary is made through an electronic medium including the internet. 2. In the event that the total premium due is not paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+3. In respect of insurance coverage with Free Look provision, You may inform Us in writing within the Free Look period if You decide to cancel the cover during the Free Look period. In such an event, You will receive a full refund of the premium paid to Us provided that no claim has been made under the insurance and the cover shall be treated as if never put in place [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## Premium Basis & Adjustment
+
+> Your Premium shall be based upon Your attained Age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30) days before Your Premium is increased or varied by Us. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 10. Cancellation of Bicycle Rider
+
+> If You wish to terminate the cover under Section C - Bicycle Rider, We will refund the prorated premium amount due to You. A cancellation fee of $10 will be deducted from the refundable amount. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 6. Abnormal Conditions/State of Emergency
+
+Any loss, damage or other contingency happened during the existence of abnormal conditions or state of emergency as declared by the local authorities (whether physical or otherwise) which is occasioned by or through or in consequence, directly or indirectly, of any of the said occurrences except to the extent that You shall prove that such loss, damage or other contingency happened independently of the existence of such abnormal conditions or state of emergency as declared by the local authorities [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 1. Residential Qualification
+
+> In the event of change of residence, You shall notify Us in writing and the Insurance shall be terminated with effect from the date You leave Singapore. For this purpose, change of residence means living or intending to live outside Singapore in excess of twelve (12) consecutive calendar months. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 2. Overseas Travel / Medical Treatment
+
+Unless otherwise specified, We shall not pay any Benefit whilst You are overseas: [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+- (a) if the event which may give rise to claim occurs on the purpose of business, study or vacation for a period exceeding three (3) consecutive months in any one annual Period of Insurance; or - (b) to seek medical treatment (even though such treatment shall be upon the requirement of attending Medical Practitioner) if such treatment is available locally [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 3. Free Look Period
+
+> You have fourteen (14) days from the date You receive this Policy to examine the terms and conditions of the Policy and may cancel the Policy within the foregoing 14-day period by written request to Us in which case premiums paid will be refunded, if a claim has not been made under the Policy. If the Policy is sent by post, it is deemed to have been delivered in the ordinary course of post. Where the Policy is so cancelled, We will have no liability whatsoever under the cancelled Policy and We will be entitled to recover any expense incurred by Us in underwriting the Policy. This provision is not applicable to any policies with Period of Insurance of less than a year and renewals. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 4. Period of Cover and Renewal
+
+> This Policy shall become effective as of the date stated in the Schedule. The Policy Renewal shall be one year after the effective date and annually thereafter. On each such renewal, the Policy is renewable at the premium rates in effect at that time and any change in the renewal premium shall be notified in writing at least thirty (30) days before change is in effect. The Policy is renewable at Our option. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 5. Misrepresentation/Fraud
+
+If the proposal or declaration of the Insured is untrue in any respect or if any material fact affecting that risk be incorrectly stated herein or omitted therefrom or if this Insurance, or any renewal thereof shall have been obtained through any misstatement, misrepresentation or suppression or if any claims made shall be fraudulent or exaggerated or if any false declaration or statement shall be made in support thereof then in any of these cases, this Insurance shall be void [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 6. Portfolio Withdrawal Condition
+
+> We reserve the right to cancel the portfolio as a whole if We decide to discontinue underwriting this Insurance product. Cancellation of the portfolio as a whole shall be given by written notice to You at least thirty (30) days before the cancellation and We will run off all Policies to expiry of the period of cover within the portfolio. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 10. Subrogation
+
+If We shall become liable for any payment under this Insurance, We shall be subrogated to the extent of such payment to all Your rights and remedies against any party and shall be entitled at Our own expense to sue in Your name. You shall give or cause to be given to Us all such assistance in Your power as We shall require to secure the rights and remedies and at Our request shall execute or cause to be executed all documents necessary to enable Us to effectively to bring suit in Your name [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 11. Interest and Currency
+
+No amount payable under this Policy shall carry any interest. Premiums and benefits payable under this Policy shall be in Singapore Dollars (SGD) [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 12. Other Insurance
+
+No person shall be covered under more than one such identical personal accident Policy issued by Etiqa Insurance Pte. Ltd. In the event You are covered under more than one such Policy, We shall consider You to be Insured under the Policy which was issued first (where the benefits provided under each such Policy are identical) or which provides the greatest amount of Benefit and We shall refund any duplicated premium payment which may have been made by You or on Your behalf [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 13. Notice of Trust or Assignment
+
+We shall not accept or be affected by notice of any trust or assignment or the like which relates to this Policy [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 14. Legal Proceedings
+
+> No action at law or in equity shall be brought to recover on the Policy prior to expiration of sixty (60) days after written proof of loss has been furnished in accordance with the requirements of this Policy. If You fail to supply the requisite proof of loss as stipulated by the terms, provisions and conditions of this Policy, You may, within a grace period of one calendar year from the time that the written proof of loss to be furnished, submit the relevant proof of loss to Us with cogent reason(s) for the failure to comply with the Policy terms, provisions and conditions. The acceptance of such proof of loss shall be at Our sole and entire discretion. After such grace period has expired, We will not accept, for any reason whatsoever, such written proof of loss. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 15. Alterations
+
+> We reserve the right to amend the terms and provisions of this Policy by giving thirty (30) day prior notice in writing by ordinary post to Your last known address in Our records, and such amendment will be applicable from the next renewal of this Policy. No alteration to this Policy shall be valid unless authorised by Us and such approval is endorsed thereon. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 16. Contract (Rights of Third Parties) Act 2001
+
+> A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act 2001 to enforce any of its terms. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 17. Termination of Policy
+
+You may terminate the policy any time prior to expiry by giving Us seven (7) days' notice in writing [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## (b) Automatic Termination
+
+- i. upon the death of the Insured; or - ii. if the Insured ceases to be eligible on the grounds of Age, and/or Residential Qualification; or - iii. upon full payment of Benefit under Sections 1 or 2(a) to 2(d) [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## (c) Termination by Us
+
+> We may give notice of termination hereof by registered post to You at Your last known address. Such termination shall become effective after thirty (30) days following the date of such notice. Your child(ren)'s coverage will be automatically terminated upon termination of Your policy. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## (d) Premium Position Upon Termination
+
+In the event of termination of this policy by Us, the proportionate part of any premium received in respect of the unexpired period of the Policy will be refunded to You [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+> In the event of termination of this policy by You beyond the free look period, the proportionate part of any premium received in respect of the unexpired period of the Policy will be refunded to You. A cancellation fee of $20 will be deducted from the refundable amount. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## (e) Effective Time of Termination
+
+> This Policy shall terminate at 12:01am Singapore Time on the relevant date specified in the occurrence date of any events specified herein, Schedule or Endorsement. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+## 18. Governing Law
+
+This Policy will be governed by and interpreted in accordance with Singapore law [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## 19. Condition Precedent
+
+The validity of this Policy is subject to the condition precedent that [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+> - (a) for the risk insured, the Insured has never had any insurance terminated in the last twelve (12) months due solely or in part to a breach of any premium payment condition; or - (b) if the Insured has declared that it has breached any premium payment condition in respect of a previous policy taken up with another insurer in the last twelve (12) months: [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+- i. the Insured has fully paid all outstanding premium for time on risk calculated by the previous insurer based on the customary short period rate in respect of the previous policy; and - ii. a copy of the written confirmation from the previous insurer to this effect is first provided by the Insured to the Company before cover incepts [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## Policy Owners' Protection Scheme
+
+This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for Your policy is automatic and no further action is required from You. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact Us or visit the General Insurance Association (GIA) or SDIC web-sites (www.gia.org.sg or www.sdic.org.sg) [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## Personal Data Use
+
+Any information collected or held by Us whether contained in Your application or otherwise obtained may be used and/or disclosed to Our associated individuals/companies or any independent third parties (within or outside Singapore) for any matters relating to Your application, any policy issued and to provide advice or information concerning products and services which We believe may be of interest to You and to communicate with You for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+This policy is not a Medisave-approved policy and You may not use Medisave to pay the premium for this policy [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+> This is a short-term accident and health policy and the insurer is not required to renew this policy. The insurer may terminate this policy by giving You 30-day notice in writing. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
+
+*If You have any existing medical condition at the policy renewal date, You may not be covered under the renewed policy for such a medical condition. If such a medical condition is covered under the renewed policy, You may need to pay additional premiums [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 ## CONDITIONS PRECEDENT TO LIABILITY
 
@@ -83,97 +222,3 @@ Us/We/Our means Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) [src:raw
 Accident/Accidental means an event of violent, accidental, external and visible nature, occurring during the Period of Insurance, which shall independently of any other cause be the sole cause of Bodily Injury or death [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
 
 Benefit means the respective Benefit, as stated in the Policy, Schedule and/or Endorsement payable by Us under the terms, exclusions and conditions of this Policy in respect of each event or loss covered by this Policy [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Bodily Injury means injury sustained by an Insured from an Accident [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Effective Date of Insurance means the effective date on the Schedule [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> Each day of Hospital Confinement is defined as a day of which the Hospital makes a charge for room and board by You for admission as an in-patient for a minimum period of twenty-four (24) hours on the recommendation of a Medical Practitioner. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-Endorsement means written evidence of an agreed change to this Policy [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Family Member means an Insured's spouse, parent, parent-in-law, grandparent, child, brother or sister [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Hospital means any institution which fully meets all of the following criteria: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> - a) maintains permanent and full-time facilities for care of overnight resident patients; and - b) has diagnostic and therapeutic facilities for surgical and medical diagnosis and treatment and care of injured and sick persons by or under the supervision of a staff of Medical Practitioners; and - c) continuously provides 24 hours a day nursing service supervised by qualified nurses; and - d) is not other than incidentally a mental institution or a place for rest or a place for the aged or for drug addicts or for alcoholics. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-> Hospital Confinement means an admission or a series of admissions from the same cause except that if admissions from the same cause are separated by twelve (12) months or more then each such admission shall constitute a separate Hospital Confinement. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-Loss of Hearing and Speech means total and irrecoverable loss of speech and hearing which is beyond remedy by surgical or other treatment [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Loss of Sight means physical loss of an eye or permanent and total loss of sight, which shall be considered as having occurred: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> - a) in both eyes if so certified by a registered fully qualified ophthalmic specialist. However, We reserve the right to seek a second opinion; or - b) in one eye if the degree of sight remaining after correction is 1/60 or less on the Snellen Scale (that is seeing at one (1) foot what a person should see at sixty (60) feet). However, We reserve the right to seek a second opinion. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-- a) amputation of an entire hand or all four fingers from where the fingers join the palm of the hand; or b) total and permanent loss of use of an entire hand or all four fingers [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-- a) amputation of a foot (at or above the ankle); or - b) permanent total loss of use of a foot [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Loss of Limb means loss or physical separation of a hand at or above the wrist or a foot at or above the ankle and shall include total and irrecoverable loss of use of hand, arm or leg [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Medical Practitioner means a legally qualified physician, doctor or surgeon other than Yourself or Your Family Member [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Medically Necessary shall mean a medical service which is: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-- a) consistent with the diagnosis and customary medical treatment for a covered disability; and - b) in accordance with standards of good medical practice, consistent with current standard of professional medical care and of proven medical benefits ; and - c) not for the convenience of the Insured or the physician, and unable to be reasonably rendered out of hospital (if admitted as an inpatient); and - d) not of an experimental, investigational or research nature, preventive or screening nature; and - e) for which the charges are fair, reasonable and customary for the disability [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Period of Insurance means the period starting from the Effective Date of Insurance during which the coverage under this Policy is effective [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Pre-existing Illness shall mean disabilities that the Insured has reasonable knowledge of. The Insured may be considered to have reasonable knowledge of a pre-existing condition where the condition is one for which: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-- a) the Insured had received or is receiving treatment; or - b) medical advice, diagnosis, care or treatment has been recommended; or - c) clear and distinct symptoms are or were evident; or - d) its existence would have been apparent to a reasonable person in the circumstances [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> Specified Illnesses shall mean the following disabilities and its related complications, occurring within the first hundred twenty (120) days of Insurance of the Insured: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-- a) Hypertension, diabetes mellitus and cardiovascular disease; or - b) All tumours, cancers, cysts, nodules, polyps, stones of the urinary system and biliary system; or - c) All ear, nose (including sinuses) and throat conditions; or - d) Hernias, haemorrhoids, fistulae, hydrocele, varicocele; or - e) Vertebro-spinal disorders (including disc) and knee conditions [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Overseas Trip means travel / trip outside Malaysia, Singapore, Brunei and not being the Insured Person's home country [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-Schedule means the information page that contains the details of the Insured, Benefit, Premium and Period of Insurance attached to this Policy [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-## General Conditions (Applicable To All Sections)
-
-In the event of change of residence, the Insured shall notify Us in writing and the Insurance shall be terminated with effect from the date he leaves Singapore. For this purpose, change of residence means living or intending to live [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> 1. Residential Qualification outside Singapore in excess of twelve (12) consecutive calendar months. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-## 2. Overseas Travel/Medical Treatment
-
-We shall not pay any Benefit whilst the Insured is outside of Singapore: [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-- a) if the event which may give rise to claim occurs on the purpose of business, study or vacation for a period exceeding three (3) consecutive months in any one annual Period of Insurance; or - b) to seek medical treatment (even though such treatment shall be upon the requirement of attending Medical Practitioner) if such treatment is available locally [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-## Free Look Period
-
-> If this Policy shall have been issued and for any reason whatsoever You shall decide not to take up the Policy, You may return the Policy to Us for cancellation provided such request for cancellation is delivered by You to Us within fourteen (14) days from the date of delivery of the Policy. You will be entitled to the return of the full Premium paid less deduction of medical expenses incurred By Us in the issue of the Policy, if any. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-> 4. Cancellation of policy You may terminate the Policy anytime prior to expiry by giving us seven (7) days' notice to Us. You shall be entitled to 80% of the pro-rata premium for the unexpired period provided you have not made any claim during the then current period of insurance. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-> 5. Period of Cover and Renewal This Policy shall become effective as of the date stated in the Schedule. The Policy Renewal shall be one year after the effective date and annually thereafter. On each such renewal, the Policy is renewable at the premium rates in effect at that time and any change in the renewal premium shall be notified by writing at least thirty (30) days before change is effected. The Policy is renewable at Our option. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-6. Disappearance Clause If the Insured is travelling and the means of transportation disappears, sinks, crashes, or is wrecked or kidnapped or abducted and the Insured has not been found within one (1) year, We shall presume that the Insured has died as a result of Bodily Injury and shall pay the Benefit accordingly. If at any time after payment of the Benefit has been made by Us, the Insured is found to be alive, such payment shall be immediately refunded to Us [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-7. Misstatement of Age If the age of the Insured has been misstated and the premium paid as a result thereof is insufficient, any claim payable under this Policy shall be prorated based on the ratio of the actual premium paid to the correct premium which should have been charged for the year. Any excess premium, which may have been paid as a result of such misstatement of age, shall be refunded without interest [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-8. Misrepresentation/Fraud If the proposal or declaration of the Insured is untrue in any respect or if any material fact affecting that risk be incorrectly stated herein or omitted therefrom or if this Insurance, or any renewal thereof shall have been obtained through any misstatement, misrepresentation or suppression or if any claims made shall be fraudulent or exaggerated or if any false declaration or statement shall be made in support thereof then in any of these cases this Insurance shall be void [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> 9. Portfolio Withdrawal Condition We reserve the right to cancel the portfolio as a whole if We decide to discontinue underwriting this Insurance product. Cancellation of the portfolio as a whole shall be given by written notice to the Insured at least thirty (30) days before the cancellation and We will run off all Policies to expiry of the period of cover within the portfolio. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-> 10. Payment of Benefit Any Benefit payable under this Policy shall be paid to the Insured or his beneficiary, if any, as stated in the Schedule or otherwise to his estate. Any receipt by the Insured or his beneficiary or estate of any Benefit payable under this Policy shall in all cases be deemed final and complete discharge of all of Our liabilities in respect of such Benefit. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-## 21. Termination of Policy
-
-- a. Termination by the Insured If the Insured gives notice in writing to Us to terminate this Insurance, such termination shall become effective on the date the notice is received or on the date specified in such notice, whichever is the later [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-- b. Automatic Termination This Insurance shall be terminated: i) upon the death of the Insured; or ii) if the Insured ceases to be eligible on the grounds of age, change of occupation and/or Residential Qualification; or iii) upon payment of Benefit Amount under Sections 1, or 2(a) to 2(d) [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md].
-
-> - c. Termination by Us We may give notice of termination hereof by registered post to the Insured at his last known address. Such termination shall become effective after thirty (30) days following the date of such notice. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-## - Premium Position Upon Termination
-
-> In the event of premium having been paid for any period beyond the date of termination of this Policy, the relevant proportion thereof shall be refunded to the Insured subject to a minimum premium payment of S$25.00 by the Insured. If premium has not been paid for any period up to the date of termination, the Insured shall be liable for the payment of such premium. If termination due to Free Look Period, You will be entitled to the return of the full Premium paid less deduction of medical expenses incurred By Us in the issue of the Policy, if any. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
-
-## e. Effective Time of Termination
-
-> This Policy shall terminate at 12:01am Singapore Time on the relevant date specified in the occurrence date of any events specified herein, Schedule or Endorsement. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]

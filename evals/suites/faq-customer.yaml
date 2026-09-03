@@ -6,7 +6,7 @@
 # and cites that product — nothing about the wording, since a better answer
 # from a wording page is an improvement over the FAQ's own text.
 #
-# 364 cases from okf-real
+# 354 cases from okf-real
 
 - id: faq-cashsaver-01
   question: What is Tiq CashSaver?
@@ -957,72 +957,6 @@
   - Do I have a claim if I find out that my personal data has been stolen from a bank, hospital, or another institution that I have dealings with ?
   expect:
     cite_product: personal-cyber-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-01
-  turns:
-  - ePROTECT personal mobility
-  - If I am a foreigner or Singaporean Permanent Resident (PR), can I purchase this policy?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-02
-  turns:
-  - ePROTECT personal mobility
-  - What is the age limit if I wish to apply for this policy?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-03
-  turns:
-  - ePROTECT personal mobility
-  - Can the policy be terminated?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-04
-  turns:
-  - ePROTECT personal mobility
-  - Is there a free-lock period?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-07
-  turns:
-  - ePROTECT personal mobility
-  - What documents will I receive after purchasing eProtect p ersonal mobility successfully?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-09
-  question: Does the eProtect personal mobility cover me while I am oversea?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-10
-  question: What are the types of personal mobility devices that are covered under this policy?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-11
-  turns:
-  - ePROTECT personal mobility
-  - What does the eProtect p ersonal mobility Cover?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-12
-  turns:
-  - ePROTECT personal mobility
-  - What does the personal liability benefit cover?
-  expect:
-    cite_product: personal-mobility-insurance
-    delivered: true
-- id: faq-personal-mobility-insurance-13
-  turns:
-  - ePROTECT personal mobility
-  - Does the medical expenses for injury due to accident benefit cover treatment at a Chinese medicine practitioner or chiropractor incurred due to injury?
-  expect:
-    cite_product: personal-mobility-insurance
     delivered: true
 - id: faq-pet-insurance-01
   question: What does Pet Insurance Cover?

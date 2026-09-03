@@ -47,7 +47,7 @@ confidence: high
 
 ## What this plan is
 
-This applies to travel to Israel, Iraq, Iran, Jordan, Lebanon, Egypt, Bahrain, Kuwait, Oman, Palestine, Qatar, Saudi Arabia, Syria, United Arab Emirates and Yemen [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#travel-advisory].
+Whether it's a GP, specialist, or TCM, you're covered [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#medical-expenses-in-singapore-and-overseas].
 
 ## What it covers
 

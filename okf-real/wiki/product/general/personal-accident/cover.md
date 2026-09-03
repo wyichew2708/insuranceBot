@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/eprotect-personal-mobility-policy-wording2018.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/tiq-pa-policy-wording-v2-280823.md
@@ -30,6 +31,10 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## 7. Payment of Benefit
+
+Any Benefit payable under this Policy shall be paid to You or Your nominated beneficiary, if any, as stated in the Schedule or otherwise to Your estate. Any receipt by You or Your nominated beneficiary or estate of any Benefit payable under this Policy shall in all cases be deemed final and complete discharge of all of Our liabilities in respect of such Benefit [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 ## Extensions
 
@@ -146,10 +151,6 @@ This Policy covers accidental food poisoning and We will pay You up to the limit
 ## 7. Insect or Animal Bites
 
 This Policy covers bites, stings, attacks or such similar event from an insect or animal and We will pay You up to the limit shown in the relevant section as shown in the Table of Benefits. For the avoidance of doubt, any illness, disease, bacterial or viral infections which is considered by a Medical Practitioner to be contracted by the Insured Person as a result of such bite, sting, attack or such similar event by an insect or animal shall be deemed as a Bodily Injury for the purposes of this Benefit extension [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
-
-## 9. Payment of Benefit
-
-Any benefit payable under this Policy shall be paid to You or Your nominated beneficiary, if any, as stated in the Schedule or otherwise to Your estate. Any receipt by You or Your nominated beneficiary or estate of any Benefit payable under this Policy shall in all cases be deemed final and complete discharge of all of Our liabilities in respect of such benefit [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 
 ## Section 12 - Permanent Disablement due to Infectious Disease
 

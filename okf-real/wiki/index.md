@@ -194,20 +194,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/personal-cyber-insurance/faq` — [Personal Cyber Insurance — Published FAQs](./product/general/personal-cyber-insurance/faq.md)
 
-- `product/general/personal-mobility-insurance` — [ePROTECT personal mobility](./product/general/personal-mobility-insurance.md)
-
-- `product/general/personal-mobility-insurance/claims` — [ePROTECT personal mobility — Making a claim](./product/general/personal-mobility-insurance/claims.md)
-
-- `product/general/personal-mobility-insurance/conditions` — [ePROTECT personal mobility — Policy conditions](./product/general/personal-mobility-insurance/conditions.md)
-
-- `product/general/personal-mobility-insurance/definitions` — [ePROTECT personal mobility — Definitions](./product/general/personal-mobility-insurance/definitions.md)
-
-- `product/general/personal-mobility-insurance/eligibility` — [ePROTECT personal mobility — Eligibility](./product/general/personal-mobility-insurance/eligibility.md)
-
-- `product/general/personal-mobility-insurance/exclusions` — [ePROTECT personal mobility — Exclusions](./product/general/personal-mobility-insurance/exclusions.md)
-
-- `product/general/personal-mobility-insurance/faq` — [ePROTECT personal mobility — Published FAQs](./product/general/personal-mobility-insurance/faq.md)
-
 - `product/general/pet-insurance` — [Pet Insurance](./product/general/pet-insurance.md)
 
 - `product/general/pet-insurance/benefits` — [Pet Insurance — Benefits](./product/general/pet-insurance/benefits.md)

@@ -140,17 +140,21 @@ INPUT_POLICY: dict[str, Policy] = {
     "advice": Policy(rules=0.0, model=0.7, flag_at=0.3, block_at=None),
     # Never blocks, and the highest-cost false negative in the set.
     "distress": Policy(rules=1.0, model=0.6, flag_at=0.3, block_at=None),
-    "abuse": Policy(rules=0.0, model=0.6, flag_at=0.4, block_at=None),
+    "abuse": Policy(rules=0.6, model=0.6, flag_at=0.4, block_at=None),
     # 0.45 put the flag point at 0.76, high enough that a model correctly
     # noticing a turn is about the weather would often not say so.
     "out_of_scope": Policy(rules=0.0, model=0.6, flag_at=0.4, block_at=None),
+    # Personal data in the question is redacted before anything else reads
+    # it, and flagged so the trace shows it happened. Never blocked: the
+    # customer who pasted their NRIC still deserves an answer.
+    "pii": Policy(rules=1.0, model=0.0, flag_at=0.3, block_at=None),
 }
 
 #: Standing per category, on the way out. Blocking here costs the customer an
 #: answer they should have had, so the thresholds sit above the input ones —
 #: except leakage, where the cost runs the other way.
 OUTPUT_POLICY: dict[str, Policy] = {
-    "leakage": Policy(rules=0.0, model=0.9, flag_at=0.3, block_at=0.6),
+    "leakage": Policy(rules=1.0, model=0.9, flag_at=0.3, block_at=0.6),
     # Flag-only, for the same measured reason as `off_topic` below and with a
     # sharper edge: Qwen 3.6 returns 0.9 confidence on 93% of its findings, so
     # the confidence axis carries no information and no bar can separate a true
@@ -186,6 +190,11 @@ OUTPUT_POLICY: dict[str, Policy] = {
     "off_topic": Policy(rules=0.0, model=0.9, flag_at=0.45, block_at=None),
     "overconfident": Policy(rules=0.5, model=0.5, flag_at=0.35, block_at=None),
     "unresolved-figure": Policy(rules=0.5, model=0.0, flag_at=0.35, block_at=None),
+    # A link off the insurer's own sites, or abuse in the answer, is a block:
+    # neither can come from the corpus, so each is a defect. The rules alone
+    # block; the model may also raise them.
+    "external-link": Policy(rules=1.0, model=0.6, flag_at=0.3, block_at=0.8),
+    "toxicity": Policy(rules=1.0, model=0.6, flag_at=0.3, block_at=0.8),
 }
 
 #: An unknown category cannot be dropped silently — it would be a finding that
@@ -527,9 +536,57 @@ def medical_emergency(question: str) -> bool:
     return bool(MEDICAL_EMERGENCY_RE.search(question or ""))
 
 
+#: Singapore NRIC / FIN, a payment card number (13–19 digits, spaces or
+#: dashes allowed), an email address, a passport-shaped token after the word.
+NRIC_RE = re.compile(r"\b[STFGM]\d{7}[A-Z]\b", re.I)
+CARD_RE = re.compile(r"\b(?:\d[ -]?){13,19}\b")
+EMAIL_RE = re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b")
+PASSPORT_RE = re.compile(r"\bpassport\s*(?:no\.?|number)?\s*[:#]?\s*([A-Z]\d{7,8}[A-Z]?)\b", re.I)
+#: The insurer's own sites — the only hosts an answer may link to.
+ALLOWED_LINK_HOSTS = ("etiqa.com.sg", "tiq.com.sg")
+LINK_RE = re.compile(r"https?://([^\s/]+)", re.I)
+#: A short list; the model layer covers the rest. Kept for the deterministic
+#: floor so abuse in an answer is a block even with no model.
+TOXIC_RE = re.compile(
+    r"\b(?:fuck(?:ing|ed)?|shit|bitch|bastard|asshole|cunt|idiot|stupid|moron|retard(?:ed)?|kill yourself)\b",
+    re.I,
+)
+
+
+def redact_pii(text: str) -> tuple[str, list[str]]:
+    """Mask personal identifiers before anything else reads the turn.
+
+    Returns the masked text and the kinds found. The customer's NRIC or card
+    number has no bearing on what a policy covers, and it must not reach a
+    model prompt, a trace, or a log.
+    """
+    kinds: list[str] = []
+    out = text
+    if NRIC_RE.search(out):
+        kinds.append("nric")
+        out = NRIC_RE.sub("[NRIC]", out)
+    if PASSPORT_RE.search(out):
+        kinds.append("passport")
+        out = PASSPORT_RE.sub(lambda m: m.group(0).replace(m.group(1), "[PASSPORT]"), out)
+    if CARD_RE.search(out):
+        kinds.append("card")
+        out = CARD_RE.sub("[CARD]", out)
+    if EMAIL_RE.search(out):
+        kinds.append("email")
+        out = EMAIL_RE.sub("[EMAIL]", out)
+    return out, kinds
+
+
 def screen_input_rules(question: str) -> Screening:
     """The floor. Runs on every turn, with or without a model."""
     findings: list[Finding] = []
+    _, pii = redact_pii(question)
+    if pii:
+        findings.append(
+            Finding("pii", Risk.flag, f"personal data in the turn ({', '.join(pii)}) — redacted", "rules")
+        )
+    if TOXIC_RE.search(question):
+        findings.append(Finding("abuse", Risk.flag, "abusive language in the turn", "rules"))
     if INJECTION_RE.search(question):
         findings.append(
             Finding(
@@ -564,6 +621,24 @@ def screen_output_rules(answer: str, allowed_figures: list[str]) -> Screening:
     the composer writes when a figure could not be resolved.
     """
     findings: list[Finding] = []
+    _, pii = redact_pii(answer)
+    if pii:
+        findings.append(
+            Finding("leakage", Risk.block, f"personal data in the answer ({', '.join(pii)})", "rules")
+        )
+    foreign = sorted(
+        {
+            host
+            for host in LINK_RE.findall(answer)
+            if not any(host.lower() == h or host.lower().endswith("." + h) for h in ALLOWED_LINK_HOSTS)
+        }
+    )
+    if foreign:
+        findings.append(
+            Finding("external-link", Risk.block, f"link off the insurer's sites: {foreign}", "rules")
+        )
+    if TOXIC_RE.search(answer):
+        findings.append(Finding("toxicity", Risk.block, "abusive language in the answer", "rules"))
     if "[unavailable]" in answer:
         findings.append(
             Finding(
@@ -573,7 +648,8 @@ def screen_output_rules(answer: str, allowed_figures: list[str]) -> Screening:
                 "rules",
             )
         )
-    return Screening(findings=findings, checked_by=["rules"])
+    # Judged against the output policies: a block here is a block.
+    return Screening(findings=findings, checked_by=["rules"], side="output")
 
 
 # --------------------------------------------------------------------------
@@ -630,7 +706,15 @@ INPUT_CATEGORIES = [
     "abuse",
     "out_of_scope",
 ]
-OUTPUT_CATEGORIES = ["off_topic", "ungrounded", "advice", "leakage", "overconfident"]
+OUTPUT_CATEGORIES = [
+    "off_topic",
+    "ungrounded",
+    "advice",
+    "leakage",
+    "overconfident",
+    "external-link",
+    "toxicity",
+]
 
 INPUT_SCHEMA: dict[str, Any] = _schema(INPUT_CATEGORIES)
 OUTPUT_SCHEMA: dict[str, Any] = _schema(OUTPUT_CATEGORIES)
@@ -781,6 +865,9 @@ evidence does not carry.
   <url> or call <number>" is doing its job.
 - `overconfident` — flag. The draft states as settled something the evidence \
 marks unresolved, or omits a condition the evidence attaches to a figure.
+- `external-link` — block. The draft links anywhere other than the insurer's \
+own sites (etiqa.com.sg, tiq.com.sg).
+- `toxicity` — block. The draft is rude, mocking or abusive towards the customer.
 
 Report only what is present. A draft that answers the question from the \
 evidence and stops earns an empty list, which is the expected result. These \
