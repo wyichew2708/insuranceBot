@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -39,7 +39,7 @@ We will not pay for any loss, damage or injury, or other contingency which is in
 
 - (a) Any injury or any loss or destruction of or damage to any property whatsoever or any loss or expenses whatsoever resulting or arising therefrom or any consequential loss; - (b) Any legal liability of whatsoever nature directly or indirectly caused by or contributed to by or arising from ionizing radiations or contaminations by radioactivity from any nuclear fuel or from any nuclear waste from the combustion of nuclear fuel. Solely for the purpose of this exclusion, combustion shall include any self-sustaining process of nuclear fission; and - (c) Any Accident, loss, destruction, damage or legal liability directly or indirectly caused by or contributed to by or arising from nuclear weapons material [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
-## 3. Gross Negligence, Criminal, Dishonest, Fraudulent, Malicious, Reckless or Wilful Conduct [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+3. Gross Negligence, Criminal, Dishonest, Fraudulent, Malicious, Reckless or Wilful Conduct [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 Any loss, damage or injury arising from or contributed to by negligence, criminal dishonesty, fraudulence, any malicious, reckless or wilful act or omission committed by You [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 

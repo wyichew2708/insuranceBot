@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -121,7 +121,7 @@ If You have paid an Advance Premium on this policy and Accidental death of the L
 
 > The maximum aggregate amount payable for Accidental death shall not exceed Two Million Singapore Dollars (SGD 2,000,000) per Life insured for all policies and riders issued by Us with Accidental death Benefits. [src:raw/wordings/tiq-cashsaver-policy-contract.md]
 
-## 5.4 Total &amp; Permanent Disability ('TPD') Premium Waiver Benefit
+## 5.4 Total & Permanent Disability ('TPD') Premium Waiver Benefit
 
 > If You become totally and permanently disabled (on or before reaching the Policy anniversary when You attain Age 86) during the premium term while the policy is in force, We will waive all future Premiums on the policy for the remaining premium term. [src:raw/wordings/tiq-cashsaver-policy-contract.md]
 

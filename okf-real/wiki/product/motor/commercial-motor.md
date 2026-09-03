@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -63,7 +63,7 @@ This extension does not cover any Accident, loss or damage or liability of any n
 
 Subject otherwise to the terms and conditions of this Policy [src:raw/wordings/commercial-motor-policy-wording-v4.md].
 
-## Personal Accident Benefit to Unnamed Passengers (Other Than The Insured and His Paid Driver or Attendant) [src:raw/wordings/commercial-motor-policy-wording-v4.md].
+Personal Accident Benefit to Unnamed Passengers (Other Than The Insured and His Paid Driver or Attendant) [src:raw/wordings/commercial-motor-policy-wording-v4.md].
 
 We pay the compensation for physical disability or death set out in the scale of benefits if you suffer bodily injury that: [src:raw/wordings/commercial-motor-policy-wording-v4.md].
 

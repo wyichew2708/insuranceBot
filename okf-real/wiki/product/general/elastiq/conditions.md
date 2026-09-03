@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -74,7 +74,7 @@ If the policy has been assigned, the refund amount will be paid to the Assignee.
 
 At any time when there are changes in taxation, regulations or legislation that will affect this policy, we may vary the terms of the policy accordingly. If we do so, we shall notify you in writing prior to such change [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
-## 8.3 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+8.3 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, we reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if you have purchased a lower cover. For overpayment of Premium, we will refund the excess Premium paid without interest [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
@@ -84,7 +84,7 @@ Based on the correct Age, gender, smoker status and/or country of residence, if 
 
 > You may return this policy for cancellation within 14 days after you receive the policy document, for any reason. We will deduct any costs incurred by the Company in assessing the risk under your policy, such as payments for medical checkup and other expenses, from the premium you paid and refund the balance to you. If your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing. [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md]
 
-## 9.2 Transferring the legal right of the policy [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+9.2 Transferring the legal right of the policy [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
 If you write to us and we agree to the transfer, you can transfer (assign) this policy to another person. When we do so, you may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
 
@@ -98,7 +98,7 @@ Your policy will end when one of these events happens first: [src:raw/wordings/e
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/elastiq-product-summary-7-nov.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/elastiq-product-summary-7-nov.md].
 
 > This is a single premium, Non-participating universal life plan denominated in SG dollars. It matures on the policy anniversary immediately before the Life insured attains 100 years old. It offers the financial flexibility, opportunity for wealth accumulation and the assurance of life insurance coverage through providing death Benefit. [src:raw/product-summaries/elastiq-product-summary-7-nov.md]
 

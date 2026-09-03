@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -103,7 +103,7 @@ Partial withdrawal(s) will reduce the Rider account value by the withdrawn amoun
 
 > No top-up is allowed if the Rider account value reaches or exceed S$1,000,000. The Rider account value will maintain should it exceed S$1,000,000 due to market performance. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-> ## 3.10 Structure of the ILP Sub-Funds in the Portfolio Fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+> 3.10 Structure of the ILP Sub-Funds in the Portfolio Fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
 > The Portfolio fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Portfolio fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Portfolio fund. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
@@ -157,12 +157,6 @@ Please refer to Premium section and/or Top-Up (Ad-hoc/Recurring) section for con
 
 We reserve the right to revise the cut-off time at Our discretion [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## 3.14 Settlement for Redemption
-
-Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within 4 business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
-
-Note: Applications submitted or Premiums received after 3 p.m. (Singapore time) will be transacted based on the unit price as at the next Valuation day [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
-
 ## 5.1 Death Benefit
 
 We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
@@ -176,3 +170,7 @@ When death exclusion happens, We will return the Rider account value calculated 
 We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 > - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - Pre-existing conditions within the first twelve (12) months from the Rider issue date; or - Acquired Immunodeficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV infection due to blood transfusion and occupationally acquired HIV. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+When TI exclusion happens, You have the option to either continue with this rider or to surrender the rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance and the Endorsement [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].

@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -37,7 +37,7 @@ This rider covers the Benefits described below [src:raw/wordings/policy-contract
 
 This Policy Contract should be read together with the Policy Contract of the Basic policy [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
 
-## 2.1 Death, Total &amp; Permanent Disability (TPD) or Critical Illness (CI) Premium Waiver Benefit [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
+2.1 Death, Total &amp; Permanent Disability (TPD) or Critical Illness (CI) Premium Waiver Benefit [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
 
 > This rider allows the Life insured to continue the Basic policy and any attaching riders without paying Premiums from the next Premium due date following the date of the Policy owner's death, diagnosis of TPD or a severe-stage CI for the first time during the policy term. The Premium will be waived up to earlier of the Policy anniversary before the Basic policy Life insured turns Age 25 for Juvenile cases or the end of the Premium payment term of Your policy. If the Basic policy Life insured is spouse, the Premium will be waived till the end of the Premium payment term of Your policy. [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md]
 
@@ -55,7 +55,7 @@ Please refer to Appendix A for the definitions of the covered critical illnesses
 
 ## PLAN BENEFIT
 
-## 1. Death, Total &amp; Permanent Disability (TPD) Or Critical Illness (CI) Premium Waiver Benefit [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md].
+1. Death, Total &amp; Permanent Disability (TPD) Or Critical Illness (CI) Premium Waiver Benefit [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md].
 
 > Total and permanent disability is a disability that lasts continuously for at least 180 days, which the Doctor considers permanent and expects it to last throughout the lifetime of the Life insured. This means one of the following: [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md]
 

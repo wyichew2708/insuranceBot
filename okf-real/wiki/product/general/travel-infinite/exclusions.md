@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -33,7 +33,7 @@ confidence: high
 
 We shall not indemnify any Permanent Disablement or death claim arising from Illness or Infectious Diseases [src:raw/wordings/travel-infinite-policy-wording.md].
 
-## Section 2 - Personal Accident (Accidental Death and Permanent Disablement due to Natural Disaster) (Applicable to Deluxe and Suite Plan Only) [src:raw/wordings/travel-infinite-policy-wording.md].
+Section 2 - Personal Accident (Accidental Death and Permanent Disablement due to Natural Disaster) (Applicable to Deluxe and Suite Plan Only) [src:raw/wordings/travel-infinite-policy-wording.md].
 
 > If the Insured Person(s) is involved in an Accident on a Public Air Conveyance or due to Natural Disaster, within the next twelve (12) months suffer Injury or death, We will indemnify the Insured Person(s) or His legal representative up to the limit stated under Section 2 of the Schedule. [src:raw/wordings/travel-infinite-policy-wording.md]
 
@@ -41,7 +41,7 @@ We shall not indemnify any Permanent Disablement or death claim arising from Ill
 
 ## Exclusions Applicable to Section 2
 
-## Section 3 - Child Education Grant (Applicable to Deluxe and Suite Plan Only) [src:raw/wordings/travel-infinite-policy-wording.md].
+Section 3 - Child Education Grant (Applicable to Deluxe and Suite Plan Only) [src:raw/wordings/travel-infinite-policy-wording.md].
 
 > If You suffer Accidental death which is claimable under either Section 1 or 2, and on the date of the Accident You have a Child or Children, We will pay S$7,500 to each Child, provided always that such Child is Your natural or legally adopted Child. [src:raw/wordings/travel-infinite-policy-wording.md]
 
@@ -55,7 +55,7 @@ We shall not indemnify any Permanent Disablement or death claim arising from Ill
 
 We will not pay for any expenses for a service not approved and arranged by the Emergency Services Hotline, or an authorized representative of the Emergency Services Hotline unless We decide that such expenses were necessarily incurred and for reasons beyond the control of the Insured Person(s), the Insured Person(s)'s Relative or Travel Companion; or in the event that the Emergency Services Hotline could not be contacted during the emergency. In any event, We reserve the right to reimburse the Insured Person(s) only for those expenses incurred for services which the Emergency Services Hotline would have provided under the same circumstances and up to the limit stated in the Schedule [src:raw/wordings/travel-infinite-policy-wording.md].
 
-## Exclusions Applicable Only to Sections 17, 18 &amp; 19
+## Exclusions Applicable Only to Sections 17, 18 & 19
 
 The following treatment, items, conditions, activities and their related or consequential expenses are excluded from the Sections and the Emergency Services Hotline and/or We will not be liable for: [src:raw/wordings/travel-infinite-policy-wording.md].
 
@@ -111,11 +111,9 @@ We shall not pay for claims arising directly or indirectly from, in respect of, 
 
 > Note: This Policy will only pay for any claim under any one of Sections 22, 23, 24, 25, 26, 27, 28, 42, 47, 48 or 52 for the same event but not for more than one of the Sections. [src:raw/wordings/travel-infinite-policy-wording.md]
 
-## This coverage is effective only: [src:raw/wordings/travel-infinite-policy-wording.md].
-
 - (a) if this Policy is purchased before the Insured Person becomes aware of any circumstances which could lead to the curtailment of a planned Trip; - (b) With the provision of documentary proof that there was a first attempt to seek a refund of any prepaid expenses from the transport or accommodation provider and the refund request has been denied by them. We will pay the balance of the irrecoverable transport or accommodation expenses after deducting the amount that has been refunded by the transport or accommodation provider; and - (c) If the travel agent, tour operator, transport or accommodation provider(s) have been duly informed at the earliest possible time as soon as the Insured Person(s) is aware that there is a change of travel plans [src:raw/wordings/travel-infinite-policy-wording.md].
 
-## Exclusions Applicable to Section 22 &amp; 24
+## Exclusions Applicable to Section 22 & 24
 
 We will not pay for any loss or charges: [src:raw/wordings/travel-infinite-policy-wording.md].
 
@@ -178,3 +176,5 @@ We will not be liable for: [src:raw/wordings/travel-infinite-policy-wording.md].
 - (n) Loss, damage, derangement or breakage of fragile or brittle articles; and/or - (o) Loss or damage resulting from mysterious disappearance of such property [src:raw/wordings/travel-infinite-policy-wording.md].
 
 > Note: This Policy will only pay for claim under any one of Sections 29, 30, 31, 39B or 41 for the same event but not for more than one of the Sections. [src:raw/wordings/travel-infinite-policy-wording.md]
+
+> Section 30 - Jewellery (due to Robbery, Theft or Burglary) (Applicable to Deluxe and Suite [src:raw/wordings/travel-infinite-policy-wording.md]

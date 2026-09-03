@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -65,7 +65,7 @@ To be eligible under this insurance: [src:raw/wordings/pet-insurance-policy-word
 
 3. In respect of insurance coverage with Free Look provision, the Policyholder may return the original policy document to the Insurer within the Free Look period if the Policyholder decides to cancel the cover during the Free Look period. In such an event, the Policyholder will receive a full refund of the premium paid to the Insurer provided that no claim has been made under the insurance and the cover shall be treated as if never put in place [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
 
-## Premium Basis &amp; Adjustment
+## Premium Basis & Adjustment
 
 Your premium shall be based upon Your Pet's attained age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least seven (7) days before Your premium is increased or varied by Us [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
 

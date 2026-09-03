@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -33,7 +33,7 @@ confidence: high
 
 In accordance with the Insurance Act, we would remind you that you must disclose to us fully and faithfully all the facts you know or could reasonably be expected to know, otherwise you may not receive any benefit from this Policy [src:raw/wordings/policywordings-eprotect-family.md].
 
-## Maybank-Etiqa Insurance Pte. Ltd. Corporate Social Responsibility ePROTECT family - Individual Personal Accident Policy [src:raw/wordings/policywordings-eprotect-family.md].
+Maybank-Etiqa Insurance Pte. Ltd. Corporate Social Responsibility ePROTECT family - Individual Personal Accident Policy [src:raw/wordings/policywordings-eprotect-family.md].
 
 1. This Policy, Schedule and endorsement, if any, are evidence of the contract between You and Us. The proposal made to Us in connection with this Insurance shall be the basis and form part of this contract. 2. This Policy, Schedule and endorsement, if any, are to be read as one document and any word or expression to which a specific meaning has been attached in any part shall bear the same meaning wherever it appears [src:raw/wordings/policywordings-eprotect-family.md].
 

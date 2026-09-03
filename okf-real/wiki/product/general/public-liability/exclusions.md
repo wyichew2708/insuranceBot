@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -35,7 +35,7 @@ This contract excludes all claims and losses based upon, arising out of, directl
 
 - Asbestos, or - Any actual or alleged asbestos related injury or damage involving the use, presence, existence, detection, removal, elimination or avoidance of asbestos or exposure or potential exposure to asbestos [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
-## PROFESSIONAL INDEMNITY &amp; PRODUCT LIABILITY EXCLUSION
+## PROFESSIONAL INDEMNITY & PRODUCT LIABILITY EXCLUSION
 
 The policy does not indemnify any legal liability incurred by the principals and/or professional consultants and/or their authorized representatives, which is indemnifiable under a professional indemnity insurance policy and/or product liability insurance policy [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
@@ -73,4 +73,4 @@ access to, processing, transmission, storage or use of any Data; [src:raw/wordin
 
 5. Data means information used, accessed, processed, transmitted or stored by a Computer System. 6. When this clause forms part of a reinsurance contract, Insured shall be amended to read Original Insured [src:raw/wordings/etiqa-public-liability-policy-wording.md].
 
-## The Following Endorsements / Clauses / Warranties Apply Only When Specified In The Schedule: [src:raw/wordings/etiqa-public-liability-policy-wording.md].
+The Following Endorsements / Clauses / Warranties Apply Only When Specified In The Schedule: [src:raw/wordings/etiqa-public-liability-policy-wording.md].

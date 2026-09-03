@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -59,7 +59,7 @@ Household means all members of Your Family living with You permanently [src:raw/
 
 > Injury means bodily injury sustained by an Insured Person during the Period of Insurance and is caused by an Accident solely and independently of any other causes within fifty-two (52) weeks from the date of such Accident. [src:raw/wordings/complimentary-home-insurance-policy-wording.md]
 
-## Insured Perils refer to the following: [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
+Insured Perils refer to the following: [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
 
 - (a) Fire, lightning, thunderbolt, subterranean fire. - (b) Domestic explosion. - (c) Aircraft and other aerial devices and/or articles dropped therefrom. - (d) Impact by any road vehicle not belonging to nor under the control of You or any member of the Household [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
 

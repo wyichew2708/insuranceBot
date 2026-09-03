@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -38,6 +38,12 @@ Your policy is regulated using the laws of Singapore. It forms the entire legal 
 ## 2 Policy Owners' Protection Scheme
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+
+## 3.11 Settlement for Redemption
+
+Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You unless dealings have been suspended as specified in the section 'Suspension of dealings' below. Redemption proceeds will be paid as per the following timeline: [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+
+- For Bond and Money Market ILP sub-funds to be processed within four (4) business days. - For Portfolios fund to be processed within seven (7) business days. - For all other ILP sub-funds to be paid within six (6) business days [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
 ## 4.1 Premium
 
@@ -109,7 +115,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > Should there be any changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You thirty (30) days' notice prior to such change. [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md]
 
-## 8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the insurance charge is wrong, We reserve the rights to adjust the Benefits. For underpayment of insurance charge, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of insurance charge, We will refund the excess insurance charge without interest less any change in the unit price(s) of the ILP sub-fund [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
@@ -123,7 +129,7 @@ In the event that the Account value of Your policy is more than the Premium paid
 
 If Your policy document is sent by email, We consider this policy is delivered to You one (1) day after the date of emailing. If Your policy document is sent by post, We consider this policy is delivered to You seven (7) days after the date of posting [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
-## 9.2 Transferring the Legal Right of the Policy [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+9.2 Transferring the Legal Right of the Policy [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
 If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
@@ -145,7 +151,7 @@ As buying a life insurance policy is a long-term commitment, an early terminatio
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md].
 
 > This is a single Premium Investment-linked insurance plan that offers the opportunity to optimize returns on Your savings and wealth accumulation needs, while giving You the benefits of a life insurance coverage. It matures on the Policy anniversary immediately before the Life insured attains 100 years old. [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md]
 
@@ -163,9 +169,13 @@ Please refer to the Fees and Charges section for more information [src:raw/produ
 
 ## 11. Premium Allocation
 
-> ## 12. Structure of the ILP Sub-Funds in the Portfolio fund [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md]
+> 12. Structure of the ILP Sub-Funds in the Portfolio fund [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md]
 
 > Each Portfolio fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Portfolio fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Portfolio fund. [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md]
+
+## 16. Settlement for Redemption
+
+- For Bond and Money Market ILP sub-funds to be processed within 4 business days. - For Portfolios fund to be processed within 7 business days. - For all other ILP sub-funds to be paid within 6 business days [src:raw/product-summaries/invest-plus-sp-product-summary-v1-23.md].
 
 ## 20. Termination
 

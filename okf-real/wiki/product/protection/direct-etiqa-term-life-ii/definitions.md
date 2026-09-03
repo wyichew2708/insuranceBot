@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -73,7 +73,7 @@ Sum insured is the amount of insurance coverage provided by the Basic policy [sr
 
 > Terminal illness (TI) is the conclusive diagnosis of an illness that is expected to result in the death of the Life insured within twelve (12) months. This diagnosis must be supported by a specialist and confirmed by the Company's appointed Doctor. Terminal illness in the presence of HIV infection is excluded. [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md]
 
-## Total and permanent disability (TPD) means any of the two situations: [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md].
+Total and permanent disability (TPD) means any of the two situations: [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md].
 
 1. The Life insured, due to Accident or sickness, is disabled to such an extent as to be rendered totally unable to engage in any occupation, business or activity for income, remuneration or profit; and The disability must continue uninterrupted for at least six (6) consecutive months from the time when disability started; and The disability must, in the view of a Doctor appointed by the Company, be deemed permanent with no possibility of improvement in the foreseeable future [src:raw/wordings/policy-contract-direct-etiqa-term-life-ii.md].
 

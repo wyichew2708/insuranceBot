@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -38,6 +38,6 @@ The difference between illustrations 1 &amp; 2 below demonstrates the rebate you
 
 > Cash Rebate Illustration 1 - Enjoy more cash rebate S$ or % if you activate DSLM 3 days prior before your coverage start date [src:raw/wordings/terms-and-conditions-drive-less-save-more.md]
 
-## Cash Rebate Illustration 2 - Enjoy lesser cash rebate S$ or % if you activate DSLM after your coverage start date [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
+Cash Rebate Illustration 2 - Enjoy lesser cash rebate S$ or % if you activate DSLM after your coverage start date [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
 
 You may obtain further information about the Rebate sample illustration in the DLSM FAQ from our website at www.tiq.com.sg/product/private-car-insurance/drive-less-same-more [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].

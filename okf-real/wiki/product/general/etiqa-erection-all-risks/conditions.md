@@ -21,12 +21,24 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
+
+## MEMO 2 - BASIS OF LOSS SETTLEMENT
+
+In the event of any loss or damage the basis of any settlement under this policy shall be [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+
+- a) in the case of damage which can be repaired the cost of repairs necessary to restore the items to their condition immediately before the occurrence of the damage less salvage, or - b) in the case of a total loss - the actual value of the items immediately before the occurrence of the loss less salvage, however, only to the extent the costs claimed had to be borne by the insured and to the extent they are included in the sums insured and provided always that the provisions and conditions have been complied with [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+
+The company will make payments only after being satisfied by production of the necessary bills and documents that the repairs have been effected or replacement has taken place, as the case may be. All damage which can be repaired shall be repaired, but if the cost of repairing any damage equals or exceeds the value of the items immediately before the occurrence of the damage, the settlement shall be made on the basis provided for in b) above [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+
+The cost of any provisional repairs will be borne by the company if such repairs constitute part of the final repairs and do not increase the total repair expenses [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
+
+The cost of any alterations, additions and/or improvements shall not be recoverable under this policy [src:raw/wordings/etiqa-erection-all-risks-policy-wording-2023-02.md].
 
 ## Special Conditions Applying to Section II
 

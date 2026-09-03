@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -116,6 +116,6 @@ Veterinarian means a registered, licensed and legally qualified medical practiti
 
 degree in veterinary medicine authorised by the relevant licensing authorities to provide medical or surgical services to Your Pet within the scope of their license and training. This cannot be You, Your family member or relative, business partner, employer, employee or agent [src:raw/wordings/pet-insurance-policy-wording.md].
 
-## Lifetime Limit for Section 1 to 3 per Pet [src:raw/wordings/pet-insurance-policy-wording.md].
+Lifetime Limit for Section 1 to 3 per Pet [src:raw/wordings/pet-insurance-policy-wording.md].
 
 The lifetime limit includes the aggregated claims submitted to Us under Sections 1 to 3. There is no cover under the Policy once the limit has been exhausted and the Policy will be cancelled without any refund by Us [src:raw/wordings/pet-insurance-policy-wording.md].

@@ -1,6 +1,6 @@
 # Website defect — pet-insurance pawmazing-get-quote:n_a.limit
 
-- opened: 2026-08-27
+- opened: 2026-09-03
 - kept (higher authority): `$250` from `raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered`
 - contradicted: `$100000` from `raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered`
 

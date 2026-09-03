@@ -35,7 +35,7 @@ from okf.channels import ALL_CHANNELS, channel_for_host
 
 # The compiler writes what the linter checks; sharing the patterns is what
 # stops it from emitting a page the build then rejects.
-from okf.linter import ALLOW_NUMBER, NUMBER_IN_PROSE_RE, ROUTE_RE
+from okf.linter import ALLOW_NUMBER, NUMBER_IN_PROSE_RE, ROUTE_RE, SOURCE_REF_RE
 from okf.page import (
     UNCOMPILED_MARK,
     ChannelBinding,
@@ -666,6 +666,23 @@ def _section_body(snapshot: Snapshot, section: Section, report: CompileReport) -
     return out
 
 
+#: A `##` heading is a label, not a claim. Two things leak into one and both
+#: reach the customer: a `[src:...]` marker, when a heading is built from text
+#: that already carried its reference, and an undecoded HTML entity from the
+#: crawl. 275 headings across 155 pages carried a marker on the real bundle.
+#: The composer binds a claim to its heading, so a mangled heading becomes a
+#: mangled claim — "tiq travel" was refused because of one.
+_HEADING_ENTITIES = {"&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&nbsp;": " "}
+
+
+def _heading(text: str) -> str:
+    """One `##` heading, cleaned. Every heading the compiler writes goes here."""
+    text = SOURCE_REF_RE.sub("", text)
+    for entity, char in _HEADING_ENTITIES.items():
+        text = text.replace(entity, char)
+    return " ".join(text.split()).strip(" .,;:")
+
+
 def _page(fm: Frontmatter, body: list[str]) -> Page:
     return Page(frontmatter=fm, body="\n\n".join(b for b in body if b).strip() + "\n")
 
@@ -900,7 +917,7 @@ def emit_benefits(
             continue
         seen.add(row.benefit_code)
         label = row.benefit_code.replace("_", " ")
-        body.append(f"## {label[:1].upper()}{label[1:]}")
+        body.append(f"## {_heading(f'{label[:1].upper()}{label[1:]}')}")
         body.append(
             f"The amount payable for the plan tier held is "
             f"{{{{table:{row.benefit_code}.{row.attribute}}}}} [src:{row.source_ref}]."
@@ -950,7 +967,7 @@ def emit_exclusions(
     )
     body: list[str] = []
     for item, ref in items:
-        body.append(f"## {item}")
+        body.append(f"## {_heading(item)}")
         grounded = _grounded(f"{item} are excluded under this policy", ref, report)
         if grounded:
             body.append(grounded)
@@ -1138,7 +1155,7 @@ def emit_journey(
             continue
         lines = _section_body(snapshot, section, report)
         if lines:
-            body.append(f"## {section.heading}")
+            body.append(f"## {_heading(section.heading)}")
             body += lines
     if not body:
         report.skip("journey page had no publishable prose")
@@ -1439,7 +1456,7 @@ def emit_index(
         "identity — the same product answers identically on every surface.",
     ]
     for lob in sorted(products):
-        body.append(f"## Products — {lob}")
+        body.append(f"## Products — {_heading(lob)}")
         for page_id, title in sorted(products[lob]):
             depth = page_id.count("/")
             body.append(f"- `{page_id}` — [{title}](./{page_id}.md)" if depth else f"- `{page_id}`")
@@ -1610,6 +1627,14 @@ def _verbatim(text: str, locator: str, report: CompileReport, min_words: int = D
       names the document and page it came from, and the numeric-binding gate
       re-reads that document to confirm the figure is really there.
     """
+    # A leading `#` run is extraction noise, not content: the raw line was a
+    # heading the segmenter did not accept, and quoting it verbatim puts
+    # `> ## Exclusions applicable to Section 10` inside a paragraph. The
+    # composer then binds that paragraph to a claim, and the claim reads
+    # "This coverage is effective only: ## Exclusions applicable to…" — which
+    # the entailment judge calls a contradiction, correctly. 22 of these on
+    # the real bundle.
+    text = re.sub(r"^#{1,6}\s+", "", text.strip())
     text = _normalise_brands(" ".join(text.split()).strip())
     # A schedule reads "does not cover" on one line and "(a)", "(b)", "(c)" on
     # the next three; rebuilding the paragraph glues the labels together and
@@ -1657,7 +1682,7 @@ def _document_body(
                 rendered.append(line)
             if not rendered:
                 continue
-            body.append(f"## {section.heading}")
+            body.append(f"## {_heading(section.heading)}")
             body.extend(rendered)
             kept += len(rendered)
             if document.ref not in refs:

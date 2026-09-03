@@ -24,10 +24,10 @@ links:
   - concept/commencement-date
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -47,7 +47,7 @@ confidence: high
 
 4. Any word denoting a singular pronoun shall also mean to include the plural. 5. Throughout this Policy, where the context so admits, words embodying the masculine gender shall include the feminine gender and vice-versa [src:raw/wordings/eprotect-travel-policy-wording.md].
 
-## Premium Basis &amp; Adjustment
+## Premium Basis & Adjustment
 
 > Your Premium shall be calculated based upon Your attained age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30) days before Your Premium is increased or varied by Us. [src:raw/wordings/eprotect-travel-policy-wording.md]
 
@@ -99,7 +99,7 @@ If the proposal or declaration from the Insured Person(s) is untrue in any respe
 
 No person shall be covered under more than one such identical travel insurance Policy issued by Etiqa Insurance Pte. Ltd. In the event the Insured Person(s) is covered under more than one such Policy, We shall consider the Insured Person(s) to be insured under the Policy which provides the greatest amount of Benefit, or where the benefits provided under each such Policy are identical, the Policy that was issued first and We shall refund any duplicated premium payment which may have been made by You / the Insured Person(s) on Your / His behalf [src:raw/wordings/eprotect-travel-policy-wording.md].
 
-## 9. Interest &amp; Currency
+## 9. Interest & Currency
 
 No amount payable under this Policy shall subject to any interest. Premium and benefits payable under this policy shall be in Singapore Dollars (SGD) [src:raw/wordings/eprotect-travel-policy-wording.md].
 

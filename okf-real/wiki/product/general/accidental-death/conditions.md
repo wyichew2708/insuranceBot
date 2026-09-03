@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -33,7 +33,7 @@ confidence: high
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].
 
 This is a yearly renewable, Non-participating rider that pays the Sum insured upon accidental death of the Life insured while the rider is in force. At the rider Expiry date, if We have not paid out any claims, this rider will end and no Benefits will be payable [src:raw/product-summaries/product-summary-accidental-death-19-nov-2020-clean.md].
 

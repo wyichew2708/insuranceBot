@@ -23,10 +23,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -106,7 +106,7 @@ Pre-existing Illness means disabilities or conditions that You have reasonable k
 
 Physical Abuse means an intentional act that will cause harm to a person's body. This includes but is not limited to, hitting, pushing, pulling, pinching, twisting, bending or manipulating any part of a person's body in a manner that causes discomfort, pain, and/or injury [src:raw/wordings/tiq-maid-policy-wording.md].
 
-## Repatriation Expenses means the cost of: [src:raw/wordings/tiq-maid-policy-wording.md].
+Repatriation Expenses means the cost of: [src:raw/wordings/tiq-maid-policy-wording.md].
 
 - a) Conveyance of the Insured Person to her Home Country as a result of being certified by a registered Medical Practitioner to be medically unfit to perform her duties as a domestic helper following Bodily Injury or Sickness or suicide which results in death or total Permanent Disablement; or - b) Burial or cremation of the Insured Person and/or conveyance of body or ashes to her Home Country [src:raw/wordings/tiq-maid-policy-wording.md].
 
@@ -122,7 +122,7 @@ Us / We / Our refers to Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) 
 
 You / Your / Insured refers to the policyholder named in the Policy [src:raw/wordings/tiq-maid-policy-wording.md].
 
-## Optional Cover (Applicable only when taken up and shown in the Schedule) [src:raw/wordings/tiq-maid-policy-wording.md].
+Optional Cover (Applicable only when taken up and shown in the Schedule) [src:raw/wordings/tiq-maid-policy-wording.md].
 
 ## 1. Interpretation
 

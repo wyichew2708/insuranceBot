@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -37,8 +37,6 @@ confidence: medium
 ## Additional Benefits
 
 The limit of liability for the Benefits provided hereunder forms part of and is not in addition to the total limit of liability for the Section [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
-
-## 1. Accidental leakage or Spillage [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 We extend to cover loss, damage of the Insured Property caused by accidental leakage or spillage of any gas, vapour, liquid (other than water) or molten material caused by a peril insured against, but excluding [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
@@ -211,3 +209,7 @@ We extend to cover Death or Disablement sustained by the Insured Person as a res
 We extend to cover Death or Disablement sustained by the Insured Person as a result of suffocation by smoke, poisonous fumes, gas or drowning provided that such injury does not arise out of the Insured Person's wilful and [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 4. Suffocation by Smoke, Poisonous Fumes, Gas and Drowning intentional act [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+
+## SECTION 5 - PUBLIC LIABILITY
+
+1. Injury or Damage to property caused by or arising in connection with the ownership, possession or use by or on Your behalf of mechanically propelled vehicles, locomotives, aircraft, aerial devices, hovercraft or water- borne craft. 2. Injury to Your Employee [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].

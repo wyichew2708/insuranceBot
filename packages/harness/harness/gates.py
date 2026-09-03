@@ -561,8 +561,12 @@ _ENTAILMENT_SCHEMA: dict[str, Any] = {
 #: still word-checked below.
 _MAX_JUDGED = 8
 _EVIDENCE_CHARS = 1500
-#: An amount or a rate. The class of figure a wrong answer misleads with.
-_MONEY_OR_RATE_RE = re.compile(r"S?\$\s?\d|\d+(?:\.\d+)?\s?%")
+#: An amount or a rate — the class of figure a wrong answer misleads with.
+#: The whole amount, not its first digit: `S?\$\s?\d` matched "$1" inside
+#: "$1,500,000", so the "is this figure in the evidence" test compared a
+#: truncated prefix and the hard fail fired on a figure that was in the
+#: evidence verbatim. Mirrors NUMERIC_SPAN_RE's currency branch.
+_MONEY_OR_RATE_RE = re.compile(r"S?\$\s?\d[\d,]*(?:\.\d+)?|\d+(?:\.\d+)?\s?%")
 
 
 #: A claim that is a transcribed list item — "- (c) continuously provides
@@ -648,10 +652,13 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     for i, claim in judged_set:
         grouped.setdefault((claim.source_id, _section_of(ctx, claim)), []).append((i, claim))
     blocks = []
+    shown_for: dict[int, str] = {}
     for (page_id, heading), members in grouped.items():
         page = ctx.bundle.get(page_id)
         body = (page.section(heading) if page and heading else None) or (page.body if page else "")
         evidence = _evidence_for(body, [claim for _, claim in members])
+        for i, _ in members:
+            shown_for[i] = evidence
         head = f"EVIDENCE ({page_id}{'#' + heading if heading else ''}):\n{evidence}\n"
         lines = [f"CLAIM {i}: {claim.text}" for i, claim in members]
         blocks.append(head + "\n".join(lines) + "\n")
@@ -679,10 +686,19 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # (12) months") is not a limit the answer is asserting, and the judge
     # returned neutral on one whose evidence contained it verbatim. So only
     # money and percentages make `neutral` a hard fail; the rest defer.
+    # A figure the judge would not vouch for, *unless it is demonstrably in
+    # the evidence*. The hard fail exists for "the number is not in the
+    # source"; where every amount and rate in the claim appears verbatim in
+    # the block the judge was shown, there is nothing to fail — the model is
+    # being conservative about a long block, and "tiq travel" was refused
+    # over a marketing line whose figures sat in its own evidence.
     unsettled_figures = [
         c.text[:60]
         for i, c in judged_set
-        if verdicts.get(i) == "neutral" and _MONEY_OR_RATE_RE.search(c.text) and not _is_list_fragment(c.text)
+        if verdicts.get(i) == "neutral"
+        and _MONEY_OR_RATE_RE.search(c.text)
+        and not _is_list_fragment(c.text)
+        and not all(span in shown_for.get(i, "") for span in _MONEY_OR_RATE_RE.findall(c.text))
     ]
     if unsettled_figures:
         return GateResult(

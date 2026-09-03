@@ -22,10 +22,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -55,7 +55,7 @@ This policy is protected under the Policy Owners' Protection Scheme which is adm
 
 Your policy may cover all or some of the benefits described below . You can find the benefit(s) covered under this policy on the policy information page and/or the supplementary terms [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
-## 3.4 Cash Values &amp; Paid-up Policy
+## 3.4 Cash Values & Paid-up Policy
 
 If your policy accumulates a cash value, you may [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
@@ -113,13 +113,13 @@ When there is condition(s) specific to the life insured which we will not cover,
 
 > If we offer you a guaranteed issuance policy, it will not cover pre-existing conditions within the first 12 months from the policy issue date or date of last reinstatement. When this happens, we will return the total premiums paid without interest, less any expenses incurred by us on your policy. [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md]
 
-## 7.1 How to make a Claim [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
+7.1 How to make a Claim [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
 > We must be informed in writing within 3 months of the event giving rise to the claim. [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md]
 
 At your own expense, you must give us all documents and evidence we ask for to assess the claim. This may include re-examining the life insured by a particular doctor we appoint [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
-## 7.2 Who do we pay benefits to [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
+7.2 Who do we pay benefits to [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
 We may pay the benefits to either you or your executors, administrators, nominees or any other proper claimant if we have proof of the relationship of the person claiming the benefit [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
@@ -129,7 +129,7 @@ Before we pay any benefit, we will deduct: [src:raw/wordings/general-provisions-
 
 By paying any benefit to you, your executors, administrators, nominees or any other proper claimants, it will end our legal responsibility on that payment [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
-## 8.1 Our Rights to challenge this contract [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
+8.1 Our Rights to challenge this contract [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
 > We cannot challenge the validity of this policy after 2 years from the policy commencement date or the latest reinstatement date. However, if there is fraud, we can challenge the validity of the policy even after 2 years have passed. [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md]
 
@@ -151,7 +151,7 @@ If the age or gender of the life insured is not correctly stated such that the p
 
 > If your policy document is sent by post, we consider this policy is delivered to you 7 days after the date of posting. If your policy document is sent by email, we consider this policy is delivered to you 1 day after the date of emailing. [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md]
 
-## 9.2 Transferring the legal right of the policy [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
+9.2 Transferring the legal right of the policy [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
 If you write to us and we agree to the transfer, you can transfer (assign) this policy to another person. When we do so, you may not make any further transfer until the previous transfer has been properly cancelled [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
@@ -173,7 +173,7 @@ iii. premium is not paid on time iv. at maturity date v. the loan amount on this
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md].
 
 > This is a participating insurance savings plan which pays the sum of 105% of the total premiums you paid on this basic plan and any attaching bonuses on the death of the life insured during the policy term. A lump sum maturity benefit will be paid at the end of the policy term. This plan has a policy term of 15 years. [src:raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md]
 

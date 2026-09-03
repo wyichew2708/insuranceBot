@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -70,7 +70,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > At any time when there are changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You thirty (30) days' notice prior to such change. [src:raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md#p2]
 
-## 7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md#p2].
+7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md#p2].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid (less any amount previously paid to You under this rider) without interest [src:raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md#p2].
 

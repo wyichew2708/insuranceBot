@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -94,7 +94,7 @@ It is hereby declared and agreed that notwithstanding anything to the contrary c
 
 For the purpose of this endorsement the expression 'event' shall mean an event or series of events arising out of one cause in connection with Your Car. Subject otherwise to the terms of this Policy [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
-## Endorsement No. M2U - Unnamed Driver Excess (Applicable if there is a claim under Section I of this Policy) [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
+Endorsement No. M2U - Unnamed Driver Excess (Applicable if there is a claim under Section I of this Policy) [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 > In addition to the excess amount specified in the Policy Schedule, an additional excess of S$1,000 shall apply for Unnamed Driver(s) when, at the time of an accident, the Motor Vehicle is driven by or in the charge of any person other than the Named Drivers listed in the Policy Schedule. [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
 

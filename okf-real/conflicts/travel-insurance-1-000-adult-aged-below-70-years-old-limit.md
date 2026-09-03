@@ -1,6 +1,6 @@
 # Website defect — travel-insurance 1-000:adult_aged_below_70_years_old.limit
 
-- opened: 2026-08-27
+- opened: 2026-09-03
 - kept (higher authority): `$100000` from `raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered`
 - contradicted: `$200000` from `raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered`
 

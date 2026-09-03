@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -82,7 +82,7 @@ Partial withdrawal(s) will be processed proportionately according to the respect
 
 > At the Maturity date on the Policy anniversary immediately before the Life insured attains 100 years old, if the policy is still in force, You will receive a lump sum maturity Benefit which is equivalent to the Account value, less any amounts owing to Us. [src:raw/wordings/tiq-invest-policy-contract-v2-26.md]
 
-## 3.6 Structure of the ILP Sub-Funds in the Packaged Fund [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
+3.6 Structure of the ILP Sub-Funds in the Packaged Fund [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 > Each Packaged fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Packaged fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Packaged fund. [src:raw/wordings/tiq-invest-policy-contract-v2-26.md]
 
@@ -133,12 +133,6 @@ If You submit Your request after the cut-off time or on a day that is not a Valu
 Please refer to Premium section and/or Top-Up (Ad-hoc/Recurring) section for conditions of acceptance [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 We reserve the right to revise the cut-off time at Our discretion [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
-
-## 3.10 Settlement for Redemption
-
-Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within 7 business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
-
-Note: Applications submitted or Premiums received after 3 p.m. (Singapore time) will be transacted based on the unit price as at the next Valuation day [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 ## 5.1 Death Benefit
 

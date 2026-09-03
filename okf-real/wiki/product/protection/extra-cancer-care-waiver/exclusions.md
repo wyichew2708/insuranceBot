@@ -20,18 +20,16 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
 ## 4 What is Not Covered?
 
 There are certain conditions under which We do not waive the Premiums: [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
-
-## 4.1 Extra cancer care waiver [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].
 
 > 1. The Major Cancer is caused by - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide within the first 12 months from the Policy issue date or the latest Reinstatement date, whichever is later; - Effects of drug or alcohol addiction; [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md]
 

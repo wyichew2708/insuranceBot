@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -82,10 +82,6 @@ You must tell Us immediately if any of the information You have given Us changes
 give Us all relevant information or if You mislead Us, We may: [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 - (a) refuse to pay a claim or part of it; and/or - (b) cancel the Policy [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
-
-## General Conditions
-
-## (Applicable to the Whole Policy) [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 ## (a) Cancellation by You
 
@@ -202,3 +198,7 @@ In the event of any payment made by Us, We reserve the right to claim from You a
 ## 2. Reduction of Young, Elderly and Inexperienced Driver Excess
 
 > The 'young, elderly and inexperienced driver excess' of S$4,000 shall be reduced to S$2,000. [src:raw/wordings/private-car-insurance-policy-wording.md]
+
+## 2. Agreement Between You and Us
+
+Your insurance cover is a legal contract between You and Us. We agree to give You the insurance set out on the Policy for the premium paid by You [src:raw/wordings/private-car-insurance-policy-wording.md].

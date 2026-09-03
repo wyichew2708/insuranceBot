@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -38,6 +38,12 @@ Your policy is regulated using the laws of Singapore. It forms the entire legal 
 ## 2. Policy Owners' Protection Scheme
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
+
+## 3.10 Settlement for Redemption
+
+Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within 7 business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
+
+Note: Applications submitted or Premiums received after 3 p.m. (Singapore time) will be transacted based on the unit price as at the next Valuation day [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 ## 4.1 Premium
 
@@ -91,7 +97,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > At any time when there are changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You thirty (30) days' written notice prior to such change. [src:raw/wordings/tiq-invest-policy-contract-v2-26.md]
 
-## 7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
+7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest less any change in the unit price(s) of the ILP sub-fund [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
@@ -109,7 +115,7 @@ As buying a life insurance policy is a long-term commitment, an early terminatio
 
 ## Premium Allocation
 
-## Structure of the ILP Sub-Funds in the Packaged Fund [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md].
+Structure of the ILP Sub-Funds in the Packaged Fund [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md].
 
 > Each Packaged fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Packaged fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Packaged fund. [src:raw/product-summaries/tiq-invest-product-summary-v2-26.md]
 

@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -33,7 +33,7 @@ confidence: high
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for Your policy is automatic and no further action is required from You. For more information on the types of Benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact Us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg )  [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md].
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md].
 
 This is a Non-participating, regular Premium term plan designed to provide protection against critical illnesses (early, intermediate or severe stage), mental health conditions as well as death. It also waives the Premium of the policy upon diagnosis and claim of an early or intermediate stage critical illness and pays a monthly cash payout upon diagnosis of a covered severe stage critical illness during the policy term [src:raw/product-summaries/product-summary-for-essential-critical-secure-final.md].
 

@@ -19,10 +19,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -62,7 +62,7 @@ Please refer to Appendix A for the list of CIs covered and the Policy Contract f
 
 Our payment on the monthly payouts will not reduce the death Benefit of the Basic policy and it shall be paid to You as an additional benefit to any CI Benefit payable by Us [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
 
-## 4. Special &amp; Juvenile Conditions Benefit
+## 4. Special & Juvenile Conditions Benefit
 
 > If the Life insured is diagnosed with a covered condition while the rider is in force, We will pay an additional 20% of the Rider sum insured in one lump sum. Before Our payment, any amounts owing to Us will first be deducted. [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md]
 
@@ -88,7 +88,7 @@ You may refer to the relevant sections in the Basic policy's product summary for
 
 - a) Bonuses - b) Reversionary Bonus - c) Performance Bonus - d) Investment of Assets - e) Investment Rate of Return - f) Total Expense Ratio (TER) - g) Type of Risk Affecting the Level of Bonuses - h) Sharing of Risks - i) Smoothing of Bonuses - j) Fees and Charges [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
 
-## CI Benefit, Special &amp; Juvenile Conditions Benefit and Top 3 CI Benefit
+## CI Benefit, Special & Juvenile Conditions Benefit and Top 3 CI Benefit
 
 We will not pay any Benefit if the CI (early, intermediate or severe stages) or special &amp; juvenile conditions is directly or indirectly, wholly or partly caused by: [src:raw/product-summaries/early-ci-benefit-rider-product-summary.md].
 

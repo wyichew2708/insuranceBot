@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -73,7 +73,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > At any time when there are changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You 30 days' notice prior to such change. [src:raw/wordings/policy-contract-enrich-goal.md]
 
-## 8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-enrich-goal.md].
+8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-enrich-goal.md].
 
 If Your Age, gender, smoker status and/or country of residence is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest [src:raw/wordings/policy-contract-enrich-goal.md].
 
@@ -85,7 +85,7 @@ Based on the correct Age, gender, smoker status and/or country of residence, if 
 
 > If Your policy document is sent by post, We consider this policy is delivered to you 7 days after the date of posting. [src:raw/wordings/policy-contract-enrich-goal.md]
 
-## 9.2 Transferring the Legal Right of the Policy [src:raw/wordings/policy-contract-enrich-goal.md].
+9.2 Transferring the Legal Right of the Policy [src:raw/wordings/policy-contract-enrich-goal.md].
 
 If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/policy-contract-enrich-goal.md].
 

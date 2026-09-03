@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -33,7 +33,7 @@ confidence: high
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 This is a limited pay regular Premium, whole life plan that provides You with whole of life protection against death, Terminal illness and Total and permanent disability. It also provides retirement option, premium relief benefit and guaranteed insurability benefit [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
@@ -55,7 +55,7 @@ The premium rate for this plan is level and guaranteed throughout the premium te
 
 > You will pay the first Premium at the time You apply for this policy. Thereafter, You will pay all future Premiums within thirty (30) days from the due date so as to continue the policy. If You fail to pay Premiums on time, We will pay the Premiums for You so that the policy can continue. We can only do so if the policy has accumulated a Surrender value which is enough to pay for the Premiums. This is a loan (automatic Premium loan) from Us and We will charge You interest. Interest accrues on a daily basis. If there is not enough Surrender value, this policy will end. We will deduct these loans and interest from any amount We may be due to pay under this policy. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
 
-## Select additional benefits according to your need(s): [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+Select additional benefits according to your need(s): [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 With additional Premiums, You may add supplementary benefits to this policy for extra protection. For more details on the riders, please refer to the riders' product summary [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 

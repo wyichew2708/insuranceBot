@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -42,7 +42,7 @@ General Exceptions and General Conditions under this Policy shall not apply to t
 
 Benefit (c) - Medical Expenses necessarily incurred in the treatment of the Insured Person as a result of Accidental Bodily Injury [src:raw/wordings/tiq-maid-policy-wording.md].
 
-## Scale of Benefits related to Personal Accident [src:raw/wordings/tiq-maid-policy-wording.md].
+Scale of Benefits related to Personal Accident [src:raw/wordings/tiq-maid-policy-wording.md].
 
 ## Section 3 - Repatriation Expenses
 
@@ -54,7 +54,7 @@ We will reimburse the Insured for the actual Repatriation Expenses incurred up t
 
 It is a condition precedent to our liability to reimburse the repatriation expenses that a detailed account be submitted to and approved by Us [src:raw/wordings/tiq-maid-policy-wording.md].
 
-## Section 4 - Hospitalisation &amp; Surgical Expenses
+## Section 4 - Hospitalisation & Surgical Expenses
 
 > We will reimburse the Insured for Hospitalisation and Surgical Expenses (including Day Surgery) necessarily incurred in Singapore as a result of an Accident, Sickness or disease sustained by the Insured Person commencing or occurring during the Period of Insurance. Under this Section, the Insured will have to co-pay 25% for claim amounts above the first S$15,000. This co-payment will be waived if the waiver of co-insurance cover is purchased. [src:raw/wordings/tiq-maid-policy-wording.md]
 
@@ -62,7 +62,7 @@ It is a condition precedent to our liability to reimburse the repatriation expen
 
 This benefit is extended to expenses incurred Overseas only if the Insured Person is travelling along with You or Your Family. In case the Insured Person is admitted to an Overseas hospital, the maximum reimbursement will be as per prevailing Class 'C' rate or 'B2' in the event of non-availability of Class 'C' wards, up to the limit of benefit as stated in the Schedule [src:raw/wordings/tiq-maid-policy-wording.md].
 
-## Section 5 - Wages &amp; Levy Reimbursement
+## Section 5 - Wages & Levy Reimbursement
 
 Subject to the Terms of this section, We will, reimburse You the wages of Your domestic helper (including government levy on foreign domestic workers) up to the limit stated in the Schedule, in the event the Insured suffers the loss of service of the Insured Person caused by her hospitalisation due to Sickness or Accident, the expenses of which are insured and payable under Section 2 or 4 of this Policy [src:raw/wordings/tiq-maid-policy-wording.md].
 
@@ -108,7 +108,7 @@ This section is applicable to the Policy only where so indicated in the Schedule
 
 > This Section will reimburse the Insured subject to the terms conditions and exceptions of the Policy if during the Period of Insurance the Insured's Letter of Guarantee, which has been effected in lieu of the security deposit required by Ministry of Manpower, is forfeited due to any breach by the Insured Person (named in the Schedule) of the conditions of the Security Bond imposed under Section 12 of Employment of Foreign Manpower (Work Passes) Regulations or Section 21 of Immigration Regulations, including her unexplained disappearance. [src:raw/wordings/tiq-maid-policy-wording.md]
 
-## Section 13 - Additional Hospitalisation &amp; Surgical Expenses
+## Section 13 - Additional Hospitalisation & Surgical Expenses
 
 We will pay You the additional medically necessary Hospitalisation &amp; Surgical Expenses up to the limit of benefit stated in the Schedule. We will pay for this benefit provided that Your claim is payable in relation to the benefit under Section 4: Hospitalisation and Surgical Expenses [src:raw/wordings/tiq-maid-policy-wording.md].
 

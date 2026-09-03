@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -53,7 +53,7 @@ Members at applicable Tiers will receive transport vouchers up to the value spec
 
 Members may access a selection of third-party deals and discounts ('Partner Deals') as displayed on the app. Merchant-specific terms and conditions apply to all Partner Deals [src:raw/wordings/travel-pass-terms-conditions.md].
 
-## 7.5. Free Personal Accident &amp; Lifestyle Protection Plan
+## 7.5. Free Personal Accident & Lifestyle Protection Plan
 
 Members at applicable Tiers will enjoy free local Personal Accident insurance coverage. Please refer to the policy wording in the App for full coverage details, exclusions, and eligibility [src:raw/wordings/travel-pass-terms-conditions.md].
 

@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -106,7 +106,7 @@ The Company shall not indemnify the Insured for: [src:raw/wordings/etiqa-contrac
 
 - -loss or damage which is foreseeable having regard to the nature of the construction work or the manner of its execution, - -loss or damage caused by subsidence if caused by insufficient compacting, and - -the costs of loss prevention or minimization measures which become necessary during the period of insurance [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
-## SPECIAL CONDITIONS CONCERNING EXISTING PROPERTY OR PROPERTY BELONGING TO OR HELD IN CARE, CUSTODY OR CONTROL OF THE INSURED [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
+SPECIAL CONDITIONS CONCERNING EXISTING PROPERTY OR PROPERTY BELONGING TO OR HELD IN CARE, CUSTODY OR CONTROL OF THE INSURED [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
 It is agreed and understood that otherwise subject to the terms, exclusions, provisions and conditions contained in the Policy or endorsed thereon and subject to the Insured having paid the agreed extra premium, Section 1 of this Policy shall be extended to cover loss of or damage to the existing property or property belonging to or held in care, custody or control by the Insured caused by or arising out of the construction or erection of the items insured under Section 1 [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
@@ -116,7 +116,7 @@ In respect of loss or damage caused by vibration or by the removal or weakening 
 
 - -loss or damage which is foreseeable having regard to the nature of the construction work or the manner of its execution, - -the costs of loss prevention or minimization measures which become necessary during the period of insurance [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
-## SPECIAL CONDITIONS CONCERNING FIRE-FIGHTING FACILITIES AND FIRE SAFETY ON CONSTRUCTION SITES [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
+SPECIAL CONDITIONS CONCERNING FIRE-FIGHTING FACILITIES AND FIRE SAFETY ON CONSTRUCTION SITES [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
 It is agreed and understood that otherwise subject to the terms, exclusions, provisions and conditions contained in the Policy or endorsed thereon, the Company shall only indemnify the Insured for loss or damage directly caused by or resulting from fire or explosion, provided always that [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 

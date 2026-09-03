@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -78,7 +78,7 @@ We will reward You if Your mileage is low with a Rebate on Your Car insurance pr
 
 ## Optional Benefits
 
-> ## 1. NCD Protector (applicable for 30% onwards) [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
+> 1. NCD Protector (applicable for 30% onwards) [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
 
 > If You are entitled to 30%, 40% or 50% NCD, in the event there is one (1) claim made against Your policy within the Period of Insurance, You will be allowed to retain Your NCD. If a second or more claims are made, the normal NCD rules will apply and Your entitlement will be reduced by 30% NCD on renewal with Us. [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
 
@@ -123,8 +123,6 @@ In the event Your Car is involved in an Accident and gives rise to a claim, Your
 ## 3. Loss of Use Benefit
 
 > We will pay You a daily transport allowance of S$50 up to a maximum of five (5) days, if the period of repairs recommended by our appointed surveyor or loss adjuster exceeds three (3) days. [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
-
-## We will not pay for: [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 - (a) any transport allowance for any accident repair not authorised by Our appointed surveyor or loss adjuster; or - (b) a Windscreen claim; or - (c) a total loss claim; or - (d) when the repairs of Your Car is delayed due to unavailability of replacement parts; or - (e) any amount beyond the repair period recommended by Our appointed surveyor or loss adjuster even if the repairs take longer. If Your Car is repaired sooner than expected, We will only pay You for the number of days it actually took to repair Your Car [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
@@ -189,3 +187,7 @@ Outstanding Car loan refers to the outstanding loan amount including interest ow
 - (i) any transport allowance for any accident repair not authorised by Our appointed surveyor or loss adjuster; or - (ii) a Windscreen claim; or - (iii) a total loss claim; or - (iv) when the repairs of Your car is delayed due to unavailability of replacement parts; or - (v) any amount beyond the repair period recommended by Our appointed surveyor or loss adjuster even if the repairs take longer. If Your car is repaired sooner than expected, We will only pay You for the number of days it actually took to repair Your car [src:raw/wordings/private-car-insurance-policy-wording.md].
 
 > The total amount payable under this benefit shall not exceed S$1,000 in respect of any one (1) Accident and will only be paid to You after We have finally settled Your repair bill with the workshop. [src:raw/wordings/private-car-insurance-policy-wording.md]
+
+## 1. Authorised Workshops Scheme
+
+In the event Your car is involved in an Accident and gives rise to a claim, Your car must be removed to an Etiqa Insurance Pte. Ltd. authorised workshop selected and approved by Us for repairs. Failure to remove Your car to an approved workshop would be a breach of this endorsement and We shall have the right to decline liability under Section I of the Policy [src:raw/wordings/private-car-insurance-policy-wording.md].

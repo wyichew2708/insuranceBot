@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -77,13 +77,13 @@ We will reward You if Your mileage is low with a Rebate on Your car insurance pr
 
 ## Optional Benefits
 
-> ## 1. NCD Protector (applicable for 30% onwards) [src:raw/wordings/privatecar-insurance-policy-wording.md]
+> 1. NCD Protector (applicable for 30% onwards) [src:raw/wordings/privatecar-insurance-policy-wording.md]
 
 > If You are entitled to 30%, 40% or 50% NCD, in the event there is one (1) claim made against Your policy within the Period of Insurance, You will be allowed to retain Your NCD. If a second claim is made, the normal NCD rules will apply and Your entitlement will be reduced by 30% NCD on renewal with Us. [src:raw/wordings/privatecar-insurance-policy-wording.md]
 
 - (a) in the event You decide to switch insurer, the protected NCD is not transferable to the new insurer; and - (b) the NCD Protector does not waive Our rights to cancel or refuse to renew Your Policy at the end of the Period of Insurance [src:raw/wordings/privatecar-insurance-policy-wording.md].
 
-## 2. Gap Cover (applicable for Comprehensive cover only) [src:raw/wordings/privatecar-insurance-policy-wording.md].
+2. Gap Cover (applicable for Comprehensive cover only) [src:raw/wordings/privatecar-insurance-policy-wording.md].
 
 > In the event of total loss or constructive total loss of Your car as covered under Section I of this Policy, if the Market Value at the time of loss of Your car is below the Outstanding Car loan (at the time of loss) for the purchase of Your car, We will pay for the difference between the Outstanding Car loan and the Market Value at the time of loss up to S$80,000. [src:raw/wordings/privatecar-insurance-policy-wording.md]
 
@@ -128,8 +128,6 @@ For the purpose of this Endorsement, 'authorised workshops' shall mean such repa
 ## 3. Loss of Use Benefit
 
 > We will pay You a daily transport allowance of S$50 up to a maximum of five (5) days, if the period of repairs recommended by our appointed surveyor or loss adjuster exceeds three (3) days. [src:raw/wordings/privatecar-insurance-policy-wording.md]
-
-## We will not pay for: [src:raw/wordings/privatecar-insurance-policy-wording.md].
 
 - (a) any transport allowance for any accident repair not authorised by Our appointed surveyor or loss adjuster; or - (b) a Windscreen claim; or - (c) a total loss claim; or - (d) when the repairs of Your car is delayed due to unavailability of replacement parts; or - (e) any amount beyond the repair period recommended by Our appointed surveyor or loss adjuster even if the repairs take longer. If Your car is repaired sooner than expected, We will only pay You for the number of days it actually took to repair Your car [src:raw/wordings/privatecar-insurance-policy-wording.md].
 

@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/nomination
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -146,7 +146,7 @@ less any outstanding amount that You still owe Us [src:raw/wordings/policy-contr
 
 When We make this payment, the policy ends [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
 
-## Other Benefits available under DIRECT - Etiqa Insurance Pte. Ltd. whole life [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
+Other Benefits available under DIRECT - Etiqa Insurance Pte. Ltd. whole life [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
 
 - Automatic premium loan - Policy loan - Conversion to Paid-up policy [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
 

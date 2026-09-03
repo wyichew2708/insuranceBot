@@ -21,16 +21,16 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
 ## About Tiq Travel Covid Insurance
 
-## Section 1 - Personal Accident (Accidental Death &amp; Permanent Disablement)
+## Section 1 - Personal Accident (Accidental Death & Permanent Disablement)
 
 > If the Insured Person(s) is involved in an Accident, within the next twelve (12) months suffer Injury or death, We will indemnify the Insured Person(s) or His legal representative up to the limit mentioned under Section 1 of the Table of Benefits. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
@@ -44,7 +44,7 @@ We will reimburse the Insured Person(s) up to the limit mentioned under the Tabl
 
 In the event the Insured Person(s) is entitled to a refund or reimbursement of all or part of such expenses from any other source, or if there is in place any other insurance against the events covered under this Section, We shall only be liable for the excess of the amount recoverable from such other source or insurance subject to the applicable limits [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-## Section 3 - Medical Expenses Incurred in Singapore (for Savvy, Luxury, Pre-Ex Savvy and Pre-Ex Luxury plans only) [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+Section 3 - Medical Expenses Incurred in Singapore (for Savvy, Luxury, Pre-Ex Savvy and Pre-Ex Luxury plans only) [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 We will reimburse the Insured Person(s) up to the limit mentioned under the Table of Benefits, the Medical Expenses necessarily incurred in Singapore for medical treatment or follow-up medical treatment in Singapore for Injury or Illness which the Insured Person(s) had sustained whilst Overseas [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -90,7 +90,7 @@ This Policy will pay for any claim under any one of Sections 6 or 7 for the same
 
 > We will reimburse the Insured Person(s) up to two hundred dollars ($200) for all telephone charges incurred for engaging the Emergency Services Hotline during a medical assistance/emergency situation for which a medical claim will be submitted under Section 2. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
-## ALL EXPENSES PAID EMERGENCY MEDICAL EVACUATION; REPATRIATION &amp; REPATRIATION OF MORTAL REMAINS TO SINGAPORE [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+ALL EXPENSES PAID EMERGENCY MEDICAL EVACUATION; REPATRIATION &amp; REPATRIATION OF MORTAL REMAINS TO SINGAPORE [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 > We shall arrange and pay for the following services up to a maximum limit of $1,500,000 per occurrence for Section 10 &amp; 11 subject to the exclusions listed. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
@@ -99,8 +99,6 @@ This Policy will pay for any claim under any one of Sections 6 or 7 for the same
 > When as the result of Injury or Illness occurring while the Insured Person(s) is Overseas and if in the opinion of the Emergency Services Hotline, it is judged medically appropriate to move the Insured Person(s) to another location or to return Him to Singapore for medical treatment, the Emergency Services Hotline will arrange for the evacuation utilizing the means best suited to do so, based on the medical severity of the Insured Person(s)'s condition. We will pay for the covered expenses for such evacuation specified in the Selected Plan under Section 10. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
 The means of evacuation arranged by the Emergency Services Hotline may include air ambulance, surface ambulance, regular air transportation, railroad or any other appropriate means. All decisions as to the means of transportation and the final destination will be made by the Emergency Services Hotline and will be based solely on medical necessity. Covered expenses are expenses for services provided and/or arranged by the Emergency Services Hotline for the Insured Person(s)'s transportation and shall include medical services and medical supplies necessarily incurred as a result of the emergency medical evacuation [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
-
-> ## Exclusions applicable to Section 10 [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
 > - (a) Any expenses incurred for services provided by another party for which the Insured Person(s) is not liable to pay, or any expenses already included in the cost of a scheduled Trip, including but not limited to the unutilized portion of the return air ticket for the scheduled Trip; and/ or - (b) Any expenses for a service not approved and arranged by the Emergency Services Hotline unless We decide that such expenses were necessarily incurred and for reasons beyond the control of the Insured Person(s), the Insured Person(s)'s Relative or Travel Companion; or in the event that the Emergency Services Hotline could not be contacted during the emergency. In any event, We reserve the right to reimburse the Insured Person(s) only for those expenses incurred for services which the Emergency Services Hotline would have provided under the same circumstances and up to the limit specified in the Selected Plan under Section 10. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
@@ -111,8 +109,6 @@ The means of evacuation arranged by the Emergency Services Hotline may include a
 We will also pay the associated reasonable expenses necessarily incurred Overseas for services and supplies provided by the mortician or undertaker, including but not limited to the cost of a basic casket, embalmment and cremation if so elected. This will not include expenses related to religious ceremony or rites [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 All arrangements for the repatriation must be approved and arranged through the Emergency Services Hotline unless making such arrangements through the Emergency Services Hotline were not possible in the circumstances due to reasons beyond the Insured Person(s) estate's control and any alternative arrangements are deemed reasonable by Us [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
-
-> ## Exclusions applicable to Section 11 [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
 - (b) Any expenses incurred for the transportation of the Insured Person(s)'s remains not approved and arranged by the Emergency Services Hotline [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -128,11 +124,7 @@ All arrangements for the repatriation must be approved and arranged through the 
 
 Under this Section, Cancellation means unavoidable termination of the Trip after it is arranged but before it has commenced [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-## This coverage is effective only: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
-
 - (a) If this Policy is purchased before the Insured Person becomes aware of any circumstances which could lead to the disruption of a planned Trip; - (b) With the provision of documentary proof that there was a first attempt to seek a refund of any prepaid expenses from the transport or accommodation provider and the refund request has been denied by them. We will pay the balance of the irrecoverable transport or accommodation expenses after deducting the amount that has been refunded by the transport or accommodation provider; and - (c) If the travel agent, tour operator, transport or accommodation provider(s) have been duly informed at the earliest possible time as soon as the Insured Person(s) is aware that there is a change of travel plans [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
-
-> ## Exclusions applicable to Section 12 [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
 We will not pay for any loss: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -158,8 +150,6 @@ If after the commencement of the Trip and the Insured Person(s) should decide to
 
 A medical certificate must be obtained from the Medical Practitioner treating the Insured Person(s) or His Family Member confirming the Serious Bodily Injury or Serious Illness [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-> ## Exclusions applicable to Section 14 [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
-
 We shall not pay for claims arising directly or indirectly from, in respect of, or due to: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 - (a) Government regulation or Statute, delay or amendment of the booked Trip (including error, omission or default) by the provider of any service forming part of the booked Trip as well as the travel agent or tour operator through whom the Trip was booked; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
@@ -177,3 +167,13 @@ This includes compensation for the Insured Person(s)'s clothing and personal eff
 We may, at Our sole discretion and option, make payment or reinstate or repair the damaged personal baggage. All claim settlements will be subject to due allowance for wear and tear and depreciation [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 We will use the table below as a guide for determining the items' fair value: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> The loss must be reported to the police or relevant authority such as hotel and airline management or other service provider having jurisdiction at the place of the loss within 24 hours of the incident. Any claim must be accompanied by proof of denial received from the airline or service provider. The Insured Person(s) must take every possible step and reasonable precaution to ensure: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+- (a) That the Insured Person(s)'s baggage or personal effects are not left unattended in a Public Place; and - (b) The safety of all personal property and baggage [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+Claims that result from the Insured Person(s) losing His baggage or it being damaged while being held by an airline or service provider should be made to the airline or service provider first. Any payment under this Policy shall be made upon proof of compensation received from the airline or service provider or where such compensation is denied, proof of such denial [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+We will not be liable for: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> - (a) Loss not reported to the police or the transport carrier within twenty-four (24) hours of discovery. - (b) The following classes of property which are excluded from coverage: animals, motor vehicles (including accessories), motorcycles, boats, motors, any other conveyances, snow skis, boards or toboggans, fruits, perishables and consumables, household effects, antiques, artefacts, paintings, objects of art, computers (including handheld computers, software and accessories with the exception of laptop computers as [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]

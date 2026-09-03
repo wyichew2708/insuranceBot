@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -64,8 +64,6 @@ introduce malware into your computer system ; 4. (c) corrupt, damage or destroy 
 > - 1.13 Home means your private residential property used solely for domestic purposes, the address of which is shown in the Schedule. - 1.14 Hacking means the unauthorized or malicious intrusion to your computer system . [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md]
 
 > - 1.15 Identity theft means the online theft or online modification, alteration or corruption by a third party of your personal information to commit fraud using your identity. [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md]
-
-> ## 1.16 Identity theft expenses means: [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md]
 
 - (a) reasonable and necessary expenses (including legal costs) incurred by you , with our prior written consent: - (i) to correct or reinstate official public records after an identity theft has occurred; - (ii) for challenging the accuracy or completeness of a consumer credit report; [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
 
@@ -130,8 +128,6 @@ the fraudulent or malicious disablement of access and control of your computer s
 > - 1.26 Restoration costs means reasonable and necessary costs and expenses you incur, with our prior written consent: 2. (a) for investigating, reconfiguring and repairing any damage to your computer system; 3. (b) for retrieving or replacing your digital assets ; or 4. (c) for locating and removing malwar e from your computer systems following a cyber act . We can at our sole discretion settle your claim for restoration costs under this policy , with new for old with provision for wear and tear deduction if necessary. [src:raw/wordings/personal-cyber-insurance-policy-wording.md]
 
 > 1.27 Third party means any natural person or entity other than you , acting on their own accord, without your knowledge, consent, assistance or participation. [src:raw/wordings/personal-cyber-insurance-policy-wording.md]
-
-> ## 1.28 Your computer system means: [src:raw/wordings/personal-cyber-insurance-policy-wording.md]
 
 - (a) any home computer network, router, hardware, digital assets therein and all associated input and output devices, which is owned by you and used mainly by you for personal purposes, and which is located at your home ; or - (b) mobile phones, laptops, notebook or tablets, which are owned by you and used mainly by you for personal purposes [src:raw/wordings/personal-cyber-insurance-policy-wording.md].
 

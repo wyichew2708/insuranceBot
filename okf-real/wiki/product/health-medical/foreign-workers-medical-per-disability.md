@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -56,7 +56,7 @@ If two or more surgical procedures are performed during the course of a single o
 
 Fees charged for daily bedside visits made by the attending physician during the Insured Person's confinement in the Hospital. This benefit is limited to one visit per day [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md].
 
-## 6. Pre-Hospitalisation Specialist Consultation Diagnosis &amp; Diagnostic X-ray &amp; Lab Test [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md].
+6. Pre-Hospitalisation Specialist Consultation Diagnosis &amp; Diagnostic X-ray &amp; Lab Test [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md].
 
 Charges incurred for consultation with a Specialist upon the recommendation in writing by a Physician and any examination and test ordered by the Specialist and performed for the diagnosis of a medical condition that results in Hospitalisation or Surgery within the period specified in the Schedule of Benefits. The benefit payable shall not exceed the maximum limit specified in the Schedule of Benefits. This shall also include treatment at the A&amp;E department of the Hospital that necessitates immediate Hospitalisation [src:raw/wordings/foreign-workers-medical-per-disability-policy-wording-1-july-2025.md].
 

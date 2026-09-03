@@ -614,3 +614,18 @@
   turns: ["i want cover for my house", "what about car insurance"]
   expect:
     must_not_contain: ["complimentary home"]
+
+- id: ft-hold-bare-product-name
+  # The most ordinary input there is: a product's name and nothing else. On
+  # the first v2.1 build it was refused by the entailment judge over a
+  # marketing line the composer emitted as a claim.
+  question: tiq travel
+  expect:
+    handoff: false
+    cite_product: [travel-insurance, tiq-travel, travel-infinite, travel-takaful]
+
+- id: ft-hold-bare-product-name-coverage
+  question: tiq travel coverage
+  expect:
+    handoff: false
+    cite_product: [travel-insurance, tiq-travel, travel-infinite, travel-takaful]

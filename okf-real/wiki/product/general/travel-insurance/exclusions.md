@@ -23,14 +23,14 @@ links:
   - concept/commencement-date
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
-## Exclusions Applicable Only To Sections 10 &amp; 11
+## Exclusions Applicable Only To Sections 10 & 11
 
 The following treatment, items, conditions, activities and their related or consequential expenses are excluded from the Sections and AGA &amp;/or Etiqa Insurance Pte. Ltd. will not be liable for: [src:raw/wordings/eprotect-travel-policy-wording.md].
 

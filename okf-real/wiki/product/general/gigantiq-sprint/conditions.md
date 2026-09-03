@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -32,7 +32,7 @@ confidence: high
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.o [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
 
 This is a single premium, yearly renewable, Non-participating universal life plan denominated in Singapore dollars. It offers the financial flexibility, opportunity for wealth accumulation and the assurance of life insurance coverage through providing death Benefit. You may add optional supplementary riders to this policy for extra protection [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
 
@@ -56,7 +56,7 @@ Upon termination, We will refund the Account value, less any amounts owing to Us
 
 > This is a single premium policy. If the average daily Account value for the calendar month falls below S$50, We will provide a thirty (30) days' grace period such that Your policy is kept in force. This policy will be de-activated if the required Top-up to keep the policy in force is not paid by the expiry date of the grace period. [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md]
 
-## Select additional benefits according to your need(s) [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
+Select additional benefits according to your need(s) [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
 
 You may add optional supplementary riders to this policy for extra protection. The Insurance cover charge for the riders will be deducted daily from the Account value of this policy [src:raw/product-summaries/product-summary-gigantiq-sprint-2-02-december-2020-clean.md].
 

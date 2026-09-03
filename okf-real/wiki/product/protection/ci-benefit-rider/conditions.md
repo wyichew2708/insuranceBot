@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -32,7 +32,7 @@ confidence: high
 
 This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/ci-benefit-rider-product-summary.md].
 
 > This is a whole of life Participating rider that accelerates the death Benefit of the Basic policy if the Life insured is diagnosed with any one of the covered 63 severe-stage critical illnesses while the rider is in force. This rider does not have any surrender value. [src:raw/product-summaries/ci-benefit-rider-product-summary.md]
 

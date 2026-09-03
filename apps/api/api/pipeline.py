@@ -9,7 +9,10 @@ the pages it considered and rejected.
 
 from __future__ import annotations
 
+import contextlib
+import threading
 from pathlib import Path
+from typing import Any
 
 from harness import (
     AnswerEnvelope,
@@ -85,6 +88,37 @@ OFF_TOPIC = (
     "our policy documents. If there's something you'd like to know about your "
     "cover, a claim, or one of our products, ask away."
 )
+
+
+def _memoised(classify: Any) -> Any:
+    """A judging callable that answers an identical (system, user) once."""
+    memo: dict[tuple[str, str], Any] = {}
+    lock = threading.Lock()
+
+    def call(system: str, user: str, schema: dict[str, Any], **kw: Any) -> Any:
+        key = (system, user)
+        with lock:
+            if key in memo:
+                return memo[key]
+        out = classify(system, user, schema, **kw)
+        with lock:
+            memo[key] = out
+        return out
+
+    return call
+
+
+def _prewarm_judge(ctx: GateContext) -> None:
+    """Run the entailment judge on the draft so the gate finds it memoised.
+
+    Swallows everything: this runs off the request thread purely to warm a
+    memo, and a fault here must cost the turn its head start and nothing else.
+    The gate calls the judge itself in that case.
+    """
+    from harness.gates import _judge_entailment
+
+    with contextlib.suppress(Exception):
+        _judge_entailment(ctx)
 
 
 def _refusal(trace: Trace, screening: Screening, gate: str, budget_note: str) -> tuple[AnswerEnvelope, Trace]:
@@ -335,7 +369,14 @@ def answer_question(
     understanding = Understanding(degraded="not attempted")
     # No stage at all on the deterministic path: opening one that reports "no
     # model" on every offline turn is noise in the one trace people read most.
-    if settings.resolve_with_model and provider.name != "deterministic" and worth_resolving(question):
+    # A product named in full needs no model to identify it, and the catalogue
+    # call is the single slowest thing on the turn (8.5 s of a 30 s answer on a
+    # 35B model, most of it prefill of the same 3,100-token list). The name is
+    # authoritative either way — it overrules the model's pick below — so
+    # where it resolves to exactly one product the call is skipped outright.
+    if len(named) == 1:
+        understanding = Understanding(product_ids=[], subject="product", degraded="named in full")
+    elif settings.resolve_with_model and provider.name != "deterministic" and worth_resolving(question):
         with trace.stage("understand") as detail:
             understanding = understand(bundle, question, provider, history=list(history or []))
             detail["products"] = understanding.product_ids
@@ -619,6 +660,42 @@ def answer_question(
         # the same gates below, so a provider that drifts is caught rather
         # than trusted — and a provider that is down degrades to the
         # deterministic prose instead of failing the question.
+        # The rewrite and the entailment judge both read the composed draft —
+        # the judge its claims, the rewrite its prose — and neither needs the
+        # other's output. In series they were 12 s and 10 s of a 30 s answer.
+        # The judge is started now on the draft's claims, memoised at the
+        # provider call, so when the gates run below the identical judging
+        # call returns from the memo instead of the model.
+        judge = None
+        judge_warmup = None
+        if provider.name != "deterministic" and getattr(provider, "classify", None) is not None:
+            judge = _memoised(provider.classify)
+            if draft.claims and not draft.handoff:
+                # A plain daemon thread, not a pool. A module-level
+                # ThreadPoolExecutor registers an atexit handler, and that
+                # handler crashed the interpreter at the end of a test run
+                # ("recursive_mutex lock failed") — a background pool that
+                # outlives the request is a liability the turn does not need.
+                # The judge reads `claims`, which the rewrite never touches;
+                # it only rebinds the prose.
+                judge_warmup = threading.Thread(
+                    target=_prewarm_judge,
+                    args=(
+                        GateContext(
+                            answer=draft,
+                            bundle=bundle,
+                            session=session,
+                            question=question,
+                            loaded_page_ids=[p.id for p in pages],
+                            raw_root=raw_root,
+                            today=session.today,
+                            judge=judge,
+                        ),
+                    ),
+                    daemon=True,
+                )
+                judge_warmup.start()
+
         if not draft.handoff and draft.answer:
             with trace.stage("generate") as detail:
                 detail["provider"] = provider.name
@@ -746,11 +823,13 @@ def answer_question(
             today=session.today,
             # Meaning is judged where a model is configured; on the
             # deterministic path the lexical test stands.
-            # `getattr`, as `understand` does: a provider that writes but cannot
-            # judge is legitimate, and a missing judge means the lexical test
-            # stands rather than the turn failing.
-            judge=getattr(provider, "classify", None) if provider.name != "deterministic" else None,
+            judge=judge,
         )
+        if judge_warmup is not None:
+            # Wait for the pre-warm so the gate's call is a memo hit. A warm-up
+            # that raised, or timed out, is simply a cold memo — the gate then
+            # calls the model itself and the turn is slower, never wrong.
+            judge_warmup.join(timeout=60)
         # Guardrail verdicts are already on the trace; extending rather than
         # replacing keeps them in the list `blocked()` reads, so an output the
         # screen refused cannot be delivered by a clean sweep of the seven.

@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -140,8 +140,6 @@ and in the event of any claim arising for breakage of insured property the Insur
 
 Provided further that the Company will not be liable for any misdescription of the glass insured and that unless expressly stated in the said Schedule all glass shall be considered plain and of ordinary glazing quality, and the liability of the Company shall be limited to intrinsic cost. Further, should the Company decide to replace instead of paying the cost value the alteration removal and restoration of all window-fittings frames fixtures casing and tiles and similar objects which it is necessary to alter or remove before replacement can be made shall be done by and at the expense of the Insured. The Company shall not be liable for the cost of barricading scaffolding or similar erections nor for any loss arising from interruption in or delay caused to business nor for any other consequential loss arising at any time or from any cause whatsoever [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-## This Policy does not cover [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
-
 1. Any loss destruction or damage directly or indirectly caused by related to or in consequence of - a. War, invasion, acts of foreign enemies, hostilities or warlike operations (whether war be declared or not), civil war - b. Mutiny, strike, riot, civil commotion assuming the proportions of or amounting to a popular rising, military rising, insurrection, rebellion, revolution, military or usurped power, martial law or state of siege or any of the events or causes which determine the proclamation or maintenance of martial law or state of siege - c. i. Permanent or temporary dispossession resulting from confiscation nationalisation commandeering or requisition by any lawfully constituted authority - ii. Permanent or temporary dispossession of any building resulting from the unlawful occupation of such building by any person 6. Provided that the Company is not relieved of any liability to the Insured in respect of physical damage to the Property Insured occurring before dispossession or during temporary dispossession which is otherwise covered by this Policy - d. The destruction of property by order of any public authority other than when such order follow loss destruction or damage to the Property Insured arising from perils covered under Section 1 [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
 In any action suit or other proceeding where the Company alleges that by reason of the provisions of Exclusions 1(a), 1(b) and 1(c) above any loss destruction or damage is not covered by this insurance the burden of proving that such loss destruction or damage is covered shall be upon the Insured [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
@@ -167,3 +165,5 @@ Property damage covered under this Agreement shall mean physical damage to the s
 Physical damage to the substance of property shall not include damage to data or software, in particular any detrimental change in data, software or computer programs that is caused by a deletion, a corruption or a deformation of the original structure [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
 Consequently the following are excluded from this Agreement: [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
+
+- A. Loss of or damage to data or software, in particular any detrimental change in data, software or computer programs that is caused by a deletion, a corruption or a deformation of the original structure, and any business interruption losses resulting from such loss or damage. Notwithstanding this exclusion, loss of or damage to data or software which is the direct consequence of insured physical damage to the substance of property shall be covered [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].

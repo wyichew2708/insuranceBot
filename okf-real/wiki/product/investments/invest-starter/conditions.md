@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -84,6 +84,10 @@ Please refer to Fees and Charges section for the full surrender charge [src:raw/
 ## 3.5.1 Premium Allocation
 
 > 100% of the regular Premium paid and 100% of Top-up(s) will be invested into Your selected Portfolio fund. The Premium shall be invested according to the allocations indicated for your Portfolio fund. [src:raw/wordings/invest-starter-policy-contract.md]
+
+## 3.5.6 Settlement for Redemption
+
+Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within seven (7) business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/invest-starter-policy-contract.md].
 
 ## 4.1 Premium
 
@@ -161,7 +165,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > Should there be any changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You thirty (30) days' notice prior to such change. [src:raw/wordings/invest-starter-policy-contract.md]
 
-## 8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/invest-starter-policy-contract.md].
+8.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/invest-starter-policy-contract.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the insurance charge is wrong, We reserve the rights to adjust the Benefits. For underpayment of insurance charge, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of insurance charge, We will refund the excess insurance charge without interest less any change in the unit price(s) of the ILP sub-fund [src:raw/wordings/invest-starter-policy-contract.md].
 
@@ -177,8 +181,6 @@ For more information on the dealing frequency of each ILP sub-fund, please refer
 
 If Your policy document is sent by email, We consider this policy is delivered to You one (1) day after the date of emailing. If Your policy document is sent by post, We consider this policy is delivered to You seven (7) days after the date of posting [src:raw/wordings/invest-starter-policy-contract.md].
 
-## 9.2 Transferring the Legal Right of the Policy [src:raw/wordings/invest-starter-policy-contract.md].
+9.2 Transferring the Legal Right of the Policy [src:raw/wordings/invest-starter-policy-contract.md].
 
 If You write to Us and We agree to the transfer, You can transfer (assign) this policy to another person. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/invest-starter-policy-contract.md].
-
-We will not be responsible for the validity of any transfer of policy [src:raw/wordings/invest-starter-policy-contract.md].

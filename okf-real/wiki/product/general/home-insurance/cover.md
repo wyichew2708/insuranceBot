@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -54,7 +54,7 @@ Note: Approved claims will be paid out to Your personal Digital Wallet (e-Wallet
 
 ## Policy Benefits
 
-> ## Section 5 - 24-hour Emergency Home Assistance (Only applicable to plans with a Period of Insurance of 3 to 5 years) [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
+> Section 5 - 24-hour Emergency Home Assistance (Only applicable to plans with a Period of Insurance of 3 to 5 years) [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
 Information about the Insured and the Policy will be disclosed to AWP for the purpose of providing the Emergency Home Assistance service [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
@@ -72,7 +72,7 @@ Information about the Insured and the Policy will be disclosed to AWP for the pu
 
 - i. Building, Contents, fixtures and fittings belonging to the landlord while under Your occupation; - ii. all legal cost and expenses of litigation recovered against You or any member of the Household by any claimant; - iii. all costs and expenses of legal defence incurred by You or any member of the Household with Our written consent [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
-## Under Section 6, We will not pay for: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+Under Section 6, We will not pay for: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 - a) liability in respect of loss or damage to property belonging to or in the charge or under the control of You or any member of the Household, other than those described under Section 6 - Tenant's Liability. - b) liability for death, injury or loss of or damage to property: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
@@ -92,7 +92,7 @@ Section 8 - Removal of Debris (Operative only if Renovations cover under Section
 
 > We will pay up to 10% of the Sum Insured for Renovations under Section 2 for the costs incurred for removal of debris if there has been damage caused by an Insured Peril. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
-## Section 9 - Professional Fees (Operative only if Building cover under Section 1 and / or Renovations cover under Section 2 is / are shown in Your Schedule) [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+Section 9 - Professional Fees (Operative only if Building cover under Section 1 and / or Renovations cover under Section 2 is / are shown in Your Schedule) [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 > We will pay up to 10% of the Sum Insured for Building under Section 1 and/or Renovations under Section 2 for the costs incurred for professional fees of architects, consultants, engineers or surveyors to repair / reinstate Your Home if damage is caused by an Insured Peril. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
@@ -117,8 +117,6 @@ We will not pay for any loss: [src:raw/wordings/tiq-home-policy-wording-v9-20-oc
 ## Section 13 - Money
 
 > We will pay up to $750 against theft of personal Money belonging to You or any member of the Household following actual forcible and violent entry occurring at your Home. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
-
-## We will not pay for: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 > - a) losses if the incident is not reported to the police within 24 hours of discovery; - b) Money belonging to You and any member of the Household in connection with any business or commercial purpose; - c) losses committed by any member of the Household. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
@@ -145,8 +143,6 @@ We shall indemnify You for Identity Theft Expenses arising directly from an Iden
 > Our maximum liability is $50,000 in the aggregate during the Period of Insurance subject to the following limits: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
 > - a) You and Your spouse at $15,000 each - b) Your Child(ren) at $10,000 each [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
-
-## We are not liable if: [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 > - a) the deceased was more than 70 years old at the time the Injury occurred. - b) death is consequent upon: - i. suicide or any attempted suicide; - ii. self-inflicted injury; - iii. the effects of intoxicating liquor or illegal drugs; [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
 
@@ -201,3 +197,7 @@ We shall only be liable for that part of each and every loss which is in Excess 
 ## 18. Sum Insured for Building, Renovations and/or Contents Cover
 
 You must insure Your Building, Renovation and/or Contents for an amount that represents the full replacement value [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+
+- a) For Building and Renovation, this is the estimated cost of rebuilding or reconstruction, if the Building and Renovation were completely destroyed. - b) For Contents, this is the cost to replace the item on a like-for-like basis based on current market prices [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+
+If You do not insure Your Building, Renovation and/or Contents for the right amount, We will consider that You have under-insured them [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].

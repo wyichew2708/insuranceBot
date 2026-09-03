@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -64,7 +64,7 @@ Rebate refers to rebate given to You if Your mileage driven during the Period of
 
 Rebate Table refers to the Rebate given to You as a percentage of basic premium paid. Basic premium paid is calculated based on basic premium less No Claim Discount (NCD) less discount for direct purchases (if any). The Rebate payable will depend on the mileage driven per year as per the Rebate Table below: [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
-## Annual mileage driven (kilometres driven) Percentage Rebate with no additional premium [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
+Annual mileage driven (kilometres driven) Percentage Rebate with no additional premium [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 Windscreen refers to the front, side, rear and quarter glass, but not the sunroof or any glass roof of the Car [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 

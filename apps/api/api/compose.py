@@ -413,6 +413,20 @@ GOVERNING_HEADING_RE = re.compile(
 )
 
 
+def clean_heading(heading: str) -> str:
+    """A heading fit to lead a claim.
+
+    The compiler now strips source markers and entities at the point it writes
+    a heading, but a served bundle may predate that, and a heading carrying
+    `[src:...]` becomes a claim carrying it — which the entailment judge will
+    not vouch for, correctly.
+    """
+    heading = SOURCE_REF_RE.sub("", heading or "")
+    for entity, char in (("&amp;", "&"), ("&lt;", "<"), ("&gt;", ">"), ("&quot;", '"'), ("&#39;", "'")):
+        heading = heading.replace(entity, char)
+    return " ".join(heading.split()).strip(" .,;:")
+
+
 def under_heading(heading: str, text: str) -> str:
     """A fact stated together with the heading that governs it.
 
@@ -420,7 +434,7 @@ def under_heading(heading: str, text: str) -> str:
     the model is told have been established, and a heading is free context
     there. It is the customer-facing prose that has to be selective.
     """
-    heading = (heading or "").strip()
+    heading = clean_heading(heading)
     if not heading or heading.lower() in text[: len(heading) + 8].lower():
         return text
     return f"{heading}: {text}"
@@ -432,7 +446,7 @@ def lead_with_heading(heading: str, prose: str) -> str:
     A label — "Premium", "General Definitions" — adds nothing a reader needs
     and makes the answer read like a table of contents, so it stays off.
     """
-    heading = (heading or "").strip()
+    heading = clean_heading(heading)
     if not heading or not GOVERNING_HEADING_RE.search(heading):
         return prose
     if heading.lower() in prose[: len(heading) + 8].lower():

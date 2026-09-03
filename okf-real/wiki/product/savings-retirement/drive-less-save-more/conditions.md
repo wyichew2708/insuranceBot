@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -65,11 +65,11 @@ The Rebate is calculated based on the average daily mileage, which is computed u
 
 The calculated average daily mileage is then applied to the Rebate Table to identify the corresponding Rebate percentage. You may refer to the illustrated calculations below [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
 
-## Section A - Information of your car odometer uploads [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
+Section A - Information of your car odometer uploads [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
 
 This section contains the basic information of your car odometer readings - coverage start date, basic premium, and upload date &amp; count [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
 
-## Section B - Calculation to determine your eligible Rebate Tier [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
+Section B - Calculation to determine your eligible Rebate Tier [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
 
 > - a) The difference in mileage (row D) and Number of days (row E) between the current and activation car odometer readings will be calculated. For example, in illustration 1, the difference between the 3rd and 1st car odometer readings are 900km and 150 days. [src:raw/wordings/terms-and-conditions-drive-less-save-more.md]
 

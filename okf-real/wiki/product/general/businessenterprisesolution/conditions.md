@@ -22,12 +22,16 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
+
+## Basis of Settlement
+
+We will settle the claim based on the cost necessary to repair, replace or reinstate the Insured Property to a condition similar or the same as but not better or more extensive than its condition when new, without any deduction for wear, tear or depreciation [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 ## 6. Automatic Reinstatement of Loss
 
@@ -84,6 +88,14 @@ The Limit of Indemnity shall be automatically reinstated and remain in full forc
 3. Benefit payable for loss or loss of use of a whole limb shall not also include Benefit for parts of that limb. 4. No Benefit shall be payable for Loss of Limb or Eye until at least thirteen weeks after the date of the accident and such Benefit shall only be payable if Death does not happen as a result of the accident [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 5. No sum payable under this Policy shall carry interest [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+
+## Basis of Settlement
+
+We will pay All Sums relating to [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+
+## 1. Damages
+
+2. Claimant's costs and expenses 3. All other costs and expenses incurred within Our written consent [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 ## 7. JURISDICTION
 
@@ -145,15 +157,19 @@ On receipt of this Policy, the Policyholder must provide a copy of the Policy an
 
 This Policy is protected under the Policy Owners' Protection Scheme, which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for this Policy under the Policy Owners' Protection Scheme is automatic and requires no further action from the Insured. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact the Company or visit SDIC website (https://www.sdic.org.sg/) [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
+## Basis of Settlement
+
+We will settle the claim based on the cost necessary to repair, replace or reinstate the Insured Property to a condition substantially the same but not better or more extensive than its condition when new, without any deduction for wear, tear or depreciation [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+
 ## Excess Clause
 
 With regards to loss or damage (other than by fire) to any Insured Building directly caused by any Insured Peril specified by this section, our liability is limited to its rateable proportion of the amount by which such loss or damage exceeds either: [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 > - (a) 1% of the Total Sum Insured against such an Insured peril on the Insured Building; or - (b) S$4 [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md]
 
-## Whichever shall be the lower amount [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+Whichever shall be the lower amount [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
-## This Excess Clause shall apply separately to: [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+This Excess Clause shall apply separately to: [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 - (a) Each Insured Building, for which all Insured Buildings at the same address will be regarded as one Building - (b) Each incident giving rise to such loss or damage and an incident shall not be considered to have concluded until there have been seven consecutive days of freedom from the Insured Peril concerned and then only thereafter shall the Excess Clause apply afresh [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
@@ -186,11 +202,3 @@ Your auditors may certify from Your books any detail required by Us in connectio
 ## 4. Payment on Account
 
 ln the event of the occurrence of a loss under this insurance, We will pay You on account in respect of such loss if desired [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
-
-> Subject to a maximum limit of S$5,000. [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md]
-
-5. Misdescription This insurance shall not be prejudiced by any alteration or misdescription of occupancy provided You shall notify Us immediately once You become aware of the same and to pay additional premium if required from the date of the [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
-
-> Subject to a maximum limit of 10% of Sum Insured or S$200,000 whichever is the lesser. [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md]
-
-6. Non-Invalidation This insurance shall not be invalidated by reason of anything being done or omitted to be done in respect of any portion of the aforementioned Premises not occupied by You whether constituting an increase in risk or not, provided that You shall immediately inform Us once You become aware thereof any such action or omission and pay such [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].

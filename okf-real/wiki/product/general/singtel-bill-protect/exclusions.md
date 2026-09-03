@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -46,7 +46,7 @@ We do not provide any Benefit under this policy caused by or contributed by or r
 
 8. engagement in a sport as an occupation and/or in a professional capacity and/or where the Life Insured would or could earn income or remuneration from engaging in such sport; or 9. racing risks of any kind other than racing on foot, swimming and racing in dinghies [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
 
-## Exclusions applicable to the Retrenchment Benefit [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
+Exclusions applicable to the Retrenchment Benefit [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
 
 The Retrenchment Benefit is subject to the following: [src:raw/product-summaries/singtel-bill-protect-product-summary-v1-23.md].
 

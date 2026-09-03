@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -53,7 +53,7 @@ confidence: high
 
 - d) A credit in favour of the Insurer or the intermediary is made through an electronic medium including the internet. 2. In the event that the total premium due is not paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
 
-## Premium Basis &amp; Adjustment
+## Premium Basis & Adjustment
 
 Your premium shall be based upon Your attained age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least seven (7) days before Your Premium is increased or varied by Us [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
 

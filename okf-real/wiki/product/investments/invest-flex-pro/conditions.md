@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -161,6 +161,14 @@ The unit price of each ILP Sub-Fund can be obtained from the Company's website w
 
 > Top-up Account: 100% of each recurring Top-up Premium and/or ad-hoc Top-up Premium paid less premium charge will be invested into Your selected ILP Sub-Funds. The Premium shall be invested according to the allocations indicated for Your ILP Sub-Funds. [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md]
 
+## 3.10 Settlement for Redemption
+
+> Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You unless dealings have been suspended as set out in clause 3.8.10 Suspension of Dealings. Redemption proceeds will be paid as per the following timeline: [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md]
+
+- for ILP Sub-Funds which invest all or significantly all of the assets in another collective investment scheme to be paid within seven (7) business days [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
+
+Note: Redemption applications submitted or Premium received after 3 p.m. (Singapore time) will be processed on the next business day. Please refer to clause 3.8.9 for the Processing of Requests and Dealing Deadline [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
+
 ## 4.1.1 Premium Requirement
 
 This is a regular Premium investment-linked insurance plan. You can choose to pay the regular Premium on a monthly, quarterly, half-yearly or yearly basis. The minimum regular Premium requirements are as follows: [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
@@ -170,11 +178,3 @@ Where the Premium is paid prior to the date Your Policy application / Top-up app
 For avoidance of doubt, the acceptance of the application refers to: [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
 
 - a) the fulfilment of all conditions and requirements communicated by the Company, whether outlined in any form of acceptance letter or conveyed through other communication means, including but not limited to any additional follow-up items that may arise during the process; [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
-
-- b) the Company duly received and processed payment of Premium(s); and - c) the issuance of Your Policy [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
-
-## 4.1.2 Premium Repayment
-
-You may request to repay all the missed regular Premium, subject to Our approval. You will be required to repay all the missed regular Premium under the Policy including the next regular Premium due in full. Upon receipt of such payments, We will: [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
-
-- a) deduct all the applicable fees and charges that have been missed from the regular Premiums that You have repaid and the applicable bonus, and the remainder (if any) will be credited into Your Policy's Regular Premium Account value in the form of units in accordance to the investment allocation chosen by You. Units will be purchased based on the unit price on the next Valuation day; [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].

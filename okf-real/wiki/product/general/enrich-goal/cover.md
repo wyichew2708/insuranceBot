@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -118,7 +118,7 @@ In the event of death of the Life insured: [src:raw/wordings/policy-contract-enr
 
 > We will pay the sum of 101% of the total Premiums You paid on the Basic policy (excluding Premiums paid for any compulsory supplementary Benefit, interest and Automatic Premium Benefit) and any attaching bonus, less any outstanding amount that You still owe Us. [src:raw/wordings/policy-contract-enrich-goal.md]
 
-## b) On and after the Payout date while the policy is still in force [src:raw/wordings/policy-contract-enrich-goal.md].
+b) On and after the Payout date while the policy is still in force [src:raw/wordings/policy-contract-enrich-goal.md].
 
 > We will pay 101% of the sum of the survival Benefit less all yearly payments disbursed and any non-guaranteed interest. [src:raw/wordings/policy-contract-enrich-goal.md]
 

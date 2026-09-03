@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -99,7 +99,7 @@ If We accept Your fund switching request, We will sell the units in the Portfoli
 
 > Should the Portfolio fund manager initiate a change of ILP sub-fund(s) to the Portfolio fund, We will perform fund switch on Your behalf to switch out the ILP sub-fund(s) based on the prevailing unit price. We will update You of such change(s) in accordance with applicable laws and regulations by giving You thirty (30) days' written notice. [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md]
 
-## 3.7 Structure of the ILP Sub-Funds in the Portfolio Fund [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+3.7 Structure of the ILP Sub-Funds in the Portfolio Fund [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
 
 > Each Portfolio fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Portfolio fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Portfolio fund. [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md]
 
@@ -153,12 +153,6 @@ Please refer to Premium section and/or Top-Up (Ad-Hoc) section for conditions of
 
 > We reserve the right to revise the cut-off time at any time by giving You thirty (30) days' written notice. [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md]
 
-## 3.11 Settlement for Redemption
-
-Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You unless dealings have been suspended as specified in the section 'Suspension of dealings' below. Redemption proceeds will be paid as per the following timeline: [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
-
-- For Bond and Money Market ILP sub-funds to be processed within four (4) business days. - For Portfolios fund to be processed within seven (7) business days. - For all other ILP sub-funds to be paid within six (6) business days [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
-
 ## 4.5.2 Policy Charge
 
 While the policy is in force, We will deduct a policy charge via unit deduction from the initial account value and additional account value of each Top-up (if applicable). Policy charge will be calculated separately for the initial account value and the Additional account value of each Top-up [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
@@ -174,3 +168,7 @@ If there are any pending transactions, We may defer the deduction of the policy 
 ## 4.5.3 Representative Management Charge
 
 While the policy is in force, We may deduct a representative management charge via unit deduction from the initial account value and additional account value of each Top-up (if applicable). Representative management charge will be calculated separately for the Initial account value and the additional account value of each Top-up [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].
+
+> This charge applicable to Your Policy will be disclosed to You during the application, and the rate is agreed between You and Your representative, subject to a maximum of 0.75% per annum, for the provision of ongoing advice and frequent monitoring of Your investment portfolio by Your representative. After the Policy commencement date, if You wish to change the percentage of the representative management charge, You must request this change through Your representative. [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md]
+
+Deduction from the initial account value starts on the Policy commencement date and subsequently on the same date of every month as Your Policy commencement date. Deduction from the additional account value of each Top-up starts on the Top-up effective date and subsequently on the same date of every month as Your respective Top-up effective date. If this date is not available in the month, deduction will occur on the following day [src:raw/wordings/policy-contract-for-invest-plus-sp-v2-25.md].

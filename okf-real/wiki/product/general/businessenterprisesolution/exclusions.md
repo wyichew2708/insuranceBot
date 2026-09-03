@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -160,8 +160,6 @@ We will not pay for any physical loss or damage caused by mold, mildew, fungus o
 
 ## Exclusions
 
-## We will not pay for [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
-
 1. Loss or damage to - a. Money or securities, gaming amusement or vending machines or the contents thereof. - b. Stained plates, toughened or laminated glass or any glass otherwise insured. - c. Any part of the Property while in any garden, yard or outbuilding unless specified in the Schedule [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 2. Loss or damage expedited or in anyway brought about by You or any member of Your family household or business staff or by any person lawfully on the Premises. 3. Loss or damage caused by or consequent upon fire or explosion [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
@@ -171,3 +169,7 @@ We will not pay for any physical loss or damage caused by mold, mildew, fungus o
 1. Loss or damage directly or indirectly caused by or arising from - a. Faults or defects existing at the time of commencement of this Section. - b. Failure or interruption of any gas, water or electricity service or supply [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 2. Loss or damage as a direct consequence of the continual influence of operation (e.g. wear and tear, cavitation, erosion, corrosion, encrustation) or of gradual deterioration due to atmospheric conditions [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
+
+## Exclusions
+
+1. Any costs arising from false programming, punching, labelling or inserting, inadvertent cancelling of information or discarding of data media, and from loss of information caused by magnetic fields. 2. Consequential loss of any kind [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].

@@ -21,10 +21,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -52,7 +52,7 @@ A credit in favour of the Insurer or the intermediary is made through an electro
 
 3. In respect of insurance coverage with Free Look provision, You may inform Us in writing within the Free Look period if You decide to cancel the cover during the Free Look period. In such an event, You will receive a full refund of the premium paid to Us provided that no claim has been made under the insurance and the cover shall be treated as if never put in place [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
-## Premium Basis &amp; Adjustment
+## Premium Basis & Adjustment
 
 > Your Premium shall be based upon Your attained Age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30) days before Your Premium is increased or varied by Us. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
 
@@ -119,8 +119,6 @@ We shall not accept or be affected by notice of any trust or assignment or the l
 > A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act 2001 to enforce any of its terms. [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md]
 
 ## 17. Termination of Policy
-
-## (a) Termination by the Insured [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 
 You may terminate the policy any time prior to expiry by giving Us seven (7) days' notice in writing [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
 

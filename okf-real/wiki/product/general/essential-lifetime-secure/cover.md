@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -79,8 +79,6 @@ If the TPD Benefit payable is the same as the death Benefit, the Policy ends whe
 ## 6. Premium Relief Benefit
 
 After the end of the first Policy year, upon the trigger of a covered Unforeseen circumstance during the premium term of this policy, the Premium for the Basic policy and its rider(s) will be waived for one (1) year. The waiver of Premium will commence from the next premium due date immediately after we received and approved your request [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
-
-## Unforeseen circumstance refers to when: [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
 
 > - a) the Policy owner is hospitalized or warded in the Intensive Care Unit (ICU) due to an illness or accident for five (5) days or more in one Hospital admission; - b) the Policy owner is retrenched and has remained unemployed for at least thirty (30) consecutive days before reaching Age of 65; or - c) upon Death, TPD or TI of the Policy owner's Immediate family member. [src:raw/product-summaries/essential-lifetime-secure-product-summary.md]
 

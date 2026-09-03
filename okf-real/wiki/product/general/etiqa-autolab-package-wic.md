@@ -20,10 +20,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -69,7 +69,7 @@ Loss or damage by fire to the electrical appliances and installation insured by 
 
 This Section extends to indemnify any other party having an interest in the Property Insured by virtue of and in accordance with the terms of a Mortgage, Leasing, Hiring or Renting Agreement, provided such property is not more specifically insured [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 
-> ## 11. Reinstatement Value (Not applicable to stock in trade and/or merchandise) [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md]
+> 11. Reinstatement Value (Not applicable to stock in trade and/or merchandise) [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md]
 
 It is hereby declared and agreed that in the event of the Property Insured under this Section being destroyed or damaged, the basis upon which the amount payable under this Section is to be calculated, shall be the cost of replacing or reinstating on the same site property of the same kind or type but not superior to or more extensive than the Property Insured when new, subject to the following Special Provisions and subject also to the terms and conditions of the Policy except insofar as the same may be varied hereby [src:raw/wordings/etiqa-autolab-insurance-package-policy-wording-wic-clean.md].
 

@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -179,6 +179,12 @@ In the event of a claim where the Building, Renovation or Contents cover has bee
 
 Benefit limit of Building, Renovation Building, or Contents shown in Schedule [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
+## 20. Basis Of Settlement
+
+A pair or set of items or articles is treated as one item [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+
+We will settle Your claim, if any, either on an indemnity basis or, at Our option, new for old with provision for wear and tear deduction, if necessary [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+
 ## 22. Contracts (Rights of Third Parties) Act 2001
 
 > A person who is not a party to this policy contract will have no right under the Contracts (Rights of Third Parties) Act 2001 to enforce any of its terms. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
@@ -220,9 +226,3 @@ If You or such other claimant or anyone acting on his / their behalf fraudulentl
 This policy will end when any of the following events happens first: [src:raw/wordings/policy-wording-home-insurance.md].
 
 > - a) Termination of GIGANTIQ; - b) 90 days after We give You notice that the policy cannot be renewed. [src:raw/wordings/policy-wording-home-insurance.md]
-
-We may also terminate the insurance by giving You seven (7) days' notice [src:raw/wordings/policy-wording-home-insurance.md].
-
-## Reinstatement
-
-- (a) reinstate the policy and reserve the right to charge additional insurance cover charge; or - (b) reinstate the policy without additional insurance cover charge; or [src:raw/wordings/policy-wording-home-insurance.md].

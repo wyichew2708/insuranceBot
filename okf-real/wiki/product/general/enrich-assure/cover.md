@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -70,11 +70,11 @@ less any outstanding amount that You still owe Us [src:raw/wordings/policy-contr
 
 Upon surrender, the surrender Benefit is paid in one lump sum. The total surrender Benefit payable is the sum of the following: [src:raw/wordings/policy-contract-enrich-assure.md].
 
-> ## (a) Before Policy year 12 while the policy is still in force [src:raw/wordings/policy-contract-enrich-assure.md]
+> (a) Before Policy year 12 while the policy is still in force [src:raw/wordings/policy-contract-enrich-assure.md]
 
 - a) guaranteed Surrender value; - b) Surrender value of reversionary bonus (if any); and - c) performance bonus (if any) [src:raw/wordings/policy-contract-enrich-assure.md].
 
-> ## (b) After Policy year 12 while the policy is still in force [src:raw/wordings/policy-contract-enrich-assure.md]
+> (b) After Policy year 12 while the policy is still in force [src:raw/wordings/policy-contract-enrich-assure.md]
 
 - a) guaranteed Surrender value; and - b) accumulated non-guaranteed interest (if any) [src:raw/wordings/policy-contract-enrich-assure.md].
 

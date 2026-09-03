@@ -20,12 +20,22 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
+
+## When Are You Not Insured
+
+You are not insured under any part of this Policy: [src:raw/wordings/privatecar-insurance-policy-wording.md].
+
+> - (a) if Your car is being driven by - (i) You when You have declared yourself as a non-driving Insured. A non-driving Insured is not an Authorised Driver - (ii) a person who is not an Authorised Driver - (iii) a person who does not have a driver's licence when required by law to have one - (iv) a person who is under suspension or disqualification from driving - (v) a person who is under the influence of intoxicating liquor drinks or drugs - (b) if Your car is being used - (i) for any use other than the uses shown on the certificate of insurance or Policy - (ii) or driven when it is not registered under the Road Traffic Act (Cap. 276) (and subsequent amendments) or when its registration under the Road Traffic Act (Cap. 276) (and subsequent amendments) has been cancelled. [src:raw/wordings/privatecar-insurance-policy-wording.md]
+
+- (c) if any Accident, loss, damage, death, injury or legal liability arises directly or indirectly out of: - (i) any change in the nature of the risk which We have not agreed in writing to cover - (ii) war or other acts of foreign enemy (whether war is declared or not) or revolution - (iii) strike, riot or civil commotion - (iv) flood, typhoon, hurricane, cyclone, tornado, volcanic eruption, earthquake or other convulsion of nature - (v) actual or attempted confiscation, seizure or detention by any lawful authority - (vi) radioactivity or the use, existence or escape of nuclear fuel, material or waste, or the action of nuclear fission - (vii) any wilful or negligent act of You or Your Authorised Driver - (d) if You have taken on a liability by agreement which would not have been imposed if the agreement had not been made [src:raw/wordings/privatecar-insurance-policy-wording.md].
+
+- (e) if Your car, its Accessories (declared and/or undeclared) or spare parts was/were procured through fraudulent or illegal means [src:raw/wordings/privatecar-insurance-policy-wording.md].
 
 ## 11. Sanction Limitation and Exclusion
 

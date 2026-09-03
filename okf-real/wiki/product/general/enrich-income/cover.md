@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -51,15 +51,15 @@ You will receive a monthly income which consists of a guaranteed and a non-guara
 
 " Yearly Premium " refers to the Premium payable on a yearly basis for the Basic policy, regardless of Your chosen premium payment frequency. Please refer to the policy illustration for the Yearly Premium amount [src:raw/wordings/policy-contract-enrich-income.md].
 
-> ## For a premium payment term of 3 years [src:raw/wordings/policy-contract-enrich-income.md]
+> For a premium payment term of 3 years [src:raw/wordings/policy-contract-enrich-income.md]
 
-> ## For a premium payment term of 5 years [src:raw/wordings/policy-contract-enrich-income.md]
+> For a premium payment term of 5 years [src:raw/wordings/policy-contract-enrich-income.md]
 
-> ## For a premium payment term of 10 years [src:raw/wordings/policy-contract-enrich-income.md]
+> For a premium payment term of 10 years [src:raw/wordings/policy-contract-enrich-income.md]
 
-> ## For a premium payment term of 15 years [src:raw/wordings/policy-contract-enrich-income.md]
+> For a premium payment term of 15 years [src:raw/wordings/policy-contract-enrich-income.md]
 
-> ## For a premium payment term of 20 years [src:raw/wordings/policy-contract-enrich-income.md]
+> For a premium payment term of 20 years [src:raw/wordings/policy-contract-enrich-income.md]
 
 ' IIRR ' refers to the illustrated investment rate of return [src:raw/wordings/policy-contract-enrich-income.md].
 

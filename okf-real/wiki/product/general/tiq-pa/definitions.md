@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -77,7 +77,7 @@ Loss of Limb means loss or physical separation of a hand at/or above the wrist o
 
 Medical Practitioner means a registered and legally qualified physician, doctor or surgeon by a medical degree in western medicine and authorised by the medical licensing authority of that country to provide medical or surgical services within the scope of their license and training. This cannot be You, Your family member or relative, business partner, employer, employee or agent [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 
-## Medically Necessary shall mean a medical service which is: [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
+Medically Necessary shall mean a medical service which is: [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 
 - a) Consistent with the diagnosis and customary medical treatment for a covered disability; and - b) In accordance with standards of good medical practice, consistent with current standard of professional medical care and of proven medical benefits ; and - c) Not for the convenience of the insured or the physician, and unable to be reasonably rendered out of hospital (if admitted as an inpatient); and - d) Not of an experimental, investigational or research nature, preventive or screening nature; and - e) For which the charges are fair, reasonable and customary for the disability [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 

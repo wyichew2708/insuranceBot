@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/nomination
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -68,4 +68,4 @@ Prohibited Person means a person or entity who is, or who is related to a person
 
 Reinstatement date is the date we reinstate your rider back to inforce. Sum insured is the amount of insurance coverage provided by the Basic policy or optional rider (where applicable). We, Our, Us, the Company means Etiqa Insurance Pte. Ltd. (Company Registration No. 201331905K) [src:raw/wordings/policy-contract-for-early-ci-protection-rider-v1-23.md].
 
-## You, Your means the Policy owner [src:raw/wordings/policy-contract-for-early-ci-protection-rider-v1-23.md].
+You, Your means the Policy owner [src:raw/wordings/policy-contract-for-early-ci-protection-rider-v1-23.md].

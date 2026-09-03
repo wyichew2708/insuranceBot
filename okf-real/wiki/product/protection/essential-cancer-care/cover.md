@@ -21,10 +21,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -55,8 +55,6 @@ We will not pay the death Benefit if any of the following occurs: [src:raw/wordi
 - (i) When the cancer Benefit is fully paid out; or - (ii) When any of the exclusions listed in point 6.1 of this Policy Contract applies [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
 
 ## 5.2 Cancer Benefit
-
-## Early and Intermediate stage cancer [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
 
 > Upon diagnosis of the Life insured with early or intermediate stage cancer during the term of the policy, 50% of the Sum insured will be accelerated and paid in one lump sum. Once a claim is made, the early and intermediate stage of the cancer Benefit will no longer be applicable. This Benefit will not be paid again even if the policy is renewed. [src:raw/wordings/policy-contract-for-essential-cancer-care.md]
 

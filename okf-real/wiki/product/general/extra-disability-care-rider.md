@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -83,8 +83,6 @@ We do not pay the TPD benefit if the TPD is directly or indirectly, wholly or pa
 When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our Letter of Conditional Acceptance. When any of the exclusion happens, We will return the total insurance charge paid for this rider without interest back into the Basic policy's Account value, less any amounts owing to Us [src:raw/wordings/extra-disability-care-rider-policy-contract.md].
 
 ## 1. Total and Permanent Disability (TPD) Benefit
-
-## TPD is defined as follows: [src:raw/product-summaries/extra-disability-care-rider-product-summary.md].
 
 - a) total and irrecoverable loss of sight in both eyes; - b) loss of two or more limbs, each above the wrist or ankle; - c) total and irrecoverable loss of sight in one eye and loss of one limb at or above the wrist or ankle; or [src:raw/product-summaries/extra-disability-care-rider-product-summary.md].
 

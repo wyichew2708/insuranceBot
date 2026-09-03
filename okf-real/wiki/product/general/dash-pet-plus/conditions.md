@@ -22,10 +22,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -44,6 +44,12 @@ This policy is protected under the Policy Owners' Protection Scheme which is adm
 > - this rider is in force on the expiry date before the renewal; and - the Life insured has not reached Age 100 at the renewal date. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
 > We reserve the right to terminate Your rider by giving You ninety (90) days' notice. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+## 3.14 Settlement for Redemption
+
+Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within 4 business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Note: Applications submitted or Premiums received after 3 p.m. (Singapore time) will be transacted based on the unit price as at the next Valuation day [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 ## 4.1 Premium
 
@@ -89,7 +95,7 @@ We reserve the right and sole discretion to terminate or decline to renew the ri
 
 > At any time when there are changes in taxation, regulations or legislation that will affect this rider, We may vary the terms of the rider accordingly. If We do so, We shall notify You by giving You thirty (30) days' written notice prior to such change. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## 7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest less any change in the unit price(s) of the ILP sub-fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
@@ -105,7 +111,7 @@ Should the free look request be received before 3 p.m. (Singapore time), We will
 
 > If Your rider document is sent by email, We consider this rider is delivered to You 1 day after the date of emailing. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## 8.2 Transferring the Legal Right of the Rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+8.2 Transferring the Legal Right of the Rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 You are not allowed to transfer (assign) Your rider to another person and/or entity unless the rider has been assigned to You by the Group Policy Owner [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
@@ -119,7 +125,7 @@ As buying a life insurance policy is a long-term commitment, an early terminatio
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md].
 
 > This is a yearly renewable, optional single Premium investment-linked insurance rider that is designed to meet Your wealth accumulation needs. This rider will renew yearly as long as the Basic policy remains in force till the Policy anniversary immediately before the Life insured attains 100 years old. This plan provides protection against death and Terminal illness of the Life insured during the policy term. [src:raw/product-summaries/dash-pet-plus-productsummary-v3-26-02042026.md]
 

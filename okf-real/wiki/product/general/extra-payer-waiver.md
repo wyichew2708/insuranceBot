@@ -20,10 +20,10 @@ links:
   concepts:
   - concept/nomination
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -37,7 +37,7 @@ This rider covers the Benefits described below [src:raw/wordings/policy-contract
 
 This Policy Contract should be read together with the Policy Contract of the Basic policy [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
-## 2.1 Death, Total &amp; Permanent Disability (TPD) Or Critical Illness (CI) Premium Waiver Benefit [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
+2.1 Death, Total &amp; Permanent Disability (TPD) Or Critical Illness (CI) Premium Waiver Benefit [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md].
 
 > This rider allows the Life insured to continue the Basic policy and any attaching riders without paying Premiums from the next Premium due date following the date of the Policy owner's death, diagnosis of TPD or a severe-stage CI for the first time during the policy term. The Premium will be waived up to earlier of the Policy anniversary before the Life insured turns Age 25 or the end of the Premium payment term of Your policy. [src:raw/wordings/policy-contract-for-extra-payer-waiver-v1-23.md]
 

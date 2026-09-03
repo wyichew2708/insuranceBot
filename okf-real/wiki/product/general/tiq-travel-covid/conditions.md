@@ -22,10 +22,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -49,7 +49,7 @@ The premium due must be paid to the Insurer (or the intermediary through whom th
 
 4. Any word denoting a singular pronoun shall also mean to include the plural. 5. Throughout this Policy, where the context so admits, words embodying the masculine gender shall include the feminine gender and vice-versa [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-## Premium Basis &amp; Adjustment
+## Premium Basis & Adjustment
 
 > Your Premium shall be calculated based upon Your attained age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30) days before Your Premium is increased or varied by Us. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
 
@@ -125,8 +125,6 @@ Zone 3: Zone 1; Zone 2; Nepal, Tibet and Worldwide/the rest of the world excludi
 
 Written proof of your missed travel connection from the transport provider (flight, train, coach or ferry with fixed itinerary) or their handling agents must be submitted to Us [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-> ## Exclusion applicable to Section 21 [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
-
 We will not pay for any claim under any of this Section if the Insured Person(s) in-coming carrier was scheduled to arrive after the stated check-in time required by the connecting carrier [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 > Note: This Policy will pay for any claim under any one of the Sections 20 or 21 only for the same event but not for more than one of the Sections. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
@@ -149,7 +147,7 @@ If the proposal or declaration from the Insured Person(s) is untrue in any respe
 
 No person shall be covered under more than one such identical travel insurance Policy issued by Us. In the event the Insured Person(s) is covered under more than one such Policy, We shall consider the Insured Person(s) to be insured under the Policy which provides the greatest amount of Benefit, or where the benefits provided under each such Policy are identical, the Policy that was issued first and We shall refund any duplicated premium payment which may have been made by You / the Insured Person(s) on Your / His behalf [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
-## 10) Interest &amp; Currency
+## 10) Interest & Currency
 
 No amount payable under this Policy shall subject to any interest. Premium and benefits payable under this policy shall be in Singapore Dollars (SGD) [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -188,3 +186,7 @@ At the time of effecting this insurance, the Insured Person(s) must not be aware
 ## 19) The Emergency Services Hotline Notification
 
 If the Insured Person(s) require hospitalization or emergency transportation services or need to return to Singapore early for any reason, He must contact the Emergency Services Hotline and obtain approval before arrangements are made. The Insured Person(s) must follow the advice and instruction of the Emergency Services Hotline failing which His claim may not be payable [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## 20) Offset Clause
+
+We will not cover the Insured Person(s) for loss or any event or liability to the extent that it is covered by any other source including but not limited to other insurance policy, medical or health scheme or Act of Parliament or any benefit which We are legally prohibited to pay by law. We will however pay the difference between what is payable under the other source and what the Insured Person(s) would have been entitled to recover under this Policy to the extent permitted by law. This does not apply to Section 1 of the Policy [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].

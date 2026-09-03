@@ -21,14 +21,14 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
-## Exclusions Applicable Only to Sections 10 &amp; 11
+## Exclusions Applicable Only to Sections 10 & 11
 
 The following treatment, items, conditions, activities and their related or consequential expenses are excluded from the Sections and for engaging the Emergency Services Hotline &amp;/or We will not be liable for: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -91,8 +91,6 @@ We will not pay for any loss or charges: [src:raw/wordings/tiq-travel-covid-19-p
 - (d) Due to any regulations or orders given by the government or relevant authority of any country on border closures; - (e) Being compensated for any air miles or holiday points the Insured Person(s) used to pay for the Trip in part or in full; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 > - (f) Other than due to a direct and necessary result of any COVID-19 Specified Cause, any change of plans whether on the Insured Person's part or that of any other person to travel; - (g) The Insured Person, Insured Person's immediate family member or Travel Companion's financial circumstances or any contractual or business obligation; and/or - (h) Any additional costs due to a delay in informing the relevant transport or accommodation provider(s) of the change in travel plans. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
-
-## This coverage is effective only: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 - (a) If this Policy is purchased before the Insured Person becomes aware of any circumstances which could lead to the cancellation of a planned Trip; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
@@ -171,3 +169,5 @@ The Insured Person(s) shall act in a prudent manner to prevent loss, damage, Acc
 If You are or any relevant person is found to be a Prohibited Person: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
 
 - (i) We are entitled not to accept the application; and - (ii) If any policy is issued, We are entitled to end/terminate the policy, not pay any benefit or not allow any transaction to be carried out under the policy. We will not refund any unutilised premium when the policy is ended/terminated [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+You will need to inform us immediately if there is any change in Your or any relevant person's identity, status or identity documents [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].

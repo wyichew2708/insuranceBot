@@ -24,10 +24,10 @@ links:
   concepts:
   - concept/commencement-date
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -133,7 +133,7 @@ If an occurrence gives rise to a claim involving more than one (1) Insured Perso
 
 No person shall be covered under more than one such identical travel insurance Policy issued by Us. In the event the Insured Person(s) is covered under more than one such Policy, We shall consider the Insured Person(s) to be insured under the Policy which provides the greatest amount of Benefit, or where the benefits provided under each such Policy are identical, the Policy that was issued first and We shall refund any duplicated premium payment which may have been made by You / the Insured Person(s) on Your / His behalf [src:raw/wordings/travel-infinite-policy-wording.md].
 
-## 11. Interest &amp; Currency
+## 11. Interest & Currency
 
 No amount payable under this Policy shall subject to any interest. Premium and benefits payable under this policy shall be in Singapore Dollars (SGD) [src:raw/wordings/travel-infinite-policy-wording.md].
 
@@ -207,7 +207,7 @@ We may cancel any cover under this Policy: [src:raw/wordings/travel-infinite-pol
 
 The total premium due must be paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date of the coverage. Otherwise, the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer [src:raw/wordings/travel-infinite-policy-wording.md].
 
-## 26. Premium Basis &amp; Adjustment
+## 26. Premium Basis & Adjustment
 
 > Your Premium shall be calculated based upon Your attained age as at the Effective Date of Insurance. The premium rates are not guaranteed and may be increased or varied by Us upon renewal of the Policy, based on Our portfolio claims experience in this class of business. We will advise You of the change in writing at least thirty (30) days before Your Premium is increased or varied by Us. [src:raw/wordings/travel-infinite-policy-wording.md]
 

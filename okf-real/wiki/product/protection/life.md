@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
@@ -31,7 +31,7 @@ confidence: medium
 
 ## 3 Our Responsibilities
 
-## Your policy may cover all or some of the Benefits described below  [src:raw/wordings/general-provisions-for-life-insurance.md].
+Your policy may cover all or some of the Benefits described below  [src:raw/wordings/general-provisions-for-life-insurance.md].
 
 You can find the Benefit(s) covered under this policy on the Policy Information Page and/or the supplementary terms [src:raw/wordings/general-provisions-for-life-insurance.md].
 
@@ -59,7 +59,7 @@ If Your policy has a cash Benefit, You can choose to [src:raw/wordings/general-p
 
 If there is a claim, the claim Benefit payment will include any cash Benefits and earned interest that is deposited with Us [src:raw/wordings/general-provisions-for-life-insurance.md].
 
-## 3.4 Cash Values &amp; Paid-up Policy
+## 3.4 Cash Values & Paid-up Policy
 
 If Your policy accumulates a cash value, You may [src:raw/wordings/general-provisions-for-life-insurance.md].
 

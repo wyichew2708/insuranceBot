@@ -21,18 +21,18 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: medium
 ---
 
 ## About Etiqa Eprotect Home Insurance
 
-## Section 1: Building &amp; Renovation
+## Section 1: Building & Renovation
 
-## (The Cover Provided By This Section Is Operative Only If Shown On The Schedule) [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
+(The Cover Provided By This Section Is Operative Only If Shown On The Schedule) [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
 We will pay You for physical loss or damage to the Building and Renovation caused by any of the Insured Perils. Our maximum liability during any one policy year in respect of this section shall not exceed in the aggregate the Sum Insured stated in the Schedule [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
@@ -42,11 +42,11 @@ We will pay You for physical loss or damage to the Building and Renovation cause
 
 > We will pay You and Your Household for physical loss or damage to Household Contents, caused by any of the Insured Perils. Our maximum liability during any one policy year in respect of this section shall not exceed in the aggregate the Sum Insured stated in the Schedule. Subject to an excess of $100.00 each and every claim. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
 
-## Extensions to Section 1 &amp; 2
+## Extensions to Section 1 & 2
 
 (The following additional covers are applicable if you are covered under Sections 1 &amp;/or 2) [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
-## Exclusions applicable to Section 1 &amp; 2: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
+Exclusions applicable to Section 1 &amp; 2: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
 We will not be liable in respect of any: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
@@ -102,7 +102,7 @@ pregnancy, childbirth; 7. (v) any kind of disease or illness; 8. (vi) pre-existi
 
 winter sports; 8. (vii) sports in a professional capacity [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
-> ## Section 5: 24-hour Emergency Home Assistance (Only Applicable for 3-Year &amp; 5-Year Plan) [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
+> Section 5: 24-hour Emergency Home Assistance (Only Applicable for 3-Year &amp; 5-Year Plan) [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
 
 > If there is a sudden and/or unforeseen event at Your Dwelling and You are in need of Emergency Home Assistance services, the following referral and arrangement assistance services shall be available to You upon specific verbal notification by You to Etiqa Insurance Pte. Ltd. Home Assistance hotline at 6702 2662. This hotline is available 24 hours, 7 days a week including Weekends and Public Holidays provided by AWP. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
 
@@ -119,8 +119,6 @@ It is hereby declared and agreed that by paying the additional premium, this Pol
 > Your Policy covers up to 2 calls per annum and is limited to $1,000 per callout repair service, [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
 
 > Appliances are defined as all major white &amp; brown goods with value above $200 such as television, refrigerators, chillers, freezers, washers, dryers, build-in ovens, hood &amp; hobs, sound systems, ceiling fans and air-conditioners. The Appliance must be out of the manufacturer's original warranty and not be more than 6 years old. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
-
-## Exclusions applicable to Section 6: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
 > 1. Appliances not defined as above. 2. Appliances still within the manufacturer's warranty period. 3. The first 30 days upon inception of the policy. 4. Replacement of the Appliance if it is non-repairable. 5. Accidental damage of any kind. 6. Call out charges where the authorized repair agent is unable to find a fault in the Appliance. [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md]
 

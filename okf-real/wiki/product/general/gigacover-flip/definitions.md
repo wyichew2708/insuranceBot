@@ -22,10 +22,10 @@ links:
   - concept/policy-schedule
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -74,8 +74,6 @@ No Claim Discount (NCD) refers to premium discount for the next Period of Insura
 - (a) Your policy is renewed in four (4) consecutive weeks, or - (b) Your policy is renewed in one (1) consecutive month, and - (c) No claim has been made under this Policy prior to the Renewal Date [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].
 
 Own Account Workers refers to those workers who, working on their own account, hold the type of job defined as a 'self-employment job' and have not engaged on a continuous basis any 'employees' to work for them [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].
-
-## Period of Insurance shall mean; [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].
 
 - (a) If you are paying a weekly premium, one (1) week from the Commencement Date or the latest Renewal Date whichever is later; - (b) If you are paying a monthly premium , one (1) month from the Commencement Date or the latest Renewal Date whichever is later; [src:raw/wordings/gigacover-flip-insurance-policy-wording.md].
 

@@ -23,10 +23,10 @@ links:
   concepts:
   - concept/nomination
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -154,6 +154,14 @@ The unit price of each ILP Sub-Fund can be obtained from the Company's website w
 
 > Top-up Account: 100% of each recurring Top-up Premium and/or ad-hoc Top-up Premium paid less premium charge will be invested into Your selected ILP Sub-Funds. The Premium shall be invested according to the allocations indicated for Your ILP Sub-Funds. [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md]
 
+## 3.10 Settlement for Redemption
+
+> Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You unless dealings have been suspended as set out in clause 3.8.10 Suspension of Dealings. Redemption proceeds will be paid as per the following timeline: [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md]
+
+- for ILP Sub-Funds which invest all or significantly all of the assets in another collective investment scheme to be paid within seven (7) business days [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
+
+Note: Redemption applications submitted or Premium received after 3 p.m. (Singapore time) will be processed on the next business day. Please refer to clause 3.8.9 for the Processing of Requests and Dealing Deadline [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
+
 ## 4.1.1 Premium Requirement
 
 This is a regular Premium investment-linked insurance plan. You can choose to pay the regular Premium on a monthly, quarterly, half-yearly or yearly basis. The minimum regular Premium requirements are as follows: [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
@@ -173,11 +181,3 @@ You may request to repay all the missed regular Premium, subject to Our approval
 - a) deduct all the applicable fees and charges that have been missed from the regular Premiums that You have repaid and the applicable bonus, and the remainder (if any) will be credited into Your Policy's Regular Premium Account value in the form of units in accordance to the investment allocation chosen by You. Units will be purchased based on the unit price on the next Valuation day; [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
 
 - b) return all the Premium Shortfall Charge imposed on Your Policy without interest back into Your Policy's Regular Premium Account value in the form of units in accordance to the investment allocation chosen by You. Units will be purchased based on the unit price on the next Valuation day; [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
-
-- c) reset the applicable Premium-Free Period; and - d) provide the applicable bonus that have been missed [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
-
-## If Premium-Free Period is applicable
-
-- Premium-Free Period will be activated automatically if regular Premium due under the Regular Premium Account are unpaid after the grace period or upon Your request to activate it. - the Policy (including attaching optional unit-deducting riders) will continue to be in force as long as the Regular Premium Account value is sufficient to cover the applicable fees and charges due [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
-
-- optional premium-paying riders (if attached) will lapse. - Premium shortfall charge will not apply as long as within the Premium-Free Period. - Top-up(s) is/are not allowed and recurring Top-up(s) if any, will stop. - when the Regular Premium Account value is insufficient to pay for the applicable fees and charges due, the Policy (including attaching optional unit-deducting riders) will lapse [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].

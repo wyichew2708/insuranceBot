@@ -24,10 +24,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -63,7 +63,7 @@ If the policy has been assigned, the refund amount will be paid to the Assignee.
 
 At any time when there are changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You in writing prior to such change [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
-## 8.3 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+8.3 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
 If Your Age, gender, smoker status and/or country of residence is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
 
@@ -95,7 +95,7 @@ The Certificate of Insurance and this policy Terms and Conditions are subject to
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/dash-easyearn-lite-product-summary.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/dash-easyearn-lite-product-summary.md].
 
 > This is a single premium, Non-participating universal life plan denominated in Singapore dollars. It matures on the policy anniversary immediately before the Life insured attains 100 years old. It offers the financial flexibility, opportunity for wealth accumulation and the assurance of life insurance coverage through providing death Benefit. [src:raw/product-summaries/dash-easyearn-lite-product-summary.md]
 

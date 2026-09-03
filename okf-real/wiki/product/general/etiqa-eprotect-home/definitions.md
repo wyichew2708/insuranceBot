@@ -21,10 +21,10 @@ links:
   concepts:
   - concept/excess
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -64,7 +64,7 @@ Household Contents shall mean any moveable household item belonging to You or an
 
 Injury means bodily injury caused solely and directly by an accident [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
-## Insured Perils refer to the following: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
+Insured Perils refer to the following: [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 
 - a) Fire, Lightning, Thunderbolt, Subterranean Fire. - b) Domestic Explosion. - c) Aircraft and other aerial devices and/or articles dropped therefrom. - d) Impact by any road vehicle not belonging to nor under the control of the You or any member of the Household [src:raw/wordings/etiqa-policy-wording-eprotect-home-20sep2017-onwards.md].
 

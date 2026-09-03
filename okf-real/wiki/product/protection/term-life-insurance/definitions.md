@@ -22,10 +22,10 @@ version_in_force: '2026'
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -129,7 +129,7 @@ We, Our, Us, the Company means Etiqa Insurance Pte. Ltd. (Co. Reg. No. 201331905
 
 You, Your means the Policy owner [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md].
 
-## Supplementary Terms for ePROTECT term life [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md].
+Supplementary Terms for ePROTECT term life [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md].
 
 These supplementary terms should be read together with the General Policy Contract for Life Insurance. If there is any discrepancy between the supplementary terms and General Policy Contract for Life Insurance, the content here will replace the General Policy Contract for Life Insurance [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md].
 

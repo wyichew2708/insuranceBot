@@ -20,10 +20,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -73,7 +73,7 @@ This Endorsement forms part of Section 1 and is subject otherwise to the terms, 
 
 > - 1.1 The Company shall not, indemnify the insured in respect of costs incurred for: - 1.1.1 loss or damage to berths, wharves, jetties and the likes caused by their subsidence or sinking, - 1.1.2 normal action of the river/sea, - 1.1.3 loss of or damage to more than 200 m. of uncompleted or unprotected seawall, quay or other marine structure, - 1.1.4 loss, damage or liability due to soil erosion, - 1.1.5 dredging or re -dredging, - 1.1.6 lost or damaged fill material, - 1.1.7 replacing or rectifying piles or retaining wall elements, - 1.1.7.1 which have become misplaced or misaligned or jammed during their construction, - 1.1.7.2 which are lost or abandoned or damaged during driving or extraction, or - 1.1.7.3 which have become obstructed by jammed or damaged piling equipment or castings, - 1.1.8 rectifying disconnected or de -clutched sheet piles, - 1.1.9 rectifying any leakage or infiltration of material of any kind, - 1.1.10 as a result of piles or foundation elements having failed to pass a load bearing test or otherwise not having reached their designed load bearing capacity, - 1.1.11 for reinstating profiles or dimensions, - 1.1.12 any floating and other equipment such as caissons, barges and the like and liabilities therefrom, - 1.1.13 any mobilization/demobilization and/or other costs which arise for stand -by/waiting on weather of offshore construction equipment, - 1.1.14 loss or damage to pulling wires, anchors, chains and buoys, - 1.1.15 loss or damage due to impact of shipping, - 1.1.16 marine liability. [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md]
 
-## TRANSMISSION &amp; DISTRIBUTION LINES EXCLUSION CLAUSE
+## TRANSMISSION & DISTRIBUTION LINES EXCLUSION CLAUSE
 
 This policy does not cover all transmission and distribution, including wire, cables, poles, pylons, standard towers and any equipment of any type of which may be attendant to such installation of any description. This exclusion includes but not limited to transmission or distribution of electrical power, telephone or telegraph signal and all communication signals whether audio or visual [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 

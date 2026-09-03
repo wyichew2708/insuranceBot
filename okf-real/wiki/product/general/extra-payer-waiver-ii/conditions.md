@@ -23,10 +23,10 @@ authority:
 links:
   concepts: []
 compiled_from_commit: working-tree
-compiled_at: '2026-08-27T00:00:00'
+compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
-review_due: '2026-11-25'
+review_due: '2026-12-02'
 confidence: high
 ---
 
@@ -74,7 +74,7 @@ We reserve the right and sole discretion to terminate or decline to renew the po
 
 > Should there be any changes in taxation, regulations or legislation that will affect this policy, We may vary the terms of the policy accordingly. If We do so, We shall notify You by giving You thirty (30) days' notice prior to such change. [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md]
 
-## 6.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
+6.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
 
 If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest [src:raw/wordings/policy-contract-extra-payer-waiver-ii-t.md].
 
@@ -92,7 +92,7 @@ If Your policy document is sent by email, We consider this policy is delivered t
 
 ## Policy Owners' Protection Scheme
 
-## Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md].
+Nature and Objective of the Plan: [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md].
 
 This is a regular Premium Non-participating rider that waives the Premium of the Basic policy and any attaching riders if the Policy owner is unable to continue Premium payment of the Basic policy and any attaching riders due to death, Total and permanent disability or severe-stage critical illness. At the rider Expiry date, if We have not paid out any claims, this rider will end and no Benefits will be payable [src:raw/product-summaries/product-summary-extra-payer-waiver-ii-t.md].
 
