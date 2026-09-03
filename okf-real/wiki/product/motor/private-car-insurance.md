@@ -12,6 +12,7 @@ line_of_business: motor
 regulated_advice: false
 aliases:
 - car
+- car insurance
 channels:
 - ref: channel/direct
   name: Direct

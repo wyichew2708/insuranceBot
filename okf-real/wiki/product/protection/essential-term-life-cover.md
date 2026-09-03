@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: protection
 regulated_advice: false
-aliases: []
+aliases:
+- essential term life cover
 channels:
 - ref: channel/direct
   name: Direct

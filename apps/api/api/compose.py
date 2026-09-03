@@ -299,7 +299,7 @@ def select_sections(
     # summary steering never fired for it and the answer led with the Family
     # Plan group-composition rule. A coverage question with no question word in
     # it is a request for the overview.
-    broad_coverage = wants_overview(question, intent)
+    broad_coverage = wants_overview(question, intent, product)
     asks_about_offer = bool(OFFER_RE.search(question))
     # The pages this intent's requirement says hold the answer, resolved
     # against the product in hand. This is the one place the requirement table
@@ -486,16 +486,71 @@ def _is_pointer_only(body: str) -> bool:
     return len(residual.split()) <= 12
 
 
-def wants_overview(question: str, intent: Intent) -> bool:
+#: Words that add nothing to a product name. "tiq travel insurance please"
+#: is still just the name.
+NAME_FILLER = frozenset(
+    [
+        "insurance",
+        "plan",
+        "policy",
+        "product",
+        "tiq",
+        "etiqa",
+        "the",
+        "a",
+        "an",
+        "my",
+        "about",
+        "info",
+        "information",
+        "details",
+        "please",
+        "tell",
+        "me",
+    ]
+)
+
+
+def bare_product_name(product: Page, question: str) -> bool:
+    """The turn is the product's name and nothing else.
+
+    "tiq travel" was answered with 304 words of FAQ fragments opening "Yes, we
+    cover beyond 70 years of age" — an answer to a question nobody asked. A
+    customer who types only a product's name is asking what it is. The older
+    "no question word" test could not be trusted for this: "travel baggage
+    per-item sub-limit" has no question word either, and it names a benefit.
+    Here the name has to account for *every* word.
+    """
+    words = re.sub(r"[^\w\s-]", " ", question.lower()).split()
+    if not words:
+        return False
+    fm = product.frontmatter
+    names = sorted(
+        {" ".join(n.lower().split()) for n in (fm.title, *fm.aliases) if len(n.split()) >= 2},
+        key=len,
+        reverse=True,
+    )
+    joined = " ".join(words)
+    for name in names:
+        if name in joined:
+            residue = joined.replace(name, " ", 1).split()
+            return all(w in NAME_FILLER for w in residue)
+    return False
+
+
+def wants_overview(question: str, intent: Intent, product: Page | None = None) -> bool:
     """The customer asked for the shape of the product, not for a figure.
 
-    Two forms: the interrogative ("what does travel insurance cover") and the
+    Three forms: the interrogative ("what does travel insurance cover"), the
     bare noun phrase ("Tiq travel insurance coverage"), which carries no
-    question word at all and so matched neither of the older tests.
+    question word at all and so matched neither of the older tests, and the
+    bare name ("tiq travel"), which carries nothing but the product.
     """
-    return intent is Intent.coverage and bool(
+    if intent is Intent.coverage and (
         BROAD_COVERAGE_RE.search(question) or SUMMARY_PHRASE_RE.search(question)
-    )
+    ):
+        return True
+    return intent is Intent.unknown and product is not None and bare_product_name(product, question)
 
 
 TIER_PLACEHOLDER = "depends on your plan tier"
@@ -907,7 +962,7 @@ def compose(
     # put it first however the facts were ordered. Asked about a specific
     # benefit, that same sentence is the answer — dropping it there cost the
     # trip-cancellation page its only claim and the turn its delivery.
-    if wants_overview(question, classify(question)):
+    if wants_overview(question, classify(question), product):
         substantive = [p for p in paragraphs if not placeholder_only(p)]
         if substantive:
             paragraphs = substantive

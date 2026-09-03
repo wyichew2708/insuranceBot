@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: general
 regulated_advice: false
-aliases: []
+aliases:
+- enrich rewards
 channels:
 - ref: channel/direct
   name: Direct

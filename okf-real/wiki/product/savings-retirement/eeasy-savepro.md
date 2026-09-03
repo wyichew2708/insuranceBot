@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: savings-retirement
 regulated_advice: false
-aliases: []
+aliases:
+- eeasy savepro
 channels:
 - ref: channel/direct
   name: Direct

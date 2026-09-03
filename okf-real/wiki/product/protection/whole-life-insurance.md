@@ -12,6 +12,7 @@ line_of_business: protection
 regulated_advice: false
 aliases:
 - whole life
+- whole life insurance
 channels:
 - ref: channel/direct
   name: Direct

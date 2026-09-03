@@ -10,7 +10,9 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: savings-retirement
 regulated_advice: false
-aliases: []
+aliases:
+- tiq 3-year endowment
+- tiq 3-year endowment plan
 channels:
 - ref: channel/direct
   name: Direct

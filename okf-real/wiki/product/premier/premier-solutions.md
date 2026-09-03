@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: premier
 regulated_advice: false
-aliases: []
+aliases:
+- premier solutions
 channels:
 - ref: channel/direct
   name: Direct

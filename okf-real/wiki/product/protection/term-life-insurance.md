@@ -12,6 +12,7 @@ line_of_business: protection
 regulated_advice: false
 aliases:
 - term life
+- term life insurance
 channels:
 - ref: channel/direct
   name: Direct

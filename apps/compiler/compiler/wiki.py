@@ -850,6 +850,21 @@ def emit_product(
     short = re.sub(r"\s+insurance$", "", group.title, flags=re.I)
     if short.lower() != group.title.lower():
         aliases.append(short.lower())
+    # The shopfront's own name for the product. The canonical title is the
+    # underwriter's — "Travel Insurance" — and the prose folds Tiq into Etiqa
+    # by design (§B.1); but customers type the name on the site they bought
+    # from, and "tiq travel" named nothing while "tiq travel covid" named the
+    # add-on. The flagship was the one product unreachable by its own name.
+    # Only name-shaped titles: an SEO sentence ("Motorcycle Insurance with up
+    # to $500,000 coverage") is not a name.
+    for snapshot in ordered:
+        shop = " ".join(snapshot.title.split())
+        if not shop or len(shop.split()) > 5 or re.search(r"[.,$|]", shop):
+            continue
+        aliases.append(shop.lower())
+        bare = re.sub(r"\s+(?:insurance|plan)$", "", shop, flags=re.I).lower()
+        if bare != shop.lower() and len(bare.split()) >= 2:
+            aliases.append(bare)
     aliases = sorted({a for a in aliases if a}, key=str.lower)
 
     regulated = any(ADVICE_RE.search(s.text) for s in ordered)

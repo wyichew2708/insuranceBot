@@ -12,6 +12,7 @@ line_of_business: general
 regulated_advice: false
 aliases:
 - home
+- home insurance
 channels:
 - ref: channel/direct
   name: Direct

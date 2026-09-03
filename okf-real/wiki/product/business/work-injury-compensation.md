@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: business
 regulated_advice: false
-aliases: []
+aliases:
+- work injury compensation
 channels:
 - ref: channel/direct
   name: Direct

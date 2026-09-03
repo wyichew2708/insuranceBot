@@ -12,6 +12,7 @@ line_of_business: general
 regulated_advice: false
 aliases:
 - fire and extraneous perils
+- fire and extraneous perils insurance
 channels:
 - ref: channel/direct
   name: Direct

@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
-aliases: []
+aliases:
+- investments
 channels:
 - ref: channel/direct
   name: Direct

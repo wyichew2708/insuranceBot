@@ -11,7 +11,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- tiq travel
+- tiq travel insurance
 - travel
+- travel insurance
 channels:
 - ref: channel/direct
   name: Direct

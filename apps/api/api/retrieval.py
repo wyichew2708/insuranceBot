@@ -224,12 +224,21 @@ def named_products(bundle: Bundle, question: str) -> list[str]:
         fm = page.frontmatter
         if fm.type != PageType.product or page.id.count("/") != 2:
             continue
-        title = " ".join(fm.title.lower().split())
-        if len(title.split()) >= 2 and title in haystack:
-            hits.append((title, bundle.product_key(page)))
+        # Aliases too: an alias *is* the customer's name for the product —
+        # "tiq travel" for the page titled "Travel Insurance". Matching titles
+        # alone meant the shopfront name could never name anything.
+        for name in (fm.title, *fm.aliases):
+            phrase = " ".join(name.lower().split())
+            if len(phrase.split()) >= 2 and phrase in haystack:
+                hits.append((phrase, bundle.product_key(page)))
     hits.sort(key=lambda h: -len(h[0]))
     kept: list[tuple[str, str]] = []
     for title, key in hits:
+        # One product, however many of its names the customer used: "tiq
+        # travel insurance" is the alias "tiq travel" and the title "travel
+        # insurance" overlapping, not two products named.
+        if any(key == k for _, k in kept):
+            continue
         if any(title in longer for longer, _ in kept):
             continue
         kept.append((title, key))
@@ -247,6 +256,13 @@ def product_family(bundle: Bundle, question: str, chosen: Page) -> list[Page]:
     The phrase is the longest run of two or more question words that appears
     in the chosen title — the same test `named_products` uses, run backwards.
     """
+    # Named outright, there is no family to ask about: "tiq travel" is an
+    # alias of Travel Insurance, and the customer who typed it did not mean
+    # the Covid add-on or Corporate Travel. `named_products` already prefers
+    # the longer name where one sits inside another, so "tiq travel covid"
+    # names the add-on and only the add-on.
+    if bundle.product_key(chosen) in named_products(bundle, question):
+        return []
     q = " ".join(question.lower().split())
     title = " ".join(chosen.frontmatter.title.lower().split())
     words = q.split()

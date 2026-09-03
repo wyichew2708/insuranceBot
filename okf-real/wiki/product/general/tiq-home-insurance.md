@@ -12,6 +12,7 @@ line_of_business: general
 regulated_advice: false
 aliases:
 - tiq home
+- tiq home insurance
 channels:
 - ref: channel/direct
   name: Direct

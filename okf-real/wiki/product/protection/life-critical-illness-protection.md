@@ -10,7 +10,8 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: protection
 regulated_advice: false
-aliases: []
+aliases:
+- life & critical illness protection
 channels:
 - ref: channel/direct
   name: Direct
