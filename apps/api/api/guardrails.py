@@ -568,13 +568,40 @@ def redact_pii(text: str) -> tuple[str, list[str]]:
     if PASSPORT_RE.search(out):
         kinds.append("passport")
         out = PASSPORT_RE.sub(lambda m: m.group(0).replace(m.group(1), "[PASSPORT]"), out)
-    if CARD_RE.search(out):
+    # A card number, not any long run of digits: Luhn has to hold, or a UEN,
+    # a policy number or a hotline with its country code would be masked.
+    cards = [m for m in CARD_RE.finditer(out) if _luhn(m.group(0))]
+    if cards:
         kinds.append("card")
-        out = CARD_RE.sub("[CARD]", out)
-    if EMAIL_RE.search(out):
+        for m in reversed(cards):
+            out = out[: m.start()] + "[CARD]" + out[m.end() :]
+    # The insurer's own addresses — nonmotor@etiqa.com.sg in a claims answer —
+    # are published contact details, not personal data.
+    personal = [m for m in EMAIL_RE.finditer(out) if not _insurer_address(m.group(0))]
+    if personal:
         kinds.append("email")
-        out = EMAIL_RE.sub("[EMAIL]", out)
+        for m in reversed(personal):
+            out = out[: m.start()] + "[EMAIL]" + out[m.end() :]
     return out, kinds
+
+
+def _luhn(number: str) -> bool:
+    digits = [int(c) for c in number if c.isdigit()]
+    if len(digits) < 13:
+        return False
+    total = 0
+    for i, d in enumerate(reversed(digits)):
+        if i % 2 == 1:
+            d *= 2
+            if d > 9:
+                d -= 9
+        total += d
+    return total % 10 == 0
+
+
+def _insurer_address(email: str) -> bool:
+    domain = email.rsplit("@", 1)[-1].lower()
+    return any(domain == h or domain.endswith("." + h) for h in ALLOWED_LINK_HOSTS)
 
 
 def screen_input_rules(question: str) -> Screening:

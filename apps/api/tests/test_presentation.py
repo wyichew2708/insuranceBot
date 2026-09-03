@@ -136,3 +136,9 @@ def test_an_answer_may_not_carry_pii_or_foreign_links_or_abuse() -> None:
     assert out.blocked
     clean = screen_output_rules("You can continue here: https://www.tiq.com.sg/product/home-insurance", [])
     assert not clean.blocked
+
+
+def test_the_insurers_own_address_and_a_policy_number_are_not_pii() -> None:
+    masked, kinds = redact_pii("Write to nonmotor@etiqa.com.sg quoting policy 1234567890123456789.")
+    assert kinds == [] and masked.endswith("1234567890123456789.")
+    assert not screen_output_rules("Please email nonmotor@etiqa.com.sg with your claim.", []).blocked
