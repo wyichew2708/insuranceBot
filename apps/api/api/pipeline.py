@@ -292,7 +292,7 @@ def answer_question(
     # name is read from the customer's own words — the abbreviation pass
     # turns "Tiq PA Insurance" into another product's title — and everything
     # downstream reads this object rather than re-deriving its own guess.
-    ask = read_ask(bundle, question)
+    ask = read_ask(bundle, question, list(history or []))
     with trace.stage("ask") as detail:
         detail.update(ask.as_trace())
 

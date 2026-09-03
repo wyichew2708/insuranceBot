@@ -197,8 +197,27 @@ def _scope(question: str, intent: Intent, bare: bool) -> str:
     return "specific"
 
 
-def read_ask(bundle: Bundle, question: str) -> Ask:
-    """The deterministic reading: names, category, intent, subject, scope."""
+def read_ask(bundle: Bundle, question: str, history: list[str] | None = None) -> Ask:
+    """The deterministic reading: names, category, intent, subject, scope.
+
+    `history` is the customer's earlier turns, latest last. A turn that names
+    no product and no category borrows the product from the nearest earlier
+    turn that named one — "Home Insurance" then "is there a free-look
+    period?" is a question about Home Insurance, and on the site that
+    question sits under exactly that heading. Marked `history`, so it is a
+    reading rather than the customer's word, and the model may still refine
+    it; the gates verify the answer either way.
+    """
+    ask = _read_turn(bundle, question)
+    if ask.resolved or ask.family or not history:
+        return ask
+    for earlier in reversed(history):
+        if len(index_for(bundle).named(earlier)) == 1:
+            return ask.carried_from(_read_turn(bundle, earlier))
+    return ask
+
+
+def _read_turn(bundle: Bundle, question: str) -> Ask:
     index: ProductNameIndex = index_for(bundle)
     intent = classify(question)
     evidence: dict[str, str] = {"intent": "classifier"}

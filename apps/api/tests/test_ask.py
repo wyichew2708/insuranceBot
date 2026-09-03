@@ -65,3 +65,15 @@ def test_the_model_never_overrules_a_named_product(real: Bundle) -> None:
     ask = read_ask(real, "tiq travel coverage")
     filled = ask.with_model(["product/general/tiq-travel-covid"], False, "product", real)
     assert filled.product == "travel-insurance"
+
+
+def test_a_question_after_a_product_name_is_about_that_product(real: Bundle) -> None:
+    ask = read_ask(real, "Is there a free look period for this policy?", history=["Home Insurance"])
+    assert ask.product == "home-insurance"
+    assert ask.named_by == "history"
+    assert not ask.named  # a reading, not the customer's word on this turn
+
+
+def test_a_turn_that_names_its_own_product_ignores_the_history(real: Bundle) -> None:
+    ask = read_ask(real, "tiq travel coverage", history=["Home Insurance"])
+    assert ask.product == "travel-insurance" and ask.named_by == "alias"
