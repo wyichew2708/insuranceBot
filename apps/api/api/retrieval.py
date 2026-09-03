@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from harness import Budget, Candidate, Channel, LoadedPage, RagHit, Session, Trace
+from okf.names import index_for
 
 from api.vectors import VectorHits
 from okf import Bundle, Page, PageType, Status, term_idf
@@ -200,104 +201,25 @@ def phrase_words(page: Page, question: str) -> int:
 
 
 def named_products(bundle: Bundle, question: str) -> list[str]:
-    """Product keys whose *title* appears verbatim in the question, longest
-    match first, with any title that is merely a substring of a longer match
-    dropped.
+    """Product keys the question names outright, longest name first.
 
-    This exists because a customer who types a product's name has answered
-    the "which product" question themselves, and nothing else should overrule
-    them. In a 1,000-case sample, eleven answers cited a different product from
-    the one named in the question — a rider's exclusions read out as another
-    rider's, at 0.99 confidence — and in every one the question carried the
-    right product's full title. The model's catalogue pick had been pinned as
-    the focus and the named product was filtered out as "a different product".
-
-    Substring subsumption is the one subtlety: "CI Benefit Rider" occurs inside
-    "Early CI Benefit Rider". The longer title is the one the customer typed;
-    the shorter one is a different product that happens to be a suffix of it.
-    Titles under two words are ignored — "Life" or "Travel" alone is
-    vocabulary, not identity.
+    One reading, from the product-name index (`okf.names`): titles and aliases
+    alike, the shopfront's name included, a longer name absorbing the shorter
+    one inside it, one product counted once however many of its names the
+    customer used. Everything that recognises a name goes through there.
     """
-    haystack = " ".join(question.lower().split())
-    hits: list[tuple[str, str]] = []
-    for page in bundle.pages.values():
-        fm = page.frontmatter
-        if fm.type != PageType.product or page.id.count("/") != 2:
-            continue
-        # Aliases too: an alias *is* the customer's name for the product —
-        # "tiq travel" for the page titled "Travel Insurance". Matching titles
-        # alone meant the shopfront name could never name anything.
-        for name in (fm.title, *fm.aliases):
-            phrase = " ".join(name.lower().split())
-            if len(phrase.split()) >= 2 and phrase in haystack:
-                hits.append((phrase, bundle.product_key(page)))
-    hits.sort(key=lambda h: -len(h[0]))
-    kept: list[tuple[str, str]] = []
-    for title, key in hits:
-        # One product, however many of its names the customer used: "tiq
-        # travel insurance" is the alias "tiq travel" and the title "travel
-        # insurance" overlapping, not two products named.
-        if any(key == k for _, k in kept):
-            continue
-        if any(title in longer for longer, _ in kept):
-            continue
-        kept.append((title, key))
-    return [key for _, key in kept]
+    return [n.key for n in index_for(bundle).named(question)]
 
 
 def product_family(bundle: Bundle, question: str, chosen: Page) -> list[Page]:
-    """Products whose titles all contain the phrase the customer used.
-
-    Where "cancer insurance" sits inside "Cancer Insurance with No Claim
-    Discount", "Major Cancer Insurance" and "Essential Cancer Care", the
-    customer named a family and one member is a guess. Returns the family
-    (chosen first, then the rest, longest titles first) when there are two or
-    more; an empty list when the phrase picks out the chosen product alone.
-    The phrase is the longest run of two or more question words that appears
-    in the chosen title — the same test `named_products` uses, run backwards.
-    """
-    # Named outright, there is no family to ask about: "tiq travel" is an
-    # alias of Travel Insurance, and the customer who typed it did not mean
-    # the Covid add-on or Corporate Travel. `named_products` already prefers
-    # the longer name where one sits inside another, so "tiq travel covid"
-    # names the add-on and only the add-on.
-    if bundle.product_key(chosen) in named_products(bundle, question):
+    """Products whose titles all contain the category the customer named —
+    chosen first, then the rest — or nothing where the customer named a
+    product outright, or where the phrase picks out one title alone."""
+    family = index_for(bundle).family(question, bundle=bundle)
+    if family is None or chosen.id not in family.members:
         return []
-    q = " ".join(question.lower().split())
-    title = " ".join(chosen.frontmatter.title.lower().split())
-    words = q.split()
-    phrase = ""
-    for n in range(len(words), 1, -1):
-        for i in range(len(words) - n + 1):
-            cand = " ".join(words[i : i + n])
-            if len(cand) >= 6 and cand in title:
-                phrase = cand
-                break
-        if phrase:
-            break
-    # A brand is not a product. "tiq travel" is inside exactly one title —
-    # "Tiq Travel Covid Insurance" — so it looked unambiguous and was answered
-    # with the COVID rider, while tiq.com.sg sells plain Travel Insurance and
-    # four others. Dropping a leading brand word turns the phrase into the
-    # category it actually names, and the family test then finds all of them.
-    if phrase:
-        head = phrase.split()[0]
-        if head in BRAND_WORDS:
-            trimmed = " ".join(phrase.split()[1:])
-            if len(trimmed) >= 5:
-                phrase = trimmed
-    if not phrase:
-        return []
-    members = [
-        page
-        for page in bundle.pages.values()
-        if page.frontmatter.type == PageType.product
-        and page.frontmatter.status == Status.approved
-        and page.id.count("/") == 2
-        and phrase in " ".join(page.frontmatter.title.lower().split())
-    ]
-    if len(members) < 2:
-        return []
+    pages = [bundle.get(m) for m in family.members]
+    members = [p for p in pages if p is not None]
     members.sort(key=lambda pg: (pg.id != chosen.id, -len(pg.frontmatter.title)))
     return members
 

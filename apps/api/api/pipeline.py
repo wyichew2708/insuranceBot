@@ -27,8 +27,10 @@ from harness import (
     blocked,
     run_gates,
 )
+from harness.ask import Ask, read_ask
 from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import Intent, classify, smalltalk_kind
+from harness.trace import StageListener
 from okf.tables import find_tokens
 
 from api.clarify import clarification, lexical_clarification
@@ -43,9 +45,7 @@ from api.retrieval import (
     NO_MATCH_PREFIXES,
     frontmatter_filter,
     keywords,
-    named_products,
     needs_rag,
-    product_family,
     rag_search,
     unsupported_term,
     wiki_read,
@@ -207,6 +207,7 @@ def _finish(
     raw_root: Path,
     loaded: list[str],
     judge: Judge | None = None,
+    ask: Ask | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     """Gate an answer produced without the retrieve-and-compose path.
 
@@ -226,6 +227,7 @@ def _finish(
                 raw_root=raw_root,
                 today=session.today,
                 judge=judge,
+                ask=ask,
             )
         )
         trace.gates = results
@@ -245,8 +247,13 @@ def answer_question(
     settings: Settings,
     history: list[str] | None = None,
     provider: LLMProvider | None = None,
+    on_stage: StageListener | None = None,
 ) -> tuple[AnswerEnvelope, Trace]:
     trace = Trace(question=question, session_id=session.session_id, channel=session.channel.value)
+    # A caller that streams progress hears each stage as it opens and closes.
+    # Nothing about the answer is streamed from here: the text a customer sees
+    # is the text the gates passed, and that does not exist until the end.
+    trace.listen(on_stage)
     budget = Budget(
         max_pages=settings.max_pages,
         max_tool_calls=settings.max_tool_calls,
@@ -281,6 +288,14 @@ def answer_question(
     if incoming.blocked or _fail_closed(incoming, settings):
         return _refusal(trace, incoming, "guardrail-input", "refused by the input guardrail")
 
+    # One reading of the question, before anything rewrites it. The product
+    # name is read from the customer's own words — the abbreviation pass
+    # turns "Tiq PA Insurance" into another product's title — and everything
+    # downstream reads this object rather than re-deriving its own guess.
+    ask = read_ask(bundle, question)
+    with trace.stage("ask") as detail:
+        detail.update(ask.as_trace())
+
     # After screening, before retrieval. A greeting is not a question the
     # corpus can fail to answer, and routing one through retrieval replies to
     # "hi" with "I could not establish that from our approved product pages" —
@@ -299,7 +314,7 @@ def answer_question(
         # to check in a reply that asserts nothing — but a turn that silently
         # bypassed verification would be indistinguishable, on the trace, from
         # one that passed it. Skipping on the record is the point.
-        return _finish(trace, answer, bundle, session, question, raw_root, [])
+        return _finish(trace, answer, bundle, session, question, raw_root, [], ask=ask)
 
     # A shopper, not a questioner. "what life products" and "looking for a CI
     # plan" ask what exists; retrieval finds the best single page and answers
@@ -315,7 +330,14 @@ def answer_question(
             with trace.stage("entity") as detail:
                 detail["underwriter"] = [c.text for c in stated.claims]
             return _finish(
-                trace, stated, bundle, session, question, raw_root, [c.source_id for c in stated.claims]
+                trace,
+                stated,
+                bundle,
+                session,
+                question,
+                raw_root,
+                [c.source_id for c in stated.claims],
+                ask=ask,
             )
 
     if classify(question) is Intent.browse:
@@ -331,26 +353,24 @@ def answer_question(
                 question,
                 raw_root,
                 [c.source_id for c in listing.claims],
+                ask=ask,
             )
 
     # What "it" refers to. A turn that names no subject borrows the topic from
     # the nearest earlier turn that did — "what's the coverages" after "term
     # life" — and a turn that stands on its own is left exactly as typed, or
     # "what about car insurance?" gets answered about term life.
-    # Read from the customer's own words, before anything rewrites them. The
-    # abbreviation pass turns "Tiq PA Insurance" into "Tiq Personal Accident
-    # Insurance" — which is no longer this product's title and *is* a
-    # different product's — so a name check run after it answered from the
-    # wrong policy. A product name is the one thing in a question that must
-    # not be normalised.
-    named = named_products(bundle, question)
-
     with trace.stage("reference") as detail:
         resolution = resolve(question, list(history or []), bundle)
         if resolution.resolved:
             detail["carried_from"] = resolution.carried_from
             detail["resolved"] = resolution.question
             question = resolution.question
+            # A subject borrowed from an earlier turn names a product this
+            # turn did not; the Ask carries it, marked as carried.
+            ask = ask.carried_from(read_ask(bundle, question))
+            if ask.named_by == "history":
+                detail["ask_product"] = ask.product
 
     # Spell out the initials before anything scores the words. The tokeniser
     # drops anything under three characters, so "ci" reached retrieval as
@@ -374,8 +394,10 @@ def answer_question(
     # 35B model, most of it prefill of the same 3,100-token list). The name is
     # authoritative either way — it overrules the model's pick below — so
     # where it resolves to exactly one product the call is skipped outright.
-    if len(named) == 1:
-        understanding = Understanding(product_ids=[], subject="product", degraded="named in full")
+    if ask.resolved or ask.ambiguous:
+        understanding = Understanding(
+            product_ids=[], subject="product", degraded=f"read: {ask.named_by or 'family'}"
+        )
     elif settings.resolve_with_model and provider.name != "deterministic" and worth_resolving(question):
         with trace.stage("understand") as detail:
             understanding = understand(bundle, question, provider, history=list(history or []))
@@ -384,6 +406,10 @@ def answer_question(
                 detail["ambiguous"] = True
             if understanding.degraded:
                 detail["degraded"] = understanding.degraded
+            ask = ask.with_model(
+                understanding.product_ids, understanding.ambiguous, understanding.subject, bundle
+            )
+            detail["ask"] = ask.as_trace()
 
     # Before anything is retrieved, and before any product can be named. Asked
     # about chest pain and a numb arm, this answered "I cannot provide medical
@@ -401,6 +427,7 @@ def answer_question(
             question,
             raw_root,
             [],
+            ask=ask,
         )
 
     # Not a question about insurance. Every gate downstream verifies that an
@@ -412,7 +439,7 @@ def answer_question(
     # Only on the model's explicit `off_topic`. A question that merely resolves
     # to no product is usually a general one about insurance — "what is an
     # excess", "how do I contact you" — and those must still be answered.
-    if understanding.subject == "off_topic":
+    if ask.kind == "off_topic":
         with trace.stage("off-topic") as detail:
             detail["declined"] = True
         return _finish(
@@ -423,6 +450,7 @@ def answer_question(
             question,
             raw_root,
             [],
+            ask=ask,
         )
 
     # A request for advice is answered by the adviser handoff, never by a menu
@@ -432,61 +460,32 @@ def answer_question(
     # paths defer to it.
     seeking_advice = bool(ADVICE_SEEKING_RE.search(question))
 
-    # Two products, and nothing in the question to separate them. Ask.
-    if understanding.ambiguous and not seeking_advice:
-        asked = clarification(bundle, understanding.product_ids)
+    # Two products, and nothing in the question to separate them — the model
+    # could not choose, the customer named two, or the phrase is a category
+    # with no flagship ("cancer insurance" inside three titles). Ask.
+    if ask.ambiguous and ask.family and not seeking_advice:
+        asked = clarification(bundle, list(ask.family))
         if asked is not None:
             with trace.stage("clarify") as detail:
                 detail["options"] = [c.source_id for c in asked.claims]
             return _finish(
-                trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+                trace,
+                asked,
+                bundle,
+                session,
+                question,
+                raw_root,
+                [c.source_id for c in asked.claims],
+                ask=ask,
             )
 
-    focus_override = None
-    if understanding.resolved and not understanding.ambiguous:
-        resolved_page = bundle.get(understanding.product_ids[0])
-        if resolved_page is not None:
-            focus_override = bundle.product_key(resolved_page)
-            # "Cancer insurance" is a family with three members, and the
-            # model now picks one where it used to flag all three. The
-            # customer's phrase is a *substring* of several titles — that is
-            # what a family is — and a single pick from it is a guess wearing
-            # a confident id. Deterministic backstop: where the phrase the
-            # customer used sits inside two or more product titles, ask.
-            family = product_family(bundle, question, resolved_page)
-            if len(family) >= 2 and not seeking_advice:
-                asked = clarification(bundle, [pg.id for pg in family])
-                if asked is not None:
-                    with trace.stage("clarify") as detail:
-                        detail["from"] = "product family"
-                        detail["options"] = [pg.id for pg in family]
-                    return _finish(
-                        trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
-                    )
-
-    # A product named in full, in the customer's own words, is not one more
-    # candidate — it is the answer to "which product", given by the person
-    # entitled to give it. It overrules the model's pick and the lexical rank
-    # alike. Eleven answers in a 1,000-case sample cited a sibling rider of
-    # the one the question named in full, all at 0.99; this is why.
-    if len(named) == 1:
-        if focus_override and focus_override != named[0]:
-            trace.note(
-                f"focus {focus_override!r} overruled by the product named in the question: {named[0]!r}"
-            )
-        focus_override = named[0]
-    elif len(named) >= 2 and not seeking_advice:
-        # Two full titles in one question: "Early CI Benefit Rider" is not a
-        # substring case (those are folded), so the customer really did name
-        # two products. Ask which, rather than pick.
-        asked = lexical_clarification(bundle, named)
-        if asked is not None:
-            with trace.stage("clarify") as detail:
-                detail["from"] = "two products named"
-                detail["options"] = named[:8]
-            return _finish(
-                trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
-            )
+    # The product this turn is about, as the Ask read it: named by the
+    # customer, carried from an earlier turn, the flagship of a category, or
+    # the model's pick. A name given by the customer is not one more
+    # candidate — it is the answer to "which product", and it overrules the
+    # lexical rank below. Eleven answers in a 1,000-case sample cited a
+    # sibling rider of the one the question named in full, all at 0.99.
+    focus_override = ask.product if ask.resolved and not ask.ambiguous else None
 
     try:
         # Dense recall, where an index is configured. No stage at all on the
@@ -565,7 +564,14 @@ def answer_question(
                     detail["from"] = "lexical tie"
                     detail["options"] = trace.ambiguous_products[:8]
                 return _finish(
-                    trace, asked, bundle, session, question, raw_root, [c.source_id for c in asked.claims]
+                    trace,
+                    asked,
+                    bundle,
+                    session,
+                    question,
+                    raw_root,
+                    [c.source_id for c in asked.claims],
+                    ask=ask,
                 )
 
         with trace.stage("wiki-read") as detail:
@@ -646,6 +652,7 @@ def answer_question(
                 idf=term_idf(bundle),
                 benefits=expand_vocabulary(question, load_vocabulary(settings.bundle_path)),
                 no_confident_match=starved,
+                ask=ask,
             )
             draft = composition.answer
             trace.composer = "deterministic"
@@ -690,6 +697,7 @@ def answer_question(
                             raw_root=raw_root,
                             today=session.today,
                             judge=judge,
+                            ask=ask,
                         ),
                     ),
                     daemon=True,
@@ -824,6 +832,7 @@ def answer_question(
             # Meaning is judged where a model is configured; on the
             # deterministic path the lexical test stands.
             judge=judge,
+            ask=ask,
         )
         if judge_warmup is not None:
             # Wait for the pre-warm so the gate's call is a memo hit. A warm-up

@@ -6,12 +6,15 @@ build before you can run is a debugging tool nobody runs.
 
 from __future__ import annotations
 
+import asyncio
 import datetime as dt
+import json
+import threading
 from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 from harness import AnswerEnvelope, AnswerRequest, Channel, TraceStore
 from pydantic import BaseModel
 
@@ -106,6 +109,100 @@ async def answer(req: AnswerRequest) -> AnswerEnvelope:
     envelope, trace = answer_question(bundle(), req.question, req.session, settings(), history=req.history)
     traces().put(trace)
     return envelope
+
+
+#: The customer-facing name of each stage, for the progress line while the
+#: turn runs. Stages not listed here are internal and show nothing.
+STAGE_LABELS = {
+    "ask": "Reading your question",
+    "understand": "Working out which product you mean",
+    "vector-search": "Finding the right pages",
+    "frontmatter-filter": "Finding the right pages",
+    "wiki-read": "Reading the product pages",
+    "compose": "Putting the answer together",
+    "generate": "Phrasing it",
+    "gates": "Checking every figure and source",
+}
+
+#: Words per streamed chunk, and the pause between chunks. The text is
+#: complete and verified before the first chunk leaves; this is pacing, so a
+#: 90-word answer reads in as it would from a person typing quickly.
+STREAM_WORDS = 3
+STREAM_PAUSE_S = 0.02
+
+
+def _sse(event: str, data: Any) -> str:
+    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+
+def _chunks(text: str, words: int = STREAM_WORDS) -> list[str]:
+    parts = text.split(" ")
+    return [
+        " ".join(parts[i : i + words]) + (" " if i + words < len(parts) else "")
+        for i in range(0, len(parts), words)
+    ]
+
+
+@app.post("/v1/answer/stream")
+async def answer_stream(req: AnswerRequest) -> StreamingResponse:
+    """The same turn as `/v1/answer`, as server-sent events.
+
+    What is streamed, and what is not, follows from the safety line the whole
+    system draws: the model phrases; the gates verify; the customer sees only
+    what the gates passed. A draft streamed token by token would show text the
+    entailment judge or the figure check may then refuse — and an insurance
+    answer that appears and is retracted is worse than one that arrives whole.
+    So the events are:
+
+      stage   — each pipeline stage as it opens and closes, with a customer
+                label, so the wait is accounted for (4 to 14 s on the Mac);
+      delta   — the *verified* answer text, paced in small chunks, once the
+                gates have passed it;
+      done    — the full envelope, identical to `/v1/answer`'s response;
+      error   — the turn failed; the detail is the exception's name.
+    """
+    loop = asyncio.get_running_loop()
+    queue: asyncio.Queue[tuple[str, Any]] = asyncio.Queue()
+
+    def emit(event: str, data: Any) -> None:
+        loop.call_soon_threadsafe(queue.put_nowait, (event, data))
+
+    def on_stage(name: str, phase: str, ms: float) -> None:
+        label = STAGE_LABELS.get(name)
+        if label:
+            emit("stage", {"name": name, "phase": phase, "label": label, "ms": ms})
+
+    def work() -> None:
+        try:
+            envelope, trace = answer_question(
+                bundle(), req.question, req.session, settings(), history=req.history, on_stage=on_stage
+            )
+            traces().put(trace)
+            emit("done", envelope.model_dump(mode="json"))
+        except Exception as exc:  # the stream must close; the client shows the name
+            emit("error", {"detail": type(exc).__name__})
+        finally:
+            emit("close", None)
+
+    threading.Thread(target=work, daemon=True).start()
+
+    async def events() -> Any:
+        while True:
+            event, data = await queue.get()
+            if event == "close":
+                break
+            if event == "done":
+                text = ((data.get("answer") or {}).get("answer")) or ""
+                for chunk in _chunks(text):
+                    yield _sse("delta", {"text": chunk})
+                    await asyncio.sleep(STREAM_PAUSE_S)
+            yield _sse(event, data)
+
+    return StreamingResponse(
+        events(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 class TraceSummary(BaseModel):

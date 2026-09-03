@@ -10,11 +10,11 @@ from __future__ import annotations
 
 import time
 import uuid
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 from harness.contracts import GateResult
 
@@ -54,7 +54,17 @@ class RagHit(BaseModel):
     excerpt: str = ""
 
 
+#: (stage name, "start" | "end", milliseconds). Called on the thread that
+#: runs the turn; a listener that needs another thread must hop itself.
+StageListener = Callable[[str, str, float], None]
+
+
 class Trace(BaseModel):
+    _on_stage: StageListener | None = PrivateAttr(default=None)
+
+    def listen(self, listener: StageListener | None) -> None:
+        self._on_stage = listener
+
     trace_id: str = Field(default_factory=lambda: uuid.uuid4().hex[:16])
     question: str = ""
     session_id: str = ""
@@ -107,12 +117,15 @@ class Trace(BaseModel):
     def stage(self, name: str, **detail: Any) -> Iterator[dict[str, Any]]:
         started = time.perf_counter()
         payload: dict[str, Any] = dict(detail)
+        if self._on_stage is not None:
+            self._on_stage(name, "start", 0.0)
         try:
             yield payload
         finally:
-            self.stages.append(
-                StageTiming(name=name, ms=round((time.perf_counter() - started) * 1000, 2), detail=payload)
-            )
+            ms = round((time.perf_counter() - started) * 1000, 2)
+            self.stages.append(StageTiming(name=name, ms=ms, detail=payload))
+            if self._on_stage is not None:
+                self._on_stage(name, "end", ms)
 
     def note(self, message: str) -> None:
         self.notes.append(message)

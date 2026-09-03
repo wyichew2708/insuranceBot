@@ -21,7 +21,8 @@ from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Sessi
 # The composer must find every span the gate will look for. Two copies of
 # this pattern drift, and the drift shows up as a quotation that composes
 # unbound and is refused — so there is one, and this is the one.
-from harness.gates import NUMERIC_SPAN_RE, asked_benefits
+from harness.ask import Ask, ask_about, asked_benefits
+from harness.gates import NUMERIC_SPAN_RE
 from harness.intent import REQUIREMENTS, Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.tables import TOKEN_RE, find_tokens
@@ -40,18 +41,6 @@ from okf import (
 )
 
 HEADING_RE = re.compile(r"^##\s+(.+)$", re.M)
-#: The open form of a coverage question: what does it cover, what are the
-#: coverages, what is included. No subject of its own beyond the product.
-BROAD_COVERAGE_RE = re.compile(
-    # Not anchored to the start of the string. Reference resolution prepends
-    # the carried topic, so by the time composition sees it the turn reads
-    # "term life whats the coverages" and the interrogative is no longer
-    # first — anchoring here silently disabled the steering for every
-    # follow-up question, which is the case it exists for.
-    r"\b(?:what(?:'?s)?|which)\b[\w\s']{0,24}?"
-    r"\b(?:cover(?:s|ed|age|ages)?|include[sd]?|benefits?)\b\W*$",
-    re.I,
-)
 
 #: Anything that makes a turn a question rather than a name. A turn with
 #: none of these is a noun phrase the customer wants explained.
@@ -182,13 +171,6 @@ QUANTITY_RE = re.compile(
 #: know an offer exists, at the end.
 PROMOTION_PENALTY = 1.2
 
-#: A noun phrase asking for the whole product: "Tiq travel insurance
-#: coverage", "maid insurance benefits". Deliberately narrower than "a
-#: coverage question with no question word in it" — an elliptical follow-up
-#: like "and the baggage limit?" has no question word either, and steering it
-#: to the overview took its figure away.
-SUMMARY_PHRASE_RE = re.compile(r"^[\w\s'&-]{0,50}\b(?:cover|coverage|benefits?|summary)\s*[.?]?\s*$", re.I)
-
 #: The sections that describe a product rather than one corner of it.
 OVERVIEW_HEADING_RE = re.compile(
     r"^(?:what it covers|what this plan is|about\b|overview|headline benefits|summary"
@@ -274,6 +256,7 @@ def select_sections(
     idf: dict[str, float] | None = None,
     benefits: set[str] | None = None,
     product: Page | None = None,
+    ask: Ask | None = None,
 ) -> list[Selection]:
     """Relevance is page relevance times section match, where page relevance is the
     *lexical* score only. The alias boost belongs to retrieval — deciding which
@@ -281,7 +264,11 @@ def select_sections(
     concept page outranks the benefits section that actually holds the figure.
     """
     terms = keywords(question)
-    intent = classify(question)
+    # One reading of the question. The pipeline makes it before retrieval and
+    # passes it in; a caller without one gets the light form, which knows the
+    # product page and nothing of the rest of the catalogue.
+    ask = ask or ask_about(question, product, benefits)
+    intent = ask.intent
     # A turn that is just a product name — "term life" — asks nothing, so no
     # intent fires and every child page competes on lexical overlap alone. The
     # exclusions page is the wordier of them and won: typing a product's name
@@ -293,13 +280,9 @@ def select_sections(
     # names a subject and asks whether it is in or out. Steering every
     # coverage question away from exclusions broke six of those, so only the
     # open form is steered.
-    # A customer who types "Tiq travel insurance coverage" is asking the same
-    # thing as one who types "what does travel insurance cover" — the first is
-    # a noun phrase, and `BROAD_COVERAGE_RE` wants an interrogative, so the
-    # summary steering never fired for it and the answer led with the Family
-    # Plan group-composition rule. A coverage question with no question word in
-    # it is a request for the overview.
-    broad_coverage = wants_overview(question, intent, product)
+    # The Ask decides whether the customer wants the shape of the product or
+    # one corner of it — see `harness.ask._scope` for the three forms.
+    broad_coverage = ask.scope == "overview"
     asks_about_offer = bool(OFFER_RE.search(question))
     # The pages this intent's requirement says hold the answer, resolved
     # against the product in hand. This is the one place the requirement table
@@ -484,73 +467,6 @@ def _is_pointer_only(body: str) -> bool:
         return False
     residual = re.sub(r"\[([^\]]*)\]\([^)]*\)", " ", stripped)
     return len(residual.split()) <= 12
-
-
-#: Words that add nothing to a product name. "tiq travel insurance please"
-#: is still just the name.
-NAME_FILLER = frozenset(
-    [
-        "insurance",
-        "plan",
-        "policy",
-        "product",
-        "tiq",
-        "etiqa",
-        "the",
-        "a",
-        "an",
-        "my",
-        "about",
-        "info",
-        "information",
-        "details",
-        "please",
-        "tell",
-        "me",
-    ]
-)
-
-
-def bare_product_name(product: Page, question: str) -> bool:
-    """The turn is the product's name and nothing else.
-
-    "tiq travel" was answered with 304 words of FAQ fragments opening "Yes, we
-    cover beyond 70 years of age" — an answer to a question nobody asked. A
-    customer who types only a product's name is asking what it is. The older
-    "no question word" test could not be trusted for this: "travel baggage
-    per-item sub-limit" has no question word either, and it names a benefit.
-    Here the name has to account for *every* word.
-    """
-    words = re.sub(r"[^\w\s-]", " ", question.lower()).split()
-    if not words:
-        return False
-    fm = product.frontmatter
-    names = sorted(
-        {" ".join(n.lower().split()) for n in (fm.title, *fm.aliases) if len(n.split()) >= 2},
-        key=len,
-        reverse=True,
-    )
-    joined = " ".join(words)
-    for name in names:
-        if name in joined:
-            residue = joined.replace(name, " ", 1).split()
-            return all(w in NAME_FILLER for w in residue)
-    return False
-
-
-def wants_overview(question: str, intent: Intent, product: Page | None = None) -> bool:
-    """The customer asked for the shape of the product, not for a figure.
-
-    Three forms: the interrogative ("what does travel insurance cover"), the
-    bare noun phrase ("Tiq travel insurance coverage"), which carries no
-    question word at all and so matched neither of the older tests, and the
-    bare name ("tiq travel"), which carries nothing but the product.
-    """
-    if intent is Intent.coverage and (
-        BROAD_COVERAGE_RE.search(question) or SUMMARY_PHRASE_RE.search(question)
-    ):
-        return True
-    return intent is Intent.unknown and product is not None and bare_product_name(product, question)
 
 
 TIER_PLACEHOLDER = "depends on your plan tier"
@@ -807,8 +723,10 @@ def compose(
     idf: dict[str, float] | None = None,
     benefits: set[str] | None = None,
     no_confident_match: bool = False,
+    ask: Ask | None = None,
 ) -> Composition:
-    selections = select_sections(pages, question, idf=idf, benefits=benefits, product=product)
+    ask = ask or ask_about(question, product, benefits)
+    selections = select_sections(pages, question, idf=idf, benefits=benefits, product=product, ask=ask)
     if no_confident_match:
         # Nothing cleared the confidence floor and the raw corpus had nothing
         # either. Composing from the least-bad pages is how an assistant
@@ -962,7 +880,7 @@ def compose(
     # put it first however the facts were ordered. Asked about a specific
     # benefit, that same sentence is the answer — dropping it there cost the
     # trip-cancellation page its only claim and the turn its delivery.
-    if wants_overview(question, classify(question), product):
+    if ask.scope == "overview":
         substantive = [p for p in paragraphs if not placeholder_only(p)]
         if substantive:
             paragraphs = substantive

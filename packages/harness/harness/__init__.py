@@ -1,5 +1,6 @@
 """Harness layer: contracts, gates, budgets, tracing."""
 
+from harness.ask import Ask, ask_about, asked_benefits, read_ask
 from harness.budget import Budget, BudgetExhausted
 from harness.contracts import (
     AnswerEnvelope,
@@ -22,6 +23,7 @@ __all__ = [
     "ALL_GATES",
     "AnswerEnvelope",
     "AnswerRequest",
+    "Ask",
     "AuthLevel",
     "Budget",
     "BudgetExhausted",
@@ -42,7 +44,9 @@ __all__ = [
     "Trace",
     "TraceStore",
     "Verdict",
+    "ask_about",
     "asked_benefits",
     "blocked",
+    "read_ask",
     "run_gates",
 ]

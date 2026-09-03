@@ -195,6 +195,9 @@ def test_every_stage_is_traced(bundle: Bundle, settings: Settings) -> None:
         # will be refused, and nothing ships without the drafted text itself
         # having been read.
         "guardrail-input",
+        # One reading of the question — product, intent, subject, scope —
+        # made before anything rewrites it, and carried on the trace.
+        "ask",
         # What "it" refers to: a turn naming no subject borrows the topic from
         # the nearest earlier turn that did.
         "reference",

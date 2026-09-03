@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from harness.ask import Ask, asked_benefits
 from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
 from harness.intent import REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
@@ -133,6 +134,10 @@ class GateContext:
     #: word overlap. None on the deterministic path, where the lexical test
     #: stands — and the gate never raises because of it.
     judge: Judge | None = None
+    #: The turn's reading of the question, where the pipeline made one. Gates
+    #: that need the intent or the named product read it from here rather than
+    #: re-deriving it from the raw string; None on callers that predate it.
+    ask: Ask | None = None
 
     def loaded_text(self) -> str:
         """Every loaded page's title and body.
@@ -852,9 +857,6 @@ def _foreign_contacts(ctx: GateContext, channel: Channel) -> list[tuple[str, str
     return out
 
 
-_SECTION_RE = re.compile(r"\bsection\s+(\d+[a-z]?)\b", re.I)
-
-
 def _benefit_of(figure: Figure) -> str | None:
     """The benefit code a table-bound figure belongs to.
 
@@ -867,19 +869,9 @@ def _benefit_of(figure: Figure) -> str | None:
     return tail.split(".", 1)[0] or None
 
 
-def asked_benefits(bundle: Bundle, question: str) -> set[str]:
-    """Benefit codes the question names — through the bundle's vocabulary
-    ("suitcase" → `baggage_loss`) or a section number ("section 6" →
-    `section_6`). Empty where the question names none. Shared with the
-    composer, which uses it to say when a named benefit was never found."""
-    from okf import expand_vocabulary, load_vocabulary
-
-    asked = set(expand_vocabulary(question, load_vocabulary(bundle.root)))
-    asked.update(f"section_{m.group(1).lower()}" for m in _SECTION_RE.finditer(question or ""))
-    return asked
-
-
 def _asked_benefits(ctx: GateContext) -> set[str]:
+    if ctx.ask is not None:
+        return set(ctx.ask.subject)
     return asked_benefits(ctx.bundle, ctx.question)
 
 
@@ -931,7 +923,7 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         # that cannot mislead anybody.
         return GateResult(gate=name, verdict=Verdict.skip, detail="asked which product was meant")
 
-    intent = classify(ctx.question)
+    intent = ctx.ask.intent if ctx.ask is not None else classify(ctx.question)
     requirement = REQUIREMENTS.get(intent)
     if requirement is None or not requirement.checkable:
         return GateResult(gate=name, verdict=Verdict.skip, detail=f"{intent.value}: unconstrained")
@@ -1072,6 +1064,45 @@ def gate_entitlement_assertion(ctx: GateContext) -> GateResult:
     )
 
 
+# --- 10. about the ask ------------------------------------------------------
+
+
+def gate_about_the_ask(ctx: GateContext) -> GateResult:
+    """Is the answer about the product the customer named?
+
+    The provenance gates pass a correct, cited, grounded answer about the
+    wrong product — eleven of them in a 1,000-case sample, all at 0.99, a
+    rider's exclusions read out as its sibling's. The metric counts those as
+    `wrong_product`; this makes the count a refusal. Only where the customer
+    *named* the product: a product the model inferred is a reading that may be
+    wrong, and refusing on it would punish the model for a guess the customer
+    never made.
+    """
+    name = "about-the-ask"
+    ask = ctx.ask
+    if ask is None:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="no reading of the question on this turn")
+    if ctx.answer.handoff or ctx.answer.smalltalk or ctx.answer.clarifying:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="nothing asserted about a product")
+    if not ask.named:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="product not named by the customer")
+    cited: set[str] = set()
+    for claim in ctx.answer.claims:
+        page = ctx.bundle.get(claim.source_id)
+        if page is not None and page.id.startswith("product/"):
+            cited.add(ctx.bundle.product_key(page))
+    if not cited:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="no product page cited")
+    if ask.product not in cited:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail=f"asked about {ask.product!r}, answered from {sorted(cited)}",
+            missing=[ask.product_page] if ask.product_page else [],
+        )
+    return GateResult(gate=name, verdict=Verdict.pass_, detail=f"answered about {ask.product!r}")
+
+
 ALL_GATES = [
     gate_reference_integrity,
     gate_numeric_binding,
@@ -1082,6 +1113,7 @@ ALL_GATES = [
     gate_groundedness,
     gate_answerability,
     gate_entitlement_assertion,
+    gate_about_the_ask,
 ]
 
 

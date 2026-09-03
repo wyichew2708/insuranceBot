@@ -139,6 +139,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
   .who h1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   header{gap:9px;padding:10px 12px}
 }
+  .stage { font-size: 12px; opacity: .65; margin-top: 4px; }
 </style>
 
 <header>
@@ -324,6 +325,35 @@ function render(text, figures) {
   return html.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`).join("");
 }
 
+/* Server-sent events over a POST body: `EventSource` is GET-only, so the
+   stream is read by hand. Resolves with the `done` payload; rejects on
+   `error` or a stream that closed without one. */
+async function readEvents(res, handlers) {
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "", done = null;
+  for (;;) {
+    const { value, done: closed } = await reader.read();
+    if (closed) break;
+    buffer += decoder.decode(value, { stream: true });
+    let idx;
+    while ((idx = buffer.indexOf("\n\n")) >= 0) {
+      const frame = buffer.slice(0, idx); buffer = buffer.slice(idx + 2);
+      let event = "message", data = "";
+      for (const line of frame.split("\n")) {
+        if (line.startsWith("event: ")) event = line.slice(7);
+        else if (line.startsWith("data: ")) data += line.slice(6);
+      }
+      const payload = data ? JSON.parse(data) : null;
+      if (event === "done") done = payload;
+      else if (event === "error") throw new Error(payload?.detail || "the turn failed");
+      else if (handlers[event]) handlers[event](payload);
+    }
+  }
+  if (!done) throw new Error("the stream closed before the answer arrived");
+  return done;
+}
+
 function turn(who) {
   const el = document.createElement("div");
   el.className = `turn ${who}`;
@@ -357,13 +387,27 @@ async function ask() {
   if (pol) session.policy = JSON.parse(pol);
 
   try {
-    const res = await fetch("/v1/answer", {
+    const res = await fetch("/v1/answer/stream", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: q, session, history: history.slice(-6) }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
-    const env = await res.json();
+    // Progress while the turn runs, then the verified text as it is paced
+    // out, then the envelope. Nothing shown here is ever taken back: the
+    // server streams only what the gates passed.
+    let streamed = "";
+    const env = await readEvents(res, {
+      stage: s => {
+        if (s.phase === "start")
+          bubble.innerHTML = `<div class="typing"><i></i><i></i><i></i></div><div class="stage">${escapeHtml(s.label)}</div>`;
+      },
+      delta: d => {
+        streamed += d.text;
+        bubble.innerHTML = render(streamed, []);
+        main.scrollTop = main.scrollHeight;
+      },
+    });
     const a = env.answer || {};
 
     // A question back to the customer, with its options as one tap each.

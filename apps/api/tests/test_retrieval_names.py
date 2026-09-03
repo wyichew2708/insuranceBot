@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
-from api.compose import bare_product_name
 from api.retrieval import named_products, product_family
+from harness.ask import ask_about
 
 from okf import Bundle
 
 
 @pytest.fixture(scope="module")
 def real() -> Bundle:
-    return Bundle.load("okf-real")
+    return Bundle.load(Path("okf-real"))
 
 
 def test_full_title_names_the_product(real: Bundle) -> None:
@@ -63,7 +65,7 @@ def test_a_product_named_outright_has_no_family_to_ask_about(real: Bundle) -> No
 def test_a_bare_name_is_a_request_for_the_overview(real: Bundle) -> None:
     travel = real.get("product/general/travel-insurance")
     assert travel is not None
-    assert bare_product_name(travel, "tiq travel")
-    assert bare_product_name(travel, "Tiq Travel Insurance please")
-    assert not bare_product_name(travel, "travel baggage per-item sub-limit")
-    assert not bare_product_name(travel, "tiq travel claim")
+    assert ask_about("tiq travel", travel).scope == "overview"
+    assert ask_about("Tiq Travel Insurance please", travel).scope == "overview"
+    assert ask_about("travel baggage per-item sub-limit", travel).scope == "specific"
+    assert ask_about("tiq travel claim", travel).scope == "specific"
