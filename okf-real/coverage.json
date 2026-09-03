@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123169,
+  "reached": 123141,
   "share": 0.048
  },
  "sources": {
@@ -1699,8 +1699,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md": {
    "words": 481,
-   "reached": 16,
-   "share": 0.033,
+   "reached": 9,
+   "share": 0.019,
    "pages": [
     "product/health-medical/accident-health"
    ]
@@ -3447,8 +3447,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md": {
    "words": 484,
-   "reached": 18,
-   "share": 0.037,
+   "reached": 13,
+   "share": 0.027,
    "pages": [
     "product/investments/tiqinvest"
    ]
@@ -3552,8 +3552,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md": {
    "words": 941,
-   "reached": 63,
-   "share": 0.067,
+   "reached": 59,
+   "share": 0.063,
    "pages": [
     "product/general/pet-insurance"
    ]
@@ -3622,11 +3622,9 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md": {
    "words": 484,
-   "reached": 18,
-   "share": 0.037,
-   "pages": [
-    "product/general/cashsaver"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement.md": {
    "words": 172,
@@ -6782,16 +6780,16 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md": {
    "words": 1195,
-   "reached": 7,
-   "share": 0.006,
+   "reached": 2,
+   "share": 0.002,
    "pages": [
     "product/protection/cancer-insurance"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md": {
    "words": 3205,
-   "reached": 19,
-   "share": 0.006,
+   "reached": 30,
+   "share": 0.009,
    "pages": [
     "product/general/cashsaver"
    ]

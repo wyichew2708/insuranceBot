@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-- Coverage for all stages of cancer [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#why-cancer-insurance].
+Let us know when your policy ends and we’ll send you a reminder to switch to Etiqa Insurance Pte. Ltd. by Etiqa Insurance Pte. Ltd. Insurance [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#insured-but-still-looking].
 
 ## What it covers
 

@@ -368,8 +368,21 @@ _BUTTON_LABEL_RE = re.compile(
 )
 
 
+def _drop_repeated_opening(text: str) -> str:
+    """ "Safeguard your pet's wellbeing Safeguard your pet's wellbeing We…" —
+    a heading and a subheading flattened into the intro, compared word by
+    word with punctuation ignored, since the two copies can differ by an
+    apostrophe."""
+    words = text.split()
+    norm = [re.sub(r"[^a-z0-9]", "", w.lower()) for w in words]
+    for n in range(min(12, len(words) // 2), 1, -1):
+        if norm[:n] == norm[n : 2 * n]:
+            return " ".join(words[n:])
+    return text
+
+
 def _first_sentence(text: str) -> str:
-    text = _REPEATED_OPENING_RE.sub(r"\1 ", " ".join(text.split()))
+    text = _drop_repeated_opening(_REPEATED_OPENING_RE.sub(r"\1 ", " ".join(text.split())))
     for sentence in re.split(r"(?<=\.)\s+", text):
         if ALIAS_RE.match(sentence) or not sentence:
             continue
@@ -901,7 +914,8 @@ _COVER_SKIP_RE = re.compile(r"advisory|about us|sitemap|overview of|apply (?:for
 #: closure notice, which is a fact about the *shopfront* and not about cover.
 _COVER_NOISE_RE = re.compile(
     r"\||thank you for your support|fully subscribed|privacy policy|terms (?:of use|and conditions|& conditions)"
-    r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in",
+    r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in|i consent to|marketing consent"
+    r"|^- ",
     re.I,
 )
 #: The tile has to actually say the product covers something. Marketing that
@@ -1018,7 +1032,8 @@ _COVER_WORD_RE = re.compile(
 )
 #: Headings that group or summarise rather than name cover.
 _COVER_GROUP_HEADING_RE = re.compile(
-    r"^(summary of cover|policy benefits|other benefits|optional benefits|scale of benefits|what is covered|sum insured|geographical|basis of settlement|definitions|general conditions|premium)",
+    r"^(summary of cover|policy benefits|other benefits|optional benefits|scale of benefits|what is covered"
+    r"|sum insured|geographical|basis of settlement|definitions|general conditions|premium)",
     re.I,
 )
 _COVER_LIST_MAX = 12
@@ -1213,22 +1228,31 @@ def emit_product(
     # that says something is the difference between a page that describes the
     # product and a page whose only content is a note about channels.
     body: list[str] = ["## What this plan is"]
-    opening = _first_sentence(primary.intro)
-    if _COVER_NOISE_RE.search(opening):
-        # "Coverage | Resources | FAQs Thank you for your support! eEASY
-        # savepro is now fully subscribed" is a navigation bar and a closure
-        # notice, not what the plan is. Fall through to the sections.
-        opening = ""
-    intro = _grounded(_normalise_brands(opening), primary.ref("body"), report) if opening else None
+    # Every listing's intro first, in authority order, then every listing's
+    # sections. The etiqa.com.sg listing outranks the tiq.com.sg one, and on
+    # CashSaver and Tiq Invest its intro is a marketing-consent checkbox —
+    # "I consent to Etiqa and its related, its agents…" — which became what
+    # the plan is. A consent form, a navigation bar, a closure notice, a
+    # bullet or a slogan is never the opening line; the next listing's is.
+    intro = None
+    for snapshot in ordered:
+        opening = _first_sentence(snapshot.intro)
+        if opening and not _COVER_NOISE_RE.search(opening) and not opening.endswith("!"):
+            intro = _grounded(_normalise_brands(opening), snapshot.ref("body"), report)
+            if intro:
+                break
     if intro is None:
-        for section in primary.sections:
-            if not section.heading or _OVERVIEW_SKIP_RE.search(section.heading):
-                continue
-            for paragraph in section.paragraphs:
-                sentence = _first_sentence(paragraph)
-                if not sentence or _COVER_NOISE_RE.search(sentence) or sentence.endswith("!"):
+        for snapshot in ordered:
+            for section in snapshot.sections:
+                if not section.heading or _OVERVIEW_SKIP_RE.search(section.heading):
                     continue
-                intro = _grounded(_normalise_brands(sentence), primary.ref(section.anchor), report)
+                for paragraph in section.paragraphs:
+                    sentence = _first_sentence(paragraph)
+                    if not sentence or _COVER_NOISE_RE.search(sentence) or sentence.endswith("!"):
+                        continue
+                    intro = _grounded(_normalise_brands(sentence), snapshot.ref(section.anchor), report)
+                    if intro:
+                        break
                 if intro:
                     break
             if intro:

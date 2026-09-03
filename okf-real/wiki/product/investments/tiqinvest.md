@@ -42,7 +42,7 @@ confidence: medium
 
 ## What this plan is
 
-- I consent to Etiqa Insurance Pte. Ltd. and its related, its agents, authorised service providers and marketing partners collecting, using, disclosing, and/or processing my personal data, in order to contact me about products and services marketed by Etiqa Insurance Pte. Ltd. or its partners as well as benefits, promotions and rewards, via the modes mentioned or selected, and using my contact particulars which Etiqa Insurance Pte. Ltd. may have in its records from time to time (including where applicable my Singapore telephone number(s)); [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md#find-out-more].
+I expressly authorise and consent to Etiqa Insurance Pte. Ltd., its officers and employees at their sole discretion, to disclose any and all information relating to me, including my personal particulars, my transactions and dealings and my policies of insurance with Etiqa Insurance Pte. Ltd., to any of the following persons, whether in Singapore or elsewhere: [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md#find-out-more].
 
 ## What it covers
 
