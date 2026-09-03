@@ -45,6 +45,10 @@ Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy 
 
 Insure as you grow your savings: Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy Save insurance savings plan [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#insure-as-you-grow-your-savings].
 
+About the Product: Non-participating life insurance savings plan in SGD covering the life insured to age 100 [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#about-the-product]. <!-- okf:allow-number -->
+
+Death Benefit: Upon death of the insured during the policy term, we will pay your beneficiaries at 101% of Account value [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#death-benefit]. <!-- okf:allow-number -->
+
 The policy wording sets out cover under: Covered Events; Surrender Benefit; Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/tiq-easy-save-general-provisions.md].
 
 ## What is not covered

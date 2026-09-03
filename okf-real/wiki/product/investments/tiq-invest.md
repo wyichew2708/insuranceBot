@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest
+id: product/investments/tiq-invest
 title: Tiq Invest
 type: product
 status: approved
@@ -18,18 +18,18 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/investments/tiq-invest
+  landing: https://www.tiq.com.sg/product/tiqinvest
   hotline: +65 6887 8777
   surfaces:
-  - https://www.tiq.com.sg/product/tiqinvest
+  - https://www.etiqa.com.sg/personal/investments/tiq-invest
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
-  exclusions: product/investments/tiqinvest/exclusions
+  exclusions: product/investments/tiq-invest/exclusions
   concepts:
   - concept/policy-schedule
 compiled_from_commit: working-tree
@@ -46,11 +46,13 @@ Your hassle-free digital Investment-Linked Plan (ILP) for maximum financial flex
 
 ## What it covers
 
+105% Guaranteed Insurance Protection: Get protected with Death Benefit at 105% of your net premium 4 , no matter how your investment performs [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md#105-guaranteed-insurance-protection]. <!-- okf:allow-number -->
+
 The policy wording sets out cover under: Death Benefit; Terminal Illness (TI) Benefit; Surrender Benefit; Maturity Benefit [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
 
 ## What is not covered
 
-The complete list is on the [exclusions page](./tiqinvest/exclusions.md).
+The complete list is on the [exclusions page](./tiq-invest/exclusions.md).
 
 ## How to buy
 

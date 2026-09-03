@@ -20,14 +20,14 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/personal-accident
+  landing: https://www.tiq.com.sg/product/tiq-personal-accident
   hotline: +65 6887 8777
   surfaces:
-  - https://www.tiq.com.sg/product/tiq-personal-accident
+  - https://www.etiqa.com.sg/personal/personal-accident
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -43,9 +43,11 @@ confidence: medium
 
 ## What this plan is
 
-Protect yourself against unexpected accidents and events Don’t let unexpected medical bills be an additional source of stress [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md#body].
+3 Plus Critical Illness Term Life Insurance Whole Life Insurance Etiqa Insurance Pte. Ltd. Personal Accident [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#have-questions-we-re-here-to-help].
 
 ## What it covers
+
+Etiqa Insurance Pte. Ltd. Personal Accident Promo: 30% off: Stay covered for life’s unexpected moments. Enjoy 30% off Etiqa Insurance Pte. Ltd. PA plan with protection for accidental death, disability, and injuries [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#tiq-personal-accident-promo-30-off]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease; Physiotherapy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 

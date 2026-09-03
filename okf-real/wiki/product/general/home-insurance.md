@@ -18,13 +18,13 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/home-insurance
+  landing: https://www.tiq.com.sg/product/home-insurance
   surfaces:
-  - https://www.tiq.com.sg/product/home-insurance
+  - https://www.etiqa.com.sg/personal/home-insurance
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -40,9 +40,11 @@ confidence: medium
 
 ## What this plan is
 
-Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
+Designed for Singapore residents who appreciate fuss-free protection for the home that you’re working hard for [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#rated-1-home-insurance-seedly-oct-2021].
 
 ## What it covers
+
+Rated #1 Home Insurance (Seedly, Oct 2021): Designed for Singapore residents who appreciate fuss-free protection for the home that you’re working hard for [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#rated-1-home-insurance-seedly-oct-2021]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Renovation; Home Contents; Personal Legal Liability (Worldwide); Building & Renovation; Household Contents; Personal Legal Liability; Tenant's Liability; Family Accidental Death Protection; Multi-appliances Home Protector [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
 

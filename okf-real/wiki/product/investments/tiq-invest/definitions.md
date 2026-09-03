@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest/definitions
+id: product/investments/tiq-invest/definitions
 title: Tiq Invest — Definitions
 type: product
 status: approved
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- tiqinvest definitions
-- what does it mean in tiqinvest
-- tiqinvest glossary
+- tiq invest definitions
+- what does it mean in tiq invest
+- tiq invest glossary
 channels: []
 plan_tiers: []
 authority:

@@ -47,6 +47,8 @@ DIRECT – Etiqa Insurance Pte. Ltd. whole life Insurance provides lifetime assu
 
 Whole life protection with a choice of premium term: Your plan will continue to accumulate cash value and bonuses* while providing you with comprehensive protection throughout your life [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#whole-life-protection-with-a-choice-of-premium-term].
 
+Protection against 30 Critical Illnesses 2: With our optional add-on cover, you and your loved ones can cope with the recovery cost if you suffer from a specific covered medical condition [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#protection-against-30-critical-illnesses-2]. <!-- okf:allow-number -->
+
 The policy wording sets out cover under: Covered Events; Guaranteed Insurability Benefit; Cash Benefits; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Total and Permanent Disability (TPD) Benefit; Surrender Benefit [src:raw/wordings/eprotect-whole-life-policy-contract.md].
 
 ## What is not covered

@@ -629,6 +629,13 @@ def merge_duplicate_groups(groups: dict[str, ProductGroup], report: CompileRepor
     return folded
 
 
+def _brand_hosts(group: ProductGroup) -> list[str]:
+    """The host that owns this product's page, per the catalogue's brand."""
+    if group.entry is None:
+        return []
+    return {"tiq": ["www.tiq.com.sg"], "etiqa": ["www.etiqa.com.sg"]}.get(group.entry.brand, [])
+
+
 def rank_hosts(hosts: list[str], order: list[str]) -> list[str]:
     """Authority order (§D.2). Anything unranked sorts last, alphabetically,
     so the result is stable rather than dependent on crawl order."""
@@ -1009,8 +1016,17 @@ def _cover_summary(ordered: list[Snapshot], report: CompileReport) -> list[str]:
             sentence = _cover_sentence(section.text)
             if not sentence or _COVER_NOISE_RE.search(sentence):
                 continue
+            # A figure on the product page is quoted from the product page
+            # ("travel delay cover from just 3 hours"): allowed, and bound to
+            # the page it is quoted from, as a promotion's figures are. The
+            # owner's rule is that the product page is the reference, and a
+            # schedule that says six hours is the conflict to fix, not the
+            # reason to drop the page's own statement.
             grounded = _grounded(
-                _normalise_brands(f"{heading}: {sentence}"), snapshot.ref(section.anchor), report
+                _normalise_brands(f"{heading}: {sentence}"),
+                snapshot.ref(section.anchor),
+                report,
+                allow_number=True,
             )
             if not grounded:
                 continue
@@ -2513,7 +2529,11 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
             # is a shared category page: built from its documents below.
             continue
         version = versions.get(slug, str(config.today.year))
-        group_hosts = rank_hosts(group.hosts, hosts)
+        # The product's own page first. The owner's rule: refer to the
+        # product page and the documents it links; a Tiq product's page is on
+        # tiq.com.sg and an Etiqa product's on etiqa.com.sg, and where the two
+        # sites disagree on a figure, the product's own page is kept.
+        group_hosts = rank_hosts(group.hosts, _brand_hosts(group) + hosts)
         rows = benefit_rows(group, version, group_hosts, report)
         linked = [c for c in concepts if _concept_pattern(c).search(group.text)]
 

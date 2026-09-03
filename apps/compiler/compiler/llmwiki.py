@@ -28,7 +28,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
-from harness.gates import NUMERIC_SPAN_RE
+from harness.gates import _ENTAILMENT_SCHEMA, _ENTAILMENT_SYSTEM, NUMERIC_SPAN_RE
 from okf.linter import SOURCE_REF_RE
 
 from compiler.wiki import CompileConfig, CompileReport, _page, _write
@@ -93,7 +93,85 @@ class Draft:
     dropped_unsourced: int = 0
     dropped_unknown_source: int = 0
     dropped_figure: int = 0
+    #: Sentences the cross-check judged not entailed by the section they cite.
+    dropped_unsupported: int = 0
+    #: Every kept sentence was judged entailed by its cited section.
+    verified: bool = False
     notes: list[str] = field(default_factory=list)
+
+
+#: Sentences per judge call. A model judges eight claims more precisely than
+#: twelve — the same cap the groundedness gate uses.
+CROSSCHECK_BATCH = 8
+
+
+def _crosscheck(markdown: str, sources: dict[str, str], judge: Any, draft: Draft) -> str:
+    """Cross-check every sentence against the product page section it cites.
+
+    `_verify` proves provenance — the ref exists, the figures are in it. This
+    proves sense: the same entailment judge the groundedness gate uses reads
+    each sentence against its cited section and returns entails / neutral /
+    contradicts. Anything not entailed is dropped, and a page whose every
+    sentence was entailed is written approved with `auto-crosscheck` as the
+    reviewer — the owner's decision, in place of a human reading each page.
+    A judge that returns nothing usable leaves the page a draft.
+    """
+    lines = markdown.splitlines()
+    items: list[tuple[int, int, str, str]] = []  # (line index, sentence index, sentence, source key)
+    per_line: dict[int, list[str]] = {}
+    for li, line in enumerate(lines):
+        if not line.strip() or _HEADING_RE.match(line):
+            continue
+        sentences = _SENTENCE_RE.findall(line)
+        per_line[li] = sentences
+        for si, sentence in enumerate(sentences):
+            ref = SOURCE_REF_RE.search(sentence)
+            key = f"{ref.group(1)}#{ref.group(2)}" if ref and ref.group(2) else (ref.group(1) if ref else "")
+            if key in sources:
+                items.append((li, si, sentence, key))
+    verdicts: dict[tuple[int, int], str] = {}
+    by_source: dict[str, list[tuple[int, int, str]]] = {}
+    for li, si, sentence, key in items:
+        by_source.setdefault(key, []).append((li, si, sentence))
+    for key, members in by_source.items():
+        for start in range(0, len(members), CROSSCHECK_BATCH):
+            batch = members[start : start + CROSSCHECK_BATCH]
+            claims = "\n".join(
+                f"CLAIM {i}: {SOURCE_REF_RE.sub('', s).strip()}" for i, (_, _, s) in enumerate(batch)
+            )
+            prompt = f"EVIDENCE ({key}):\n{sources[key]}\n{claims}\n"
+            try:
+                payload = judge(_ENTAILMENT_SYSTEM, prompt, _ENTAILMENT_SCHEMA)
+            except Exception:
+                payload = None
+            got = (
+                {v.get("claim"): v.get("verdict") for v in payload.get("verdicts", []) if isinstance(v, dict)}
+                if isinstance(payload, dict)
+                else {}
+            )
+            for i, (li, si, _) in enumerate(batch):
+                verdicts[(li, si)] = str(got.get(i) or "silent")
+    kept_lines: list[str] = []
+    all_entailed = bool(items)
+    for li, line in enumerate(lines):
+        if li not in per_line:
+            kept_lines.append(line)
+            continue
+        good = []
+        for si, sentence in enumerate(per_line[li]):
+            verdict = verdicts.get((li, si), "silent")
+            if verdict == "entails":
+                good.append(sentence.strip())
+            else:
+                draft.dropped_unsupported += 1
+                draft.kept -= 1
+                all_entailed = False if verdict != "silent" else all_entailed
+                if verdict == "silent":
+                    all_entailed = False
+        if good:
+            kept_lines.append(" ".join(good))
+    draft.verified = all_entailed and draft.kept >= 4
+    return "\n".join(kept_lines).strip()
 
 
 def _sources_for(bundle: Bundle, product: Page) -> dict[str, str]:
@@ -187,17 +265,25 @@ def write_llm_wiki(
             report.skip("llm-wiki: model returned nothing — not written")
             continue
         draft = Draft(product=product, body="")
-        draft.body = _verify(
-            markdown, {k: v for k, v in sources.items() if any(k in s for s in shown)}, draft
-        )
+        shown_sources = {k: v for k, v in sources.items() if any(k in s for s in shown)}
+        draft.body = _verify(markdown, shown_sources, draft)
         if draft.kept < 4:
             report.skip("llm-wiki: fewer than four sentences survived verification — not written")
+            continue
+        # Provenance proven; now sense, against the product page's own sections.
+        draft.body = _crosscheck(draft.body, shown_sources, classify, draft)
+        if draft.kept < 4:
+            report.skip("llm-wiki: fewer than four sentences survived the cross-check — not written")
             continue
         fm = Frontmatter(
             id=f"{product.id}/plain",
             title=f"{product.frontmatter.title} — in plain language",
             type=PageType.product,
-            status=Status.draft,  # never approved by the thing that wrote it
+            # Approved only when every sentence was judged entailed by the
+            # product page section it cites — the owner's decision, in place
+            # of a human reading each page. Anything less stays a draft.
+            status=Status.approved if draft.verified else Status.draft,
+            reviewed_by=["auto-crosscheck"] if draft.verified else [],
             underwriter=product.frontmatter.underwriter,
             jurisdiction=product.frontmatter.jurisdiction,
             line_of_business=product.frontmatter.line_of_business,

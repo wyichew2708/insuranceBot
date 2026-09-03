@@ -19,16 +19,16 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/travel-insurance
+  landing: https://www.tiq.com.sg/product/travel-insurance
   surfaces:
-  - https://www.tiq.com.sg/product/travel-insurance
+  - https://www.etiqa.com.sg/personal/travel-insurance
 plan_tiers:
 - 1-000
 - 1-000
 - 3-000
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -47,13 +47,15 @@ confidence: high
 
 ## What this plan is
 
-Be it a short getaway, business convention or adventure of your lifetime, we’ve got you covered [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
+This applies to travel to Israel, Iraq, Iran, Jordan, Lebanon, Egypt, Bahrain, Kuwait, Oman, Palestine, Qatar, Saudi Arabia, Syria, United Arab Emirates and Yemen [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#travel-advisory].
 
 ## What it covers
 
 Medical expenses in Singapore and overseas: Whether it's a GP, specialist, or TCM, you're covered [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#medical-expenses-in-singapore-and-overseas].
 
 Pre-existing medical conditions coverage: Get covered for overseas medical bills, emergency evacuation, and even travel hiccups [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#pre-existing-medical-conditions-coverage].
+
+Flexible add-ons: Customise your protection with add-on options like COVID-19, rental car excess, pet hotel, child education and sports equipment protection from just $0.64 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#flexible-add-ons]. <!-- okf:allow-number -->
 
 Coverage for every traveller: Whether you're departing from Singapore, transiting, or purchasing coverage for your child, we’ve got you protected for all your air, land & cruise travels [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#coverage-for-every-traveller].
 

@@ -43,6 +43,10 @@ confidence: medium
 
 Coverage for your policy is automatic and no further action is required from you [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
 
+## What it covers
+
+Accident & Health Insurance: Care for your employees with our Accident & Health Insurance that protects them 24/7, worldwide—against injuries, death, or permanent disabilities [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#accident-health-insurance]. <!-- okf:allow-number -->
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./accident-health/exclusions.md).

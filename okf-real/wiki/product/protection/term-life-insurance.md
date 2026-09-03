@@ -44,9 +44,17 @@ With Term Life Insurance, we have made protection easy to apply, affordable and 
 
 ## What it covers
 
+There is a plan for that. Term Life Insurance: Support your loved ones in times of need with high coverage from as low as $0.09/day 1 Get a Quote [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#there-is-a-plan-for-that-term-life-insurance]. <!-- okf:allow-number -->
+
 Provide for your family during hard times: Get a lump sum payout in an event of death [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#provide-for-your-family-during-hard-times].
 
+Get full control over coverage and premium: Select your preferred sum insured from S$50,000 to S$2 million [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#get-full-control-over-coverage-and-premium]. <!-- okf:allow-number -->
+
 Deal with unexpected expenses: Receive a lump sum payout if you’re diagnosed with terminal illness or total & permanent disability [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#deal-with-unexpected-expenses].
+
+Protection against 30 Critical Illness 2: With our optional add-on cover, you and your family will be able to better cope with medical expenses and living costs if you suffer from a specified medical condition [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#protection-against-30-critical-illness-2]. <!-- okf:allow-number -->
+
+DIRECT - Etiqa Insurance Pte. Ltd. term life II: Essential coverage with low premiums S$50,000 – S$400,000 [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#direct-etiqa-term-life-ii]. <!-- okf:allow-number -->
 
 The policy wording sets out cover under: Covered Events; Death Benefit; Total and Permanent Disability (TPD) Benefit; Terminal Illness Benefit; Terminal Illness (TI) Benefit; TI Benefit; TPD Benefit; Guaranteed Insurability Benefit; Cash Benefits; Cash Values & Paid-up Policy; Maturity Benefit [src:raw/wordings/etiqa-term-life-policy-contract.md].
 

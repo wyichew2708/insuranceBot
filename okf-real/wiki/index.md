@@ -320,19 +320,19 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/investments/invest-vista/exclusions` — [Invest vista — Exclusions](./product/investments/invest-vista/exclusions.md)
 
-- `product/investments/tiqinvest` — [Tiq Invest](./product/investments/tiqinvest.md)
+- `product/investments/tiq-invest` — [Tiq Invest](./product/investments/tiq-invest.md)
 
-- `product/investments/tiqinvest/claims` — [Tiq Invest — Making a claim](./product/investments/tiqinvest/claims.md)
+- `product/investments/tiq-invest/claims` — [Tiq Invest — Making a claim](./product/investments/tiq-invest/claims.md)
 
-- `product/investments/tiqinvest/conditions` — [Tiq Invest — Policy conditions](./product/investments/tiqinvest/conditions.md)
+- `product/investments/tiq-invest/conditions` — [Tiq Invest — Policy conditions](./product/investments/tiq-invest/conditions.md)
 
-- `product/investments/tiqinvest/cover` — [Tiq Invest — What is covered](./product/investments/tiqinvest/cover.md)
+- `product/investments/tiq-invest/cover` — [Tiq Invest — What is covered](./product/investments/tiq-invest/cover.md)
 
-- `product/investments/tiqinvest/definitions` — [Tiq Invest — Definitions](./product/investments/tiqinvest/definitions.md)
+- `product/investments/tiq-invest/definitions` — [Tiq Invest — Definitions](./product/investments/tiq-invest/definitions.md)
 
-- `product/investments/tiqinvest/exclusions` — [Tiq Invest — Exclusions](./product/investments/tiqinvest/exclusions.md)
+- `product/investments/tiq-invest/exclusions` — [Tiq Invest — Exclusions](./product/investments/tiq-invest/exclusions.md)
 
-- `product/investments/tiqinvest/faq` — [Tiq Invest — Published FAQs](./product/investments/tiqinvest/faq.md)
+- `product/investments/tiq-invest/faq` — [Tiq Invest — Published FAQs](./product/investments/tiq-invest/faq.md)
 
 ## Products — motor
 

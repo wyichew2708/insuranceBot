@@ -81,3 +81,23 @@ def test_a_question_after_a_product_name_is_about_that_product(real: Bundle) -> 
 def test_a_turn_that_names_its_own_product_ignores_the_history(real: Bundle) -> None:
     ask = read_ask(real, "tiq travel coverage", history=["Home Insurance"])
     assert ask.product == "travel-insurance" and ask.named_by == "alias"
+
+
+def test_a_misspelt_name_still_names_the_product(real: Bundle) -> None:
+    for question, product in [
+        ("tiq travle coverage", "travel-insurance"),
+        ("maid insurence", "maid-insurance"),
+        ("pet insurnce exclusions", "pet-insurance"),
+        ("tiq hom", "home-insurance"),
+    ]:
+        ask = read_ask(real, question)
+        assert ask.product == product, question
+        assert ask.named_by == "fuzzy"
+        assert not ask.named  # a reading, not the customer's exact words
+
+
+def test_a_slip_within_reach_of_two_products_names_neither(real: Bundle) -> None:
+    # "insurance" alone is within a slip of nothing in particular, and a
+    # generic word must not become a product.
+    assert read_ask(real, "what is the excess").product is None
+    assert read_ask(real, "how do i claim").product is None

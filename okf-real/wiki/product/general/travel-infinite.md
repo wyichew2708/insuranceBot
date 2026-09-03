@@ -45,6 +45,10 @@ confidence: medium
 
 Flight delays, lost baggage or caught a bug during your travel? [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#body].
 
+## What it covers
+
+What you can get: Overseas medical expense coverage from $200,000 to $2.5 million Unlimited emergency medical evacuation (for Deluxe and Suite plans) Automatic payout should your flight be delayed for more than 3 hours (Exclusive to Etiqa Insurance Pte. Ltd.!) 24-hour worldwide emergency travel support services Trip cancellation compensation up to $15,000 Fast and easy claims via PayNow [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-you-can-get]. <!-- okf:allow-number -->
+
 ## Headline benefits
 
 The golf equipment limit for the plan tier held is {{table:golf_equipment.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].

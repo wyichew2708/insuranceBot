@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest/conditions
+id: product/investments/tiq-invest/conditions
 title: Tiq Invest — Policy conditions
 type: product
 status: approved
@@ -10,10 +10,10 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- tiqinvest policy conditions
-- tiqinvest terms
-- tiqinvest free look
-- cancel tiqinvest
+- tiq invest policy conditions
+- tiq invest terms
+- tiq invest free look
+- cancel tiq invest
 channels: []
 plan_tiers: []
 authority:

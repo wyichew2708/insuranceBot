@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest/cover
+id: product/investments/tiq-invest/cover
 title: Tiq Invest — What is covered
 type: product
 status: approved
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- what does tiqinvest cover
-- tiqinvest coverage
-- tiqinvest benefits explained
+- what does tiq invest cover
+- tiq invest coverage
+- tiq invest benefits explained
 channels: []
 plan_tiers: []
 authority:

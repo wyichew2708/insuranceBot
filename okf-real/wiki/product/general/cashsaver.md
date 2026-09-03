@@ -18,13 +18,13 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/savings-retirement/tiq-cashsaver
+  landing: https://www.tiq.com.sg/product/cashsaver
   surfaces:
-  - https://www.tiq.com.sg/product/cashsaver
+  - https://www.etiqa.com.sg/personal/savings-retirement/tiq-cashsaver
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:

@@ -19,8 +19,8 @@ plan_tiers:
 - 1-000
 - 3-000
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:

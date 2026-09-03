@@ -42,6 +42,10 @@ Coverage for your policy is automatic and no further action is required from you
 
 ## What it covers
 
+Attractive guaranteed returns of 2.01% p.a. at maturity: Enjoy attractive guaranteed returns with a lump sum payout at the end of 5 years [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#attractive-guaranteed-returns-of-2-01-p-a-at-maturity]. <!-- okf:allow-number -->
+
+Lump sum payout upon death: Stay protected with life coverage of 101% of the total premiums paid.* [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#lump-sum-payout-upon-death]. <!-- okf:allow-number -->
+
 The policy wording sets out cover under: Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/enrich-aspire-vii-policy-contract.md].
 
 ## What is not covered

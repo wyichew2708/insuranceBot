@@ -19,8 +19,8 @@ plan_tiers:
 - plan-b
 - plan-c
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:

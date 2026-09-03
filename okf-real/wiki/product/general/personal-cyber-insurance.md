@@ -19,13 +19,13 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/personal-cyber-insurance
+  landing: https://www.tiq.com.sg/product/personal-cyber-insurance
   surfaces:
-  - https://www.tiq.com.sg/product/personal-cyber-insurance
+  - https://www.etiqa.com.sg/personal/personal-cyber-insurance
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-cyber-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-personal-cyber-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-cyber-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Personal Cyber Insurance Mitigate your cyber risks The Internet has become an integral part of daily life [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-cyber-insurance.md#body].
+However, here’s a gentle reminder: you are vulnerable to cyber risks [src:raw/web/www.tiq.com.sg/2026-08-25/product-personal-cyber-insurance.md#get-safety-in-connectivity-with-comprehensive-cyber-protection].
 
 ## What is not covered
 

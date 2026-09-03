@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest/faq
+id: product/investments/tiq-invest/faq
 title: Tiq Invest — Published FAQs
 type: product
 status: approved
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- tiqinvest faq
-- tiqinvest questions
-- common questions about tiqinvest
+- tiq-invest faq
+- tiq-invest questions
+- common questions about tiq-invest
 channels: []
 plan_tiers: []
 authority:

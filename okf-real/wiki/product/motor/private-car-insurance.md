@@ -45,6 +45,8 @@ Our Private Car Insurance also offers comprehensive protection for Electric Vehi
 
 ## What it covers
 
+Private Car Promo: 20% Off: Enjoy extra savings when you insure your car with Etiqa Insurance Pte. Ltd.! Get comprehensive coverage with claim approval of up to $5,000 within 30 minutes*, and more [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#private-car-promo-20-off]. <!-- okf:allow-number -->
+
 We’ve got your back with 3 levels of cover: We cover accidental loss or damage costs due to accidents We cover the cost if a towing service is required after an accident We cover your legal liability We cover your costs in the event of a personal accident We cover other benefits Excess for driver(s) Benefits for Electric Vehicles [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#we-ve-got-your-back-with-3-levels-of-cover].
 
 The policy wording sets out cover under: Your Car; Injury and Damage; Personal Accident Benefits (for You only); Courtesy Car Benefit; Enhanced Personal Accident Benefits; Loss of Use Benefit; Medical Expenses [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].

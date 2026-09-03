@@ -44,6 +44,8 @@ You can simply purchase this product via any of our partnering Travel Agents  [s
 
 Corporate Travel Insurance: Protect your employees for their business travel [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#corporate-travel-insurance].
 
+What you can get: High Trip Cancellation Expenses coverage of $10,000 High coverage for medical expenses in Singapore for up to $50,000 Free leisure travel extension for named employees Covers up to 180 days for each business trip Comes with COVID-19 coverage 24-hour emergency travel hotline FAQ for Corporate Travel Insurance [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#what-you-can-get]. <!-- okf:allow-number -->
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./corporate-travel/exclusions.md).

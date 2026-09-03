@@ -29,6 +29,7 @@ Two readings come out of it:
 from __future__ import annotations
 
 import contextlib
+import difflib
 import re
 from dataclasses import dataclass, field
 
@@ -39,6 +40,10 @@ from okf.page import Page, PageType, Status
 #: product titles on the real bundle, and a customer who writes "travel" has
 #: not named a product.
 MIN_NAME_WORDS = 2
+#: How close a run of the customer's words must be to a name to count as a
+#: misspelling of it, and how long the run must be for that to be safe.
+FUZZY_RATIO = 0.86
+FUZZY_MIN_CHARS = 7
 #: A category phrase is at least this long. "ci plan" is six characters and a
 #: real category; anything shorter is noise.
 MIN_FAMILY_CHARS = 6
@@ -96,7 +101,14 @@ class ProductNameIndex:
         return index
 
     def named(self, question: str) -> list[Name]:
-        """Products the question names outright, longest phrase first."""
+        """Products the question names outright, longest phrase first.
+
+        Exact first. Where nothing matches exactly, a near miss is accepted —
+        "tiq travle", "home insurnace", "maid insurence" — when a run of the
+        question's words is within `FUZZY_RATIO` of a name and long enough
+        that a slip could not have made it another name. Marked `fuzzy` so
+        the trace says the customer was read, not quoted.
+        """
         haystack = normalise(question)
         if not haystack:
             return []
@@ -110,7 +122,41 @@ class ProductNameIndex:
             if any(name.phrase in k.phrase for k in kept):
                 continue
             kept.append(name)
-        return kept
+        if kept:
+            return kept
+        return self._fuzzy(haystack)
+
+    def _fuzzy(self, haystack: str) -> list[Name]:
+        words = haystack.split()
+        best: tuple[float, Name, str] | None = None
+        for n in range(min(5, len(words)), 1, -1):
+            for i in range(len(words) - n + 1):
+                run = " ".join(words[i : i + n])
+                if len(run) < FUZZY_MIN_CHARS:
+                    continue
+                for name in self.names:
+                    if abs(len(name.phrase) - len(run)) > 3:
+                        continue
+                    ratio = difflib.SequenceMatcher(None, run, name.phrase).ratio()
+                    if ratio >= FUZZY_RATIO and (best is None or ratio > best[0]):
+                        best = (ratio, name, run)
+        if best is None:
+            return []
+        # Two different products within reach of the same slip is a tie, not
+        # a reading; the caller falls through to the model or asks. Measured
+        # against the customer's run, not name against name: "maid insurance"
+        # and "pmd insurance" are close to each other and only one is close
+        # to "maid insurence".
+        run = best[2]
+        ties = {
+            name.page_id
+            for name in self.names
+            if abs(len(name.phrase) - len(run)) <= 3
+            and difflib.SequenceMatcher(None, run, name.phrase).ratio() >= FUZZY_RATIO
+        }
+        if len(ties) > 1:
+            return []
+        return [Name(best[1].phrase, best[1].page_id, best[1].key, "fuzzy")]
 
     def family(
         self, question: str, approved_only: bool = True, bundle: Bundle | None = None

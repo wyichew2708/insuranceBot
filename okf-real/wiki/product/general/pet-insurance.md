@@ -22,16 +22,16 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/pet-insurance
+  landing: https://www.tiq.com.sg/product/pet-insurance
   surfaces:
-  - https://www.tiq.com.sg/product/pet-insurance
+  - https://www.etiqa.com.sg/personal/pet-insurance
 plan_tiers:
 - pawmazing-get-quote
 - pawtastic-get-quote
 - pawfect-get-quote
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -49,7 +49,7 @@ confidence: high
 
 ## What this plan is
 
-Your pets are cherished members of your family, and their health and wellbeing deserve the utmost protection [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#body].
+Some situations where we cover: Vomiting, Diarrhoea, Ear Infections, Cancer, Diabetes and more [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#coverage-highlights].
 
 ## What it covers
 

@@ -1,6 +1,6 @@
 ---
 okf_version: '0.1'
-id: product/investments/tiqinvest/exclusions
+id: product/investments/tiq-invest/exclusions
 title: Tiq Invest — Exclusions
 type: product
 status: approved
@@ -10,9 +10,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
-- tiqinvest exclusions
-- what is not covered by tiqinvest
-- tiqinvest not covered
+- tiq invest exclusions
+- what is not covered by tiq invest
+- tiq invest not covered
 channels: []
 plan_tiers: []
 authority:

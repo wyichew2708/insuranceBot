@@ -20,17 +20,17 @@ channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/maid-insurance
+  landing: https://www.tiq.com.sg/product/maid-insurance
   hotline: +65 6887 8777
   surfaces:
-  - https://www.tiq.com.sg/product/maid-insurance
+  - https://www.etiqa.com.sg/personal/maid-insurance
 plan_tiers:
 - plan-a
 - plan-b
 - plan-c
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
@@ -47,7 +47,7 @@ confidence: high
 
 ## What this plan is
 
-Your domestic helper is a key member of your household [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#body].
+Protect your maid with the right coverage while safeguarding against unexpected expenses and liabilities as an employer [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#why-tiq-maid-insurance].
 
 ## What it covers
 

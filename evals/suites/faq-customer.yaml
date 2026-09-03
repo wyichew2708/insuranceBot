@@ -1459,150 +1459,150 @@
   expect:
     cite_product: travel-insurance
     delivered: true
-- id: faq-tiqinvest-01
+- id: faq-tiq-invest-01
   question: What is Tiq Invest ?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-02
+- id: faq-tiq-invest-02
   turns:
   - Tiq Invest
   - How is the Account value calculated?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-03
+- id: faq-tiq-invest-03
   turns:
   - Tiq Invest
   - What is the minimum / maximum amount that I can start investing?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-04
+- id: faq-tiq-invest-04
   turns:
   - Tiq Invest
   - Is there a minimum account value to maintain?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-05
+- id: faq-tiq-invest-05
   turns:
   - Tiq Invest
   - How many Packaged funds can I select?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-06
+- id: faq-tiq-invest-06
   turns:
   - Tiq Invest
   - Can I switch between Packaged funds?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-07
+- id: faq-tiq-invest-07
   turns:
   - Tiq Invest
   - What are the protection benefits cover for this policy?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-08
+- id: faq-tiq-invest-08
   turns:
   - Tiq Invest
   - What happens when the policy reaches maturity?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-09
+- id: faq-tiq-invest-09
   turns:
   - Tiq Invest
   - What are the applicable fees and charges?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-11
+- id: faq-tiq-invest-11
   turns:
   - Tiq Invest
   - Why do I need to complete the Customer Knowledge Assessment (CKA)?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-12
+- id: faq-tiq-invest-12
   turns:
   - Tiq Invest
   - What does the Customer Knowledge Assessment (CKA) result means to me?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-13
+- id: faq-tiq-invest-13
   turns:
   - Tiq Invest
   - What is the minimum / maximum initial Single Premium amount?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-14
+- id: faq-tiq-invest-14
   turns:
   - Tiq Invest
   - What are the accepted payment methods?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-15
+- id: faq-tiq-invest-15
   turns:
   - Tiq Invest
   - What type of Top-up(s) are available?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-16
+- id: faq-tiq-invest-16
   turns:
   - Tiq Invest
   - What happens when my account value is zero or less than zero?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-17
+- id: faq-tiq-invest-17
   turns:
   - Tiq Invest
   - Can I withdraw money from my policy?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-19
+- id: faq-tiq-invest-19
   turns:
   - Tiq Invest
   - How can I request to reinstate my policy?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-20
+- id: faq-tiq-invest-20
   turns:
   - Tiq Invest
   - How do I check the status of my requests or view my policy status?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-21
+- id: faq-tiq-invest-21
   turns:
   - Tiq Invest
   - Will there be any monthly policy statements sent to me?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-22
+- id: faq-tiq-invest-22
   turns:
   - Tiq Invest
   - How to file for a death / terminal illness claim?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
-- id: faq-tiqinvest-23
+- id: faq-tiq-invest-23
   turns:
   - Tiq Invest
   - How is my policy protected?
   expect:
-    cite_product: tiqinvest
+    cite_product: tiq-invest
     delivered: true
 - id: faq-motorcycle-insurance-01
   question: How can I buy ePROTECT motorcycle ?
