@@ -244,14 +244,15 @@ first.
 — the field test and the 1,000-case sample on live Qwen, at commit
 `c2b0d88`, before the Ask landed.
 
-| measure | c2b0d88 (pre-Ask) | v2.1 (`4177480`) |
-|---|---|---|
-| field test | 83 / 109 | 80 / 104 |
-| sample accuracy | 86.9% | 82.6% |
-| unsafe / safe misses | 78 / 53 | 71 / — |
-| wrong product | 2 | 2 |
-| unbound figures | 0 | 0 |
-| entitlement leaks | 0 | 0 |
+| measure | c2b0d88 (pre-Ask) | fe6649e (catalogue + enhancements, live) | v2.1 (`4177480`) |
+|---|---|---|---|
+| field test | 83 / 109 | **89 / 109** | 80 / 104 |
+| FAQ suite (live Qwen) | — | **342 / 354** | — |
+| sample accuracy | 86.9% | not yet run on the new corpus | 82.6% |
+| unsafe / safe misses | 78 / 53 | — | 71 / — |
+| wrong product | 2 | — | 2 |
+| unbound figures | 0 | — | 0 |
+| entitlement leaks | 0 | — | 0 |
 
 Caveat on the sample: the entailment judge was silent on 536 of 1,000 turns
 and the gate fell back to word overlap, because the run shared the Mac with
