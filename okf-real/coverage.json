@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123133,
+  "reached": 123169,
   "share": 0.048
  },
  "sources": {
@@ -3447,8 +3447,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md": {
    "words": 484,
-   "reached": 6,
-   "share": 0.012,
+   "reached": 18,
+   "share": 0.037,
    "pages": [
     "product/investments/tiqinvest"
    ]
@@ -3622,8 +3622,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md": {
    "words": 484,
-   "reached": 6,
-   "share": 0.012,
+   "reached": 18,
+   "share": 0.037,
    "pages": [
     "product/general/cashsaver"
    ]
@@ -6804,8 +6804,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md": {
    "words": 1514,
-   "reached": 21,
-   "share": 0.014,
+   "reached": 33,
+   "share": 0.022,
    "pages": [
     "product/savings-retirement/eeasy-savepro"
    ]

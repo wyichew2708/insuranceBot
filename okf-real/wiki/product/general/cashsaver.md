@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md#find-out-more].
+- I consent to Etiqa Insurance Pte. Ltd. and its related, its agents, authorised service providers and marketing partners collecting, using, disclosing, and/or processing my personal data, in order to contact me about products and services marketed by Etiqa Insurance Pte. Ltd. or its partners as well as benefits, promotions and rewards, via the modes mentioned or selected, and using my contact particulars which Etiqa Insurance Pte. Ltd. may have in its records from time to time (including where applicable my Singapore telephone number(s)); [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-tiq-cashsaver.md#find-out-more].
 
 ## What it covers
 

@@ -899,7 +899,11 @@ _COVER_SKIP_RE = re.compile(r"advisory|about us|sitemap|overview of|apply (?:for
 #: Sentence-level noise the tile shape does not exclude: a navigation bar the
 #: extractor flattened into prose ("Coverage | Resources | FAQs"), and a
 #: closure notice, which is a fact about the *shopfront* and not about cover.
-_COVER_NOISE_RE = re.compile(r"\||thank you for your support|fully subscribed", re.I)
+_COVER_NOISE_RE = re.compile(
+    r"\||thank you for your support|fully subscribed|privacy policy|terms (?:of use|and conditions|& conditions)"
+    r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in",
+    re.I,
+)
 #: The tile has to actually say the product covers something. Marketing that
 #: asserts nothing ("Your journey, your way") is not a benefit.
 _COVER_PROSE_RE = re.compile(

@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-Read Etiqa Insurance Pte. Ltd.’s Privacy Policy [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#go-beyond-the-basics-and-grow-your-wealth-like-a-pro].
+With eEASY savepro , savour the market upshot with a long-term insurance savings plan [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#go-beyond-the-basics-and-grow-your-wealth-like-a-pro].
 
 ## What it covers
 
