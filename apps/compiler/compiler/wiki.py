@@ -1977,9 +1977,27 @@ def emit_document_products(
     source than the marketing page anyway; the only thing missing is a
     purchase route, and there is no honest way to invent one.
     """
-    by_plan: dict[str, list[Document]] = {}
+    # Grouped by identity, not by plan name: the wording is filed as
+    # `heart-and-neurological-disorder-rider` and the product summary as
+    # `tiq-product-summary-heart-and-neurological-disorder-rider`, and those
+    # are one rider. The plainer plan name — no brand prefix, then shorter —
+    # becomes the slug.
+    by_identity: dict[str, list[Document]] = {}
     for document in documents:
-        by_plan.setdefault(document.plan, []).append(document)
+        by_identity.setdefault(product_identity(document.plan.replace("-", " ")) or document.plan, []).append(
+            document
+        )
+    by_plan: dict[str, list[Document]] = {}
+    for found in by_identity.values():
+        plans = sorted(
+            {d.plan for d in found},
+            key=lambda p: (bool(_BRAND_PREFIX_RE.match(p.replace("-", " "))), len(p), p),
+        )
+        if len(plans) > 1:
+            report.skip(
+                f"same document product under two names — {', '.join(plans[1:])} folded into {plans[0]}"
+            )
+        by_plan[plans[0]] = found
 
     products: dict[str, list[tuple[str, str]]] = {}
     for plan, found in sorted(by_plan.items()):
@@ -2165,6 +2183,20 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
     for _ in campaign_documents(config.source_root):
         report.skip("campaign paperwork the ingest filed as a wording — not a product")
     matched, unmatched = match_documents(documents, sorted(groups))
+    # The identity rule from `merge_duplicate_groups`, on the wordings path:
+    # a document whose plan name is a web product's title once the brand and
+    # the category word are taken off belongs to that product. `ELASTIQ` on
+    # the web and `elastiq` in the wording were two products before this.
+    by_identity = {product_identity(groups[s].title or s): s for s in groups}
+    still_unmatched: list[Document] = []
+    for document in unmatched:
+        slug = by_identity.get(product_identity(document.plan.replace("-", " ")))
+        if slug is None:
+            still_unmatched.append(document)
+        else:
+            matched.setdefault(slug, []).append(document)
+            report.skip(f"document matched a product by identity — {document.plan} → {slug}")
+    unmatched = still_unmatched
     report.documents = len(documents)
     for slug, found in sorted(matched.items()):
         product_page = product_page_ids.get(slug)

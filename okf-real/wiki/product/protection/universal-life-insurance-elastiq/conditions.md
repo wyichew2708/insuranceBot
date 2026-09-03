@@ -1,27 +1,27 @@
 ---
 okf_version: '0.1'
-id: product/general/elastiq/conditions
-title: Elastiq Insurance — Policy conditions
+id: product/protection/universal-life-insurance-elastiq/conditions
+title: ELASTIQ — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
 underwriter: Etiqa Insurance Pte. Ltd.
 jurisdiction: SG
-line_of_business: general
+line_of_business: protection
 regulated_advice: false
 aliases:
-- elastiq policy conditions
-- elastiq terms
-- elastiq free look
-- cancel elastiq
+- universal life insurance elastiq policy conditions
+- universal life insurance elastiq terms
+- universal life insurance elastiq free look
+- cancel universal life insurance elastiq
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/elastiq-general-provisions-contract-7-nov.md
 - raw/product-summaries/elastiq-product-summary-7-nov.md
+version_in_force: '2026'
 links:
-  concepts:
-  - concept/commencement-date
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:

@@ -115,20 +115,21 @@ Deterministic runs, in order:
 |---|---|---|
 | Ask landed | 332 / 395 | — |
 | + product carried from the earlier turn | 349 / 395 | the two-turn cases resolve without a model |
-| + duplicate products folded at compile time | **380 / 395** | 29 failures were one corpus defect |
+| + duplicate products folded at compile time | 380 / 395 | 29 failures were one corpus defect |
+| + the same fold on the wordings path | **382 / 395** | no product compiled twice remains |
 
 The corpus defect: the same product listed under two URL slugs — etiqa.com.sg
 lists Home Insurance twice, and spells the investment product `tiq-invest`
 where tiq.com.sg spells it `tiqinvest`. Grouped by slug, six products were
 compiled twice, and a customer asking about one was answered from the other.
 `merge_duplicate_groups` in the compiler folds two listings whose titles
-agree once the brand and the category word are taken off; four pairs fold on
-the web path. The two that remain (`elastiq`, `heart-neurological-disorder-
-rider`) are a wordings-path listing beside a web listing and need the same
-rule on that path.
+agree once the brand and the category word are taken off — four pairs on the
+web path — and the same identity rule attaches a wording to the web product
+it belongs to (`elastiq` → `universal-life-insurance-elastiq`) and folds two
+filings of one rider into one. No product is compiled twice now.
 
-Of the 15 still failing deterministically: four cite no product, three are
-not delivered, two are the `elastiq` pair, and the rest are single cases. The
+Of the 13 still failing deterministically: four cite no product, three are
+not delivered, and the rest are single cases. The
 live run on Qwen is queued behind the baseline (`.eval-reports/v22-baseline/
 customer-suite.log`).
 
@@ -158,10 +159,6 @@ completes.
   travel-delay threshold (product page 3 hours, schedule 6). LLM WIKI drafts
   written from a contested source repeat the contest; they land as `draft`
   and stay unretrievable until reviewed.
-- **Same product compiled twice, wordings path**: `elastiq` beside
-  `universal-life-insurance-elastiq`, and the Heart & Neurological Disorder
-  Rider beside its `tiq-` listing. The web-path fold does not reach these;
-  the product-summary and wording documents need the same identity rule.
 - **Which slug survives a fold** is chosen for plainness (no brand prefix,
   then shorter), which kept `tiqinvest` over `tiq-invest`. Harmless — both
   names are aliases — but if the readable slug is wanted, that is a one-line

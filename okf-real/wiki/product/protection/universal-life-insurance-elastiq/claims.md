@@ -1,25 +1,25 @@
 ---
 okf_version: '0.1'
-id: product/general/elastiq/claims
-title: Elastiq Insurance — Making a claim
+id: product/protection/universal-life-insurance-elastiq/claims
+title: ELASTIQ — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
 underwriter: Etiqa Insurance Pte. Ltd.
 jurisdiction: SG
-line_of_business: general
+line_of_business: protection
 regulated_advice: false
 aliases:
-- how to claim on elastiq
-- elastiq claim procedure
-- elastiq claim
+- how to claim on universal life insurance elastiq
+- universal life insurance elastiq claim procedure
+- universal life insurance elastiq claim
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/elastiq-general-provisions-contract-7-nov.md
+version_in_force: '2026'
 links:
-  concepts:
-  - concept/commencement-date
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:

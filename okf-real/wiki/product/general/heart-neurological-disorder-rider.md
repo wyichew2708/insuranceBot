@@ -16,6 +16,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md
+- raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md
 links:
   concepts: []
 compiled_from_commit: working-tree
@@ -63,3 +64,7 @@ We do not pay the Benefits if the Heart and Neurological Disorder Benefit is dir
 ## 7.2 Correction of Mistakes and Errors
 
 When We find any mistake or error made in this policy, We will make the correction and inform You by way of an Endorsement [src:raw/wordings/heart-and-neurological-disorder-rider-policy-contract-v1-23.md#p2].
+
+## Heart and Neurological Disorder Benefit
+
+This rider pays the Heart and Neurological Disorder Benefit as an advancement of the Sum insured of the Basic policy if the Life insured is diagnosed with Heart and Neurological Disorder while the rider is in force [src:raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md].

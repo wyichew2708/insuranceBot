@@ -1,35 +1,33 @@
 ---
 okf_version: '0.1'
-id: product/general/elastiq
-title: Elastiq Insurance
+id: product/protection/universal-life-insurance-elastiq/cover
+title: ELASTIQ — What is covered
 type: product
 status: approved
 lifecycle: on_sale
 underwriter: Etiqa Insurance Pte. Ltd.
-uen: 201331905K
 jurisdiction: SG
-line_of_business: general
+line_of_business: protection
 regulated_advice: false
 aliases:
-- elastiq
-- elastiq insurance
+- what does universal life insurance elastiq cover
+- universal life insurance elastiq coverage
+- universal life insurance elastiq benefits explained
 channels: []
 plan_tiers: []
 authority:
 - raw/wordings/elastiq-general-provisions-contract-7-nov.md
 - raw/product-summaries/elastiq-product-summary-7-nov.md
+version_in_force: '2026'
 links:
-  concepts:
-  - concept/commencement-date
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-12-02'
-confidence: medium
+confidence: high
 ---
-
-## About Elastiq Insurance
 
 ## 3. Our Responsibilities
 

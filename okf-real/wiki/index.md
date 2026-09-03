@@ -166,16 +166,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/education/exclusions` — [Education — Exclusions](./product/general/education/exclusions.md)
 
-- `product/general/elastiq` — [Elastiq Insurance](./product/general/elastiq.md)
-
-- `product/general/elastiq/claims` — [Elastiq Insurance — Making a claim](./product/general/elastiq/claims.md)
-
-- `product/general/elastiq/conditions` — [Elastiq Insurance — Policy conditions](./product/general/elastiq/conditions.md)
-
-- `product/general/elastiq/definitions` — [Elastiq Insurance — Definitions](./product/general/elastiq/definitions.md)
-
-- `product/general/elastiq/exclusions` — [Elastiq Insurance — Exclusions](./product/general/elastiq/exclusions.md)
-
 - `product/general/electronic-equipment` — [Electronic Equipment](./product/general/electronic-equipment.md)
 
 - `product/general/electronic-equipment/exclusions` — [Electronic Equipment — Exclusions](./product/general/electronic-equipment/exclusions.md)
@@ -750,12 +740,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/solitaire-protect/exclusions` — [Etiqa Solitaire Protect — Exclusions](./product/general/solitaire-protect/exclusions.md)
 
-- `product/general/tiq-heart-neurological-disorder-rider` — [Tiq Heart Neurological Disorder Rider](./product/general/tiq-heart-neurological-disorder-rider.md)
-
-- `product/general/tiq-heart-neurological-disorder-rider/conditions` — [Tiq Heart Neurological Disorder Rider — Policy conditions](./product/general/tiq-heart-neurological-disorder-rider/conditions.md)
-
-- `product/general/tiq-heart-neurological-disorder-rider/exclusions` — [Tiq Heart Neurological Disorder Rider — Exclusions](./product/general/tiq-heart-neurological-disorder-rider/exclusions.md)
-
 - `product/general/tiq-heart-neurological-disorders-benefit-rider` — [Tiq Heart Neurological Disorders Benefit Rider](./product/general/tiq-heart-neurological-disorders-benefit-rider.md)
 
 - `product/general/tiq-heart-neurological-disorders-benefit-rider/conditions` — [Tiq Heart Neurological Disorders Benefit Rider — Policy conditions](./product/general/tiq-heart-neurological-disorders-benefit-rider/conditions.md)
@@ -1297,6 +1281,14 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/protection/term-life-insurance/faq` — [Term Life Insurance — Published FAQs](./product/protection/term-life-insurance/faq.md)
 
 - `product/protection/universal-life-insurance-elastiq` — [ELASTIQ](./product/protection/universal-life-insurance-elastiq.md)
+
+- `product/protection/universal-life-insurance-elastiq/claims` — [ELASTIQ — Making a claim](./product/protection/universal-life-insurance-elastiq/claims.md)
+
+- `product/protection/universal-life-insurance-elastiq/conditions` — [ELASTIQ — Policy conditions](./product/protection/universal-life-insurance-elastiq/conditions.md)
+
+- `product/protection/universal-life-insurance-elastiq/cover` — [ELASTIQ — What is covered](./product/protection/universal-life-insurance-elastiq/cover.md)
+
+- `product/protection/universal-life-insurance-elastiq/definitions` — [ELASTIQ — Definitions](./product/protection/universal-life-insurance-elastiq/definitions.md)
 
 - `product/protection/universal-life-insurance-elastiq/exclusions` — [ELASTIQ — Exclusions](./product/protection/universal-life-insurance-elastiq/exclusions.md)
 

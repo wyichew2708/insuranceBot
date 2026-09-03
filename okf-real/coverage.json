@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 254014,
+  "reached": 253792,
   "share": 0.098
  },
  "sources": {
@@ -824,9 +824,9 @@
    "reached": 154,
    "share": 0.097,
    "pages": [
-    "product/general/elastiq",
-    "product/general/elastiq/conditions",
-    "product/general/elastiq/exclusions"
+    "product/protection/universal-life-insurance-elastiq/conditions",
+    "product/protection/universal-life-insurance-elastiq/cover",
+    "product/protection/universal-life-insurance-elastiq/exclusions"
    ]
   },
   "raw/product-summaries/enrich-aspire-vii-product-summary.md": {
@@ -1146,12 +1146,11 @@
   },
   "raw/product-summaries/tiq-product-summary-heart-and-neurological-disorder-rider-v1-23.md": {
    "words": 3988,
-   "reached": 489,
-   "share": 0.123,
+   "reached": 267,
+   "share": 0.067,
    "pages": [
-    "product/general/tiq-heart-neurological-disorder-rider",
-    "product/general/tiq-heart-neurological-disorder-rider/conditions",
-    "product/general/tiq-heart-neurological-disorder-rider/exclusions"
+    "product/general/heart-neurological-disorder-rider",
+    "product/general/heart-neurological-disorder-rider/conditions"
    ]
   },
   "raw/product-summaries/tiq-product-summary-heart-and-neurological-disorders-benefit-rider-3-nov-2021-clean.md": {
@@ -7691,11 +7690,11 @@
    "reached": 1367,
    "share": 0.371,
    "pages": [
-    "product/general/elastiq",
-    "product/general/elastiq/claims",
-    "product/general/elastiq/conditions",
-    "product/general/elastiq/definitions",
-    "product/general/elastiq/exclusions"
+    "product/protection/universal-life-insurance-elastiq/claims",
+    "product/protection/universal-life-insurance-elastiq/conditions",
+    "product/protection/universal-life-insurance-elastiq/cover",
+    "product/protection/universal-life-insurance-elastiq/definitions",
+    "product/protection/universal-life-insurance-elastiq/exclusions"
    ]
   },
   "raw/wordings/enrich-aspire-vii-policy-contract.md": {
