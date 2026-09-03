@@ -29,4 +29,4 @@ channel_ref: channel/direct
 
 ## Offer
 
-10% OFF with "TEIF" Buy Now Read More [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#eprotect-safety]. <!-- okf:allow-number -->
+10% OFF with "TEIF" [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#eprotect-safety]. <!-- okf:allow-number -->

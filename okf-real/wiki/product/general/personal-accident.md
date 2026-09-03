@@ -40,7 +40,7 @@ confidence: medium
 
 ## What this plan is
 
-Protect yourself against unexpected accidents and events Protect yourself against unexpected accidents and events Don’t let unexpected medical bills be an additional source of stress [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md#body].
+Protect yourself against unexpected accidents and events Don’t let unexpected medical bills be an additional source of stress [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md#body].
 
 ## What it covers
 

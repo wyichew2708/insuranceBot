@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 254619,
+  "reached": 254576,
   "share": 0.098
  },
  "sources": {
@@ -3517,8 +3517,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md": {
    "words": 159,
-   "reached": 31,
-   "share": 0.195,
+   "reached": 26,
+   "share": 0.164,
    "pages": [
     "product/general/home-insurance"
    ]
@@ -3666,8 +3666,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection.md": {
    "words": 517,
-   "reached": 24,
-   "share": 0.046,
+   "reached": 15,
+   "share": 0.029,
    "pages": [
     "product/protection/life-critical-illness-protection"
    ]
@@ -3706,8 +3706,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md": {
    "words": 166,
-   "reached": 26,
-   "share": 0.157,
+   "reached": 19,
+   "share": 0.114,
    "pages": [
     "product/general/personal-accident"
    ]
@@ -3991,8 +3991,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/promotions.md": {
    "words": 34,
-   "reached": 11,
-   "share": 0.324,
+   "reached": 17,
+   "share": 0.5,
    "pages": [
     "promotion/direct-tiq-before-it-s-gone"
    ]
@@ -7226,8 +7226,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md": {
    "words": 702,
-   "reached": 150,
-   "share": 0.214,
+   "reached": 122,
+   "share": 0.174,
    "pages": [
     "promotion/direct-eprotect-maid",
     "promotion/direct-eprotect-motorcycle",

@@ -30,7 +30,7 @@ channel_ref: channel/direct
 
 ## Offer
 
-20% + 5% OFF with “TEIF” Buy Now Read More [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#private-car-insurance]. <!-- okf:allow-number -->
+20% + 5% OFF with “TEIF” [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#private-car-insurance]. <!-- okf:allow-number -->
 
 We have the answers you need [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#private-car-insurance].
 

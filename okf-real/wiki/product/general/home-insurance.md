@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-Protect what belongs to you Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
+Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
 
 ## What it covers
 

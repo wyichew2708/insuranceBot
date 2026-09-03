@@ -36,7 +36,7 @@ confidence: medium
 
 ## What this plan is
 
-Life & Critical Illness Protection Protect what lies ahead Life & Critical Illness Protection Protect what lies ahead Life can take unexpected turns [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection.md#body].
+Life & Critical Illness Protection Protect what lies ahead Life can take unexpected turns [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection.md#body].
 
 ## What is not covered
 

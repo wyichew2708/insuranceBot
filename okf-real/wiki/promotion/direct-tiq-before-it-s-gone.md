@@ -29,4 +29,4 @@ channel_ref: channel/direct
 
 ## Offer
 
-Take advantage of our exclusive promos for greater savings! Find out more from our Tiq buy direct channel now [src:raw/web/www.etiqa.com.sg/2026-08-25/promotions.md#tiq-before-it-s-gone].
+Take advantage of our exclusive promos for greater savings! from our Tiq buy direct channel now [src:raw/web/www.etiqa.com.sg/2026-08-25/promotions.md#tiq-before-it-s-gone].

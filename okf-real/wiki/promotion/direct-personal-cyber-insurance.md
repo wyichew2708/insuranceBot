@@ -30,4 +30,4 @@ product_key: personal-cyber-insurance
 
 ## Offer
 
-5% OFF with "TEIF" Buy Now Read More [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#personal-cyber-insurance]. <!-- okf:allow-number -->
+5% OFF with "TEIF" [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#personal-cyber-insurance]. <!-- okf:allow-number -->

@@ -36,7 +36,7 @@ confidence: medium
 
 ## What this plan is
 
-Savings & Retirement Savings & Retirement Planning for your retirement, while protecting against the unexpected? Our savings and retirement plans can meet your needs – allowing you to choose either a lump sum payout upon maturity or a regular income [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement.md#body].
+Savings & Retirement Planning for your retirement, while protecting against the unexpected? Our savings and retirement plans can meet your needs – allowing you to choose either a lump sum payout upon maturity or a regular income [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement.md#body].
 
 ## What is not covered
 

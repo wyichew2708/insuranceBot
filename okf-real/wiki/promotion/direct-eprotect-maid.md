@@ -30,4 +30,4 @@ product_key: maid-insurance
 
 ## Offer
 
-20% + 5% OFF with "TEIF" Buy Now Read More [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#eprotect-maid]. <!-- okf:allow-number -->
+20% + 5% OFF with "TEIF" [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#eprotect-maid]. <!-- okf:allow-number -->

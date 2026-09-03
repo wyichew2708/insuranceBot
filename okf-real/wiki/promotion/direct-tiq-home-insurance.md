@@ -30,4 +30,4 @@ product_key: home-insurance
 
 ## Offer
 
-15% + 5% OFF with "TEIF" Buy Now Read More [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#tiq-home-insurance]. <!-- okf:allow-number -->
+15% + 5% OFF with "TEIF" [src:raw/web/www.tiq.com.sg/2026-08-25/promotion-friday-promotions.md#tiq-home-insurance]. <!-- okf:allow-number -->

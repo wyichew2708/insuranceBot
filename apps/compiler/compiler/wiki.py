@@ -350,8 +350,17 @@ class CompileReport:
         self.skipped[reason] = self.skipped.get(reason, 0) + 1
 
 
+#: A heading flattened into the intro and then repeated by the subheading:
+#: "Protect what belongs to you Protect what belongs to you Give your family…".
+_REPEATED_OPENING_RE = re.compile(r"^(.{6,80}?)\s+\1\s+")
+#: Button labels the extractor flattened into offer copy.
+_BUTTON_LABEL_RE = re.compile(
+    r"\b(?:Buy Now|Read More|Learn More|Find Out More|Apply Now|Get (?:a )?Quote|T&Cs? apply)\b\.?", re.I
+)
+
+
 def _first_sentence(text: str) -> str:
-    text = " ".join(text.split())
+    text = _REPEATED_OPENING_RE.sub(r"\1 ", " ".join(text.split()))
     for sentence in re.split(r"(?<=\.)\s+", text):
         if ALIAS_RE.match(sentence) or not sentence:
             continue
@@ -1670,6 +1679,7 @@ def _offer_prose(paragraph: str) -> str:
     already holds — and the numeric-binding gate is right to refuse it. What
     survives is the offer itself, whose figure binds to the dated page."""
     kept: list[str] = []
+    paragraph = _BUTTON_LABEL_RE.sub(" ", paragraph)
     for sentence in re.split(r"(?<=\.)\s+", " ".join(paragraph.split())):
         cleaned = DATE_CLAUSE_RE.sub("", sentence)
         cleaned = DATE_RE.sub("", cleaned).strip()
