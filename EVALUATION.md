@@ -373,3 +373,34 @@ hostile ones; the false-positive rate is the metric that matters.
 
 **A defect you cannot fix now** → an entry in `known-findings.json` with a note
 saying why. That is the honest alternative to lowering a gate.
+
+## v2.1 — measured (2026-09-03)
+
+Same 1,000-case random sample of the generated suite (seed 20260827), live on
+Qwen (`qwen3.6-35b-a3b`, MLX), scored with the corrected metric — a delivered
+answer citing the wrong page is unsafe. Build `4177480` (the two later
+clarification guards in `c4bf71b` are not in this run).
+
+| | v2 (re-counted) | v2.1 |
+|---|---|---|
+| accuracy | 84.5% | 82.6% |
+| **unsafe** — a wrong answer delivered | **114** | **71** |
+| **wrong product** delivered | **11** | **2** |
+| safe misses — declined | 41 | 103 |
+| citation F1 | 0.771 | 0.725 |
+| numeric binding | 100% | 100% |
+| entitlement leaks | 0 | 0 |
+| entailment judge engaged | — | 815 / 1000 (185 fell back to overlap under load) |
+
+This is the trade the plan set out to make, and it is the number that
+decides: unsafe fell by 38% and wrong-product by 82%, by becoming safe misses
+rather than by editing the suite. Accuracy gave up 1.9 points for it. The
+misses are the next target — recall is what the pgvector layer is for, and it
+was off for this run.
+
+Field test (104 customer-phrased turns), live on Qwen: v2 78/104 (75.0%) →
+v2.1 80/104 (76.9%).
+
+Run at three workers so the judge stays inside its 30 s timeout; 185 turns
+still fell back, and the tally says so rather than counting them as judged.
+

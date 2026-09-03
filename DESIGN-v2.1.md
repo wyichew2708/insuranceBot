@@ -47,10 +47,21 @@ Two further findings from reading all 155 failures:
   premiums.
 
 Field test (104 customer-phrased turns): 40.4% → 75.0% across the v2 fixes,
-**76.9% (80/104) on v2.1**, live on Qwen. A modest move on that suite is
-expected — it was v2's own instrument and most of its cases were already
-closed; v2.1's target is the unsafe count on the generated sample, which is
-being measured as this is written and will be appended to EVALUATION.md.
+**76.9% (80/104) on v2.1**, live on Qwen.
+
+**The number the plan was judged by — the same 1,000-case sample, on v2.1:**
+
+| | v2 (re-counted) | v2.1 |
+|---|---|---|
+| unsafe | 114 | **71** (−38%) |
+| wrong product | 11 | **2** |
+| safe misses | 41 | 103 |
+| accuracy | 84.5% | 82.6% |
+
+Unsafe fell by becoming safe misses, not by editing the suite; accuracy gave
+up 1.9 points for it. The misses are the next target, and recall — the
+pgvector layer, off for this run — is what closes them. Full table in
+EVALUATION.md.
 
 ## What changed, by layer
 
@@ -169,9 +180,8 @@ safe miss — never by editing a suite.
 
 ## What is not done
 
-- **The 1,000-case sample on v2.1** — running as this is written; EVALUATION.md
-  will carry unsafe / wrong-product / misses. The field-test figure above is
-  final; the v2 figures are final.
+- **The sample above measured build `4177480`**; the two clarification guards
+  in `c4bf71b` landed after it started and are not reflected.
 - **The recompile** for the homeowners fix — held until the run finishes.
 - **The LLM WIKI tier has not been generated** on the real bundle; the
   generator is built and tested against the contract, and the first run needs
