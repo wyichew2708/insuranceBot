@@ -40,6 +40,10 @@ confidence: medium
 
 Grow with principles, invest with purpose [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-prime-purpose.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-prime-purpose.md].
+
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-prime-purpose.md#what-is-covered].

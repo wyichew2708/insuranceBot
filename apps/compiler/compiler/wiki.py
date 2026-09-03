@@ -49,6 +49,7 @@ from okf.page import (
     parse_page,
     render_page,
 )
+from okf.sources import PRODUCT_PAGE_TYPES
 
 from compiler.documents import (
     COMPILED_ROLES,
@@ -508,11 +509,16 @@ def merge_duplicate_groups(groups: dict[str, ProductGroup], report: CompileRepor
         for slug in others:
             other = groups.pop(slug)
             for host, snapshot in other.product.items():
-                current = target.product.get(host)
-                if current is None or len(snapshot.text) > len(current.text):
-                    target.product[host] = snapshot
+                # The canonical group's own listing stands. "Longer wins" was
+                # the first rule, and on Home Insurance the longer listing
+                # was a post-application page whose one section is 419 words
+                # of marketing-consent terms; it replaced the real product
+                # page and "Marketing Consent Terms & Conditions" became what
+                # the plan is.
+                if host in target.product:
+                    report.skip("duplicate listing of a product on the same host — the canonical one kept")
                 else:
-                    report.skip("duplicate listing of a product on the same host — the longer one kept")
+                    target.product[host] = snapshot
             for host, snapshot in other.claims.items():
                 target.claims.setdefault(host, snapshot)
             for host, snapshot in other.faq.items():
@@ -803,9 +809,7 @@ _COVER_END_RE = re.compile(
 #: A heading that describes something other than the cover, above that line.
 #: "Apply for business insurance today" is a call to action, not a benefit,
 #: and it was compiled onto eight pages as what the product covers.
-_COVER_SKIP_RE = re.compile(
-    r"advisory|why choose|about us|sitemap|overview of|apply (?:for|now)|start your", re.I
-)
+_COVER_SKIP_RE = re.compile(r"advisory|about us|sitemap|overview of|apply (?:for|now)|start your", re.I)
 #: Sentence-level noise the tile shape does not exclude: a navigation bar the
 #: extractor flattened into prose ("Coverage | Resources | FAQs"), and a
 #: closure notice, which is a fact about the *shopfront* and not about cover.
@@ -829,12 +833,24 @@ def _cover_sentence(text: str) -> str:
     nothing, and an answer built from hooks is a page of slogans.
     """
     sentences = [s.rstrip() for s in re.split(r"(?<=\.)\s+", " ".join(text.split())) if s.strip()]
+    kept: list[str] = []
     for sentence in sentences:
         if ALIAS_RE.match(sentence):
             continue
+        # A slogan is not a statement of cover: "Save more with longer
+        # protection!" matched on "protection" and became what Home
+        # Insurance covers. An exclamation, or fewer than six words, is a
+        # tagline.
+        if sentence.endswith("!") or len(sentence.split()) < 6:
+            continue
         if _COVER_PROSE_RE.search(sentence):
-            return sentence
-    return _first_sentence(text)
+            kept.append(sentence)
+        # Two at most. "Why Tiq Home Insurance?" says what fire insurance
+        # does *not* cover in its first sentence and what this plan covers in
+        # its second; one sentence gave the customer the wrong half.
+        if len(kept) == 2:
+            break
+    return " ".join(kept)
 
 
 def _cover_summary(ordered: list[Snapshot], report: CompileReport) -> list[str]:
@@ -871,6 +887,10 @@ def _cover_summary(ordered: list[Snapshot], report: CompileReport) -> list[str]:
             # as what maid insurance covers.
             if _COVER_SKIP_RE.search(heading) or _OVERVIEW_SKIP_RE.search(heading):
                 continue
+            # A question heading is a FAQ. "Why Tiq Home Insurance?" was
+            # allowed for a while: its one usable sentence says what *fire*
+            # insurance does not cover, and the wording's sections of cover
+            # now say what this plan does, which is the better answer.
             if heading.endswith("?"):
                 continue
             if len(section.text.split()) > _COVER_TILE_WORDS:
@@ -893,6 +913,107 @@ def _cover_summary(ordered: list[Snapshot], report: CompileReport) -> list[str]:
             if len(lines) == _COVER_TILES:
                 return lines
     return lines
+
+
+#: A cover-page heading that names a section of cover: "Section 1 - Building",
+#: "Section I - Your Car", "5.1 Death Benefit", "2. Personal Accident Benefits".
+_COVER_SECTION_HEADING_RE = re.compile(
+    r"^(?:section\s+[\divx]+\s*[-\u2013:]\s*|\d+(?:\.\d+)*\.?\s+|\([a-z]\)\s*)(.+)$", re.I
+)
+#: A numbered heading that is a benefit, not a clause of administration.
+_COVER_WORD_RE = re.compile(
+    r"benefit|cover|protection|liabilit|expense|loss|damage|death|illness|disabilit|allowance|income"
+    r"|accident|assistance|baggage|delay|cancellation|valuables|money|cash|renovation|building|contents",
+    re.I,
+)
+#: Headings that group or summarise rather than name cover.
+_COVER_GROUP_HEADING_RE = re.compile(
+    r"^(summary of cover|policy benefits|other benefits|optional benefits|scale of benefits|what is covered)",
+    re.I,
+)
+_COVER_LIST_MAX = 12
+
+
+def cover_sections_from_documents(cover_markdown: str) -> tuple[list[str], str]:
+    """The sections of cover a policy wording sets out, and the ref to cite.
+
+    The product page says what a product is in the site's words; the wording
+    says what it covers, section by section, and on most products the wording
+    is the only place that list exists — the tiq.com.sg home page has no
+    benefit tiles, only "Why Tiq Home Insurance?" and a promotion. The cover
+    page is compiled from the wording already; this reads its headings back.
+    """
+    names: list[str] = []
+    seen: set[str] = set()
+    ref = ""
+    for line in cover_markdown.splitlines():
+        if not ref:
+            match = SOURCE_REF_RE.search(line)
+            if match and match.group(1).startswith(
+                ("raw/wordings/", "raw/product-summaries/", "raw/brochures/")
+            ):
+                ref = match.group(1)
+        if not line.startswith("## "):
+            continue
+        heading = line[3:].strip()
+        if _COVER_GROUP_HEADING_RE.match(heading):
+            continue
+        match = _COVER_SECTION_HEADING_RE.match(heading)
+        if not match:
+            continue
+        name = match.group(1).strip().rstrip(".:")
+        # "5 What is Covered?" is a group heading with a number in front.
+        if _COVER_GROUP_HEADING_RE.match(name):
+            continue
+        numbered = not heading.lower().startswith("section")
+        if numbered and not _COVER_WORD_RE.search(name):
+            continue
+        if NUMBER_IN_PROSE_RE.search(name) or len(name.split()) > 8:
+            continue
+        key = name.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        names.append(name)
+        if len(names) == _COVER_LIST_MAX:
+            break
+    return names, ref
+
+
+def augment_cover_from_documents(config: CompileConfig, report: CompileReport) -> int:
+    """Add the wording's sections of cover to every product page that has a
+    compiled cover page. Runs after every page is written; edits the product
+    page in place. Returns how many pages were augmented."""
+    wiki = config.dest_root / "wiki" / "product"
+    augmented = 0
+    for cover in sorted(wiki.glob("*/*/cover.md")):
+        product = cover.parent.with_suffix(".md")
+        if not product.exists():
+            continue
+        names, ref = cover_sections_from_documents(cover.read_text())
+        if len(names) < 3 or not ref:
+            continue
+        line = f"The policy wording sets out cover under: {'; '.join(names)} [src:{ref}]."
+        text = product.read_text()
+        if line in text:
+            continue
+        if "\n## What it covers\n" in text:
+            head, rest = text.split("\n## What it covers\n", 1)
+            body, _, tail = rest.partition("\n## ")
+            body = body.rstrip() + "\n\n" + line + "\n"
+            text = head + "\n## What it covers\n" + body + ("\n## " + tail if tail else "")
+        else:
+            marker: str | None = next(
+                (m for m in ("\n## Headline benefits\n", "\n## What is not covered\n") if m in text), None
+            )
+            if marker is None:
+                continue
+            text = text.replace(marker, "\n## What it covers\n\n" + line + "\n" + marker, 1)
+        product.write_text(text)
+        augmented += 1
+    if augmented:
+        report.skip(f"product pages given the wording's sections of cover: {augmented}")
+    return augmented
 
 
 def emit_product(
@@ -1559,7 +1680,52 @@ def _offer_prose(paragraph: str) -> str:
     return " ".join(kept)
 
 
-def emit_promotions(config: CompileConfig, snapshots: list[Snapshot], report: CompileReport) -> list[str]:
+_PROMO_NOISE_WORDS = frozenset(
+    [
+        "tiq",
+        "etiqa",
+        "insurance",
+        "plan",
+        "policy",
+        "promo",
+        "promotion",
+        "promotions",
+        "offer",
+        "offers",
+        "off",
+        "discount",
+        "new",
+        "customers",
+        "get",
+    ]
+)
+
+
+def _promotion_product(heading: str, products: dict[str, str]) -> str | None:
+    """The product an offer is for, read from the offer's own heading.
+
+    "Tiq Travel Insurance" and "Tiq Travel Promo 45% off" are both about
+    Travel Insurance; "6 weeks of surprises" is about nothing in particular.
+    A product matches when every word of its name, brand and category word
+    aside, appears in the heading; the longest such name wins.
+    """
+    words = set(re.findall(r"[a-z]+", heading.lower())) - _PROMO_NOISE_WORDS
+    best: tuple[int, str] | None = None
+    for slug, title in products.items():
+        name = set(re.findall(r"[a-z]+", title.lower())) - _PROMO_NOISE_WORDS
+        if not name or not name <= words or max(len(w) for w in name) < 4:
+            continue
+        if best is None or len(name) > best[0]:
+            best = (len(name), slug)
+    return best[1] if best else None
+
+
+def emit_promotions(
+    config: CompileConfig,
+    snapshots: list[Snapshot],
+    report: CompileReport,
+    products: dict[str, str] | None = None,
+) -> list[str]:
     emitted: list[str] = []
     for snapshot in snapshots:
         if snapshot.page_type != "promo":
@@ -1570,6 +1736,12 @@ def emit_promotions(config: CompileConfig, snapshots: list[Snapshot], report: Co
                 continue
             start, end = _parse_window(section.text)
             page_id = f"promotion/{channel_id.split('/')[-1]}-{slugify(section.heading)}"
+            # The product the offer is for, so the retrieval focus keeps the
+            # page when the customer asks "is there a promo for travel
+            # insurance". Without it every promotion keyed to its own slug,
+            # the focus filter dropped them all, and the offer question was
+            # answered from a policy clause about other insurance.
+            product_key = _promotion_product(section.heading, products or {})
             lines = [
                 "## Offer",
                 *[
@@ -1596,9 +1768,12 @@ def emit_promotions(config: CompileConfig, snapshots: list[Snapshot], report: Co
                 effective_to=end,
                 confidence=Confidence.medium,
                 channel_ref=channel_id,
+                **({"product_key": product_key} if product_key else {}),
             )
             _write(config, _page(fm, lines), report)
             emitted.append(page_id)
+            if product_key is None:
+                report.skip("promotion names no product — kept, unattached")
     return emitted
 
 
@@ -2102,8 +2277,12 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         [h for h in sorted({s.host for s in snapshots}) if "etiqa" in h],
     )
     groups = group_products(snapshots, report)
+    # Sentences for the concept and channel pages are chosen from the
+    # product's own pages. A blog post defined "excess" before this, and a
+    # blog post is not the insurer's statement of anything.
+    supporting = [s for s in snapshots if s.page_type in PRODUCT_PAGE_TYPES]
     versions = versions_from_documents(config.source_root)
-    concepts = emit_concepts(config, snapshots, report)
+    concepts = emit_concepts(config, supporting, report)
 
     products: dict[str, list[tuple[str, str]]] = {}
     journeys: list[tuple[str, str]] = []
@@ -2190,12 +2369,12 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
     by_identity = {product_identity(groups[s].title or s): s for s in groups}
     still_unmatched: list[Document] = []
     for document in unmatched:
-        slug = by_identity.get(product_identity(document.plan.replace("-", " ")))
-        if slug is None:
+        owner = by_identity.get(product_identity(document.plan.replace("-", " ")))
+        if owner is None:
             still_unmatched.append(document)
         else:
-            matched.setdefault(slug, []).append(document)
-            report.skip(f"document matched a product by identity — {document.plan} → {slug}")
+            matched.setdefault(owner, []).append(document)
+            report.skip(f"document matched a product by identity — {document.plan} → {owner}")
     unmatched = still_unmatched
     report.documents = len(documents)
     for slug, found in sorted(matched.items()):
@@ -2231,13 +2410,16 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         title = groups[next(s for s in groups if product_page_ids.get(s) == faq_page.rsplit("/", 1)[0])].title
         products.setdefault(lob, []).append((faq_page, f"{title} — Published FAQs"))
 
-    channels = emit_channels(config, groups, hosts, snapshots, report)
-    promotions = emit_promotions(config, snapshots, report)
+    channels = emit_channels(config, groups, hosts, supporting, report)
+    promotions = emit_promotions(config, snapshots, report, {slug: groups[slug].title for slug in groups})
     governance = next((s for s in snapshots if s.page_type == "governance"), snapshots[0])
     entity = emit_entity(config, governance.ref(), report)
     emit_index(config, products, concepts, journeys, channels, entity, promotions, report)
     write_manifest(config, hosts)
     write_conflicts(config, report)
+    # After every page exists: the product page borrows the wording's
+    # sections of cover, cited to the wording.
+    augment_cover_from_documents(config, report)
     return report
 
 

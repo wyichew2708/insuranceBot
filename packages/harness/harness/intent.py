@@ -43,6 +43,7 @@ class Intent(str, Enum):
     smalltalk = "smalltalk"  # hello, thanks, are you a bot
     browse = "browse"  # what do you sell, show me your life plans
     entity = "entity"  # who underwrites this, which legal entity
+    offer = "offer"  # is there a promotion, a discount, cashback
     unknown = "unknown"
 
 
@@ -165,6 +166,22 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"\b(policy (document|wording|contract)|download|send me the|copy of (the|my) (policy|wording)"
             r"|certificate of insurance|product summary)\b",
             re.I,
+        ),
+    ),
+    # Before claim and coverage: "is there a promo on travel cover" is a
+    # question about the offer, and only a promotion page can answer it.
+    (
+        Intent.offer,
+        # "discount" only when it is not the no-claim discount, which is a
+        # policy figure: "what is the maximum NCD" is a limit question, and
+        # reading it as an offer refused ten private-car cases for want of a
+        # promotion page.
+        re.compile(
+            r"\b(promo|promotion|offer|deal|voucher|cashback|rebate|sale)s?\b"
+            # "discount" in a turn that mentions claims anywhere — "I have
+            # not claimed in years, how far can my discount go" — is the NCD.
+            r"|^(?!.*\b(?:claim(?:s|ed|ing)?|ncd|no[- ]claims?)\b).*\bdiscounts?\b",
+            re.I | re.S,
         ),
     ),
     (
@@ -414,6 +431,10 @@ REQUIREMENTS: dict[Intent, Requirement] = {
     # page contains the word "insurer" a hundred times and says nothing about
     # who that is.
     Intent.entity: Requirement(needs_page_type=("entity",)),
+    # An offer is stated on a promotion page or nowhere. A policy clause about
+    # "any other insurance covering the same damage" answered "is there a
+    # promotion for home insurance" before this.
+    Intent.offer: Requirement(needs_page_type=("promotion",)),
     Intent.renewal: Requirement(
         needs_any_term=("renew", "expire", "cancel", "free-look", "cooling"),
         holds_answer=("/conditions",),

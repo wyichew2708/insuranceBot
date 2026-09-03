@@ -31,6 +31,7 @@ faq_intents:
 - coverage
 - definition
 - eligibility
+- offer
 - renewal
 - unknown
 ---

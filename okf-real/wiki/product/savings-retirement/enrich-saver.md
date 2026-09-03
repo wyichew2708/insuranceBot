@@ -38,6 +38,10 @@ confidence: medium
 
 Achieve your goals with a shorter commitment [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-saver.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/policy-contract-enrich-saver.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-saver/exclusions.md).

@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from okf.sources import UNKNOWN, may_support, source_class
+
 from harness.ask import Ask, asked_benefits
 from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
 from harness.intent import REQUIREMENTS, classify
@@ -265,6 +267,12 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
 
     orphans: list[str] = []
     for match in NUMERIC_SPAN_RE.finditer(ctx.answer.answer):
+        # A number glued to a word by a hyphen is a model code, not a figure:
+        # "HEPA-13", "COVID-19". A promotion for an air purifier put "13" in
+        # front of this gate as an unbound figure.
+        start = match.start()
+        if start >= 2 and ctx.answer.answer[start - 1] == "-" and ctx.answer.answer[start - 2].isalnum():
+            continue
         span = match.group().strip()
         if not any(span in text or text in span for text in bound_text):
             orphans.append(span)
@@ -1103,6 +1111,47 @@ def gate_about_the_ask(ctx: GateContext) -> GateResult:
     return GateResult(gate=name, verdict=Verdict.pass_, detail=f"answered about {ask.product!r}")
 
 
+# --- 11. supporting sources ---------------------------------------------------
+
+
+def gate_supporting_sources(ctx: GateContext) -> GateResult:
+    """Does every claim rest on the product page or a document?
+
+    The corpus carries 586 blog posts, press releases, awards pages and tag
+    indexes beside the wordings and product pages. Reference-integrity checks
+    that a cited source exists; this checks what kind of source it is. A
+    sentence from a blog post about choosing travel insurance is not the
+    insurer's statement of what the policy covers, and it may not be the
+    thing an answer rests on. A promotion may, but only for a customer who
+    asked about the offer.
+    """
+    name = "supporting-sources"
+    if ctx.answer.handoff or ctx.answer.smalltalk or ctx.answer.clarifying:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="nothing asserted from a source")
+    root = ctx.raw_root.parent if ctx.raw_root is not None else ctx.bundle.root
+    offending: list[str] = []
+    checked = 0
+    for claim in ctx.answer.claims:
+        ref = claim.locator or ""
+        kind = source_class(ref, root)
+        if kind == UNKNOWN:
+            continue
+        checked += 1
+        if not may_support(ref, ctx.question, root):
+            offending.append(f"{ref.split('#', 1)[0]} ({kind})")
+    if offending:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail="marketing source behind a claim: " + "; ".join(sorted(set(offending))[:4]),
+        )
+    if not checked:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="no raw source cited")
+    return GateResult(
+        gate=name, verdict=Verdict.pass_, detail=f"{checked} claim(s) on product pages and documents"
+    )
+
+
 ALL_GATES = [
     gate_reference_integrity,
     gate_numeric_binding,
@@ -1114,6 +1163,7 @@ ALL_GATES = [
     gate_answerability,
     gate_entitlement_assertion,
     gate_about_the_ask,
+    gate_supporting_sources,
 ]
 
 

@@ -41,7 +41,9 @@ While you enjoy life’s mini victories and continue to strive for your goals, d
 
 ## What it covers
 
-Protect the life you’ve built: While you enjoy life’s mini victories and continue to strive for your goals, don’t forget to protect what you’ve already achieved [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#protect-the-life-you-ve-built].
+Protect the life you’ve built: While you enjoy life’s mini victories and continue to strive for your goals, don’t forget to protect what you’ve already achieved. Life insurance can protect your assets and those that you love without breaking the bank [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#protect-the-life-you-ve-built].
+
+Why choose Etiqa Insurance Pte. Ltd.: Choose short-term to lifetime coverage, according to your needs. Wide coverage with no medical examination required 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#why-choose-tiq].
 
 Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#guaranteed-renewals].
 

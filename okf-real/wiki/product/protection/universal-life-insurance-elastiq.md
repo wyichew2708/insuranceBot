@@ -39,6 +39,10 @@ confidence: medium
 
 Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-universal-life-insurance-elastiq.md#high-guaranteed-rate-with-flexible-withdrawals].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/elastiq-general-provisions-contract-7-nov.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./universal-life-insurance-elastiq/exclusions.md).

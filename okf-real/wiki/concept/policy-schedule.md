@@ -13,7 +13,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/about-us-sustainability.md
+- raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite-education.md
 effective_from: '2026-09-03'
 links:
   concepts: []
@@ -27,4 +27,4 @@ confidence: medium
 
 ## What it means
 
-Congratulations on insuring your new home! Please note that this complimentary home insurance policy is only successfully incepted when you receive your Policy Schedule and Welcome Letter from us [src:raw/web/www.etiqa.com.sg/2026-08-25/about-us-sustainability.md#etiqa-s-sustainability-initiatives].
+Congratulations on insuring your new home! Please note that this complimentary home insurance policy is only successfully incepted when you receive your Policy Schedule and Welcome Letter from us [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite-education.md#body].

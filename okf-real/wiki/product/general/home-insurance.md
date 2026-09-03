@@ -13,25 +13,22 @@ regulated_advice: false
 aliases:
 - home
 - home insurance
-- tiq home
-- tiq home insurance
 channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/home-insurance/tiq-home-insurance
+  landing: https://www.etiqa.com.sg/personal/home-insurance
   surfaces:
   - https://www.tiq.com.sg/product/home-insurance
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-tiq-home-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/home-insurance/exclusions
-  concepts:
-  - concept/policy-schedule
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -42,11 +39,11 @@ confidence: medium
 
 ## What this plan is
 
-Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-tiq-home-insurance.md#find-out-more].
+Protect what belongs to you Protect what belongs to you Give your family more than a roof over their head when you insure your household contents, renovation and mortgage payments [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md#body].
 
 ## What it covers
 
-Etiqa Insurance Pte. Ltd. Home Insurance at a glance: Save more with longer protection! [src:raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md#tiq-home-insurance-at-a-glance].
+The policy wording sets out cover under: Building; Renovation; Emergency Cash Allowance; Personal Legal Liability; Tenant's Liability; Valuables; Conservancy Charges; Accidental Breakage of Mirrors and Fixed Glass; Money; Personal Cyber; Family Accidental Death Protection; Property Damage [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 ## What is not covered
 

@@ -13,7 +13,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/blog-children-nutritional-requirements.md
+- raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-commercial-vehicle.md
 effective_from: '2026-09-03'
 links:
   concepts: []
@@ -27,4 +27,4 @@ confidence: medium
 
 ## What it means
 
-Sugar grades for beverages Beverages are often a hidden source of excess sugar in children’s diets [src:raw/web/www.etiqa.com.sg/2026-08-25/blog-children-nutritional-requirements.md#body].
+What does "Excess" mean? Excess is the amount you need to pay towards a claim before your insurance coverage applies [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-commercial-vehicle.md#frequently-asked-questions].

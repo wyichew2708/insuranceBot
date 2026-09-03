@@ -59,6 +59,8 @@ Coverage for every traveller: Whether you're departing from Singapore, transitin
 
 Travel inconvenience: Be covered for trip cancellations, postponement, loss or damage to your personal belongings and more [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#travel-inconvenience].
 
+The policy wording sets out cover under: Medical Expenses Incurred Overseas; Medical Expenses Incurred In Singapore; Overseas Hospital Income; Hospital Allowance in Singapore [src:raw/wordings/eprotect-travel-policy-wording.md].
+
 ## Headline benefits
 
 The child limit for the plan tier held is {{table:child.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].

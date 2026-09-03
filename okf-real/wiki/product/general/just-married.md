@@ -43,6 +43,8 @@ Simple and affordable life cover to build a better future [src:raw/web/www.tiq.c
 
 Term Life Insurance: Simple and affordable life cover to build a better future [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#term-life-insurance].
 
+Why choose Etiqa Insurance Pte. Ltd.: Wide coverage with no medical examination required 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#why-choose-tiq].
+
 Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#guaranteed-renewals].
 
 ## What is not covered

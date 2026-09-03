@@ -25,6 +25,7 @@ from harness.ask import Ask, ask_about, asked_benefits
 from harness.gates import NUMERIC_SPAN_RE
 from harness.intent import REQUIREMENTS, Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
+from okf.sources import OFFER_QUESTION_RE
 from okf.tables import TOKEN_RE, find_tokens
 
 from api.retrieval import keywords, score_page
@@ -84,6 +85,10 @@ SHORTFALL: dict[Intent, str] = {
         "answer from. A colleague can confirm whether you qualify."
     ),
     Intent.claim: ("I do not have the claim steps for {product}. A colleague can take you through it."),
+    Intent.offer: (
+        "I do not have a current offer for {product} in the pages I answer from. "
+        "Offers change often, so the product page will show any that is running."
+    ),
     Intent.application: (
         "I do not have the application steps for {product}. The product page "
         "has the route to buy, and a colleague can take you through it."
@@ -179,7 +184,7 @@ OVERVIEW_HEADING_RE = re.compile(
 )
 
 #: A question that is actually about an offer. Only then does a promotion lead.
-OFFER_RE = re.compile(r"\b(promo|promotion|discount|offer|deal|voucher|cashback|rebate|sale)\b", re.I)
+OFFER_RE = OFFER_QUESTION_RE
 
 #: How much of one section can reach the answer. The median section is 531
 #: characters and the 90th percentile 1,545, but "Family Plan" on the travel

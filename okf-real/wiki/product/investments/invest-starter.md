@@ -38,6 +38,10 @@ confidence: medium
 
 Multiple rewards to boost your investment [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-starter.md#what-you-can-get].
 
+## What it covers
+
+The policy wording sets out cover under: Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit [src:raw/wordings/invest-starter-policy-contract.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-starter/exclusions.md).

@@ -40,6 +40,10 @@ confidence: medium
 
 Embark on ethical investing with Invest vista, Etiqa Insurance Pte. Ltd.’s values-based insurance solution that is designed for investing with a vision [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-vista.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-vista-v4-0.md].
+
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-vista.md#what-is-covered].

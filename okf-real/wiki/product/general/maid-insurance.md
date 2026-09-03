@@ -46,6 +46,10 @@ confidence: high
 
 Your domestic helper is a key member of your household [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Personal Accident; Repatriation Expenses; Hospitalisation & Surgical Expenses; Wages & Levy Reimbursement; Recuperation Benefit; Alternative Maid Services; Termination / Re-Hiring Expenses; Maid's Liability; Special Grant; Physical Abuse by Maid; Additional Hospitalisation & Surgical Expenses; Critical Illness [src:raw/wordings/tiq-maid-policy-wording.md].
+
 ## Headline benefits
 
 The accidental death limit for the plan tier held is {{table:accidental_death.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].

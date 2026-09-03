@@ -38,6 +38,10 @@ confidence: medium
 
 For the times in your life when extra financial security comes in handy [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-term-life-cover.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Death Benefit; Terminal Illness Benefit [src:raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-term-life-cover/exclusions.md).

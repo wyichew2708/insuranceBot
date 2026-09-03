@@ -19,8 +19,7 @@ authority:
 - raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md
 version_in_force: '2026'
 links:
-  concepts:
-  - concept/policy-schedule
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:

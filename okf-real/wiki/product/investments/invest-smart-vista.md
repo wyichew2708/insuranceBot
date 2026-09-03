@@ -39,6 +39,10 @@ confidence: medium
 
 Invest with purpose with Invest Smart Vista, Etiqa Insurance Pte. Ltd.’s values-based insurance solution [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-smart-vista.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-smart-vista.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-smart-vista/exclusions.md).

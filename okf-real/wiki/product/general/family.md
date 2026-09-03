@@ -43,6 +43,8 @@ Being a sandwich generation can be stressful [src:raw/web/www.tiq.com.sg/2026-08
 
 Support for your family: While you work hard to enrich the lives of your family for a better future, don’t miss out on important life protection that can empower and support them in times of need [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#support-for-your-family].
 
+Why choose Etiqa Insurance Pte. Ltd.: Choose short-term to lifetime coverage, according to your needs. Wide coverage with no medical examination required 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#why-choose-tiq].
+
 Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#guaranteed-renewals].
 
 ## What is not covered

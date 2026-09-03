@@ -39,6 +39,10 @@ confidence: medium
 
 Secure your future with lifetime monthly income [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-income.md#here-s-what-you-can-get].
 
+## What it covers
+
+The policy wording sets out cover under: Lifetime Monthly Income; Surrender Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit [src:raw/wordings/policy-contract-enrich-income.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-income/exclusions.md).

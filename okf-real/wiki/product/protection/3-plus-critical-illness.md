@@ -39,6 +39,10 @@ confidence: medium
 
 Facts about Critical Illness in Singapore [src:raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md#why-choose-tiq-3-plus-critical-illness].
 
+## What it covers
+
+The policy wording sets out cover under: Death Benefit; Critical Illness (CI) Benefit; Special Conditions Benefit; Critical Illness Benefit / Special Conditions Benefit [src:raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./3-plus-critical-illness/exclusions.md).

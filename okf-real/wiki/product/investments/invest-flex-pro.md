@@ -39,6 +39,10 @@ confidence: medium
 
 *Please refer to the full T&Cs here  [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-pro.md#receive-up-to-20-additional-bonus-top-up-on-1st-year-premium-for-all-eligible-sign-ups-from-6-november-2025].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md].
+
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-pro.md#what-is-covered].

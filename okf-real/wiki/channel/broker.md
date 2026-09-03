@@ -14,7 +14,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/about-us-key-milestones.md#body
+- raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#office
 effective_from: '2026-09-03'
 links:
   concepts: []
@@ -38,10 +38,10 @@ intermediary: broker
 | {{channel.broker.landing}} | {{channel.broker.hotline}} |
 <!-- /okf:channel-variant -->
 
-EIPL offers a comprehensive range of life and general insurance products accessible through its diverse distribution channels, including bancassurance, agents, brokers, financial advisers, partnerships, direct and online sales via Tiq by Etiqa [src:raw/web/www.etiqa.com.sg/2026-08-25/about-us-key-milestones.md#body].
+Cover is arranged through a broker [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#office].
 
 ## Channel binding
 
-This channel is a route to market for Etiqa Insurance Pte. Ltd., and the products sold through it are the same canonical products [src:raw/web/www.etiqa.com.sg/2026-08-25/about-us-key-milestones.md#body].
+This channel is a route to market for Etiqa Insurance Pte. Ltd., and the products sold through it are the same canonical products [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#office].
 
-A customer on this route deals with a broker rather than buying online; the cover itself is unchanged [src:raw/web/www.etiqa.com.sg/2026-08-25/about-us-key-milestones.md#body].
+A customer on this route deals with a broker rather than buying online; the cover itself is unchanged [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#office].

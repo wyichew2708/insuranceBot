@@ -38,6 +38,10 @@ confidence: medium
 
 Prepare for the future and ensure peace of mind with comprehensive riders and multiplier benefits [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-lifetime-secure.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Death Benefit; Terminal Illness (TI) Benefit; Total and Permanent Disability (TPD) Benefit; Premium Relief Benefit; Guaranteed Insurability Benefit; Surrender Benefit [src:raw/product-summaries/essential-lifetime-secure-product-summary.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-lifetime-secure/exclusions.md).

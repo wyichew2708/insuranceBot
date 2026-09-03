@@ -25,6 +25,7 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: medium
 channel_ref: channel/direct
+product_key: travel-insurance
 ---
 
 ## Offer

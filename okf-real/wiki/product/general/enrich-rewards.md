@@ -38,6 +38,10 @@ confidence: medium
 
 Reach for your savings goals while enjoying yearly rewards [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-rewards.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Guaranteed Yearly Cash Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/policy-contract-enrich-rewards.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-rewards/exclusions.md).

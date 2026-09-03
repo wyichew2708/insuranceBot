@@ -40,6 +40,10 @@ confidence: medium
 
 Thank you for your support! Etiqa Insurance Pte. Ltd. 3-Year Endowment Plan is now fully subscribed [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiq-3-year-endowment-plan/exclusions.md).

@@ -38,6 +38,10 @@ confidence: medium
 
 Guaranteed issuance with no medical examinations required [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#hassle-free-application].
 
+## What it covers
+
+The policy wording sets out cover under: Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/enrich-aspire-vii-policy-contract.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-aspire-vii/exclusions.md).

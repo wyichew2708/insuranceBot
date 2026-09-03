@@ -335,6 +335,7 @@ def test_every_gate_runs_regardless_of_earlier_failures(bundle: Bundle) -> None:
     assert {r.gate for r in results} == {
         "entitlement-assertion",
         "about-the-ask",
+        "supporting-sources",
         "reference-integrity",
         "numeric-binding",
         "version-coherence",

@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 253792,
+  "reached": 254619,
   "share": 0.098
  },
  "sources": {
@@ -850,9 +850,10 @@
   },
   "raw/product-summaries/essential-lifetime-secure-product-summary.md": {
    "words": 5176,
-   "reached": 1299,
-   "share": 0.251,
+   "reached": 1327,
+   "share": 0.256,
    "pages": [
+    "product/general/essential-lifetime-secure",
     "product/general/essential-lifetime-secure/conditions",
     "product/general/essential-lifetime-secure/cover",
     "product/general/essential-lifetime-secure/exclusions"
@@ -1183,19 +1184,15 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/about-us-key-milestones.md": {
    "words": 378,
-   "reached": 65,
-   "share": 0.172,
-   "pages": [
-    "channel/broker"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/about-us-leadership-team.md": {
    "words": 2282,
-   "reached": 34,
-   "share": 0.015,
-   "pages": [
-    "concept/nomination"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/about-us-newsroom.md": {
    "words": 101,
@@ -1205,11 +1202,9 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/about-us-sustainability.md": {
    "words": 962,
-   "reached": 24,
-   "share": 0.025,
-   "pages": [
-    "concept/policy-schedule"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/about-us-the-etiqa-way.md": {
    "words": 292,
@@ -1375,11 +1370,9 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/blog-children-nutritional-requirements.md": {
    "words": 1270,
-   "reached": 17,
-   "share": 0.013,
-   "pages": [
-    "concept/excess"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/blog-easy-ways-boost-metabolism.md": {
    "words": 1978,
@@ -1425,11 +1418,9 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/blog-how-to-choose-the-right-funds-for-your-ilp.md": {
    "words": 2000,
-   "reached": 15,
-   "share": 0.007,
-   "pages": [
-    "concept/commencement-date"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/blog-how-to-save-money-for-your-upcoming-trip.md": {
    "words": 1369,
@@ -1813,9 +1804,10 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite-education.md": {
    "words": 482,
-   "reached": 6,
-   "share": 0.012,
+   "reached": 30,
+   "share": 0.062,
    "pages": [
+    "concept/policy-schedule",
     "product/general/education"
    ]
   },
@@ -1861,9 +1853,10 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md": {
    "words": 4938,
-   "reached": 27,
-   "share": 0.005,
+   "reached": 66,
+   "share": 0.013,
    "pages": [
+    "channel/broker",
     "product/business/business-owners-super-suite"
    ]
   },
@@ -1909,9 +1902,10 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-commercial-vehicle.md": {
    "words": 1282,
-   "reached": 37,
-   "share": 0.029,
+   "reached": 54,
+   "share": 0.042,
    "pages": [
+    "concept/excess",
     "product/motor/commercial-vehicle"
    ]
   },
@@ -2061,8 +2055,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance.md": {
    "words": 335,
-   "reached": 104,
-   "share": 0.31,
+   "reached": 91,
+   "share": 0.272,
    "pages": [
     "channel/direct",
     "product/business/business-insurance"
@@ -2158,9 +2152,11 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/claims-life-medical-claim-critical-illness.md": {
    "words": 299,
-   "reached": 0,
-   "share": 0.0,
-   "pages": []
+   "reached": 22,
+   "share": 0.074,
+   "pages": [
+    "concept/nomination"
+   ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/claims-life-medical-claim-death.md": {
    "words": 333,
@@ -3515,17 +3511,17 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-tiq-home-insurance.md": {
    "words": 486,
-   "reached": 6,
-   "share": 0.012,
-   "pages": [
-    "product/general/home-insurance"
-   ]
-  },
-  "raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md": {
-   "words": 159,
    "reached": 0,
    "share": 0.0,
    "pages": []
+  },
+  "raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md": {
+   "words": 159,
+   "reached": 31,
+   "share": 0.195,
+   "pages": [
+    "product/general/home-insurance"
+   ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-prime-ii.md": {
    "words": 1647,
@@ -3555,9 +3551,10 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-plus-sp.md": {
    "words": 1188,
-   "reached": 15,
-   "share": 0.013,
+   "reached": 38,
+   "share": 0.032,
    "pages": [
+    "concept/commencement-date",
     "product/investments/invest-plus-sp"
    ]
   },
@@ -3703,17 +3700,17 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident-tiq-personal-accident.md": {
    "words": 486,
-   "reached": 6,
-   "share": 0.012,
-   "pages": [
-    "product/general/personal-accident"
-   ]
-  },
-  "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md": {
-   "words": 166,
    "reached": 0,
    "share": 0.0,
    "pages": []
+  },
+  "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md": {
+   "words": 166,
+   "reached": 26,
+   "share": 0.157,
+   "pages": [
+    "product/general/personal-accident"
+   ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-cyber-insurance-personal-cyber-insurance.md": {
    "words": 486,
@@ -6042,11 +6039,9 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/blog-savings-and-investments-dash-pet-plus-why-consider-bonds.md": {
    "words": 1523,
-   "reached": 63,
-   "share": 0.041,
-   "pages": [
-    "channel/ifa"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.tiq.com.sg/2026-08-25/blog-savings-tips-university-students-elastiq.md": {
    "words": 1307,
@@ -7034,11 +7029,9 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md": {
    "words": 1499,
-   "reached": 1,
-   "share": 0.001,
-   "pages": [
-    "product/general/home-insurance"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md": {
    "words": 1570,
@@ -7051,8 +7044,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md": {
    "words": 941,
-   "reached": 29,
-   "share": 0.031,
+   "reached": 10,
+   "share": 0.011,
    "pages": [
     "product/motor/motorcycle-insurance"
    ]
@@ -7090,32 +7083,32 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md": {
    "words": 1525,
-   "reached": 60,
-   "share": 0.039,
+   "reached": 69,
+   "share": 0.045,
    "pages": [
     "product/general/family"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md": {
    "words": 1493,
-   "reached": 40,
-   "share": 0.027,
+   "reached": 50,
+   "share": 0.033,
    "pages": [
     "product/general/just-married"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md": {
    "words": 1540,
-   "reached": 64,
-   "share": 0.042,
+   "reached": 62,
+   "share": 0.04,
    "pages": [
     "product/general/loans"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md": {
    "words": 1496,
-   "reached": 34,
-   "share": 0.023,
+   "reached": 44,
+   "share": 0.029,
    "pages": [
     "product/general/single"
    ]
@@ -7503,9 +7496,10 @@
   },
   "raw/wordings/3-plus-critical-illness-policy-contract-v1-25.md": {
    "words": 5804,
-   "reached": 1611,
-   "share": 0.278,
+   "reached": 1635,
+   "share": 0.282,
    "pages": [
+    "product/protection/3-plus-critical-illness",
     "product/protection/3-plus-critical-illness/claims",
     "product/protection/3-plus-critical-illness/conditions",
     "product/protection/3-plus-critical-illness/cover",
@@ -7598,9 +7592,10 @@
   },
   "raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md": {
    "words": 3734,
-   "reached": 1206,
-   "share": 0.323,
+   "reached": 1222,
+   "share": 0.327,
    "pages": [
+    "product/general/dash-easyearn",
     "product/general/dash-easyearn/claims",
     "product/general/dash-easyearn/conditions",
     "product/general/dash-easyearn/cover",
@@ -7687,9 +7682,10 @@
   },
   "raw/wordings/elastiq-general-provisions-contract-7-nov.md": {
    "words": 3680,
-   "reached": 1367,
-   "share": 0.371,
+   "reached": 1383,
+   "share": 0.376,
    "pages": [
+    "product/protection/universal-life-insurance-elastiq",
     "product/protection/universal-life-insurance-elastiq/claims",
     "product/protection/universal-life-insurance-elastiq/conditions",
     "product/protection/universal-life-insurance-elastiq/cover",
@@ -7699,9 +7695,10 @@
   },
   "raw/wordings/enrich-aspire-vii-policy-contract.md": {
    "words": 3580,
-   "reached": 1429,
-   "share": 0.399,
+   "reached": 1443,
+   "share": 0.403,
    "pages": [
+    "product/general/enrich-aspire-vii",
     "product/general/enrich-aspire-vii/claims",
     "product/general/enrich-aspire-vii/conditions",
     "product/general/enrich-aspire-vii/cover",
@@ -7790,9 +7787,10 @@
   },
   "raw/wordings/eprotect-travel-policy-wording.md": {
    "words": 16260,
-   "reached": 4484,
-   "share": 0.276,
+   "reached": 4508,
+   "share": 0.277,
    "pages": [
+    "product/general/travel-insurance",
     "product/general/travel-insurance/claims",
     "product/general/travel-insurance/conditions",
     "product/general/travel-insurance/cover",
@@ -7802,9 +7800,10 @@
   },
   "raw/wordings/eprotect-whole-life-policy-contract.md": {
    "words": 4998,
-   "reached": 1388,
-   "share": 0.278,
+   "reached": 1416,
+   "share": 0.283,
    "pages": [
+    "product/protection/whole-life-insurance",
     "product/protection/whole-life-insurance/conditions",
     "product/protection/whole-life-insurance/cover",
     "product/protection/whole-life-insurance/definitions"
@@ -8220,9 +8219,10 @@
   },
   "raw/wordings/invest-starter-policy-contract.md": {
    "words": 9124,
-   "reached": 3076,
-   "share": 0.337,
+   "reached": 3092,
+   "share": 0.339,
    "pages": [
+    "product/investments/invest-starter",
     "product/investments/invest-starter/claims",
     "product/investments/invest-starter/conditions",
     "product/investments/invest-starter/cover",
@@ -8285,9 +8285,10 @@
   },
   "raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md": {
    "words": 7161,
-   "reached": 3620,
-   "share": 0.506,
+   "reached": 3653,
+   "share": 0.51,
    "pages": [
+    "product/general/pet-insurance",
     "product/general/pet-insurance/claims",
     "product/general/pet-insurance/conditions",
     "product/general/pet-insurance/cover",
@@ -8331,9 +8332,10 @@
   },
   "raw/wordings/policy-contract-enrich-assure.md": {
    "words": 4602,
-   "reached": 1822,
-   "share": 0.396,
+   "reached": 1840,
+   "share": 0.4,
    "pages": [
+    "product/general/enrich-assure",
     "product/general/enrich-assure/claims",
     "product/general/enrich-assure/conditions",
     "product/general/enrich-assure/cover",
@@ -8343,9 +8345,10 @@
   },
   "raw/wordings/policy-contract-enrich-flex-plus.md": {
    "words": 5822,
-   "reached": 2145,
-   "share": 0.368,
+   "reached": 2167,
+   "share": 0.372,
    "pages": [
+    "product/general/enrich-flex-plus",
     "product/general/enrich-flex-plus/claims",
     "product/general/enrich-flex-plus/conditions",
     "product/general/enrich-flex-plus/cover",
@@ -8355,9 +8358,10 @@
   },
   "raw/wordings/policy-contract-enrich-goal.md": {
    "words": 4397,
-   "reached": 1650,
-   "share": 0.375,
+   "reached": 1668,
+   "share": 0.379,
    "pages": [
+    "product/general/enrich-goal",
     "product/general/enrich-goal/claims",
     "product/general/enrich-goal/conditions",
     "product/general/enrich-goal/cover",
@@ -8367,9 +8371,10 @@
   },
   "raw/wordings/policy-contract-enrich-income.md": {
    "words": 5571,
-   "reached": 2122,
-   "share": 0.381,
+   "reached": 2143,
+   "share": 0.385,
    "pages": [
+    "product/general/enrich-income",
     "product/general/enrich-income/claims",
     "product/general/enrich-income/conditions",
     "product/general/enrich-income/cover",
@@ -8379,9 +8384,10 @@
   },
   "raw/wordings/policy-contract-enrich-retirement.md": {
    "words": 5636,
-   "reached": 1722,
-   "share": 0.306,
+   "reached": 1747,
+   "share": 0.31,
    "pages": [
+    "product/savings-retirement/enrich-retirement",
     "product/savings-retirement/enrich-retirement/claims",
     "product/savings-retirement/enrich-retirement/conditions",
     "product/savings-retirement/enrich-retirement/cover",
@@ -8391,9 +8397,10 @@
   },
   "raw/wordings/policy-contract-enrich-rewards.md": {
    "words": 4289,
-   "reached": 1625,
-   "share": 0.379,
+   "reached": 1645,
+   "share": 0.384,
    "pages": [
+    "product/general/enrich-rewards",
     "product/general/enrich-rewards/claims",
     "product/general/enrich-rewards/conditions",
     "product/general/enrich-rewards/cover",
@@ -8403,9 +8410,10 @@
   },
   "raw/wordings/policy-contract-enrich-saver.md": {
    "words": 4025,
-   "reached": 1642,
-   "share": 0.408,
+   "reached": 1658,
+   "share": 0.412,
    "pages": [
+    "product/savings-retirement/enrich-saver",
     "product/savings-retirement/enrich-saver/claims",
     "product/savings-retirement/enrich-saver/conditions",
     "product/savings-retirement/enrich-saver/cover",
@@ -8415,9 +8423,10 @@
   },
   "raw/wordings/policy-contract-essential-whole-life-cover.md": {
    "words": 5354,
-   "reached": 2134,
-   "share": 0.399,
+   "reached": 2161,
+   "share": 0.404,
    "pages": [
+    "product/protection/essential-whole-life-cover",
     "product/protection/essential-whole-life-cover/claims",
     "product/protection/essential-whole-life-cover/conditions",
     "product/protection/essential-whole-life-cover/cover",
@@ -8499,9 +8508,10 @@
   },
   "raw/wordings/policy-contract-for-eprotect-mortgage-v1-23.md": {
    "words": 3905,
-   "reached": 1616,
-   "share": 0.414,
+   "reached": 1642,
+   "share": 0.42,
    "pages": [
+    "product/general/eprotect-mortgage",
     "product/general/eprotect-mortgage/claims",
     "product/general/eprotect-mortgage/conditions",
     "product/general/eprotect-mortgage/cover",
@@ -8511,9 +8521,10 @@
   },
   "raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md": {
    "words": 5623,
-   "reached": 2497,
-   "share": 0.444,
+   "reached": 2531,
+   "share": 0.45,
    "pages": [
+    "product/protection/term-life-insurance",
     "product/protection/term-life-insurance/claims",
     "product/protection/term-life-insurance/conditions",
     "product/protection/term-life-insurance/cover",
@@ -8523,9 +8534,10 @@
   },
   "raw/wordings/policy-contract-for-essential-cancer-care.md": {
    "words": 5652,
-   "reached": 1620,
-   "share": 0.287,
+   "reached": 1637,
+   "share": 0.29,
    "pages": [
+    "product/protection/essential-cancer-care",
     "product/protection/essential-cancer-care/claims",
     "product/protection/essential-cancer-care/conditions",
     "product/protection/essential-cancer-care/cover",
@@ -8535,9 +8547,10 @@
   },
   "raw/wordings/policy-contract-for-essential-term-life-cover-v1-23.md": {
    "words": 4195,
-   "reached": 1941,
-   "share": 0.463,
+   "reached": 1956,
+   "share": 0.466,
    "pages": [
+    "product/protection/essential-term-life-cover",
     "product/protection/essential-term-life-cover/claims",
     "product/protection/essential-term-life-cover/conditions",
     "product/protection/essential-term-life-cover/cover",
@@ -8607,9 +8620,10 @@
   },
   "raw/wordings/policy-contract-for-invest-flex-prime-ii-v1-2-final-20251107-clean.md": {
    "words": 16565,
-   "reached": 2302,
-   "share": 0.139,
+   "reached": 2324,
+   "share": 0.14,
    "pages": [
+    "product/investments/invest-flex-prime-ii",
     "product/investments/invest-flex-prime-ii/claims",
     "product/investments/invest-flex-prime-ii/conditions",
     "product/investments/invest-flex-prime-ii/cover",
@@ -8619,9 +8633,10 @@
   },
   "raw/wordings/policy-contract-for-invest-flex-pro-v5-2-20250926.md": {
    "words": 16480,
-   "reached": 2408,
-   "share": 0.146,
+   "reached": 2430,
+   "share": 0.147,
    "pages": [
+    "product/investments/invest-flex-pro",
     "product/investments/invest-flex-pro/claims",
     "product/investments/invest-flex-pro/conditions",
     "product/investments/invest-flex-pro/cover",
@@ -8631,9 +8646,10 @@
   },
   "raw/wordings/policy-contract-for-invest-flex-wealth-ii.md": {
    "words": 16484,
-   "reached": 2325,
-   "share": 0.141,
+   "reached": 2347,
+   "share": 0.142,
    "pages": [
+    "product/investments/invest-flex-wealth-ii",
     "product/investments/invest-flex-wealth-ii/claims",
     "product/investments/invest-flex-wealth-ii/conditions",
     "product/investments/invest-flex-wealth-ii/cover",
@@ -8655,9 +8671,10 @@
   },
   "raw/wordings/policy-contract-for-invest-prime-purpose.md": {
    "words": 17216,
-   "reached": 2315,
-   "share": 0.134,
+   "reached": 2337,
+   "share": 0.136,
    "pages": [
+    "product/investments/invest-prime-purpose",
     "product/investments/invest-prime-purpose/claims",
     "product/investments/invest-prime-purpose/conditions",
     "product/investments/invest-prime-purpose/cover",
@@ -8667,9 +8684,10 @@
   },
   "raw/wordings/policy-contract-for-invest-smart-flex-ii.md": {
    "words": 16253,
-   "reached": 2316,
-   "share": 0.142,
+   "reached": 2338,
+   "share": 0.144,
    "pages": [
+    "product/investments/invest-smart-flex-ii",
     "product/investments/invest-smart-flex-ii/claims",
     "product/investments/invest-smart-flex-ii/conditions",
     "product/investments/invest-smart-flex-ii/cover",
@@ -8679,9 +8697,10 @@
   },
   "raw/wordings/policy-contract-for-invest-smart-vista.md": {
    "words": 16841,
-   "reached": 2318,
-   "share": 0.138,
+   "reached": 2340,
+   "share": 0.139,
    "pages": [
+    "product/investments/invest-smart-vista",
     "product/investments/invest-smart-vista/claims",
     "product/investments/invest-smart-vista/conditions",
     "product/investments/invest-smart-vista/cover",
@@ -8691,9 +8710,10 @@
   },
   "raw/wordings/policy-contract-for-invest-vista-v4-0.md": {
    "words": 17042,
-   "reached": 2323,
-   "share": 0.136,
+   "reached": 2345,
+   "share": 0.138,
    "pages": [
+    "product/investments/invest-vista",
     "product/investments/invest-vista/claims",
     "product/investments/invest-vista/conditions",
     "product/investments/invest-vista/cover",
@@ -8703,9 +8723,10 @@
   },
   "raw/wordings/policy-contract-for-invest-wealth-purpose.md": {
    "words": 16986,
-   "reached": 2303,
-   "share": 0.136,
+   "reached": 2325,
+   "share": 0.137,
    "pages": [
+    "product/investments/invest-wealth-purpose",
     "product/investments/invest-wealth-purpose/claims",
     "product/investments/invest-wealth-purpose/conditions",
     "product/investments/invest-wealth-purpose/cover",
@@ -8805,9 +8826,10 @@
   },
   "raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md": {
    "words": 11304,
-   "reached": 3951,
-   "share": 0.35,
+   "reached": 3983,
+   "share": 0.352,
    "pages": [
+    "product/motor/private-car-insurance",
     "product/motor/private-car-insurance/claims",
     "product/motor/private-car-insurance/conditions",
     "product/motor/private-car-insurance/cover",
@@ -8896,9 +8918,10 @@
   },
   "raw/wordings/tiq-3-year-endowment-plan-policy-contract-tiq.md": {
    "words": 3056,
-   "reached": 1051,
-   "share": 0.344,
+   "reached": 1065,
+   "share": 0.348,
    "pages": [
+    "product/savings-retirement/tiq-3-year-endowment-plan",
     "product/savings-retirement/tiq-3-year-endowment-plan/claims",
     "product/savings-retirement/tiq-3-year-endowment-plan/conditions",
     "product/savings-retirement/tiq-3-year-endowment-plan/cover",
@@ -8918,9 +8941,10 @@
   },
   "raw/wordings/tiq-cashsaver-policy-contract.md": {
    "words": 6125,
-   "reached": 2651,
-   "share": 0.433,
+   "reached": 2685,
+   "share": 0.438,
    "pages": [
+    "product/general/cashsaver",
     "product/general/cashsaver/claims",
     "product/general/cashsaver/conditions",
     "product/general/cashsaver/cover",
@@ -8936,9 +8960,10 @@
   },
   "raw/wordings/tiq-easy-save-general-provisions.md": {
    "words": 4267,
-   "reached": 1698,
-   "share": 0.398,
+   "reached": 1718,
+   "share": 0.403,
    "pages": [
+    "product/savings-retirement/tiq-easy-save",
     "product/savings-retirement/tiq-easy-save/claims",
     "product/savings-retirement/tiq-easy-save/conditions",
     "product/savings-retirement/tiq-easy-save/cover",
@@ -8963,9 +8988,10 @@
   },
   "raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md": {
    "words": 10158,
-   "reached": 4504,
-   "share": 0.443,
+   "reached": 4541,
+   "share": 0.447,
    "pages": [
+    "product/general/home-insurance",
     "product/general/home-insurance/claims",
     "product/general/home-insurance/conditions",
     "product/general/home-insurance/cover",
@@ -8987,9 +9013,10 @@
   },
   "raw/wordings/tiq-invest-policy-contract-v2-26.md": {
    "words": 7406,
-   "reached": 2181,
-   "share": 0.294,
+   "reached": 2199,
+   "share": 0.297,
    "pages": [
+    "product/investments/tiqinvest",
     "product/investments/tiqinvest/claims",
     "product/investments/tiqinvest/conditions",
     "product/investments/tiqinvest/cover",
@@ -8999,9 +9026,10 @@
   },
   "raw/wordings/tiq-maid-policy-wording.md": {
    "words": 11276,
-   "reached": 3287,
-   "share": 0.292,
+   "reached": 3332,
+   "share": 0.295,
    "pages": [
+    "product/general/maid-insurance",
     "product/general/maid-insurance/claims",
     "product/general/maid-insurance/conditions",
     "product/general/maid-insurance/cover",
@@ -9040,9 +9068,10 @@
   },
   "raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md": {
    "words": 8708,
-   "reached": 3311,
-   "share": 0.38,
+   "reached": 3358,
+   "share": 0.386,
    "pages": [
+    "product/general/personal-accident",
     "product/general/personal-accident/claims",
     "product/general/personal-accident/conditions",
     "product/general/personal-accident/cover",

@@ -46,6 +46,8 @@ Provide for your family during hard times: Get a lump sum payout in an event of 
 
 Deal with unexpected expenses: Receive a lump sum payout if you’re diagnosed with terminal illness or total & permanent disability [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#deal-with-unexpected-expenses].
 
+The policy wording sets out cover under: Covered Events; Guaranteed Insurability Benefit; Cash Benefits; Cash Values & Paid-up Policy; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Total and Permanent Disability (TPD) Benefit [src:raw/wordings/policy-contract-for-eprotect-term-life-v1-23-2024-01.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./term-life-insurance/exclusions.md).

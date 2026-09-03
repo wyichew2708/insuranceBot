@@ -43,6 +43,8 @@ Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy 
 
 Insure as you grow your savings: Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy Save insurance savings plan [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#insure-as-you-grow-your-savings].
 
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/tiq-easy-save-general-provisions.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiq-easy-save/exclusions.md).

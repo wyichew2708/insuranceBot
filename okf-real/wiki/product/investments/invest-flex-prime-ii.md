@@ -39,6 +39,10 @@ confidence: medium
 
 Just as life changes, your financial plans should stay adaptable [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-prime-ii.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-flex-prime-ii-v1-2-final-20251107-clean.md].
+
 ## Headline benefits
 
 The additional start up bonus rate is {{table:additional_start_up_bonus_rate.rate}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-prime-ii.md#what-is-covered].

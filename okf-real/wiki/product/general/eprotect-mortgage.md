@@ -38,6 +38,10 @@ confidence: medium
 
 A home insured for your family ePROTECT mortgage ensures that your remaining home loan will be taken care of, in the event you no longer can [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance-eprotect-mortgage.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Death Benefit; Total and Permanent Disability (TPD) Benefit; Terminal Illness Benefit; Total Permanent Disability (TPD) Benefit [src:raw/wordings/policy-contract-for-eprotect-mortgage-v1-23.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./eprotect-mortgage/exclusions.md).

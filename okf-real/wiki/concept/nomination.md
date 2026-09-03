@@ -13,7 +13,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/about-us-leadership-team.md
+- raw/web/www.etiqa.com.sg/2026-08-25/claims-life-medical-claim-critical-illness.md
 effective_from: '2026-09-03'
 links:
   concepts: []
@@ -27,4 +27,4 @@ confidence: medium
 
 ## What it means
 
-Her board responsibilities include being Chairman of the Credit Review Committee in Malayan Banking Berhad, Chairman of Maybank Philippines Inc and Chairman of the Nomination and Remuneration Committee of Maybank Ageas Holdings Berhad [src:raw/web/www.etiqa.com.sg/2026-08-25/about-us-leadership-team.md#board-of-directors].
+How would the death claim proceeds be paid? Death claim proceeds will be paid to nominee if there is a nomination or the assignee if the policy is assigned [src:raw/web/www.etiqa.com.sg/2026-08-25/claims-life-medical-claim-critical-illness.md#frequently-asked-questions].

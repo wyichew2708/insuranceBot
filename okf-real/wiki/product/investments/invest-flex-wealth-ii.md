@@ -38,6 +38,10 @@ confidence: medium
 
 Your financial journey deserves more than growth [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-flex-wealth-ii.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-flex-wealth-ii.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-flex-wealth-ii/exclusions.md).

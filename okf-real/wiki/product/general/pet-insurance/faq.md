@@ -30,6 +30,7 @@ faq_intents:
 - claim
 - coverage
 - exclusion
+- offer
 - renewal
 - unknown
 ---

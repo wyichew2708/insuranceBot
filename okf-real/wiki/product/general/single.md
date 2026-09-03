@@ -41,6 +41,8 @@ You can live life to the fullest while providing assurance to your loved ones wi
 
 ## What it covers
 
+Why choose Etiqa Insurance Pte. Ltd.: Wide coverage with no medical examination required 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#why-choose-tiq].
+
 Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#guaranteed-renewals].
 
 ## What is not covered

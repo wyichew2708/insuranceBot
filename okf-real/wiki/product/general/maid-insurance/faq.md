@@ -32,6 +32,7 @@ faq_intents:
 - coverage
 - eligibility
 - exclusion
+- offer
 - price
 - renewal
 - unknown

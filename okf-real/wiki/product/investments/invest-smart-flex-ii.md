@@ -38,6 +38,10 @@ confidence: medium
 
 Take charge of your financial journey with Invest smart flex II, a regular premium investment-linked plan that helps you grow your wealth while staying protected [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-smart-flex-ii.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-smart-flex-ii.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-smart-flex-ii/exclusions.md).

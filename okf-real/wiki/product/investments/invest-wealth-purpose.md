@@ -39,6 +39,10 @@ confidence: medium
 
 Your investment journey deserves a plan that supports what matters most to you [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-wealth-purpose.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Free Partial Withdrawal Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; TI Benefit [src:raw/wordings/policy-contract-for-invest-wealth-purpose.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./invest-wealth-purpose/exclusions.md).

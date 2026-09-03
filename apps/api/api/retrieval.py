@@ -19,6 +19,7 @@ from pathlib import Path
 
 from harness import Budget, Candidate, Channel, LoadedPage, RagHit, Session, Trace
 from okf.names import index_for
+from okf.sources import OFFER_QUESTION_RE, may_support, page_type_of_text
 
 from api.vectors import VectorHits
 from okf import Bundle, Page, PageType, Status, term_idf
@@ -368,6 +369,12 @@ def frontmatter_filter(
             reason = "review overdue — demoted to RAG"
         elif fm.lifecycle.value == "withdrawn":
             reason = "withdrawn"
+        elif fm.type is PageType.promotion and not OFFER_QUESTION_RE.search(question or ""):
+            # An offer page scores well on the product's own name and says
+            # nothing about the cover. It is admitted only for a customer who
+            # asked about the offer; a section-level penalty was not enough,
+            # since the page still reached composition.
+            reason = "promotion — the customer did not ask about an offer"
         elif (
             fm.type is PageType.channel
             and session.channel is not Channel.unknown
@@ -693,6 +700,11 @@ def rag_search(
     for path in sorted(raw_root.rglob("*.md")):
         rel = f"raw/{path.relative_to(raw_root)}"
         text = path.read_text(errors="ignore")
+        # The product page and the documents, never the marketing. 586 of
+        # the crawled pages are blog posts, and this fallback is the one path
+        # by which a blog sentence could reach a customer as the answer.
+        if not may_support(rel, question, page_type=page_type_of_text(text)):
+            continue
         # Historic-version questions must retrieve that version's wording, never
         # a summary of the current one (§E point 2).
         if version and "/wordings/" in rel and version not in path.name:

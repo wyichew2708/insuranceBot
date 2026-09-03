@@ -46,6 +46,10 @@ confidence: high
 
 Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance-pet-insurance.md#find-out-more].
 
+## What it covers
+
+The policy wording sets out cover under: Surgical Illness Cover; Non-Surgical Illness Cover; Accidental Injury; Funeral Expenses; Third Party Liability; Coverage for Congenital and Hereditary Conditions; Geographical Coverage; Payment of Benefit [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+
 ## Headline benefits
 
 The n a limit for the plan tier held is {{table:n_a.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].

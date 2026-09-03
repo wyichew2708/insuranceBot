@@ -38,6 +38,10 @@ confidence: medium
 
 Get a peace of mind with all stages of cancer covered [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-cancer-care.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Death Benefit; Cancer Benefit; Monthly Payout Benefit [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-cancer-care/exclusions.md).

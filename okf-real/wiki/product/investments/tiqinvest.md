@@ -42,6 +42,10 @@ confidence: medium
 
 Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md#find-out-more].
 
+## What it covers
+
+The policy wording sets out cover under: Death Benefit; Terminal Illness (TI) Benefit; Surrender Benefit; Maturity Benefit [src:raw/wordings/tiq-invest-policy-contract-v2-26.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiqinvest/exclusions.md).

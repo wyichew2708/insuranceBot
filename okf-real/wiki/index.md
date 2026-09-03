@@ -1666,8 +1666,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - [direct](./channel/direct.md)
 
-- [ifa](./channel/ifa.md)
-
 ## Entities
 
 - [Etiqa Insurance Pte. Ltd.](./entity/etiqa-sg-legal.md)

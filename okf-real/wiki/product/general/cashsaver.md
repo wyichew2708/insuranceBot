@@ -45,6 +45,8 @@ Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/pe
 
 Secure Your Family’s Future: Place the plan under your child’s name while you remain insured against the unexpected [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#secure-your-family-s-future].
 
+The policy wording sets out cover under: Yearly Cash Benefit; Surrender Benefit; Maturity Benefit; Death Benefit; Terminal Illness ('TI') Benefit; Accidental Death Benefit; Total & Permanent Disability ('TPD') Premium Waiver Benefit; TI Benefit [src:raw/wordings/tiq-cashsaver-policy-contract.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./cashsaver/exclusions.md).

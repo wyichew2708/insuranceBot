@@ -38,6 +38,10 @@ confidence: medium
 
 Sticking to a regular savings plan can sometimes be challenging [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-assure.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Survival Benefit; Surrender Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/policy-contract-enrich-assure.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-assure/exclusions.md).

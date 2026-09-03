@@ -39,6 +39,10 @@ confidence: medium
 
 Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-dash-easyearn.md#take-your-savings-higher].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Death Benefit; Surrender Benefit; Maturity Benefit [src:raw/wordings/dash-easyearn-lite-policy-terms-and-conditions.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./dash-easyearn/exclusions.md).

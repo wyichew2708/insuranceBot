@@ -38,6 +38,10 @@ confidence: medium
 
 You can choose to receive maturity payment according to your needs, with one of these choices: [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-goal.md#what-you-can-get].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Survival Benefit; Maturity Benefit; Death Benefit [src:raw/wordings/policy-contract-enrich-goal.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-goal/exclusions.md).

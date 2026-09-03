@@ -38,6 +38,10 @@ confidence: medium
 
 Secure your retirement dreams of living in comfort with Enrich retirement, which offers both a lump sum maturity payout, as well as a monthly retirement income [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-retirement.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Retirement Income; Surrender Benefit; Maturity Benefit; Death Benefit; Terminal Illness (TI) Benefit; Special Conditions Benefit [src:raw/wordings/policy-contract-enrich-retirement.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-retirement/exclusions.md).

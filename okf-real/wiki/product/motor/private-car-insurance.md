@@ -45,6 +45,8 @@ Not driving much these days? No problem [src:raw/web/www.tiq.com.sg/2026-08-25/p
 
 We’ve got your back with 3 levels of cover: We cover accidental loss or damage costs due to accidents We cover the cost if a towing service is required after an accident We cover your legal liability We cover your costs in the event of a personal accident We cover other benefits Excess for driver(s) Benefits for Electric Vehicles [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#we-ve-got-your-back-with-3-levels-of-cover].
 
+The policy wording sets out cover under: Your Car; Injury and Damage; Personal Accident Benefits (for You only); Courtesy Car Benefit; Enhanced Personal Accident Benefits; Loss of Use Benefit; Medical Expenses [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./private-car-insurance/exclusions.md).

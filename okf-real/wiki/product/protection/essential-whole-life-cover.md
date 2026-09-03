@@ -38,6 +38,10 @@ confidence: medium
 
 Whatever life throws in your way, Etiqa Insurance Pte. Ltd.’s comprehensive whole life insurance ensures financial security for you and your loved ones [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-life-critical-illness-protection-essential-whole-life-cover.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Death Benefit; Terminal Illness (TI) Benefit; Total And Permanent Disability (TPD) Benefit; Guaranteed Insurability Benefit [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./essential-whole-life-cover/exclusions.md).

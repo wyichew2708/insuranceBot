@@ -13,7 +13,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/blog-how-to-choose-the-right-funds-for-your-ilp.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-plus-sp.md
 effective_from: '2026-09-03'
 links:
   concepts: []
@@ -27,4 +27,4 @@ confidence: medium
 
 ## What it means
 
-3 Payout date refers to every 3 completed years from the policy commencement date [src:raw/web/www.etiqa.com.sg/2026-08-25/blog-how-to-choose-the-right-funds-for-your-ilp.md#body].
+2 Payout date refers to every 3 completed years from the policy commencement date and each top-up effective date (if applicable) [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-invest-plus-sp.md#what-you-can-get].

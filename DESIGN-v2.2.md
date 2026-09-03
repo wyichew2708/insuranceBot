@@ -98,6 +98,49 @@ renders the envelope exactly as before. Nothing shown is ever taken back.
 calls from `trace.stage()`. Nothing else in the pipeline knows it is being
 streamed.
 
+## Sources — the product page and the documents, never the marketing
+
+The corpus holds 1,001 crawled pages, and 586 of them are blog posts; press
+releases, awards pages and tag indexes make up most of the rest. A blog post
+about choosing travel insurance is not the insurer's statement of what the
+policy covers. `packages/okf/okf/sources.py` draws the line once:
+
+| class | what | may support a claim |
+|---|---|---|
+| document | `raw/wordings`, `product-summaries`, `brochures`, `faq`, `benefit-tables` | always |
+| product page | crawled pages typed `product`, `claims`, `faq`, `servicing` | always |
+| offer | crawled pages typed `promo` | only when the customer asked about an offer |
+| marketing | `blog`, `other` (about-us, awards, tag indexes), press releases | never |
+
+Enforced in three places, so a marketing sentence cannot reach a customer
+by any path:
+
+- the raw-corpus fallback search skips marketing files (it walked every
+  file under `raw/` before);
+- the compiler chooses concept and channel sentences from product pages
+  only (a blog post defined "excess" before), and promotion pages are
+  admitted to retrieval only for an offer question;
+- an eleventh gate, `supporting-sources`, classifies every claim's source
+  after composition and refuses on marketing.
+
+Two corpus fixes fell out of checking Home Insurance against
+`tiq.com.sg/product/home-insurance`:
+
+- the etiqa.com.sg site also lists the product on a post-application page
+  whose only section is 419 words of marketing-consent terms; the duplicate
+  fold had preferred the longer listing, and "Marketing Consent Terms &
+  Conditions" became what the plan is. The canonical listing stands now.
+- the tiq.com.sg home page carries no benefit tiles, only "Why Tiq Home
+  Insurance?" and a promotion, so its "What it covers" was a slogan. Every
+  product page with a compiled cover page now also carries the wording's
+  sections of cover, cited to the wording — "Building; Renovation;
+  Emergency Cash Allowance; Personal Legal Liability; …" — on 37 products.
+
+And an `offer` intent: "is there a promo for travel insurance" is answered
+from the promotion pages, which now carry the product they are for; where
+there is none, the answer says so instead of quoting a policy clause about
+other insurance. The no-claim discount is not an offer.
+
 ## Measurement
 
 **`evals/suites/faq-customer.yaml`** — 395 questions across 19 products,

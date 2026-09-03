@@ -38,6 +38,10 @@ confidence: medium
 
 Enrich flex plus, an endowment plan designed to help you save for the long term while enjoying the flexibility to support your key milestones in life [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-savings-retirement-enrich-flex-plus.md#body].
 
+## What it covers
+
+The policy wording sets out cover under: Covered Events; Surrender Benefit; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Accidental Death Benefit [src:raw/wordings/policy-contract-enrich-flex-plus.md].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./enrich-flex-plus/exclusions.md).
