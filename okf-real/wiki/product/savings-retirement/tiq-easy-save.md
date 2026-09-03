@@ -11,7 +11,9 @@ jurisdiction: SG
 line_of_business: savings-retirement
 regulated_advice: false
 aliases:
+- easy save
 - tiq easy save
+- tiq easysave
 channels:
 - ref: channel/direct
   name: Direct

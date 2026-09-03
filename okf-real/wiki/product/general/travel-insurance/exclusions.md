@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/exclusions
-title: Travel Insurance — Exclusions
+title: Tiq Travel Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -17,6 +17,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/eprotect-travel-policy-wording.md
+- raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md
 version_in_force: '2026'
 links:
   concepts:
@@ -119,3 +120,55 @@ Notwithstanding any provision to the contrary within the Policy or any endorseme
 We will not pay for any claim of whatsoever nature directly or indirectly caused by or consisting of or arising from the failure or inability of any computer or other equipment or system for processing storing or retrieving the Insured Person(s)'s data, whether the property of the Insured Person(s) or not, occurring at any time to [src:raw/wordings/eprotect-travel-policy-wording.md].
 
 - i. correctly recognize any date as its true calendar date; - ii. capture, save or retain, and/or correctly to manipulate, interpret or process any data or information or command or instruction as a result of treating any date otherwise than as its true calendar date; iii. capture, save, retain or correctly to process any data as a result of the operation of any command which has been programmed into any computer software, being a command which causes the loss of data or the inability to capture save retain or correctly to process such data on or after any date [src:raw/wordings/eprotect-travel-policy-wording.md].
+
+## Exclusions Applicable Only to Sections 10 & 11
+
+The following treatment, items, conditions, activities and their related or consequential expenses are excluded from the Sections and for engaging the Emergency Services Hotline &amp;/or We will not be liable for: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (b) Emergency Medical Evacuation or repatriation or cost not approved in advance and in writing by the Emergency Services Hotline and/or not arranged by the Emergency Services Hotline. This exclusion shall not apply to Emergency Medical Evacuation from remote or primitive areas where the Emergency Services Hotline cannot be contacted in advance and delay might reasonably be expected to result in loss of life or extreme prejudice to the lnsured Person(s)'s prospect [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> - (g) Any expenses related to Accident or Injury occurring while the member is engaged in Extreme Sports, mountaineering or rock climbing necessitating the use of rope, underwater activities - (h) Requiring the use of artificial breathing apparatus except leisure scuba diving no deeper than thirty (30) meters, speed contest or racing of any kind other than on foot and all professional sports. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+- (i) Any expenses incurred for emotional, mental illness and psychiatric disorder as opposed to physical and strictly medical reason. - (j) Self-inflicted injury, suicide, drug addiction or abuse, alcohol abuse, sexually transmitted diseases, Acquired Immune Deficiency Syndrome (AIDS) or any AIDS-related conditions or diseases [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (k) Any treatment performed or ordered by a non-registered Medical Practitioner not in accordance with the standard medical practice as defined in the country of treatment. - (l) The cost of burial in the Insured Person(s)'s home country. - (m) Any expenses resulting from participation in war, riot, civil commotion or any illegal act including resulting imprisonment or while serving in a police or military unit [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## Exclusion to Section 28
+
+In addition to the exclusions, this Section does not cover any claims resulting from: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> - (a) Any pre-existing medical condition that worsens within the thirty (30) days before the start of the Trip for which doctor has advised to see a medical specialist, undergo investigative test, surgery, or change in treatment, prescribed medication or dosage. This does not include changes to prescribed medication or dosage for lowering blood cholesterol; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+- (b) Terminal illness regardless whether diagnosis was received before or after this insurance was purchased; - (c) Outpatient medical treatment; - (d) Medical expenses incurred in Singapore [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## Exclusions Applicable to Section 33
+
+We will not pay for any loss or charges: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (a) That is covered by any other existing insurance scheme or government programme; - (b) From prepaid or non-refundable expenses for tours, seminars, courses and any other charges not related to transport or accommodation; - (c) Should this policy be purchased less than three (3) days before the date of departure (date of departure inclusive); [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (d) That results from a border closure which was publicly known at the time the Insured Person(s) booked His Trip or purchased this policy, whichever occurs last; - (e) Being compensated for any air miles or holiday points the Insured Person(s) used to pay for the Trip in part or in full; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (f) Any change of plans on the Insured Person's part or that of any other person to travel; and/or - (g) The Insured Person, Insured Person's immediate family member or Travel Companion's financial circumstances or any contractual or business obligation [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> Note: This Policy will only pay for any claim under any one (1) of Sections 12, 13, 33, 34 and 38 and not for more than one of the Sections. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+## Exclusions Applicable to Section 34
+
+- (d) Due to any regulations or orders given by the government or relevant authority of any country on border closures; - (e) Being compensated for any air miles or holiday points the Insured Person(s) used to pay for the Trip in part or in full; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> - (f) Other than due to a direct and necessary result of any COVID-19 Specified Cause, any change of plans whether on the Insured Person's part or that of any other person to travel; - (g) The Insured Person, Insured Person's immediate family member or Travel Companion's financial circumstances or any contractual or business obligation; and/or - (h) Any additional costs due to a delay in informing the relevant transport or accommodation provider(s) of the change in travel plans. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+- (a) If this Policy is purchased before the Insured Person becomes aware of any circumstances which could lead to the cancellation of a planned Trip; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (b) With the provision of documentary proof that there was a first attempt to seek a refund of any prepaid expenses from the transport or accommodation provider and the refund request has been denied by them. We will pay the balance of the irrecoverable transport or accommodation expenses after deducting the amount that has been refunded by the transport or accommodation provider; and - (c) If the travel agent, tour operator, transport or accommodation provider(s) have been duly informed at the earliest possible time as soon as the Insured Person(s) is aware that there is a change of travel plans [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## Exclusions Applicable to Section 37
+
+- (a) Any expenses for a service not approved and arranged by the Emergency Services Hotline unless We decide that such expenses were necessarily incurred and for reasons beyond the control of the Insured Person(s), the Insured Person(s)'s Relative, estate or Travel Companion; or in the event that the Emergency Services Hotline could not be contacted during the emergency. In any event, We reserve the right to reimburse the Insured Person(s) only for those expenses incurred for services which the Emergency Services Hotline would have provided under the same circumstances and up to the limit stated in the Schedule [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## Exclusions Applicable to Section 38
+
+- (f) Any change of plans on the Insured Person's part or that of any other person to travel; - (g) The Insured Person, Insured Person's immediate family member or Travel Companion's financial circumstances or any contractual or business obligation; and/or - (h) Any additional costs due to a delay in informing the relevant transport or accommodation provider(s) of the change in travel plans [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (a) If this Policy is purchased before the Insured Person becomes aware of any circumstances which could lead to the curtailment or disruption of a planned Trip; - (b) With the provision of documentary proof that there was a first attempt to seek a refund of any prepaid expenses from the transport or accommodation provider and the refund request has been denied by them. We will pay the balance of the irrecoverable transport or accommodation expenses after deducting the amount that has been refunded by the transport or accommodation provider; and - (c) If the travel agent, tour operator, transport or accommodation provider(s) have been duly informed at the earliest possible time as soon as the Insured Person(s) is aware that there is a change of travel plans [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].

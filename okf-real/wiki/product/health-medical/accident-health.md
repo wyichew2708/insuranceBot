@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/health-medical/accident-health
-title: Accident & Health
+title: Accident & Health Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -12,6 +12,10 @@ line_of_business: health-medical
 regulated_advice: false
 aliases:
 - accident & health
+- accident and health
+- foreign worker medical insurance
+- foreign workers medical
+- group accident
 channels:
 - ref: channel/direct
   name: Direct
@@ -25,6 +29,7 @@ version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/health-medical/accident-health/exclusions
+  claims: journey/claim/accident-health
   concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'

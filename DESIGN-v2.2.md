@@ -98,6 +98,55 @@ renders the envelope exactly as before. Nothing shown is ever taken back.
 calls from `trace.stage()`. Nothing else in the pipeline knows it is being
 streamed.
 
+## The catalogue — `okf-real/catalogue.yaml`
+
+The crawl labelled a page "product" from its URL, and that made 156 products
+out of a catalogue of thirty-eight: every business sub-category stub
+(Burglary, Office, Retail, Plate Glass…), four life-stage landing pages under
+Term Life (Family, Single, Just Married, Loans), category indexes
+(Investments, Motor Insurance, Premier Solutions), a webinar, a fire-safety
+event, a survey form. A customer who typed "tiq home" was asked whether they
+meant the event or the webinar.
+
+The owner supplied the catalogue on 2026-09-03 — 35 current products and 3
+legacy ones, with their official pages — and it is now data the compiler
+obeys. One product per entry, built from the listed pages and from the
+documents whose names match the entry's keys. A crawled page the catalogue
+does not list is not a product, whatever the crawl called it. A page shared
+by several entries (the Life & Critical Illness category page) is attached
+to none. Legacy entries compile with `lifecycle: closed_to_new_business` and
+the composer opens their answers with "closed to new customers".
+
+Result: **38 product pages**, every catalogue name resolves ("tiq home" →
+Tiq Home Insurance, "eprotect maid" → Tiq Maid Insurance, "3 plus ci" → Tiq
+3 Plus Critical Illness), no clarification on a named product. Deterministic
+FAQ suite 354 / 364; field test 80 / 109 on the deterministic path (the
+remaining hold cases — "my house", "my helper", advice-switching — resolve
+through the model).
+
+**Documents the catalogue does not claim.** The compiler now reports these
+by name and compiles nothing from them. They are for the owner to map — each
+is either a product missing from the catalogue, a rider that belongs to a
+listed product, or paperwork:
+
+| group | plan names in `raw/` |
+|---|---|
+| CI riders | direct-etiqa-ci-rider, direct-etiqa-ci-rider-ii, advanced-ci-rider, ci-benefit-rider, ci-protection-rider, early-ci-rider, early-ci-benefit-rider, early-ci-protection-rider, etiqa-direct-critical-illness-rider, heart-neurological-disorder-rider (×2) |
+| Waivers / care riders | extra-secure-waiver (I, II), extra-payer-waiver (I, II), extra-disability-care (+ rider), extra-cancer-care-waiver |
+| Enrich series | enrich-assure, enrich-flex-plus, enrich-goal, enrich-income, enrich-retirement, enrich-rewards, enrich-saver |
+| Invest series | invest-flex-prime-ii, invest-flex-pro, invest-flex-wealth-ii, invest-plus-sp, invest-prime-purpose, invest-smart-flex-ii, invest-wealth-purpose, invest-starter |
+| Other products not listed | elastiq, dash-easyearn (+ lite), dash-pet, gigantiq-sprint, gigacover-flip, singtel-bill-protect, flep, travel-pass, eprotect-mortgage, eprotect-family, essential-lifetime-secure, essential-critical-secure, accidental-death, death-tpd, life |
+| Home variants | complimentary-home, eprotect-home, etiqa-eprotect-home, etiqa-homeowners-enhanced, home-renewal-protection-bundle, etiqa-fire |
+| Business documents | etiqa-autolab-package-wic, etiqa-management-corporation-errors-ommission |
+
+Published FAQs with no product to hang on: GIGANTIQ (37 pairs), ELASTIQ (33),
+Dash PET (45), Dash EasyEarn (16).
+
+Two things this changes for the measurement: corpus reach by sentence falls
+to 5% (the unclaimed documents are most of the words), and the 1,000-case
+sample in `.eval-reports/real-sample-1000.json` was generated from the old
+156-product corpus and must be regenerated before the next run.
+
 ## Sources — the product page and the documents, never the marketing
 
 The corpus holds 1,001 crawled pages, and 586 of them are blog posts; press

@@ -4,13 +4,15 @@ id: product/savings-retirement/eeasy-savepro
 title: eEASY savepro
 type: product
 status: approved
-lifecycle: on_sale
+lifecycle: closed_to_new_business
 underwriter: Etiqa Insurance Pte. Ltd.
 uen: 201331905K
 jurisdiction: SG
 line_of_business: savings-retirement
 regulated_advice: false
 aliases:
+- easy savepro
+- eeasy save pro
 - eeasy savepro
 channels:
 - ref: channel/direct
@@ -37,11 +39,13 @@ confidence: medium
 
 ## What this plan is
 
-Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#go-beyond-the-basics-and-grow-your-wealth-like-a-pro].
+Read Etiqa Insurance Pte. Ltd.’s Privacy Policy [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#go-beyond-the-basics-and-grow-your-wealth-like-a-pro].
 
 ## What it covers
 
 Save better with added peace of mind and convenience: Protected up to specified limits by SDIC [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#save-better-with-added-peace-of-mind-and-convenience].
+
+The policy wording sets out cover under: Covered Events; Guaranteed Insurability Benefit; Cash Benefits; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Total and Permanent Disability (TPD) Benefit [src:raw/wordings/general-provisions-eeasy-savepro-15-year-policy-term.md].
 
 ## What is not covered
 

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/claims
-title: Car Insurance — Making a claim
+title: Private Car Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale

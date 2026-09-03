@@ -11,6 +11,8 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- etiqa hdb fire insurance
+- fire insurance
 - hdb fire
 - hdb fire insurance
 channels:
@@ -27,6 +29,7 @@ effective_from: '2026-08-25'
 links:
   benefits: product/general/fire-insurance/benefits
   exclusions: product/general/fire-insurance/exclusions
+  claims: journey/claim/fire-insurance
   concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'

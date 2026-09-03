@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance/claims
-title: Motorcycle Insurance with up to $500,000 coverage — Making a claim
+title: Motorcycle Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale

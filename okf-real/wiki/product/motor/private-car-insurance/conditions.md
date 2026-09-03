@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/conditions
-title: Car Insurance — Policy conditions
+title: Private Car Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale

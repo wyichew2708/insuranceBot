@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/property
-title: Property
+title: Property Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,6 +11,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- commercial property
+- consequential loss
+- fire and extraneous perils
+- industrial all risks
 - property
 channels:
 - ref: channel/direct
@@ -41,6 +45,8 @@ Protect your commercial property against damage or loss due to an accident, fire
 ## What it covers
 
 Property Insurance: Protect your commercial property against damage or loss due to an accident, fire or other events [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-property.md#property-insurance].
+
+The policy wording sets out cover under: Material Damage; Third Party Liability; Business Interruption [src:raw/wordings/etiqa-contractors-all-risks-policy-wording.md].
 
 ## What is not covered
 

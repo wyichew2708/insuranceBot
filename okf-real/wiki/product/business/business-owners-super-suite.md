@@ -11,7 +11,11 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
+- boss
+- business owners suite
 - business owners super suite
+- sme package
+- super suite
 channels:
 - ref: channel/direct
   name: Direct
@@ -41,6 +45,8 @@ Our ‘BOSS’ (Business Owners Super Suite) insurance plans make it easy for sm
 ## What it covers
 
 Light Industries: If you manufacture and assemble goods, or store goods in a light industrial building, you can protect your business from the unexpected with the Etiqa Insurance Pte. Ltd. BOSS suite [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#light-industries].
+
+The policy wording sets out cover under: ALL RISKS; All Other Contents; Damage to Safe or Strongroom; Money in Private Residences; Personal Accident Benefits; Seasonal Money Accumulation; Travellers Money; PUBLIC LIABILITY [src:raw/wordings/businessenterprisesolutionpolicywordings-1-nov-2020-clean.md].
 
 ## What is not covered
 

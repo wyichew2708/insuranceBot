@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety/definitions
-title: Eprotect Safety Insurance — Definitions
+title: ePROTECT safety — Definitions
 type: product
 status: approved
 lifecycle: on_sale

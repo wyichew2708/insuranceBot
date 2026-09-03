@@ -474,14 +474,20 @@
 # capable of breaking exactly these.
 
 - id: ft-hold-cancer-disambiguation
+  # Until 2026-09-03 the corpus carried three cancer products and this had to
+  # ask. The owner's catalogue lists one Cancer Insurance, so the name is the
+  # answer and asking would be the defect.
   question: i want to buy cancer insurance
   expect:
-    clarifying: true
+    clarifying: false
+    cite_product: cancer-insurance
 
 - id: ft-hold-home-disambiguation
+  # Same change as the cancer case: the catalogue lists one Tiq Home Insurance.
   question: do you have home insurance
   expect:
-    clarifying: true
+    clarifying: false
+    cite_product: home-insurance
 
 - id: ft-hold-no-invented-premium-travel
   question: how much does travel insurance cost
@@ -602,7 +608,7 @@
   expect:
     # Any of the home products serves this; the point is that "house" reached
     # one at all, when nothing in the corpus is called a house.
-    cite_product: [complimentary-home, home-insurance, tiq-home-insurance, etiqa-eprotect-home]
+    cite_product: [home-insurance, fire-insurance]
 
 - id: ft-hold-helper-is-maid
   turns: ["my helper hurt herself", "how do i claim"]
@@ -634,9 +640,13 @@
   # "tiq" is the brand, "travel" the category. The phrase sits inside exactly
   # one title — Tiq Travel Covid Insurance — so it looked unambiguous and was
   # answered with the COVID rider while tiq.com.sg sells plain Travel Insurance.
+  # 2026-09-03: "Tiq Travel" is the product's own name on the site that sells
+  # it, and the catalogue records it as one. The customer named the product;
+  # asking them which they meant was the defect.
   question: tiq travel
   expect:
-    clarifying: true
+    clarifying: false
+    cite_product: travel-insurance
 
 - id: ft-product-how-to-buy-is-not-cover
   # Answered with 467 words of travel cover because one clause said the Trip

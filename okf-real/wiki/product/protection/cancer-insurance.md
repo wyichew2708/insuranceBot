@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/cancer-insurance
-title: Cancer Insurance with No Claim Discount
+title: Cancer Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,7 +10,11 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: protection
 regulated_advice: false
-aliases: []
+aliases:
+- cancer
+- cancer cover
+- cancer insurance with no claim discount
+- tiq cancer insurance
 channels:
 - ref: channel/direct
   name: Direct
@@ -36,6 +40,10 @@ confidence: medium
 ## What this plan is
 
 - Coverage for all stages of cancer [src:raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md#why-cancer-insurance].
+
+## What it covers
+
+The policy wording sets out cover under: Cancer Benefit; Death Benefit; Covered Events; Monthly Payout Benefit [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
 
 ## What is not covered
 

@@ -38,12 +38,16 @@ def test_a_benefit_named_is_not_an_overview(real: Bundle) -> None:
     assert ask.scope == "specific"
 
 
-def test_the_longer_name_names_the_add_on(real: Bundle) -> None:
-    assert read_ask(real, "tiq travel covid coverage").product == "tiq-travel-covid"
+def test_a_name_inside_a_longer_phrase_still_names_the_product(real: Bundle) -> None:
+    # The Covid add-on is not a catalogue product; "tiq travel covid" is a
+    # question about Tiq Travel Insurance.
+    assert read_ask(real, "tiq travel covid coverage").product == "travel-insurance"
 
 
 def test_a_category_with_no_flagship_is_a_family_to_ask_about(real: Bundle) -> None:
-    ask = read_ask(real, "cancer insurance premium")
+    # "direct etiqa" sits inside two catalogue titles — term life II and
+    # whole life — and neither title is the phrase itself.
+    ask = read_ask(real, "direct etiqa premium")
     assert ask.product is None
     assert ask.ambiguous and len(ask.family) >= 2
 

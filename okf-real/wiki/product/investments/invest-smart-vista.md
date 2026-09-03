@@ -11,7 +11,9 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
+- etiqa invest smart vista
 - invest smart vista
+- smart vista
 channels:
 - ref: channel/direct
   name: Direct

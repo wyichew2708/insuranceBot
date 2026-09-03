@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/direct-etiqa-term-life-ii/definitions
-title: Direct Etiqa Term Life II Insurance — Definitions
+title: DIRECT – Etiqa term life II — Definitions
 type: product
 status: approved
 lifecycle: on_sale

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/direct-etiqa-term-life-ii/exclusions
-title: Direct Etiqa Term Life II Insurance — Exclusions
+title: DIRECT – Etiqa term life II — Exclusions
 type: product
 status: approved
 lifecycle: on_sale

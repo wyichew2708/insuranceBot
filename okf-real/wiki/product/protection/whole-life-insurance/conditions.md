@@ -17,8 +17,8 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/direct-whole-life-terms-and-conditions-003.md
 - raw/wordings/eprotect-whole-life-policy-contract.md
-- raw/wordings/policy-contract-direct-etiqa-whole-life.md
 version_in_force: '2026'
 links:
   concepts:
@@ -30,6 +30,48 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## Terms and Conditions
+
+> DIRECT - Etiqa Insurance Pte. Ltd. whole life Insurance: 1 May 2024 to 30 June 2024 [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 1. This DIRECT - Etiqa Insurance Pte. Ltd. whole life Insurance ('Promotion'), organised by Etiqa Insurance Pte. Ltd. by Etiqa Insurance Pte. Ltd. ('Etiqa Insurance Pte. Ltd.'), is valid from 1 May 2024 to 30 June 2024 , both dates inclusive ('Promotion Period'). 2. This Promotion is open to all Singapore citizen(s), Singapore Permanent Resident(s) and Foreigner(s) with valid Work Pass, Student Pass, Dependant's Pass or Long-Term Visit Pass. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+3. Customers will qualify for Etiqa Insurance Pte. Ltd. Rewards Points ('Rewards Points') if the following Product is purchased via the Etiqa Insurance Pte. Ltd. by Etiqa Insurance Pte. Ltd. mobile app during the Promotion Period, and where acceptable, is accepted by Etiqa Insurance Pte. Ltd.: [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+Refer to our Etiqa Insurance Pte. Ltd. Rewards page for more information [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+4. No promotion code is required for the Rewards Points. Customers will automatically be entitled to receive the rewards when they meet the eligible criteria above. 5. The Rewards Points are not transferable, exchangeable for cash, goods, and services or extendable in validity [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+> 6. The Rewards Points will be credited to the eligible customers' TiqConnect eWallet within 90 days from the policy start date , provided that the policy of the Product(s) purchased has not been cancelled or free-look rights have been exercised. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+7. Should the customers cancel their policy of the Product(s) purchased after the Rewards Points has been issued, Etiqa Insurance Pte. Ltd. is entitled to deduct an equivalent amount of the Rewards Points value from the refund amount of the policy, provided no claims have been made under the policy [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+> 8. The Promotion is not valid for customers who have an existing in-force DIRECT - Etiqa Insurance Pte. Ltd. whole life policy/policies with Etiqa Insurance Pte. Ltd.. 9. The Promotion is not valid for customers who have cancelled or free-look existing policy/policies with Etiqa Insurance Pte. Ltd. within 14 days of policy application. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 10. Existing terms and conditions for the product apply. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 11. The Promotion is not valid in conjunction with any ongoing or existing insurance promotions, coupons, staff discounts and privileges, unless otherwise stated. 12. By participating in the Promotion, the customer agrees to release and hold Etiqa Insurance Pte. Ltd. harmless from any and all liability whatsoever for any injuries, losses or damages of any kind to any person or property arising from or in connection with, either directly or indirectly the participation in the Promotion. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 13. Notwithstanding anything herein, Etiqa Insurance Pte. Ltd. has the absolute discretion to determine the eligibility of any person to participate in the Promotion. 14. If Etiqa Insurance Pte. Ltd. subsequently determines that a person is in fact not eligible, for any reason whatsoever, Etiqa Insurance Pte. Ltd. may at its discretion, disqualify that person and clawback/cancel the Rewards Points without prior notice and liability to any person. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 15. Etiqa Insurance Pte. Ltd.'s decision on all matters relating to the Promotion is final and binding on all customers. 16. Etiqa Insurance Pte. Ltd. may at its sole discretion at any time change the terms of the Promotion, or substitute or replace the Promotion with any other prize of equal or higher value, without prior notice. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 17. In the event of any inconsistency between these terms and conditions and any advertising, publicity, brochure, marketing or other materials relating to or in connection with the Promotion, these terms and conditions shall prevail. 18. The terms and conditions of the Promotion shall be governed by and interpreted in accordance with Singapore law. The courts of Singapore shall have exclusive jurisdiction over any disputes arising from the terms and conditions, including the validity and enforceability thereof. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+> 19. By participating in the Promotion, the Customer consent to Etiqa Insurance Pte. Ltd. and its related, its agents, authorised service providers and marketing partners collecting, using or disclosing and/or processing their personal data, for the purpose to evaluate their proposal form and to provide the product and services which they are applying for and such other purposes as stated in Etiqa Insurance Pte. Ltd.'s Data Protection and Privacy Statement on Etiqa Insurance Pte. Ltd.'s website, which the Customer confirmed that they have read and understood. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+The Customer confirm and agree that their consents herein supplement but do not supersede or replace any other consents which they may have previously provided to Etiqa Insurance Pte. Ltd., and are additional to any rights which Etiqa Insurance Pte. Ltd. may have at law to collect, use or disclose their personal data, with or without their consent, to the extent permitted under applicable law [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+In addition, where personal data of any person is disclosed by the Customer, the Customer further confirm and represent that they have obtained the consent of the individual concerned for the purposes, unless such consent is not required under applicable laws [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+> 20. A person who is not a party to these Promotion Terms and Conditions has no right under the Contracts (Rights of Third Parties) Act 2001, to enforce any of these Terms and Conditions. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+This policy is underwritten by Etiqa Insurance Pte. Ltd. This content is for reference only and is not a contract of insurance. Full details of the policy terms and conditions can be found in the policy contract. The information contained on this product advertisement is intended to be valid in Singapore only and shall not be construed as an offer to sell or solicitation to buy or provision of any insurance product outside Singapore. You should seek advice from a financial adviser before deciding to purchase the policy. If you choose not to seek advice, you should consider if the policy is suitable for you. This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC websites (lia.org.sg or www.sdic.org.sg) [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
+
+> Information is correct as of 1 May 2024. [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md]
+
+This advertisement has not been reviewed by the Monetary Authority of Singapore [src:raw/wordings/direct-whole-life-terms-and-conditions-003.md].
 
 ## 1.1 The Agreement
 
@@ -132,59 +174,3 @@ We may pay the benefits to either you or your executors, administrators, nominee
 Before we pay any benefit, we will deduct: [src:raw/wordings/eprotect-whole-life-policy-contract.md].
 
 -  any amount you owe on this policy from the benefit and  -  any future instalment premiums which are necessary to make up the full year's premium.  [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-By paying any benefit to you, your executors, administrators, nominees or any other proper claimants, it will end our legal responsibility on that payment [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-8.1 Our Rights to challenge this contract [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-> We cannot challenge the validity of this policy after 2 years from the policy commencement date or the latest reinstatement date. However, if there is fraud, we can challenge the validity of the policy even after 2 years have passed. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-## 8.2 Correction of Mistakes and Errors
-
-When we find any mistake or error made in this policy, we will make the correction and inform you by way of an endorsement [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## 8.3 Changes in Taxation, Regulations and Legislation
-
-At any time when there are changes in taxation, regulations or legislation that will affect this policy, we may vary the terms of the policy. If we do so, we will notify you in writing [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## 8.4 Errors in Age or Gender
-
-If the age or gender of the life insured is not correctly stated such that the premium paid is wrong, we may adjust the benefits. For underpayment of premium, the claims will be pro-rated as if you have purchased a lower cover. For overpayment of premium, we will refund the excess premium without interest [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## 9.1 Free Look
-
-> You may return this policy within 14 days after you receive the policy document, for any reason. We will deduct any medical fee incurred in assessing the risk from the premium you paid and refund the balance to you. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-> We consider this policy is delivered to you 7 days after the date of email or posting. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-9.2 Transferring the legal right of the policy [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-If you write to us and we agree to the transfer, you can transfer (assign) this policy to another person. When we do so, you may not make any further transfer until the previous transfer has been properly cancelled [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-We will not be responsible for the validity of any transfer of policy [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## 9.3 Change of Policy Ownership
-
-> On written request, you may change the owner or the interest of any owner back to the life insured if he is at least 21 years old. [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-## 9.4 Nominees
-
-Subject to the current laws and regulations, you may add, change or remove a nominee(s) to receive the share of the benefits by giving us a written notice. However, if there is a trustee(s) appointed or created under the policy, the trustee(s) must consent before any change can be effected [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-Your policy will end when one of these events happens first: [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-> - i. death of the life insured - ii. we paid out 100% of the sum insured of this policy 3. the loan amount on this policy owing to us [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-iii. premium is not paid on time iv. at maturity date v. exceeds the cash value vi. the cover expiry date vii. you write in to terminate the policy [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## 3. Guaranteed Renewability
-
-> If you have chosen a policy term of 5 years (renewable), this policy will be renewed automatically from the renewal date for another 5 years at the same sum insured, without giving us proof of good health so long as all of the following conditions are met: [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-> - a) this policy is in force on the expiry date before the renewal; - b) the life insured has not reached age 81 at the renewal date; and - c) there is no claim on this policy [src:raw/wordings/eprotect-whole-life-policy-contract.md]
-
-The renewal premium will be calculated based on the prevailing premium rates at the attained age of the life insured and will stay level throughout the renewed term [src:raw/wordings/eprotect-whole-life-policy-contract.md].
-
-## Policy Owners' Protection Scheme
-
-This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites ( www.lia.org.sg or www.sdic.org.sg ) [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].

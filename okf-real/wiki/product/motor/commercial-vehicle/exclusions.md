@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/commercial-vehicle/exclusions
-title: Commercial Vehicle — Exclusions
+title: Commercial Vehicle Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,15 +10,14 @@ jurisdiction: SG
 line_of_business: motor
 regulated_advice: false
 aliases:
-- commercial-vehicle exclusions
-- commercial-vehicle not covered
-- what is not covered by commercial-vehicle
+- commercial vehicle exclusions
+- what is not covered by commercial vehicle
+- commercial vehicle not covered
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-commercial-vehicle.md
+- raw/wordings/commercial-motor-policy-wording-v4.md
 version_in_force: '2026'
-effective_from: '2026-08-25'
 links:
   concepts:
   - concept/policy-schedule
@@ -28,9 +27,13 @@ compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-12-02'
-confidence: low
+confidence: high
 ---
 
-## Exclusions
+## EXCEPTIONS
 
-The exclusions for this product are set out in its policy wording, which is not part of this compiled bundle [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-commercial-vehicle.md].
+The Company shall not be liable in respect of [src:raw/wordings/commercial-motor-policy-wording-v4.md].
+
+- (a) death of or bodily injury to - (i) the Insured. - (ii) any person driving the Motor Vehicle or in charge of the Motor Vehicle for the purpose of driving. - (iii) any person in the employment of the Passenger where such death or bodily injury arises out of or in the course of such employment [src:raw/wordings/commercial-motor-policy-wording-v4.md].
+
+- (b) damage to property belonging to or held in trust by or in the custody or control of the Insured or of the Passenger or being conveyed by the Motor Vehicle [src:raw/wordings/commercial-motor-policy-wording-v4.md].

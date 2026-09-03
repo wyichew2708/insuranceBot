@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/benefits
-title: Travel Insurance — Benefits
+title: Tiq Travel Insurance — Benefits
 type: product
 status: approved
 lifecycle: on_sale

@@ -25,6 +25,7 @@ from harness.ask import Ask, ask_about, asked_benefits
 from harness.gates import NUMERIC_SPAN_RE
 from harness.intent import REQUIREMENTS, Intent, classify
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
+from okf.page import Lifecycle
 from okf.sources import OFFER_QUESTION_RE
 from okf.tables import TOKEN_RE, find_tokens
 
@@ -889,6 +890,18 @@ def compose(
         substantive = [p for p in paragraphs if not placeholder_only(p)]
         if substantive:
             paragraphs = substantive
+
+    # A legacy product is still answered — a policyholder has questions — but
+    # never as though it could be bought. The catalogue says which these are.
+    if (
+        product is not None
+        and product.frontmatter.lifecycle is Lifecycle.closed_to_new_business
+        and paragraphs
+    ):
+        paragraphs.insert(
+            0,
+            f"{product_name(product)} is closed to new customers; what follows applies to existing policies.",
+        )
 
     render = render_channel(bundle, product, session)
     if contested_notes:

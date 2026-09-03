@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/commercial-vehicle
-title: Commercial Vehicle
+title: Commercial Vehicle Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,9 @@ jurisdiction: SG
 line_of_business: motor
 regulated_advice: false
 aliases:
+- commercial motor
 - commercial vehicle
+- fleet insurance
 channels:
 - ref: channel/direct
   name: Direct

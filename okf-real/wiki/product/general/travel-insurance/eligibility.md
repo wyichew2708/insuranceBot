@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/eligibility
-title: Travel Insurance — Eligibility
+title: Tiq Travel Insurance — Eligibility
 type: product
 status: approved
 lifecycle: on_sale
@@ -17,6 +17,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/eprotect-travel-policy-wording.md
+- raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md
 version_in_force: '2026'
 links:
   concepts:
@@ -37,3 +38,7 @@ Payment shall be deemed to have been effected to the Insurer or the intermediary
 - (a) Cash or honoured cheque for the premium is handed over to the Insurer or the intermediary; - (b) A credit or debit card transaction for the premium is approved by the issuing bank; - (c) A payment through an electronic medium including the internet is approved by the relevant party; [src:raw/wordings/eprotect-travel-policy-wording.md].
 
 - (d) A credit in favour of the Insurer or the intermediary is made through an electronic medium including the internet. 2. In the event that the total premium due is not paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/eprotect-travel-policy-wording.md].
+
+## Eligibility
+
+In the event that the total premium due is not paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date or the renewal date, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].

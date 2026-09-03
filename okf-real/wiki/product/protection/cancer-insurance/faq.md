@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/cancer-insurance/faq
-title: Cancer Insurance with No Claim Discount — Published FAQs
+title: Cancer Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

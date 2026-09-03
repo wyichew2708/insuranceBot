@@ -12,6 +12,8 @@ line_of_business: investments
 regulated_advice: true
 aliases:
 - tiq invest
+- tiq invest ilp
+- tiqinvest
 channels:
 - ref: channel/direct
   name: Direct

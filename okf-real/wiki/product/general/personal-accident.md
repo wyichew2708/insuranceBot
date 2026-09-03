@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/personal-accident
-title: Personal Accident
+title: Tiq Personal Accident
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- pa insurance
 - personal accident
+- personal accident insurance
+- tiq pa
 - tiq personal accident
 channels:
 - ref: channel/direct
@@ -44,7 +47,7 @@ Protect yourself against unexpected accidents and events Don’t let unexpected 
 
 ## What it covers
 
-The policy wording sets out cover under: Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease; Physiotherapy [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
+The policy wording sets out cover under: Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease; Physiotherapy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
 ## What is not covered
 

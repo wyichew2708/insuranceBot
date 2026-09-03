@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/conditions
-title: Travel Insurance — Policy conditions
+title: Tiq Travel Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale
@@ -18,6 +18,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/eprotect-travel-policy-wording.md
+- raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md
 version_in_force: '2026'
 links:
   concepts:
@@ -200,3 +201,23 @@ This policy is protected under the Policy Owners' Protection Scheme which is adm
 ## Personal Data Use
 
 Any information collected or held by Us whether contained in Your application or otherwise obtained may be used and/or disclosed to Our associated individuals/companies or any independent third parties (within or outside Singapore) for any matters relating to Your application, any policy issued and to provide advice or information concerning products and services which We believe may be of interest to You and to communicate with You for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/eprotect-travel-policy-wording.md].
+
+## Payment Before Cover Warranty (Applicable to Individual Policy Owner Only)
+
+The premium due must be paid to the Insurer (or the intermediary through whom this Policy was effected) on or before the inception date ('the inception date') or the renewal date of the coverage. Payment shall be deemed to have been effected to the Insurer or the intermediary when one of the following acts takes place: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (a) Cash or honoured cheque for the premium is handed over to the Insurer or the intermediary; - (b) A credit or debit card transaction for the premium is approved by the issuing bank; - (c) A payment through an electronic medium including the internet is approved by the relevant party; [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+- (d) A credit in favour of the Insurer or the intermediary is made through an electronic medium including the internet [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+## Important Notice
+
+> In accordance with Section 23(5) of the Insurance Act 1966, We would remind You that You must disclose to Us fully and faithfully all the facts You know or could reasonably be expected to know, otherwise You may not receive any benefit from this Policy. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+## Pre-existing Condition
+
+For Non Pre-Ex Plans, this means any medical condition for which: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].
+
+> - (a) The Insured Person(s) received medical treatment, diagnosis, consultation or prescribed drugs within a twelve (12) month period immediately prior to the Effective Date of Insurance; or - (b) Medical advice or treatment was recommended by a Medical Practitioner within a twelve (12) month period immediately prior to the Effective Date of Insurance; or - (c) A reasonable person in the circumstances would be expected to be aware of within a twelve (12) month period immediately prior to the Effective Date of Insurance. [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md]
+
+Prohibited Person means a person or entity who is, or who is related to a person or entity: [src:raw/wordings/tiq-travel-covid-19-policy-wording-v10-2026-03.md].

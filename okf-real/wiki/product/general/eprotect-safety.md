@@ -1,18 +1,18 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety
-title: Eprotect Safety Insurance
+title: ePROTECT safety
 type: product
 status: approved
-lifecycle: on_sale
+lifecycle: closed_to_new_business
 underwriter: Etiqa Insurance Pte. Ltd.
 uen: 201331905K
 jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- e-protect safety
 - eprotect safety
-- eprotect safety insurance
 channels: []
 plan_tiers: []
 authority:
@@ -27,7 +27,7 @@ review_due: '2026-12-02'
 confidence: medium
 ---
 
-## About Eprotect Safety Insurance
+## About ePROTECT safety
 
 ## Section 1 - Accidental Death
 

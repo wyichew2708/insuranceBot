@@ -51,10 +51,12 @@ from okf.page import (
 )
 from okf.sources import PRODUCT_PAGE_TYPES
 
+from compiler.catalogue import Catalogue, Entry, load_catalogue
 from compiler.documents import (
     COMPILED_ROLES,
     TIERS,
     Document,
+    _keys,
     campaign_documents,
     load_documents,
     match_documents,
@@ -311,6 +313,13 @@ class SourceConflict:
 class ProductGroup:
     slug: str
     title: str = ""
+    #: Names the product is listed under elsewhere — the title of a listing
+    #: folded into this group. "Tiq Home Insurance" for Home Insurance: a
+    #: customer types the name on the site they bought from, and losing it
+    #: with the folded listing sent "tiq home" to a fire-safety event page.
+    names: list[str] = field(default_factory=list)
+    #: The catalogue entry this group is, where a catalogue drives the build.
+    entry: Entry | None = None
     product: dict[str, Snapshot] = field(default_factory=dict)  # host → snapshot
     claims: dict[str, Snapshot] = field(default_factory=dict)
     faq: dict[str, Snapshot] = field(default_factory=dict)
@@ -438,7 +447,11 @@ NOT_A_PRODUCT_URL = re.compile(
 )
 
 
-def group_products(snapshots: list[Snapshot], report: CompileReport) -> dict[str, ProductGroup]:
+def group_products(
+    snapshots: list[Snapshot], report: CompileReport, catalogue: Catalogue | None = None
+) -> dict[str, ProductGroup]:
+    if catalogue is not None:
+        return _group_by_catalogue(snapshots, report, catalogue)
     groups: dict[str, ProductGroup] = {}
     for snapshot in snapshots:
         if snapshot.page_type != "product":
@@ -466,6 +479,67 @@ def group_products(snapshots: list[Snapshot], report: CompileReport) -> dict[str
         elif snapshot.page_type == "faq":
             attached.faq.setdefault(snapshot.host, snapshot)
     return groups
+
+
+def _group_by_catalogue(
+    snapshots: list[Snapshot], report: CompileReport, catalogue: Catalogue
+) -> dict[str, ProductGroup]:
+    """One group per catalogue entry, from the pages the entry lists.
+
+    A crawled page the catalogue does not list is not a product, whatever
+    the crawl called it — that is the whole point of the catalogue. A page
+    shared by several entries (a category page) is attached to none. A
+    claims or FAQ page attaches to the entry whose names it shares.
+    """
+    groups: dict[str, ProductGroup] = {}
+    for entry in catalogue.entries:
+        group = ProductGroup(entry.slug, title=entry.name, entry=entry)
+        group.names = [a for a in entry.aliases if a.lower() != entry.name.lower()]
+        groups[entry.slug] = group
+
+    for snapshot in snapshots:
+        if snapshot.page_type != "product":
+            continue
+        listed = catalogue.entry_for_url(snapshot.url)
+        if listed is None:
+            shared = catalogue.entries_for_url(snapshot.url)
+            if shared:
+                report.skip(
+                    f"category page shared by {len(shared)} products — attached to none: {snapshot.url}"
+                )
+            else:
+                report.skip("product page not in the catalogue — not compiled as a product")
+            continue
+        group = groups[listed.slug]
+        current = group.product.get(snapshot.host)
+        if current is None or len(snapshot.text) > len(current.text):
+            group.product[snapshot.host] = snapshot
+
+    # Claims and FAQ pages, by shared name keys.
+    keysets = {slug: _group_keys(group) for slug, group in groups.items()}
+    for snapshot in snapshots:
+        if snapshot.page_type not in ("claims", "faq") or snapshot.slug in SECTION_ROOTS:
+            continue
+        forms = _keys(snapshot.slug)
+        hits = [slug for slug, keys in keysets.items() if forms & keys]
+        if len(hits) != 1:
+            continue
+        target = groups[hits[0]]
+        if snapshot.page_type == "claims":
+            target.claims.setdefault(snapshot.host, snapshot)
+        else:
+            target.faq.setdefault(snapshot.host, snapshot)
+    return groups
+
+
+def _group_keys(group: ProductGroup) -> set[str]:
+    keys = set(_keys(group.slug))
+    for name in (group.title, *group.names):
+        keys |= _keys(slugify(name))
+    if group.entry is not None:
+        for url in group.entry.urls:
+            keys |= _keys(url.rstrip("/").rsplit("/", 1)[-1].lower())
+    return {k for k in keys if len(k) >= 3}
 
 
 #: The words a shopfront puts in front of a product's name. Stripped, not
@@ -532,6 +606,9 @@ def merge_duplicate_groups(groups: dict[str, ProductGroup], report: CompileRepor
                 target.claims.setdefault(host, snapshot)
             for host, snapshot in other.faq.items():
                 target.faq.setdefault(host, snapshot)
+            for name in (other.title, *other.names):
+                if name and name not in target.names and name != target.title:
+                    target.names.append(name)
             if not target.title or (other.title and len(other.title) < len(target.title)):
                 target.title = other.title
             folded[slug] = keep
@@ -937,7 +1014,7 @@ _COVER_WORD_RE = re.compile(
 )
 #: Headings that group or summarise rather than name cover.
 _COVER_GROUP_HEADING_RE = re.compile(
-    r"^(summary of cover|policy benefits|other benefits|optional benefits|scale of benefits|what is covered)",
+    r"^(summary of cover|policy benefits|other benefits|optional benefits|scale of benefits|what is covered|sum insured|geographical|basis of settlement|definitions|general conditions|premium)",
     re.I,
 )
 _COVER_LIST_MAX = 12
@@ -1055,8 +1132,13 @@ def emit_product(
     # add-on. The flagship was the one product unreachable by its own name.
     # Only name-shaped titles: an SEO sentence ("Motorcycle Insurance with up
     # to $500,000 coverage") is not a name.
-    for snapshot in ordered:
-        shop = " ".join(snapshot.title.split())
+    # The catalogue's names are trusted verbatim; a crawled title only when
+    # it is name-shaped.
+    for alias in group.names if group.entry is not None else []:
+        aliases.append(alias.lower())
+    for shop in [" ".join(s.title.split()) for s in ordered] + (
+        [] if group.entry is not None else list(group.names)
+    ):
         if not shop or len(shop.split()) > 5 or re.search(r"[.,$|]", shop):
             continue
         aliases.append(shop.lower())
@@ -1102,7 +1184,11 @@ def emit_product(
         group.title,
         PageType.product,
         authority,
-        lifecycle=Lifecycle.on_sale,
+        lifecycle=(
+            Lifecycle.closed_to_new_business
+            if group.entry is not None and group.entry.legacy
+            else Lifecycle.on_sale
+        ),
         underwriter=LEGAL_NAME,
         uen=UEN,
         line_of_business=lob,
@@ -1123,15 +1209,22 @@ def emit_product(
     # that says something is the difference between a page that describes the
     # product and a page whose only content is a note about channels.
     body: list[str] = ["## What this plan is"]
-    intro = _grounded(_normalise_brands(_first_sentence(primary.intro)), primary.ref("body"), report)
+    opening = _first_sentence(primary.intro)
+    if _COVER_NOISE_RE.search(opening):
+        # "Coverage | Resources | FAQs Thank you for your support! eEASY
+        # savepro is now fully subscribed" is a navigation bar and a closure
+        # notice, not what the plan is. Fall through to the sections.
+        opening = ""
+    intro = _grounded(_normalise_brands(opening), primary.ref("body"), report) if opening else None
     if intro is None:
         for section in primary.sections:
             if not section.heading or _OVERVIEW_SKIP_RE.search(section.heading):
                 continue
             for paragraph in section.paragraphs:
-                intro = _grounded(
-                    _normalise_brands(_first_sentence(paragraph)), primary.ref(section.anchor), report
-                )
+                sentence = _first_sentence(paragraph)
+                if not sentence or _COVER_NOISE_RE.search(sentence) or sentence.endswith("!"):
+                    continue
+                intro = _grounded(_normalise_brands(sentence), primary.ref(section.anchor), report)
                 if intro:
                     break
             if intro:
@@ -1386,6 +1479,8 @@ def emit_faqs(
     for slug, group in sorted(groups.items(), key=lambda kv: -len(kv[1].text)):
         index.setdefault(_faq_key(slug), slug)
         index.setdefault(_faq_key(group.title), slug)
+        for name in group.names:
+            index.setdefault(_faq_key(name), slug)
     slugs = sorted(groups, key=lambda s: -len(groups[s].text))
 
     by_product: dict[str, list[dict[str, str]]] = {}
@@ -2152,6 +2247,7 @@ def emit_document_products(
     documents: list[Document],
     report: CompileReport,
     concepts: list[str],
+    named: dict[str, tuple[str, list[Document], Entry | None]] | None = None,
 ) -> dict[str, list[tuple[str, str]]]:
     """Products that exist only as a PDF.
 
@@ -2183,11 +2279,19 @@ def emit_document_products(
                 f"same document product under two names — {', '.join(plans[1:])} folded into {plans[0]}"
             )
         by_plan[plans[0]] = found
+    titles: dict[str, str] = {}
+    entries: dict[str, Entry | None] = {}
+    for slug, (title, found, entry) in (named or {}).items():
+        if found:
+            by_plan[slug] = list(found)
+            titles[slug] = title
+            entries[slug] = entry
 
     products: dict[str, list[tuple[str, str]]] = {}
     for plan, found in sorted(by_plan.items()):
         found.sort(key=lambda d: (TIERS.index(d.tier), -sum(s.words for s in d.sections)))
-        title = _document_title(found, plan)
+        title = titles.get(plan) or _document_title(found, plan)
+        entry = entries.get(plan)
         lob = line_of_business(plan, title)
         page_id = f"product/{lob}/{plan}"
         if page_id in report.pages:
@@ -2214,11 +2318,19 @@ def emit_document_products(
             title,
             PageType.product,
             refs or [d.ref for d in found],
-            lifecycle=Lifecycle.on_sale,
+            lifecycle=Lifecycle.closed_to_new_business
+            if entry is not None and entry.legacy
+            else Lifecycle.on_sale,
             underwriter=LEGAL_NAME,
             uen=UEN,
             line_of_business=lob,
-            aliases=sorted({plan.replace("-", " "), title.lower()}),
+            aliases=sorted(
+                {
+                    plan.replace("-", " "),
+                    title.lower(),
+                    *([a.lower() for a in entry.aliases] if entry else []),
+                }
+            ),
             links=Links(concepts=linked),
             # No crawled page means no marketing claim to cross-check against,
             # and no channel binding either. High authority, low corroboration.
@@ -2286,7 +2398,10 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
         sorted({s.host for s in snapshots}),
         [h for h in sorted({s.host for s in snapshots}) if "etiqa" in h],
     )
-    groups = group_products(snapshots, report)
+    catalogue = load_catalogue(config.source_root)
+    groups = group_products(snapshots, report, catalogue)
+    if catalogue is not None:
+        report.skip(f"catalogue: {len(catalogue.entries)} products listed by the owner")
     # Sentences for the concept and channel pages are chosen from the
     # product's own pages. A blog post defined "excess" before this, and a
     # blog post is not the insurer's statement of anything.
@@ -2311,6 +2426,10 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
 
     for slug in sorted(groups):
         group = groups[slug]
+        if not group.product:
+            # A catalogue entry whose page was not crawled, or whose only page
+            # is a shared category page: built from its documents below.
+            continue
         version = versions.get(slug, str(config.today.year))
         group_hosts = rank_hosts(group.hosts, hosts)
         rows = benefit_rows(group, version, group_hosts, report)
@@ -2371,7 +2490,23 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
     documents = load_documents(config.source_root)
     for _ in campaign_documents(config.source_root):
         report.skip("campaign paperwork the ingest filed as a wording — not a product")
-    matched, unmatched = match_documents(documents, sorted(groups))
+    if catalogue is not None:
+        # The catalogue says which documents are whose. A document matching
+        # no entry is reported by name and compiled as nothing.
+        matched: dict[str, list[Document]] = {}
+        unmatched: list[Document] = []
+        for document in documents:
+            claimants = catalogue.entries_for_document(document.plan)
+            if not claimants:
+                unmatched.append(document)
+                continue
+            for claimant in claimants:
+                matched.setdefault(claimant.slug, []).append(document)
+        for document in unmatched:
+            report.skip(f"document matches no catalogue product — not compiled: {document.plan}")
+        unmatched = []
+    else:
+        matched, unmatched = match_documents(documents, sorted(groups))
     # The identity rule from `merge_duplicate_groups`, on the wordings path:
     # a document whose plan name is a web product's title once the brand and
     # the category word are taken off belongs to that product. `ELASTIQ` on
@@ -2413,6 +2548,23 @@ def compile_bundle(config: CompileConfig) -> CompileReport:
                 listing.append((child_id, child_title))
     for lob, pages in emit_document_products(config, unmatched, report, concepts).items():
         products.setdefault(lob, []).extend(pages)
+    if catalogue is not None:
+        # Entries with no crawled page: a product from its documents, under
+        # the entry's own name and slug.
+        named: dict[str, tuple[str, list[Document], Entry | None]] = {
+            slug: (group.title, matched.get(slug, []), group.entry)
+            for slug, group in groups.items()
+            if not group.product and group.entry is not None
+        }
+        for lob, pages in emit_document_products(config, [], report, concepts, named=named).items():
+            products.setdefault(lob, []).extend(pages)
+            # So the FAQ pages below can hang off a document-backed product.
+            for page_id, _ in pages:
+                if page_id.count("/") == 2 and page_id.rsplit("/", 1)[-1] in named:
+                    product_page_ids[page_id.rsplit("/", 1)[-1]] = page_id
+        for slug, (_title, found, _entry) in named.items():
+            if not found:
+                report.skip(f"catalogue product with no page and no documents — nothing to compile: {slug}")
 
     # After the product pages, because a FAQ page hangs off one.
     for faq_page in emit_faqs(config, groups, product_page_ids, report):

@@ -30,61 +30,23 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 ## Products — business
 
-- `product/business/business-insurance` — [Business](./product/business/business-insurance.md)
-
-- `product/business/business-insurance/exclusions` — [Business — Exclusions](./product/business/business-insurance/exclusions.md)
-
 - `product/business/business-owners-super-suite` — [Business Owners Super Suite](./product/business/business-owners-super-suite.md)
+
+- `product/business/business-owners-super-suite/claims` — [Business Owners Super Suite — Making a claim](./product/business/business-owners-super-suite/claims.md)
+
+- `product/business/business-owners-super-suite/conditions` — [Business Owners Super Suite — Policy conditions](./product/business/business-owners-super-suite/conditions.md)
+
+- `product/business/business-owners-super-suite/cover` — [Business Owners Super Suite — What is covered](./product/business/business-owners-super-suite/cover.md)
+
+- `product/business/business-owners-super-suite/definitions` — [Business Owners Super Suite — Definitions](./product/business/business-owners-super-suite/definitions.md)
 
 - `product/business/business-owners-super-suite/exclusions` — [Business Owners Super Suite — Exclusions](./product/business/business-owners-super-suite/exclusions.md)
 
-- `product/business/corporate-employee-scheme` — [Corporate Employee Scheme](./product/business/corporate-employee-scheme.md)
+- `product/business/corporate-travel` — [Corporate Travel Insurance](./product/business/corporate-travel.md)
 
-- `product/business/corporate-employee-scheme/exclusions` — [Corporate Employee Scheme — Exclusions](./product/business/corporate-employee-scheme/exclusions.md)
-
-- `product/business/corporate-travel` — [Corporate Travel](./product/business/corporate-travel.md)
-
-- `product/business/corporate-travel/exclusions` — [Corporate Travel — Exclusions](./product/business/corporate-travel/exclusions.md)
-
-- `product/business/etiqa-commercial-all-risks` — [Etiqa Commercial All Risks Insurance](./product/business/etiqa-commercial-all-risks.md)
-
-- `product/business/etiqa-commercial-all-risks/claims` — [Etiqa Commercial All Risks Insurance — Making a claim](./product/business/etiqa-commercial-all-risks/claims.md)
-
-- `product/business/etiqa-commercial-all-risks/conditions` — [Etiqa Commercial All Risks Insurance — Policy conditions](./product/business/etiqa-commercial-all-risks/conditions.md)
-
-- `product/business/etiqa-commercial-all-risks/definitions` — [Etiqa Commercial All Risks Insurance — Definitions](./product/business/etiqa-commercial-all-risks/definitions.md)
-
-- `product/business/etiqa-commercial-all-risks/exclusions` — [Etiqa Commercial All Risks Insurance — Exclusions](./product/business/etiqa-commercial-all-risks/exclusions.md)
-
-- `product/business/work-injury-compensation` — [Work Injury Compensation](./product/business/work-injury-compensation.md)
-
-- `product/business/work-injury-compensation/exclusions` — [Work Injury Compensation — Exclusions](./product/business/work-injury-compensation/exclusions.md)
-
-- `product/business/work-injury-platform-workers` — [Work Injury Compensation for Platform Workers](./product/business/work-injury-platform-workers.md)
-
-- `product/business/work-injury-platform-workers/exclusions` — [Work Injury Compensation for Platform Workers — Exclusions](./product/business/work-injury-platform-workers/exclusions.md)
+- `product/business/corporate-travel/exclusions` — [Corporate Travel Insurance — Exclusions](./product/business/corporate-travel/exclusions.md)
 
 ## Products — general
-
-- `product/general/accidental-death` — [Accidental Death Insurance](./product/general/accidental-death.md)
-
-- `product/general/accidental-death/conditions` — [Accidental Death Insurance — Policy conditions](./product/general/accidental-death/conditions.md)
-
-- `product/general/accidental-death/exclusions` — [Accidental Death Insurance — Exclusions](./product/general/accidental-death/exclusions.md)
-
-- `product/general/burglary` — [Burglary](./product/general/burglary.md)
-
-- `product/general/burglary/exclusions` — [Burglary — Exclusions](./product/general/burglary/exclusions.md)
-
-- `product/general/businessenterprisesolution` — [Businessenterprisesolution Insurance](./product/general/businessenterprisesolution.md)
-
-- `product/general/businessenterprisesolution/claims` — [Businessenterprisesolution Insurance — Making a claim](./product/general/businessenterprisesolution/claims.md)
-
-- `product/general/businessenterprisesolution/conditions` — [Businessenterprisesolution Insurance — Policy conditions](./product/general/businessenterprisesolution/conditions.md)
-
-- `product/general/businessenterprisesolution/definitions` — [Businessenterprisesolution Insurance — Definitions](./product/general/businessenterprisesolution/definitions.md)
-
-- `product/general/businessenterprisesolution/exclusions` — [Businessenterprisesolution Insurance — Exclusions](./product/general/businessenterprisesolution/exclusions.md)
 
 - `product/general/cashsaver` — [Tiq CashSaver](./product/general/cashsaver.md)
 
@@ -100,79 +62,23 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/cashsaver/faq` — [Tiq CashSaver — Published FAQs](./product/general/cashsaver/faq.md)
 
-- `product/general/casualty` — [Casualty](./product/general/casualty.md)
+- `product/general/casualty` — [Casualty Insurance](./product/general/casualty.md)
 
-- `product/general/casualty/exclusions` — [Casualty — Exclusions](./product/general/casualty/exclusions.md)
+- `product/general/casualty/conditions` — [Casualty Insurance — Policy conditions](./product/general/casualty/conditions.md)
 
-- `product/general/complimentary-home` — [Complimentary Home Insurance](./product/general/complimentary-home.md)
+- `product/general/casualty/cover` — [Casualty Insurance — What is covered](./product/general/casualty/cover.md)
 
-- `product/general/complimentary-home/conditions` — [Complimentary Home Insurance — Policy conditions](./product/general/complimentary-home/conditions.md)
+- `product/general/casualty/definitions` — [Casualty Insurance — Definitions](./product/general/casualty/definitions.md)
 
-- `product/general/complimentary-home/definitions` — [Complimentary Home Insurance — Definitions](./product/general/complimentary-home/definitions.md)
+- `product/general/casualty/exclusions` — [Casualty Insurance — Exclusions](./product/general/casualty/exclusions.md)
 
-- `product/general/complimentary-home/exclusions` — [Complimentary Home Insurance — Exclusions](./product/general/complimentary-home/exclusions.md)
+- `product/general/engineering` — [Engineering Insurance](./product/general/engineering.md)
 
-- `product/general/consequential-loss` — [Consequential Loss](./product/general/consequential-loss.md)
+- `product/general/engineering/conditions` — [Engineering Insurance — Policy conditions](./product/general/engineering/conditions.md)
 
-- `product/general/consequential-loss/conditions` — [Consequential Loss — Policy conditions](./product/general/consequential-loss/conditions.md)
+- `product/general/engineering/cover` — [Engineering Insurance — What is covered](./product/general/engineering/cover.md)
 
-- `product/general/consequential-loss/exclusions` — [Consequential Loss — Exclusions](./product/general/consequential-loss/exclusions.md)
-
-- `product/general/cyber` — [Cyber Insurance](./product/general/cyber.md)
-
-- `product/general/cyber/claims` — [Cyber Insurance — Making a claim](./product/general/cyber/claims.md)
-
-- `product/general/cyber/conditions` — [Cyber Insurance — Policy conditions](./product/general/cyber/conditions.md)
-
-- `product/general/cyber/definitions` — [Cyber Insurance — Definitions](./product/general/cyber/definitions.md)
-
-- `product/general/cyber/exclusions` — [Cyber Insurance — Exclusions](./product/general/cyber/exclusions.md)
-
-- `product/general/dash-easyearn` — [Dash EasyEarn](./product/general/dash-easyearn.md)
-
-- `product/general/dash-easyearn/claims` — [Dash EasyEarn — Making a claim](./product/general/dash-easyearn/claims.md)
-
-- `product/general/dash-easyearn/conditions` — [Dash EasyEarn — Policy conditions](./product/general/dash-easyearn/conditions.md)
-
-- `product/general/dash-easyearn/cover` — [Dash EasyEarn — What is covered](./product/general/dash-easyearn/cover.md)
-
-- `product/general/dash-easyearn/definitions` — [Dash EasyEarn — Definitions](./product/general/dash-easyearn/definitions.md)
-
-- `product/general/dash-easyearn/exclusions` — [Dash EasyEarn — Exclusions](./product/general/dash-easyearn/exclusions.md)
-
-- `product/general/dash-easyearn/faq` — [Dash EasyEarn — Published FAQs](./product/general/dash-easyearn/faq.md)
-
-- `product/general/dash-pet-plus` — [Dash Pet Plus Insurance](./product/general/dash-pet-plus.md)
-
-- `product/general/dash-pet-plus/claims` — [Dash Pet Plus Insurance — Making a claim](./product/general/dash-pet-plus/claims.md)
-
-- `product/general/dash-pet-plus/conditions` — [Dash Pet Plus Insurance — Policy conditions](./product/general/dash-pet-plus/conditions.md)
-
-- `product/general/dash-pet-plus/definitions` — [Dash Pet Plus Insurance — Definitions](./product/general/dash-pet-plus/definitions.md)
-
-- `product/general/dash-pet-plus/exclusions` — [Dash Pet Plus Insurance — Exclusions](./product/general/dash-pet-plus/exclusions.md)
-
-- `product/general/death-tpd` — [Death Tpd Insurance](./product/general/death-tpd.md)
-
-- `product/general/death-tpd/conditions` — [Death Tpd Insurance — Policy conditions](./product/general/death-tpd/conditions.md)
-
-- `product/general/death-tpd/exclusions` — [Death Tpd Insurance — Exclusions](./product/general/death-tpd/exclusions.md)
-
-- `product/general/deterioration-of-stocks` — [Deterioration of Stocks](./product/general/deterioration-of-stocks.md)
-
-- `product/general/deterioration-of-stocks/exclusions` — [Deterioration of Stocks — Exclusions](./product/general/deterioration-of-stocks/exclusions.md)
-
-- `product/general/education` — [Education](./product/general/education.md)
-
-- `product/general/education/exclusions` — [Education — Exclusions](./product/general/education/exclusions.md)
-
-- `product/general/electronic-equipment` — [Electronic Equipment](./product/general/electronic-equipment.md)
-
-- `product/general/electronic-equipment/exclusions` — [Electronic Equipment — Exclusions](./product/general/electronic-equipment/exclusions.md)
-
-- `product/general/engineering` — [Engineering](./product/general/engineering.md)
-
-- `product/general/engineering/exclusions` — [Engineering — Exclusions](./product/general/engineering/exclusions.md)
+- `product/general/engineering/exclusions` — [Engineering Insurance — Exclusions](./product/general/engineering/exclusions.md)
 
 - `product/general/enrich-aspire-vii` — [Enrich aspire VII](./product/general/enrich-aspire-vii.md)
 
@@ -186,451 +92,91 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/enrich-aspire-vii/exclusions` — [Enrich aspire VII — Exclusions](./product/general/enrich-aspire-vii/exclusions.md)
 
-- `product/general/enrich-assure` — [Enrich assure](./product/general/enrich-assure.md)
+- `product/general/eprotect-safety` — [ePROTECT safety](./product/general/eprotect-safety.md)
 
-- `product/general/enrich-assure/claims` — [Enrich assure — Making a claim](./product/general/enrich-assure/claims.md)
+- `product/general/eprotect-safety/claims` — [ePROTECT safety — Making a claim](./product/general/eprotect-safety/claims.md)
 
-- `product/general/enrich-assure/conditions` — [Enrich assure — Policy conditions](./product/general/enrich-assure/conditions.md)
+- `product/general/eprotect-safety/conditions` — [ePROTECT safety — Policy conditions](./product/general/eprotect-safety/conditions.md)
 
-- `product/general/enrich-assure/cover` — [Enrich assure — What is covered](./product/general/enrich-assure/cover.md)
+- `product/general/eprotect-safety/definitions` — [ePROTECT safety — Definitions](./product/general/eprotect-safety/definitions.md)
 
-- `product/general/enrich-assure/definitions` — [Enrich assure — Definitions](./product/general/enrich-assure/definitions.md)
+- `product/general/eprotect-safety/eligibility` — [ePROTECT safety — Eligibility](./product/general/eprotect-safety/eligibility.md)
 
-- `product/general/enrich-assure/exclusions` — [Enrich assure — Exclusions](./product/general/enrich-assure/exclusions.md)
+- `product/general/eprotect-safety/exclusions` — [ePROTECT safety — Exclusions](./product/general/eprotect-safety/exclusions.md)
 
-- `product/general/enrich-flex-plus` — [Enrich flex plus](./product/general/enrich-flex-plus.md)
-
-- `product/general/enrich-flex-plus/claims` — [Enrich flex plus — Making a claim](./product/general/enrich-flex-plus/claims.md)
-
-- `product/general/enrich-flex-plus/conditions` — [Enrich flex plus — Policy conditions](./product/general/enrich-flex-plus/conditions.md)
-
-- `product/general/enrich-flex-plus/cover` — [Enrich flex plus — What is covered](./product/general/enrich-flex-plus/cover.md)
-
-- `product/general/enrich-flex-plus/definitions` — [Enrich flex plus — Definitions](./product/general/enrich-flex-plus/definitions.md)
-
-- `product/general/enrich-flex-plus/exclusions` — [Enrich flex plus — Exclusions](./product/general/enrich-flex-plus/exclusions.md)
-
-- `product/general/enrich-goal` — [Enrich goal](./product/general/enrich-goal.md)
-
-- `product/general/enrich-goal/claims` — [Enrich goal — Making a claim](./product/general/enrich-goal/claims.md)
-
-- `product/general/enrich-goal/conditions` — [Enrich goal — Policy conditions](./product/general/enrich-goal/conditions.md)
-
-- `product/general/enrich-goal/cover` — [Enrich goal — What is covered](./product/general/enrich-goal/cover.md)
-
-- `product/general/enrich-goal/definitions` — [Enrich goal — Definitions](./product/general/enrich-goal/definitions.md)
-
-- `product/general/enrich-goal/exclusions` — [Enrich goal — Exclusions](./product/general/enrich-goal/exclusions.md)
-
-- `product/general/enrich-income` — [Enrich income](./product/general/enrich-income.md)
-
-- `product/general/enrich-income/claims` — [Enrich income — Making a claim](./product/general/enrich-income/claims.md)
-
-- `product/general/enrich-income/conditions` — [Enrich income — Policy conditions](./product/general/enrich-income/conditions.md)
-
-- `product/general/enrich-income/cover` — [Enrich income — What is covered](./product/general/enrich-income/cover.md)
-
-- `product/general/enrich-income/definitions` — [Enrich income — Definitions](./product/general/enrich-income/definitions.md)
-
-- `product/general/enrich-income/exclusions` — [Enrich income — Exclusions](./product/general/enrich-income/exclusions.md)
-
-- `product/general/enrich-index-income` — [Enrich Index Income](./product/general/enrich-index-income.md)
-
-- `product/general/enrich-index-income/exclusions` — [Enrich Index Income — Exclusions](./product/general/enrich-index-income/exclusions.md)
-
-- `product/general/enrich-rewards` — [Enrich rewards](./product/general/enrich-rewards.md)
-
-- `product/general/enrich-rewards/claims` — [Enrich rewards — Making a claim](./product/general/enrich-rewards/claims.md)
-
-- `product/general/enrich-rewards/conditions` — [Enrich rewards — Policy conditions](./product/general/enrich-rewards/conditions.md)
-
-- `product/general/enrich-rewards/cover` — [Enrich rewards — What is covered](./product/general/enrich-rewards/cover.md)
-
-- `product/general/enrich-rewards/definitions` — [Enrich rewards — Definitions](./product/general/enrich-rewards/definitions.md)
-
-- `product/general/enrich-rewards/exclusions` — [Enrich rewards — Exclusions](./product/general/enrich-rewards/exclusions.md)
-
-- `product/general/eprotect-mortgage` — [ePROTECT mortgage](./product/general/eprotect-mortgage.md)
-
-- `product/general/eprotect-mortgage/claims` — [ePROTECT mortgage — Making a claim](./product/general/eprotect-mortgage/claims.md)
-
-- `product/general/eprotect-mortgage/conditions` — [ePROTECT mortgage — Policy conditions](./product/general/eprotect-mortgage/conditions.md)
-
-- `product/general/eprotect-mortgage/cover` — [ePROTECT mortgage — What is covered](./product/general/eprotect-mortgage/cover.md)
-
-- `product/general/eprotect-mortgage/definitions` — [ePROTECT mortgage — Definitions](./product/general/eprotect-mortgage/definitions.md)
-
-- `product/general/eprotect-mortgage/exclusions` — [ePROTECT mortgage — Exclusions](./product/general/eprotect-mortgage/exclusions.md)
-
-- `product/general/eprotect-personal-mobility-2018` — [Eprotect Personal Mobility 2018 Insurance](./product/general/eprotect-personal-mobility-2018.md)
-
-- `product/general/eprotect-personal-mobility-2018/claims` — [Eprotect Personal Mobility 2018 Insurance — Making a claim](./product/general/eprotect-personal-mobility-2018/claims.md)
-
-- `product/general/eprotect-personal-mobility-2018/conditions` — [Eprotect Personal Mobility 2018 Insurance — Policy conditions](./product/general/eprotect-personal-mobility-2018/conditions.md)
-
-- `product/general/eprotect-personal-mobility-2018/definitions` — [Eprotect Personal Mobility 2018 Insurance — Definitions](./product/general/eprotect-personal-mobility-2018/definitions.md)
-
-- `product/general/eprotect-personal-mobility-2018/eligibility` — [Eprotect Personal Mobility 2018 Insurance — Eligibility](./product/general/eprotect-personal-mobility-2018/eligibility.md)
-
-- `product/general/eprotect-personal-mobility-2018/exclusions` — [Eprotect Personal Mobility 2018 Insurance — Exclusions](./product/general/eprotect-personal-mobility-2018/exclusions.md)
-
-- `product/general/eprotect-safety` — [Eprotect Safety Insurance](./product/general/eprotect-safety.md)
-
-- `product/general/eprotect-safety/claims` — [Eprotect Safety Insurance — Making a claim](./product/general/eprotect-safety/claims.md)
-
-- `product/general/eprotect-safety/conditions` — [Eprotect Safety Insurance — Policy conditions](./product/general/eprotect-safety/conditions.md)
-
-- `product/general/eprotect-safety/definitions` — [Eprotect Safety Insurance — Definitions](./product/general/eprotect-safety/definitions.md)
-
-- `product/general/eprotect-safety/eligibility` — [Eprotect Safety Insurance — Eligibility](./product/general/eprotect-safety/eligibility.md)
-
-- `product/general/eprotect-safety/exclusions` — [Eprotect Safety Insurance — Exclusions](./product/general/eprotect-safety/exclusions.md)
-
-- `product/general/essential-lifetime-secure` — [Essential lifetime secure](./product/general/essential-lifetime-secure.md)
-
-- `product/general/essential-lifetime-secure/conditions` — [Essential lifetime secure — Policy conditions](./product/general/essential-lifetime-secure/conditions.md)
-
-- `product/general/essential-lifetime-secure/cover` — [Essential lifetime secure — What is covered](./product/general/essential-lifetime-secure/cover.md)
-
-- `product/general/essential-lifetime-secure/exclusions` — [Essential lifetime secure — Exclusions](./product/general/essential-lifetime-secure/exclusions.md)
-
-- `product/general/esteem-by-etiqa-programme` — [Esteem By Etiqa Programme Insurance](./product/general/esteem-by-etiqa-programme.md)
-
-- `product/general/esteem-by-etiqa-programme/conditions` — [Esteem By Etiqa Programme Insurance — Policy conditions](./product/general/esteem-by-etiqa-programme/conditions.md)
-
-- `product/general/esteem-by-etiqa-sportsmed` — [Esteem By Etiqa Sportsmed Insurance](./product/general/esteem-by-etiqa-sportsmed.md)
-
-- `product/general/esteem-by-etiqa-sportsmed/conditions` — [Esteem By Etiqa Sportsmed Insurance — Policy conditions](./product/general/esteem-by-etiqa-sportsmed/conditions.md)
-
-- `product/general/esteem-eternity-ii` — [Esteem eternity II](./product/general/esteem-eternity-ii.md)
-
-- `product/general/esteem-eternity-ii/exclusions` — [Esteem eternity II — Exclusions](./product/general/esteem-eternity-ii/exclusions.md)
-
-- `product/general/etiqa-autolab-package-wic` — [Etiqa Autolab Package Wic](./product/general/etiqa-autolab-package-wic.md)
-
-- `product/general/etiqa-autolab-package-wic/claims` — [Etiqa Autolab Package Wic — Making a claim](./product/general/etiqa-autolab-package-wic/claims.md)
-
-- `product/general/etiqa-autolab-package-wic/conditions` — [Etiqa Autolab Package Wic — Policy conditions](./product/general/etiqa-autolab-package-wic/conditions.md)
-
-- `product/general/etiqa-autolab-package-wic/definitions` — [Etiqa Autolab Package Wic — Definitions](./product/general/etiqa-autolab-package-wic/definitions.md)
-
-- `product/general/etiqa-autolab-package-wic/eligibility` — [Etiqa Autolab Package Wic — Eligibility](./product/general/etiqa-autolab-package-wic/eligibility.md)
-
-- `product/general/etiqa-autolab-package-wic/exclusions` — [Etiqa Autolab Package Wic — Exclusions](./product/general/etiqa-autolab-package-wic/exclusions.md)
-
-- `product/general/etiqa-bailees-liability` — [Etiqa Bailees Liability Insurance](./product/general/etiqa-bailees-liability.md)
-
-- `product/general/etiqa-bailees-liability/claims` — [Etiqa Bailees Liability Insurance — Making a claim](./product/general/etiqa-bailees-liability/claims.md)
-
-- `product/general/etiqa-bailees-liability/conditions` — [Etiqa Bailees Liability Insurance — Policy conditions](./product/general/etiqa-bailees-liability/conditions.md)
-
-- `product/general/etiqa-bailees-liability/exclusions` — [Etiqa Bailees Liability Insurance — Exclusions](./product/general/etiqa-bailees-liability/exclusions.md)
-
-- `product/general/etiqa-eprotect-home` — [Etiqa Eprotect Home Insurance](./product/general/etiqa-eprotect-home.md)
-
-- `product/general/etiqa-eprotect-home/claims` — [Etiqa Eprotect Home Insurance — Making a claim](./product/general/etiqa-eprotect-home/claims.md)
-
-- `product/general/etiqa-eprotect-home/conditions` — [Etiqa Eprotect Home Insurance — Policy conditions](./product/general/etiqa-eprotect-home/conditions.md)
-
-- `product/general/etiqa-eprotect-home/definitions` — [Etiqa Eprotect Home Insurance — Definitions](./product/general/etiqa-eprotect-home/definitions.md)
-
-- `product/general/etiqa-eprotect-home/exclusions` — [Etiqa Eprotect Home Insurance — Exclusions](./product/general/etiqa-eprotect-home/exclusions.md)
-
-- `product/general/etiqa-erection-all-risks` — [Etiqa Erection All Risks Insurance](./product/general/etiqa-erection-all-risks.md)
-
-- `product/general/etiqa-erection-all-risks/conditions` — [Etiqa Erection All Risks Insurance — Policy conditions](./product/general/etiqa-erection-all-risks/conditions.md)
-
-- `product/general/etiqa-erection-all-risks/exclusions` — [Etiqa Erection All Risks Insurance — Exclusions](./product/general/etiqa-erection-all-risks/exclusions.md)
-
-- `product/general/etiqa-fire-mortgagee-interest` — [Etiqa Fire Mortgagee Interest Insurance](./product/general/etiqa-fire-mortgagee-interest.md)
-
-- `product/general/etiqa-fire-mortgagee-interest/conditions` — [Etiqa Fire Mortgagee Interest Insurance — Policy conditions](./product/general/etiqa-fire-mortgagee-interest/conditions.md)
-
-- `product/general/etiqa-fire-mortgagee-interest/exclusions` — [Etiqa Fire Mortgagee Interest Insurance — Exclusions](./product/general/etiqa-fire-mortgagee-interest/exclusions.md)
-
-- `product/general/etiqa-goods-in-transit` — [Etiqa Goods In Transit Insurance](./product/general/etiqa-goods-in-transit.md)
-
-- `product/general/etiqa-goods-in-transit/conditions` — [Etiqa Goods In Transit Insurance — Policy conditions](./product/general/etiqa-goods-in-transit/conditions.md)
-
-- `product/general/etiqa-goods-in-transit/exclusions` — [Etiqa Goods In Transit Insurance — Exclusions](./product/general/etiqa-goods-in-transit/exclusions.md)
-
-- `product/general/etiqa-homeowners-enhanced` — [Etiqa Homeowners Enhanced Insurance](./product/general/etiqa-homeowners-enhanced.md)
-
-- `product/general/etiqa-homeowners-enhanced/conditions` — [Etiqa Homeowners Enhanced Insurance — Policy conditions](./product/general/etiqa-homeowners-enhanced/conditions.md)
-
-- `product/general/etiqa-homeowners-enhanced/exclusions` — [Etiqa Homeowners Enhanced Insurance — Exclusions](./product/general/etiqa-homeowners-enhanced/exclusions.md)
-
-- `product/general/etiqa-management-corporation-errors-ommission` — [Etiqa Management Corporation Errors Ommission Insurance](./product/general/etiqa-management-corporation-errors-ommission.md)
-
-- `product/general/etiqa-management-corporation-errors-ommission/conditions` — [Etiqa Management Corporation Errors Ommission Insurance — Policy conditions](./product/general/etiqa-management-corporation-errors-ommission/conditions.md)
-
-- `product/general/etiqa-management-corporation-errors-ommission/definitions` — [Etiqa Management Corporation Errors Ommission Insurance — Definitions](./product/general/etiqa-management-corporation-errors-ommission/definitions.md)
-
-- `product/general/etiqa-management-corporation-errors-ommission/exclusions` — [Etiqa Management Corporation Errors Ommission Insurance — Exclusions](./product/general/etiqa-management-corporation-errors-ommission/exclusions.md)
-
-- `product/general/etiqa-or-plant-machinery` — [Etiqa Or Plant Machinery](./product/general/etiqa-or-plant-machinery.md)
-
-- `product/general/etiqa-or-plant-machinery/conditions` — [Etiqa Or Plant Machinery — Policy conditions](./product/general/etiqa-or-plant-machinery/conditions.md)
-
-- `product/general/etiqa-or-plant-machinery/exclusions` — [Etiqa Or Plant Machinery — Exclusions](./product/general/etiqa-or-plant-machinery/exclusions.md)
-
-- `product/general/etiqa-ors-all-risks` — [Etiqa Ors All Risks Insurance](./product/general/etiqa-ors-all-risks.md)
-
-- `product/general/etiqa-ors-all-risks/claims` — [Etiqa Ors All Risks Insurance — Making a claim](./product/general/etiqa-ors-all-risks/claims.md)
-
-- `product/general/etiqa-ors-all-risks/conditions` — [Etiqa Ors All Risks Insurance — Policy conditions](./product/general/etiqa-ors-all-risks/conditions.md)
-
-- `product/general/etiqa-ors-all-risks/definitions` — [Etiqa Ors All Risks Insurance — Definitions](./product/general/etiqa-ors-all-risks/definitions.md)
-
-- `product/general/etiqa-ors-all-risks/exclusions` — [Etiqa Ors All Risks Insurance — Exclusions](./product/general/etiqa-ors-all-risks/exclusions.md)
-
-- `product/general/etiqa-theft` — [Etiqa Theft Insurance](./product/general/etiqa-theft.md)
-
-- `product/general/etiqa-theft/conditions` — [Etiqa Theft Insurance — Policy conditions](./product/general/etiqa-theft/conditions.md)
-
-- `product/general/etiqa-theft/exclusions` — [Etiqa Theft Insurance — Exclusions](./product/general/etiqa-theft/exclusions.md)
-
-- `product/general/extra-disability-care` — [Extra Disability Care Insurance](./product/general/extra-disability-care.md)
-
-- `product/general/extra-disability-care-rider` — [Extra Disability Care Rider](./product/general/extra-disability-care-rider.md)
-
-- `product/general/extra-disability-care-rider/claims` — [Extra Disability Care Rider — Making a claim](./product/general/extra-disability-care-rider/claims.md)
-
-- `product/general/extra-disability-care-rider/conditions` — [Extra Disability Care Rider — Policy conditions](./product/general/extra-disability-care-rider/conditions.md)
-
-- `product/general/extra-disability-care-rider/definitions` — [Extra Disability Care Rider — Definitions](./product/general/extra-disability-care-rider/definitions.md)
-
-- `product/general/extra-disability-care-rider/exclusions` — [Extra Disability Care Rider — Exclusions](./product/general/extra-disability-care-rider/exclusions.md)
-
-- `product/general/extra-disability-care/claims` — [Extra Disability Care Insurance — Making a claim](./product/general/extra-disability-care/claims.md)
-
-- `product/general/extra-disability-care/conditions` — [Extra Disability Care Insurance — Policy conditions](./product/general/extra-disability-care/conditions.md)
-
-- `product/general/extra-disability-care/definitions` — [Extra Disability Care Insurance — Definitions](./product/general/extra-disability-care/definitions.md)
-
-- `product/general/extra-disability-care/exclusions` — [Extra Disability Care Insurance — Exclusions](./product/general/extra-disability-care/exclusions.md)
-
-- `product/general/extra-payer-waiver` — [Extra Payer Waiver](./product/general/extra-payer-waiver.md)
-
-- `product/general/extra-payer-waiver-ii` — [Extra Payer Waiver II](./product/general/extra-payer-waiver-ii.md)
-
-- `product/general/extra-payer-waiver-ii/claims` — [Extra Payer Waiver II — Making a claim](./product/general/extra-payer-waiver-ii/claims.md)
-
-- `product/general/extra-payer-waiver-ii/conditions` — [Extra Payer Waiver II — Policy conditions](./product/general/extra-payer-waiver-ii/conditions.md)
-
-- `product/general/extra-payer-waiver-ii/definitions` — [Extra Payer Waiver II — Definitions](./product/general/extra-payer-waiver-ii/definitions.md)
-
-- `product/general/extra-payer-waiver-ii/exclusions` — [Extra Payer Waiver II — Exclusions](./product/general/extra-payer-waiver-ii/exclusions.md)
-
-- `product/general/extra-payer-waiver/claims` — [Extra Payer Waiver — Making a claim](./product/general/extra-payer-waiver/claims.md)
-
-- `product/general/extra-payer-waiver/conditions` — [Extra Payer Waiver — Policy conditions](./product/general/extra-payer-waiver/conditions.md)
-
-- `product/general/extra-payer-waiver/definitions` — [Extra Payer Waiver — Definitions](./product/general/extra-payer-waiver/definitions.md)
-
-- `product/general/extra-payer-waiver/exclusions` — [Extra Payer Waiver — Exclusions](./product/general/extra-payer-waiver/exclusions.md)
-
-- `product/general/extra-secure-waiver` — [Extra Secure Waiver](./product/general/extra-secure-waiver.md)
-
-- `product/general/extra-secure-waiver-ii` — [Extra Secure Waiver II](./product/general/extra-secure-waiver-ii.md)
-
-- `product/general/extra-secure-waiver-ii/claims` — [Extra Secure Waiver II — Making a claim](./product/general/extra-secure-waiver-ii/claims.md)
-
-- `product/general/extra-secure-waiver-ii/conditions` — [Extra Secure Waiver II — Policy conditions](./product/general/extra-secure-waiver-ii/conditions.md)
-
-- `product/general/extra-secure-waiver-ii/definitions` — [Extra Secure Waiver II — Definitions](./product/general/extra-secure-waiver-ii/definitions.md)
-
-- `product/general/extra-secure-waiver-ii/exclusions` — [Extra Secure Waiver II — Exclusions](./product/general/extra-secure-waiver-ii/exclusions.md)
-
-- `product/general/extra-secure-waiver/claims` — [Extra Secure Waiver — Making a claim](./product/general/extra-secure-waiver/claims.md)
-
-- `product/general/extra-secure-waiver/conditions` — [Extra Secure Waiver — Policy conditions](./product/general/extra-secure-waiver/conditions.md)
-
-- `product/general/extra-secure-waiver/definitions` — [Extra Secure Waiver — Definitions](./product/general/extra-secure-waiver/definitions.md)
-
-- `product/general/extra-secure-waiver/exclusions` — [Extra Secure Waiver — Exclusions](./product/general/extra-secure-waiver/exclusions.md)
-
-- `product/general/family` — [Family](./product/general/family.md)
-
-- `product/general/family/claims` — [Family — Making a claim](./product/general/family/claims.md)
-
-- `product/general/family/conditions` — [Family — Policy conditions](./product/general/family/conditions.md)
-
-- `product/general/family/cover` — [Family — What is covered](./product/general/family/cover.md)
-
-- `product/general/family/definitions` — [Family — Definitions](./product/general/family/definitions.md)
-
-- `product/general/family/eligibility` — [Family — Eligibility](./product/general/family/eligibility.md)
-
-- `product/general/family/exclusions` — [Family — Exclusions](./product/general/family/exclusions.md)
-
-- `product/general/fidelity-guarantee` — [Fidelity Guarantee](./product/general/fidelity-guarantee.md)
-
-- `product/general/fidelity-guarantee/conditions` — [Fidelity Guarantee — Policy conditions](./product/general/fidelity-guarantee/conditions.md)
-
-- `product/general/fidelity-guarantee/exclusions` — [Fidelity Guarantee — Exclusions](./product/general/fidelity-guarantee/exclusions.md)
-
-- `product/general/fire-and-extraneous-perils-insurance` — [Fire and Extraneous Perils Insurance](./product/general/fire-and-extraneous-perils-insurance.md)
-
-- `product/general/fire-and-extraneous-perils-insurance/exclusions` — [Fire and Extraneous Perils Insurance — Exclusions](./product/general/fire-and-extraneous-perils-insurance/exclusions.md)
+- `product/general/eprotect-safety/faq` — [ePROTECT safety — Published FAQs](./product/general/eprotect-safety/faq.md)
 
 - `product/general/fire-insurance` — [HDB Fire Insurance](./product/general/fire-insurance.md)
 
 - `product/general/fire-insurance/benefits` — [HDB Fire Insurance — Benefits](./product/general/fire-insurance/benefits.md)
 
-- `product/general/fire-insurance/conditions` — [HDB Fire Insurance — Policy conditions](./product/general/fire-insurance/conditions.md)
-
 - `product/general/fire-insurance/exclusions` — [HDB Fire Insurance — Exclusions](./product/general/fire-insurance/exclusions.md)
 
-- `product/general/flep` — [Flep Insurance](./product/general/flep.md)
+- `product/general/home-insurance` — [Tiq Home Insurance](./product/general/home-insurance.md)
 
-- `product/general/flep/claims` — [Flep Insurance — Making a claim](./product/general/flep/claims.md)
+- `product/general/home-insurance/claims` — [Tiq Home Insurance — Making a claim](./product/general/home-insurance/claims.md)
 
-- `product/general/flep/conditions` — [Flep Insurance — Policy conditions](./product/general/flep/conditions.md)
+- `product/general/home-insurance/conditions` — [Tiq Home Insurance — Policy conditions](./product/general/home-insurance/conditions.md)
 
-- `product/general/flep/definitions` — [Flep Insurance — Definitions](./product/general/flep/definitions.md)
+- `product/general/home-insurance/cover` — [Tiq Home Insurance — What is covered](./product/general/home-insurance/cover.md)
 
-- `product/general/gigacover-flip` — [Gigacover Flip](./product/general/gigacover-flip.md)
+- `product/general/home-insurance/definitions` — [Tiq Home Insurance — Definitions](./product/general/home-insurance/definitions.md)
 
-- `product/general/gigacover-flip/claims` — [Gigacover Flip — Making a claim](./product/general/gigacover-flip/claims.md)
+- `product/general/home-insurance/exclusions` — [Tiq Home Insurance — Exclusions](./product/general/home-insurance/exclusions.md)
 
-- `product/general/gigacover-flip/conditions` — [Gigacover Flip — Policy conditions](./product/general/gigacover-flip/conditions.md)
+- `product/general/home-insurance/faq` — [Tiq Home Insurance — Published FAQs](./product/general/home-insurance/faq.md)
 
-- `product/general/gigacover-flip/definitions` — [Gigacover Flip — Definitions](./product/general/gigacover-flip/definitions.md)
+- `product/general/maid-insurance` — [Tiq Maid Insurance](./product/general/maid-insurance.md)
 
-- `product/general/gigacover-flip/exclusions` — [Gigacover Flip — Exclusions](./product/general/gigacover-flip/exclusions.md)
+- `product/general/maid-insurance/benefits` — [Tiq Maid Insurance — Benefits](./product/general/maid-insurance/benefits.md)
 
-- `product/general/gigantiq-sprint` — [Gigantiq Sprint Insurance](./product/general/gigantiq-sprint.md)
+- `product/general/maid-insurance/claims` — [Tiq Maid Insurance — Making a claim](./product/general/maid-insurance/claims.md)
 
-- `product/general/gigantiq-sprint/conditions` — [Gigantiq Sprint Insurance — Policy conditions](./product/general/gigantiq-sprint/conditions.md)
+- `product/general/maid-insurance/conditions` — [Tiq Maid Insurance — Policy conditions](./product/general/maid-insurance/conditions.md)
 
-- `product/general/gigantiq-sprint/exclusions` — [Gigantiq Sprint Insurance — Exclusions](./product/general/gigantiq-sprint/exclusions.md)
+- `product/general/maid-insurance/cover` — [Tiq Maid Insurance — What is covered](./product/general/maid-insurance/cover.md)
 
-- `product/general/heart-neurological-disorder-rider` — [Heart Neurological Disorder Rider](./product/general/heart-neurological-disorder-rider.md)
+- `product/general/maid-insurance/definitions` — [Tiq Maid Insurance — Definitions](./product/general/maid-insurance/definitions.md)
 
-- `product/general/heart-neurological-disorder-rider/claims` — [Heart Neurological Disorder Rider — Making a claim](./product/general/heart-neurological-disorder-rider/claims.md)
+- `product/general/maid-insurance/eligibility` — [Tiq Maid Insurance — Eligibility](./product/general/maid-insurance/eligibility.md)
 
-- `product/general/heart-neurological-disorder-rider/conditions` — [Heart Neurological Disorder Rider — Policy conditions](./product/general/heart-neurological-disorder-rider/conditions.md)
+- `product/general/maid-insurance/exclusions` — [Tiq Maid Insurance — Exclusions](./product/general/maid-insurance/exclusions.md)
 
-- `product/general/heart-neurological-disorder-rider/definitions` — [Heart Neurological Disorder Rider — Definitions](./product/general/heart-neurological-disorder-rider/definitions.md)
+- `product/general/maid-insurance/faq` — [Tiq Maid Insurance — Published FAQs](./product/general/maid-insurance/faq.md)
 
-- `product/general/heart-neurological-disorder-rider/exclusions` — [Heart Neurological Disorder Rider — Exclusions](./product/general/heart-neurological-disorder-rider/exclusions.md)
+- `product/general/marine` — [Marine Insurance](./product/general/marine.md)
 
-- `product/general/home-insurance` — [Home Insurance](./product/general/home-insurance.md)
+- `product/general/marine/claims` — [Marine Insurance — Making a claim](./product/general/marine/claims.md)
 
-- `product/general/home-insurance/claims` — [Home Insurance — Making a claim](./product/general/home-insurance/claims.md)
+- `product/general/marine/conditions` — [Marine Insurance — Policy conditions](./product/general/marine/conditions.md)
 
-- `product/general/home-insurance/conditions` — [Home Insurance — Policy conditions](./product/general/home-insurance/conditions.md)
+- `product/general/marine/exclusions` — [Marine Insurance — Exclusions](./product/general/marine/exclusions.md)
 
-- `product/general/home-insurance/cover` — [Home Insurance — What is covered](./product/general/home-insurance/cover.md)
+- `product/general/miscellaneous` — [Miscellaneous Insurance](./product/general/miscellaneous.md)
 
-- `product/general/home-insurance/definitions` — [Home Insurance — Definitions](./product/general/home-insurance/definitions.md)
+- `product/general/miscellaneous/claims` — [Miscellaneous Insurance — Making a claim](./product/general/miscellaneous/claims.md)
 
-- `product/general/home-insurance/exclusions` — [Home Insurance — Exclusions](./product/general/home-insurance/exclusions.md)
+- `product/general/miscellaneous/conditions` — [Miscellaneous Insurance — Policy conditions](./product/general/miscellaneous/conditions.md)
 
-- `product/general/home-insurance/faq` — [Home Insurance — Published FAQs](./product/general/home-insurance/faq.md)
+- `product/general/miscellaneous/definitions` — [Miscellaneous Insurance — Definitions](./product/general/miscellaneous/definitions.md)
 
-- `product/general/home-webinar` — [Tiq Home Insurance Webinar](./product/general/home-webinar.md)
+- `product/general/miscellaneous/exclusions` — [Miscellaneous Insurance — Exclusions](./product/general/miscellaneous/exclusions.md)
 
-- `product/general/home-webinar/exclusions` — [Tiq Home Insurance Webinar — Exclusions](./product/general/home-webinar/exclusions.md)
+- `product/general/personal-accident` — [Tiq Personal Accident](./product/general/personal-accident.md)
 
-- `product/general/industrial-all-risks-insurance` — [Industrial All Risks Insurance](./product/general/industrial-all-risks-insurance.md)
+- `product/general/personal-accident/claims` — [Tiq Personal Accident — Making a claim](./product/general/personal-accident/claims.md)
 
-- `product/general/industrial-all-risks-insurance/claims` — [Industrial All Risks Insurance — Making a claim](./product/general/industrial-all-risks-insurance/claims.md)
+- `product/general/personal-accident/conditions` — [Tiq Personal Accident — Policy conditions](./product/general/personal-accident/conditions.md)
 
-- `product/general/industrial-all-risks-insurance/conditions` — [Industrial All Risks Insurance — Policy conditions](./product/general/industrial-all-risks-insurance/conditions.md)
+- `product/general/personal-accident/cover` — [Tiq Personal Accident — What is covered](./product/general/personal-accident/cover.md)
 
-- `product/general/industrial-all-risks-insurance/cover` — [Industrial All Risks Insurance — What is covered](./product/general/industrial-all-risks-insurance/cover.md)
+- `product/general/personal-accident/definitions` — [Tiq Personal Accident — Definitions](./product/general/personal-accident/definitions.md)
 
-- `product/general/industrial-all-risks-insurance/definitions` — [Industrial All Risks Insurance — Definitions](./product/general/industrial-all-risks-insurance/definitions.md)
+- `product/general/personal-accident/eligibility` — [Tiq Personal Accident — Eligibility](./product/general/personal-accident/eligibility.md)
 
-- `product/general/industrial-all-risks-insurance/exclusions` — [Industrial All Risks Insurance — Exclusions](./product/general/industrial-all-risks-insurance/exclusions.md)
+- `product/general/personal-accident/exclusions` — [Tiq Personal Accident — Exclusions](./product/general/personal-accident/exclusions.md)
 
-- `product/general/inland-transit` — [Inland Transit](./product/general/inland-transit.md)
-
-- `product/general/inland-transit/exclusions` — [Inland Transit — Exclusions](./product/general/inland-transit/exclusions.md)
-
-- `product/general/just-married` — [Just Married](./product/general/just-married.md)
-
-- `product/general/just-married/exclusions` — [Just Married — Exclusions](./product/general/just-married/exclusions.md)
-
-- `product/general/light-industries` — [Light Industries](./product/general/light-industries.md)
-
-- `product/general/light-industries/exclusions` — [Light Industries — Exclusions](./product/general/light-industries/exclusions.md)
-
-- `product/general/loans` — [Loans](./product/general/loans.md)
-
-- `product/general/loans/exclusions` — [Loans — Exclusions](./product/general/loans/exclusions.md)
-
-- `product/general/m01-all-risks` — [M01 All Risks Insurance](./product/general/m01-all-risks.md)
-
-- `product/general/m01-all-risks/conditions` — [M01 All Risks Insurance — Policy conditions](./product/general/m01-all-risks/conditions.md)
-
-- `product/general/m01-all-risks/exclusions` — [M01 All Risks Insurance — Exclusions](./product/general/m01-all-risks/exclusions.md)
-
-- `product/general/machinery-breakdown-and-loss-of-profits-following-machinery-breakdown` — [Machinery Breakdown](./product/general/machinery-breakdown-and-loss-of-profits-following-machinery-breakdown.md)
-
-- `product/general/machinery-breakdown-and-loss-of-profits-following-machinery-breakdown/exclusions` — [Machinery Breakdown — Exclusions](./product/general/machinery-breakdown-and-loss-of-profits-following-machinery-breakdown/exclusions.md)
-
-- `product/general/maid-insurance` — [Maid Insurance](./product/general/maid-insurance.md)
-
-- `product/general/maid-insurance/benefits` — [Maid Insurance — Benefits](./product/general/maid-insurance/benefits.md)
-
-- `product/general/maid-insurance/claims` — [Maid Insurance — Making a claim](./product/general/maid-insurance/claims.md)
-
-- `product/general/maid-insurance/conditions` — [Maid Insurance — Policy conditions](./product/general/maid-insurance/conditions.md)
-
-- `product/general/maid-insurance/cover` — [Maid Insurance — What is covered](./product/general/maid-insurance/cover.md)
-
-- `product/general/maid-insurance/definitions` — [Maid Insurance — Definitions](./product/general/maid-insurance/definitions.md)
-
-- `product/general/maid-insurance/eligibility` — [Maid Insurance — Eligibility](./product/general/maid-insurance/eligibility.md)
-
-- `product/general/maid-insurance/exclusions` — [Maid Insurance — Exclusions](./product/general/maid-insurance/exclusions.md)
-
-- `product/general/maid-insurance/faq` — [Maid Insurance — Published FAQs](./product/general/maid-insurance/faq.md)
-
-- `product/general/marine` — [Marine](./product/general/marine.md)
-
-- `product/general/marine-cargo` — [Marine Cargo](./product/general/marine-cargo.md)
-
-- `product/general/marine-cargo/exclusions` — [Marine Cargo — Exclusions](./product/general/marine-cargo/exclusions.md)
-
-- `product/general/marine/exclusions` — [Marine — Exclusions](./product/general/marine/exclusions.md)
-
-- `product/general/miscellaneous` — [Miscellaneous](./product/general/miscellaneous.md)
-
-- `product/general/miscellaneous/exclusions` — [Miscellaneous — Exclusions](./product/general/miscellaneous/exclusions.md)
-
-- `product/general/money` — [Money](./product/general/money.md)
-
-- `product/general/money/claims` — [Money — Making a claim](./product/general/money/claims.md)
-
-- `product/general/money/conditions` — [Money — Policy conditions](./product/general/money/conditions.md)
-
-- `product/general/money/definitions` — [Money — Definitions](./product/general/money/definitions.md)
-
-- `product/general/money/exclusions` — [Money — Exclusions](./product/general/money/exclusions.md)
-
-- `product/general/office` — [Office](./product/general/office.md)
-
-- `product/general/office/exclusions` — [Office — Exclusions](./product/general/office/exclusions.md)
-
-- `product/general/personal-accident` — [Personal Accident](./product/general/personal-accident.md)
-
-- `product/general/personal-accident/claims` — [Personal Accident — Making a claim](./product/general/personal-accident/claims.md)
-
-- `product/general/personal-accident/conditions` — [Personal Accident — Policy conditions](./product/general/personal-accident/conditions.md)
-
-- `product/general/personal-accident/cover` — [Personal Accident — What is covered](./product/general/personal-accident/cover.md)
-
-- `product/general/personal-accident/definitions` — [Personal Accident — Definitions](./product/general/personal-accident/definitions.md)
-
-- `product/general/personal-accident/eligibility` — [Personal Accident — Eligibility](./product/general/personal-accident/eligibility.md)
-
-- `product/general/personal-accident/exclusions` — [Personal Accident — Exclusions](./product/general/personal-accident/exclusions.md)
-
-- `product/general/personal-accident/faq` — [Personal Accident — Published FAQs](./product/general/personal-accident/faq.md)
+- `product/general/personal-accident/faq` — [Tiq Personal Accident — Published FAQs](./product/general/personal-accident/faq.md)
 
 - `product/general/personal-cyber-insurance` — [Personal Cyber Insurance](./product/general/personal-cyber-insurance.md)
 
@@ -648,9 +194,19 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/personal-cyber-insurance/faq` — [Personal Cyber Insurance — Published FAQs](./product/general/personal-cyber-insurance/faq.md)
 
-- `product/general/personal-services` — [Personal Services](./product/general/personal-services.md)
+- `product/general/personal-mobility-insurance` — [ePROTECT personal mobility](./product/general/personal-mobility-insurance.md)
 
-- `product/general/personal-services/exclusions` — [Personal Services — Exclusions](./product/general/personal-services/exclusions.md)
+- `product/general/personal-mobility-insurance/claims` — [ePROTECT personal mobility — Making a claim](./product/general/personal-mobility-insurance/claims.md)
+
+- `product/general/personal-mobility-insurance/conditions` — [ePROTECT personal mobility — Policy conditions](./product/general/personal-mobility-insurance/conditions.md)
+
+- `product/general/personal-mobility-insurance/definitions` — [ePROTECT personal mobility — Definitions](./product/general/personal-mobility-insurance/definitions.md)
+
+- `product/general/personal-mobility-insurance/eligibility` — [ePROTECT personal mobility — Eligibility](./product/general/personal-mobility-insurance/eligibility.md)
+
+- `product/general/personal-mobility-insurance/exclusions` — [ePROTECT personal mobility — Exclusions](./product/general/personal-mobility-insurance/exclusions.md)
+
+- `product/general/personal-mobility-insurance/faq` — [ePROTECT personal mobility — Published FAQs](./product/general/personal-mobility-insurance/faq.md)
 
 - `product/general/pet-insurance` — [Pet Insurance](./product/general/pet-insurance.md)
 
@@ -668,115 +224,17 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/pet-insurance/faq` — [Pet Insurance — Published FAQs](./product/general/pet-insurance/faq.md)
 
-- `product/general/pet-survey` — [Pet Survey Lead Form](./product/general/pet-survey.md)
+- `product/general/property` — [Property Insurance](./product/general/property.md)
 
-- `product/general/pet-survey/exclusions` — [Pet Survey Lead Form — Exclusions](./product/general/pet-survey/exclusions.md)
+- `product/general/property/claims` — [Property Insurance — Making a claim](./product/general/property/claims.md)
 
-- `product/general/plate-glass` — [Plate Glass](./product/general/plate-glass.md)
+- `product/general/property/conditions` — [Property Insurance — Policy conditions](./product/general/property/conditions.md)
 
-- `product/general/plate-glass/claims` — [Plate Glass — Making a claim](./product/general/plate-glass/claims.md)
+- `product/general/property/cover` — [Property Insurance — What is covered](./product/general/property/cover.md)
 
-- `product/general/plate-glass/conditions` — [Plate Glass — Policy conditions](./product/general/plate-glass/conditions.md)
+- `product/general/property/definitions` — [Property Insurance — Definitions](./product/general/property/definitions.md)
 
-- `product/general/plate-glass/exclusions` — [Plate Glass — Exclusions](./product/general/plate-glass/exclusions.md)
-
-- `product/general/privatecar` — [Privatecar Insurance](./product/general/privatecar.md)
-
-- `product/general/privatecar/claims` — [Privatecar Insurance — Making a claim](./product/general/privatecar/claims.md)
-
-- `product/general/privatecar/conditions` — [Privatecar Insurance — Policy conditions](./product/general/privatecar/conditions.md)
-
-- `product/general/privatecar/definitions` — [Privatecar Insurance — Definitions](./product/general/privatecar/definitions.md)
-
-- `product/general/privatecar/eligibility` — [Privatecar Insurance — Eligibility](./product/general/privatecar/eligibility.md)
-
-- `product/general/privatecar/exclusions` — [Privatecar Insurance — Exclusions](./product/general/privatecar/exclusions.md)
-
-- `product/general/products-liability` — [Products liability](./product/general/products-liability.md)
-
-- `product/general/products-liability/exclusions` — [Products liability — Exclusions](./product/general/products-liability/exclusions.md)
-
-- `product/general/property` — [Property](./product/general/property.md)
-
-- `product/general/property/exclusions` — [Property — Exclusions](./product/general/property/exclusions.md)
-
-- `product/general/pub-restaurant` — [Pub & Restaurant](./product/general/pub-restaurant.md)
-
-- `product/general/pub-restaurant/exclusions` — [Pub & Restaurant — Exclusions](./product/general/pub-restaurant/exclusions.md)
-
-- `product/general/public-liability` — [Public liability](./product/general/public-liability.md)
-
-- `product/general/public-liability/conditions` — [Public liability — Policy conditions](./product/general/public-liability/conditions.md)
-
-- `product/general/public-liability/cover` — [Public liability — What is covered](./product/general/public-liability/cover.md)
-
-- `product/general/public-liability/definitions` — [Public liability — Definitions](./product/general/public-liability/definitions.md)
-
-- `product/general/public-liability/exclusions` — [Public liability — Exclusions](./product/general/public-liability/exclusions.md)
-
-- `product/general/retail` — [Retail](./product/general/retail.md)
-
-- `product/general/retail/exclusions` — [Retail — Exclusions](./product/general/retail/exclusions.md)
-
-- `product/general/single` — [Single](./product/general/single.md)
-
-- `product/general/single/exclusions` — [Single — Exclusions](./product/general/single/exclusions.md)
-
-- `product/general/singtel-bill-protect` — [Singtel Bill Protect Insurance](./product/general/singtel-bill-protect.md)
-
-- `product/general/singtel-bill-protect/claims` — [Singtel Bill Protect Insurance — Making a claim](./product/general/singtel-bill-protect/claims.md)
-
-- `product/general/singtel-bill-protect/conditions` — [Singtel Bill Protect Insurance — Policy conditions](./product/general/singtel-bill-protect/conditions.md)
-
-- `product/general/singtel-bill-protect/definitions` — [Singtel Bill Protect Insurance — Definitions](./product/general/singtel-bill-protect/definitions.md)
-
-- `product/general/singtel-bill-protect/eligibility` — [Singtel Bill Protect Insurance — Eligibility](./product/general/singtel-bill-protect/eligibility.md)
-
-- `product/general/singtel-bill-protect/exclusions` — [Singtel Bill Protect Insurance — Exclusions](./product/general/singtel-bill-protect/exclusions.md)
-
-- `product/general/solitaire-protect` — [Etiqa Solitaire Protect](./product/general/solitaire-protect.md)
-
-- `product/general/solitaire-protect/benefits` — [Etiqa Solitaire Protect — Benefits](./product/general/solitaire-protect/benefits.md)
-
-- `product/general/solitaire-protect/exclusions` — [Etiqa Solitaire Protect — Exclusions](./product/general/solitaire-protect/exclusions.md)
-
-- `product/general/tiq-heart-neurological-disorders-benefit-rider` — [Tiq Heart Neurological Disorders Benefit Rider](./product/general/tiq-heart-neurological-disorders-benefit-rider.md)
-
-- `product/general/tiq-heart-neurological-disorders-benefit-rider/conditions` — [Tiq Heart Neurological Disorders Benefit Rider — Policy conditions](./product/general/tiq-heart-neurological-disorders-benefit-rider/conditions.md)
-
-- `product/general/tiq-heart-neurological-disorders-benefit-rider/exclusions` — [Tiq Heart Neurological Disorders Benefit Rider — Exclusions](./product/general/tiq-heart-neurological-disorders-benefit-rider/exclusions.md)
-
-- `product/general/tiq-home-fire-safety-event` — [Tiq Home Fire Safety Event Insurance](./product/general/tiq-home-fire-safety-event.md)
-
-- `product/general/tiq-home-fire-safety-event/conditions` — [Tiq Home Fire Safety Event Insurance — Policy conditions](./product/general/tiq-home-fire-safety-event/conditions.md)
-
-- `product/general/tiq-pa` — [Tiq PA Insurance](./product/general/tiq-pa.md)
-
-- `product/general/tiq-pa-pa30` — [Tiq PA Pa30 Insurance](./product/general/tiq-pa-pa30.md)
-
-- `product/general/tiq-pa-pa30/conditions` — [Tiq PA Pa30 Insurance — Policy conditions](./product/general/tiq-pa-pa30/conditions.md)
-
-- `product/general/tiq-pa/claims` — [Tiq PA Insurance — Making a claim](./product/general/tiq-pa/claims.md)
-
-- `product/general/tiq-pa/conditions` — [Tiq PA Insurance — Policy conditions](./product/general/tiq-pa/conditions.md)
-
-- `product/general/tiq-pa/definitions` — [Tiq PA Insurance — Definitions](./product/general/tiq-pa/definitions.md)
-
-- `product/general/tiq-pa/eligibility` — [Tiq PA Insurance — Eligibility](./product/general/tiq-pa/eligibility.md)
-
-- `product/general/tiq-pa/exclusions` — [Tiq PA Insurance — Exclusions](./product/general/tiq-pa/exclusions.md)
-
-- `product/general/tiq-travel-covid` — [Tiq Travel Covid Insurance](./product/general/tiq-travel-covid.md)
-
-- `product/general/tiq-travel-covid/claims` — [Tiq Travel Covid Insurance — Making a claim](./product/general/tiq-travel-covid/claims.md)
-
-- `product/general/tiq-travel-covid/conditions` — [Tiq Travel Covid Insurance — Policy conditions](./product/general/tiq-travel-covid/conditions.md)
-
-- `product/general/tiq-travel-covid/definitions` — [Tiq Travel Covid Insurance — Definitions](./product/general/tiq-travel-covid/definitions.md)
-
-- `product/general/tiq-travel-covid/eligibility` — [Tiq Travel Covid Insurance — Eligibility](./product/general/tiq-travel-covid/eligibility.md)
-
-- `product/general/tiq-travel-covid/exclusions` — [Tiq Travel Covid Insurance — Exclusions](./product/general/tiq-travel-covid/exclusions.md)
+- `product/general/property/exclusions` — [Property Insurance — Exclusions](./product/general/property/exclusions.md)
 
 - `product/general/travel-infinite` — [Travel Infinite](./product/general/travel-infinite.md)
 
@@ -794,29 +252,23 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/travel-infinite/exclusions` — [Travel Infinite — Exclusions](./product/general/travel-infinite/exclusions.md)
 
-- `product/general/travel-insurance` — [Travel Insurance](./product/general/travel-insurance.md)
+- `product/general/travel-insurance` — [Tiq Travel Insurance](./product/general/travel-insurance.md)
 
-- `product/general/travel-insurance/benefits` — [Travel Insurance — Benefits](./product/general/travel-insurance/benefits.md)
+- `product/general/travel-insurance/benefits` — [Tiq Travel Insurance — Benefits](./product/general/travel-insurance/benefits.md)
 
-- `product/general/travel-insurance/claims` — [Travel Insurance — Making a claim](./product/general/travel-insurance/claims.md)
+- `product/general/travel-insurance/claims` — [Tiq Travel Insurance — Making a claim](./product/general/travel-insurance/claims.md)
 
-- `product/general/travel-insurance/conditions` — [Travel Insurance — Policy conditions](./product/general/travel-insurance/conditions.md)
+- `product/general/travel-insurance/conditions` — [Tiq Travel Insurance — Policy conditions](./product/general/travel-insurance/conditions.md)
 
-- `product/general/travel-insurance/cover` — [Travel Insurance — What is covered](./product/general/travel-insurance/cover.md)
+- `product/general/travel-insurance/cover` — [Tiq Travel Insurance — What is covered](./product/general/travel-insurance/cover.md)
 
-- `product/general/travel-insurance/eligibility` — [Travel Insurance — Eligibility](./product/general/travel-insurance/eligibility.md)
+- `product/general/travel-insurance/definitions` — [Tiq Travel Insurance — Definitions](./product/general/travel-insurance/definitions.md)
 
-- `product/general/travel-insurance/exclusions` — [Travel Insurance — Exclusions](./product/general/travel-insurance/exclusions.md)
+- `product/general/travel-insurance/eligibility` — [Tiq Travel Insurance — Eligibility](./product/general/travel-insurance/eligibility.md)
 
-- `product/general/travel-insurance/faq` — [Travel Insurance — Published FAQs](./product/general/travel-insurance/faq.md)
+- `product/general/travel-insurance/exclusions` — [Tiq Travel Insurance — Exclusions](./product/general/travel-insurance/exclusions.md)
 
-- `product/general/travel-pass` — [Travel Pass](./product/general/travel-pass.md)
-
-- `product/general/travel-pass/claims` — [Travel Pass — Making a claim](./product/general/travel-pass/claims.md)
-
-- `product/general/travel-pass/conditions` — [Travel Pass — Policy conditions](./product/general/travel-pass/conditions.md)
-
-- `product/general/travel-pass/exclusions` — [Travel Pass — Exclusions](./product/general/travel-pass/exclusions.md)
+- `product/general/travel-insurance/faq` — [Tiq Travel Insurance — Published FAQs](./product/general/travel-insurance/faq.md)
 
 - `product/general/travel-takaful` — [Travel Takaful](./product/general/travel-takaful.md)
 
@@ -826,113 +278,21 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 ## Products — health-medical
 
-- `product/health-medical/accident-health` — [Accident & Health](./product/health-medical/accident-health.md)
+- `product/health-medical/accident-health` — [Accident & Health Insurance](./product/health-medical/accident-health.md)
 
-- `product/health-medical/accident-health/exclusions` — [Accident & Health — Exclusions](./product/health-medical/accident-health/exclusions.md)
+- `product/health-medical/accident-health/claims` — [Accident & Health Insurance — Making a claim](./product/health-medical/accident-health/claims.md)
 
-- `product/health-medical/foreign-workers-medical-annual` — [Foreign Workers Medical Annual Insurance](./product/health-medical/foreign-workers-medical-annual.md)
+- `product/health-medical/accident-health/conditions` — [Accident & Health Insurance — Policy conditions](./product/health-medical/accident-health/conditions.md)
 
-- `product/health-medical/foreign-workers-medical-annual/claims` — [Foreign Workers Medical Annual Insurance — Making a claim](./product/health-medical/foreign-workers-medical-annual/claims.md)
+- `product/health-medical/accident-health/cover` — [Accident & Health Insurance — What is covered](./product/health-medical/accident-health/cover.md)
 
-- `product/health-medical/foreign-workers-medical-annual/conditions` — [Foreign Workers Medical Annual Insurance — Policy conditions](./product/health-medical/foreign-workers-medical-annual/conditions.md)
+- `product/health-medical/accident-health/definitions` — [Accident & Health Insurance — Definitions](./product/health-medical/accident-health/definitions.md)
 
-- `product/health-medical/foreign-workers-medical-annual/definitions` — [Foreign Workers Medical Annual Insurance — Definitions](./product/health-medical/foreign-workers-medical-annual/definitions.md)
+- `product/health-medical/accident-health/eligibility` — [Accident & Health Insurance — Eligibility](./product/health-medical/accident-health/eligibility.md)
 
-- `product/health-medical/foreign-workers-medical-annual/eligibility` — [Foreign Workers Medical Annual Insurance — Eligibility](./product/health-medical/foreign-workers-medical-annual/eligibility.md)
-
-- `product/health-medical/foreign-workers-medical-annual/exclusions` — [Foreign Workers Medical Annual Insurance — Exclusions](./product/health-medical/foreign-workers-medical-annual/exclusions.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability` — [Foreign Workers Medical Per Disability Insurance](./product/health-medical/foreign-workers-medical-per-disability.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability/claims` — [Foreign Workers Medical Per Disability Insurance — Making a claim](./product/health-medical/foreign-workers-medical-per-disability/claims.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability/conditions` — [Foreign Workers Medical Per Disability Insurance — Policy conditions](./product/health-medical/foreign-workers-medical-per-disability/conditions.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability/definitions` — [Foreign Workers Medical Per Disability Insurance — Definitions](./product/health-medical/foreign-workers-medical-per-disability/definitions.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability/eligibility` — [Foreign Workers Medical Per Disability Insurance — Eligibility](./product/health-medical/foreign-workers-medical-per-disability/eligibility.md)
-
-- `product/health-medical/foreign-workers-medical-per-disability/exclusions` — [Foreign Workers Medical Per Disability Insurance — Exclusions](./product/health-medical/foreign-workers-medical-per-disability/exclusions.md)
+- `product/health-medical/accident-health/exclusions` — [Accident & Health Insurance — Exclusions](./product/health-medical/accident-health/exclusions.md)
 
 ## Products — investments
-
-- `product/investments/invest-flex-prime-ii` — [Invest flex prime II](./product/investments/invest-flex-prime-ii.md)
-
-- `product/investments/invest-flex-prime-ii/benefits` — [Invest flex prime II — Benefits](./product/investments/invest-flex-prime-ii/benefits.md)
-
-- `product/investments/invest-flex-prime-ii/claims` — [Invest flex prime II — Making a claim](./product/investments/invest-flex-prime-ii/claims.md)
-
-- `product/investments/invest-flex-prime-ii/conditions` — [Invest flex prime II — Policy conditions](./product/investments/invest-flex-prime-ii/conditions.md)
-
-- `product/investments/invest-flex-prime-ii/cover` — [Invest flex prime II — What is covered](./product/investments/invest-flex-prime-ii/cover.md)
-
-- `product/investments/invest-flex-prime-ii/definitions` — [Invest flex prime II — Definitions](./product/investments/invest-flex-prime-ii/definitions.md)
-
-- `product/investments/invest-flex-prime-ii/exclusions` — [Invest flex prime II — Exclusions](./product/investments/invest-flex-prime-ii/exclusions.md)
-
-- `product/investments/invest-flex-pro` — [Invest flex pro](./product/investments/invest-flex-pro.md)
-
-- `product/investments/invest-flex-pro/benefits` — [Invest flex pro — Benefits](./product/investments/invest-flex-pro/benefits.md)
-
-- `product/investments/invest-flex-pro/claims` — [Invest flex pro — Making a claim](./product/investments/invest-flex-pro/claims.md)
-
-- `product/investments/invest-flex-pro/conditions` — [Invest flex pro — Policy conditions](./product/investments/invest-flex-pro/conditions.md)
-
-- `product/investments/invest-flex-pro/cover` — [Invest flex pro — What is covered](./product/investments/invest-flex-pro/cover.md)
-
-- `product/investments/invest-flex-pro/definitions` — [Invest flex pro — Definitions](./product/investments/invest-flex-pro/definitions.md)
-
-- `product/investments/invest-flex-pro/exclusions` — [Invest flex pro — Exclusions](./product/investments/invest-flex-pro/exclusions.md)
-
-- `product/investments/invest-flex-wealth-ii` — [Invest flex wealth II](./product/investments/invest-flex-wealth-ii.md)
-
-- `product/investments/invest-flex-wealth-ii/claims` — [Invest flex wealth II — Making a claim](./product/investments/invest-flex-wealth-ii/claims.md)
-
-- `product/investments/invest-flex-wealth-ii/conditions` — [Invest flex wealth II — Policy conditions](./product/investments/invest-flex-wealth-ii/conditions.md)
-
-- `product/investments/invest-flex-wealth-ii/cover` — [Invest flex wealth II — What is covered](./product/investments/invest-flex-wealth-ii/cover.md)
-
-- `product/investments/invest-flex-wealth-ii/definitions` — [Invest flex wealth II — Definitions](./product/investments/invest-flex-wealth-ii/definitions.md)
-
-- `product/investments/invest-flex-wealth-ii/exclusions` — [Invest flex wealth II — Exclusions](./product/investments/invest-flex-wealth-ii/exclusions.md)
-
-- `product/investments/invest-plus-sp` — [Invest plus SP](./product/investments/invest-plus-sp.md)
-
-- `product/investments/invest-plus-sp/claims` — [Invest plus SP — Making a claim](./product/investments/invest-plus-sp/claims.md)
-
-- `product/investments/invest-plus-sp/conditions` — [Invest plus SP — Policy conditions](./product/investments/invest-plus-sp/conditions.md)
-
-- `product/investments/invest-plus-sp/cover` — [Invest plus SP — What is covered](./product/investments/invest-plus-sp/cover.md)
-
-- `product/investments/invest-plus-sp/definitions` — [Invest plus SP — Definitions](./product/investments/invest-plus-sp/definitions.md)
-
-- `product/investments/invest-plus-sp/exclusions` — [Invest plus SP — Exclusions](./product/investments/invest-plus-sp/exclusions.md)
-
-- `product/investments/invest-prime-purpose` — [Invest Prime Purpose](./product/investments/invest-prime-purpose.md)
-
-- `product/investments/invest-prime-purpose/benefits` — [Invest Prime Purpose — Benefits](./product/investments/invest-prime-purpose/benefits.md)
-
-- `product/investments/invest-prime-purpose/claims` — [Invest Prime Purpose — Making a claim](./product/investments/invest-prime-purpose/claims.md)
-
-- `product/investments/invest-prime-purpose/conditions` — [Invest Prime Purpose — Policy conditions](./product/investments/invest-prime-purpose/conditions.md)
-
-- `product/investments/invest-prime-purpose/cover` — [Invest Prime Purpose — What is covered](./product/investments/invest-prime-purpose/cover.md)
-
-- `product/investments/invest-prime-purpose/definitions` — [Invest Prime Purpose — Definitions](./product/investments/invest-prime-purpose/definitions.md)
-
-- `product/investments/invest-prime-purpose/exclusions` — [Invest Prime Purpose — Exclusions](./product/investments/invest-prime-purpose/exclusions.md)
-
-- `product/investments/invest-smart-flex-ii` — [Invest smart flex II](./product/investments/invest-smart-flex-ii.md)
-
-- `product/investments/invest-smart-flex-ii/claims` — [Invest smart flex II — Making a claim](./product/investments/invest-smart-flex-ii/claims.md)
-
-- `product/investments/invest-smart-flex-ii/conditions` — [Invest smart flex II — Policy conditions](./product/investments/invest-smart-flex-ii/conditions.md)
-
-- `product/investments/invest-smart-flex-ii/cover` — [Invest smart flex II — What is covered](./product/investments/invest-smart-flex-ii/cover.md)
-
-- `product/investments/invest-smart-flex-ii/definitions` — [Invest smart flex II — Definitions](./product/investments/invest-smart-flex-ii/definitions.md)
-
-- `product/investments/invest-smart-flex-ii/exclusions` — [Invest smart flex II — Exclusions](./product/investments/invest-smart-flex-ii/exclusions.md)
 
 - `product/investments/invest-smart-vista` — [Invest Smart Vista](./product/investments/invest-smart-vista.md)
 
@@ -945,18 +305,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/investments/invest-smart-vista/definitions` — [Invest Smart Vista — Definitions](./product/investments/invest-smart-vista/definitions.md)
 
 - `product/investments/invest-smart-vista/exclusions` — [Invest Smart Vista — Exclusions](./product/investments/invest-smart-vista/exclusions.md)
-
-- `product/investments/invest-starter` — [Invest starter](./product/investments/invest-starter.md)
-
-- `product/investments/invest-starter/claims` — [Invest starter — Making a claim](./product/investments/invest-starter/claims.md)
-
-- `product/investments/invest-starter/conditions` — [Invest starter — Policy conditions](./product/investments/invest-starter/conditions.md)
-
-- `product/investments/invest-starter/cover` — [Invest starter — What is covered](./product/investments/invest-starter/cover.md)
-
-- `product/investments/invest-starter/definitions` — [Invest starter — Definitions](./product/investments/invest-starter/definitions.md)
-
-- `product/investments/invest-starter/exclusions` — [Invest starter — Exclusions](./product/investments/invest-starter/exclusions.md)
 
 - `product/investments/invest-vista` — [Invest vista](./product/investments/invest-vista.md)
 
@@ -971,22 +319,6 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/investments/invest-vista/definitions` — [Invest vista — Definitions](./product/investments/invest-vista/definitions.md)
 
 - `product/investments/invest-vista/exclusions` — [Invest vista — Exclusions](./product/investments/invest-vista/exclusions.md)
-
-- `product/investments/invest-wealth-purpose` — [Invest Wealth Purpose](./product/investments/invest-wealth-purpose.md)
-
-- `product/investments/invest-wealth-purpose/claims` — [Invest Wealth Purpose — Making a claim](./product/investments/invest-wealth-purpose/claims.md)
-
-- `product/investments/invest-wealth-purpose/conditions` — [Invest Wealth Purpose — Policy conditions](./product/investments/invest-wealth-purpose/conditions.md)
-
-- `product/investments/invest-wealth-purpose/cover` — [Invest Wealth Purpose — What is covered](./product/investments/invest-wealth-purpose/cover.md)
-
-- `product/investments/invest-wealth-purpose/definitions` — [Invest Wealth Purpose — Definitions](./product/investments/invest-wealth-purpose/definitions.md)
-
-- `product/investments/invest-wealth-purpose/exclusions` — [Invest Wealth Purpose — Exclusions](./product/investments/invest-wealth-purpose/exclusions.md)
-
-- `product/investments/investments` — [Investments](./product/investments/investments.md)
-
-- `product/investments/investments/exclusions` — [Investments — Exclusions](./product/investments/investments/exclusions.md)
 
 - `product/investments/tiqinvest` — [Tiq Invest](./product/investments/tiqinvest.md)
 
@@ -1004,267 +336,109 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 ## Products — motor
 
-- `product/motor/commercial-motor` — [Commercial Motor Insurance](./product/motor/commercial-motor.md)
+- `product/motor/commercial-vehicle` — [Commercial Vehicle Insurance](./product/motor/commercial-vehicle.md)
 
-- `product/motor/commercial-motor/claims` — [Commercial Motor Insurance — Making a claim](./product/motor/commercial-motor/claims.md)
+- `product/motor/commercial-vehicle/claims` — [Commercial Vehicle Insurance — Making a claim](./product/motor/commercial-vehicle/claims.md)
 
-- `product/motor/commercial-motor/conditions` — [Commercial Motor Insurance — Policy conditions](./product/motor/commercial-motor/conditions.md)
+- `product/motor/commercial-vehicle/conditions` — [Commercial Vehicle Insurance — Policy conditions](./product/motor/commercial-vehicle/conditions.md)
 
-- `product/motor/commercial-motor/definitions` — [Commercial Motor Insurance — Definitions](./product/motor/commercial-motor/definitions.md)
+- `product/motor/commercial-vehicle/cover` — [Commercial Vehicle Insurance — What is covered](./product/motor/commercial-vehicle/cover.md)
 
-- `product/motor/commercial-motor/exclusions` — [Commercial Motor Insurance — Exclusions](./product/motor/commercial-motor/exclusions.md)
+- `product/motor/commercial-vehicle/definitions` — [Commercial Vehicle Insurance — Definitions](./product/motor/commercial-vehicle/definitions.md)
 
-- `product/motor/commercial-vehicle` — [Commercial Vehicle](./product/motor/commercial-vehicle.md)
+- `product/motor/commercial-vehicle/exclusions` — [Commercial Vehicle Insurance — Exclusions](./product/motor/commercial-vehicle/exclusions.md)
 
-- `product/motor/commercial-vehicle/exclusions` — [Commercial Vehicle — Exclusions](./product/motor/commercial-vehicle/exclusions.md)
+- `product/motor/motorcycle-insurance` — [Motorcycle Insurance](./product/motor/motorcycle-insurance.md)
 
-- `product/motor/contractors-all-risks-erection-all-risks` — [Contractors’ All Risks / Erection All Risks (CAR/EAR)](./product/motor/contractors-all-risks-erection-all-risks.md)
+- `product/motor/motorcycle-insurance/claims` — [Motorcycle Insurance — Making a claim](./product/motor/motorcycle-insurance/claims.md)
 
-- `product/motor/contractors-all-risks-erection-all-risks/exclusions` — [Contractors’ All Risks / Erection All Risks (CAR/EAR) — Exclusions](./product/motor/contractors-all-risks-erection-all-risks/exclusions.md)
+- `product/motor/motorcycle-insurance/conditions` — [Motorcycle Insurance — Policy conditions](./product/motor/motorcycle-insurance/conditions.md)
 
-- `product/motor/motor-insurance` — [Motor Insurance](./product/motor/motor-insurance.md)
+- `product/motor/motorcycle-insurance/cover` — [Motorcycle Insurance — What is covered](./product/motor/motorcycle-insurance/cover.md)
 
-- `product/motor/motor-insurance/exclusions` — [Motor Insurance — Exclusions](./product/motor/motor-insurance/exclusions.md)
+- `product/motor/motorcycle-insurance/exclusions` — [Motorcycle Insurance — Exclusions](./product/motor/motorcycle-insurance/exclusions.md)
 
-- `product/motor/motor-trade` — [Motor Trade Insurance](./product/motor/motor-trade.md)
+- `product/motor/motorcycle-insurance/faq` — [Motorcycle Insurance — Published FAQs](./product/motor/motorcycle-insurance/faq.md)
 
-- `product/motor/motor-trade/claims` — [Motor Trade Insurance — Making a claim](./product/motor/motor-trade/claims.md)
+- `product/motor/private-car-insurance` — [Private Car Insurance](./product/motor/private-car-insurance.md)
 
-- `product/motor/motor-trade/conditions` — [Motor Trade Insurance — Policy conditions](./product/motor/motor-trade/conditions.md)
+- `product/motor/private-car-insurance/claims` — [Private Car Insurance — Making a claim](./product/motor/private-car-insurance/claims.md)
 
-- `product/motor/motorcycle-insurance` — [Motorcycle Insurance with up to $500,000 coverage](./product/motor/motorcycle-insurance.md)
+- `product/motor/private-car-insurance/conditions` — [Private Car Insurance — Policy conditions](./product/motor/private-car-insurance/conditions.md)
 
-- `product/motor/motorcycle-insurance/claims` — [Motorcycle Insurance with up to $500,000 coverage — Making a claim](./product/motor/motorcycle-insurance/claims.md)
+- `product/motor/private-car-insurance/cover` — [Private Car Insurance — What is covered](./product/motor/private-car-insurance/cover.md)
 
-- `product/motor/motorcycle-insurance/conditions` — [Motorcycle Insurance with up to $500,000 coverage — Policy conditions](./product/motor/motorcycle-insurance/conditions.md)
+- `product/motor/private-car-insurance/definitions` — [Private Car Insurance — Definitions](./product/motor/private-car-insurance/definitions.md)
 
-- `product/motor/motorcycle-insurance/cover` — [Motorcycle Insurance with up to $500,000 coverage — What is covered](./product/motor/motorcycle-insurance/cover.md)
+- `product/motor/private-car-insurance/eligibility` — [Private Car Insurance — Eligibility](./product/motor/private-car-insurance/eligibility.md)
 
-- `product/motor/motorcycle-insurance/exclusions` — [Motorcycle Insurance with up to $500,000 coverage — Exclusions](./product/motor/motorcycle-insurance/exclusions.md)
+- `product/motor/private-car-insurance/exclusions` — [Private Car Insurance — Exclusions](./product/motor/private-car-insurance/exclusions.md)
 
-- `product/motor/motorcycle-insurance/faq` — [Motorcycle Insurance with up to $500,000 coverage — Published FAQs](./product/motor/motorcycle-insurance/faq.md)
-
-- `product/motor/private-car-insurance` — [Car Insurance](./product/motor/private-car-insurance.md)
-
-- `product/motor/private-car-insurance/claims` — [Car Insurance — Making a claim](./product/motor/private-car-insurance/claims.md)
-
-- `product/motor/private-car-insurance/conditions` — [Car Insurance — Policy conditions](./product/motor/private-car-insurance/conditions.md)
-
-- `product/motor/private-car-insurance/cover` — [Car Insurance — What is covered](./product/motor/private-car-insurance/cover.md)
-
-- `product/motor/private-car-insurance/definitions` — [Car Insurance — Definitions](./product/motor/private-car-insurance/definitions.md)
-
-- `product/motor/private-car-insurance/eligibility` — [Car Insurance — Eligibility](./product/motor/private-car-insurance/eligibility.md)
-
-- `product/motor/private-car-insurance/exclusions` — [Car Insurance — Exclusions](./product/motor/private-car-insurance/exclusions.md)
-
-- `product/motor/private-car-insurance/faq` — [Car Insurance — Published FAQs](./product/motor/private-car-insurance/faq.md)
+- `product/motor/private-car-insurance/faq` — [Private Car Insurance — Published FAQs](./product/motor/private-car-insurance/faq.md)
 
 ## Products — premier
 
 - `product/premier/premier-solutions` — [Premier Solutions](./product/premier/premier-solutions.md)
 
+- `product/premier/premier-solutions/conditions` — [Premier Solutions — Policy conditions](./product/premier/premier-solutions/conditions.md)
+
 - `product/premier/premier-solutions/exclusions` — [Premier Solutions — Exclusions](./product/premier/premier-solutions/exclusions.md)
 
 ## Products — protection
 
-- `product/protection/3-plus-critical-illness` — [3 Plus Critical Illness](./product/protection/3-plus-critical-illness.md)
+- `product/protection/3-plus-critical-illness` — [Tiq 3 Plus Critical Illness](./product/protection/3-plus-critical-illness.md)
 
-- `product/protection/3-plus-critical-illness/claims` — [3 Plus Critical Illness — Making a claim](./product/protection/3-plus-critical-illness/claims.md)
+- `product/protection/3-plus-critical-illness/claims` — [Tiq 3 Plus Critical Illness — Making a claim](./product/protection/3-plus-critical-illness/claims.md)
 
-- `product/protection/3-plus-critical-illness/conditions` — [3 Plus Critical Illness — Policy conditions](./product/protection/3-plus-critical-illness/conditions.md)
+- `product/protection/3-plus-critical-illness/conditions` — [Tiq 3 Plus Critical Illness — Policy conditions](./product/protection/3-plus-critical-illness/conditions.md)
 
-- `product/protection/3-plus-critical-illness/cover` — [3 Plus Critical Illness — What is covered](./product/protection/3-plus-critical-illness/cover.md)
+- `product/protection/3-plus-critical-illness/cover` — [Tiq 3 Plus Critical Illness — What is covered](./product/protection/3-plus-critical-illness/cover.md)
 
-- `product/protection/3-plus-critical-illness/definitions` — [3 Plus Critical Illness — Definitions](./product/protection/3-plus-critical-illness/definitions.md)
+- `product/protection/3-plus-critical-illness/definitions` — [Tiq 3 Plus Critical Illness — Definitions](./product/protection/3-plus-critical-illness/definitions.md)
 
-- `product/protection/3-plus-critical-illness/exclusions` — [3 Plus Critical Illness — Exclusions](./product/protection/3-plus-critical-illness/exclusions.md)
+- `product/protection/3-plus-critical-illness/exclusions` — [Tiq 3 Plus Critical Illness — Exclusions](./product/protection/3-plus-critical-illness/exclusions.md)
 
-- `product/protection/3-plus-critical-illness/faq` — [3 Plus Critical Illness — Published FAQs](./product/protection/3-plus-critical-illness/faq.md)
+- `product/protection/3-plus-critical-illness/faq` — [Tiq 3 Plus Critical Illness — Published FAQs](./product/protection/3-plus-critical-illness/faq.md)
 
-- `product/protection/advanced-ci-rider` — [Advanced CI Rider](./product/protection/advanced-ci-rider.md)
+- `product/protection/cancer-insurance` — [Cancer Insurance](./product/protection/cancer-insurance.md)
 
-- `product/protection/advanced-ci-rider/claims` — [Advanced CI Rider — Making a claim](./product/protection/advanced-ci-rider/claims.md)
+- `product/protection/cancer-insurance/claims` — [Cancer Insurance — Making a claim](./product/protection/cancer-insurance/claims.md)
 
-- `product/protection/advanced-ci-rider/conditions` — [Advanced CI Rider — Policy conditions](./product/protection/advanced-ci-rider/conditions.md)
+- `product/protection/cancer-insurance/conditions` — [Cancer Insurance — Policy conditions](./product/protection/cancer-insurance/conditions.md)
 
-- `product/protection/advanced-ci-rider/definitions` — [Advanced CI Rider — Definitions](./product/protection/advanced-ci-rider/definitions.md)
+- `product/protection/cancer-insurance/cover` — [Cancer Insurance — What is covered](./product/protection/cancer-insurance/cover.md)
 
-- `product/protection/advanced-ci-rider/exclusions` — [Advanced CI Rider — Exclusions](./product/protection/advanced-ci-rider/exclusions.md)
+- `product/protection/cancer-insurance/definitions` — [Cancer Insurance — Definitions](./product/protection/cancer-insurance/definitions.md)
 
-- `product/protection/cancer-insurance` — [Cancer Insurance with No Claim Discount](./product/protection/cancer-insurance.md)
+- `product/protection/cancer-insurance/exclusions` — [Cancer Insurance — Exclusions](./product/protection/cancer-insurance/exclusions.md)
 
-- `product/protection/cancer-insurance/claims` — [Cancer Insurance with No Claim Discount — Making a claim](./product/protection/cancer-insurance/claims.md)
+- `product/protection/cancer-insurance/faq` — [Cancer Insurance — Published FAQs](./product/protection/cancer-insurance/faq.md)
 
-- `product/protection/cancer-insurance/conditions` — [Cancer Insurance with No Claim Discount — Policy conditions](./product/protection/cancer-insurance/conditions.md)
+- `product/protection/direct-etiqa-term-life-ii` — [DIRECT – Etiqa term life II](./product/protection/direct-etiqa-term-life-ii.md)
 
-- `product/protection/cancer-insurance/cover` — [Cancer Insurance with No Claim Discount — What is covered](./product/protection/cancer-insurance/cover.md)
+- `product/protection/direct-etiqa-term-life-ii/claims` — [DIRECT – Etiqa term life II — Making a claim](./product/protection/direct-etiqa-term-life-ii/claims.md)
 
-- `product/protection/cancer-insurance/definitions` — [Cancer Insurance with No Claim Discount — Definitions](./product/protection/cancer-insurance/definitions.md)
+- `product/protection/direct-etiqa-term-life-ii/conditions` — [DIRECT – Etiqa term life II — Policy conditions](./product/protection/direct-etiqa-term-life-ii/conditions.md)
 
-- `product/protection/cancer-insurance/exclusions` — [Cancer Insurance with No Claim Discount — Exclusions](./product/protection/cancer-insurance/exclusions.md)
+- `product/protection/direct-etiqa-term-life-ii/definitions` — [DIRECT – Etiqa term life II — Definitions](./product/protection/direct-etiqa-term-life-ii/definitions.md)
 
-- `product/protection/cancer-insurance/faq` — [Cancer Insurance with No Claim Discount — Published FAQs](./product/protection/cancer-insurance/faq.md)
+- `product/protection/direct-etiqa-term-life-ii/exclusions` — [DIRECT – Etiqa term life II — Exclusions](./product/protection/direct-etiqa-term-life-ii/exclusions.md)
 
-- `product/protection/ci-benefit-rider` — [CI Benefit Rider](./product/protection/ci-benefit-rider.md)
+- `product/protection/direct-etiqa-whole-life` — [DIRECT – Etiqa whole life](./product/protection/direct-etiqa-whole-life.md)
 
-- `product/protection/ci-benefit-rider/conditions` — [CI Benefit Rider — Policy conditions](./product/protection/ci-benefit-rider/conditions.md)
+- `product/protection/direct-etiqa-whole-life/conditions` — [DIRECT – Etiqa whole life — Policy conditions](./product/protection/direct-etiqa-whole-life/conditions.md)
 
-- `product/protection/ci-benefit-rider/exclusions` — [CI Benefit Rider — Exclusions](./product/protection/ci-benefit-rider/exclusions.md)
+- `product/protection/direct-etiqa-whole-life/exclusions` — [DIRECT – Etiqa whole life — Exclusions](./product/protection/direct-etiqa-whole-life/exclusions.md)
 
-- `product/protection/ci-protection-rider` — [CI Protection Rider](./product/protection/ci-protection-rider.md)
+- `product/protection/eprotect-term-life` — [ePROTECT term life](./product/protection/eprotect-term-life.md)
 
-- `product/protection/ci-protection-rider/claims` — [CI Protection Rider — Making a claim](./product/protection/ci-protection-rider/claims.md)
+- `product/protection/eprotect-term-life/claims` — [ePROTECT term life — Making a claim](./product/protection/eprotect-term-life/claims.md)
 
-- `product/protection/ci-protection-rider/conditions` — [CI Protection Rider — Policy conditions](./product/protection/ci-protection-rider/conditions.md)
+- `product/protection/eprotect-term-life/conditions` — [ePROTECT term life — Policy conditions](./product/protection/eprotect-term-life/conditions.md)
 
-- `product/protection/ci-protection-rider/definitions` — [CI Protection Rider — Definitions](./product/protection/ci-protection-rider/definitions.md)
+- `product/protection/eprotect-term-life/definitions` — [ePROTECT term life — Definitions](./product/protection/eprotect-term-life/definitions.md)
 
-- `product/protection/ci-protection-rider/exclusions` — [CI Protection Rider — Exclusions](./product/protection/ci-protection-rider/exclusions.md)
-
-- `product/protection/direct-etiqa-ci-rider` — [Direct Etiqa CI Rider](./product/protection/direct-etiqa-ci-rider.md)
-
-- `product/protection/direct-etiqa-ci-rider-ii` — [Direct Etiqa CI Rider II](./product/protection/direct-etiqa-ci-rider-ii.md)
-
-- `product/protection/direct-etiqa-ci-rider-ii/claims` — [Direct Etiqa CI Rider II — Making a claim](./product/protection/direct-etiqa-ci-rider-ii/claims.md)
-
-- `product/protection/direct-etiqa-ci-rider-ii/conditions` — [Direct Etiqa CI Rider II — Policy conditions](./product/protection/direct-etiqa-ci-rider-ii/conditions.md)
-
-- `product/protection/direct-etiqa-ci-rider-ii/definitions` — [Direct Etiqa CI Rider II — Definitions](./product/protection/direct-etiqa-ci-rider-ii/definitions.md)
-
-- `product/protection/direct-etiqa-ci-rider-ii/exclusions` — [Direct Etiqa CI Rider II — Exclusions](./product/protection/direct-etiqa-ci-rider-ii/exclusions.md)
-
-- `product/protection/direct-etiqa-ci-rider/claims` — [Direct Etiqa CI Rider — Making a claim](./product/protection/direct-etiqa-ci-rider/claims.md)
-
-- `product/protection/direct-etiqa-ci-rider/conditions` — [Direct Etiqa CI Rider — Policy conditions](./product/protection/direct-etiqa-ci-rider/conditions.md)
-
-- `product/protection/direct-etiqa-ci-rider/definitions` — [Direct Etiqa CI Rider — Definitions](./product/protection/direct-etiqa-ci-rider/definitions.md)
-
-- `product/protection/direct-etiqa-ci-rider/exclusions` — [Direct Etiqa CI Rider — Exclusions](./product/protection/direct-etiqa-ci-rider/exclusions.md)
-
-- `product/protection/direct-etiqa-term-life-ii` — [Direct Etiqa Term Life II Insurance](./product/protection/direct-etiqa-term-life-ii.md)
-
-- `product/protection/direct-etiqa-term-life-ii/claims` — [Direct Etiqa Term Life II Insurance — Making a claim](./product/protection/direct-etiqa-term-life-ii/claims.md)
-
-- `product/protection/direct-etiqa-term-life-ii/conditions` — [Direct Etiqa Term Life II Insurance — Policy conditions](./product/protection/direct-etiqa-term-life-ii/conditions.md)
-
-- `product/protection/direct-etiqa-term-life-ii/definitions` — [Direct Etiqa Term Life II Insurance — Definitions](./product/protection/direct-etiqa-term-life-ii/definitions.md)
-
-- `product/protection/direct-etiqa-term-life-ii/exclusions` — [Direct Etiqa Term Life II Insurance — Exclusions](./product/protection/direct-etiqa-term-life-ii/exclusions.md)
-
-- `product/protection/early-ci-benefit-rider` — [Early CI Benefit Rider](./product/protection/early-ci-benefit-rider.md)
-
-- `product/protection/early-ci-benefit-rider/conditions` — [Early CI Benefit Rider — Policy conditions](./product/protection/early-ci-benefit-rider/conditions.md)
-
-- `product/protection/early-ci-benefit-rider/exclusions` — [Early CI Benefit Rider — Exclusions](./product/protection/early-ci-benefit-rider/exclusions.md)
-
-- `product/protection/early-ci-protection-rider` — [Early CI Protection Rider](./product/protection/early-ci-protection-rider.md)
-
-- `product/protection/early-ci-protection-rider/claims` — [Early CI Protection Rider — Making a claim](./product/protection/early-ci-protection-rider/claims.md)
-
-- `product/protection/early-ci-protection-rider/conditions` — [Early CI Protection Rider — Policy conditions](./product/protection/early-ci-protection-rider/conditions.md)
-
-- `product/protection/early-ci-protection-rider/definitions` — [Early CI Protection Rider — Definitions](./product/protection/early-ci-protection-rider/definitions.md)
-
-- `product/protection/early-ci-protection-rider/exclusions` — [Early CI Protection Rider — Exclusions](./product/protection/early-ci-protection-rider/exclusions.md)
-
-- `product/protection/early-ci-rider` — [Early CI Rider](./product/protection/early-ci-rider.md)
-
-- `product/protection/early-ci-rider/claims` — [Early CI Rider — Making a claim](./product/protection/early-ci-rider/claims.md)
-
-- `product/protection/early-ci-rider/conditions` — [Early CI Rider — Policy conditions](./product/protection/early-ci-rider/conditions.md)
-
-- `product/protection/early-ci-rider/definitions` — [Early CI Rider — Definitions](./product/protection/early-ci-rider/definitions.md)
-
-- `product/protection/early-ci-rider/exclusions` — [Early CI Rider — Exclusions](./product/protection/early-ci-rider/exclusions.md)
-
-- `product/protection/essential-cancer-care` — [Essential Cancer Care](./product/protection/essential-cancer-care.md)
-
-- `product/protection/essential-cancer-care/claims` — [Essential Cancer Care — Making a claim](./product/protection/essential-cancer-care/claims.md)
-
-- `product/protection/essential-cancer-care/conditions` — [Essential Cancer Care — Policy conditions](./product/protection/essential-cancer-care/conditions.md)
-
-- `product/protection/essential-cancer-care/cover` — [Essential Cancer Care — What is covered](./product/protection/essential-cancer-care/cover.md)
-
-- `product/protection/essential-cancer-care/definitions` — [Essential Cancer Care — Definitions](./product/protection/essential-cancer-care/definitions.md)
-
-- `product/protection/essential-cancer-care/exclusions` — [Essential Cancer Care — Exclusions](./product/protection/essential-cancer-care/exclusions.md)
-
-- `product/protection/essential-critical-secure` — [Essential critical secure](./product/protection/essential-critical-secure.md)
-
-- `product/protection/essential-critical-secure/claims` — [Essential critical secure — Making a claim](./product/protection/essential-critical-secure/claims.md)
-
-- `product/protection/essential-critical-secure/conditions` — [Essential critical secure — Policy conditions](./product/protection/essential-critical-secure/conditions.md)
-
-- `product/protection/essential-critical-secure/cover` — [Essential critical secure — What is covered](./product/protection/essential-critical-secure/cover.md)
-
-- `product/protection/essential-critical-secure/exclusions` — [Essential critical secure — Exclusions](./product/protection/essential-critical-secure/exclusions.md)
-
-- `product/protection/essential-term-life-cover` — [Essential term life cover](./product/protection/essential-term-life-cover.md)
-
-- `product/protection/essential-term-life-cover/claims` — [Essential term life cover — Making a claim](./product/protection/essential-term-life-cover/claims.md)
-
-- `product/protection/essential-term-life-cover/conditions` — [Essential term life cover — Policy conditions](./product/protection/essential-term-life-cover/conditions.md)
-
-- `product/protection/essential-term-life-cover/cover` — [Essential term life cover — What is covered](./product/protection/essential-term-life-cover/cover.md)
-
-- `product/protection/essential-term-life-cover/definitions` — [Essential term life cover — Definitions](./product/protection/essential-term-life-cover/definitions.md)
-
-- `product/protection/essential-term-life-cover/exclusions` — [Essential term life cover — Exclusions](./product/protection/essential-term-life-cover/exclusions.md)
-
-- `product/protection/essential-whole-life-cover` — [Essential whole life cover](./product/protection/essential-whole-life-cover.md)
-
-- `product/protection/essential-whole-life-cover/claims` — [Essential whole life cover — Making a claim](./product/protection/essential-whole-life-cover/claims.md)
-
-- `product/protection/essential-whole-life-cover/conditions` — [Essential whole life cover — Policy conditions](./product/protection/essential-whole-life-cover/conditions.md)
-
-- `product/protection/essential-whole-life-cover/cover` — [Essential whole life cover — What is covered](./product/protection/essential-whole-life-cover/cover.md)
-
-- `product/protection/essential-whole-life-cover/definitions` — [Essential whole life cover — Definitions](./product/protection/essential-whole-life-cover/definitions.md)
-
-- `product/protection/essential-whole-life-cover/exclusions` — [Essential whole life cover — Exclusions](./product/protection/essential-whole-life-cover/exclusions.md)
-
-- `product/protection/etiqa-direct-critical-illness-rider` — [Etiqa Direct Critical Illness Rider](./product/protection/etiqa-direct-critical-illness-rider.md)
-
-- `product/protection/etiqa-direct-critical-illness-rider/conditions` — [Etiqa Direct Critical Illness Rider — Policy conditions](./product/protection/etiqa-direct-critical-illness-rider/conditions.md)
-
-- `product/protection/etiqa-direct-critical-illness-rider/exclusions` — [Etiqa Direct Critical Illness Rider — Exclusions](./product/protection/etiqa-direct-critical-illness-rider/exclusions.md)
-
-- `product/protection/extra-cancer-care-waiver` — [Extra Cancer Care Waiver](./product/protection/extra-cancer-care-waiver.md)
-
-- `product/protection/extra-cancer-care-waiver/claims` — [Extra Cancer Care Waiver — Making a claim](./product/protection/extra-cancer-care-waiver/claims.md)
-
-- `product/protection/extra-cancer-care-waiver/conditions` — [Extra Cancer Care Waiver — Policy conditions](./product/protection/extra-cancer-care-waiver/conditions.md)
-
-- `product/protection/extra-cancer-care-waiver/definitions` — [Extra Cancer Care Waiver — Definitions](./product/protection/extra-cancer-care-waiver/definitions.md)
-
-- `product/protection/extra-cancer-care-waiver/exclusions` — [Extra Cancer Care Waiver — Exclusions](./product/protection/extra-cancer-care-waiver/exclusions.md)
-
-- `product/protection/life` — [Life Insurance](./product/protection/life.md)
-
-- `product/protection/life-critical-illness-protection` — [Life & Critical Illness Protection](./product/protection/life-critical-illness-protection.md)
-
-- `product/protection/life-critical-illness-protection/exclusions` — [Life & Critical Illness Protection — Exclusions](./product/protection/life-critical-illness-protection/exclusions.md)
-
-- `product/protection/life-nomination-guide` — [Life Nomination Guide](./product/protection/life-nomination-guide.md)
-
-- `product/protection/life-nomination-guide/exclusions` — [Life Nomination Guide — Exclusions](./product/protection/life-nomination-guide/exclusions.md)
-
-- `product/protection/life/claims` — [Life Insurance — Making a claim](./product/protection/life/claims.md)
-
-- `product/protection/life/conditions` — [Life Insurance — Policy conditions](./product/protection/life/conditions.md)
-
-- `product/protection/life/definitions` — [Life Insurance — Definitions](./product/protection/life/definitions.md)
-
-- `product/protection/life/exclusions` — [Life Insurance — Exclusions](./product/protection/life/exclusions.md)
-
-- `product/protection/major-cancer` — [Major Cancer Insurance](./product/protection/major-cancer.md)
-
-- `product/protection/major-cancer/conditions` — [Major Cancer Insurance — Policy conditions](./product/protection/major-cancer/conditions.md)
-
-- `product/protection/major-cancer/definitions` — [Major Cancer Insurance — Definitions](./product/protection/major-cancer/definitions.md)
-
-- `product/protection/major-cancer/exclusions` — [Major Cancer Insurance — Exclusions](./product/protection/major-cancer/exclusions.md)
+- `product/protection/eprotect-term-life/exclusions` — [ePROTECT term life — Exclusions](./product/protection/eprotect-term-life/exclusions.md)
 
 - `product/protection/term-life-insurance` — [Term Life Insurance](./product/protection/term-life-insurance.md)
 
@@ -1280,21 +454,9 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/protection/term-life-insurance/faq` — [Term Life Insurance — Published FAQs](./product/protection/term-life-insurance/faq.md)
 
-- `product/protection/universal-life-insurance-elastiq` — [ELASTIQ](./product/protection/universal-life-insurance-elastiq.md)
-
-- `product/protection/universal-life-insurance-elastiq/claims` — [ELASTIQ — Making a claim](./product/protection/universal-life-insurance-elastiq/claims.md)
-
-- `product/protection/universal-life-insurance-elastiq/conditions` — [ELASTIQ — Policy conditions](./product/protection/universal-life-insurance-elastiq/conditions.md)
-
-- `product/protection/universal-life-insurance-elastiq/cover` — [ELASTIQ — What is covered](./product/protection/universal-life-insurance-elastiq/cover.md)
-
-- `product/protection/universal-life-insurance-elastiq/definitions` — [ELASTIQ — Definitions](./product/protection/universal-life-insurance-elastiq/definitions.md)
-
-- `product/protection/universal-life-insurance-elastiq/exclusions` — [ELASTIQ — Exclusions](./product/protection/universal-life-insurance-elastiq/exclusions.md)
-
-- `product/protection/universal-life-insurance-elastiq/faq` — [ELASTIQ — Published FAQs](./product/protection/universal-life-insurance-elastiq/faq.md)
-
 - `product/protection/whole-life-insurance` — [Whole Life Insurance](./product/protection/whole-life-insurance.md)
+
+- `product/protection/whole-life-insurance/claims` — [Whole Life Insurance — Making a claim](./product/protection/whole-life-insurance/claims.md)
 
 - `product/protection/whole-life-insurance/conditions` — [Whole Life Insurance — Policy conditions](./product/protection/whole-life-insurance/conditions.md)
 
@@ -1308,67 +470,17 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 ## Products — savings-retirement
 
-- `product/savings-retirement/drive-less-save-more` — [Drive Less Save More](./product/savings-retirement/drive-less-save-more.md)
-
-- `product/savings-retirement/drive-less-save-more/conditions` — [Drive Less Save More — Policy conditions](./product/savings-retirement/drive-less-save-more/conditions.md)
-
-- `product/savings-retirement/drive-less-save-more/cover` — [Drive Less Save More — What is covered](./product/savings-retirement/drive-less-save-more/cover.md)
-
-- `product/savings-retirement/drive-less-save-more/definitions` — [Drive Less Save More — Definitions](./product/savings-retirement/drive-less-save-more/definitions.md)
-
-- `product/savings-retirement/drive-less-save-more/eligibility` — [Drive Less Save More — Eligibility](./product/savings-retirement/drive-less-save-more/eligibility.md)
-
-- `product/savings-retirement/drive-less-save-more/exclusions` — [Drive Less Save More — Exclusions](./product/savings-retirement/drive-less-save-more/exclusions.md)
-
 - `product/savings-retirement/eeasy-savepro` — [eEASY savepro](./product/savings-retirement/eeasy-savepro.md)
 
-- `product/savings-retirement/eeasy-savepro-7-year-term` — [Eeasy Savepro 7 Year Term Insurance](./product/savings-retirement/eeasy-savepro-7-year-term.md)
+- `product/savings-retirement/eeasy-savepro/conditions` — [eEASY savepro — Policy conditions](./product/savings-retirement/eeasy-savepro/conditions.md)
 
-- `product/savings-retirement/eeasy-savepro-7-year-term/conditions` — [Eeasy Savepro 7 Year Term Insurance — Policy conditions](./product/savings-retirement/eeasy-savepro-7-year-term/conditions.md)
+- `product/savings-retirement/eeasy-savepro/cover` — [eEASY savepro — What is covered](./product/savings-retirement/eeasy-savepro/cover.md)
 
-- `product/savings-retirement/eeasy-savepro-7-year-term/definitions` — [Eeasy Savepro 7 Year Term Insurance — Definitions](./product/savings-retirement/eeasy-savepro-7-year-term/definitions.md)
-
-- `product/savings-retirement/eeasy-savepro-7-year-term/exclusions` — [Eeasy Savepro 7 Year Term Insurance — Exclusions](./product/savings-retirement/eeasy-savepro-7-year-term/exclusions.md)
-
-- `product/savings-retirement/eeasy-savepro-year-term` — [Eeasy Savepro Year Term Insurance](./product/savings-retirement/eeasy-savepro-year-term.md)
-
-- `product/savings-retirement/eeasy-savepro-year-term/conditions` — [Eeasy Savepro Year Term Insurance — Policy conditions](./product/savings-retirement/eeasy-savepro-year-term/conditions.md)
-
-- `product/savings-retirement/eeasy-savepro-year-term/definitions` — [Eeasy Savepro Year Term Insurance — Definitions](./product/savings-retirement/eeasy-savepro-year-term/definitions.md)
-
-- `product/savings-retirement/eeasy-savepro-year-term/exclusions` — [Eeasy Savepro Year Term Insurance — Exclusions](./product/savings-retirement/eeasy-savepro-year-term/exclusions.md)
+- `product/savings-retirement/eeasy-savepro/definitions` — [eEASY savepro — Definitions](./product/savings-retirement/eeasy-savepro/definitions.md)
 
 - `product/savings-retirement/eeasy-savepro/exclusions` — [eEASY savepro — Exclusions](./product/savings-retirement/eeasy-savepro/exclusions.md)
 
 - `product/savings-retirement/eeasy-savepro/faq` — [eEASY savepro — Published FAQs](./product/savings-retirement/eeasy-savepro/faq.md)
-
-- `product/savings-retirement/enrich-retirement` — [Enrich retirement](./product/savings-retirement/enrich-retirement.md)
-
-- `product/savings-retirement/enrich-retirement/claims` — [Enrich retirement — Making a claim](./product/savings-retirement/enrich-retirement/claims.md)
-
-- `product/savings-retirement/enrich-retirement/conditions` — [Enrich retirement — Policy conditions](./product/savings-retirement/enrich-retirement/conditions.md)
-
-- `product/savings-retirement/enrich-retirement/cover` — [Enrich retirement — What is covered](./product/savings-retirement/enrich-retirement/cover.md)
-
-- `product/savings-retirement/enrich-retirement/definitions` — [Enrich retirement — Definitions](./product/savings-retirement/enrich-retirement/definitions.md)
-
-- `product/savings-retirement/enrich-retirement/exclusions` — [Enrich retirement — Exclusions](./product/savings-retirement/enrich-retirement/exclusions.md)
-
-- `product/savings-retirement/enrich-saver` — [Enrich saver](./product/savings-retirement/enrich-saver.md)
-
-- `product/savings-retirement/enrich-saver/claims` — [Enrich saver — Making a claim](./product/savings-retirement/enrich-saver/claims.md)
-
-- `product/savings-retirement/enrich-saver/conditions` — [Enrich saver — Policy conditions](./product/savings-retirement/enrich-saver/conditions.md)
-
-- `product/savings-retirement/enrich-saver/cover` — [Enrich saver — What is covered](./product/savings-retirement/enrich-saver/cover.md)
-
-- `product/savings-retirement/enrich-saver/definitions` — [Enrich saver — Definitions](./product/savings-retirement/enrich-saver/definitions.md)
-
-- `product/savings-retirement/enrich-saver/exclusions` — [Enrich saver — Exclusions](./product/savings-retirement/enrich-saver/exclusions.md)
-
-- `product/savings-retirement/savings-retirement` — [Savings & Retirement](./product/savings-retirement/savings-retirement.md)
-
-- `product/savings-retirement/savings-retirement/exclusions` — [Savings & Retirement — Exclusions](./product/savings-retirement/savings-retirement/exclusions.md)
 
 - `product/savings-retirement/tiq-3-year-endowment-plan` — [Tiq 3-Year Endowment Plan](./product/savings-retirement/tiq-3-year-endowment-plan.md)
 
@@ -1410,9 +522,13 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 ## Journeys
 
-- [Making a Plate Glass claim](./journey/claim/plate-glass.md)
+- [Making a Accident & Health Insurance claim](./journey/claim/accident-health.md)
 
-- [Making a Work Injury Compensation claim](./journey/claim/work-injury-compensation.md)
+- [Making a Casualty Insurance claim](./journey/claim/casualty.md)
+
+- [Making a HDB Fire Insurance claim](./journey/claim/fire-insurance.md)
+
+- [Making a Miscellaneous Insurance claim](./journey/claim/miscellaneous.md)
 
 ## Promotions
 

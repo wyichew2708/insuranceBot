@@ -11,6 +11,8 @@ jurisdiction: SG
 line_of_business: premier
 regulated_advice: false
 aliases:
+- etiqa premier solutions
+- premier
 - premier solutions
 channels:
 - ref: channel/direct

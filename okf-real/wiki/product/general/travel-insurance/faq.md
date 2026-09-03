@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/faq
-title: Travel Insurance — Published FAQs
+title: Tiq Travel Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

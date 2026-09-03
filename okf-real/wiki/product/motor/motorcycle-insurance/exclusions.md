@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance/exclusions
-title: Motorcycle Insurance with up to $500,000 coverage — Exclusions
+title: Motorcycle Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale

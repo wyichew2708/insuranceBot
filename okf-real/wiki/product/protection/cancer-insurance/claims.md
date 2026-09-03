@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/cancer-insurance/claims
-title: Cancer Insurance with No Claim Discount — Making a claim
+title: Cancer Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -17,6 +17,8 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/cancer-insurance-policy-contract-v1-25.md
+- raw/wordings/policy-contract-for-essential-cancer-care.md
+- raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md
 version_in_force: '2026'
 links:
   concepts: []
@@ -45,3 +47,19 @@ Material facts required under this policy that were not disclosed when required 
 If the policy has been assigned, the Benefit amount will be paid to the Assignee. If the policy has not been assigned, the Benefit amount will be paid to either you or your executors, administrators, Nominees or any other Proper claimant if we have proof of the relationship of the person claiming the Benefit [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
 
 Before we pay any Benefit, we will deduct any amount you owe on this policy from the Benefit. By paying out the Benefit, it will end our legal responsibility on this policy [src:raw/wordings/cancer-insurance-policy-contract-v1-25.md].
+
+## 7 Making Claims from the Policy
+
+7.1 How to make a Claim [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
+
+We must be informed in writing within three (3) months of the event giving rise to the claim. At the Proper claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
+
+We reserve the rights to reject Your claim if the terms and conditions stated in this Policy Contract are not met [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
+
+7.2 Who do We pay Benefits to [src:raw/wordings/policy-contract-for-essential-cancer-care.md].
+
+## 5.1 How To Make A Claim
+
+> We must be informed in writing within 3 months of the event giving rise to the claim. At the Proper claimant's own expense, he/she must give Us all documents and evidence We ask for to assess the claim. This may include re-examining the Life insured by a particular Doctor We appoint. [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md]
+
+5.2 Who do we pay Benefits to [src:raw/wordings/policy-contract-for-extra-cancer-care-waiver-v1-23.md].

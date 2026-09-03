@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/faq
-title: Car Insurance — Published FAQs
+title: Private Car Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

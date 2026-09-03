@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance/conditions
-title: Motorcycle Insurance with up to $500,000 coverage — Policy conditions
+title: Motorcycle Insurance — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale

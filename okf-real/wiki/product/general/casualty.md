@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/casualty
-title: Casualty
+title: Casualty Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -12,6 +12,10 @@ line_of_business: general
 regulated_advice: false
 aliases:
 - casualty
+- products liability
+- public liability
+- wica
+- work injury compensation
 channels:
 - ref: channel/direct
   name: Direct
@@ -25,6 +29,7 @@ version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/casualty/exclusions
+  claims: journey/claim/casualty
   concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'

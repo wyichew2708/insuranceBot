@@ -11,6 +11,8 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- etiqa travel takaful
+- takaful travel
 - travel takaful
 channels:
 - ref: channel/direct

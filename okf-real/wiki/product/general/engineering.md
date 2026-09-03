@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/engineering
-title: Engineering
+title: Engineering Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,11 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- contractors all risks
+- electronic equipment
 - engineering
+- erection all risks
+- machinery breakdown
 channels:
 - ref: channel/direct
   name: Direct

@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/3-plus-critical-illness
-title: 3 Plus Critical Illness
+title: Tiq 3 Plus Critical Illness
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,9 @@ jurisdiction: SG
 line_of_business: protection
 regulated_advice: false
 aliases:
+- 3 plus ci
 - 3 plus critical illness
+- tiq 3 plus ci
 channels:
 - ref: channel/direct
   name: Direct

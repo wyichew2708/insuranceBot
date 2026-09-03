@@ -17,8 +17,8 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md
 - raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md
-- raw/wordings/pet-insurance-policy-wording.md
 version_in_force: '2026'
 links:
   concepts:
@@ -30,6 +30,100 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## 1.1 The Agreement
+
+Your rider is regulated using the laws of Singapore. It forms the entire legal agreement between You and Us. It is made up of: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 2. Policy Owners' Protection Scheme
+
+This policy is protected under the Policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the Life Insurance Association (LIA) or SDIC web-sites (www.lia.org.sg or www.sdic.org.sg) [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 3.6 Yearly Renewability
+
+> This is a yearly renewable rider and the policy term is 1 year. At the end of 1 year policy term, this rider will be renewed automatically from the renewal date for another 1 year at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+> - this rider is in force on the expiry date before the renewal; and - the Life insured has not reached Age 100 at the renewal date. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+> We reserve the right to terminate Your rider by giving You ninety (90) days' notice. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+## 3.14 Settlement for Redemption
+
+Upon the receipt and acceptance of Your redemption request with all the required documents, the redemption proceeds will be paid to You within 4 business days unless dealings have been suspended as specified in the section 'Suspension of dealings' below [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Note: Applications submitted or Premiums received after 3 p.m. (Singapore time) will be transacted based on the unit price as at the next Valuation day [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 4.1 Premium
+
+> This is a yearly renewable, optional single Premium investment-linked insurance rider that is attachable to the Basic policy. The minimum single Premium required is S$1,000 while the maximum single Premium is capped at S$99,999. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+Where the Premium is paid prior to the date the application is accepted by the Company, it will only be allocated and apportioned to create Units in each Fund following the Company's acceptance of the application. For subsequent Premium(s), the acceptance will be the later of the premium receipt date or premium due date. Any Premium received before the premium due date will be considered received on the due date [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+For avoidance of doubt, the acceptance of the application refers to: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+- i. the fulfilment of all conditions and requirements communicated by the Company, whether outlined in any form of acceptance letter or conveyed through other communication means, including but not limited to any additional follow-up items that may arise during the process; [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+- ii. duly received and processed payment of Premium(s); and - iii. the issuance of Your policy [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 4.2 Premium Allocation
+
+> 100% of the single Premium paid and 100% of Top-up(s) for this rider will be invested into Your selected Portfolio fund. The Premium shall be invested according to the ILP sub-funds allocation. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+## 4.4 Grace Period
+
+> If the Rider account value is less than the minimum Rider account value of S$100, We will provide a thirty (30) days' grace period such that Your rider is kept in force. Your rider will be surrendered if the required Top-up(s) to keep the rider in force is not paid by the expiry date of the grace period. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+## 7.1 Incontestability
+
+Claims will not be rejected and this rider will not be voided or have its terms revised after this rider has been in-force for two (2) years from the Rider commencement date, except for: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+- fraud; - material non-disclosure and/or misrepresentation of a material fact that would have impacted acceptance of coverage; - non-payment of Premium; or - rider exclusions [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+However, if the above mentioned event occurs, We reserve the rights to void the rider, revise the terms of the rider or reject any claims even after two (2) years have passed. We will refund all Premiums paid (less any change in the unit price(s) of the Portfolio fund and any costs incurred by Us in providing You the rider, such as payments for medical check-up and other expenses. Any partial withdrawal previously paid to You under this rider will also be deducted. In the event that the Rider account value of the Portfolio fund of Your rider is more than the Premium paid, We will only refund the Premium You have paid [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 7.3 Fraud and Misrepresentation
+
+If You or such other claimant or anyone acting on his / their behalf fraudulently makes any claim under this rider or obtains any sum payable under this rider through fraudulent means or devices, all Benefits paid under this rider shall be forfeited and must be immediately repaid. This rider will be terminated immediately and there will be no refund of Premiums [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 7.4 Change of Address, Country of Residence or Citizenship
+
+> You must, as soon as practicable, notify Us in writing if there is a change in Your citizenship and / or usual country of residence. A change in the usual country of residence will be deemed to mean Your living or intending to live in another country other than Singapore in excess of twelve (12) consecutive calendar months. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+You must also, as soon as practicable, notify Us in writing if there is a change of address for the Life insured (if any) [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We reserve the right and sole discretion to terminate or decline to renew the rider or continue cover on prevailing or varied terms and conditions [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 7.5 Changes in Taxation, Regulations and Legislation
+
+> At any time when there are changes in taxation, regulations or legislation that will affect this rider, We may vary the terms of the rider accordingly. If We do so, We shall notify You by giving You thirty (30) days' written notice prior to such change. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+7.6 Errors in Age / Gender / Smoker Status / Country of Residence [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+If the Age, gender, smoker status and/or country of residence of the Life insured is not correctly stated such that the Premium paid is wrong, We reserve the rights to adjust the Benefits. For underpayment of Premium, the claims will be pro-rated as if You have purchased a lower cover. For overpayment of Premium, We will refund the excess Premium paid without interest less any change in the unit price(s) of the ILP sub-fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Based on the correct Age, gender, smoker status and/or country of residence, if the Life insured is not eligible to apply for this rider, We will not pay any Benefits and the rider will be terminated. When this happens, We will refund all Premiums paid (less any change in the unit price(s) of the ILP sub-fund and any costs incurred by the Company in assessing the risk under the rider, such as payments for medical check-up and other expenses. Any partial withdrawal previously paid to You under this rider will also be deducted [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 8.1 Free Look
+
+> You may return this rider for cancellation within fourteen (14) days after You receive the rider document, for any reason. We will refund You the Premiums You have paid less any change in the unit price(s) of the Portfolio fund and any costs incurred by the Company in assessing the risk under the rider, such as payments for medical check-up and other expenses. Any partial withdrawal(s) previously paid to You under this rider will also be deducted. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+Should the free look request be received before 3 p.m. (Singapore time), We will use the unit price for the current Valuation day or else it will be based on the unit price as at the next Valuation day. In the event that the Rider account value of the Portfolio fund of Your rider is more than the Premium paid, We will only refund the Premium You have paid [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+> We will transfer the Premiums to You via paynow mobile. A charge of S$0.70 will be imposed for transaction via paynow mobile and it will be deducted from the transferred amount. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+> If Your rider document is sent by email, We consider this rider is delivered to You 1 day after the date of emailing. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+8.2 Transferring the Legal Right of the Rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+You are not allowed to transfer (assign) Your rider to another person and/or entity unless the rider has been assigned to You by the Group Policy Owner [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We will have to agree to the assignment in writing in order for it to be effective. When We do so, You may not make any further transfer until the previous transfer has been properly cancelled by the Assignee [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We will not be responsible for the validity of any transfer of rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 10.7 Impact of Early Surrender
+
+As buying a life insurance policy is a long-term commitment, an early termination of the rider usually involves high costs and the surrender value, if any, that is payable to You may less than the Premiums paid [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 ## Important Note
 
@@ -100,109 +194,3 @@ If Your Pet is not Spayed or Neutered during the Policy's Effective Date of Insu
 - a) Prostate issues - b) Hormonal skin Conditions - c) Perianal hernias - d) Testicular tumours - e) Perianal tumours - f) Mammary tumours; and/or - g) Uterine and ovarian Conditions [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
 
 If Your pet is Spayed or Neutered after the Policy's Effective Date of Insurance and provided no claim(s) have been made under the Policy, You may write in to Us to provide the relevant medical report from the Veterinarian regarding the spaying or neutering procedure and We will update Our records accordingly [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 2. Pre-Existing Medical Condition
-
-This Policy does not cover claims directly or indirectly caused by or arising from any Pre-Existing Medical Condition that was present prior to when Your Pet was first insured under this Policy [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-If You upgrade Your plan whereby the Benefit amount is higher, We will pay You the Benefits based on Your earlier plan that does not exclude Your Pet's Pre-Existing Medical Condition [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 2. Residential Qualification
-
-> In the event of change of residence, You shall notify Us in writing and the Insurance shall be terminated with effect from the date You leave Singapore. For this purpose, change of residence means living or intending to live outside Singapore in excess of twelve (12) consecutive calendar months. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## 3. Period of Cover and Renewal
-
-This Policy shall become effective as of the date stated in the Schedule. The Policy renewal shall be one (1) year after the effective date. The Policy is renewable at Our option [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-Before renewing this Policy, You shall give written notice to Us of any material fact affecting this insurance which has come to Your notice during the preceding Period of Insurance including notice of any disease, physical or mental defect or infirmity affecting Your Pet [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-The Policy may be renewed until Your Pet reaches the age of eight (8) years with the consent of Us from term to term by payment of the premium in advance at Our premium rate in force at the time of renewal. Premiums payable for this coverage are not guaranteed and may be revised at Policy renewal at Our full discretion [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 4. Misstatement of Age
-
-If the age of Your Pet has been misstated and the premium paid as a result thereof is insufficient, any claim payable under this Policy shall be prorated based on the ratio of the actual premium paid to the correct premium which should have been charged for the year. Any excess premium, which may have been paid as a result of such misstatement of age, shall be refunded without interest [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 5. Misrepresentation / Fraud
-
-If the proposal or declaration by You is untrue in any respect or if any material fact affecting that risk be incorrectly stated herein or omitted therefrom or if this Insurance, or any renewal thereof shall have been obtained through any misstatement, misrepresentation or suppression or if any claims made shall be fraudulent or exaggerated or if any false declaration or statement shall be made in support thereof then in any of these cases, this Policy shall be void [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 6. Portfolio Withdrawal Condition
-
-We reserve the right to cancel the portfolio as a whole if We decide to discontinue underwriting this Insurance product. Cancellation of the portfolio as a whole shall be given by written notice to You at least seven (7) days before the cancellation and We will run off all Policies to expiry of the period of cover within the portfolio [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 10. Subrogation
-
-If We shall become liable for any payment under this Policy, We shall be subrogated to the extent of such payment to all Your rights and remedies against any party and shall be entitled at Our own expense to sue in Your name. You shall give or cause to be given to Us all such assistance in Your power as We shall require to secure the rights and remedies and at Our request shall execute or cause to be executed all documents necessary to enable Us to effectively to bring suit in Your name [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 11. Interest and Currency
-
-No amount payable under this Policy shall carry any interest. Premiums and benefits payable under this Policy shall be in Singapore Dollars (SGD) [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 12. Other Insurance
-
-No Pet shall be covered under more than one such identical Pet Insurance Policy issued by Us. In the event You are covered under more than one such Policy, We shall consider Your Pet to be Insured under the Policy which was issued first (where the benefits provided under each such Policy are identical) or which provides the greatest amount of Benefit and We shall refund any duplicated premium payment which may have been made by You or on Your behalf [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 13. Notice of Trust or Assignment
-
-We shall not accept or be affected by notice of any trust or assignment or the like which relates to this Policy [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 15. Legal Proceedings
-
-> No action at law or in equity shall be brought to recover on the Policy prior to expiration of sixty (60) days after written proof of loss has been furnished in accordance with the requirements of this Policy. If You fail to supply the requisite proof of loss as stipulated by the terms, provisions and conditions of this Policy, You may, within a grace period of one (1) calendar year from the time that the written proof of loss to be furnished, submit the relevant proof of loss to Us with cogent reason(s) for the failure to comply with the Policy terms, provisions and conditions. The acceptance of such proof of loss shall be at Our sole and entire discretion. After such grace period has expired, We will not accept, for any reason whatsoever, such written proof of loss. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## 16. Alterations
-
-We reserve the right to amend the terms and provisions of this Policy by giving seven (7) day prior notice in writing by ordinary post to Your last known address in Our records, and such amendment will be applicable from the next renewal of this Policy. No alteration to this Policy shall be valid unless authorised by Us and such approval is endorsed thereon [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 17. Rights of Third Parties
-
-> A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act 2001, to enforce any of its terms. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## a) Automatic Termination
-
-- i) upon the death of Your Pet; or 2. ii) if Your Pet ceases to be eligible for this Policy; or 3. iii) upon full payment of this Policy's lifetime limit as stated in the Table of Benefits [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-We may give notice of termination hereof by registered post or email address to You at Your last known address or email address. Such termination shall become effective after seven (7) days following the date of such notice [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## c) Premium Position Upon Termination
-
-> This policy may be cancelled at any time at Your request in writing to Us and We will refund 80% of the pro-rata premium for the unexpired period, subject to a minimum retention amount of S$25 + GST, provided no claims have been made under the policy. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## d) Effective Time of Termination
-
-> This Policy shall terminate at 12:01am Singapore Time on the relevant date specified in the occurrence date of any events specified herein, Schedule or Endorsement. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## 19. Governing Law
-
-This Policy will be governed by and interpreted in accordance with Singapore law [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 21. Duty of Disclosure
-
-> You have a duty under the Insurance Act 1966 (or any subsequent amendments thereof) to disclose to us every matter known or could be reasonably expected to be known, relevant to our decision whether to accept the risk of the insurance and, if so, on what terms, including but not limited to matters relating to the health of the Pet in question and the nature and extent of the insurance cover provided. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## 22. Changes in Circumstances
-
-You shall give notice to Us of any change of Your name or residence immediately after such change. Additionally, this Policy shall become void if Your Pet is found not to be meeting the eligibility criteria at any time during the Period of Insurance or claim(s) [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-## 23. Free Look Period
-
-> In the event that You are not satisfied with the Policy for any reason and there are no claims on the Policy, it may be returned to Us for cancellation with effect from inception, within fourteen (14) working days after receipt of the Policy by You. Any premium billed will be refunded without interest. This right to return the Policy is applicable only to newly incepted policies. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## Personal Data Use
-
-Any information collected or held by Us whether contained in Your application or otherwise obtained may be used and/or disclosed to Our associated individuals/companies or any independent third parties (within or outside Singapore) for any matters relating to Your application, any policy issued and to provide advice or information concerning products and services which We believe may be of interest to You and to communicate with You for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
-
-> This Policy is underwritten by Etiqa Insurance Pte. Ltd. Insurance. Pte. Ltd. This content is for reference only and is not a contract of insurance. Full Details of the policy terms and conditions can be found in the policy contract. Information is accurate as at 25 January 2024. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
-
-## General Terms
-
-7. We do not cover claims arising from Pre-Existing Medical Condition or Known Events. 8. This policy is not transferrable to other pets. All new pets are subject to a new application and premium rating [src:raw/wordings/pet-insurance-policy-wording.md].
-
-## Additional Condition(s)
-
-1. We will pay for this section subject to the Co-Insurance and Deductible applicable per incident and in accordance with the Table of Benefits under the Schedule. 2. Non-surgical expenses incurred under this section that is a result of Sickness is subject to a Waiting Period of three (3) months [src:raw/wordings/pet-insurance-policy-wording.md].
-
-## 12. Other Insurance
-
-provides the greatest amount of Benefit and We shall refund any duplicated premium payment which may have been made by You or on Your behalf [src:raw/wordings/pet-insurance-policy-wording.md].

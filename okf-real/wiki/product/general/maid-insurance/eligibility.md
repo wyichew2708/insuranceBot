@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/maid-insurance/eligibility
-title: Maid Insurance — Eligibility
+title: Tiq Maid Insurance — Eligibility
 type: product
 status: approved
 lifecycle: on_sale
@@ -16,7 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/tiq-maid-policy-wording.md
+- raw/wordings/eprotect-maid-policy-wording-v10.md
 version_in_force: '2026'
 links:
   concepts: []
@@ -30,6 +30,6 @@ confidence: high
 
 ## Eligibility
 
-This policy is only available to You if You: [src:raw/wordings/tiq-maid-policy-wording.md].
+This policy is only available to You if You: [src:raw/wordings/eprotect-maid-policy-wording-v10.md].
 
-- a) are a Singapore Resident, i.e. living in Singapore; - b) employ a foreign domestic helper and she will be holding a valid work permit issued by Singapore's Ministry of Manpower; and - c) have fully paid Your premium [src:raw/wordings/tiq-maid-policy-wording.md].
+- a) are a Singapore Resident, i.e. living in Singapore; - b) employ a foreign domestic helper and she will be holding a valid work permit issued by Singapore's Ministry of Manpower; and - c) have fully paid Your premium [src:raw/wordings/eprotect-maid-policy-wording-v10.md].

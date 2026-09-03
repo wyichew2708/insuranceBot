@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/personal-accident/faq
-title: Personal Accident — Published FAQs
+title: Tiq Personal Accident — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

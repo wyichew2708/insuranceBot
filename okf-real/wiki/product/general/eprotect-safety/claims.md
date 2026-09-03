@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety/claims
-title: Eprotect Safety Insurance — Making a claim
+title: ePROTECT safety — Making a claim
 type: product
 status: approved
 lifecycle: on_sale

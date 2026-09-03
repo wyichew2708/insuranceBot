@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/business/corporate-travel/exclusions
-title: Corporate Travel — Exclusions
+title: Corporate Travel Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale

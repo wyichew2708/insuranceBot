@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety/eligibility
-title: Eprotect Safety Insurance — Eligibility
+title: ePROTECT safety — Eligibility
 type: product
 status: approved
 lifecycle: on_sale

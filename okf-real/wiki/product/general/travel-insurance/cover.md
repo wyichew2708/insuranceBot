@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance/cover
-title: Travel Insurance — What is covered
+title: Tiq Travel Insurance — What is covered
 type: product
 status: approved
 lifecycle: on_sale

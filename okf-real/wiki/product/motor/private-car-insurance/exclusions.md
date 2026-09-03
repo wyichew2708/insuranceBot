@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/exclusions
-title: Car Insurance — Exclusions
+title: Private Car Insurance — Exclusions
 type: product
 status: approved
 lifecycle: on_sale

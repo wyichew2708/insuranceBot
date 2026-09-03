@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/eligibility
-title: Car Insurance — Eligibility
+title: Private Car Insurance — Eligibility
 type: product
 status: approved
 lifecycle: on_sale
@@ -17,6 +17,7 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md
+- raw/wordings/terms-and-conditions-drive-less-save-more.md
 version_in_force: '2026'
 links:
   concepts:
@@ -34,3 +35,9 @@ confidence: high
 This reward is offered if You fall under the following criteria: [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md].
 
 > - (a) Age of Insured: 25 - 80 years - (b) Age of vehicle: 0 to 15 years - (c) Car type: Private Car for private use [src:raw/wordings/private-car-insurance-policy-wording-v19-2026-02.md]
+
+## 2. Eligibility Criteria
+
+This Rebate is offered if You fall under the following criteria: [src:raw/wordings/terms-and-conditions-drive-less-save-more.md].
+
+> - a) Age of Participant : 25 to 80 years - b) Age of vehicle: 0 to 15 years - c) Car type: Private Car Insurance (Comprehensive) Plan for private use [src:raw/wordings/terms-and-conditions-drive-less-save-more.md]

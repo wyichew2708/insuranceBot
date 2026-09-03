@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/direct-etiqa-term-life-ii/conditions
-title: Direct Etiqa Term Life II Insurance — Policy conditions
+title: DIRECT – Etiqa term life II — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale

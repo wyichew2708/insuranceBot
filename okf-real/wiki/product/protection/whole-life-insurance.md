@@ -11,6 +11,8 @@ jurisdiction: SG
 line_of_business: protection
 regulated_advice: false
 aliases:
+- tiq whole life
+- tiq whole life insurance
 - whole life
 - whole life insurance
 channels:
@@ -45,7 +47,7 @@ Some things in life are beyond our control [src:raw/web/www.tiq.com.sg/2026-08-2
 
 Whole life protection with a choice of premium term: Your plan will continue to accumulate cash value and bonuses* while providing you with comprehensive protection throughout your life [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#whole-life-protection-with-a-choice-of-premium-term].
 
-The policy wording sets out cover under: Covered Events; Guaranteed Insurability Benefit; Cash Benefits; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Total and Permanent Disability (TPD) Benefit [src:raw/wordings/eprotect-whole-life-policy-contract.md].
+The policy wording sets out cover under: Covered Events; Guaranteed Insurability Benefit; Cash Benefits; Maturity Benefit; Death Benefit; Terminal Illness Benefit; Total and Permanent Disability (TPD) Benefit; Surrender Benefit [src:raw/wordings/eprotect-whole-life-policy-contract.md].
 
 ## What is not covered
 

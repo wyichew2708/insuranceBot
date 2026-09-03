@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/maid-insurance/benefits
-title: Maid Insurance — Benefits
+title: Tiq Maid Insurance — Benefits
 type: product
 status: approved
 lifecycle: on_sale

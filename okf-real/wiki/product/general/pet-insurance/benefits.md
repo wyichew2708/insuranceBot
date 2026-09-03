@@ -19,7 +19,7 @@ plan_tiers:
 - pawtastic-get-quote
 - pawfect-get-quote
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance-pet-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'

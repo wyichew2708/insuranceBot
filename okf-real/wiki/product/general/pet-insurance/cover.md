@@ -16,8 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md
-- raw/wordings/pet-insurance-policy-wording.md
+- raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md
 version_in_force: '2026'
 links:
   concepts:
@@ -30,94 +29,148 @@ review_due: '2026-12-02'
 confidence: high
 ---
 
-## Section 1 - Surgical Illness Cover
+## 3. Our Responsibilities
 
-If during the Period of Insurance, Your Pet suffers Sickness that requires medical attention, We shall pay for the costs of Medical Necessary Surgery subject to the terms and conditions of this Policy. For the avoidance of doubt, this Benefit includes the following costs and expenses incurred by Your Pet: [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+> This is a yearly renewable, optional single Premium investment-linked insurance rider that is designed to meet Your wealth accumulation needs. This rider will renew yearly as long as the Basic policy remains in force till the Policy anniversary immediately before the Life insured attains 100 years old. This plan provides protection against death and Terminal illness of the Life insured during the policy term. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-1. Diagnostic Tests; 2. Veterinarian's fees; 3. Operating theatre fees; 4. Expenses incurred for the purposes of administering anaesthesia and oxygen; 5. Surgical implants; 6. Miscellaneous expenses such as prescribed drugs, injections, dressings and other medical services or supplies related to performing the Surgery; [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+This rider allows You the flexibility to choose from Portfolio funds for investment. This rider is subject to the market performance of the assets of the ILP sub-funds. Your investment returns are subject to investment risks, including the possible loss of the principal invested. The value of the units in the Portfolio fund may fall as well as rise depending on economic / market conditions [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-> 7. Pet boarding expenses at a licensed veterinary clinic or hospital as required by Your Veterinarian to provide medical attention to Your Pet (Pet confinement period must be a minimum of twelve (12) consecutive hours as a result of a Surgery); and/or 8. Post-surgical treatment for Your Pet as required by Your Veterinarian, up to ninety (90) days from the Surgery date. [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
+This is a guaranteed issuance rider which means that We issue this rider without asking for Your health declaration or medical checks at the time of Application [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## Section 2 - Non-Surgical Illness Cover
+## 3.1 Death Benefit
 
-If during the Period of Insurance, Your Pet suffers Sickness that requires medical attention, We shall pay for the costs of Medical Necessary non-surgical expenses subject to the terms and conditions of this Policy. For the avoidance of doubt, this Benefit includes the following costs and expenses incurred by Your Pet: [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+Upon death of the Life insured while the rider is in force, the death Benefit payable is the higher of: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-1. Diagnostic Tests; 2. Veterinarian's fees; and/or 3. Miscellaneous expenses such as prescribed drugs, injections, dressings and other medical services or supplies related to providing medical treatment to Your Pet [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+> - the Rider account value; or - 105% of the single Premium of the rider and 105% of the total Top-up(s) of the rider less 105% of any partial withdrawal(s) from the rider; [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## Section 3 - Accidental Injury
+less any amounts owing to Us [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-If during the Period of Insurance, Your Pet suffers Accidental Bodily Injury that requires medical attention, We shall pay for the costs of Medical Necessary Veterinarian expenses subject to the terms and conditions of this Policy [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+When We make this payment, the rider ends [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## Section 4 - Funeral Expenses
+Rider account value is the value of all the units in Your rider less any applicable fees and charges [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-If during the Period of Insurance, Your Pet dies or suffers Accidental Bodily Injury or Sickness and it is recommended by a Veterinarian for them to be euthanized, We shall pay for the costs of cremation, funeral service and/or handling expenses charged by the Veterinarian or funeral service provider to handle the remains of Your Pet, subject to the terms and conditions of this Policy [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+## 3.2 Terminal Illness (TI) Benefit
 
-## Section 5 - Third Party Liability
+If the Life insured has a Terminal illness while the rider is in force, We will pay the death Benefit in one lump sum [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-If during the Period of Insurance, You become legally responsible to pay compensation in respect of Accidental Bodily Injury to any person and/or Accidental loss or damage to property caused by Your Pet, We will provide You legal indemnity, subject to the terms and conditions of this Policy. For the avoidance of doubt, indemnity under this section includes: [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+> The maximum aggregate amount payable is Five Million Singapore Dollars (SGD 5,000,000) per Life insured for all policies and riders issued by Us with Terminal illness Benefit. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-1. All legal costs and expenses to legally represent You; 2. All legal costs and expenses incurred by You with Our written consent; and/or 3. The amount awarded against You by the court in Singapore [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+If the Terminal illness Benefit payable is lesser than the death Benefit, the death Benefit will be automatically reduced by the amount paid for the Terminal illness. The rider remains in force and the remaining death Benefit is the original death Benefit less the amount paid for Terminal illness [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## 2. Multi-Pet Discount
+If the Terminal illness Benefit payable is the same as the death Benefit, the rider ends when We make this payment [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-If You are insuring more than one (1) Pet with Us, You will be entitled to the following multi-pet discount as specified below [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+## 3.3 Surrender Benefit
 
-For the avoidance of doubt, the multi-pet discount is only applicable to the additional Pet(s) insured with Us [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+You may surrender Your rider in full or partially through partial withdrawal(s) [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-According to NParks, a maximum of three dogs is allowed to be kept in any one private (non-HDB residential or commercial) premises [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+Upon full surrender, We will pay the surrender Benefit in one lump sum which is equivalent to the Rider account value, less any amounts owing to Us. You may request for a full surrender at any time after the free look period [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## 3. Coverage for Congenital and Hereditary Conditions
+We will transfer the surrender Benefit to You via paynow mobile [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-(Applicable only if You have submitted a medical report of Your Pet) [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+> There will be a S$0.70 charge for withdrawal per transaction made via paynow mobile. The S$0.70 charge will be deducted from the withdrawn amount. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-> Notwithstanding the General Exclusions and Additional Exclusions across all sections of this Policy, if Your Pet has been Clinically Examined by a Veterinarian within thirty (30) days before the purchase date of this Policy and You have provided Us with the relevant medical documents on the purchase date of this Policy in respect of this Clinical Examination, Section 1, 2 and 4 of Your Policy will be extended to cover the following hereditary and congenital conditions, subject to a twelve (12) month Waiting Period and provided that it is not a Pre-Existing Medical Condition: [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md]
+## 3.4 Partial Withdrawal Benefit
 
-- a. Hip and elbow dysplasia; - b. Luxating patella; [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+While the rider is in force, You may request for partial withdrawal(s) at any time, subject to the following: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-- c. Glaucoma; - d. Cherry eye; - e. Inverterbral disk disease (IVDD); and/or - f. Conditions requiring femoral head and neck excision [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+> - the minimum partial withdrawal amount is S$100 and the remaining amount in the Portfolio fund at the point of withdrawal must be at least S$100; - partial withdrawal(s) is not allowed if the remaining amount in the Rider account value falls below the minimum requirement of S$100 after withdrawal(s). [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## 1. Geographical Coverage
+> We reserve the right to revise the partial withdrawals requirement at any time by giving You thirty (30) days' written notice. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-This Policy covers Your Pet while it is in Singapore only [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+You have the following options to receive the partial withdrawal amount: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## 7. Payment of Benefit
+- Transfer to Your Basic policy. - Transfer to You via paynow mobile [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-Any benefit payable under this Policy shall be paid to You as stated in the Schedule. Any receipt by You of any Benefit payable under this Policy shall in all cases be deemed final and complete discharge of all of Our liabilities in respect of such benefit [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+If You choose the option to add the withdrawn amount to Your account value of Your Basic policy upon partial withdrawal, no withdrawal from the Rider account value is allowed if the withdrawn amount added to the account value of the Basic policy exceeds the maximum Basic policy account value. You may consider the option of transferring via paynow mobile instead if such scenario happens [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-## Section 1 - Surgical Illness Cover
+> If You choose the option to transfer to You via paynow mobile, a charge of S$0.70 will be imposed for every transaction via paynow mobile and it will be deducted from the transferred amount. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-If during the Period of Insurance, Your Pet suffers Sickness that requires medical attention, We shall pay for the costs of Medically Necessary Surgery subject to the terms and conditions of this Policy. For the avoidance of doubt, this Benefit includes the following costs and expenses incurred by Your Pet: [src:raw/wordings/pet-insurance-policy-wording.md].
+Partial withdrawal(s) will reduce the Rider account value by the withdrawn amount. Partial withdrawal(s) will be processed proportionately according to the respective ILP sub-funds' allocation [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-1. Diagnostic Tests; 2. Veterinarian's fees; 3. Operating theatre fees; [src:raw/wordings/pet-insurance-policy-wording.md].
+## 3.7 Maturity Benefit
 
-## Benefits
+> Upon the expiry date of the rider or at the Maturity date on the Policy anniversary immediately before the Life insured attains 100 years old, if the rider is still in force, You will receive a lump sum maturity Benefit which is equivalent to the Rider account value, less any amounts owing to Us. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-> 4. Expenses incurred for the purposes of administering anesthesia and oxygen; 5. Surgical implants; 6. Miscellaneous expenses such as prescribed drugs, injections, dressings and other medical services or supplies related to performing the Surgery; 7. Pet boarding expenses at a licensed veterinary clinic or hospital as required by Your Veterinarian to provide medical attention to Your Pet (Pet confinement period must be a minimum of twelve (12) consecutive hours as a result of a Surgery); and/or 8. Post-surgical treatment for Your Pet as required by Your Veterinarian, up to ninety (90) days from the Surgery date. [src:raw/wordings/pet-insurance-policy-wording.md]
+## 3.8 Minimum Rider Account Value
 
-## Section 2 - Non-Surgical Illness Cover
+> The minimum Rider account value is S$100. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-If during the Period of Insurance, Your Pet suffers Sickness that requires medical attention, We shall pay for the costs of Medically Necessary non-surgical expenses subject to the terms and conditions of this Policy. For the avoidance of doubt, this Benefit includes the following costs and expenses incurred by Your Pet: [src:raw/wordings/pet-insurance-policy-wording.md].
+> Should the Rider account value falls below S$100, You will be required to do a Top-up to the Rider account value to keep the rider in force. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## Section 3 - Accidental Injury
+## 3.9 Maximum Rider Account Value
 
-If during the Period of Insurance, Your Pet suffers Accidental Bodily Injury that requires medical attention, We shall pay for the costs of Medically Necessary Veterinarian expenses subject to the terms and conditions of this Policy [src:raw/wordings/pet-insurance-policy-wording.md].
+> The maximum Rider account value is S$1,000,000. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## 2. Multi-Pet Discount
+> No top-up is allowed if the Rider account value reaches or exceed S$1,000,000. The Rider account value will maintain should it exceed S$1,000,000 due to market performance. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-According to National Parks Board (NParks) a maximum of three Pets is allowed to be kept in any one private (non-HDB residential or commercial) premises [src:raw/wordings/pet-insurance-policy-wording.md].
+> 3.10 Structure of the ILP Sub-Funds in the Portfolio Fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-## 3. Coverage for Congenital and Hereditary Conditions
+> The Portfolio fund comprises of a list of ILP sub-funds and each ILP sub-fund is a feeder fund that feeds 100% into an umbrella fund. Each ILP sub-fund will invest the assets in accordance with the investment objective and strategy determined by the ILP sub-fund Manager from time to time. We make no recommendation in respect of the Portfolio fund that You choose to invest in. It is Your responsibility to obtain the necessary information and assess the suitability of the Portfolio fund. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
 
-(Applicable only if You have submitted a Clinical Examination Form of Your Pet) [src:raw/wordings/pet-insurance-policy-wording.md].
+## 3.11 Available Portfolio Fund
 
-> Notwithstanding the General Exclusions and Additional Exclusions across all sections of this Policy, if Your Pet has been Clinically Examined by a Veterinarian within thirty (30) days from the purchase date of this Policy and You have provided Us with the Clinical Examination Form within thirty (30) days from the purchase date of this Policy in respect of this Clinical Examination, Your Policy will be extended to cover the following hereditary and congenital conditions, subject to a twelve (12) month Waiting Period and provided that it is not a PreExisting Medical Condition: [src:raw/wordings/pet-insurance-policy-wording.md]
+This rider provides You the flexibility to choose from Portfolio funds for investment. Please refer to the Fund Summary for the Portfolio fund as well as their ILP sub-funds and allocation. The returns of the Portfolio fund are subject to the market performance of the assets of the ILP sub-funds highlighted in the Fund Factsheet [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-- a) Hip and elbow dysplasia; - b) Luxating patella; - c) Glaucoma; - d) Cherry eye; - e) Intervertebral disc disease (IVDD); and/or - f) Conditions requiring femoral head and neck excision [src:raw/wordings/pet-insurance-policy-wording.md].
+Note that We may, as deemed appropriate, at any time [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-All costs and fees incurred from Clinical Examination of Your Pet will be borne by You and there will be no reimbursement from Us [src:raw/wordings/pet-insurance-policy-wording.md].
+- introduce new ILP sub-funds; - restrict new investments in any of the ILP sub-funds; - merge two or more of the ILP sub-funds; - terminate any of the ILP sub-funds; - adjust the ILP sub-funds allocation in the Portfolio fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-> If Your Pet is below six (6) months old and you choose to delay the Blood Test, You may submit the Clinical Examination Form within 30 days after Your Pet turns six (6) months old, but before Your Pet reaches seven (7) months old, to qualify for complimentary coverage for Congenital and Hereditary Conditions. [src:raw/wordings/pet-insurance-policy-wording.md]
+The terms of this rider apply to each Portfolio fund, including the newly setup Portfolio fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-The coverage under this Section will commence only upon Our receipt of the completed Clinical Examination Form and Blood Test [src:raw/wordings/pet-insurance-policy-wording.md].
+You may obtain the unit price of the Portfolio funds from www.tiq.com.sg / www.etiqa.c [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
-If the Clinical Examination Form as completed by the Veterinarian reveals that Your Pet has medical conditions that were not declared or detected upon purchase of the Policy, We reserve the right to cancel the Policy. If We cancel the Policy, the Policy will be ineffective from the Effective Date and there will not be any insurance coverage. We will refund the Premium paid to Us but We will not reimburse all costs and fees incurred from the Clinical Examination of Your Pet and the cost of any medical report or Blood Test obtained from the Veterinarian [src:raw/wordings/pet-insurance-policy-wording.md].
+## 3.12 Investment Objectives, Focus and Approach
+
+Terms and disclosure (e.g. Fees and charges, Top-ups and withdrawals) indicated in the Policy Contract are applicable to all Portfolio funds while the details of each ILP sub-fund as well as the rest of the terms and disclosure (e.g. Risk, investment Objectives) can be found in the Fund Summary and Fund Prospectus [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Please refer to the Fund Prospectuses for more information on ILP sub-funds' investment objectives, focus and approach [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Please refer to the Fund Summary for Fund manager / ILP sub-fund Manager details and Portfolio fund investment objectives [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Fund manager refers to UOB Asset Management Ltd (Company Registration No.198600120Z) the entity that manages the Portfolio fund [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+The placement of trades for the Portfolio fund will be executed in Singapore through Citibank Singapore Limited (Company Registration No. 200309485K) [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+> The ILP sub-fund Manager shall have the sole discretion determining how the ILP sub-funds is to be invested and the forms of investment. The ILP sub-fund Manager shall have the right to change the investment objectives of the ILP sub-funds from time to time. We will keep You updated on such change(s) as per applicable law and regulations by giving You thirty (30) days written' notice. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+We will observe certain duties and obligations (which may require Your co-operation and assistance): [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+- Under the agreements between Us and the ILP sub-fund Managers, and - Under certain statutory and regulatory requirements which may include, but are not limited to notices and guidelines issued from time to time by various associations and authorities [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We may therefore require Your co-operation, upon Our request, to perform certain actions, so as to allow Us to carry out these duties and obligations [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We shall provide You material information, such as, but not limited to, name changes and valuation errors, in writing as soon as practicable and in accordance with applicable laws and regulations after obtaining such information from the ILP sub-fund Manager [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+ILP sub-fund Manager refers to the asset management company that manages the respective ILP subfunds [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 3.13 Pricing and Dealing Datelines
+
+Unit(s) are issued on a forward pricing basis upon completion of the dealing for the Portfolio fund, subject to each underlying fund's dealing basis [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+The pricing is done on a single pricing basis (bid to bid basis) calculated by the Portfolio fund manager / ILP sub-fund manager as at each Valuation day in respect of the relevant Portfolio fund / ILP sub-fund invested into [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+The cut-off time for subscription / redemption of units is 3 p.m. (Singapore time) on each business day. Note that subscriptions / redemptions received and processed before 3 p.m., the request will be taken to have been received on that business day and we will place your order on the next Valuation day, subject to the ILP sub-fund manager's pricing policy [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+If You submit Your request after the cut-off time or on a day that is not a Valuation day, the request will be taken to have been received and processed on the next business day and we will place your order two business days later, subject to the ILP sub-fund manager's pricing policy [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+Please refer to Premium section and/or Top-Up (Ad-hoc/Recurring) section for conditions of acceptance [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+We reserve the right to revise the cut-off time at Our discretion [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 5.1 Death Benefit
+
+We do not pay the death Benefit if the death is directly or indirectly, wholly or partly caused by: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+> - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; or - Pre-existing conditions within the first twelve (12) months from the Rider Issue date. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+When death exclusion happens, We will return the Rider account value calculated based on the next Valuation day following Our receipt of Your death notification, less any amounts owing to Us from this rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+## 5.2 Terminal Illness (TI) Benefit
+
+We do not pay the TI Benefit if the TI is directly or indirectly, wholly or partly caused by: [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+> - Intentional acts (sane or insane) such as self-inflicted injuries, suicide or attempted suicide; - Pre-existing conditions within the first twelve (12) months from the Rider issue date; or - Acquired Immunodeficiency Syndrome (AIDS), AIDS-related conditions or infection in the presence of Human Immunodeficiency Virus (HIV) except HIV infection due to blood transfusion and occupationally acquired HIV. [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md]
+
+When TI exclusion happens, You have the option to either continue with this rider or to surrender the rider [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
+
+When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance and the Endorsement [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].

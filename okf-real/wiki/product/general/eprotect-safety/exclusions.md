@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety/exclusions
-title: Eprotect Safety Insurance — Exclusions
+title: ePROTECT safety — Exclusions
 type: product
 status: approved
 lifecycle: on_sale

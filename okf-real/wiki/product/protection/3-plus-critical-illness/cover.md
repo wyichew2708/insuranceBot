@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/3-plus-critical-illness/cover
-title: 3 Plus Critical Illness — What is covered
+title: Tiq 3 Plus Critical Illness — What is covered
 type: product
 status: approved
 lifecycle: on_sale

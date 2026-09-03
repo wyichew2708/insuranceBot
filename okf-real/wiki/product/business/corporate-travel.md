@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/business/corporate-travel
-title: Corporate Travel
+title: Corporate Travel Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,9 @@ jurisdiction: SG
 line_of_business: business
 regulated_advice: false
 aliases:
+- business travel insurance
 - corporate travel
+- group travel
 channels:
 - ref: channel/direct
   name: Direct

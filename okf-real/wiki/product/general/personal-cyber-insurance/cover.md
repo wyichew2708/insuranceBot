@@ -17,10 +17,10 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md
+- raw/product-summaries/product-summary-cyber-insurance.md
 version_in_force: '2026'
 links:
-  concepts:
-  - concept/policy-schedule
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -34,3 +34,7 @@ confidence: high
 Our maximum liability for each and every loss and all loss in the aggregate under this policy shall not exceed the Sum Insured stated in the Schedule [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
 
 We shall only be liable for that part of each and every loss which is in excess of the Deductible stated in the Schedule [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
+
+## Plan Benefit
+
+Please refer to policy wording for full details of plan benefit [src:raw/product-summaries/product-summary-cyber-insurance.md].

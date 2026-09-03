@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/maid-insurance/faq
-title: Maid Insurance — Published FAQs
+title: Tiq Maid Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

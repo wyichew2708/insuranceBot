@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/miscellaneous
-title: Miscellaneous
+title: Miscellaneous Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,12 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- burglary insurance
+- fidelity guarantee
 - miscellaneous
+- money insurance
+- plate glass
+- theft insurance
 channels:
 - ref: channel/direct
   name: Direct
@@ -25,6 +30,7 @@ version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
   exclusions: product/general/miscellaneous/exclusions
+  claims: journey/claim/miscellaneous
   concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'

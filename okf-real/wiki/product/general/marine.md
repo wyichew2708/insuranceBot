@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/marine
-title: Marine
+title: Marine Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,7 +11,10 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- goods in transit
+- inland transit
 - marine
+- marine cargo
 channels:
 - ref: channel/direct
   name: Direct

@@ -16,6 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
+- raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md
 - raw/wordings/travel-infinite-policy-wording.md
 version_in_force: '2026'
 links:
@@ -31,10 +32,12 @@ confidence: high
 
 ## General Definitions
 
-You / Your means the Policyholder / Policy Owner named in the Schedule [src:raw/wordings/travel-infinite-policy-wording.md].
+You / Your means the Policyholder / Policy Owner named in the Schedule [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md].
 
-Insured Person(s) / His / Him / He in respect of Individual Plan means the person named in the Schedule as the Insured Person; in respect of Family Plan means the person(s) as defined under such plan [src:raw/wordings/travel-infinite-policy-wording.md].
+Insured Person(s) / His / Him / He in respect of Individual Plan means the person named in the Schedule as the Insured Person; in respect of Family Plan means the person(s) as defined under such plan [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md].
 
-Us / We / Our means Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) [src:raw/wordings/travel-infinite-policy-wording.md].
+Us / We / Our means Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md].
+
+## General Definitions
 
 Accident / Accidental means an unforeseen event of violent, Accidental, external and visible [src:raw/wordings/travel-infinite-policy-wording.md].

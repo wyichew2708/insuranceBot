@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance/faq
-title: Motorcycle Insurance with up to $500,000 coverage — Published FAQs
+title: Motorcycle Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

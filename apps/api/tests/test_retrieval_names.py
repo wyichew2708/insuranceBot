@@ -17,15 +17,15 @@ def real() -> Bundle:
 
 
 def test_full_title_names_the_product(real: Bundle) -> None:
-    assert named_products(real, "Early CI Protection Rider — Policy conditions — fraud") == [
-        "early-ci-protection-rider"
+    assert named_products(real, "Tiq 3 Plus Critical Illness — Policy conditions — fraud") == [
+        "3-plus-critical-illness"
     ]
 
 
 def test_a_longer_title_absorbs_the_shorter_one_inside_it(real: Bundle) -> None:
-    # "CI Benefit Rider" is a real product and also a suffix of this one. The
-    # customer typed the long form; the short one is not a second candidate.
-    assert named_products(real, "Early CI Benefit Rider free look period") == ["early-ci-benefit-rider"]
+    # "Invest vista" is a product and also sits inside "Invest Smart Vista".
+    # The customer typed the long form; the short one is not a second candidate.
+    assert named_products(real, "Invest Smart Vista free look period") == ["invest-smart-vista"]
 
 
 def test_no_title_means_no_override(real: Bundle) -> None:
@@ -45,21 +45,20 @@ def test_the_shopfront_name_names_the_flagship(real: Bundle) -> None:
     assert named_products(real, "Tiq Travel Insurance coverage") == ["travel-insurance"]
 
 
-def test_the_longer_shopfront_name_names_the_add_on(real: Bundle) -> None:
-    # "tiq travel" sits inside "tiq travel covid". The customer typed the
-    # long form; the flagship is not a second candidate.
-    assert named_products(real, "tiq travel covid coverage") == ["tiq-travel-covid"]
+def test_a_longer_phrase_around_a_name_still_names_it(real: Bundle) -> None:
+    # The Covid add-on is not a catalogue product, so "tiq travel covid"
+    # names Tiq Travel Insurance and nothing else.
+    assert named_products(real, "tiq travel covid coverage") == ["travel-insurance"]
 
 
 def test_a_product_named_outright_has_no_family_to_ask_about(real: Bundle) -> None:
     travel = real.get("product/general/travel-insurance")
     assert travel is not None
     assert product_family(real, "tiq travel coverage", travel) == []
-    # A category is still a family: "travel insurance" alone is the title,
-    # so it is named; "cancer insurance" is a phrase inside three titles.
-    cancer = real.get("product/health-medical/cancer-insurance-with-no-claim-discount")
-    if cancer is not None:
-        assert len(product_family(real, "cancer insurance premium", cancer)) >= 2
+    # A category is still a family: "direct etiqa" sits inside two titles.
+    term = real.get("product/protection/direct-etiqa-term-life-ii")
+    assert term is not None
+    assert len(product_family(real, "direct etiqa premium", term)) >= 2
 
 
 def test_a_bare_name_is_a_request_for_the_overview(real: Bundle) -> None:

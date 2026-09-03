@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/3-plus-critical-illness/claims
-title: 3 Plus Critical Illness — Making a claim
+title: Tiq 3 Plus Critical Illness — Making a claim
 type: product
 status: approved
 lifecycle: on_sale

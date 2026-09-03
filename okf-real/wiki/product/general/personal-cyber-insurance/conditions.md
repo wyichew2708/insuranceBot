@@ -18,12 +18,12 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md
-- raw/wordings/personal-cyber-insurance-policy-wording.md
 - raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md
+- raw/wordings/personal-cyber-insurance-policy-wording.md
+- raw/wordings/policy-wording-cyber-insurance.md
 version_in_force: '2026'
 links:
-  concepts:
-  - concept/policy-schedule
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -120,6 +120,26 @@ This policy will be governed by and interpreted in accordance with Singapore law
 
 This policy is protected under the policy Owners' Protection Scheme which is administered by the Singapore Deposit Insurance Corporation (SDIC). Coverage for your policy is automatic and no further action is required from you. For more information on the types of benefits that are covered under the scheme as well as the limits of coverage, where applicable, please contact us or visit the General Insurance Association (GIA) or SDIC web-sites (www.gia.org.sg or www.sdic.org.sg) [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
 
+## IMPORTANT NOTICE
+
+> In accordance with the Section 23(5) Insurance Act 1966, we would remind You that You must disclose to Us fully and faithfully all the facts You know or could reasonably be expected to know, otherwise You may not receive any benefit from this Policy. [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+
+## 5.3 Cancellation
+
+> This policy may be cancelled at any time at your request in writing to us and the premium shall be adjusted on the basis that we shall be entitled to receive or retain the customary short term premium SGD 25 + GST, provided no claims have been made under the policy . No refund shall be given where a claim has been lodged under the policy . [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+
+## GENERAL CONDITIONS (APPLICABLE TO THE ENTIRE POLICY)
+
+> A person or organization that is not a party to this policy shall have no rights under the Contracts (Rights of Third Parties) Act 2001 of Singapore (or equivalent or similar statute in any jurisdiction) to enforce any of its terms. [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+
+## PERSONAL DATA USE
+
+Any information collected or held by us whether contained in your application or otherwise obtained may be used and/or disclosed to our associated individuals/companies or any independent third parties (within or outside Singapore) for any matters relating to your application, any policy issued and to provide advice or information concerning products and services which we believe may be of interest to you and to communicate with you for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+
+Personal Cyber Insurance is an insurance product which is underwritten by Etiqa Insurance Pte. Ltd [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+
+> Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) One Raffles Quay, #22-01 North Tower, Singapore 048583 [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+
 ## Important Note
 
 > In accordance with Section 23(5) of the Insurance Act 1966, We would remind You that You must disclose to Us fully and faithfully all the facts You know or could reasonably be expected to know, otherwise You may not receive any benefit from this Policy. [src:raw/wordings/personal-cyber-insurance-policy-wording.md]
@@ -150,24 +170,54 @@ A credit in favour of the Insurer or the intermediary is made through an electro
 
 This Policy shall apply in excess of any other valid and collectible insurance policy available to the insured, including any retention or deductible portion thereof, unless such other insurance is written only as specific excess insurance over the Sum Insured under this policy  [src:raw/wordings/personal-cyber-insurance-policy-wording.md].
 
-## Personal Data Use
+## PAYMENT BEFORE COVER WARRANTY (APPLICABLE TO INDIVIDUAL POLICYHOLDERS ONLY)
 
-Any information collected or held by us whether contained in your application or otherwise obtained may be used and/or disclosed to our associated individuals/companies or any independent third parties (within or outside Singapore) for any matters relating to your application, any policy issued and to provide advice or information concerning products and services which we believe may be of interest to you and to communicate with you for any purpose. Your data may also be used for audit, business analysis and reinsurance purposes [src:raw/wordings/personal-cyber-insurance-policy-wording.md].
+1. The insurance cover charge due must be paid to the Insurer on or before the inception date ('the inception date') or the renewal date of the coverage. Payment shall be deemed to have been effected to the Insurer when the daily deduction from the account value of GIGANTIQ is successful [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-Personal Cyber Insurance is an insurance product which is underwritten by Etiqa Insurance Pte. Ltd [src:raw/wordings/personal-cyber-insurance-policy-wording.md].
+2. In the event that a deduction is unsuccessful due to an insufficient account value in GIGANTIQ on or before the inception date or the renewal date, this policy will be de-activated immediately, then the insurance shall not attach and no benefits whatsoever shall be payable by the Insurer. Any payment received thereafter shall be of no effect whatsoever as cover has not attached [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-## IMPORTANT NOTICE
+## GENERAL TERMS
 
-> In accordance with the Section 23(5) Insurance Act 1966, we would remind You that You must disclose to Us fully and faithfully all the facts You know or could reasonably be expected to know, otherwise You may not receive any benefit from this Policy. [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+1. This Add-on Protection Policy, Schedule, Endorsement, online application, proposal form, declaration and attached papers together with other statements in writing, if any, are evidence of the contract between You and Us and shall hereinafter be referred to as the 'Policy'. The proposal made to Us in connection with this Insurance shall be the basis and forms part of this contract. The Policy is to be read as one document and any word or expression to which a specific meaning has been attached in any part shall bear the same meaning wherever it appears [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-## 5.3 Cancellation
+2. We shall provide the respective Insurance in the terms set out in this Policy, provided that You pay the insurance cover charge in full and We agree to accept it. 3. The conditions which appear in this Policy must be complied with. Failure to comply may mean that You or the Insured Person(s) may not be able to claim under this Policy [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-> This policy may be cancelled at any time at your request in writing to us and the premium shall be adjusted on the basis that we shall be entitled to receive or retain the customary short term premium SGD 25 + GST, provided no claims have been made under the policy . No refund shall be given where a claim has been lodged under the policy . [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+## SPECIAL CONDITIONS
 
-## GENERAL CONDITIONS (APPLICABLE TO THE ENTIRE POLICY)
+malware software regularly in accordance with the vendor's recommendation and regularly back-up Your digital assets; [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-> A person or organization that is not a party to this policy shall have no rights under the Contracts (Rights of Third Parties) Act 2001 of Singapore (or equivalent or similar statute in any jurisdiction) to enforce any of its terms. [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+## 5.3 De-activation
 
-## PERSONAL DATA USE
+Your policy will be de-activated when any one of the following event happens: [src:raw/wordings/policy-wording-cyber-insurance.md].
 
-> Etiqa Insurance Pte. Ltd. (Company Reg. No. 201331905K) One Raffles Quay, #22-01 North Tower, Singapore 048583 [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md]
+- a) de-activation of GIGANTIQ; - b) upon Your request to de-activate the policy. The de-activation will take effect on the next calendar day; or - c) there is insufficient account value in GIGANTIQ and Insurance cover charge for this policy is not paid by expiry date of the grace period [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+When Your policy is de-activated, all benefits under this policy will end. The policy will remain dormant and You may choose to re-activate Your policy at any time before termination of this Add-on Protection occurs [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+## 5.4 Change of Address, Country of Residence or Citizenship
+
+> You must, as soon as practicable, notify Us in writing if there is a change in Your citizenship and / or usual country of residence. A change in the usual country of residence will be deemed to mean Your living or intending to live in another country other than Singapore in excess of 12 consecutive calendar months. [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+We reserve the right and sole discretion to terminate or decline to renew the policy or continue cover on prevailing or varied terms and conditions [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+## 5.5 Fraud and Misrepresentation
+
+If You or such other claimant or anyone acting on his / their behalf fraudulently makes any claim under this policy or obtains any sum payable under this policy through fraudulent means or devices, all Benefits paid under this policy shall be forfeited and must be immediately repaid. This policy will be terminated immediately and there will be no refund of Premiums [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+## 5.12 Renewal
+
+> This is a monthly renewable Add-on Protection and the policy term is 1 month. At the end of every month policy term, this Add-on Protection will be renewed automatically for another month at the same conditions on the expiry date before renewal, so long as the following conditions are met: [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> - (a) this Add-on Protection is in force on the expiry date before the renewal; and - (b) the insured has not reached Age 100 at the renewal date. [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+If We did not receive any request to de-activate the policy as set out in General Condition clause 5.3, we will take the insurance cover charge using the current payment method You have chosen [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+This policy will apply for as long as we can successfully collect the insurance cover charge before the insurance cover charge due date [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+This policy may be renewed, at our sole discretion, with payment of the premium in advance at our premium rate in force at time of renewals [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+## 5.17 Termination
+
+This policy will end when any of the following events happens first: [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+> - a) Termination of GIGANTIQ; - b) 90 days after We give You notice that the policy cannot be renewed. [src:raw/wordings/policy-wording-cyber-insurance.md]

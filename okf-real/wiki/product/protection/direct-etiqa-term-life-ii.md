@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/direct-etiqa-term-life-ii
-title: Direct Etiqa Term Life II Insurance
+title: DIRECT – Etiqa term life II
 type: product
 status: approved
 lifecycle: on_sale
@@ -12,7 +12,9 @@ line_of_business: protection
 regulated_advice: false
 aliases:
 - direct etiqa term life ii
-- direct etiqa term life ii insurance
+- direct purchase term life
+- direct term life ii
+- direct – etiqa term life ii
 channels: []
 plan_tiers: []
 authority:
@@ -28,7 +30,7 @@ review_due: '2026-12-02'
 confidence: medium
 ---
 
-## About Direct Etiqa Term Life II Insurance
+## About DIRECT – Etiqa term life II
 
 ## 3. Our Responsibilities
 

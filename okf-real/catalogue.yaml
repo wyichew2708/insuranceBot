@@ -1,0 +1,369 @@
+# The product catalogue — the only pages that become products.
+#
+# Supplied by the product owner on 2026-09-03 from the current Etiqa Singapore
+# and Tiq by Etiqa websites. The compiler builds one product per entry, from
+# the listed pages and from the policy documents whose names match the entry;
+# a crawled page that is not listed here is not a product, whatever the crawl
+# called it, and a document that matches no entry is reported, not compiled.
+#
+# Fields:
+#   slug      the product key and the page id's last segment (stable — suites
+#             and benefit tables are keyed by it)
+#   name      the customer-facing name
+#   brand     tiq | etiqa
+#   category  the site's own grouping
+#   status    active | legacy   (legacy: closed to new business; still answered,
+#             with a note)
+#   urls      official product pages, any host; several when the product is
+#             listed on both sites
+#   aliases   other names customers use for it
+#   documents name keys that identify this product's wordings, summaries and
+#             brochures in raw/ (matched against the file's plan name)
+
+products:
+  # ---------------------------------------------------------------- Tiq — Protection
+  - slug: 3-plus-critical-illness
+    name: Tiq 3 Plus Critical Illness
+    brand: tiq
+    category: Protection
+    status: active
+    urls: [https://www.tiq.com.sg/product/3-plus-critical-illness]
+    aliases: [3 Plus Critical Illness, 3 plus CI, Tiq 3 Plus CI]
+    documents: [3-plus-critical-illness]
+  - slug: term-life-insurance
+    name: Term Life Insurance
+    brand: tiq
+    category: Protection
+    status: active
+    urls: [https://www.tiq.com.sg/product/term-life-insurance]
+    aliases: [Tiq Term Life, Tiq Term Life Insurance, term life]
+    documents: [eprotect-term-life, term-life]
+  - slug: whole-life-insurance
+    name: Whole Life Insurance
+    brand: tiq
+    category: Protection
+    status: active
+    urls: [https://www.tiq.com.sg/product/whole-life-insurance]
+    aliases: [Tiq Whole Life, Tiq Whole Life Insurance, whole life]
+    documents: [whole-life]
+  - slug: cancer-insurance
+    name: Cancer Insurance
+    brand: tiq
+    category: Protection
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/cancer-insurance
+      - https://www.etiqa.com.sg/personal/life-critical-illness-protection
+    aliases: [Cancer Insurance with No Claim Discount, Tiq Cancer Insurance, cancer cover]
+    documents: [cancer-insurance, major-cancer, essential-cancer-care, cancer]
+  - slug: personal-accident
+    name: Tiq Personal Accident
+    brand: tiq
+    category: Protection
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/tiq-personal-accident
+      - https://www.etiqa.com.sg/personal/personal-accident
+    aliases: [Personal Accident Insurance, Tiq PA, PA insurance, personal accident]
+    documents: [tiq-pa, personal-accident]
+
+  # ---------------------------------------------------------------- Tiq — Home & Maid
+  - slug: home-insurance
+    name: Tiq Home Insurance
+    brand: tiq
+    category: Home & Maid
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/home-insurance
+      - https://www.etiqa.com.sg/personal/home-insurance
+    aliases: [Tiq Home, Home Insurance, home contents insurance]
+    documents: [tiq-home, home-insurance, home]
+  - slug: maid-insurance
+    name: Tiq Maid Insurance
+    brand: tiq
+    category: Home & Maid
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/maid-insurance
+      - https://www.etiqa.com.sg/personal/maid-insurance
+      - https://www.etiqa.com.sg/Online/quotation/eProtect-Maid
+    aliases: [ePROTECT maid, Maid Insurance, Tiq Maid, domestic helper insurance, helper insurance]
+    documents: [eprotect-maid, maid-insurance, maid]
+
+  # ---------------------------------------------------------------- Tiq — Travel & Lifestyle
+  - slug: travel-insurance
+    name: Tiq Travel Insurance
+    brand: tiq
+    category: Travel & Lifestyle
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/travel-insurance
+      - https://www.etiqa.com.sg/personal/travel-insurance
+    aliases: [Tiq Travel, Travel Insurance, travel cover]
+    documents: [tiq-travel, eprotect-travel, travel-insurance]
+  - slug: personal-cyber-insurance
+    name: Personal Cyber Insurance
+    brand: tiq
+    category: Travel & Lifestyle
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/personal-cyber-insurance
+      - https://www.etiqa.com.sg/personal/personal-cyber-insurance
+    aliases: [Tiq Personal Cyber, cyber insurance, personal cyber]
+    documents: [personal-cyber, cyber]
+  - slug: pet-insurance
+    name: Pet Insurance
+    brand: tiq
+    category: Travel & Lifestyle
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/pet-insurance
+      - https://www.etiqa.com.sg/personal/pet-insurance
+    aliases: [Tiq Pet Insurance, Tiq Pet, pet cover, dog insurance, cat insurance]
+    documents: [pet-insurance, dash-pet, pet]
+  - slug: personal-mobility-insurance
+    name: ePROTECT personal mobility
+    brand: tiq
+    category: Travel & Lifestyle
+    status: active
+    urls: [https://www.tiq.com.sg/product/personal-mobility-insurance]
+    aliases: [personal mobility insurance, PMD insurance, e-scooter insurance, personal mobility]
+    documents: [eprotect-personal-mobility, personal-mobility]
+
+  # ---------------------------------------------------------------- Tiq — Motor
+  - slug: private-car-insurance
+    name: Private Car Insurance
+    brand: tiq
+    category: Motor
+    status: active
+    urls: [https://www.tiq.com.sg/product/private-car-insurance]
+    aliases: [Car Insurance, Tiq Car Insurance, Tiq Private Car, private car]
+    documents: [private-car, privatecar, drive-less-save-more]
+  - slug: motorcycle-insurance
+    name: Motorcycle Insurance
+    brand: tiq
+    category: Motor
+    status: active
+    urls: [https://www.tiq.com.sg/product/motorcycle-insurance]
+    aliases: [ePROTECT motorcycle, Tiq Motorcycle, motorcycle, motorbike insurance, bike insurance]
+    documents: [eprotect-motorcycle, motorcycle]
+
+  # ---------------------------------------------------------------- Tiq — Savings & Investments
+  - slug: tiqinvest
+    name: Tiq Invest
+    brand: tiq
+    category: Savings & Investments
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/tiqinvest
+      - https://www.etiqa.com.sg/personal/investments/tiq-invest
+    aliases: [TiqInvest, Tiq Invest ILP]
+    documents: [tiq-invest, tiqinvest]
+  - slug: cashsaver
+    name: Tiq CashSaver
+    brand: tiq
+    category: Savings & Investments
+    status: active
+    urls:
+      - https://www.tiq.com.sg/product/cashsaver
+      - https://www.etiqa.com.sg/personal/savings-retirement/tiq-cashsaver
+    aliases: [CashSaver, Tiq Cash Saver]
+    documents: [cashsaver]
+  - slug: tiq-3-year-endowment-plan
+    name: Tiq 3-Year Endowment Plan
+    brand: tiq
+    category: Savings & Investments
+    status: active
+    urls: [https://www.tiq.com.sg/product/tiq-3-year-endowment-plan]
+    aliases: [3-Year Endowment Plan, Tiq 3 Year Endowment, 3 year endowment]
+    documents: [3-year-endowment, endowment]
+  - slug: tiq-easy-save
+    name: Tiq Easy Save
+    brand: tiq
+    category: Savings & Investments
+    status: active
+    urls: [https://www.tiq.com.sg/product/tiq-easy-save]
+    aliases: [Easy Save, Tiq EasySave]
+    documents: [easy-save, easysave]
+
+  # ---------------------------------------------------------------- Etiqa — Life & Critical Illness
+  - slug: direct-etiqa-term-life-ii
+    name: DIRECT – Etiqa term life II
+    brand: etiqa
+    category: Life & Critical Illness
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/life-critical-illness-protection]
+    aliases: [Direct Etiqa term life II, DIRECT term life II, direct purchase term life]
+    documents: [direct-etiqa-term-life-ii, direct-etiqa-term-life]
+  - slug: direct-etiqa-whole-life
+    name: DIRECT – Etiqa whole life
+    brand: etiqa
+    category: Life & Critical Illness
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/life-critical-illness-protection]
+    aliases: [Direct Etiqa whole life, DIRECT whole life, direct purchase whole life]
+    documents: [direct-etiqa-whole-life]
+  - slug: eprotect-term-life
+    name: ePROTECT term life
+    brand: etiqa
+    category: Life & Critical Illness
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/life-critical-illness-protection]
+    aliases: [eProtect term life, e-protect term life]
+    documents: [eprotect-term-life]
+
+  # ---------------------------------------------------------------- Etiqa — Investments
+  - slug: invest-vista
+    name: Invest vista
+    brand: etiqa
+    category: Investments
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/investments/invest-vista]
+    aliases: [Etiqa Invest Vista]
+    documents: [invest-vista]
+  - slug: invest-smart-vista
+    name: Invest Smart Vista
+    brand: etiqa
+    category: Investments
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/investments/invest-smart-vista]
+    aliases: [Etiqa Invest Smart Vista, smart vista]
+    documents: [invest-smart-vista]
+
+  # ---------------------------------------------------------------- Etiqa — Travel
+  - slug: travel-infinite
+    name: Travel Infinite
+    brand: etiqa
+    category: Travel
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/travel-insurance/travel-infinite]
+    aliases: [Etiqa Travel Infinite, infinite travel]
+    documents: [travel-infinite]
+  - slug: travel-takaful
+    name: Travel Takaful
+    brand: etiqa
+    category: Travel
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/travel-insurance/travel-takaful]
+    aliases: [Etiqa Travel Takaful, takaful travel]
+    documents: [travel-takaful, takaful]
+
+  # ---------------------------------------------------------------- Etiqa — HDB Fire
+  - slug: fire-insurance
+    name: HDB Fire Insurance
+    brand: etiqa
+    category: HDB Fire
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/fire-insurance]
+    aliases: [HDB fire, fire insurance, Etiqa HDB Fire Insurance]
+    documents: [fire-insurance, hdb-fire]
+
+  # ---------------------------------------------------------------- Etiqa — Premier
+  - slug: premier-solutions
+    name: Premier Solutions
+    brand: etiqa
+    category: Premier Solutions
+    status: active
+    urls: [https://www.etiqa.com.sg/personal/premier-solutions]
+    aliases: [Etiqa Premier Solutions, premier]
+    documents: [esteem, premier]
+
+  # ---------------------------------------------------------------- Etiqa — Business
+  - slug: business-owners-super-suite
+    name: Business Owners Super Suite
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/business-owners-super-suite]
+    aliases: [BOSS, super suite, business owners suite, SME package]
+    documents: [businessenterprisesolution, business-owners]
+  - slug: commercial-vehicle
+    name: Commercial Vehicle Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/commercial-vehicle]
+    aliases: [commercial motor, commercial vehicle, fleet insurance]
+    documents: [commercial-motor, commercial-vehicle, motor-trade]
+  - slug: accident-health
+    name: Accident & Health Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/accident-health]
+    aliases: [accident and health, group accident, foreign workers medical, foreign worker medical insurance]
+    documents: [foreign-workers-medical, accident-health, group-personal-accident]
+  - slug: casualty
+    name: Casualty Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/casualty]
+    aliases: [casualty, public liability, products liability, work injury compensation, WICA]
+    documents: [public-liability, work-injury, wic, casualty]
+  - slug: corporate-travel
+    name: Corporate Travel Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/corporate-travel]
+    aliases: [corporate travel, business travel insurance, group travel]
+    documents: [corporate-travel]
+  - slug: engineering
+    name: Engineering Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/engineering]
+    aliases: [engineering, contractors all risks, erection all risks, machinery breakdown, electronic equipment]
+    documents: [erection-all-risks, contractors-all-risks, plant-machinery, machinery, engineering]
+  - slug: marine
+    name: Marine Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/marine]
+    aliases: [marine, marine cargo, inland transit, goods in transit]
+    documents: [marine, goods-in-transit, inland-transit, bailees]
+  - slug: miscellaneous
+    name: Miscellaneous Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/miscellaneous]
+    aliases: [miscellaneous, plate glass, money insurance, fidelity guarantee, burglary insurance, theft insurance]
+    documents: [plate-glass, money, fidelity, burglary, theft]
+  - slug: property
+    name: Property Insurance
+    brand: etiqa
+    category: Business
+    status: active
+    urls: [https://www.etiqa.com.sg/business-insurance/property]
+    aliases: [property, commercial property, fire and extraneous perils, industrial all risks, consequential loss]
+    documents: [commercial-all-risks, all-risks, fire-mortgagee, consequential-loss, industrial-all-risks, property]
+
+  # ---------------------------------------------------------------- Legacy — closed to new business
+  - slug: eeasy-savepro
+    name: eEASY savepro
+    brand: tiq
+    category: Savings & Investments
+    status: legacy
+    urls: [https://www.tiq.com.sg/product/eeasy-savepro]
+    aliases: [eEASY save pro, easy savepro]
+    documents: [eeasy-savepro]
+  - slug: eprotect-safety
+    name: ePROTECT safety
+    brand: etiqa
+    category: Protection
+    status: legacy
+    urls: [https://www.etiqa.com.sg/online/quotation/ePROTECT-safety]
+    aliases: [eProtect safety, e-protect safety]
+    documents: [eprotect-safety]
+  - slug: enrich-aspire-vii
+    name: Enrich aspire VII
+    brand: tiq
+    category: Savings & Investments
+    status: legacy
+    urls: [https://www.tiq.com.sg/product/enrich-aspire-vii]
+    aliases: [Enrich aspire 7, enrich aspire]
+    documents: [enrich-aspire]

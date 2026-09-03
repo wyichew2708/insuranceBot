@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance/cover
-title: Car Insurance — What is covered
+title: Private Car Insurance — What is covered
 type: product
 status: approved
 lifecycle: on_sale

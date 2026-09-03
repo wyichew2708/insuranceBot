@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/personal-accident/claims
-title: Personal Accident — Making a claim
+title: Tiq Personal Accident — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -16,9 +16,9 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md
-- raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
 - raw/wordings/policy-wording-personal-accident-policy-22032016.md
+- raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md
+- raw/wordings/tiq-pa-policy-wording-v2-280823.md
 version_in_force: '2026'
 links:
   concepts: []
@@ -30,15 +30,13 @@ review_due: '2026-12-02'
 confidence: high
 ---
 
-## 10. Claim Procedures
+## CLAIMS PROCEDURE
 
-- a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
+7. Written notice shall be given to the Company as soon as possible and in any event within one calendar month of the occurrence of any bodily injury which may give rise to a claim under this policy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
-- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
+All certificates information and evidence required by the Company shall be supplied free of expense to the Company in the form precribed by the Company. The Insured shall as often as required submit to medical examination on behalf of and at the expense of the Company in connection with any claim [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
-## 11. Incomplete Claims
-
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-personal-accident-policy-wording-final-v1-0-18052022.md].
+The Company shall in the case of death of the Insured be entitled to have a postmortem at its own expense [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
 
 ## 11. Claim Procedures
 
@@ -62,10 +60,12 @@ All differences arising out of this Policy shall be referred to the decision of 
 
 > 20. Contract (Rights of Third Parties) Act 2001 A person who is not a party to this Policy contract shall have no right under the Contracts (Rights of Third Parties) Act 2001 to enforce any of its terms. [src:raw/wordings/policy-wording-personal-accident-with-rider-plan-policy-22032016.md]
 
-## CLAIMS PROCEDURE
+## 10. Claim Procedures
 
-7. Written notice shall be given to the Company as soon as possible and in any event within one calendar month of the occurrence of any bodily injury which may give rise to a claim under this policy [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
+- a) All claims and relevant supporting documents must be notified to Us as soon as possible but not later than seven (7) days after any event which may entitle You to claim under this Policy. - b) Any documents or evidence required by Us to verify the claim shall be provided by You at Your own expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 
-All certificates information and evidence required by the Company shall be supplied free of expense to the Company in the form precribed by the Company. The Insured shall as often as required submit to medical examination on behalf of and at the expense of the Company in connection with any claim [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
+- c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].
 
-The Company shall in the case of death of the Insured be entitled to have a postmortem at its own expense [src:raw/wordings/policy-wording-personal-accident-policy-22032016.md].
+## 11. Incomplete Claims
+
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/tiq-pa-policy-wording-v2-280823.md].

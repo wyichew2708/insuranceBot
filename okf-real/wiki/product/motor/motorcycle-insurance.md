@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance
-title: Motorcycle Insurance with up to $500,000 coverage
+title: Motorcycle Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -10,7 +10,12 @@ uen: 201331905K
 jurisdiction: SG
 line_of_business: motor
 regulated_advice: false
-aliases: []
+aliases:
+- bike insurance
+- eprotect motorcycle
+- motorbike insurance
+- motorcycle
+- tiq motorcycle
 channels:
 - ref: channel/direct
   name: Direct
@@ -36,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Protection for your sheer riding pleasure Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#body].
+Safeguard your ride with our comprehensive coverage [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#eprotect-motorcycle-promo-10-off].
 
 ## What is not covered
 

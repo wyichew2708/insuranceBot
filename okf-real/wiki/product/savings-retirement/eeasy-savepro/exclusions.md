@@ -10,15 +10,14 @@ jurisdiction: SG
 line_of_business: savings-retirement
 regulated_advice: false
 aliases:
-- eeasy-savepro exclusions
-- eeasy-savepro not covered
-- what is not covered by eeasy-savepro
+- eeasy savepro exclusions
+- what is not covered by eeasy savepro
+- eeasy savepro not covered
 channels: []
 plan_tiers: []
 authority:
-- raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md
+- raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md
 version_in_force: '2026'
-effective_from: '2026-08-25'
 links:
   concepts: []
 compiled_from_commit: working-tree
@@ -26,9 +25,11 @@ compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-12-02'
-confidence: low
+confidence: high
 ---
 
 ## Exclusions
 
-The exclusions for this product are set out in its policy wording, which is not part of this compiled bundle [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md].
+> There are certain conditions (such as death from suicide or pre-existing conditions within 12 months from the date of issue of the policy or the date of the last reinstatement of the policy, whichever is later) under which no benefits will be payable. When this happens, we will return the total premiums you paid without interest, less any expenses incurred by us on your policy. [src:raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md]
+
+These are stated as exclusions in the policy contract. You are advised to read your policy contract for the full details of these exclusions [src:raw/product-summaries/eeasy-savepro-product-summary-15-year-policy-term.md].

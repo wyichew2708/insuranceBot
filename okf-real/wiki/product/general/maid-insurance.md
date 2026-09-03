@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/maid-insurance
-title: Maid Insurance
+title: Tiq Maid Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,8 +11,11 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- maid
+- domestic helper insurance
+- eprotect maid
+- helper insurance
 - maid insurance
+- tiq maid
 channels:
 - ref: channel/direct
   name: Direct
@@ -48,7 +51,7 @@ Your domestic helper is a key member of your household [src:raw/web/www.etiqa.co
 
 ## What it covers
 
-The policy wording sets out cover under: Personal Accident; Repatriation Expenses; Hospitalisation & Surgical Expenses; Wages & Levy Reimbursement; Recuperation Benefit; Alternative Maid Services; Termination / Re-Hiring Expenses; Maid's Liability; Special Grant; Physical Abuse by Maid; Additional Hospitalisation & Surgical Expenses; Critical Illness [src:raw/wordings/tiq-maid-policy-wording.md].
+The policy wording sets out cover under: Personal Accident; Repatriation Expenses; Hospitalisation & Surgical Expenses; Wages & Levy Reimbursement; Recuperation Benefit; Alternative Maid Services; Termination / Re-Hiring Expenses; Maid's Liability; Special Grant; Physical Abuse by Maid; Reimbursement of Indemnity Paid to Insurer; Additional Hospitalisation & Surgical Expenses [src:raw/wordings/eprotect-maid-policy-wording-v10.md].
 
 ## Headline benefits
 

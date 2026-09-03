@@ -11,6 +11,8 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- cashsaver
+- tiq cash saver
 - tiq cashsaver
 channels:
 - ref: channel/direct

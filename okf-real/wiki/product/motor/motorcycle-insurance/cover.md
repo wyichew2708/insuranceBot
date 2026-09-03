@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/motorcycle-insurance/cover
-title: Motorcycle Insurance with up to $500,000 coverage — What is covered
+title: Motorcycle Insurance — What is covered
 type: product
 status: approved
 lifecycle: on_sale

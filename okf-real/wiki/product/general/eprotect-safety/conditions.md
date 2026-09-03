@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/eprotect-safety/conditions
-title: Eprotect Safety Insurance — Policy conditions
+title: ePROTECT safety — Policy conditions
 type: product
 status: approved
 lifecycle: on_sale

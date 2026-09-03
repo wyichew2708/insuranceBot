@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/direct-etiqa-term-life-ii/claims
-title: Direct Etiqa Term Life II Insurance — Making a claim
+title: DIRECT – Etiqa term life II — Making a claim
 type: product
 status: approved
 lifecycle: on_sale

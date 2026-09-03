@@ -11,13 +11,18 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- cat insurance
+- dog insurance
 - pet
+- pet cover
 - pet insurance
+- tiq pet
+- tiq pet insurance
 channels:
 - ref: channel/direct
   name: Direct
   purchase: direct_online
-  landing: https://www.etiqa.com.sg/personal/pet-insurance/pet-insurance
+  landing: https://www.etiqa.com.sg/personal/pet-insurance
   surfaces:
   - https://www.tiq.com.sg/product/pet-insurance
 plan_tiers:
@@ -25,7 +30,7 @@ plan_tiers:
 - pawtastic-get-quote
 - pawfect-get-quote
 authority:
-- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance-pet-insurance.md
+- raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
 - raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
@@ -44,11 +49,15 @@ confidence: high
 
 ## What this plan is
 
-Marketing Consent Terms & Conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance-pet-insurance.md#find-out-more].
+Safeguard your pet's wellbeing Safeguard your pet's wellbeing We believe that providing the best care for your dogs and cats 1 should never result in a financial burden [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#body].
 
 ## What it covers
 
-The policy wording sets out cover under: Surgical Illness Cover; Non-Surgical Illness Cover; Accidental Injury; Funeral Expenses; Third Party Liability; Coverage for Congenital and Hereditary Conditions; Geographical Coverage; Payment of Benefit [src:raw/wordings/pet-insurance-policy-wording-v1-25-january-2024-final.md].
+Unmatched Protection: Industry-leading coverage for surgical and non-surgical procedures, accidental injuries, congenital, and hereditary conditions [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#unmatched-protection].
+
+Discounts and Benefit: No-claim discounts, multi-pet discounts, and additional coverage for final expenses [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#discounts-and-benefit].
+
+The policy wording sets out cover under: Death Benefit; Terminal Illness (TI) Benefit; Surrender Benefit; Partial Withdrawal Benefit; Maturity Benefit [src:raw/wordings/dash-pet-plus-policy-contract-v3-26-02042026.md].
 
 ## Headline benefits
 

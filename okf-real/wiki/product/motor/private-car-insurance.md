@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/motor/private-car-insurance
-title: Car Insurance
+title: Private Car Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,8 +11,10 @@ jurisdiction: SG
 line_of_business: motor
 regulated_advice: false
 aliases:
-- car
 - car insurance
+- private car
+- tiq car insurance
+- tiq private car
 channels:
 - ref: channel/direct
   name: Direct

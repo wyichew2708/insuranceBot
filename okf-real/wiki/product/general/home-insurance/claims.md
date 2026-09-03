@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/home-insurance/claims
-title: Home Insurance — Making a claim
+title: Tiq Home Insurance — Making a claim
 type: product
 status: approved
 lifecycle: on_sale
@@ -16,8 +16,8 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md
 - raw/wordings/eprotect-home-policy-wording.md
+- raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md
 version_in_force: '2026'
 links:
   concepts: []
@@ -28,6 +28,10 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: high
 ---
+
+## 16. Notice of Claim
+
+> A claim must be notified to us as soon as possible and in any case within thirty (30) days after the occurrence of any event which may give rise to a claim. To report a claim, please call 9695 1338 or 8218 8521. [src:raw/wordings/eprotect-home-policy-wording.md]
 
 ## 2. Claims Notification
 
@@ -42,7 +46,3 @@ confidence: high
 - d) With respect to Cyber Extortion, the Extortion Payment shall not be paid without Our prior written consent. You must also make every reasonable effort to establish the credibility of the threat and to notify the police or other local law enforcement authorities before surrendering any Extortion Payment in response to the Cyber Extortion Threat. If the Extortion Payment involves marketable goods, we will pay the actual cash value at the time of the surrender of such goods [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
 
 > - e) With respect to Identity Theft, You must report to the police as well as the issuers of the Plastic Card (where applicable) and the financial institution (where applicable) as soon as practicable but no later twenty four (24) hours after Your discovery of the Identity Theft. [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md]
-
-## 16. Notice of Claim
-
-> A claim must be notified to us as soon as possible and in any case within thirty (30) days after the occurrence of any event which may give rise to a claim. To report a claim, please call 9695 1338 or 8218 8521. [src:raw/wordings/eprotect-home-policy-wording.md]

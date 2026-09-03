@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/travel-insurance
-title: Travel Insurance
+title: Tiq Travel Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -13,7 +13,7 @@ regulated_advice: false
 aliases:
 - tiq travel
 - tiq travel insurance
-- travel
+- travel cover
 - travel insurance
 channels:
 - ref: channel/direct

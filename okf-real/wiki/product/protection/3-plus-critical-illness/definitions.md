@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/protection/3-plus-critical-illness/definitions
-title: 3 Plus Critical Illness — Definitions
+title: Tiq 3 Plus Critical Illness — Definitions
 type: product
 status: approved
 lifecycle: on_sale

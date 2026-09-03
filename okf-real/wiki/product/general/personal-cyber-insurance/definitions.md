@@ -17,12 +17,12 @@ channels: []
 plan_tiers: []
 authority:
 - raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md
-- raw/wordings/personal-cyber-insurance-policy-wording.md
 - raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md
+- raw/wordings/personal-cyber-insurance-policy-wording.md
+- raw/wordings/policy-wording-cyber-insurance.md
 version_in_force: '2026'
 links:
-  concepts:
-  - concept/policy-schedule
+  concepts: []
 compiled_from_commit: working-tree
 compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
@@ -101,6 +101,12 @@ We can at our sole discretion settle your claim for restoration costs under this
 
 The construction, interpretation and meaning of the terms, conditions, exclusions and limitations of this policy shall be determined in accordance with the law of Singapore and in accordance with the English text as it appears in this policy  [src:raw/wordings/etiqa-policy-wording-personal-cyber-v4-march-2025.md].
 
+## GENERAL DEFINITIONS
+
+- 1.2 Crawford means Crawford &amp; Company International Pte Ltd (Company Reg. No. 197101412E), our appointed Claims Service Call Centre. - 1.3 Cyber act means: 4. (a) the fraudulent or malicious input, modification, deletion, corruption, encryption or extraction of your digital assets , residing on your computer system, which is caused by the introduction of malware or hacking by a third party ; [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+
+the fraudulent or malicious disablement of access and control of your computer system , which is caused by the introduction of malware or hacking by a third party ; or 6. (c) cryptojacking  [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+
 ## General Definitions
 
 - 1.2 Crawford means Crawford &amp; Company International Pte Ltd (Company Reg. No. 197101412E), our appointed Claims Service Call Centre. - 1.3 Cyber act means: 3. (a) the fraudulent or malicious input, modification, deletion, corruption, encryption or extraction of your digital assets, residing on your computer system , which is caused by the introduction of malware or hacking by a third party ; [src:raw/wordings/personal-cyber-insurance-policy-wording.md].
@@ -137,6 +143,20 @@ the fraudulent or malicious disablement of access and control of your computer s
 
 ## GENERAL DEFINITIONS
 
-- 1.2 Crawford means Crawford &amp; Company International Pte Ltd (Company Reg. No. 197101412E), our appointed Claims Service Call Centre. - 1.3 Cyber act means: 4. (a) the fraudulent or malicious input, modification, deletion, corruption, encryption or extraction of your digital assets , residing on your computer system, which is caused by the introduction of malware or hacking by a third party ; [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+> - 1.1 Add-on Protection is an optional insurance plan, which can be activated to provide supplementary coverage to the Basic Policy. - 1.2 Child (ren) means a fully dependent child (ren) under the age of twenty-three (23) years who is not married, not employed and is residing in the same household and in the same country of residence as the Policyholder on the Policy Period of Insurance stated in the Schedule. [src:raw/wordings/policy-wording-cyber-insurance.md]
 
-the fraudulent or malicious disablement of access and control of your computer system , which is caused by the introduction of malware or hacking by a third party ; or 6. (c) cryptojacking  [src:raw/wordings/etiqa-policy-wording-tiq-personal-cyber-utd-28052020.md].
+- 1.3 Cyber act means: 4. (a) the fraudulent or malicious input, modification, deletion, corruption, encryption or extraction of Your digital assets, residing on Your computer system, which is caused by the introduction of malware or hacking by a third party; [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+- 1.6 Crypto jacking means the unauthorized use of Your computer system by a third party for mining cryptocurrency. - 1.7 Deductible means the initial amount that You will need to pay before We will make any benefit payments. - 1.8 Digital assets means software, programs, Your personal electronic data, digital photos, digital music and digital video stored on Your computer systems [src:raw/wordings/policy-wording-cyber-insurance.md].
+
+> - 1.9 Digital wallet is an e-wallet associated with a user's account with an online merchant and is intended for effecting payment for the purchase of goods and services through the online merchant's website. - 1.10 Excess means the amount You must pay in the event of each and every loss. [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> - 1.11 Electronic communication means: 4. (a) electronic mails; 5. (b) instructions given via the online banking or trading platform of a financial institution; or 6. (c) instructions given via the mobile application software (App) of a financial institution. - 1.12 Electronic data means information stored or transmitted in a digital format. [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> - 1.13 Extortion payment means any monies (including crypto or virtual currencies) or property paid by You, to a third party, who You reasonably believe to be responsible for a cyber extortion threat, with the purpose of resolving or terminating such threat. [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> - 1.14 Family means your spouse and children, and your relatives permanently living with you at the address stated in the Schedule. - 1.15 Financial loss means: 11. (a) loss of funds from Your personal account with a financial institution or from Your digital wallet with an online merchant; [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> any associated fees, penalties or interest incurred by You which have been levied by the financial institution or online merchant; 13. (c) reasonable and necessary cost of replacing or reconstituting Your personal documents or title deeds; 14. (d) plastic card charges that You have incurred, including any penalties or interest which have been levied by the financial institution; [src:raw/wordings/policy-wording-cyber-insurance.md]
+
+> reasonable and necessary legal costs and expenses You incur, with our prior written consent, in pursuing or defending any legal action, arising directly from a covered cyber event; or 16. (f) actual lost income that would have been earned, whether for partial or whole day's work, for time reasonably and necessarily taken off Your work and away from Your work premises, solely to attend to the matters requiring attention, directly arising from a covered cyber event. [src:raw/wordings/policy-wording-cyber-insurance.md]

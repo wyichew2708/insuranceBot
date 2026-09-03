@@ -4,13 +4,15 @@ id: product/general/enrich-aspire-vii
 title: Enrich aspire VII
 type: product
 status: approved
-lifecycle: on_sale
+lifecycle: closed_to_new_business
 underwriter: Etiqa Insurance Pte. Ltd.
 uen: 201331905K
 jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
+- enrich aspire
+- enrich aspire 7
 - enrich aspire vii
 channels:
 - ref: channel/direct

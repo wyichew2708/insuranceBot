@@ -11,6 +11,7 @@ jurisdiction: SG
 line_of_business: investments
 regulated_advice: false
 aliases:
+- etiqa invest vista
 - invest vista
 channels:
 - ref: channel/direct

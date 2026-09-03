@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/home-insurance/faq
-title: Home Insurance — Published FAQs
+title: Tiq Home Insurance — Published FAQs
 type: product
 status: approved
 lifecycle: on_sale

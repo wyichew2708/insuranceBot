@@ -1,7 +1,7 @@
 ---
 okf_version: '0.1'
 id: product/general/home-insurance
-title: Home Insurance
+title: Tiq Home Insurance
 type: product
 status: approved
 lifecycle: on_sale
@@ -11,8 +11,9 @@ jurisdiction: SG
 line_of_business: general
 regulated_advice: false
 aliases:
-- home
+- home contents insurance
 - home insurance
+- tiq home
 channels:
 - ref: channel/direct
   name: Direct
@@ -43,7 +44,7 @@ Protect what belongs to you Give your family more than a roof over their head wh
 
 ## What it covers
 
-The policy wording sets out cover under: Building; Renovation; Emergency Cash Allowance; Personal Legal Liability; Tenant's Liability; Valuables; Conservancy Charges; Accidental Breakage of Mirrors and Fixed Glass; Money; Personal Cyber; Family Accidental Death Protection; Property Damage [src:raw/wordings/tiq-home-policy-wording-v9-20-oct-2023-final.md].
+The policy wording sets out cover under: Renovation; Home Contents; Personal Legal Liability (Worldwide); Building & Renovation; Household Contents; Personal Legal Liability; Tenant's Liability; Family Accidental Death Protection; Multi-appliances Home Protector [src:raw/wordings/complimentary-home-insurance-policy-wording.md].
 
 ## What is not covered
 

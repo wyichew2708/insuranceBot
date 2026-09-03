@@ -16,7 +16,7 @@ aliases:
 channels: []
 plan_tiers: []
 authority:
-- raw/wordings/travel-infinite-policy-wording.md
+- raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md
 version_in_force: '2026'
 links:
   concepts:
@@ -31,10 +31,10 @@ confidence: high
 
 ## 8. Claims Procedures
 
-> - (a) All claims and relevant supporting documents must be given to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured Person(s) to claim under this Policy. - (b) Any document or evidence required by Us to verify the claim shall be provided by the Insured Person(s) at His own expense. [src:raw/wordings/travel-infinite-policy-wording.md]
+> - (a) All claims and relevant supporting documents must be given to Us as soon as possible but not later than thirty (30) days after any event which may entitle the Insured Person(s) to claim under this Policy. - (b) Any document or evidence required by Us to verify the claim shall be provided by the Insured Person(s) at His own expense. [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md]
 
-- (c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/travel-infinite-policy-wording.md].
+- (c) Any medical examination required by Us to verify the claim shall be at Our expense [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md].
 
 ## 9. Incomplete Claims
 
-Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/travel-infinite-policy-wording.md].
+Claims are not deemed complete and eligible benefits are not payable unless all bills for such claims have been submitted and agreed by Us. Only actual costs incurred shall be considered for reimbursement. Any variation or waiver of the foregoing shall be at Our sole discretion [src:raw/wordings/travel-infinite-covid-19-policy-wording-2025-03.md].

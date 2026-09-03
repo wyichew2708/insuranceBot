@@ -18,6 +18,7 @@ plan_tiers: []
 authority:
 - raw/wordings/eprotect-whole-life-policy-contract.md
 - raw/wordings/policy-contract-direct-etiqa-whole-life.md
+- raw/wordings/policy-contract-essential-whole-life-cover.md
 version_in_force: '2026'
 links:
   concepts:
@@ -169,3 +170,23 @@ We do not pay the TPD Benefit if the TPD is directly or indirectly, wholly or pa
 When there is condition(s) specific to the Life insured which We will not cover, We will state them on Our offer of conditional acceptance, the Policy Information Page and Endorsement. When any of the exclusion happens, We will return the higher of either the total Premiums paid (less any amounts previously paid to You under this policy) without interest or the Surrender value (if any), less any amounts owing to Us [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
 
 - 4) The definitions of the exclusions are stated in the policy contract. Please refer to the policy contract [src:raw/wordings/policy-contract-direct-etiqa-whole-life.md].
+
+## 3 Our Responsibilities
+
+> This is a whole life plan that provides You with protection against death, Terminal illness and Total and permanent disability (until Age 70). You have a choice of additional Non-participating coverage of 100%, 200% or 300% of Basic sum insured to increase Your protection up to either Age 65 or Age 80. [src:raw/wordings/policy-contract-essential-whole-life-cover.md]
+
+This is a Participating life insurance policy. It allows You to participate in the performance of the Participating fund in the form of bonuses that are not guaranteed [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
+
+## 3.1 Covered Events
+
+If Your policy is valid and a covered event happens, We will pay You the Benefits less any amount You owe Us on this policy or its supplementary rider contract (where applicable). The covered events of Your policy are written on the Policy Information Page [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
+
+## 3.2 Surrender Benefit
+
+- a) the guaranteed Surrender value; - b) Surrender value of reversionary bonus (if any); and - c) performance bonus (if any) [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
+
+less any amounts owing to Us [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
+
+## 3.3 Bonus
+
+Your policy comprises of a Participating component. A part of the Premiums You pay will go into a life Participating fund. We will share the profit or loss of this fund with You [src:raw/wordings/policy-contract-essential-whole-life-cover.md].
