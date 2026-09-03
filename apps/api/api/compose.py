@@ -846,9 +846,15 @@ def compose(
             for paragraph in _paragraphs(resolved.text):
                 if ALLOW_NUMBER not in paragraph:
                     continue
-                for match in NUMERIC_SPAN_RE.finditer(
-                    SOURCE_REF_RE.sub("", paragraph.replace(ALLOW_NUMBER, ""))
-                ):
+                text = SOURCE_REF_RE.sub("", paragraph.replace(ALLOW_NUMBER, ""))
+                for match in NUMERIC_SPAN_RE.finditer(text):
+                    # "COVID-19" is a name, not a figure; the gate skips it too.
+                    if (
+                        match.start() >= 2
+                        and text[match.start() - 1] == "-"
+                        and text[match.start() - 2].isalnum()
+                    ):
+                        continue
                     figures.append(
                         Figure(label="product page", text=match.group(), page_ref=selection.page.id)
                     )
