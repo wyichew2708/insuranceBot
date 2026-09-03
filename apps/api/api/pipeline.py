@@ -916,6 +916,9 @@ def _answer_turn(
             and product is not None
             and not draft.handoff
             and ask.scope != "overview"
+            # Only where a figure was the point: on an exclusions or claims
+            # answer the line offered a number the question never asked for.
+            and ask.intent in (Intent.limit, Intent.coverage, Intent.price, Intent.unknown)
             and _tier_specific(product, bundle)
         ):
             draft.unresolved.append("plan tier unknown — sign in for tier-specific limits")

@@ -227,6 +227,40 @@ DRILL_PAGES = ("/exclusions", "/cover", "/benefits", "/claims", "/conditions", "
 _HEADING_RE = re.compile(r"^## (.+)$", re.M)
 
 
+_SECTION_NUMBER_RE = re.compile(r"section[s]?\s+(\d+[a-z]?)(?:\s*(?:&|and)\s*(\d+[a-z]?))?", re.I)
+_SECTION_TITLE_RE = re.compile(r"section\s+(\d+[a-z]?)\s*[-\u2013:]\s*(.+)$", re.I)
+
+
+def section_titles(bundle: Bundle, product_page: str) -> dict[str, str]:
+    """Section number → benefit name, from the cover page's headings
+    ("Section 2 - Medical Expenses Incurred Overseas")."""
+    titles: dict[str, str] = {}
+    for suffix in ("/cover", "/benefits"):
+        page = bundle.get(f"{product_page}{suffix}")
+        if page is None:
+            continue
+        for heading in _HEADING_RE.findall(page.body):
+            m = _SECTION_TITLE_RE.match(heading.strip())
+            if m:
+                titles.setdefault(m.group(1).lower(), m.group(2).strip())
+    return titles
+
+
+def friendly_heading(heading: str, titles: dict[str, str]) -> str:
+    """ "Exclusion to Section 28" -> "Section 28 (Baggage) exclusions";
+    "General Exclusions (Applicable to All Sections)" -> "General exclusions".
+    The chip shows this; the Ask reads the chip back to the heading."""
+    h = heading.strip()
+    if re.match(r"general exclusions", h, re.I):
+        return "General exclusions"
+    m = _SECTION_NUMBER_RE.search(h)
+    if m and re.search(r"exclusion", h, re.I):
+        numbers = [n for n in (m.group(1), m.group(2)) if n]
+        named = [f"{n}" + (f" ({titles[n.lower()]})" if n.lower() in titles else "") for n in numbers]
+        return f"Section{'s' if len(named) > 1 else ''} {' & '.join(named)} exclusions"
+    return h
+
+
 def _section_body(body: str, heading: str) -> str:
     start = body.find(f"## {heading}")
     if start < 0:
@@ -245,14 +279,17 @@ def read_section(bundle: Bundle, product_page: str, question: str) -> tuple[str,
     haystack = f" {normalise(question)} "
     root = bundle.get(product_page)
     product_names = names_of(root) if root is not None else []
+    titles = section_titles(bundle, product_page)
     best: tuple[int, str, str] | None = None
     for suffix in DRILL_PAGES:
         page = bundle.get(f"{product_page}{suffix}")
         if page is None:
             continue
         for heading in _HEADING_RE.findall(page.body):
-            phrase = normalise(heading)
-            if len(phrase.split()) < 2 or f" {phrase} " not in haystack:
+            # The heading as written, or as the chip showed it.
+            forms = {normalise(heading), normalise(friendly_heading(heading, titles))}
+            phrase = next((f for f in sorted(forms, key=len, reverse=True) if f" {f} " in haystack), "")
+            if not phrase or len(phrase.split()) < 2:
                 continue
             # A section with no source reference is a pointer ("the complete
             # list is on the exclusions page"), and drilling into it composed

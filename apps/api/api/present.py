@@ -20,7 +20,8 @@ from __future__ import annotations
 
 import re
 
-from harness.ask import Ask
+from harness.ask import Ask, friendly_heading
+from harness.ask import section_titles as _section_titles
 from harness.intent import Intent
 
 from okf import Bundle, Page
@@ -199,32 +200,15 @@ def bulletise(text: str) -> str:
 
 
 def section_titles(bundle: Bundle, product: Page) -> dict[str, str]:
-    """Section number → benefit name, from the cover page's headings
-    ("Section 2 - Medical Expenses Incurred Overseas")."""
-    titles: dict[str, str] = {}
-    for suffix in ("/cover", "/benefits"):
-        page = bundle.get(f"{product.id}{suffix}")
-        if page is None:
-            continue
-        for heading in _HEADING_RE.findall(page.body):
-            m = re.match(r"section\s+(\d+[a-z]?)\s*[-\u2013:]\s*(.+)$", heading.strip(), re.I)
-            if m:
-                titles.setdefault(m.group(1).lower(), m.group(2).strip())
-    return titles
+    return _section_titles(bundle, product.id)
 
 
-def friendly_heading(heading: str, titles: dict[str, str]) -> str:
-    """ "Exclusion to Section 28" -> "Section 28 (Baggage) exclusions";
-    "General Exclusions (Applicable to All Sections)" -> "General exclusions"."""
-    h = heading.strip()
-    if re.match(r"general exclusions", h, re.I):
-        return "General exclusions"
-    m = _SECTION_NUMBER_RE.search(h)
-    if m and re.search(r"exclusion", h, re.I):
-        numbers = [n for n in (m.group(1), m.group(2)) if n]
-        named = [f"{n}" + (f" ({titles[n.lower()]})" if n.lower() in titles else "") for n in numbers]
-        return f"Section{'s' if len(named) > 1 else ''} {' & '.join(named)} exclusions"
-    return h
+def _body_of(body: str, heading: str) -> str:
+    start = body.find(f"## {heading}")
+    if start < 0:
+        return ""
+    end = body.find("\n## ", start + 3)
+    return body[start : end if end > 0 else len(body)]
 
 
 def section_chips(bundle: Bundle, product: Page, intent: Intent, limit: int = 5) -> list[str]:
@@ -236,11 +220,14 @@ def section_chips(bundle: Bundle, product: Page, intent: Intent, limit: int = 5)
         page = bundle.get(f"{product.id}{suffix}")
         if page is None:
             continue
+        titles = section_titles(bundle, product)
         for heading in _HEADING_RE.findall(page.body):
             heading = heading.strip()
             if len(heading.split()) < 2 or len(chips) >= limit:
                 continue
-            chips.append(f"{heading} — {name}")
+            if "[src:" not in _body_of(page.body, heading):
+                continue
+            chips.append(f"{friendly_heading(heading, titles)} — {name}")
         if chips:
             break
     return chips
