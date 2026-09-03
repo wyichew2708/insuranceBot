@@ -245,18 +245,50 @@ first.
 `c2b0d88`, before the Ask landed. Numbers are appended here when the run
 completes.
 
+## Four decisions from the owner (2026-09-03, evening)
+
+**The product page and the documents it links are the reference.** Where
+sources disagree, the product's own page wins. A Tiq product's page is on
+tiq.com.sg and an Etiqa product's on etiqa.com.sg, so that host ranks first
+for the product's benefit table and its opening line. A figure stated on the
+product page ("travel delay cover from just 3 hours") is quoted from the page
+and bound to it — the same mechanism a promotion's figures use — rather than
+dropped because a schedule elsewhere says six. The conflict tickets in
+`okf-real/conflicts/` remain the list of places the *website* disagrees with
+itself; the answer follows the product page.
+
+**Names bend.** The catalogue slug is whatever the owner writes (`tiq-invest`
+now). Every name a customer uses is an alias. A misspelt name still names the
+product: a run of the customer's words within a small edit distance of
+exactly one product's name — "tiq travle", "maid insurence", "pet insurnce",
+"tiq hom" — is read as that product, marked `fuzzy` on the trace, and never
+when two products are within reach of the same slip.
+
+**LLM WIKI drafts are cross-checked against the product page automatically.**
+After provenance is proven (the cited section exists, the figures are in it),
+every sentence is put to the same entailment judge the groundedness gate
+uses, against the product-page section it cites. Not entailed → dropped. A
+page whose every sentence was entailed is written `approved` with
+`auto-crosscheck` as the reviewer; anything less stays a draft. The first
+generation on the 38-product corpus is queued behind the baseline
+(`.eval-reports/v22-baseline/llm-wiki.log`).
+
+**GPU deployment, in plain terms.** Today the model (Qwen), the API and the
+evaluation all run on this Mac, which is why a turn takes 4–30 seconds and
+why the evaluation slows down when anything else runs. Plan step 7 is to run
+the same software on a Linux machine with a graphics card: the model in
+vLLM, the vector database in Postgres, the embedder in TEI. The configuration
+for that is already in `infra/docker-compose.yml` under the `gpu` profile
+and `.env` switches the URLs; nothing in the code changes. It is optional —
+the bot works without it — and it only matters when the wait per answer
+matters. If there is no GPU machine, skip it.
+
 ## Open — needs a person
 
-- **20 conflict tickets** in `okf-real/conflicts/`, including the
-  travel-delay threshold (product page 3 hours, schedule 6). LLM WIKI drafts
-  written from a contested source repeat the contest; they land as `draft`
-  and stay unretrievable until reviewed.
-- **Which slug survives a fold** is chosen for plainness (no brand prefix,
-  then shorter), which kept `tiqinvest` over `tiq-invest`. Harmless — both
-  names are aliases — but if the readable slug is wanted, that is a one-line
-  preference.
-- **LLM WIKI review**: `make llm-wiki` output, all `draft`, one product at a
-  time.
-- **GPU deployment** (plan step 7): vLLM, pgvector, TEI on the Linux box —
-  the configuration exists (`infra/docker-compose.yml`, `gpu` profile); the
-  measurement has to be taken there.
+- **20 conflict tickets** in `okf-real/conflicts/`: places the website
+  disagrees with itself. The bot follows the product page; the tickets are
+  for the website team.
+- **LLM WIKI pages the cross-check left as drafts**: read the ones whose
+  sentences the judge did not all entail, or drop them.
+- **GPU deployment**: only if a Linux machine with a graphics card exists;
+  see the plain-terms note above.

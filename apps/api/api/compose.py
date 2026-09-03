@@ -838,6 +838,30 @@ def compose(
                     }
                 )
 
+        # A figure the product page states, marked by the compiler as quoted
+        # from it ("travel delay cover from just 3 hours"), binds to the
+        # product page. The owner's rule: the product page is the reference.
+        # The numeric-binding gate re-reads the page to confirm it says so.
+        if selection.page.frontmatter.type == PageType.product:
+            for paragraph in _paragraphs(resolved.text):
+                if ALLOW_NUMBER not in paragraph:
+                    continue
+                for match in NUMERIC_SPAN_RE.finditer(
+                    SOURCE_REF_RE.sub("", paragraph.replace(ALLOW_NUMBER, ""))
+                ):
+                    figures.append(
+                        Figure(label="product page", text=match.group(), page_ref=selection.page.id)
+                    )
+                    figures_detail.append(
+                        {
+                            "label": "product page",
+                            "value": match.group(),
+                            "row_id": "",
+                            "source_ref": selection.page.id,
+                            "page": selection.page.id,
+                        }
+                    )
+
         # Promotion facts bind to their effective-dated page, not a table row.
         if selection.page.frontmatter.type == PageType.promotion:
             for match in PROMO_NUMBER_RE.finditer(resolved.text):

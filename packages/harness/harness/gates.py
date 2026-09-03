@@ -224,11 +224,25 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
         if not figure.page_ref or figure.table_row_id or figure.sor_field:
             continue
         page = ctx.bundle.get(figure.page_ref)
-        if page is None or page.frontmatter.type.value != "promotion":
+        # A figure may be quoted from a promotion page or from the product's
+        # own page. The owner's rule is that the product page is the
+        # reference: "travel delay cover from just 3 hours" is what the page
+        # says, and it is bound to the page it is quoted from — `_quote_holds`
+        # below checks the page really says it.
+        if page is None or page.frontmatter.type.value not in ("promotion", "product"):
             return GateResult(
                 gate=name,
                 verdict=Verdict.fail,
-                detail=f"{figure.label!r} binds to {figure.page_ref!r}, which is not a promotion page",
+                detail=f"{figure.label!r} binds to {figure.page_ref!r}, which is not a promotion or product page",
+            )
+        if page.frontmatter.type.value == "product" and " ".join(figure.text.split()) not in " ".join(
+            page.body.split()
+        ):
+            # Bound to the product page, so the product page has to say it.
+            return GateResult(
+                gate=name,
+                verdict=Verdict.fail,
+                detail=f"{figure.text!r} binds to {figure.page_ref!r}, which does not state it",
             )
         if not page.frontmatter.is_effective_on(ctx.today):
             return GateResult(
