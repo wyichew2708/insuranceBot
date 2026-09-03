@@ -132,6 +132,12 @@ class Selection:
     heading: str
     body: str
     score: float
+    #: The section that carries the answer to a procedural question — "How to
+    #: buy" for an application, the claims steps for a claim. Kept apart from
+    #: `score` on purpose: the cutoff below is *relative* to the best score, so
+    #: boosting this section's score raised the bar and cut every other
+    #: section loose, leaving an answer with no citable claim at all.
+    lead: bool = False
 
 
 @dataclass
@@ -169,6 +175,14 @@ QUANTITY_RE = re.compile(
     r"percentage|discount|per item|how far)\b",
     re.IGNORECASE,
 )
+
+
+#: The heading that carries the answer to a procedural question. A customer
+#: asking how to buy wants the buying section, not the best-scoring one.
+PROCEDURAL_HEADINGS: dict[Intent, re.Pattern[str]] = {
+    Intent.application: re.compile(r"how to buy|buy|purchase|apply|get a quote|where to buy", re.I),
+    Intent.claim: re.compile(r"claim|how to make|notify|report a", re.I),
+}
 
 
 #: How much a page the requirement asked for outranks one that merely scored.
@@ -331,6 +345,20 @@ def select_sections(
             # reason: the substance lives on the page they point at.
             if _is_pointer_only(body):
                 section_relevance -= 1.0
+            # A procedural question is answered by the section that carries the
+            # procedure, and by no other. "How to buy?" was answered with 467
+            # words of travel cover because nothing steered selection toward
+            # the "How to buy" section — 101 products have one. Where the
+            # matching section exists it wins outright; where it does not, the
+            # cover sections are demoted so the turn reaches the honest
+            # shortfall instead of reciting benefits at someone asking to buy.
+            # Boost, never demote. Suppressing the other sections starved the
+            # answer of claims: a "How to buy" section is a channel table with
+            # no `[src:]` markers, so on its own it produces no claim at all
+            # and reference-integrity refuses the turn. The procedural section
+            # leads; the rest still carry the citations.
+            procedural = PROCEDURAL_HEADINGS.get(intent)
+            leads = procedural is not None and bool(procedural.search(heading))
             heading_is_exclusion = bool(re.search(r"not covered|exclusion|exclude", heading, re.I))
             if heading_is_exclusion and broad_coverage:
                 section_relevance -= 0.8
@@ -345,10 +373,14 @@ def select_sections(
             if wants_quantity and TOKEN_RE.search(body):
                 section_relevance += 0.4
             score = page_relevance + section_relevance
-            if score > 0:
-                scored.append(Selection(page=page, heading=heading, body=body, score=round(score, 3)))
+            if score > 0 or leads:
+                scored.append(
+                    Selection(page=page, heading=heading, body=body, score=round(score, 3), lead=leads)
+                )
 
-    scored.sort(key=lambda s: (-s.score, s.page.id, s.heading))
+    # The procedural section leads whatever it scored — a "How to buy" section
+    # is a channel table and scores poorly on word overlap with "how do I buy".
+    scored.sort(key=lambda s: (not s.lead, -s.score, s.page.id, s.heading))
     if not scored:
         # Retrieval found pages but no section shared the question's wording.
         # Answering from the best page's opening section beats refusing.
@@ -362,8 +394,11 @@ def select_sections(
         return []
     # Keep only sections close to the best match. A weakly-related section is
     # not free: it dilutes the answer and drags the groundedness score down.
-    floor = max(0.2, scored[0].score * 0.72)
-    return [s for s in scored if s.score >= floor][:limit]
+    # Relative to the best *scored* section, not to the lead: the lead is kept
+    # regardless, and the others are kept on their own merits, so the answer
+    # opens with the procedure and still carries citable claims.
+    floor = max(0.2, max(s.score for s in scored) * 0.72)
+    return [s for s in scored if s.lead or s.score >= floor][:limit]
 
 
 def _is_pointer_only(body: str) -> bool:

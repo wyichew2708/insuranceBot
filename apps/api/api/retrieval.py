@@ -29,6 +29,10 @@ BODY_WEIGHT = 0.35
 #: single page. Scaled down by fan-out from there — see `_alias_bonus`.
 ALIAS_BONUS = 0.5
 
+#: Words that name the seller, not the product. Both front doors carry the
+#: same cover, so neither separates one product from another.
+BRAND_WORDS = frozenset({"tiq", "etiqa"})
+
 #: The most a vector hit can add, earned at similarity 1.0 and scaled down to
 #: nothing at `vector_floor`. Comparable to FOCUS_PIN on purpose: a page the
 #: words missed entirely should be able to clear the confidence floor on a
@@ -255,6 +259,17 @@ def product_family(bundle: Bundle, question: str, chosen: Page) -> list[Page]:
                 break
         if phrase:
             break
+    # A brand is not a product. "tiq travel" is inside exactly one title —
+    # "Tiq Travel Covid Insurance" — so it looked unambiguous and was answered
+    # with the COVID rider, while tiq.com.sg sells plain Travel Insurance and
+    # four others. Dropping a leading brand word turns the phrase into the
+    # category it actually names, and the family test then finds all of them.
+    if phrase:
+        head = phrase.split()[0]
+        if head in BRAND_WORDS:
+            trimmed = " ".join(phrase.split()[1:])
+            if len(trimmed) >= 5:
+                phrase = trimmed
     if not phrase:
         return []
     members = [

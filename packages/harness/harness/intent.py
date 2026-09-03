@@ -286,6 +286,11 @@ class Requirement:
     needs_page_type: tuple[str, ...] = ()
     #: Words the answer must contain to be about the right subject at all.
     needs_any_term: tuple[str, ...] = ()
+    #: A rendered purchase route — the product's deep link and hotline for the
+    #: session's channel. Structural rather than lexical, and that is the
+    #: point: "how do I buy" is answered by a route, and no policy clause can
+    #: accidentally satisfy it the way the word "purchased" once did.
+    needs_channel_route: bool = False
     #: Page-id suffixes that *hold* the answer, as opposed to `needs_page_suffix`
     #: which says what a cited page must look like for the gate to be satisfied.
     #:
@@ -322,7 +327,11 @@ class Requirement:
         none of it".
         """
         return bool(
-            self.needs_figure or self.needs_page_suffix or self.needs_page_type or self.needs_any_term
+            self.needs_figure
+            or self.needs_page_suffix
+            or self.needs_page_type
+            or self.needs_any_term
+            or self.needs_channel_route
         )
 
 
@@ -336,14 +345,31 @@ REQUIREMENTS: dict[Intent, Requirement] = {
         needs_any_term=("exclud", "not covered", "exclusion"),
         holds_answer=("/exclusions",),
     ),
+    # `needs_any_term` on a procedural intent is the same hole `price` had.
+    # The clauses are OR'd, so a bare word satisfies the gate: "how to buy?"
+    # was answered with 467 words of travel cover because one clause said the
+    # Trip was "purchased from a registered Travel Agent", and "purchase" was
+    # on the list. A procedure is not a word; it is an instruction, and these
+    # are the forms an answer that actually gives one uses.
     Intent.claim: Requirement(
         needs_page_type=("journey",),
-        needs_any_term=("claim",),
+        needs_page_suffix=("/claims",),
+        needs_any_term=("to make a claim", "to claim", "notify us", "submit your claim", "report the"),
         holds_answer=("/claims",),
     ),
     Intent.application: Requirement(
+        needs_channel_route=True,
         needs_page_type=("journey", "channel"),
-        needs_any_term=("buy", "purchase", "apply", "quote", "online"),
+        needs_any_term=(
+            "you can buy",
+            "to buy",
+            "buy online",
+            "purchase online",
+            "apply online",
+            "start an application",
+            "get a quote",
+            "how to buy",
+        ),
         # The product page's own "How to buy" section carries the channel
         # table; the empty suffix means the product page itself.
         holds_answer=("",),

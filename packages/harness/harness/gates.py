@@ -968,6 +968,10 @@ def gate_answerability(ctx: GateContext) -> GateResult:
                 )
         if bound:
             return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: bound figure")
+    if requirement.needs_channel_route:
+        render = ctx.answer.channel_render
+        if render is not None and (render.landing or render.hotline):
+            return GateResult(gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: route to buy shown")
     if requirement.satisfied_by_unresolved and ctx.answer.unresolved:
         return GateResult(
             gate=name, verdict=Verdict.pass_, detail=f"{intent.value}: accounted for as unresolved"

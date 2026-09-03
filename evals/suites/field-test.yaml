@@ -629,3 +629,25 @@
   expect:
     handoff: false
     cite_product: [travel-insurance, tiq-travel, travel-infinite, travel-takaful]
+
+- id: ft-product-brand-plus-category-asks
+  # "tiq" is the brand, "travel" the category. The phrase sits inside exactly
+  # one title — Tiq Travel Covid Insurance — so it looked unambiguous and was
+  # answered with the COVID rider while tiq.com.sg sells plain Travel Insurance.
+  question: tiq travel
+  expect:
+    clarifying: true
+
+- id: ft-product-how-to-buy-is-not-cover
+  # Answered with 467 words of travel cover because one clause said the Trip
+  # was "purchased from a registered Travel Agent", and "purchase" satisfied
+  # the application requirement.
+  turns: ["travel insurance", "how to buy?"]
+  expect:
+    must_not_contain: ["irrecoverable travel deposits", "emergency medical evacuation"]
+
+- id: ft-product-buy-names-the-route
+  question: how do i buy maid insurance
+  expect:
+    cite_product: maid-insurance
+    must_not_contain: ["scale of compensation"]
