@@ -38,7 +38,7 @@ confidence: medium
 
 ## What this plan is
 
-Guaranteed issuance with no medical examinations required [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#hassle-free-application].
+Etiqa Insurance Pte. Ltd. Insurance Singapore Launches Enrich Index Income that Combines Index-Linked Growth Potential with Capital Protection at Maturity [src:raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md#featured-articles].
 
 ## What it covers
 

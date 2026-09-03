@@ -47,7 +47,7 @@ confidence: high
 
 ## What this plan is
 
-We are your travel buddy [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
+Be it a short getaway, business convention or adventure of your lifetime, we’ve got you covered [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
 
 ## What it covers
 

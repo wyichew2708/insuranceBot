@@ -49,7 +49,7 @@ confidence: high
 
 ## What this plan is
 
-Safeguard your pet's wellbeing We believe that providing the best care for your dogs and cats 1 should never result in a financial burden [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#body].
+Your pets are cherished members of your family, and their health and wellbeing deserve the utmost protection [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md#body].
 
 ## What it covers
 

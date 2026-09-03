@@ -40,7 +40,7 @@ confidence: medium
 
 ## What this plan is
 
-The financial burden you leave behind can be just as devastating as the loss of a loved one [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#protect-the-life-you-ve-built].
+With Term Life Insurance, we have made protection easy to apply, affordable and flexible based on your needs [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#protect-the-life-you-ve-built].
 
 ## What it covers
 

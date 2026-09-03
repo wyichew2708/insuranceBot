@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Guaranteed acceptance regardless of your health condition [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md#your-hard-earned-savings-deserve-high-stable-returns].
+Leave your contacts and we’ll inform you when Etiqa Insurance Pte. Ltd. 3-Year Endowment Plan is available for signup [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md#body].
 
 ## What it covers
 

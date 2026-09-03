@@ -1121,6 +1121,24 @@ def augment_cover_from_documents(config: CompileConfig, report: CompileReport) -
     return augmented
 
 
+def _sentences(text: str) -> list[str]:
+    text = _drop_repeated_opening(" ".join(text.split()))
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+
+
+def _describes_plan(sentence: str, names: set[str]) -> bool:
+    """A sentence that says what the plan is: eight words or more, no page
+    furniture, and either a cover verb or the product's own name in it."""
+    if len(sentence.split()) < 8 or sentence.endswith("!") or ALIAS_RE.match(sentence):
+        return False
+    if _COVER_NOISE_RE.search(sentence) or NUMBER_IN_PROSE_RE.search(sentence):
+        return False
+    lower = sentence.lower()
+    if _COVER_PROSE_RE.search(sentence):
+        return True
+    return any(name in lower for name in names)
+
+
 def emit_product(
     config: CompileConfig,
     group: ProductGroup,
@@ -1234,29 +1252,43 @@ def emit_product(
     # "I consent to Etiqa and its related, its agents…" — which became what
     # the plan is. A consent form, a navigation bar, a closure notice, a
     # bullet or a slogan is never the opening line; the next listing's is.
+    # Positive selection, not a blacklist. Every listing opens on something
+    # else first — a promotion ("Get Apple Watch Ultra 3 with min."), a
+    # consent checkbox, "This policy is underwritten by", a renewal
+    # reminder — and excluding each shape by name never converged. A
+    # sentence describes the plan when it is long enough to say something
+    # and either uses a cover verb or names the product.
+    names = {w for n in (group.title, *group.names) for w in re.findall(r"[a-z]{4,}", n.lower())} - {
+        "insurance",
+        "plan",
+        "policy",
+        "etiqa",
+    }
     intro = None
     for snapshot in ordered:
-        opening = _first_sentence(snapshot.intro)
-        if opening and not _COVER_NOISE_RE.search(opening) and not opening.endswith("!"):
-            intro = _grounded(_normalise_brands(opening), snapshot.ref("body"), report)
-            if intro:
-                break
-    if intro is None:
-        for snapshot in ordered:
-            for section in snapshot.sections:
-                if not section.heading or _OVERVIEW_SKIP_RE.search(section.heading):
+        candidates = [snapshot.intro] + [
+            p
+            for s in snapshot.sections
+            if s.heading and not _OVERVIEW_SKIP_RE.search(s.heading)
+            for p in s.paragraphs
+        ]
+        anchors = ["body"] + [
+            s.anchor
+            for s in snapshot.sections
+            if s.heading and not _OVERVIEW_SKIP_RE.search(s.heading)
+            for _ in s.paragraphs
+        ]
+        for text, anchor in zip(candidates, anchors):
+            for sentence in _sentences(text):
+                if not _describes_plan(sentence, names):
                     continue
-                for paragraph in section.paragraphs:
-                    sentence = _first_sentence(paragraph)
-                    if not sentence or _COVER_NOISE_RE.search(sentence) or sentence.endswith("!"):
-                        continue
-                    intro = _grounded(_normalise_brands(sentence), snapshot.ref(section.anchor), report)
-                    if intro:
-                        break
+                intro = _grounded(_normalise_brands(sentence), snapshot.ref(anchor), report)
                 if intro:
                     break
             if intro:
                 break
+        if intro:
+            break
     if intro:
         body.append(intro)
         # The channel note used to be appended here as a qualifier, on 104

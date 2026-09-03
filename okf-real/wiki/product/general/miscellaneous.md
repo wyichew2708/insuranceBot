@@ -42,7 +42,7 @@ confidence: medium
 
 ## What this plan is
 
-Need more protection? Our Miscellaneous Insurance covers your plate glass and cash, and safeguards you from fraud and burglary [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-miscellaneous.md#miscellaneous-insurance].
+Our Miscellaneous Insurance covers your plate glass and cash, and safeguards you from fraud and burglary [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-miscellaneous.md#miscellaneous-insurance].
 
 ## What it covers
 

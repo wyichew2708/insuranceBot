@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Not driving much these days? No problem [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#why-private-car-insurance].
+Our Private Car Insurance also offers comprehensive protection for Electric Vehicles (EVs) [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#drive-an-electric-vehicle].
 
 ## What it covers
 

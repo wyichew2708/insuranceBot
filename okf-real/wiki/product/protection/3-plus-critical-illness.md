@@ -39,7 +39,7 @@ confidence: medium
 
 ## What this plan is
 
-Facts about Critical Illness in Singapore [src:raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md#why-choose-tiq-3-plus-critical-illness].
+1 In 4 Or 5 Singaporeans get diagnosed with a critical illness in their lives 1  [src:raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md#why-choose-tiq-3-plus-critical-illness].
 
 ## What it covers
 

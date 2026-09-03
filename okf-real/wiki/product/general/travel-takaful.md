@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Built on care and shared responsibility, for every journey [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-takaful.md#body].
+Guided by Takaful principles, Travel Takaful offers dependable protection designed for travellers who want flexible and comprehensive coverage for a variety of travel purposes including Umrah journeys, leisure or business trips [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-takaful.md#body].
 
 ## What is not covered
 

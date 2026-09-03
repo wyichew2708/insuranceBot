@@ -42,7 +42,7 @@ confidence: medium
 
 ## What this plan is
 
-I expressly authorise and consent to Etiqa Insurance Pte. Ltd., its officers and employees at their sole discretion, to disclose any and all information relating to me, including my personal particulars, my transactions and dealings and my policies of insurance with Etiqa Insurance Pte. Ltd., to any of the following persons, whether in Singapore or elsewhere: [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md#find-out-more].
+Your hassle-free digital Investment-Linked Plan (ILP) for maximum financial flexibility [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md#low-cost-more-wealth-there-s-a-plan-for-that-tiq-invest].
 
 ## What it covers
 

@@ -2,7 +2,7 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 123141,
+  "reached": 123242,
   "share": 0.048
  },
  "sources": {
@@ -1699,8 +1699,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md": {
    "words": 481,
-   "reached": 9,
-   "share": 0.019,
+   "reached": 17,
+   "share": 0.035,
    "pages": [
     "product/health-medical/accident-health"
    ]
@@ -1778,8 +1778,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-casualty.md": {
    "words": 474,
-   "reached": 24,
-   "share": 0.051,
+   "reached": 34,
+   "share": 0.072,
    "pages": [
     "product/general/casualty"
    ]
@@ -1795,8 +1795,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md": {
    "words": 794,
-   "reached": 19,
-   "share": 0.024,
+   "reached": 21,
+   "share": 0.026,
    "pages": [
     "product/business/corporate-travel"
    ]
@@ -3447,11 +3447,9 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments-tiq-invest.md": {
    "words": 484,
-   "reached": 13,
-   "share": 0.027,
-   "pages": [
-    "product/investments/tiqinvest"
-   ]
+   "reached": 0,
+   "share": 0.0,
+   "pages": []
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-investments.md": {
    "words": 253,
@@ -3552,8 +3550,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md": {
    "words": 941,
-   "reached": 59,
-   "share": 0.063,
+   "reached": 52,
+   "share": 0.055,
    "pages": [
     "product/general/pet-insurance"
    ]
@@ -3566,8 +3564,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-premier-solutions.md": {
    "words": 836,
-   "reached": 8,
-   "share": 0.01,
+   "reached": 13,
+   "share": 0.016,
    "pages": [
     "product/premier/premier-solutions"
    ]
@@ -3634,8 +3632,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md": {
    "words": 3269,
-   "reached": 133,
-   "share": 0.041,
+   "reached": 127,
+   "share": 0.039,
    "pages": [
     "product/general/travel-infinite",
     "product/general/travel-infinite/benefits"
@@ -3643,16 +3641,16 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-takaful.md": {
    "words": 6651,
-   "reached": 10,
-   "share": 0.002,
+   "reached": 32,
+   "share": 0.005,
    "pages": [
     "product/general/travel-takaful"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md": {
    "words": 220,
-   "reached": 6,
-   "share": 0.027,
+   "reached": 17,
+   "share": 0.077,
    "pages": [
     "product/general/travel-insurance"
    ]
@@ -6771,8 +6769,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-3-plus-critical-illness.md": {
    "words": 3265,
-   "reached": 81,
-   "share": 0.025,
+   "reached": 91,
+   "share": 0.028,
    "pages": [
     "channel/direct",
     "product/protection/3-plus-critical-illness"
@@ -6780,15 +6778,15 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cancer-insurance.md": {
    "words": 1195,
-   "reached": 2,
-   "share": 0.002,
+   "reached": 24,
+   "share": 0.02,
    "pages": [
     "product/protection/cancer-insurance"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md": {
    "words": 3205,
-   "reached": 30,
+   "reached": 29,
    "share": 0.009,
    "pages": [
     "product/general/cashsaver"
@@ -6802,16 +6800,16 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md": {
    "words": 1514,
-   "reached": 33,
-   "share": 0.022,
+   "reached": 32,
+   "share": 0.021,
    "pages": [
     "product/savings-retirement/eeasy-savepro"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-enrich-aspire-vii.md": {
    "words": 753,
-   "reached": 8,
-   "share": 0.011,
+   "reached": 18,
+   "share": 0.024,
    "pages": [
     "product/general/enrich-aspire-vii"
    ]
@@ -6833,8 +6831,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md": {
    "words": 941,
-   "reached": 8,
-   "share": 0.009,
+   "reached": 12,
+   "share": 0.013,
    "pages": [
     "product/motor/motorcycle-insurance"
    ]
@@ -6862,8 +6860,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md": {
    "words": 1761,
-   "reached": 63,
-   "share": 0.036,
+   "reached": 73,
+   "share": 0.041,
    "pages": [
     "product/motor/private-car-insurance"
    ]
@@ -6902,8 +6900,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiq-3-year-endowment-plan.md": {
    "words": 1010,
-   "reached": 8,
-   "share": 0.008,
+   "reached": 10,
+   "share": 0.01,
    "pages": [
     "product/savings-retirement/tiq-3-year-endowment-plan"
    ]
@@ -6924,9 +6922,11 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md": {
    "words": 2298,
-   "reached": 0,
-   "share": 0.0,
-   "pages": []
+   "reached": 13,
+   "share": 0.006,
+   "pages": [
+    "product/investments/tiqinvest"
+   ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md": {
    "words": 4993,

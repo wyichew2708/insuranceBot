@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Get Apple Watch Ultra 3 / SE 3 with min [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#body].
+Etiqa Insurance Pte. Ltd. CashSaver is a capital guaranteed endowment plan upon maturity [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#what-is-tiq-cashsaver].
 
 ## What it covers
 

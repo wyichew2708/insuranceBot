@@ -38,7 +38,7 @@ confidence: medium
 
 ## What this plan is
 
-You have lived a life of distinction [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-premier-solutions.md#curating-a-lasting-legacy].
+You have worked hard to care for and protect your loved ones [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-premier-solutions.md#curating-a-lasting-legacy].
 
 ## What is not covered
 

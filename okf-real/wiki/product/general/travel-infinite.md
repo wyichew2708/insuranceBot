@@ -43,7 +43,7 @@ confidence: medium
 
 ## What this plan is
 
-Flight delays, lost baggage or caught a bug during your travel? Don’t let it affect your holiday [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#body].
+Flight delays, lost baggage or caught a bug during your travel? [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#body].
 
 ## Headline benefits
 

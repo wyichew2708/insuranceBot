@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-This policy is underwritten by Etiqa Insurance Pte [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
+It is usually detrimental to replace an existing accident and health plan with a new one [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-accident-health.md#what-you-can-get].
 
 ## What is not covered
 

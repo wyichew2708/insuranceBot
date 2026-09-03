@@ -41,7 +41,7 @@ confidence: medium
 
 ## What this plan is
 
-Safeguard your ride with our comprehensive coverage [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#eprotect-motorcycle-promo-10-off].
+Buy online today and enjoy extra savings with Promo Code 'BIKE10’ [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#eprotect-motorcycle-promo-10-off].
 
 ## What is not covered
 
