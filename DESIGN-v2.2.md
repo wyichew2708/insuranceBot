@@ -347,6 +347,89 @@ anywhere but etiqa.com.sg or tiq.com.sg is `external-link`, abuse is
 `toxicity`; all three block on the rules alone and the model may raise them
 too. The model-layer screens (`GUARDRAILS=model`) run on top as before.
 
+## Progressive disclosure: short answers first, the wording a tap away
+
+"What does Tiq Travel Insurance not cover?" came back as 538 words of the
+exclusions page. Three mechanisms now keep answers short without hiding
+anything:
+
+- **FAQ-first** (`compose.faq_pick`). Where the insurer has published an
+  answer to the customer's question — the FAQ's "Are there any exclusions
+  under Tiq Travel?" *is* "what does it not cover" — the answer is the
+  insurer's, four sentences. Matched on shared words with a slip allowed,
+  plus the intent; a lone FAQ entry with the customer's intent is accepted
+  on intent alone. Never for a figure (a limit or a price comes from the
+  table) and never where a benefit is named. The product's FAQ page is
+  loaded on every turn that resolves the product so the gates hold it as
+  evidence.
+- **A digest** (`present.digest`). A long answer composed from several
+  sections becomes one line per section — a friendly heading ("Section 28
+  (Baggage) exclusions", "General exclusions") and the section's opening —
+  and a long single section becomes its first two sentences. Gists never
+  carry a number; an answer that carries figures is never digested unless it
+  is a claims procedure; **exclusions are never digested**, because the
+  exclusion-completeness gate exists so a list of what is not covered is
+  never shown in part. Exclusions get the FAQ's short form or the full
+  bulleted list.
+- **Section chips** (`present.section_chips`). "General Exclusions
+  (Applicable to All Sections) — Tiq Travel Insurance" is a chip; the Ask
+  reads a chip as a drill-down (`Ask.section`) when the heading, the product
+  name and filler are the whole request, and the answer is that section and
+  nothing else. "Show everything" (`Ask.full`) turns the digest off. A
+  pointer section with no citation ("the complete list is on the exclusions
+  page") is never a drill-down target.
+
+Also: enumerations the compiler flattened ("(a) …; - (b) …") are one bullet
+each; a shouted line from a wording is set in title case; a sentence that
+appears twice appears once; "i want to buy" reads as a purchase question; a
+misspelt name must match word by word ("crop insurance" is not "pet
+insurance").
+
+## Conversation simulation — `scripts/simulate.py`
+
+Twenty-five scripted conversations, sixty-two turns, across the catalogue:
+typos, elliptical follow-ups, chips tapped as the next turn, personal data,
+off-topic, advice, legacy and replaced products. Each reply is checked by a
+set of weirdness detectors — too long, a duplicated sentence, page
+furniture, a shouted line, a clarification on a named product, a handoff on
+a named product, another product named, no chips, an introduction with no
+closing question, personal data echoed, a placeholder shown — and the
+findings go to `.eval-reports/v22/simulation.md`. Deterministic, a minute,
+every build; `--live` uses the configured model.
+
+The first run found 21 turns with findings; the last, 22, all but one of
+them "long answer" — complete exclusion lists and figure-bearing answers the
+digest leaves whole by design — and one shouted line. In between it caught:
+the digest dropping figures and bare numbers so the numeric gate blocked
+every "not cover" turn; a drill-down landing on a pointer section with no
+claims; a misspelt product resolving to a product but loading no page and
+handing off; "i want to buy" read as a definition question; "ok what about
+travel then" read as nothing.
+
+## The proper solution — where this goes next (v2.3)
+
+The pattern in everything above is one principle: **the customer sees the
+shortest true thing first, and everything else is one tap away, verified.**
+The next steps that follow from it, in order:
+
+1. **The LLM WIKI's "In plain terms" as the opening line.** The 34 good
+   opening lines come from marketing pages and read like it. Once the
+   cross-checked drafts exist, their first paragraph is the introduction,
+   and the product page's tiles become the "What it covers" list beneath it.
+2. **FAQ-first for every product.** 18 of 37 products have a published FAQ.
+   The LLM WIKI's "Questions people ask" section, cross-checked against the
+   product page, gives the rest one — and the FAQ suite then covers every
+   product.
+3. **A length budget per intent, enforced by the presentation layer** rather
+   than left to the model: an introduction under 120 words, a specific
+   answer under 80, a drill-down as long as its section. The simulation's
+   "long answer" count is the metric.
+4. **Live simulation on every build**, with the four mini-agent testers
+   reading the report, so a regression in feel is caught the way a
+   regression in fact already is.
+5. **The GPU box**, so a turn is two seconds rather than thirty and the
+   entailment judge is never silent.
+
 ## Open — needs a person
 
 - **20 conflict tickets** in `okf-real/conflicts/`: places the website

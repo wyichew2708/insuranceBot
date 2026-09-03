@@ -211,6 +211,9 @@ def test_every_stage_is_traced(bundle: Bundle, settings: Settings) -> None:
         "sor",
         "compose",
         "generate",
+        # The presentation layer: an introduction, a digest, or a bulleted
+        # answer — the same verified sentences, organised.
+        "present",
         "guardrail-output",
         "gates",
     ]

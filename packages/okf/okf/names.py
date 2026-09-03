@@ -138,7 +138,14 @@ class ProductNameIndex:
                     if abs(len(name.phrase) - len(run)) > 3:
                         continue
                     ratio = difflib.SequenceMatcher(None, run, name.phrase).ratio()
-                    if ratio >= FUZZY_RATIO and (best is None or ratio > best[0]):
+                    # Word by word too: "crop insurance" is within a slip of
+                    # "pet insurance" as a string and nowhere near it as words.
+                    # Every word of the run needs a near-twin in the name.
+                    if (
+                        ratio >= FUZZY_RATIO
+                        and _words_match(run, name.phrase)
+                        and (best is None or ratio > best[0])
+                    ):
                         best = (ratio, name, run)
         if best is None:
             return []
@@ -206,6 +213,13 @@ class ProductNameIndex:
                 residue = f" {joined} ".replace(f" {phrase} ", " ", 1).split()
                 return all(w in filler for w in residue)
         return False
+
+
+def _words_match(run: str, phrase: str) -> bool:
+    words = phrase.split()
+    return all(
+        any(w == p or difflib.SequenceMatcher(None, w, p).ratio() >= 0.75 for p in words) for w in run.split()
+    )
 
 
 def _approved(bundle: Bundle, page_id: str) -> bool:

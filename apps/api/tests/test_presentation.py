@@ -29,7 +29,8 @@ def test_an_introduction_is_a_line_a_list_and_a_question(real: Bundle) -> None:
     assert home is not None
     text = (
         "The policy wording sets out cover under: Renovation; Home Contents; Personal Legal Liability.\n\n"
-        "Protect what belongs to you when you insure your household contents, renovation and mortgage payments.\n\n"
+        "Protect what belongs to you when you insure your household contents, "
+        "renovation and mortgage payments.\n\n"
         "No. Each property can only be covered under one active policy at a time.\n\n"
         "You can continue here: https://www.tiq.com.sg/product/home-insurance or call +65 6336 0477."
     )
@@ -48,7 +49,10 @@ def test_an_introduction_is_a_line_a_list_and_a_question(real: Bundle) -> None:
 def test_presentation_keeps_every_figure_verbatim(real: Bundle) -> None:
     travel = real.get("product/general/travel-insurance")
     assert travel is not None
-    text = "Travel delay cover from just 3 hours: Be covered for travel delays starting from just 3 hours, instead of the usual 6 hours."
+    text = (
+        "Travel delay cover from just 3 hours: Be covered for travel delays starting from just 3 hours, "
+        "instead of the usual 6 hours."
+    )
     shaped = present_overview(text, travel, "")
     assert "3 hours" in shaped and "6 hours" in shaped
 

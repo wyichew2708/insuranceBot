@@ -30,7 +30,7 @@ from harness import (
 from harness.ask import Ask, read_ask
 from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import Intent, classify, smalltalk_kind
-from harness.trace import StageListener
+from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
 from api.clarify import clarification, lexical_clarification
@@ -41,7 +41,7 @@ from api.gates_ext import advice_required
 from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency, redact_pii
 from api.llm import Draft, LLMProvider, provider_for
 from api.memory import SessionMemory
-from api.present import present_overview
+from api.present import bulletise, digest, present_overview, section_chips
 from api.reference import resolve
 from api.retrieval import (
     NO_MATCH_PREFIXES,
@@ -665,6 +665,29 @@ def _answer_turn(
 
         with trace.stage("wiki-read") as detail:
             pages = wiki_read(bundle, admitted, trace, budget, settings.wiki_read_limit, session.today)
+            # The product's published FAQ rides along whenever the product is
+            # known: the composer answers a question the insurer has already
+            # answered with that answer, and the page has to be loaded for
+            # the gates to hold it as evidence.
+            if ask.product_page:
+                # A misspelt name resolves the product but matches no page
+                # lexically — "car insurnace coverage" loaded nothing and
+                # handed off. The product the Ask read is loaded whatever the
+                # words scored.
+                wanted = [ask.product_page] + [
+                    f"{ask.product_page}{suffix}"
+                    for suffix in ("/faq", "/cover", "/benefits", "/exclusions", "/claims", "/conditions")
+                ]
+                held = {p.id for p in pages}
+                has_product = any(p.id.startswith(ask.product_page) for p in pages)
+                for page_id in wanted if not has_product else wanted[:1]:
+                    extra = bundle.get(page_id)
+                    if extra is not None and extra.id not in held:
+                        pages.append(extra)
+                        held.add(extra.id)
+                        trace.loaded.append(
+                            LoadedPage(page_id=extra.id, title=extra.frontmatter.title, via="ask")
+                        )
             detail["pages"] = [p.id for p in pages]
 
         product = _product_page(pages)
@@ -684,7 +707,10 @@ def _answer_turn(
                     idf=term_idf(bundle),
                     must_include=unsupported_term(bundle, question, admitted),
                 )
-            starved = reason.startswith(NO_MATCH_PREFIXES) and not trace.rag_hits
+            # A product the Ask resolved is never "starved": the words may
+            # have scored nothing — a misspelling, "ok what about travel then"
+            # — but the product's pages are loaded and the customer named it.
+            starved = reason.startswith(NO_MATCH_PREFIXES) and not trace.rag_hits and not ask.resolved
             # A situational phrasing scores badly on lexical overlap — "my place
             # was broken into" shares almost nothing with a page about contents
             # cover — so the confidence floor calls it starved and the composer
@@ -842,12 +868,33 @@ def _answer_turn(
         # Every other answer keeps its shape and gets the chips alone.
         if not draft.handoff and draft.answer:
             draft.suggestions = suggest_next(bundle, ask, product, clarifying=draft.clarifying)
-            if ask.scope == "overview" and product is not None:
-                with trace.stage("present") as detail:
+            with trace.stage("present") as detail:
+                if ask.scope == "overview" and product is not None:
                     draft.answer = present_overview(
                         draft.answer, product, closing_question(draft.suggestions)
                     )
                     detail["shape"] = "introduction"
+                elif product is not None:
+                    # A long answer becomes a digest of its sections, each a
+                    # chip away in full; a short one is bulleted where the
+                    # compiler flattened an enumeration. The section chips
+                    # come first, so "tap a part below" is true.
+                    triples = [(s.page.id, s.heading, s.body) for s in composition.selections]
+                    short = digest(draft.answer, product, bundle, ask, triples, figures=len(draft.figures))
+                    drill = section_chips(bundle, product, ask.intent)
+                    if short is not None:
+                        draft.answer = short
+                        detail["shape"] = "digest"
+                        draft.suggestions = (drill + draft.suggestions)[:7]
+                    else:
+                        draft.answer = bulletise(draft.answer)
+                        detail["shape"] = "bulleted"
+                        faq_answer = any(s.page.id.endswith("/faq") for s in composition.selections)
+                        if faq_answer and drill:
+                            draft.suggestions = (drill[:3] + draft.suggestions)[:6]
+                else:
+                    draft.answer = bulletise(draft.answer)
+                    detail["shape"] = "bulleted"
 
         if incoming.acted_on("distress"):
             # Routed to a person rather than answered. What a customer in

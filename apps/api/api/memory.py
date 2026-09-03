@@ -22,6 +22,7 @@ deterministic line when it arrives.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import re
 import threading
@@ -120,10 +121,9 @@ class SessionMemory:
         path = self._path(session_id)
         record: dict[str, Any] = {"session_id": session_id, "turns": [], "summary": ""}
         if path.exists():
-            try:
+            # An unreadable file is an empty memory, not a failed turn.
+            with contextlib.suppress(OSError, json.JSONDecodeError):
                 record = json.loads(path.read_text())
-            except (OSError, json.JSONDecodeError):
-                pass
         self._cache[session_id] = record
         return record
 

@@ -536,7 +536,7 @@ def medical_emergency(question: str) -> bool:
     return bool(MEDICAL_EMERGENCY_RE.search(question or ""))
 
 
-#: Singapore NRIC / FIN, a payment card number (13–19 digits, spaces or
+#: Singapore NRIC / FIN, a payment card number (13 to 19 digits, spaces or
 #: dashes allowed), an email address, a passport-shaped token after the word.
 NRIC_RE = re.compile(r"\b[STFGM]\d{7}[A-Z]\b", re.I)
 CARD_RE = re.compile(r"\b(?:\d[ -]?){13,19}\b")

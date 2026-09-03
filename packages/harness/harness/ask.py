@@ -40,6 +40,16 @@ from okf import Bundle, Page
 #: still just the name.
 NAME_FILLER = frozenset(
     [
+        "ok",
+        "okay",
+        "what",
+        "then",
+        "now",
+        "so",
+        "and",
+        "more",
+        "hi",
+        "hello",
         "insurance",
         "plan",
         "policy",
@@ -113,6 +123,13 @@ class Ask:
     kind: str = ""
     #: The model could not separate the products it returned.
     ambiguous: bool = False
+    #: A drill-down: the customer tapped a section of the product's pages
+    #: ("General Exclusions — Tiq Travel Insurance"), so the answer is that
+    #: section and nothing else. (page id, heading).
+    section: tuple[str, str] | None = None
+    #: The customer asked for the whole thing ("show everything", "in full"),
+    #: so a long answer is not digested.
+    full: bool = False
     #: Per field: what set it. Read on the trace, never by code.
     evidence: dict[str, str] = field(default_factory=dict)
     degraded: str = ""
@@ -171,6 +188,10 @@ class Ask:
             "intent": self.intent.value,
             "scope": self.scope,
         }
+        if self.section:
+            out["section"] = f"{self.section[0]}#{self.section[1]}"
+        if self.full:
+            out["full"] = True
         if self.product:
             out["product"] = self.product
             out["named_by"] = self.named_by
@@ -197,6 +218,62 @@ def _scope(question: str, intent: Intent, bare: bool) -> str:
     return "specific"
 
 
+#: "Show everything", "in full", "the full wording": no digest.
+FULL_RE = re.compile(
+    r"\b(show (?:me )?everything|in full|full (?:answer|details?|wording|list)|all of it)\b", re.I
+)
+#: Child pages whose headings a customer can drill into.
+DRILL_PAGES = ("/exclusions", "/cover", "/benefits", "/claims", "/conditions", "/eligibility", "/faq", "")
+_HEADING_RE = re.compile(r"^## (.+)$", re.M)
+
+
+def _section_body(body: str, heading: str) -> str:
+    start = body.find(f"## {heading}")
+    if start < 0:
+        return ""
+    end = body.find("\n## ", start + 3)
+    return body[start : end if end > 0 else len(body)]
+
+
+def read_section(bundle: Bundle, product_page: str, question: str) -> tuple[str, str] | None:
+    """The section of the product's pages the question names verbatim, if one.
+
+    A chip on a digested answer asks "General Exclusions — Tiq Travel
+    Insurance"; the heading is the customer's whole request, and the answer is
+    that section. Longest heading wins where one sits inside another.
+    """
+    haystack = f" {normalise(question)} "
+    root = bundle.get(product_page)
+    product_names = names_of(root) if root is not None else []
+    best: tuple[int, str, str] | None = None
+    for suffix in DRILL_PAGES:
+        page = bundle.get(f"{product_page}{suffix}")
+        if page is None:
+            continue
+        for heading in _HEADING_RE.findall(page.body):
+            phrase = normalise(heading)
+            if len(phrase.split()) < 2 or f" {phrase} " not in haystack:
+                continue
+            # A section with no source reference is a pointer ("the complete
+            # list is on the exclusions page"), and drilling into it composed
+            # an answer with no claims. The exclusions page is where the
+            # heading's own words lead.
+            if "[src:" not in _section_body(page.body, heading):
+                continue
+            # The heading has to be the whole request, product name and
+            # filler aside. "Travel delay" sits inside "what are the baggage
+            # limit and the travel delay threshold", and reading that as a
+            # drill-down into one section took the baggage figure away.
+            residue = f" {haystack} ".replace(f" {phrase} ", " ", 1)
+            for name in product_names:
+                residue = residue.replace(f" {name} ", " ", 1)
+            if any(w not in NAME_FILLER for w in residue.split()):
+                continue
+            if best is None or len(phrase) > best[0]:
+                best = (len(phrase), page.id, heading.strip())
+    return (best[1], best[2]) if best else None
+
+
 def read_ask(bundle: Bundle, question: str, history: list[str] | None = None) -> Ask:
     """The deterministic reading: names, category, intent, subject, scope.
 
@@ -209,11 +286,19 @@ def read_ask(bundle: Bundle, question: str, history: list[str] | None = None) ->
     it; the gates verify the answer either way.
     """
     ask = _read_turn(bundle, question)
-    if ask.resolved or ask.family or not history:
-        return ask
-    for earlier in reversed(history):
-        if len(index_for(bundle).named(earlier)) == 1:
-            return ask.carried_from(_read_turn(bundle, earlier))
+    if not ask.resolved and not ask.family and history:
+        for earlier in reversed(history):
+            if len(index_for(bundle).named(earlier)) == 1:
+                ask = ask.carried_from(_read_turn(bundle, earlier))
+                break
+    if ask.product_page:
+        section = read_section(bundle, ask.product_page, question)
+        if section is not None:
+            ask = replace(
+                ask, section=section, scope="specific", evidence={**ask.evidence, "section": "heading"}
+            )
+    if FULL_RE.search(question):
+        ask = replace(ask, full=True)
     return ask
 
 

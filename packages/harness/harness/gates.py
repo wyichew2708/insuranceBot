@@ -233,7 +233,9 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
             return GateResult(
                 gate=name,
                 verdict=Verdict.fail,
-                detail=f"{figure.label!r} binds to {figure.page_ref!r}, which is not a promotion or product page",
+                detail=(
+                    f"{figure.label!r} binds to {figure.page_ref!r}, which is not a promotion or product page"
+                ),
             )
         if page.frontmatter.type.value == "product" and " ".join(figure.text.split()) not in " ".join(
             page.body.split()

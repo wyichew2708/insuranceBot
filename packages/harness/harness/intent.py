@@ -207,7 +207,11 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # it, not whether the customer qualifies — without this it read as
             # eligibility and was refused for not discussing age or residency.
             r"|can i (get|buy|purchase|arrange) .{0,44}\b(from|through|via)\b"
-            r"|where do i go to arrange)\b",
+            r"|where do i go to arrange"
+            # "i want to buy cancer insurance" asks how to buy it; unread, it
+            # was answered from the definitions page.
+            r"|(?:i )?(?:want|would like|wish|looking) to (buy|purchase|apply for|sign up for|get) "
+            r"|(?:buy|purchase) (?:a |the |an )?(?:policy|plan|cover|insurance)\b)\b",
             re.I,
         ),
     ),

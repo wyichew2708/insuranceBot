@@ -275,6 +275,28 @@ def select_sections(
     # product page and nothing of the rest of the catalogue.
     ask = ask or ask_about(question, product, benefits)
     intent = ask.intent
+    # A drill-down: the customer tapped a section of the product's pages, and
+    # the answer is that section and nothing else.
+    if ask.section is not None:
+        page_id, heading = ask.section
+        for page in pages:
+            if page.id != page_id:
+                continue
+            for name, body in split_sections(page):
+                if name == heading:
+                    return [Selection(page=page, heading=name, body=body, score=1.0, lead=True)]
+    # The insurer's own published answer, where the customer asked the
+    # published question. "What does Tiq Travel Insurance not cover?" and the
+    # FAQ's "Are there any exclusions under Tiq Travel?" are one question, and
+    # the FAQ's answer is four sentences where the exclusions page is five
+    # hundred words. The full wording is a chip away.
+    # Never for a figure: "what is the baggage limit" is answered by the
+    # benefit table, and a published answer about baggage in general would
+    # take the customer's number away. Never where a benefit is named either.
+    if product is not None and not ask.full and intent in FAQ_FIRST_INTENTS and not ask.subject:
+        picked = faq_pick(pages, question, intent, product)
+        if picked is not None:
+            return [picked]
     # A turn that is just a product name — "term life" — asks nothing, so no
     # intent fires and every child page competes on lexical overlap alone. The
     # exclusions page is the wordier of them and won: typing a product's name
@@ -436,6 +458,12 @@ def select_sections(
             if wants_quantity and TOKEN_RE.search(body):
                 section_relevance += 0.4
             score = page_relevance + section_relevance
+            # A section with no source reference is a pointer ("the complete
+            # list is on the exclusions page"), not evidence: composed alone,
+            # it made a factual answer with no claims and reference-integrity
+            # refused the turn. A lead — the "How to buy" table — is kept.
+            if "[src:" not in body and not leads:
+                continue
             if score > 0 or leads:
                 scored.append(
                     Selection(
@@ -533,6 +561,109 @@ GOVERNING_HEADING_RE = re.compile(
 )
 
 
+#: Intents a published FAQ answer may stand in for. A limit or a price is a
+#: figure from the table, not a paragraph from the FAQ.
+FAQ_FIRST_INTENTS = frozenset(
+    {Intent.exclusion, Intent.claim, Intent.application, Intent.eligibility, Intent.renewal, Intent.document}
+)
+#: How close a customer's question must be to a published FAQ question to be
+#: answered with the FAQ's answer — with the same intent, and without it.
+FAQ_MATCH_WITH_INTENT = 0.5
+FAQ_MATCH_ALONE = 0.78
+#: The best match must beat the next by this much, or the FAQ is not the
+#: one answer to this question.
+FAQ_MATCH_MARGIN = 0.08
+_FAQ_STOP = frozenset(
+    [
+        "the",
+        "a",
+        "an",
+        "is",
+        "are",
+        "do",
+        "does",
+        "can",
+        "i",
+        "my",
+        "your",
+        "you",
+        "it",
+        "its",
+        "of",
+        "for",
+        "to",
+        "in",
+        "on",
+        "under",
+        "with",
+        "and",
+        "or",
+        "what",
+        "which",
+        "how",
+        "any",
+        "there",
+    ]
+)
+
+
+def _faq_words(text: str, product_words: set[str]) -> set[str]:
+    words = set(re.findall(r"[a-z0-9]+", text.lower()))
+    return {w for w in words if w not in _FAQ_STOP and w not in product_words and len(w) > 2}
+
+
+def faq_pick(pages: list[Page], question: str, intent: Intent, product: Page) -> Selection | None:
+    """The one published FAQ entry that is the customer's question, or None."""
+    import difflib
+
+    faq = next((p for p in pages if p.id == f"{product.id}/faq"), None)
+    if faq is None:
+        return None
+    product_words = set(re.findall(r"[a-z0-9]+", product.frontmatter.title.lower())) | {
+        "tiq",
+        "etiqa",
+        "insurance",
+    }
+    asked = _faq_words(question, product_words)
+    if not asked:
+        return None
+    entries = [(h, b) for h, b in split_sections(faq) if h and b.strip()]
+    same_intent_count = sum(1 for h, _ in entries if intent is not Intent.unknown and classify(h) is intent)
+    scored: list[tuple[float, str, str]] = []
+    for heading, body in entries:
+        entry = _faq_words(heading, product_words)
+        # Shared words, with a slip allowed ("exclusion" for "exclusions"),
+        # over the words either side used. A string ratio over the joined
+        # words was tried first and scored "not cover" against "couple plan"
+        # at 0.5 — letters in common, nothing else.
+        shared = sum(
+            1
+            for a in asked
+            if any(a == e or difflib.SequenceMatcher(None, a, e).ratio() >= 0.85 for e in entry)
+        )
+        overlap = shared / len(asked | entry) if asked | entry else 0.0
+        same_intent = intent is not Intent.unknown and classify(heading) is intent
+        score = overlap + (0.25 if same_intent else 0.0)
+        # The one FAQ entry with the customer's intent is the customer's
+        # question even when the words differ: "What does it not cover?" is
+        # "Are there any exclusions?". Several with that intent must earn it.
+        if same_intent and same_intent_count == 1:
+            threshold = 0.2
+        elif same_intent:
+            threshold = FAQ_MATCH_WITH_INTENT
+        else:
+            threshold = FAQ_MATCH_ALONE
+        if score >= threshold:
+            scored.append((score, heading, body))
+    if not scored:
+        return None
+    scored.sort(key=lambda s: -s[0])
+    if len(scored) > 1 and scored[0][0] - scored[1][0] < FAQ_MATCH_MARGIN:
+        return None
+    _, heading, body = scored[0]
+    return Selection(page=faq, heading=heading, body=body, score=1.0, lead=True)
+
+
 def clean_heading(heading: str) -> str:
     """A heading fit to lead a claim.
 
@@ -541,6 +672,9 @@ def clean_heading(heading: str) -> str:
     `[src:...]` becomes a claim carrying it — which the entailment judge will
     not vouch for, correctly.
     """
+    # "10. What Do We Mean With These Words?" — the enumeration is a wording's
+    # numbering, not a figure, and led as prose it met the numeric gate.
+    heading = re.sub(r"^\s*(?:\d+[.)]|\([a-z]\)|[a-z][.)])\s+", "", heading)
     heading = SOURCE_REF_RE.sub("", heading or "")
     for entity, char in (("&amp;", "&"), ("&lt;", "<"), ("&gt;", ">"), ("&quot;", '"'), ("&#39;", "'")):
         heading = heading.replace(entity, char)
@@ -926,8 +1060,8 @@ def compose(
     # mobility is told Tiq Personal Accident replaced it.
     replaced = (product.frontmatter.model_extra or {}).get("replaces") if product is not None else None
     if product is not None and isinstance(replaced, list) and replaced and paragraphs:
-        named = " and ".join(str(r) for r in replaced)
-        paragraphs.insert(0, f"{product_name(product)} replaced {named}, which is no longer sold.")
+        replaced_names = " and ".join(str(r) for r in replaced)
+        paragraphs.insert(0, f"{product_name(product)} replaced {replaced_names}, which is no longer sold.")
 
     # A legacy product is still answered — a policyholder has questions — but
     # never as though it could be bought. The catalogue says which these are.
