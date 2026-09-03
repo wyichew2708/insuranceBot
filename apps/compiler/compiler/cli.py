@@ -169,7 +169,8 @@ def main() -> None:
     p_fac.set_defaults(func=cmd_facts)
 
     p_llm = sub.add_parser("llm-wiki", help="write the LLM WIKI tier: plain-language pages, draft, gated")
-    p_llm.add_argument("--bundle", type=Path, default=Path("okf"))
+    # No `--bundle` of its own: the subcommand's default shadowed the global
+    # flag, and `--bundle okf-real llm-wiki` quietly wrote the seed bundle.
     p_llm.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
     p_llm.add_argument("--review-months", type=int, default=3)
     p_llm.set_defaults(func=cmd_llm_wiki)
