@@ -37,6 +37,10 @@ confidence: medium
 
 Get Apple Watch Ultra 3 / SE 3 with min [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#body].
 
+## What it covers
+
+Secure Your Family’s Future: Place the plan under your child’s name while you remain insured against the unexpected [src:raw/web/www.tiq.com.sg/2026-08-25/product-cashsaver.md#secure-your-family-s-future].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./cashsaver/exclusions.md).

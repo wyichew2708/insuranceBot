@@ -37,6 +37,10 @@ confidence: medium
 
 Be prepared for the unexpected [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-casualty.md#casualty-insurance].
 
+## What it covers
+
+Casualty Insurance: Our Casualty Insurance protects your business against accidental damage, injury to others and property damage [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-casualty.md#casualty-insurance].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./casualty/exclusions.md).

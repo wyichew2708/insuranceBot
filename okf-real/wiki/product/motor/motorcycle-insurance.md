@@ -38,6 +38,10 @@ confidence: medium
 
 Protection for your sheer riding pleasure Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#body].
 
+## What it covers
+
+Ride Fun, Ride Safe: Choose from comprehensive, third-party fire & theft and third party only coverage types [src:raw/web/www.tiq.com.sg/2026-08-25/product-motorcycle-insurance.md#ride-fun-ride-safe].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./motorcycle-insurance/exclusions.md).

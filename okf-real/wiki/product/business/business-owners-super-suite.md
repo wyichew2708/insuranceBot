@@ -37,6 +37,10 @@ confidence: medium
 
 Our ‘BOSS’ (Business Owners Super Suite) insurance plans make it easy for small and medium-sized businesses to get the protection they need [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#body].
 
+## What it covers
+
+Light Industries: If you manufacture and assemble goods, or store goods in a light industrial building, you can protect your business from the unexpected with the Etiqa Insurance Pte. Ltd. BOSS suite [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md#light-industries].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./business-owners-super-suite/exclusions.md).

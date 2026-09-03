@@ -38,6 +38,12 @@ confidence: medium
 
 Being a sandwich generation can be stressful [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#support-for-your-family].
 
+## What it covers
+
+Support for your family: While you work hard to enrich the lives of your family for a better future, don’t miss out on important life protection that can empower and support them in times of need [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#support-for-your-family].
+
+Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-family.md#guaranteed-renewals].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./family/exclusions.md).

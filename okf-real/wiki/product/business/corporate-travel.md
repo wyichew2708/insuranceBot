@@ -37,6 +37,10 @@ confidence: medium
 
 Protect your employees for their business travel [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#corporate-travel-insurance].
 
+## What it covers
+
+Corporate Travel Insurance: Protect your employees for their business travel [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md#corporate-travel-insurance].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./corporate-travel/exclusions.md).

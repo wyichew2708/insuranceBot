@@ -37,6 +37,10 @@ confidence: medium
 
 Protect your commercial property against damage or loss due to an accident, fire or other events [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-property.md#property-insurance].
 
+## What it covers
+
+Property Insurance: Protect your commercial property against damage or loss due to an accident, fire or other events [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-property.md#property-insurance].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./property/exclusions.md).

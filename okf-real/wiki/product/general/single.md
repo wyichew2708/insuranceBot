@@ -38,6 +38,10 @@ confidence: medium
 
 You can live life to the fullest while providing assurance to your loved ones with term life insurance [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#get-your-adulting-game-on].
 
+## What it covers
+
+Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-single.md#guaranteed-renewals].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./single/exclusions.md).

@@ -40,6 +40,10 @@ confidence: medium
 
 Some things in life are beyond our control [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#a-plan-you-can-count-on-till-old-age].
 
+## What it covers
+
+Whole life protection with a choice of premium term: Your plan will continue to accumulate cash value and bonuses* while providing you with comprehensive protection throughout your life [src:raw/web/www.tiq.com.sg/2026-08-25/product-whole-life-insurance.md#whole-life-protection-with-a-choice-of-premium-term].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./whole-life-insurance/exclusions.md).

@@ -37,6 +37,10 @@ confidence: medium
 
 Specially tailored to cater to the needs of small to medium size business for various trades [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance.md#body].
 
+## What it covers
+
+Your business is our business: Worried about the unexpected events that may affect your business? We tailor our business insurance solutions to protect your operations and employees [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance.md#your-business-is-our-business].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./business-insurance/exclusions.md).

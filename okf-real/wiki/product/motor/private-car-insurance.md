@@ -40,6 +40,10 @@ confidence: medium
 
 Not driving much these days? No problem [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#why-private-car-insurance].
 
+## What it covers
+
+We’ve got your back with 3 levels of cover: We cover accidental loss or damage costs due to accidents We cover the cost if a towing service is required after an accident We cover your legal liability We cover your costs in the event of a personal accident We cover other benefits Excess for driver(s) Benefits for Electric Vehicles [src:raw/web/www.tiq.com.sg/2026-08-25/product-private-car-insurance.md#we-ve-got-your-back-with-3-levels-of-cover].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./private-car-insurance/exclusions.md).

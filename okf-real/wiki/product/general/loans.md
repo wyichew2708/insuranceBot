@@ -38,6 +38,12 @@ confidence: medium
 
 While you enjoy life’s mini victories and continue to strive for your goals, don’t forget to protect what you’ve already achieved [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#protect-the-life-you-ve-built].
 
+## What it covers
+
+Protect the life you’ve built: While you enjoy life’s mini victories and continue to strive for your goals, don’t forget to protect what you’ve already achieved [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#protect-the-life-you-ve-built].
+
+Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-loans.md#guaranteed-renewals].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./loans/exclusions.md).

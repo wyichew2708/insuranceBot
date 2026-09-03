@@ -39,6 +39,14 @@ confidence: medium
 
 Appointed Insurer for the HDB Fire Insurance Scheme [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#body].
 
+## What it covers
+
+Covers damages to building structure: Covers damage caused by fire to the building, structures, fixtures, and fittings provided by HDB and its approved developers [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#covers-damages-to-building-structure].
+
+Extended benefits: Includes extension to cover fires in adjoining properties and water damage from burst pipes [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#extended-benefits].
+
+Optional enhanced home content insurance: Boost coverage for your home contents and renovation by adding on Etiqa Insurance Pte. Ltd. Home Insurance [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-fire-insurance.md#optional-enhanced-home-content-insurance].
+
 ## Headline benefits
 
 Full benefit detail is on the [benefits page](./fire-insurance/benefits.md).

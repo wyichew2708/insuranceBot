@@ -720,6 +720,113 @@ def _common(
     )
 
 
+#: Where a product page stops describing the cover and starts selling extras,
+#: answering questions, or listing articles. Everything from here down is
+#: either an add-on — which is *not* included cover, and reading it as though
+#: it were is the misleading answer this section exists to prevent — or
+#: navigation. "Level up your plan" opens that block; "Flexible add-ons" does
+#: not, it is a tile inside the cover block naming that add-ons exist, and
+#: ending the scan on the word cost the page every tile that followed it.
+_COVER_END_RE = re.compile(
+    r"level up|value added|useful information|frequently asked|faq"
+    r"|customers say|featured|follow us|claims process|questions",
+    re.I,
+)
+#: A heading that describes something other than the cover, above that line.
+#: "Apply for business insurance today" is a call to action, not a benefit,
+#: and it was compiled onto eight pages as what the product covers.
+_COVER_SKIP_RE = re.compile(
+    r"advisory|why choose|about us|sitemap|overview of|apply (?:for|now)|start your", re.I
+)
+#: Sentence-level noise the tile shape does not exclude: a navigation bar the
+#: extractor flattened into prose ("Coverage | Resources | FAQs"), and a
+#: closure notice, which is a fact about the *shopfront* and not about cover.
+_COVER_NOISE_RE = re.compile(r"\||thank you for your support|fully subscribed", re.I)
+#: The tile has to actually say the product covers something. Marketing that
+#: asserts nothing ("Your journey, your way") is not a benefit.
+_COVER_PROSE_RE = re.compile(
+    r"\b(cover(?:s|ed|age)?|protect(?:s|ed|ion)?|insured|reimburse\w*|payouts?)\b", re.I
+)
+#: A benefit tile is a heading and a line or two. Anything longer is a
+#: different kind of section — the travel advisory runs to 163 words.
+_COVER_TILE_WORDS = 60
+_COVER_TILES = 6
+
+
+def _cover_sentence(text: str) -> str:
+    """The sentence that says what is covered, not merely the first one.
+
+    A tile usually opens on a hook — "Don't let your medical history hold you
+    back" — and states the cover in the sentence after it. The hook asserts
+    nothing, and an answer built from hooks is a page of slogans.
+    """
+    sentences = [s.rstrip() for s in re.split(r"(?<=\.)\s+", " ".join(text.split())) if s.strip()]
+    for sentence in sentences:
+        if ALIAS_RE.match(sentence):
+            continue
+        if _COVER_PROSE_RE.search(sentence):
+            return sentence
+    return _first_sentence(text)
+
+
+def _cover_summary(ordered: list[Snapshot], report: CompileReport) -> list[str]:
+    """What the plan covers, in the words the product page uses.
+
+    "Headline benefits" is generated from benefit-table rows, so it is figures
+    and nothing else — and for a customer who is not signed in, every one of
+    those figures is tier-varying and resolves to "depends on your plan tier".
+    Asked for a summary of Tiq Travel Insurance the answer was two unknowns,
+    while the product page itself said "whether it's a GP, specialist, or TCM,
+    you're covered" and five more like it. Those tiles were parsed, and then
+    never read by anything.
+
+    Ordinary rule 2 applies, and it costs real lines here: "be covered for
+    travel delays starting from just 3 hours" carries a number no table row
+    binds — the schedule says six — so it is dropped rather than published.
+    A contested figure in marketing prose is exactly what rule 2 is for.
+    """
+    lines: list[str] = []
+    seen: set[str] = set()
+    for snapshot in ordered:
+        for section in snapshot.sections:
+            # The extractor leaves zero-width spaces in headings, and one of
+            # them sat between "Home Insurance" and its question mark.
+            heading = section.heading.replace("\u200b", "").strip()
+            if not heading:
+                continue
+            if _COVER_END_RE.search(heading):
+                break
+            # `_OVERVIEW_SKIP_RE` is the existing list of headings that do not
+            # describe the product, and it has to apply here too: without it
+            # the maid page's "You might also be interested in" cross-sell
+            # block — a teaser for a life-protection article — was compiled in
+            # as what maid insurance covers.
+            if _COVER_SKIP_RE.search(heading) or _OVERVIEW_SKIP_RE.search(heading):
+                continue
+            if heading.endswith("?"):
+                continue
+            if len(section.text.split()) > _COVER_TILE_WORDS:
+                continue
+            if not _COVER_PROSE_RE.search(section.text):
+                continue
+            key = slugify(heading)
+            if key in seen:
+                continue
+            sentence = _cover_sentence(section.text)
+            if not sentence or _COVER_NOISE_RE.search(sentence):
+                continue
+            grounded = _grounded(
+                _normalise_brands(f"{heading}: {sentence}"), snapshot.ref(section.anchor), report
+            )
+            if not grounded:
+                continue
+            seen.add(key)
+            lines.append(grounded)
+            if len(lines) == _COVER_TILES:
+                return lines
+    return lines
+
+
 def emit_product(
     config: CompileConfig,
     group: ProductGroup,
@@ -829,6 +936,13 @@ def emit_product(
         # already carries it.
     else:
         report.skip("no publishable description of the product on any host")
+
+    # Before the figures: the figures are tier-varying and say nothing at all
+    # to a customer who has not signed in.
+    covers = _cover_summary(ordered, report)
+    if covers:
+        body.append("## What it covers")
+        body += covers
 
     if rows:
         body.append("## Headline benefits")

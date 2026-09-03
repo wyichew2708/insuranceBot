@@ -37,6 +37,10 @@ confidence: medium
 
 You can protect your business with Marine Insurance that secures your cargo from loss or damage while in transit [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-marine.md#marine-insurance].
 
+## What it covers
+
+Marine Insurance: You can protect your business with Marine Insurance that secures your cargo from loss or damage while in transit [src:raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-marine.md#marine-insurance].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./marine/exclusions.md).

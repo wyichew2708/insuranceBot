@@ -38,6 +38,10 @@ confidence: medium
 
 Coverage | Resources | FAQs [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#go-beyond-the-basics-and-grow-your-wealth-like-a-pro].
 
+## What it covers
+
+Save better with added peace of mind and convenience: Protected up to specified limits by SDIC [src:raw/web/www.tiq.com.sg/2026-08-25/product-eeasy-savepro.md#save-better-with-added-peace-of-mind-and-convenience].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./eeasy-savepro/exclusions.md).

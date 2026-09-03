@@ -38,6 +38,10 @@ confidence: medium
 
 Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy Save insurance savings plan [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#insure-as-you-grow-your-savings].
 
+## What it covers
+
+Insure as you grow your savings: Achieve your money goals and stay protected with Etiqa Insurance Pte. Ltd. Easy Save insurance savings plan [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-easy-save.md#insure-as-you-grow-your-savings].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./tiq-easy-save/exclusions.md).

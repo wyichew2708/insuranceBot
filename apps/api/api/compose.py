@@ -191,7 +191,9 @@ SUMMARY_PHRASE_RE = re.compile(r"^[\w\s'&-]{0,50}\b(?:cover|coverage|benefits?|s
 
 #: The sections that describe a product rather than one corner of it.
 OVERVIEW_HEADING_RE = re.compile(
-    r"^(?:what this plan is|about\b|overview|headline benefits|summary|key benefits|at a glance)", re.I
+    r"^(?:what it covers|what this plan is|about\b|overview|headline benefits|summary"
+    r"|key benefits|at a glance)",
+    re.I,
 )
 
 #: A question that is actually about an offer. Only then does a promotion lead.

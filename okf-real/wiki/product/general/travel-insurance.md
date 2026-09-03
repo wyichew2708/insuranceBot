@@ -46,6 +46,16 @@ confidence: high
 
 We are your travel buddy [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md#body].
 
+## What it covers
+
+Medical expenses in Singapore and overseas: Whether it's a GP, specialist, or TCM, you're covered [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#medical-expenses-in-singapore-and-overseas].
+
+Pre-existing medical conditions coverage: Get covered for overseas medical bills, emergency evacuation, and even travel hiccups [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#pre-existing-medical-conditions-coverage].
+
+Coverage for every traveller: Whether you're departing from Singapore, transiting, or purchasing coverage for your child, we’ve got you protected for all your air, land & cruise travels [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#coverage-for-every-traveller].
+
+Travel inconvenience: Be covered for trip cancellations, postponement, loss or damage to your personal belongings and more [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#travel-inconvenience].
+
 ## Headline benefits
 
 The child limit for the plan tier held is {{table:child.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].

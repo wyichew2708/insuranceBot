@@ -38,6 +38,12 @@ confidence: medium
 
 Simple and affordable life cover to build a better future [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#term-life-insurance].
 
+## What it covers
+
+Term Life Insurance: Simple and affordable life cover to build a better future [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#term-life-insurance].
+
+Guaranteed renewals: Ensures that you get the cover that you need as you age [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance-just-married.md#guaranteed-renewals].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./just-married/exclusions.md).

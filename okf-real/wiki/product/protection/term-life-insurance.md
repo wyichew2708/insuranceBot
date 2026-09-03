@@ -39,6 +39,12 @@ confidence: medium
 
 The financial burden you leave behind can be just as devastating as the loss of a loved one [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#protect-the-life-you-ve-built].
 
+## What it covers
+
+Provide for your family during hard times: Get a lump sum payout in an event of death [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#provide-for-your-family-during-hard-times].
+
+Deal with unexpected expenses: Receive a lump sum payout if you’re diagnosed with terminal illness or total & permanent disability [src:raw/web/www.tiq.com.sg/2026-08-25/product-term-life-insurance.md#deal-with-unexpected-expenses].
+
 ## What is not covered
 
 The complete list is on the [exclusions page](./term-life-insurance/exclusions.md).
