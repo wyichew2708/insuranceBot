@@ -112,9 +112,11 @@ docker-logs:
 	$(COMPOSE) logs -f $(SERVICE)
 
 # Loop 2 — the knowledge gates.
-# Build the vector index over the served bundle. Offline and incremental —
-# keyed by content hash — and never part of Bundle.load, so `make evals` and
-# CI need no database. Needs PGVECTOR_DSN and EMBED_BASE_URL in .env.
+# Build the vector indexes over the served bundle: `chunk` over the compiled
+# wiki, `raw_chunk` over the immutable sources the RAG fallback searches.
+# Offline and incremental — keyed by content hash — and never part of
+# Bundle.load, so `make evals` and CI need no database. Needs PGVECTOR_DSN and
+# EMBED_BASE_URL in .env. `--only wiki` / `--only raw` builds one of them.
 index:
 	uv run python scripts/index_pgvector.py --bundle okf-real
 

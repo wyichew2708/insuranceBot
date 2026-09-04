@@ -116,6 +116,14 @@ class Settings(BaseSettings):
     # the dense analogue of RAG_FLOOR: a hit made of corpus-wide vocabulary is
     # the shape of every document. Calibrated on the suites, not a default.
     vector_floor: float = 0.55
+    # The same floor for the raw index, which the RAG fallback searches. Lower
+    # than the wiki's on purpose: the fallback fires precisely when nothing
+    # matched, its hits go to the trace as evidence rather than into the
+    # answer's prose, and `may_support` plus the in-force version have already
+    # thrown out the documents that must not be cited. A floor tight enough
+    # for a compiled page would leave the fallback empty on exactly the
+    # questions it exists for.
+    vector_raw_floor: float = 0.5
 
 
 def get_settings() -> Settings:

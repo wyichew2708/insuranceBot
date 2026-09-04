@@ -25,7 +25,7 @@ from api import scan as scanner
 from api.integrations import probe, registry
 from api.settings import Settings
 from api.store import ContentStore, StoreError, _as_violation_dicts, taxonomy
-from okf import Bundle, lint_bundle
+from okf import LINKED, Bundle, graph_for, lint_bundle
 
 router = APIRouter(prefix="/v1/cms", tags=["content"])
 
@@ -163,7 +163,12 @@ async def read_page(page_id: str) -> dict[str, Any]:
         "source_path": page.source_path,
         "product_key": bundle.product_key(page),
         "neighbours": bundle.neighbours(page.id),
-        "backlinks": sorted(p.id for p in bundle.pages.values() if page.id in bundle.neighbours(p.id)),
+        # From the graph's reverse index. The scan it replaces asked every one
+        # of the bundle's pages for its neighbour list, on every request for
+        # one page — 301 link resolutions to answer "who points here", which
+        # the graph already knows. Links only, not containment: a page is not
+        # referenced by its own parent.
+        "backlinks": sorted(e.src for e in graph_for(bundle).in_edges(page.id, LINKED)),
         "violations": _as_violation_dicts(violations),
         "table_rows": rows,
         "retrievable": bundle.retrievable(page, dt.date.today()),

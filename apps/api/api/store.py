@@ -23,7 +23,7 @@ from typing import Any
 from okf.linter import Violation
 from okf.page import Frontmatter, PageType
 
-from okf import Bundle, Page, Status, lint_bundle, parse_page, render_page
+from okf import LINKED, Bundle, Page, Status, graph_for, lint_bundle, parse_page, render_page
 
 ID_RE = re.compile(r"[a-z0-9]+(?:[-/][a-z0-9]+)*")
 CUSTOM_SOURCE_DIR = "raw/custom"
@@ -270,7 +270,10 @@ class ContentStore:
         page = bundle.get(page_id)
         if page is None:
             raise StoreError(f"no page {page_id!r}")
-        incoming = [p.id for p in bundle.pages.values() if page_id in bundle.neighbours(p.id)]
+        # Authored links only. A child page is not "linked to" by its parent,
+        # and counting containment here would make every `/faq` and `/cover`
+        # page permanently undeletable.
+        incoming = sorted(e.src for e in graph_for(bundle).in_edges(page_id, LINKED))
         if incoming:
             raise StoreError(f"{len(incoming)} page(s) link to {page_id!r}: {', '.join(incoming[:5])}")
         self.path_for(page_id).unlink(missing_ok=True)

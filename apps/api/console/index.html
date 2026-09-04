@@ -405,13 +405,18 @@ const viewPipeline = () => {
 const viewRetrieval = () => {
   const adm = TRACE.candidates.filter(c => c.admitted), rej = TRACE.candidates.filter(c => !c.admitted);
   return `<div class="card"><h2 class="sec">Pages loaded (${TRACE.loaded.length})</h2>
-    <table><tr><th>Page</th><th>Via</th><th>Hop</th><th>Chars</th></tr>
+    <table><tr><th>Page</th><th>Via</th><th>Edge</th><th>Hop</th><th>Chars</th></tr>
     ${TRACE.loaded.map(p => `<tr>
       <td><span class="clickable mono" onclick="showPage('${esc(p.page_id)}')">${esc(p.page_id)}</span></td>
-      <td><span class="tag">${esc(p.via)}</span></td><td class="mono">${p.hop}</td>
-      <td class="mono dim">${p.chars}</td></tr>`).join('') || '<tr><td colspan=4 class="mute">none</td></tr>'}</table>
-    <div class="hint" style="margin-top:8px"><b>graph</b> = reached by following links from a seed page.
-    Deterministic traversal guarantees the complete exclusion set, rather than hoping a retriever surfaces it.</div></div>
+      <td><span class="tag">${esc(p.via)}</span></td>
+      <td class="mono dim">${esc(p.edge || '')}</td><td class="mono">${p.hop}</td>
+      <td class="mono dim">${p.chars}</td></tr>`).join('') || '<tr><td colspan=5 class="mute">none</td></tr>'}</table>
+    <div class="hint" style="margin-top:8px"><b>graph</b> = reached by following links from a seed page;
+    <b>graph:typed</b> = one of the product\u2019s own <span class="mono">exclusions</span>/<span
+    class="mono">benefits</span>/<span class="mono">claims</span> edges; <b>graph:back</b> = walked
+    <i>backwards</i> from a concept, which only happens when nothing product-shaped was reached.
+    <b>Edge</b> names the link followed. Deterministic traversal guarantees the complete exclusion set,
+    rather than hoping a retriever surfaces it.</div></div>
 
   <div class="card"><h2 class="sec">Frontmatter filter — admitted (${adm.length})</h2>
     <table><tr><th>#</th><th>Page</th><th>Score</th></tr>
@@ -443,11 +448,17 @@ const viewRag = () => TRACE.rag_used ? `
   <div class="card"><h2 class="sec">RAG fallback fired</h2>
     <div class="hint">Reason: <b>${esc(TRACE.rag_reason)}</b>. RAG covers the long tail of wordings,
     historic versions and novel questions — the wiki covers the curated core.</div>
-    <table><tr><th>Source</th><th>Section</th><th>Score</th></tr>
+    <table><tr><th>Source</th><th>Section</th><th>Found by</th><th>Score</th></tr>
     ${TRACE.rag_hits.map(h => `<tr><td class="mono">${esc(h.source_path)}</td>
-      <td class="dim">${esc(h.locator)}</td><td class="mono">${h.score}</td></tr>
-      <tr><td colspan=3 class="mute" style="font-size:11.5px;padding-top:0">${esc(h.excerpt)}</td></tr>`).join('')}
-    </table></div>` : `<div class="card"><h2 class="sec">RAG not used</h2>
+      <td class="dim">${esc(h.locator)}</td><td><span class="tag">${esc(h.found_by || 'lexical')}</span></td>
+      <td class="mono">${h.score}</td></tr>
+      <tr><td colspan=4 class="mute" style="font-size:11.5px;padding-top:0">${esc(h.excerpt)}</td></tr>`).join('')}
+    </table>
+    <div class="hint" style="margin-top:8px"><b>Found by</b>: <b>lexical</b> = word overlap over
+    <span class="mono">raw/</span>; <b>dense</b> = nearest neighbour in the raw vector index;
+    <b>both</b> = the two retrievers agree, which is what the rank fusion rewards. With no index
+    configured every hit is lexical and the score is the lexical one; with both, the score is the
+    fused rank, normalised so the leader reads 1.0.</div></div>` : `<div class="card"><h2 class="sec">RAG not used</h2>
     <div class="hint">Wiki-first retrieval answered this turn. RAG triggers on: no wiki page matched ·
     clause-level question · historic policy version · confidence below floor.</div></div>`;
 

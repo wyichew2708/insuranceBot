@@ -113,9 +113,11 @@ def registry(settings: Settings) -> list[Integration]:
             label="pgvector — dense retrieval (self-hosted)",
             direction="outbound",
             purpose=(
-                "Vector search over the compiled wiki sections, fused with the lexical "
-                "rank. Recall only: a chunk found by similarity goes through the same "
-                "frontmatter filter, composition and gates as one found by words."
+                "Vector search over the compiled wiki sections and the raw sources, "
+                "fused with the lexical rank and the lexical RAG fallback. Recall only: "
+                "a chunk found by similarity goes through the same frontmatter filter, "
+                "composition and gates as one found by words, and a raw section through "
+                "the same marketing screen and version filter."
             ),
             configured=bool(settings.pgvector_dsn) and settings.pgvector.lower() != "off",
             required=False,
@@ -332,19 +334,40 @@ def _redact_dsn(dsn: str) -> str:
 
 
 def _pgvector_probe(dsn: str, bundle: str) -> tuple[bool, str]:
-    """Connect, and read the index fingerprint for this bundle. Synchronous —
-    run under `asyncio.to_thread` by the caller."""
+    """Connect, and read both index fingerprints for this bundle. Synchronous —
+    run under `asyncio.to_thread` by the caller.
+
+    Both, because a deployment can now have one and not the other: `chunk` is
+    the compiled wiki and `raw_chunk` is the sources the RAG fallback searches,
+    and a `make index --only wiki` leaves the second empty. Reporting only the
+    first would say "connected, 4,812 chunks" about a deployment whose fallback
+    is still purely lexical.
+    """
     try:
         import psycopg
     except ImportError:
         return False, "psycopg not installed — install the api package's `pgvector` extra"
+    counts: dict[str, str] = {}
     try:
         with psycopg.connect(dsn, connect_timeout=int(PROBE_TIMEOUT_S)) as conn:
-            row = conn.execute(
-                "SELECT chunks, fingerprint FROM chunk_fingerprint WHERE bundle = %s", (bundle,)
-            ).fetchone()
+            for view, label in (("chunk_fingerprint", "wiki"), ("raw_chunk_fingerprint", "raw")):
+                # A schema predating `raw_chunk` still answers for `chunk`, and
+                # a probe is a diagnostic: it reports what it found, and does
+                # not fail the whole check because half of it is not there yet.
+                try:
+                    row = conn.execute(
+                        f"SELECT chunks, fingerprint FROM {view} WHERE bundle = %s", (bundle,)
+                    ).fetchone()
+                except Exception as exc:
+                    counts[label] = f"unavailable ({type(exc).__name__})"
+                    conn.rollback()
+                    continue
+                counts[label] = (
+                    f"{row[0]} chunks, fingerprint {str(row[1])[:12]}..." if row else "not indexed"
+                )
     except Exception as exc:
         return False, f"{type(exc).__name__}: {exc}"
-    if row is None:
-        return False, f"connected; no index for bundle {bundle!r} — run `make index`"
-    return True, f"connected; {row[0]} chunks indexed for {bundle!r} (fingerprint {str(row[1])[:12]}...)"
+    detail = "; ".join(f"{label}: {value}" for label, value in counts.items())
+    if counts.get("wiki", "").startswith("not indexed"):
+        return False, f"connected; no wiki index for bundle {bundle!r} — run `make index` ({detail})"
+    return True, f"connected; {bundle!r} — {detail}"

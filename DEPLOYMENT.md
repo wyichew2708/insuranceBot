@@ -377,11 +377,36 @@ What it is, and is not. A chunk found by similarity is a *candidate* — under
 the same frontmatter filter, composition and gates as one found by words. It
 is fused into the lexical rank as a bonus, so a page the words missed can rise
 above the confidence floor, and a draft or expired chunk cannot win on
-similarity. The index is the wiki, not `raw/`, because wiki sections carry the
-frontmatter the filter needs. It is built offline by `make index`, keyed by
-content hash so a recompile re-embeds what changed, and never inside
-`Bundle.load` — the evaluators and CI need no database. At request time the
-API embeds only the question.
+similarity. Both indexes are built offline by `make index`, keyed by content
+hash so a recompile re-embeds what changed, and never inside `Bundle.load` —
+the evaluators and CI need no database. At request time the API embeds only
+the question, once per turn for both searches.
+
+**Two tables.** `chunk` is the compiled wiki, whose WHERE clause is the
+frontmatter ladder in SQL — approved, in its effective window, not
+review-overdue, right jurisdiction, not withdrawn. Its hits are used twice:
+pooled to page scores, which decide which pages retrieval reads, and kept at
+section level, which helps the composer decide which section of them answers.
+
+`raw_chunk` is the immutable sources, and it is what makes the RAG fallback
+hybrid. It has no frontmatter to filter on — it is a PDF someone published —
+so what guards it is `okf.sources.may_support` (the product pages and the
+documents, never the marketing) plus the customer's in-force version, applied
+in Python to the dense list and the lexical list by the same function. The two
+rankings are fused by reciprocal rank, and `found_by` on every hit says which
+retriever found it. The raw index is searched **only on the turns the fallback
+actually fires**, so it costs an ordinary turn nothing.
+
+    make index                                # both tables
+    uv run python scripts/index_pgvector.py --bundle okf-real --only raw
+    uv run python scripts/index_pgvector.py --bundle okf-real --dry-run
+
+Two floors, both settings rather than constants because they should be set by
+measurement: `VECTOR_FLOOR` (0.55) for the wiki, `VECTOR_RAW_FLOOR` (0.5) for
+the sources. Below a floor a hit is the shape of every document in the corpus
+and earns nothing. The raw floor is the looser of the two because the fallback
+fires precisely when nothing matched, and its hits reach the trace as evidence
+rather than the answer as prose.
 
 Failure is a mode, not an outage. `PGVECTOR=auto` degrades to the lexical
 path when the database or the embedder is unreachable, records why on the
