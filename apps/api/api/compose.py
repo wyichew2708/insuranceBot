@@ -1084,7 +1084,10 @@ def compose(
     # selected section mentions it, say so — a statement about what was *not*
     # found, which the composer already knows and the customer cannot.
     named = asked_benefits(bundle, question) if product is not None else set()
-    if named and paragraphs:
+    # `named` is only non-empty when a product was resolved (see its
+    # assignment above), so the guard restates an invariant rather than
+    # adding one — and states it where `product_name(product)` is read.
+    if named and paragraphs and product is not None:
         from okf import load_vocabulary
 
         # Judged against every page that was *loaded*, not only the sections

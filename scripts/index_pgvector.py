@@ -38,8 +38,9 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="count what would change; embed nothing")
     args = parser.parse_args()
 
-    from api.compose import SOURCE_REF_RE, split_sections
+    from api.compose import split_sections
     from api.settings import Settings
+    from okf.linter import SOURCE_REF_RE
 
     from okf import UNCOMPILED_MARK, Bundle, PageType
 
