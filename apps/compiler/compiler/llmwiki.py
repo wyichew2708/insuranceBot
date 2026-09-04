@@ -361,7 +361,10 @@ def write_llm_wiki(
         if draft.kept < 4:
             report.skip("llm-wiki: fewer than four sentences survived the cross-check — not written")
             continue
-        fm = Frontmatter(
+        # `compiled_by` is an extra field: `Frontmatter` is `extra="allow"`,
+        # so pydantic keeps it and the indexer reads it back, but a model's
+        # extras are not in its generated signature.
+        fm = Frontmatter(  # type: ignore[call-arg]
             id=f"{product.id}/plain",
             title=f"{product.frontmatter.title} — in plain language",
             type=PageType.product,

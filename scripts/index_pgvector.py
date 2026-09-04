@@ -60,7 +60,8 @@ def _hash(content: str) -> str:
 
 def _wiki_rows(bundle: Any, name: str) -> dict[str, dict[str, Any]]:
     """One row per compiled section, with the columns the ladder filters on."""
-    from api.compose import SOURCE_REF_RE, split_sections
+    from api.compose import split_sections
+    from okf.linter import SOURCE_REF_RE
 
     from okf import UNCOMPILED_MARK, PageType
 
