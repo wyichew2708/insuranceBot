@@ -490,7 +490,10 @@ packages/harness/       contracts, eight gates, budgets, traces
 apps/api/               serve loop, debug console, content studio, content API
 apps/crawler/           allowlist + robots policy, extraction, dated snapshots
 apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
-evals/suites/           golden · merge-consistency · adversarial · staleness
+evals/suites/           golden · merge-consistency · adversarial · staleness ·
+                        field-test · faq-customer · conversation (generated)
+evals/taxonomy/         the authored conversation taxonomy: what customers ask,
+                        and what a correct reply is for each
 ```
 
 ## The corpus in this repo
@@ -755,13 +758,23 @@ question-ordered graph traversal, deterministic numeric binding, a hybrid
 lexical + dense RAG fallback over `raw/`, the SOR
 entitlement stub, all eight gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
-gate, the allowlisted crawler, the compile step that turns crawl snapshots into
+gate, a 1,356-case golden conversation dataset over all 37 products,
+the allowlisted crawler, the compile step that turns crawl snapshots into
 canonical pages, benefit-table CSVs and website defect tickets, and the content
 studio — review, scan-and-verify, authoring, status workflow, tagging,
 in-process evaluation and the integration registry.
 
 Not built:
 
+- **Routing a question the corpus cannot answer.** The largest finding of the
+  golden conversation dataset (`make conversation-eval`, EVALUATION.md §4a):
+  of 191 cases whose correct reply is "this needs a system or a human",
+  82 got a substantive answer instead. "I received an OTP I did not request"
+  was answered with a Start-up Bonus rate table; "is this email really from
+  you?" with a policy termination clause. Every gate passed — they check that
+  an answer is grounded, not that the question was one to take. The corpus
+  cannot hold a claim status, a password reset or a phishing verdict, and the
+  bot needs to say so rather than retrieve the nearest clause.
 - **Composing answers from retrieved clauses** (their K4). A historic-version
   question correctly triggers RAG, retrieves that version's wording, and is
   then **blocked by `version-coherence` and handed off** rather than answered

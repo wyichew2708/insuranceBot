@@ -1,4 +1,4 @@
-.PHONY: customer-suite faq-suite coverage index llm-wiki install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
+.PHONY: customer-suite faq-suite conversation-suite conversation-eval coverage index llm-wiki install dev lint typecheck test lint-bundle conflicts evals autoeval autoeval-generate \
         guardrail-backtest autoeval-live evals-live \
         docker-build docker-up docker-down docker-logs \
         crawl crawl-fixture wiki knowledge autoeval-web studio studio-web ci console clean
@@ -154,6 +154,21 @@ customer-suite:
 
 faq-suite:
 	uv run python scripts/faq_suite.py --bundle okf-real --out evals/suites/faq-customer.yaml
+
+# The golden conversation dataset (§G Loop 3). `conversation-suite` regenerates
+# it from the authored taxonomy — do that after a compile changes the
+# catalogue, and commit the result: a golden dataset that moves under you is
+# not one. `conversation-eval` scores it and writes the grouped report.
+#
+# Deliberately not in `make evals`: 1,356 cases is four minutes, and the point
+# of this suite is the breakdown rather than a pass/fail gate. The suite is
+# scoped to okf-real, so `make evals` skips it against the seed bundle.
+conversation-suite:
+	uv run python scripts/conversation_suite.py --bundle okf-real
+
+conversation-eval:
+	LLM_PROVIDER=deterministic GUARDRAILS=rules \
+	uv run python scripts/conversation_report.py --bundle okf-real
 
 # Per source, how much of it reached a wiki page. Also printed by every
 # `corpus-compile`; this is the report on its own.

@@ -134,11 +134,13 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
     # carried from an earlier turn, or lost by it — and a suite that can only
     # ask one question cannot see any of it.
     turns = [str(t) for t in (case.get("turns") or [])] or [case["question"]]
+    if not turns:
+        raise ValueError(f"{case['id']}: no question and no turns")
     history: list[str] = []
-    envelope = trace = None
-    for turn in turns:
+    envelope, trace = answer_question(bundle, turns[0], session, settings, history=[])
+    for turn in turns[1:]:
+        history.append(turns[len(history)])
         envelope, trace = answer_question(bundle, turn, session, settings, history=list(history))
-        history.append(turn)
     failures = _check(case, envelope, trace, bundle)
     return {
         "id": case["id"],
@@ -147,6 +149,21 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
         "trace_id": trace.trace_id,
         "answer": envelope.answer.answer,
         "composer": trace.composer,
+        # What the turn actually did, alongside what was expected. `failures`
+        # says a case missed; this says *how*, and for a case that owed a
+        # handoff the difference matters more than the pass rate: answering a
+        # question about a suspicious email with a termination clause and
+        # asking which product it is about are both wrong, and only one of
+        # them is dangerous.
+        "observed": {
+            "delivered": envelope.delivered,
+            "handoff": envelope.answer.handoff,
+            "clarifying": envelope.answer.clarifying,
+            "advice_flag": envelope.answer.advice_flag,
+            "smalltalk": envelope.answer.smalltalk,
+            "rag_used": trace.rag_used,
+            "claims": len(envelope.answer.claims),
+        },
     }
 
 
@@ -188,8 +205,32 @@ def _run_merge_consistency(bundle: Bundle, settings: Settings, case: dict[str, A
     }
 
 
+#: Labels the taxonomy puts on a case and the runner carries through to the
+#: report. Not read by `_check` — they say what a case *is*, so a score can be
+#: read as "claims questions on motor products are weak" rather than as one
+#: number over 1,356 cases.
+LABELS = ("section", "journey", "intent", "entities", "contract", "product", "brand", "lifecycle")
+
+
+def load_suite(path: Path) -> tuple[str, list[dict[str, Any]]]:
+    """A suite file, and the bundle it is written for.
+
+    Two shapes, because one of them is older than the other. A bare list is a
+    suite that runs against whatever bundle it is given — the seed suites,
+    which are written against `okf`. A mapping with `bundle` and `cases` names
+    the corpus it was generated from, and `run_suites` skips it when a
+    different one is loaded: `faq-customer` and `conversation` are both derived
+    from `okf-real` and every case in them fails against the seed bundle,
+    which is not a finding about the bot.
+    """
+    data = yaml.safe_load(path.read_text()) or []
+    if isinstance(data, dict):
+        return str(data.get("bundle", "")), list(data.get("cases") or [])
+    return "", list(data)
+
+
 def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, Any]:
-    cases = yaml.safe_load(path.read_text()) or []
+    _, cases = load_suite(path)
     results = []
     for case in cases:
         try:
@@ -201,6 +242,7 @@ def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, 
             results.append(
                 {"id": case.get("id", "?"), "passed": False, "failures": [f"error: {exc}"], "answer": ""}
             )
+        results[-1].update({label: case[label] for label in LABELS if label in case})
     passed = sum(1 for r in results if r["passed"])
     return {
         "suite": path.stem,
@@ -213,7 +255,14 @@ def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, 
 
 def run_suites(bundle: Bundle, settings: Settings, suite: str = "all") -> dict[str, Any]:
     names = available_suites() if suite == "all" else [suite]
-    suites = [run_suite_file(bundle, settings, SUITES_DIR / f"{name}.yaml") for name in names]
+    paths = [SUITES_DIR / f"{name}.yaml" for name in names]
+    if suite == "all":
+        # A suite generated from another corpus is skipped rather than failed.
+        # Naming it explicitly still runs it, so `--suite conversation` against
+        # the seed bundle is a thing you can do on purpose.
+        served = bundle.root.name
+        paths = [p for p in paths if load_suite(p)[0] in ("", served)]
+    suites = [run_suite_file(bundle, settings, p) for p in paths]
     total = sum(s["total"] for s in suites)
     passed = sum(s["passed"] for s in suites)
     return {

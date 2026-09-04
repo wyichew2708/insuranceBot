@@ -111,9 +111,17 @@ def main() -> int:
         "# and cites that product — nothing about the wording, since a better answer\n"
         "# from a wording page is an improvement over the FAQ's own text.\n"
         "#\n"
+        "#\n"
+        "# Scoped to the bundle it was generated from. Every question here names a\n"
+        "# product that exists in that corpus and in no other, so run against the\n"
+        "# seed bundle all 354 fail on a missing product — which is a fact about\n"
+        "# which corpus was loaded, not about the bot. `run_suites` skips a\n"
+        "# bundle-scoped suite when a different one is served.\n"
+        "#\n"
         f"# {len(cases)} cases from {args.bundle}\n\n"
     )
-    args.out.write_text(header + yaml.safe_dump(cases, sort_keys=False, allow_unicode=True, width=1000))
+    payload = {"bundle": args.bundle.name, "cases": cases}
+    args.out.write_text(header + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=1000))
     products = len({c["expect"]["cite_product"] for c in cases})  # type: ignore[index]
     print(f"wrote {len(cases)} cases across {products} products to {args.out}")
     return 0
