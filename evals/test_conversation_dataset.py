@@ -38,6 +38,8 @@ def test_every_template_names_a_contract_that_exists(taxonomy: dict[str, Any]) -
     known = set(taxonomy["contracts"])
     unknown = sorted({t["contract"] for t in taxonomy["templates"]} - known)
     assert not unknown, f"templates reference contracts that do not exist: {unknown}"
+    per_turn = {t["contract"] for c in taxonomy["conversations"] for t in c["turns"]}
+    assert not (per_turn - known), f"turns reference contracts that do not exist: {sorted(per_turn - known)}"
 
 
 def test_every_line_names_products_and_no_template_names_a_missing_line(taxonomy: dict[str, Any]) -> None:
@@ -91,6 +93,17 @@ def test_the_evaluation_date_is_pinned(taxonomy: dict[str, Any], suite: dict[str
     assert all(c["session"]["today"] == pinned for c in suite["cases"])
 
 
+def _expectations(case: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every expectation a case carries — its own, plus one per turn.
+
+    A single-turn case asserts once at case level; a conversation asserts once
+    per turn and not at all at case level, because there is no one answer a
+    journey produces.
+    """
+    found = [case["expect"]] if case.get("expect") else []
+    return found + [t["expect"] for t in (case.get("turns") or []) if isinstance(t, dict) and t.get("expect")]
+
+
 def test_a_handoff_case_never_asserts_a_citation(suite: dict[str, Any]) -> None:
     """A handoff carries no claims. Asserting a citation on one would assert
     the bot answered something the contract says it must not."""
@@ -99,9 +112,18 @@ def test_a_handoff_case_never_asserts_a_citation(suite: dict[str, Any]) -> None:
             assert "cite_product" not in case["expect"], case["id"]
 
 
-def test_the_hygiene_assertions_reach_every_case(taxonomy: dict[str, Any], suite: dict[str, Any]) -> None:
+def test_every_case_asserts_something(suite: dict[str, Any]) -> None:
+    for case in suite["cases"]:
+        assert _expectations(case), f"{case['id']} is never scored"
+
+
+def test_the_hygiene_assertions_reach_every_expectation(
+    taxonomy: dict[str, Any], suite: dict[str, Any]
+) -> None:
     for needle in taxonomy["hygiene"]:
-        assert all(needle in c["expect"]["must_not_contain"] for c in suite["cases"]), needle
+        for case in suite["cases"]:
+            for expect in _expectations(case):
+                assert needle in expect["must_not_contain"], f"{case['id']}: {needle}"
 
 
 def test_the_committed_suite_matches_the_taxonomy(suite: dict[str, Any]) -> None:
@@ -129,3 +151,58 @@ def _generator() -> Any:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+# --- conversations ---------------------------------------------------------
+
+
+def test_conversation_ids_are_unique(taxonomy: dict[str, Any]) -> None:
+    counts = collections.Counter(c["id"] for c in taxonomy["conversations"])
+    assert not [i for i, n in counts.items() if n > 1]
+
+
+def test_every_conversation_has_more_than_one_turn(taxonomy: dict[str, Any]) -> None:
+    """A one-turn conversation is a template with extra ceremony."""
+    for convo in taxonomy["conversations"]:
+        assert len(convo["turns"]) >= 2, f"{convo['id']} is not a conversation"
+
+
+def test_every_turn_says_something_and_owes_something(taxonomy: dict[str, Any]) -> None:
+    for convo in taxonomy["conversations"]:
+        for n, turn in enumerate(convo["turns"], start=1):
+            assert turn.get("say"), f"{convo['id']} turn {n} says nothing"
+            assert turn.get("contract"), f"{convo['id']} turn {n} owes nothing — it would never be scored"
+
+
+def test_no_conversation_opens_on_a_context_dependent_turn(taxonomy: dict[str, Any]) -> None:
+    """`needs_context` means "unanswerable without the turns before it", and
+    there are none before the first."""
+    for convo in taxonomy["conversations"]:
+        assert not convo["turns"][0].get("needs_context"), f"{convo['id']} opens on an elliptical turn"
+
+
+def test_a_product_scoped_conversation_names_its_product(taxonomy: dict[str, Any]) -> None:
+    for convo in taxonomy["conversations"]:
+        if str(convo["scope"]) == "global":
+            continue
+        said = " ".join(str(t["say"]) for t in convo["turns"])
+        assert "{name}" in said, f"{convo['id']} is product-scoped but never names the product"
+
+
+def test_generated_conversations_carry_per_turn_expectations(suite: dict[str, Any]) -> None:
+    """The whole point of the shape: a journey scored only on its last turn
+    cannot tell a bot that answered all five from one that answered the fifth."""
+    convos = [c for c in suite["cases"] if c.get("archetype")]
+    assert convos, "the suite has no conversations"
+    for case in convos:
+        assert len(case["turns"]) >= 2
+        for turn in case["turns"]:
+            assert turn.get("expect"), f"{case['id']}: a turn with no expectation is never scored"
+            assert turn.get("say")
+
+
+def test_a_handoff_turn_never_asserts_a_citation(suite: dict[str, Any]) -> None:
+    for case in suite["cases"]:
+        for turn in case.get("turns") or []:
+            if isinstance(turn, dict) and turn.get("contract") in {"handoff", "out_of_scope"}:
+                assert "cite_product" not in turn["expect"], f"{case['id']}: {turn['say']!r}"

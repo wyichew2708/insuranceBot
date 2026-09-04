@@ -51,8 +51,17 @@ def _session(spec: dict[str, Any], case_id: str) -> Session:
     )
 
 
-def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | None = None) -> list[str]:
-    expect = case.get("expect") or {}
+def _check(
+    expect: dict[str, Any] | None, envelope: Any, trace: Any, bundle: Bundle | None = None
+) -> list[str]:
+    """Score one answer against one expectation.
+
+    Takes the expectation rather than the case, because a conversation checks
+    one per *turn*. A case that asserts only its last turn cannot tell a bot
+    that answered every question from one that got the first three wrong and
+    recovered — and on a five-turn journey those are not the same product.
+    """
+    expect = expect or {}
     failures: list[str] = []
     answer = envelope.answer
     text = answer.answer.lower()
@@ -127,45 +136,91 @@ def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | Non
     return failures
 
 
+def _turns_of(case: dict[str, Any]) -> list[dict[str, Any]]:
+    """A case's turns, in one shape.
+
+    Three forms are accepted, and they are the history of this file rather than
+    three ways of saying the same thing. `question:` is one turn. `turns:` of
+    plain strings is a conversation whose expectation lands on the last turn.
+    `turns:` of mappings — `{say, expect, ...}` — is a conversation that says
+    what each turn owed, which is the only form that can tell a bot that
+    answered all five from one that answered the fifth.
+    """
+    raw = case.get("turns")
+    if not raw:
+        return [{"say": str(case["question"])}]
+    out: list[dict[str, Any]] = []
+    for entry in raw:
+        out.append(dict(entry) if isinstance(entry, dict) else {"say": str(entry)})
+    return out
+
+
 def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> dict[str, Any]:
     session = _session(case.get("session") or {}, str(case["id"]))
-    # `turns` is one conversation; `expect` is asserted against the last turn.
-    # Half of what the field test found only appears on a follow-up — a subject
-    # carried from an earlier turn, or lost by it — and a suite that can only
-    # ask one question cannot see any of it.
-    turns = [str(t) for t in (case.get("turns") or [])] or [str(case["question"])]
-    # The first turn is run outside the loop so that `envelope` and `trace` are
-    # bound rather than `None`-until-the-loop-runs. Every read of them below
-    # assumed the loop had gone round at least once, which is true — `turns` is
-    # never empty — but only the code knew it, not the type checker.
-    history = [turns[0]]
-    envelope, trace = answer_question(bundle, turns[0], session, settings, history=[])
-    for turn in turns[1:]:
-        envelope, trace = answer_question(bundle, turn, session, settings, history=list(history))
-        history.append(turn)
-    failures = _check(case, envelope, trace, bundle)
+    # One conversation, one session, every turn in order — and the history the
+    # pipeline actually receives, so an elliptical follow-up has the same thing
+    # to work with here that it would in production.
+    turns = _turns_of(case)
+    history: list[str] = []
+    scored: list[dict[str, Any]] = []
+    envelope = trace = None
+    for turn in turns:
+        said = str(turn["say"])
+        envelope, trace = answer_question(bundle, said, session, settings, history=list(history))
+        history.append(said)
+        turn_failures = _check(turn.get("expect"), envelope, trace, bundle)
+        scored.append(
+            {
+                "say": said,
+                "kind": turn.get("kind", ""),
+                "intent": turn.get("intent", ""),
+                "contract": turn.get("contract", ""),
+                # A turn that cannot be answered without the ones before it.
+                # Reported apart from the rest: a bot with no memory fails
+                # these and only these, and averaging the two hides which.
+                "needs_context": bool(turn.get("needs_context")),
+                "checked": bool(turn.get("expect")),
+                "passed": not turn_failures,
+                "failures": turn_failures,
+                "answer": envelope.answer.answer[:300],
+                "observed": _observed(envelope, trace),
+            }
+        )
+    assert envelope is not None and trace is not None  # `turns` is never empty
+    # The case-level expectation still applies to the last turn, so every suite
+    # written before per-turn expectations existed scores exactly as it did.
+    failures = _check(case.get("expect"), envelope, trace, bundle)
+    turn_failures = [
+        f"turn {i + 1} ({t['say'][:40]!r}): {f}" for i, t in enumerate(scored) for f in t["failures"]
+    ]
     return {
         "id": case["id"],
-        "passed": not failures,
-        "failures": failures,
+        "passed": not failures and not turn_failures,
+        "failures": failures + turn_failures,
         "trace_id": trace.trace_id,
         "answer": envelope.answer.answer,
         "composer": trace.composer,
-        # What the turn actually did, alongside what was expected. `failures`
-        # says a case missed; this says *how*, and for a case that owed a
-        # handoff the difference matters more than the pass rate: answering a
-        # question about a suspicious email with a termination clause and
-        # asking which product it is about are both wrong, and only one of
-        # them is dangerous.
-        "observed": {
-            "delivered": envelope.delivered,
-            "handoff": envelope.answer.handoff,
-            "clarifying": envelope.answer.clarifying,
-            "advice_flag": envelope.answer.advice_flag,
-            "smalltalk": envelope.answer.smalltalk,
-            "rag_used": trace.rag_used,
-            "claims": len(envelope.answer.claims),
-        },
+        "turn_results": scored,
+        "observed": _observed(envelope, trace),
+    }
+
+
+def _observed(envelope: Any, trace: Any) -> dict[str, Any]:
+    """What the turn actually did, alongside what was expected.
+
+    `failures` says a turn missed; this says *how*, and for one that owed a
+    handoff the difference matters more than the pass rate: answering a
+    question about a suspicious email with a termination clause and asking
+    which product it is about are both wrong, and only one is dangerous.
+    """
+    return {
+        "delivered": envelope.delivered,
+        "handoff": envelope.answer.handoff,
+        "clarifying": envelope.answer.clarifying,
+        "advice_flag": envelope.answer.advice_flag,
+        "smalltalk": envelope.answer.smalltalk,
+        "rag_used": trace.rag_used,
+        "claims": len(envelope.answer.claims),
     }
 
 
@@ -211,7 +266,17 @@ def _run_merge_consistency(bundle: Bundle, settings: Settings, case: dict[str, A
 #: report. Not read by `_check` — they say what a case *is*, so a score can be
 #: read as "claims questions on motor products are weak" rather than as one
 #: number over 1,356 cases.
-LABELS = ("section", "journey", "intent", "entities", "contract", "product", "brand", "lifecycle")
+LABELS = (
+    "section",
+    "journey",
+    "intent",
+    "archetype",
+    "entities",
+    "contract",
+    "product",
+    "brand",
+    "lifecycle",
+)
 
 
 def load_suite(path: Path) -> tuple[str, list[dict[str, Any]]]:

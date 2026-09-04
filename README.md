@@ -758,7 +758,8 @@ question-ordered graph traversal, deterministic numeric binding, a hybrid
 lexical + dense RAG fallback over `raw/`, the SOR
 entitlement stub, all eight gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
-gate, a 1,356-case golden conversation dataset over all 37 products,
+gate, a 1,711-case golden conversation dataset over all 37 products — 355 of
+them multi-turn journeys scored turn by turn —
 the allowlisted crawler, the compile step that turns crawl snapshots into
 canonical pages, benefit-table CSVs and website defect tickets, and the content
 studio — review, scan-and-verify, authoring, status workflow, tagging,
@@ -766,15 +767,28 @@ in-process evaluation and the integration registry.
 
 Not built:
 
-- **Routing a question the corpus cannot answer.** The largest finding of the
-  golden conversation dataset (`make conversation-eval`, EVALUATION.md §4a):
-  of 191 cases whose correct reply is "this needs a system or a human",
-  82 got a substantive answer instead. "I received an OTP I did not request"
-  was answered with a Start-up Bonus rate table; "is this email really from
-  you?" with a policy termination clause. Every gate passed — they check that
-  an answer is grounded, not that the question was one to take. The corpus
-  cannot hold a claim status, a password reset or a phishing verdict, and the
-  bot needs to say so rather than retrieve the nearest clause.
+- **Knowing when the customer has changed gear.** The largest finding of the
+  golden conversation dataset (`make conversation-eval`, EVALUATION.md §4a),
+  and the reason it is worth running conversations rather than questions.
+  Turn accuracy is 72.4%; whole-journey accuracy is **37.2%**. The gap is
+  almost entirely one turn kind: the **pivot**, where a customer crosses from
+  what the corpus knows to what only a system knows — *"and how much is it?"*,
+  *"where is my claim now?"* — which scores **10.9%**. Every failure is the
+  same: it answers instead of handing off. Four turns about how to claim, then
+  "where is my claim now?" answered with the policy's claim-notification
+  clause.
+
+  Context makes it worse rather than better, which is why a single-turn suite
+  could not find it: asked cold, "how much is it?" names no product and the bot
+  has little to say; asked on turn three it has a product in hand and keeps
+  answering from its pages. Every gate passes — they check that an answer is
+  grounded, not that the question was one to take. The corpus cannot hold a
+  premium, a claim status or a phishing verdict, and the bot needs to say so
+  rather than retrieve the nearest clause.
+
+  What is *not* broken is memory: `ellipsis` turns score 88.2% and
+  context-dependent turns 78.8%, so following a subject through a conversation
+  works.
 - **Composing answers from retrieved clauses** (their K4). A historic-version
   question correctly triggers RAG, retrieves that version's wording, and is
   then **blocked by `version-coherence` and handed off** rather than answered

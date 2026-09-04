@@ -122,6 +122,84 @@ def _targets(
     raise SystemExit(f"{template['id']}: unknown scope {scope!r}")
 
 
+def _turn_expect(
+    turn: dict[str, Any],
+    contracts: dict[str, Any],
+    hygiene: dict[str, Any],
+    slug: str,
+    entry: dict[str, Any],
+) -> dict[str, Any]:
+    """One turn's expectation: the dataset's hygiene, then its contract, then
+    the product it is about, then whatever the turn itself overrode.
+
+    In that order, so a turn can name a *different* product from the one the
+    conversation was generated for — which is exactly what a topic switch is,
+    and the only way to assert that the bot moved with the customer.
+    """
+    name = str(turn.get("contract", ""))
+    contract = contracts.get(name)
+    if contract is None:
+        raise SystemExit(f"turn references unknown contract {name!r}")
+    pinned: dict[str, Any] = (
+        {"cite_product": slug} if slug and name in {"product_fact", "corpus_fact"} else {}
+    )
+    if entry.get("regulated_advice") and name == "product_fact":
+        pinned |= {"advice_flag": True, "gates_pass": ["advice-boundary"]}
+    return _merge(hygiene, contract, pinned, turn.get("expect") or {})
+
+
+def _conversations(
+    spec: dict[str, Any],
+    catalogue: dict[str, dict[str, Any]],
+    lines: dict[str, list[str]],
+    hygiene: dict[str, Any],
+    today: str,
+) -> list[dict[str, Any]]:
+    """Expand the authored conversations, one case per (conversation, product).
+
+    A conversation is a case with `turns`, and each turn carries its own
+    expectation — so the runner scores every turn and the whole conversation,
+    rather than asserting the last thing said and calling the journey passed.
+    """
+    contracts = spec["contracts"]
+    cases: list[dict[str, Any]] = []
+    for convo in spec.get("conversations", []):
+        for slug in _targets(convo, catalogue, lines) or [""]:
+            entry = catalogue.get(slug, {})
+            name = str(entry.get("name", ""))
+            turns = [
+                {
+                    "say": str(turn["say"]).format(name=name),
+                    "kind": turn.get("kind", ""),
+                    "intent": turn.get("intent", ""),
+                    "contract": turn.get("contract", ""),
+                    "needs_context": bool(turn.get("needs_context")),
+                    "expect": _turn_expect(turn, contracts, hygiene, slug, entry),
+                }
+                for turn in convo["turns"]
+            ]
+            cases.append(
+                {
+                    "id": f"{convo['id']}--{slug}" if slug else str(convo["id"]),
+                    "section": convo["section"],
+                    "journey": convo["journey"],
+                    # A conversation's "intent" is its archetype: what the
+                    # customer is *doing* over several turns, which is not any
+                    # one of the per-turn intents.
+                    "intent": convo["archetype"],
+                    "archetype": convo["archetype"],
+                    "entities": list(convo.get("entities", [])),
+                    "contract": "conversation",
+                    "product": slug,
+                    "brand": entry.get("brand", ""),
+                    "lifecycle": entry.get("status", ""),
+                    "session": {"channel": "channel/direct", "auth_level": "L0", "today": today},
+                    "turns": turns,
+                }
+            )
+    return cases
+
+
 def build(bundle_root: Path) -> list[dict[str, Any]]:
     spec = yaml.safe_load(TAXONOMY.read_text())
     contracts = spec["contracts"]
@@ -178,7 +256,11 @@ def build(bundle_root: Path) -> list[dict[str, Any]]:
             else:
                 case["question"] = str(template["ask"]).format(name=name)
             cases.append(case)
-    return cases
+
+    conversations = _conversations(spec, catalogue, lines, hygiene, today)
+    turns = sum(len(c["turns"]) for c in conversations)
+    print(f"  {len(conversations)} conversations ({turns} turns) from {len(spec['conversations'])} templates")
+    return cases + conversations
 
 
 def main() -> int:

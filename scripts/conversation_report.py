@@ -81,6 +81,32 @@ def main() -> int:
         f"Bundle `{args.bundle.name}`, deterministic composer, "
         f"{len({r.get('product') for r in results if r.get('product')})} products.",
     ]
+    # Conversations are scored twice over, and the two numbers answer different
+    # questions. Turn accuracy is how often the bot is right. Conversation
+    # accuracy is how often a customer got all the way through a journey
+    # without a bad answer — and on a five-turn journey the second is the one
+    # they experience.
+    convos = [r for r in results if r.get("archetype")]
+    turns = [t for r in results for t in (r.get("turn_results") or []) if t.get("checked")]
+    if convos:
+        contextual = [t for t in turns if t.get("needs_context")]
+        standalone = [t for t in turns if not t.get("needs_context")]
+        lines += [
+            f"\n## Conversations — {len(convos)} journeys, {len(turns)} scored turns\n",
+            "| | pass | of | rate |",
+            "|---|---:|---:|---:|",
+            f"| **whole conversations** (every turn right) | {sum(1 for c in convos if c['passed'])} "
+            f"| {len(convos)} | {_rate(convos):.0%} |",
+            f"| turns overall | {sum(1 for t in turns if t['passed'])} | {len(turns)} | {_rate(turns):.0%} |",
+            f"| — standalone turns | {sum(1 for t in standalone if t['passed'])} | {len(standalone)} "
+            f"| {_rate(standalone):.0%} |",
+            f"| — context-dependent turns | {sum(1 for t in contextual if t['passed'])} "
+            f"| {len(contextual)} | {_rate(contextual):.0%} |",
+        ]
+        lines += _table("Turns by what they do to the conversation", _group(turns, "kind"))
+        lines += _table("Turns by contract", _group(turns, "contract"))
+        lines += _table("Conversations by archetype", _group(convos, "archetype"))
+
     lines += _table("By behaviour contract — what kind of reply was owed", _group(results, "contract"))
     lines += _table("By journey — where in the lifecycle", _group(results, "journey"))
     lines += _table("By intent — weakest 25", _group(results, "intent"), limit=25)
@@ -131,6 +157,24 @@ def main() -> int:
     (args.out / "conversation.md").write_text("\n".join(lines) + "\n")
 
     print("\n".join(lines[:4]))
+    if convos:
+        print(f"\n  conversations   {len(convos)} journeys, {len(turns)} scored turns")
+        print(
+            f"    whole           {sum(1 for c in convos if c['passed']):5d}/{len(convos):<5d} "
+            f"{_rate(convos):6.1%}   (every turn right)"
+        )
+        print(
+            f"    turns           {sum(1 for t in turns if t['passed']):5d}/{len(turns):<5d} "
+            f"{_rate(turns):6.1%}"
+        )
+        contextual = [t for t in turns if t.get("needs_context")]
+        print(
+            f"    needs context   {sum(1 for t in contextual if t['passed']):5d}/{len(contextual):<5d} "
+            f"{_rate(contextual):6.1%}   (unanswerable without the turns before)"
+        )
+        print("\n  turns by kind:")
+        for name, passed, total, rate in _group(turns, "kind"):
+            print(f"    {name:14s} {passed:5d}/{total:<5d} {rate:6.1%}")
     for title, key in (("contract", "contract"), ("journey", "journey")):
         print(f"\n  by {title}:")
         for name, passed, total, rate in _group(results, key):
