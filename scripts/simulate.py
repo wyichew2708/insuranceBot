@@ -172,6 +172,14 @@ def run(bundle: Bundle, settings: Settings, live: bool) -> tuple[list[dict[str, 
     return results, turns_total
 
 
+def _findings(result: dict[str, object]) -> list[object]:
+    """The findings list, typed. `results` rows are `dict[str, object]`
+    because they hold strings, floats and lists together, so every read
+    of a list-valued key needs this said once rather than at each use."""
+    found = result.get("findings")
+    return list(found) if isinstance(found, list) else []
+
+
 def write_report(path: Path, results: list[dict[str, object]], turns: int, live: bool, head: str) -> None:
     lines = [
         "# Conversation simulation",
@@ -183,7 +191,7 @@ def write_report(path: Path, results: list[dict[str, object]], turns: int, live:
     ]
     by_kind: dict[str, int] = {}
     for r in results:
-        for f in r["findings"]:  # type: ignore[union-attr]
+        for f in _findings(r):
             kind = str(f).split(":")[0]
             by_kind[kind] = by_kind.get(kind, 0) + 1
     lines.append("| finding | turns |")
@@ -194,7 +202,7 @@ def write_report(path: Path, results: list[dict[str, object]], turns: int, live:
     for r in results:
         lines.append(f"## {r['conversation']} — {r['turn']!r}")
         lines.append("")
-        for f in r["findings"]:  # type: ignore[union-attr]
+        for f in _findings(r):
             lines.append(f"- {f}")
         lines.append("")
         reply = str(r.get("reply", "")).replace("\n", "\n> ")

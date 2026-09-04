@@ -133,10 +133,15 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
     # Half of what the field test found only appears on a follow-up — a subject
     # carried from an earlier turn, or lost by it — and a suite that can only
     # ask one question cannot see any of it.
-    turns = [str(t) for t in (case.get("turns") or [])] or [case["question"]]
-    history: list[str] = []
-    envelope = trace = None
-    for turn in turns:
+    turns = [str(t) for t in (case.get("turns") or [])] or [str(case["question"])]
+    # The first turn is run outside the loop so that `envelope` and `trace` are
+    # bound rather than `None`-until-the-loop-runs. Every read of them below
+    # assumed the loop had gone round at least once, which is true — `turns` is
+    # never empty — but only the code knew it, not the type checker, and three
+    # of mypy's ten errors were that one assumption.
+    history = [turns[0]]
+    envelope, trace = answer_question(bundle, turns[0], session, settings, history=[])
+    for turn in turns[1:]:
         envelope, trace = answer_question(bundle, turn, session, settings, history=list(history))
         history.append(turn)
     failures = _check(case, envelope, trace, bundle)

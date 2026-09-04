@@ -53,7 +53,7 @@ namespace_packages = true
 mypy_path = "packages/okf:packages/harness:apps/api:apps/compiler:apps/evalgen:apps/crawler:scripts:."
 
 [[tool.mypy.overrides]]
-module = ["langfuse.*", "psycopg.*", "trafilatura.*", "docling.*", "markitdown.*"]
+module = ["langfuse.*", "psycopg.*", "pgvector.*", "trafilatura.*", "docling.*", "markitdown.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
