@@ -247,7 +247,8 @@ def _opening(text: str, product: Page, label: str) -> str | None:
     name = product.frontmatter.title.split(" — ")[0]
     parts = [
         f"**{name} — {label}**, in brief: {kept}",
-        f"That is the opening of a longer section. Tap “{label}” below for the full wording, or ask about your own situation.",
+        f"That is the opening of a longer section. Tap “{label}” below for the full "
+        "wording, or ask about your own situation.",
     ]
     parts.extend(route)
     return "\n\n".join(parts)
