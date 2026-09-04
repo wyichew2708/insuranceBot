@@ -746,11 +746,14 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # replaced never did.
     entailed_ids = {i for i, _ in judged_set if verdicts.get(i) == "entails"}
     deferred = [c for i, c in enumerate(ctx.answer.claims) if i not in entailed_ids]
-    evidence = _tokens(ctx.loaded_text())
+    # Not `evidence`: that name is the prose block shown to the judge, bound in
+    # the loop above, and reusing it here for a token set made one function
+    # hold two unrelated things under one name.
+    evidence_tokens = _tokens(ctx.loaded_text())
     weak = []
     for claim in deferred:
         toks = _tokens(claim.text)
-        if toks and len(toks & evidence) / len(toks) < 0.6:
+        if toks and len(toks & evidence_tokens) / len(toks) < 0.6:
             weak.append(claim.text[:50])
     if weak:
         return GateResult(
@@ -973,7 +976,11 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         asked = _asked_benefits(ctx)
         if bound and asked:
             on_topic = [f for f in bound if _benefit_of(f) in asked]
-            off_topic = sorted({_benefit_of(f) for f in bound if _benefit_of(f)} - asked)
+            # Bound once rather than called twice, so the filter and the value
+            # cannot disagree — and so the `None` the filter removes is gone
+            # from the set's type as well as from the set.
+            benefits = {b for f in bound if (b := _benefit_of(f))}
+            off_topic = sorted(benefits - asked)
             if not on_topic and off_topic:
                 return GateResult(
                     gate=name,

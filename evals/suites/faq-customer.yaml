@@ -6,8 +6,17 @@
 # and cites that product — nothing about the wording, since a better answer
 # from a wording page is an improvement over the FAQ's own text.
 #
+#
+# Scoped to the bundle it was generated from. Every question here names a
+# product that exists in that corpus and in no other, so run against the
+# seed bundle all 354 fail on a missing product — which is a fact about
+# which corpus was loaded, not about the bot. `run_suites` skips a
+# bundle-scoped suite when a different one is served.
+#
 # 354 cases from okf-real
 
+bundle: okf-real
+cases:
 - id: faq-cashsaver-01
   question: What is Tiq CashSaver?
   expect:

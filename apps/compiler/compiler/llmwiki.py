@@ -94,7 +94,8 @@ def _part_prompt(headings: str) -> str:
     wanted = [h for h in headings.splitlines()]
     return (
         SYSTEM_PROMPT.replace(
-            "Write four \\\nparts, in this order, with these exact headings:\n\n## In plain terms\n## What it covers\n"
+            "Write four \\\nparts, in this order, with these exact headings:\n\n"
+            "## In plain terms\n## What it covers\n"
             "## What it does not cover\n## How to claim\n## Questions people ask\n",
             "Write ONLY these parts, in this order, with these exact headings:\n\n"
             + "\n".join(wanted)
@@ -238,7 +239,10 @@ def _shown_for(sources: dict[str, str], product: Page, roles: tuple[str, ...]) -
 
 
 def _loose(key: str) -> str:
-    return re.sub(r"[\s\-–_]+", "", key.lower())
+    # The en dash is written as an escape: ruff reads a literal one inside a
+    # character class as a typo for a hyphen, and the two are three characters
+    # apart on the page. Same pattern, same behaviour.
+    return re.sub(r"[\s\-\u2013_]+", "", key.lower())
 
 
 def _verify(markdown: str, sources: dict[str, str], draft: Draft) -> str:
@@ -318,7 +322,7 @@ def write_llm_wiki(
                 f"SECTION `{k}`:\n{v}\n" for k, v in shown.items()
             )
             payload = None
-            for attempt in range(2):
+            for _attempt in range(2):
                 try:
                     payload = classify(_part_prompt(headings), user, SCHEMA, max_tokens=max_tokens)
                 except Exception as exc:
@@ -357,7 +361,10 @@ def write_llm_wiki(
         if draft.kept < 4:
             report.skip("llm-wiki: fewer than four sentences survived the cross-check — not written")
             continue
-        fm = Frontmatter(
+        # `compiled_by` is an extra field: `Frontmatter` is `extra="allow"`,
+        # so pydantic keeps it and the indexer reads it back, but a model's
+        # extras are not in its generated signature.
+        fm = Frontmatter(  # type: ignore[call-arg]
             id=f"{product.id}/plain",
             title=f"{product.frontmatter.title} — in plain language",
             type=PageType.product,

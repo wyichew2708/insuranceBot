@@ -48,6 +48,7 @@ from api.retrieval import (
     frontmatter_filter,
     keywords,
     needs_rag,
+    product_family_pages,
     rag_search,
     unsupported_term,
     wiki_read,
@@ -664,7 +665,9 @@ def _answer_turn(
                 )
 
         with trace.stage("wiki-read") as detail:
-            pages = wiki_read(bundle, admitted, trace, budget, settings.wiki_read_limit, session.today)
+            pages = wiki_read(
+                bundle, admitted, trace, budget, settings.wiki_read_limit, session.today, question
+            )
             # The product's published FAQ rides along whenever the product is
             # known: the composer answers a question the insurer has already
             # answered with that answer, and the page has to be loaded for
@@ -674,10 +677,15 @@ def _answer_turn(
                 # lexically — "car insurnace coverage" loaded nothing and
                 # handed off. The product the Ask read is loaded whatever the
                 # words scored.
-                wanted = [ask.product_page] + [
-                    f"{ask.product_page}{suffix}"
-                    for suffix in ("/faq", "/cover", "/benefits", "/exclusions", "/claims", "/conditions")
-                ]
+                # The product's family, read off the graph rather than guessed
+                # from a suffix list. The list said `/faq /cover /benefits
+                # /exclusions /claims /conditions`; the real corpus also files
+                # `/definitions` and `/eligibility`, and every question about a
+                # defined term on a product the words did not find was answered
+                # without the page that defines it. `EdgeKind.child` is the
+                # containment the suffixes were approximating, and it is right
+                # by construction for whatever the compiler emits next.
+                wanted = [ask.product_page, *product_family_pages(bundle, ask.product_page)]
                 held = {p.id for p in pages}
                 has_product = any(p.id.startswith(ask.product_page) for p in pages)
                 # The root and the FAQ always; the rest only when nothing of
@@ -705,13 +713,28 @@ def _answer_turn(
                 trace.rag_used = True
                 trace.rag_reason = reason
                 budget.charge_tool()
+                # Dense recall over the sources, where an index is configured.
+                # Only here, and only on the turns the fallback actually fires
+                # — a few per cent of them — so the second query costs the
+                # request path nothing on a turn the wiki answered. The
+                # question's embedding is already in hand from the search
+                # above; `VectorSearch.embed` memoises it rather than paying
+                # for it twice.
+                raw_dense = []
+                if searcher is not None:
+                    found = searcher.search_raw(bundle, question)
+                    detail["dense"] = len(found.hits) if not found.degraded else found.degraded
+                    raw_dense = found.hits
                 trace.rag_hits = rag_search(
                     raw_root,
                     question,
                     session,
                     idf=term_idf(bundle),
                     must_include=unsupported_term(bundle, question, admitted),
+                    dense=raw_dense,
+                    dense_floor=settings.vector_raw_floor,
                 )
+                detail["hits"] = [f"{h.found_by}:{h.source_path}#{h.locator}" for h in trace.rag_hits]
             # A product the Ask resolved is never "starved": the words may
             # have scored nothing — a misspelling, "ok what about travel then"
             # — but the product's pages are loaded and the customer named it.
@@ -773,6 +796,11 @@ def _answer_turn(
                 benefits=expand_vocabulary(question, load_vocabulary(settings.bundle_path)),
                 no_confident_match=starved,
                 ask=ask,
+                # The section-level half of the dense layer. `frontmatter_filter`
+                # pooled these to page scores to decide *which pages* to read;
+                # this is the same hits deciding *which section of them* answers.
+                dense=vector.by_section if vector is not None else None,
+                dense_floor=settings.vector_floor,
             )
             draft = composition.answer
             trace.composer = "deterministic"

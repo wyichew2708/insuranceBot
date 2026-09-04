@@ -255,6 +255,16 @@ def evidence_types(intent: Intent) -> frozenset[str]:
     return frozenset(requirement.needs_page_type) if requirement else frozenset()
 
 
+#: What a section hit at similarity 1.0 is worth to `select_sections`, in the
+#: same units as the heading-overlap bonus below it (0.35 + 0.9 * overlap, so
+#: at most 1.25). Deliberately of that size rather than larger: dense recall is
+#: evidence that this section is *about* the question, which is what a heading
+#: match is too — it is not evidence that the section answers it, and the
+#: procedural, benefit-token and requirement signals that do know that still
+#: outweigh it.
+DENSE_SECTION_WEIGHT = 1.0
+
+
 def select_sections(
     pages: list[Page],
     question: str,
@@ -263,6 +273,8 @@ def select_sections(
     benefits: set[str] | None = None,
     product: Page | None = None,
     ask: Ask | None = None,
+    dense: dict[tuple[str, str], float] | None = None,
+    dense_floor: float = 0.55,
 ) -> list[Selection]:
     """Relevance is page relevance times section match, where page relevance is the
     *lexical* score only. The alias boost belongs to retrieval — deciding which
@@ -329,6 +341,12 @@ def select_sections(
     wants_quantity = bool(QUANTITY_RE.search(question))
     wants_definition = bool(DEFINITION_RE.search(question))
     wants_procedure = bool(PROCEDURE_RE.search(question))
+    # Similarity per `(page_id, heading)`, where a vector index is configured.
+    # The index is built one row per section; retrieval pooled that to page
+    # level to rank candidates and then dropped it, so the composer chose a
+    # section by word overlap even on a turn the dense layer had already
+    # pointed at the right one. This is the same numbers, not new ones.
+    similarity = dense or {}
     scored: list[Selection] = []
 
     for page in pages:
@@ -457,6 +475,18 @@ def select_sections(
             # actually produce the number.
             if wants_quantity and TOKEN_RE.search(body):
                 section_relevance += 0.4
+            # Dense recall, at the level the index actually holds. Added in the
+            # lexical scale and scaled from the floor up, exactly as
+            # `frontmatter_filter` adds it to a page score: a section the words
+            # already found keeps what the words gave it, and one they missed
+            # can still lead. Worth about a strong heading hit at similarity
+            # 1.0 and nothing at the floor, because below the floor a hit is
+            # the shape of every section in the bundle.
+            match = similarity.get((page.id, heading), 0.0)
+            if match >= dense_floor:
+                section_relevance += (
+                    DENSE_SECTION_WEIGHT * (match - dense_floor) / max(1e-6, 1.0 - dense_floor)
+                )
             score = page_relevance + section_relevance
             # A section with no source reference is a pointer ("the complete
             # list is on the exclusions page"), not evidence: composed alone,
@@ -864,9 +894,20 @@ def compose(
     benefits: set[str] | None = None,
     no_confident_match: bool = False,
     ask: Ask | None = None,
+    dense: dict[tuple[str, str], float] | None = None,
+    dense_floor: float = 0.55,
 ) -> Composition:
     ask = ask or ask_about(question, product, benefits)
-    selections = select_sections(pages, question, idf=idf, benefits=benefits, product=product, ask=ask)
+    selections = select_sections(
+        pages,
+        question,
+        idf=idf,
+        benefits=benefits,
+        product=product,
+        ask=ask,
+        dense=dense,
+        dense_floor=dense_floor,
+    )
     if no_confident_match:
         # Nothing cleared the confidence floor and the raw corpus had nothing
         # either. Composing from the least-bad pages is how an assistant
@@ -1084,7 +1125,10 @@ def compose(
     # selected section mentions it, say so — a statement about what was *not*
     # found, which the composer already knows and the customer cannot.
     named = asked_benefits(bundle, question) if product is not None else set()
-    if named and paragraphs:
+    # `named` is only non-empty when a product was resolved (see its
+    # assignment above), so the guard restates an invariant rather than
+    # adding one — and states it where `product_name(product)` is read.
+    if named and paragraphs and product is not None:
         from okf import load_vocabulary
 
         # Judged against every page that was *loaded*, not only the sections

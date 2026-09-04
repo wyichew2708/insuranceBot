@@ -107,7 +107,11 @@ def run_case(bundle: Bundle, settings: Settings, case: GeneratedCase) -> tuple[C
         relevant_pages=case.expect.relevant_pages,
         admitted_pages=admitted,
         loaded_pages=[p.page_id for p in trace.loaded],
-        graph_pages=sum(1 for p in trace.loaded if p.via == "graph"),
+        # Every page the walk produced, typed edge and reverse edge alike —
+        # `via` is "graph", "graph:typed" or "graph:back", and counting only
+        # the bare one measured which pass happened to reach a page rather
+        # than whether the graph did.
+        graph_pages=sum(1 for p in trace.loaded if p.via.startswith("graph")),
         delivered=envelope.delivered,
         handoff=answer.handoff,
         advice_flag=answer.advice_flag,

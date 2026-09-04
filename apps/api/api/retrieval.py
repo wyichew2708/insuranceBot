@@ -18,10 +18,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from harness import Budget, Candidate, Channel, LoadedPage, RagHit, Session, Trace
+from okf.graph import TYPED, graph_for, plan_for
 from okf.names import index_for
 from okf.sources import OFFER_QUESTION_RE, may_support, page_type_of_text
 
-from api.vectors import VectorHits
+from api.vectors import RawHit, VectorHits
 from okf import Bundle, Page, PageType, Status, term_idf
 
 # The body is corroborating evidence, not the primary signal: frontmatter is
@@ -519,17 +520,34 @@ def focus_product(bundle: Bundle, scored: dict[str, float], terms: set[str] | No
     return candidates[0][0] if candidates else None
 
 
-def _product_root(bundle: Bundle, page_id: str) -> Page | None:
-    """The `product/<line>/<slug>` page a child page belongs to.
+def product_family_pages(bundle: Bundle, product_page: str) -> list[str]:
+    """A product's own child pages, the published FAQ first.
 
-    `product/general/travel/faq` belongs to `product/general/travel`, which is
-    where the typed edges live. Returns None for a page that is already the
-    root, or is not a product page at all.
+    Read off the graph's containment map rather than guessed from a list of
+    suffixes. The FAQ leads because it is the insurer's own short answer to
+    the customer's own question — the composer prefers it, and it has to be
+    in hand for the gates to hold it as evidence.
     """
-    parts = page_id.split("/")
-    if parts[0] != "product" or len(parts) < 4:
-        return None
-    return bundle.get("/".join(parts[:3]))
+    children = graph_for(bundle).children_of(product_page)
+    faq = f"{product_page}/faq"
+    return ([faq] if faq in children else []) + [c for c in children if c != faq]
+
+
+#: How many product roots a reverse walk may pull in when nothing
+#: product-shaped was loaded, and the widest fan-in it will walk back through.
+#:
+#: The fan-in is 1, and that is the whole guard. A concept several products
+#: depend on says nothing about which one the customer means: `concept/excess`
+#: is referenced by home, travel and private car, and walking back from it
+#: picked home — first alphabetically — for the bare questions "deductible"
+#: and "co-payment", both of which are answered by the definition and neither
+#: of which is about home insurance. Two cases, and the honest reading of both
+#: is that the reverse edge identified nothing. At a fan-in of one it cannot:
+#: there is exactly one product the concept belongs to, and reaching it is the
+#: fact, not the alphabet. Same distinction `ambiguous_focus` draws on the
+#: lexical side, same reason.
+RESCUE_LIMIT = 2
+RESCUE_FANIN = 1
 
 
 def wiki_read(
@@ -539,22 +557,48 @@ def wiki_read(
     budget: Budget,
     limit: int,
     today: dt.date | None = None,
+    question: str = "",
 ) -> list[Page]:
-    """Load whole pages, then follow links. Bounded by the page budget, which
-    is a defined exit rather than a silent truncation."""
+    """Load whole pages, then follow the graph. Bounded by the page budget,
+    which is a defined exit rather than a silent truncation.
+
+    Three passes over the graph, in the order their guarantees are worth:
+    the product's own typed edges, then a breadth-first walk shaped by what
+    the question asked for, then — only where the first two reached no
+    product at all — a walk *backwards* along the edges that point at what we
+    did load.
+    """
+    graph = graph_for(bundle)
+    # What this question wants read first. An ordering, never a filter, so no
+    # phrasing can talk the harness out of the exclusions page (§F.2).
+    order = plan_for(question)
     pages: list[Page] = []
     seen: set[str] = set()
+    when = today or dt.date.today()
 
-    def take(page: Page, via: str, hop: int) -> bool:
+    def take(page: Page, via: str, hop: int, edge: str = "") -> bool:
         if page.id in seen or len(pages) >= limit or budget.would_exceed_pages():
             return False
         seen.add(page.id)
         pages.append(page)
         budget.charge_page()
         trace.loaded.append(
-            LoadedPage(page_id=page.id, title=page.frontmatter.title, via=via, hop=hop, chars=len(page.body))
+            LoadedPage(
+                page_id=page.id,
+                title=page.frontmatter.title,
+                via=via,
+                hop=hop,
+                chars=len(page.body),
+                edge=edge,
+            )
         )
         return True
+
+    def retrievable(page_id: str) -> Page | None:
+        page = bundle.get(page_id)
+        if page is None or not bundle.retrievable(page, when):
+            return None
+        return page
 
     # Reserve capacity for traversal: if the highest-scoring seeds fill the
     # budget, the linked exclusion page never loads — and the exclusion set is
@@ -575,24 +619,47 @@ def wiki_read(
     # page at all, asserted coverage from the FAQ, and was refused — three of
     # six refusals in the last simulation, every one of them a product whose
     # exclusions were sitting one hop away and unreachable.
+    #
+    # All three typed edges, in the question's order. `claims` was in the
+    # schema and in the frontmatter and followed by nothing: "how do I claim"
+    # reached the claims page only if the generic walk had budget left after
+    # the concepts, which on a wordy product it did not.
+    typed = tuple(kind for kind in order if kind in TYPED)
     for seed in list(pages):
-        owner = _product_root(bundle, seed.id) or seed
-        for ref in (owner.frontmatter.links.exclusions, owner.frontmatter.links.benefits):
-            if not ref:
-                continue
-            linked = bundle.get(ref)
-            if linked is not None and bundle.retrievable(linked, today or dt.date.today()):
-                take(linked, "graph:typed", 1)
+        owner = graph.owner_of(bundle, seed.id) or seed.id
+        for edge in graph.out_edges(owner, typed):
+            linked = retrievable(edge.dst)
+            if linked is not None:
+                take(linked, "graph:typed", 1, edge.kind.value)
 
-    # Graph traversal — deterministic multi-hop.
+    # Graph traversal — deterministic multi-hop, in the question's edge order.
     for seed in list(pages):
-        for hop, neighbour_id in enumerate(bundle.traverse(seed.id, max_pages=limit + 2), start=0):
-            if neighbour_id == seed.id:
+        for found in graph.walk(seed.id, order, max_pages=limit + 2):
+            neighbour = retrievable(found.page_id)
+            if neighbour is not None:
+                take(neighbour, "graph", found.hop, found.kind.value)
+
+    # Nothing product-shaped was reached. A question answered entirely from
+    # `concept/pre-existing-condition` is a definition, not an answer about
+    # cover, and the forward edges cannot get home from there because links
+    # run product → concept and never back. Walk them backwards instead —
+    # but only from a concept few products depend on, because one they all
+    # depend on identifies none of them.
+    if not any(page.frontmatter.type is PageType.product for page in pages):
+        rescued = 0
+        for seed in list(pages):
+            if rescued >= RESCUE_LIMIT:
+                break
+            incoming = graph.in_edges(seed.id)
+            if not incoming or len(incoming) > RESCUE_FANIN:
                 continue
-            neighbour = bundle.get(neighbour_id)
-            if neighbour is None or not bundle.retrievable(neighbour, today or dt.date.today()):
-                continue
-            take(neighbour, "graph", hop + 1)
+            for edge in incoming:
+                root = retrievable(graph.owner_of(bundle, edge.src) or edge.src)
+                if root is None or root.frontmatter.type is not PageType.product:
+                    continue
+                if take(root, "graph:back", 1, edge.kind.value):
+                    rescued += 1
+                    break
 
     # Spend anything left over on the next-best seeds.
     for page, _score in seeds[seed_limit:]:
@@ -682,63 +749,171 @@ def rag_search(
     limit: int = 4,
     idf: dict[str, float] | None = None,
     must_include: str = "",
+    dense: list[RawHit] | None = None,
+    dense_floor: float = 0.5,
 ) -> list[RagHit]:
-    """Lexical BM25-style search over raw/ sections. Structure-aware: an
-    exclusion is never split from its parent benefit because sections are the
-    unit (§E.2). Version-filtered against the customer's in-force policy.
+    """Search raw/ sections — lexically, and by similarity where an index is
+    configured. Structure-aware: an exclusion is never split from its parent
+    benefit because sections are the unit (§E.2). Version-filtered against the
+    customer's in-force policy.
 
     Scored by information overlap, not term count: the fallback is the last
     thing standing between a question the corpus cannot answer and an answer
-    assembled from whatever shared the most common words with it."""
+    assembled from whatever shared the most common words with it.
+
+    The dense list arrives unfiltered — see `VectorSearch.search_raw` — and is
+    put through `_admissible` here, the same function the lexical pass uses.
+    That is the whole safety argument for the layer: a section the words found
+    and a section similarity found are admitted by identical rules, so a blog
+    post, another version's wording, or a document missing the one word the
+    question turned on cannot enter by the dense door having been refused at
+    the lexical one.
+    """
     terms = keywords(question)
-    if not terms or not raw_root.is_dir():
-        return []
     weights = idf or {}
     version = session.policy.version if session.policy else None
-    hits: list[RagHit] = []
+    lexical: list[RagHit] = []
 
-    for path in sorted(raw_root.rglob("*.md")):
-        rel = f"raw/{path.relative_to(raw_root)}"
-        text = path.read_text(errors="ignore")
-        # The product page and the documents, never the marketing. 586 of
-        # the crawled pages are blog posts, and this fallback is the one path
-        # by which a blog sentence could reach a customer as the answer.
-        if not may_support(rel, question, page_type=page_type_of_text(text)):
-            continue
-        # Historic-version questions must retrieve that version's wording, never
-        # a summary of the current one (§E point 2).
-        if version and "/wordings/" in rel and version not in path.name:
-            continue
-        for section, body in _sections(text):
-            body_terms = keywords(f"{section} {body}")
-            if not body_terms:
+    if terms and raw_root.is_dir():
+        for path in sorted(raw_root.rglob("*.md")):
+            rel = f"raw/{path.relative_to(raw_root)}"
+            text = path.read_text(errors="ignore")
+            if not _admissible(rel, question, version, page_type=page_type_of_text(text)):
                 continue
-            # The fallback was triggered because this word matched nothing in
-            # the wiki. A raw section that does not contain it either is not
-            # the answer — it is the nearest neighbour, which is the failure.
-            if must_include and must_include not in body_terms:
-                continue
-            overlap = terms & body_terms
-            if not overlap:
-                continue
-            if weights and not any(weights.get(t, 1.0) >= INFORMATIVE_IDF for t in overlap):
-                continue
-            score = _weighted(overlap, terms, weights) * (1 + 0.15 * len(overlap))
-            if score < RAG_FLOOR:
-                continue
-            hits.append(
-                RagHit(
-                    source_path=rel,
-                    locator=section,
-                    score=round(score, 3),
-                    excerpt=" ".join(body.split())[:280],
+            for section, body in raw_sections(text):
+                body_terms = keywords(f"{section} {body}")
+                if not body_terms:
+                    continue
+                # The fallback was triggered because this word matched nothing
+                # in the wiki. A raw section that does not contain it either is
+                # not the answer — it is the nearest neighbour, which is the
+                # failure.
+                if must_include and must_include not in body_terms:
+                    continue
+                overlap = terms & body_terms
+                if not overlap:
+                    continue
+                if weights and not any(weights.get(t, 1.0) >= INFORMATIVE_IDF for t in overlap):
+                    continue
+                score = _weighted(overlap, terms, weights) * (1 + 0.15 * len(overlap))
+                if score < RAG_FLOOR:
+                    continue
+                lexical.append(
+                    RagHit(
+                        source_path=rel,
+                        locator=section,
+                        score=round(score, 3),
+                        excerpt=" ".join(body.split())[:280],
+                        found_by="lexical",
+                    )
                 )
+    lexical.sort(key=lambda h: -h.score)
+
+    admitted_dense = _dense_hits(dense or [], question, version, must_include, dense_floor)
+    if not admitted_dense:
+        # No index, or nothing survived the filters. Byte-for-byte the lexical
+        # fallback as it was, scores included — a deployment without pgvector
+        # must not be able to tell this code was touched.
+        return lexical[:limit]
+    return _fuse(lexical, admitted_dense, limit)
+
+
+def _admissible(rel: str, question: str, version: str | None, page_type: str) -> bool:
+    """May this raw document support an answer to this question at all?
+
+    Both halves of the fallback ask exactly this, which is why it is one
+    function. The product pages and the documents, never the marketing: 586 of
+    the crawled pages are blog posts, and this fallback is the one path by
+    which a blog sentence could reach a customer as the answer. And a
+    historic-version question must retrieve *that* version's wording, never a
+    summary of the current one (§E point 2).
+    """
+    if not may_support(rel, question, page_type=page_type):
+        return False
+    return not (version and "/wordings/" in rel and version not in rel.rsplit("/", 1)[-1])
+
+
+def _dense_hits(
+    hits: list[RawHit], question: str, version: str | None, must_include: str, floor: float
+) -> list[RagHit]:
+    """The index's raw hits, filtered by everything the lexical pass filters by.
+
+    `page_type_of_text` is re-run over the indexed content rather than trusted
+    from the row: the index can be older than the classifier, and a document
+    that has since been recognised as a blog post must stop being citable the
+    moment the code says so, not the next time someone runs `make index`.
+    """
+    out: list[RagHit] = []
+    for hit in hits:
+        if hit.similarity < floor:
+            continue
+        if not _admissible(hit.source_path, question, version, page_type=page_type_of_text(hit.content)):
+            continue
+        if must_include and must_include not in keywords(hit.content):
+            continue
+        out.append(
+            RagHit(
+                source_path=hit.source_path,
+                locator=hit.heading,
+                score=round(hit.similarity, 3),
+                excerpt=" ".join(hit.content.split())[:280],
+                found_by="dense",
             )
-    hits.sort(key=lambda h: -h.score)
-    return hits[:limit]
+        )
+    out.sort(key=lambda h: -h.score)
+    return out
 
 
-def _sections(text: str) -> list[tuple[str, str]]:
+#: Reciprocal-rank fusion's damping constant, at its conventional value. It is
+#: what stops a single retriever's first place from deciding the fused order on
+#: its own: at k=60 the gap between rank 1 and rank 2 is 0.03% of the score, so
+#: agreement between the two lists counts for more than either one's confidence
+#: — which is the point, because a BM25-ish share-of-information ratio and a
+#: cosine similarity are not on the same scale and never will be.
+RRF_K = 60
+
+
+def _fuse(lexical: list[RagHit], dense: list[RagHit], limit: int) -> list[RagHit]:
+    """Reciprocal-rank fusion of the two ranked lists.
+
+    Rank, not score: the two numbers are incomparable — `0.62` from the
+    lexical pass and `0.62` from a cosine similarity mean nothing to each
+    other — and every attempt to weight one against the other is a coefficient
+    fitted to whichever suite was open at the time. What both lists genuinely
+    agree on is *order*.
+
+    The returned `score` is renormalised so the leader reads 1.0, because the
+    raw fused values live near 0.03 and a console column that always shows
+    0.03 tells a human nothing. `found_by` carries what the number no longer
+    can: which retriever found it, or that both did.
+    """
+    ranks: dict[tuple[str, str], dict[str, int]] = {}
+    seen: dict[tuple[str, str], RagHit] = {}
+    for name, hits in (("lexical", lexical), ("dense", dense)):
+        for position, hit in enumerate(hits, start=1):
+            key = (hit.source_path, hit.locator)
+            ranks.setdefault(key, {})[name] = position
+            # The lexical excerpt wins a tie: it is cut from the file on disk,
+            # where the dense one is cut from whatever was indexed, and the two
+            # can differ by a recompile.
+            if key not in seen or name == "lexical":
+                seen[key] = hit
+    fused: list[RagHit] = []
+    for key, positions in ranks.items():
+        value = sum(1.0 / (RRF_K + rank) for rank in positions.values())
+        hit = seen[key]
+        found = "both" if len(positions) == 2 else next(iter(positions))
+        fused.append(hit.model_copy(update={"score": value, "found_by": found}))
+    best = max(h.score for h in fused)
+    fused = [h.model_copy(update={"score": round(h.score / best, 3)}) for h in fused]
+    fused.sort(key=lambda h: (-h.score, h.source_path, h.locator))
+    return fused[:limit]
+
+
+def raw_sections(text: str) -> list[tuple[str, str]]:
+    """Split a raw document at its `##` headings — the unit both halves of the
+    fallback search and the unit `scripts/index_pgvector.py` embeds, so the
+    index and the query agree on what a section is."""
     matches = list(SECTION_RE.finditer(text))
     if not matches:
         return [("", text)]

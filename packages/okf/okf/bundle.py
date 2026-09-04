@@ -1,8 +1,13 @@
-"""Bundle loading, alias resolution and graph traversal (§C.1, §E.1).
+"""Bundle loading and alias resolution (§C.1, §E.1).
 
 The bundle is a git repo: `raw/` immutable sources, `wiki/` compiled pages.
 Loading builds the frontmatter index the pre-read filter runs against, plus
 the alias index — per §B.3 the cheapest single accuracy win in the build.
+
+The link graph lives in `okf.graph`, which reads a loaded bundle and caches
+itself on it. `neighbours` here is the frontmatter accessor — what this page's
+`links:` block names, in the order it names them — and `traverse` delegates to
+the graph rather than keeping a second breadth-first search alongside it.
 """
 
 from __future__ import annotations
@@ -10,9 +15,9 @@ from __future__ import annotations
 import datetime as dt
 import math
 import re
-from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -55,6 +60,12 @@ class Bundle:
     load_errors: list[str] = field(default_factory=list)
     _alias_index: dict[str, list[str]] = field(default_factory=dict, repr=False)
     _idf: dict[str, float] = field(default_factory=dict, repr=False)
+    #: The typed link graph, built on first use by `okf.graph.graph_for` and
+    #: cached here for the same reason `_idf` is: derived from pages already in
+    #: memory, one pass to build, read on every turn. Typed `Any` because the
+    #: graph imports this module — the dependency runs one way, and a field
+    #: annotation is not worth reversing it for.
+    _graph: Any = field(default=None, repr=False)
     #: (product, benefit_code, attribute) triples the compiler filed a conflict
     #: ticket for. The wiki carries the higher-authority value; a figure bound
     #: to one of these rows is delivered with that said.
@@ -165,22 +176,22 @@ class Bundle:
         return [ref for ref in page.frontmatter.links.all_refs() if ref in self.pages]
 
     def traverse(self, start: str, max_pages: int = 6) -> list[str]:
-        """Breadth-first link traversal — the deterministic replacement for
-        multi-hop RAG (§E.1). Guarantees the complete exclusion set rather
-        than hoping a retriever surfaces the exclusion chunk."""
+        """Breadth-first link traversal from `start`, `start` included — the
+        deterministic replacement for multi-hop RAG (§E.1). Guarantees the
+        complete exclusion set rather than hoping a retriever surfaces the
+        exclusion chunk.
+
+        Delegates to `okf.graph`, which is the one traversal in this codebase:
+        typed, containment-aware and totally ordered. Imported inside the
+        method because the graph is built from a bundle and importing it at
+        module scope would run the dependency in a circle.
+        """
+        from okf.graph import graph_for
+
         if start not in self.pages:
             return []
-        order: list[str] = []
-        seen = {start}
-        queue: deque[str] = deque([start])
-        while queue and len(order) < max_pages:
-            current = queue.popleft()
-            order.append(current)
-            for neighbour in self.neighbours(current):
-                if neighbour not in seen:
-                    seen.add(neighbour)
-                    queue.append(neighbour)
-        return order
+        walk = graph_for(self).walk(start, max_pages=max(0, max_pages - 1))
+        return [start, *(hop.page_id for hop in walk)]
 
     def product_key(self, page: Page) -> str:
         """Benefit-table key for a page. Sub-pages inherit their parent

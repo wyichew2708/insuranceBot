@@ -11,8 +11,22 @@ The four layers, wired into loops rather than chosen between:
 |---|---|
 | **LLM Wiki** — knowledge compiled once, not re-discovered per query | `okf/wiki/` — one canonical page per product |
 | **OKF** — the portable, lintable file format | `packages/okf` — frontmatter schema, graph, linter |
-| **RAG** — the long tail and the raw source of truth | `apps/api/api/retrieval.py` — fallback over `okf/raw/` |
+| **RAG** — the long tail and the raw source of truth | `apps/api/api/retrieval.py` — hybrid fallback over `okf/raw/` |
 | **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, eight gates, budgets, traces |
+
+Retrieval itself is three layers, and the point is that each closes a failure
+the other two cannot — see [DESIGN-v2.3.md](DESIGN-v2.3.md):
+
+| | Answers | Closes |
+|---|---|---|
+| **Graph** — `packages/okf/okf/graph.py` | "what points at what" — typed edges, containment, both directions, deterministic walks | an incomplete exclusion set, which is how an answer becomes wrong rather than short |
+| **OKF** — `packages/okf` | "why this page exists" — approved, dated, jurisdiction-bound, with its authority order | a stale or unapproved page reaching a customer |
+| **Vectors** — `apps/api/api/vectors.py` | "the thing I can't name precisely" — dense recall over the wiki *and* the raw sources | a question phrased in the customer's words rather than the contract's |
+
+None of the three is a bypass. A page found by similarity is a candidate under
+the same frontmatter filter, the same composition and the same gates as one
+found by words; a section found in `raw/` by similarity is admitted by the same
+marketing screen and version filter as one found lexically.
 
 Two more pieces close the loop from the live websites to the wiki:
 
@@ -77,8 +91,9 @@ out the way it did:
 - **claims → sources**, each with its page id and raw locator
 - **eight gate verdicts**, and the blocked draft when one refuses delivery
 - the **frontmatter filter**: pages admitted *and pages rejected with the reason*
-- **graph traversal**: which pages were reached by following links, and at which hop
-- **RAG fallback**: whether it fired and why
+- **graph traversal**: which pages were reached, by which typed edge, and at which hop
+- **RAG fallback**: whether it fired, why, and whether each hit was found by words,
+  by similarity, or by both
 - **budgets**, stage latencies, and the raw trace JSON
 - a **page inspector** (click any page id) and an in-browser **eval runner**
 
@@ -410,6 +425,24 @@ covered?" loads the product page, follows `links.exclusions`, then
 `concept/pre-existing-condition`. Three deterministic reads, complete exclusion
 set guaranteed.
 
+The walk is *ordered by what the question asked for* and never *filtered* by
+it: a claims question follows the `claims` edge first, and still follows the
+exclusions edge, because the completeness gate will refuse a coverage
+assertion made without it. Containment is an edge too — the real corpus has
+150 `/cover`, `/definitions` and `/eligibility` pages that no `links:` block
+points at — and edges run backwards as well as forwards, so a turn that landed
+on a concept page can reach the product that owns it. Every loaded page records
+which edge produced it.
+
+**Dense recall is recall, not a shortcut.** The vector index is built one row
+per section, and both halves of it are used: pooled to page scores to decide
+*which pages* to read, and kept at section level to help decide *which section
+of them* answers. The RAG fallback searches the raw sources the same two ways
+and fuses the rankings by reciprocal rank — a section both retrievers place
+second beats one that either places first, because a share-of-information
+ratio and a cosine similarity are not on the same scale. With no index
+configured the fallback is byte-for-byte the lexical one it has always been.
+
 **The assistant audits the websites** (§D.2). `make conflicts` compares every
 raw source against the benefit tables under the declared authority order. The
 seed bundle ships with a planted disagreement — one front door says the delay
@@ -452,11 +485,15 @@ okf-real/               the Etiqa/Tiq corpus — COMMITTED, and what a deploymen
 okf-web/                build output: crawled + compiled. `make knowledge` regenerates it
 fixtures/               the synthetic two-host site the crawler is proved against
 packages/okf/           page model, frontmatter schema, tables, graph, linter, corpus IDF
+  graph.py              typed edges, containment, reverse index, deterministic walks
 packages/harness/       contracts, eight gates, budgets, traces
 apps/api/               serve loop, debug console, content studio, content API
 apps/crawler/           allowlist + robots policy, extraction, dated snapshots
 apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
-evals/suites/           golden · merge-consistency · adversarial · staleness
+evals/suites/           golden · merge-consistency · adversarial · staleness ·
+                        field-test · faq-customer · conversation (generated)
+evals/taxonomy/         the authored conversation taxonomy: what customers ask,
+                        and what a correct reply is for each
 ```
 
 ## The corpus in this repo
@@ -709,21 +746,49 @@ GUARDRAIL_FAIL_CLOSED=false
 MAX_PAGES=8             MAX_TOOL_CALLS=6
 MAX_WALL_CLOCK_S=10     MAX_TOKENS=20000
 WIKI_READ_LIMIT=5       CANDIDATE_FLOOR=0.08     CONFIDENCE_FLOOR=0.45
+PGVECTOR=auto           # auto | on | off — `auto` with no DSN is lexical only
+PGVECTOR_DSN=           EMBED_BASE_URL=          RERANK_BASE_URL=
+VECTOR_FLOOR=0.55       VECTOR_RAW_FLOOR=0.5
 ```
 
 ## Status
 
-Built: the OKF bundle contract and linter, wiki-first retrieval with graph
-traversal, deterministic numeric binding, RAG fallback over `raw/`, the SOR
+Built: the OKF bundle contract and linter, wiki-first retrieval with typed,
+question-ordered graph traversal, deterministic numeric binding, a hybrid
+lexical + dense RAG fallback over `raw/`, the SOR
 entitlement stub, all eight gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
-gate, the allowlisted crawler, the compile step that turns crawl snapshots into
+gate, a 1,711-case golden conversation dataset over all 37 products — 355 of
+them multi-turn journeys scored turn by turn —
+the allowlisted crawler, the compile step that turns crawl snapshots into
 canonical pages, benefit-table CSVs and website defect tickets, and the content
 studio — review, scan-and-verify, authoring, status workflow, tagging,
 in-process evaluation and the integration registry.
 
 Not built:
 
+- **Knowing when the customer has changed gear.** The largest finding of the
+  golden conversation dataset (`make conversation-eval`, EVALUATION.md §4a),
+  and the reason it is worth running conversations rather than questions.
+  Turn accuracy is 72.4%; whole-journey accuracy is **37.2%**. The gap is
+  almost entirely one turn kind: the **pivot**, where a customer crosses from
+  what the corpus knows to what only a system knows — *"and how much is it?"*,
+  *"where is my claim now?"* — which scores **10.9%**. Every failure is the
+  same: it answers instead of handing off. Four turns about how to claim, then
+  "where is my claim now?" answered with the policy's claim-notification
+  clause.
+
+  Context makes it worse rather than better, which is why a single-turn suite
+  could not find it: asked cold, "how much is it?" names no product and the bot
+  has little to say; asked on turn three it has a product in hand and keeps
+  answering from its pages. Every gate passes — they check that an answer is
+  grounded, not that the question was one to take. The corpus cannot hold a
+  premium, a claim status or a phishing verdict, and the bot needs to say so
+  rather than retrieve the nearest clause.
+
+  What is *not* broken is memory: `ellipsis` turns score 88.2% and
+  context-dependent turns 78.8%, so following a subject through a conversation
+  works.
 - **Composing answers from retrieved clauses** (their K4). A historic-version
   question correctly triggers RAG, retrieves that version's wording, and is
   then **blocked by `version-coherence` and handed off** rather than answered
@@ -740,14 +805,23 @@ Not built:
 - **Durable scan jobs.** The registry is in-process, so a restart loses a
   running scan's suggestions. The shape — submit, poll, act — is what a queue
   would keep.
-- **pgvector dense retrieval — now present, off by default.** `§J.1`
-  recommended grep + frontmatter filter until measured recall degraded. It
-  did: the field test found the lexical scorer tying 87–213 pages on ordinary
-  customer questions, and "my flat got flooded" reaching a different product
-  from "my home got flooded". v2.1 adds a pgvector index over the compiled
-  wiki sections as a recall layer only — fused into the lexical rank before
-  the frontmatter filter runs, so it cannot admit what the filter rejects —
-  behind `PGVECTOR=auto|on|off`. See DEPLOYMENT.md §8a.
+- **pgvector dense retrieval — present, off by default, and unmeasured.**
+  `§J.1` recommended grep + frontmatter filter until measured recall degraded.
+  It did: the field test found the lexical scorer tying 87–213 pages on
+  ordinary customer questions, and "my flat got flooded" reaching a different
+  product from "my home got flooded". v2.1 added a pgvector index over the
+  compiled wiki sections as a recall layer only — fused into the lexical rank
+  before the frontmatter filter runs, so it cannot admit what the filter
+  rejects. v2.3 uses the index at the level it is built at (a section hit now
+  steers section selection, not just page ranking) and adds a second table
+  over `raw/`, which makes the RAG fallback hybrid. All of it behind
+  `PGVECTOR=auto|on|off`; see DEPLOYMENT.md §8a and DESIGN-v2.3.md.
+
+  What is *not* done is measuring it. Both floors and the section weight are
+  settings rather than constants because the numbers that should set them come
+  from running the field test and the FAQ suite against a live index, which
+  needs the GPU box. The suites in this repo run without one and so cannot
+  move on this work — they show it costs nothing, not that it earns anything.
 - **Conversational memory.** A session carries channel, auth and policy;
   it does not carry what was said. Measured cost above — context-dependent
   turns fall from 96.8% to 48.4% as the corpus grows from 3 products to 108,

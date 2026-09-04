@@ -51,8 +51,17 @@ def _session(spec: dict[str, Any], case_id: str) -> Session:
     )
 
 
-def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | None = None) -> list[str]:
-    expect = case.get("expect") or {}
+def _check(
+    expect: dict[str, Any] | None, envelope: Any, trace: Any, bundle: Bundle | None = None
+) -> list[str]:
+    """Score one answer against one expectation.
+
+    Takes the expectation rather than the case, because a conversation checks
+    one per *turn*. A case that asserts only its last turn cannot tell a bot
+    that answered every question from one that got the first three wrong and
+    recovered — and on a five-turn journey those are not the same product.
+    """
+    expect = expect or {}
     failures: list[str] = []
     answer = envelope.answer
     text = answer.answer.lower()
@@ -127,26 +136,91 @@ def _check(case: dict[str, Any], envelope: Any, trace: Any, bundle: Bundle | Non
     return failures
 
 
+def _turns_of(case: dict[str, Any]) -> list[dict[str, Any]]:
+    """A case's turns, in one shape.
+
+    Three forms are accepted, and they are the history of this file rather than
+    three ways of saying the same thing. `question:` is one turn. `turns:` of
+    plain strings is a conversation whose expectation lands on the last turn.
+    `turns:` of mappings — `{say, expect, ...}` — is a conversation that says
+    what each turn owed, which is the only form that can tell a bot that
+    answered all five from one that answered the fifth.
+    """
+    raw = case.get("turns")
+    if not raw:
+        return [{"say": str(case["question"])}]
+    out: list[dict[str, Any]] = []
+    for entry in raw:
+        out.append(dict(entry) if isinstance(entry, dict) else {"say": str(entry)})
+    return out
+
+
 def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> dict[str, Any]:
     session = _session(case.get("session") or {}, str(case["id"]))
-    # `turns` is one conversation; `expect` is asserted against the last turn.
-    # Half of what the field test found only appears on a follow-up — a subject
-    # carried from an earlier turn, or lost by it — and a suite that can only
-    # ask one question cannot see any of it.
-    turns = [str(t) for t in (case.get("turns") or [])] or [case["question"]]
+    # One conversation, one session, every turn in order — and the history the
+    # pipeline actually receives, so an elliptical follow-up has the same thing
+    # to work with here that it would in production.
+    turns = _turns_of(case)
     history: list[str] = []
+    scored: list[dict[str, Any]] = []
     envelope = trace = None
     for turn in turns:
-        envelope, trace = answer_question(bundle, turn, session, settings, history=list(history))
-        history.append(turn)
-    failures = _check(case, envelope, trace, bundle)
+        said = str(turn["say"])
+        envelope, trace = answer_question(bundle, said, session, settings, history=list(history))
+        history.append(said)
+        turn_failures = _check(turn.get("expect"), envelope, trace, bundle)
+        scored.append(
+            {
+                "say": said,
+                "kind": turn.get("kind", ""),
+                "intent": turn.get("intent", ""),
+                "contract": turn.get("contract", ""),
+                # A turn that cannot be answered without the ones before it.
+                # Reported apart from the rest: a bot with no memory fails
+                # these and only these, and averaging the two hides which.
+                "needs_context": bool(turn.get("needs_context")),
+                "checked": bool(turn.get("expect")),
+                "passed": not turn_failures,
+                "failures": turn_failures,
+                "answer": envelope.answer.answer[:300],
+                "observed": _observed(envelope, trace),
+            }
+        )
+    assert envelope is not None and trace is not None  # `turns` is never empty
+    # The case-level expectation still applies to the last turn, so every suite
+    # written before per-turn expectations existed scores exactly as it did.
+    failures = _check(case.get("expect"), envelope, trace, bundle)
+    turn_failures = [
+        f"turn {i + 1} ({t['say'][:40]!r}): {f}" for i, t in enumerate(scored) for f in t["failures"]
+    ]
     return {
         "id": case["id"],
-        "passed": not failures,
-        "failures": failures,
+        "passed": not failures and not turn_failures,
+        "failures": failures + turn_failures,
         "trace_id": trace.trace_id,
         "answer": envelope.answer.answer,
         "composer": trace.composer,
+        "turn_results": scored,
+        "observed": _observed(envelope, trace),
+    }
+
+
+def _observed(envelope: Any, trace: Any) -> dict[str, Any]:
+    """What the turn actually did, alongside what was expected.
+
+    `failures` says a turn missed; this says *how*, and for one that owed a
+    handoff the difference matters more than the pass rate: answering a
+    question about a suspicious email with a termination clause and asking
+    which product it is about are both wrong, and only one is dangerous.
+    """
+    return {
+        "delivered": envelope.delivered,
+        "handoff": envelope.answer.handoff,
+        "clarifying": envelope.answer.clarifying,
+        "advice_flag": envelope.answer.advice_flag,
+        "smalltalk": envelope.answer.smalltalk,
+        "rag_used": trace.rag_used,
+        "claims": len(envelope.answer.claims),
     }
 
 
@@ -188,8 +262,42 @@ def _run_merge_consistency(bundle: Bundle, settings: Settings, case: dict[str, A
     }
 
 
+#: Labels the taxonomy puts on a case and the runner carries through to the
+#: report. Not read by `_check` — they say what a case *is*, so a score can be
+#: read as "claims questions on motor products are weak" rather than as one
+#: number over 1,356 cases.
+LABELS = (
+    "section",
+    "journey",
+    "intent",
+    "archetype",
+    "entities",
+    "contract",
+    "product",
+    "brand",
+    "lifecycle",
+)
+
+
+def load_suite(path: Path) -> tuple[str, list[dict[str, Any]]]:
+    """A suite file, and the bundle it is written for.
+
+    Two shapes, because one of them is older than the other. A bare list is a
+    suite that runs against whatever bundle it is given — the seed suites,
+    which are written against `okf`. A mapping with `bundle` and `cases` names
+    the corpus it was generated from, and `run_suites` skips it when a
+    different one is loaded: `faq-customer` and `conversation` are both derived
+    from `okf-real` and every case in them fails against the seed bundle,
+    which is not a finding about the bot.
+    """
+    data = yaml.safe_load(path.read_text()) or []
+    if isinstance(data, dict):
+        return str(data.get("bundle", "")), list(data.get("cases") or [])
+    return "", list(data)
+
+
 def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, Any]:
-    cases = yaml.safe_load(path.read_text()) or []
+    _, cases = load_suite(path)
     results = []
     for case in cases:
         try:
@@ -201,6 +309,7 @@ def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, 
             results.append(
                 {"id": case.get("id", "?"), "passed": False, "failures": [f"error: {exc}"], "answer": ""}
             )
+        results[-1].update({label: case[label] for label in LABELS if label in case})
     passed = sum(1 for r in results if r["passed"])
     return {
         "suite": path.stem,
@@ -213,7 +322,14 @@ def run_suite_file(bundle: Bundle, settings: Settings, path: Path) -> dict[str, 
 
 def run_suites(bundle: Bundle, settings: Settings, suite: str = "all") -> dict[str, Any]:
     names = available_suites() if suite == "all" else [suite]
-    suites = [run_suite_file(bundle, settings, SUITES_DIR / f"{name}.yaml") for name in names]
+    paths = [SUITES_DIR / f"{name}.yaml" for name in names]
+    if suite == "all":
+        # A suite generated from another corpus is skipped rather than failed.
+        # Naming it explicitly still runs it, so `--suite conversation` against
+        # the seed bundle is a thing you can do on purpose.
+        served = bundle.root.name
+        paths = [p for p in paths if load_suite(p)[0] in ("", served)]
+    suites = [run_suite_file(bundle, settings, p) for p in paths]
     total = sum(s["total"] for s in suites)
     passed = sum(s["passed"] for s in suites)
     return {

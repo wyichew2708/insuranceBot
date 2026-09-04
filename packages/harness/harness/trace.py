@@ -42,9 +42,15 @@ class Candidate(BaseModel):
 class LoadedPage(BaseModel):
     page_id: str
     title: str = ""
-    via: str = "filter"  # filter | graph | index
+    via: str = "filter"  # filter | graph | graph:typed | graph:back | ask
     hop: int = 0
     chars: int = 0
+    #: Which typed edge produced this page — `exclusions`, `benefits`,
+    #: `claims`, `concept`, `ref`, `child`. Empty for a page the filter
+    #: admitted on its own score. `via` says the walk reached it; this says
+    #: what the walk was following, which is the half you need to tell a
+    #: guaranteed exclusion set from a lucky neighbour.
+    edge: str = ""
 
 
 class RagHit(BaseModel):
@@ -52,6 +58,14 @@ class RagHit(BaseModel):
     locator: str = ""
     score: float = 0.0
     excerpt: str = ""
+    #: Which retriever produced it: `lexical`, `dense`, or `both`. Empty on a
+    #: hit made before the raw index existed. Worth recording because the two
+    #: fail differently — a lexical-only hit on a question phrased in the
+    #: customer's words is usually the nearest neighbour rather than the
+    #: answer, and a dense-only hit is the case the words could never have
+    #: reached. Which of those a fallback is made of is the thing you want to
+    #: know when it goes wrong.
+    found_by: str = ""
 
 
 #: (stage name, "start" | "end", milliseconds). Called on the thread that

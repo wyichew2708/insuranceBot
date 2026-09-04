@@ -53,8 +53,13 @@ def test_alias_hit_outranks_bag_of_words(bundle: Bundle) -> None:
 def test_wiki_read_follows_the_graph(bundle: Bundle) -> None:
     trace = Trace()
     admitted = frontmatter_filter(bundle, "travel exclusions", make_session(), trace, 0.08)
-    pages = wiki_read(bundle, admitted, trace, Budget(), 5, TODAY)
-    assert any(p.via == "graph" for p in trace.loaded)
+    pages = wiki_read(bundle, admitted, trace, Budget(), 5, TODAY, "travel exclusions")
+    walked = [p for p in trace.loaded if p.via.startswith("graph")]
+    assert walked
+    # Every walked page says which edge produced it. `via` says the graph
+    # reached it; `edge` says what the graph was following, and only the second
+    # tells a guaranteed exclusion set from a lucky neighbour.
+    assert all(p.edge for p in walked)
     assert len(pages) <= 5
 
 
@@ -184,18 +189,20 @@ def test_typed_edges_are_followed_from_the_product_a_page_belongs_to(bundle: Bun
     parent reached no exclusions page at all, asserted coverage from the child,
     and was refused — three of six refusals in one simulation, each a product
     whose exclusions sat one hop away and unreachable."""
-    from api.retrieval import _product_root
+    from okf.graph import graph_for
 
+    graph = graph_for(bundle)
     child = bundle.get("product/general/travel/benefits")
     assert child is not None
-    owner = _product_root(bundle, child.id)
-    assert owner is not None and owner.id == "product/general/travel"
-    assert owner.frontmatter.links.exclusions
+    owner_id = graph.owner_of(bundle, child.id)
+    assert owner_id == "product/general/travel"
+    owner = bundle.get(owner_id)
+    assert owner is not None and owner.frontmatter.links.exclusions
 
-    # The root of a root is None — nothing to climb to.
-    assert _product_root(bundle, "product/general/travel") is None
-    assert _product_root(bundle, "concept/excess") is None
+    # The owner of a root is None — nothing to climb to.
+    assert graph.owner_of(bundle, "product/general/travel") is None
+    assert graph.owner_of(bundle, "concept/excess") is None
 
     trace, budget = Trace(question="q"), Budget()
-    loaded = wiki_read(bundle, [(child, 1.0)], trace, budget, limit=6, today=TODAY)
+    loaded = wiki_read(bundle, [(child, 1.0)], trace, budget, limit=6, today=TODAY, question="q")
     assert any(page.id.endswith("/exclusions") for page in loaded), [page.id for page in loaded]
