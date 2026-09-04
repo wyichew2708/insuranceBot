@@ -922,8 +922,10 @@ _COVER_SKIP_RE = re.compile(
 #: extractor flattened into prose ("Coverage | Resources | FAQs"), and a
 #: closure notice, which is a fact about the *shopfront* and not about cover.
 _COVER_NOISE_RE = re.compile(
-    r"\||thank you for your support|fully subscribed|privacy policy|terms (?:of use|and conditions|& conditions)"
-    r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in|i consent to|marketing consent"
+    r"\||thank you for your support|fully subscribed|privacy policy"
+    r"|terms (?:of use|and conditions|& conditions)"
+    r"|all rights reserved|cookie|read more|learn more|click here|sign up|log ?in"
+    r"|i consent to|marketing consent"
     r"|^- |leave your contacts|by submitting|buy online|buy now|promo code|launches|available for signup"
     r"|^\d+ in \d+|get in touch|it is usually detrimental|underwritten by|protection scheme|protected under"
     r"|\bpromo\b|% off|promotion"
@@ -1335,7 +1337,10 @@ def emit_product(
         candidates = [snapshot.intro] + [p for s in usable for p in s.paragraphs]
         anchors = ["body"] + [s.anchor for s in usable for _ in s.paragraphs]
 
-        for text, anchor in zip(candidates, anchors):
+        # `strict=True`: both lists are built as one entry for the intro plus
+        # one per paragraph of `usable`, so a length mismatch is a bug in that
+        # construction rather than something to truncate away silently.
+        for text, anchor in zip(candidates, anchors, strict=True):
             for sentence in _sentences(text):
                 if not _describes_plan(sentence, names):
                     continue

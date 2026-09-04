@@ -119,7 +119,12 @@ def detect(
         findings.append("personal data echoed")
     if "[unavailable]" in text or "{{" in text:
         findings.append("unresolved placeholder shown")
-    if not env.delivered and a.handoff and ask.get("named_by") in ("title", "alias") and ask.get("intent") == "unknown":
+    if (
+        not env.delivered
+        and a.handoff
+        and ask.get("named_by") in ("title", "alias")
+        and ask.get("intent") == "unknown"
+    ):
         findings.append("bare product name handed off")
     return findings
 
@@ -129,14 +134,20 @@ def run(bundle: Bundle, settings: Settings, live: bool) -> tuple[list[dict[str, 
     results: list[dict[str, object]] = []
     turns_total = 0
     for name, script in CONVERSATIONS:
-        session = Session(session_id=f"sim-{name}-{int(time.time())}", channel=Channel("channel/direct"), auth_level=AuthLevel("L0"))
+        session = Session(
+            session_id=f"sim-{name}-{int(time.time())}",
+            channel=Channel("channel/direct"),
+            auth_level=AuthLevel("L0"),
+        )
         history: list[str] = []
         last_chips: list[str] = []
         prior_product: str | None = None
         for raw in script:
             turn = last_chips[0] if raw == ">chip" and last_chips else raw
             if raw == ">chip" and not last_chips:
-                results.append({"conversation": name, "turn": raw, "reply": "", "findings": ["no chip to tap"]})
+                results.append(
+                    {"conversation": name, "turn": raw, "reply": "", "findings": ["no chip to tap"]}
+                )
                 continue
             t0 = time.perf_counter()
             env, trace = answer_question(bundle, turn, session, settings, history=history)
@@ -165,7 +176,8 @@ def write_report(path: Path, results: list[dict[str, object]], turns: int, live:
     lines = [
         "# Conversation simulation",
         "",
-        f"- build `{head}` · {'live model' if live else 'deterministic'} · {len(CONVERSATIONS)} conversations, {turns} turns",
+        f"- build `{head}` · {'live model' if live else 'deterministic'} · "
+        f"{len(CONVERSATIONS)} conversations, {turns} turns",
         f"- **{len(results)} turns with a finding**",
         "",
     ]
