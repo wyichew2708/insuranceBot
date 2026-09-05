@@ -19,12 +19,15 @@ from okf.sources import UNKNOWN, may_support, source_class
 
 from harness.ask import Ask, asked_benefits
 from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
-from harness.intent import REQUIREMENTS, classify
+from harness.intent import OUT_OF_CORPUS, REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
 # Currency amounts, percentages, quantities with a time unit, or any bare
 # multi-digit number. A hallucinated "4 hours" must be caught as surely as a
 # hallucinated limit.
+#: Singapore's ambulance and police numbers, bound by construction.
+EMERGENCY_NUMBERS = ("995", "999")
+
 NUMERIC_SPAN_RE = re.compile(
     r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)"
     r"|(?:\b\d+(?:\.\d+)?\s?%)"
@@ -54,7 +57,17 @@ ADVICE_SEEKING_RE = re.compile(
     # the best one for me, i am 34 with two kids" — which is the direction that
     # makes a request *more* clearly regulated advice, not less.
     r"best (?:plan|policy|one|option|cover|product|choice)\s+for\s+(?:me|my|us)|"
-    r"is (?:this|it) suitable|worth (?:it|buying)|better (?:for|than) me)\b",
+    r"is (?:this|it) suitable|worth (?:it|buying)|better (?:for|than) me|"
+    # "which insurance is suitable for me", "the cheapest plan I should get",
+    # "how much life insurance do I need": a recommendation asked for by
+    # its outcome rather than by the verb.
+    r"which (?:insurance|plan|policy|product|cover|one) (?:is|would be) "
+    r"(?:suitable|right|best|good) for (?:me|us|my)|"
+    r"(?:cheapest|best|right) (?:plan|policy|one|cover) (?:i|we) should|"
+    r"how much (?:\w+ )?(?:insurance|cover|coverage) do (?:i|we) need|"
+    r"what (?:insurance|cover) does my \w+ need|most popular (?:plans?|products?|policies)|"
+    # Cover for someone else's circumstances is a recommendation about them.
+    r"insurance for my (?:elderly )?parents)\b",
     re.IGNORECASE,
 )
 
@@ -203,6 +216,64 @@ def gate_reference_integrity(ctx: GateContext) -> GateResult:
 # --- 2. numeric binding -----------------------------------------------------
 
 
+def unbound_spans(ctx: GateContext) -> list[str]:
+    """Every numeric span in the answer that no bound figure accounts for.
+
+    The orphan scan of the numeric-binding gate, on its own so a caller can
+    do something better than refuse: drop the sentences that carry an
+    unbound number and deliver the rest (the product owner's rule, v2.5).
+    """
+    bound_text = [f.text for f in ctx.answer.figures if f.is_bound]
+    # Contact details and deep links are substituted by the renderer from the
+    # channel binding, not produced by the model, so digits inside them are
+    # bound by construction (§C.4).
+    render = ctx.answer.channel_render
+    if render is not None:
+        bound_text.extend(v for v in (render.hotline, render.landing) if v)
+        bound_text.extend(render.surfaces)
+        # Every front door of the rendered channel, from the registry. A route
+        # with two addresses has two contact numbers, and both are structural
+        # values the renderer substitutes — not figures the model invented.
+        # With no route in the session every route is on offer, so every
+        # route's contacts are renderer-substituted too.
+        specs = ALL_CHANNELS if render.channel is Channel.unknown else [spec_for(render.channel)]
+        for spec in specs:
+            if spec is not None:
+                bound_text.extend(spec.contact_values())
+    bound_text.extend(_channel_values(ctx))
+    # The jurisdiction's emergency numbers. The medical-emergency reply says
+    # "call 995"; that is a constant of Singapore, not a figure read from a
+    # document, and it must never be trimmed or refused.
+    bound_text.extend(EMERGENCY_NUMBERS)
+    # A benefit the customer named by its number — "section 99", "section 6"
+    # — is an identifier the answer may echo ("the pages do not address
+    # section 99"), not a figure it asserts. Only the codes the question
+    # itself named, read the way the answerability gate reads them.
+    bound_text.extend(code.replace("_", " ") for code in _asked_benefits(ctx))
+    # The title of a page the answer cites. A product directory answers "what
+    # life products do you have" by naming products, and one of them is called
+    # "3 Plus Critical Illness" — the digits are the product's name, read from
+    # the frontmatter of a page this answer cites, not a figure it fetched.
+    bound_text.extend(
+        page.frontmatter.title
+        for page in (ctx.bundle.get(c.source_id) for c in ctx.answer.claims)
+        if page is not None
+    )
+
+    orphans: list[str] = []
+    for match in NUMERIC_SPAN_RE.finditer(ctx.answer.answer):
+        # A number glued to a word by a hyphen is a model code, not a figure:
+        # "HEPA-13", "COVID-19". A promotion for an air purifier put "13" in
+        # front of this gate as an unbound figure.
+        start = match.start()
+        if start >= 2 and ctx.answer.answer[start - 1] == "-" and ctx.answer.answer[start - 2].isalnum():
+            continue
+        span = match.group().strip()
+        if not any(span in text or text in span for text in bound_text):
+            orphans.append(span)
+    return orphans
+
+
 def gate_numeric_binding(ctx: GateContext) -> GateResult:
     name = "numeric-binding"
     unbound = [f.label for f in ctx.answer.figures if not f.is_bound]
@@ -253,45 +324,7 @@ def gate_numeric_binding(ctx: GateContext) -> GateResult:
                 detail=f"{figure.label!r} cites expired promotion {figure.page_ref!r}",
             )
 
-    bound_text = [f.text for f in ctx.answer.figures if f.is_bound]
-    # Contact details and deep links are substituted by the renderer from the
-    # channel binding, not produced by the model, so digits inside them are
-    # bound by construction (§C.4).
-    render = ctx.answer.channel_render
-    if render is not None:
-        bound_text.extend(v for v in (render.hotline, render.landing) if v)
-        bound_text.extend(render.surfaces)
-        # Every front door of the rendered channel, from the registry. A route
-        # with two addresses has two contact numbers, and both are structural
-        # values the renderer substitutes — not figures the model invented.
-        # With no route in the session every route is on offer, so every
-        # route's contacts are renderer-substituted too.
-        specs = ALL_CHANNELS if render.channel is Channel.unknown else [spec_for(render.channel)]
-        for spec in specs:
-            if spec is not None:
-                bound_text.extend(spec.contact_values())
-    bound_text.extend(_channel_values(ctx))
-    # The title of a page the answer cites. A product directory answers "what
-    # life products do you have" by naming products, and one of them is called
-    # "3 Plus Critical Illness" — the digits are the product's name, read from
-    # the frontmatter of a page this answer cites, not a figure it fetched.
-    bound_text.extend(
-        page.frontmatter.title
-        for page in (ctx.bundle.get(c.source_id) for c in ctx.answer.claims)
-        if page is not None
-    )
-
-    orphans: list[str] = []
-    for match in NUMERIC_SPAN_RE.finditer(ctx.answer.answer):
-        # A number glued to a word by a hyphen is a model code, not a figure:
-        # "HEPA-13", "COVID-19". A promotion for an air purifier put "13" in
-        # front of this gate as an unbound figure.
-        start = match.start()
-        if start >= 2 and ctx.answer.answer[start - 1] == "-" and ctx.answer.answer[start - 2].isalnum():
-            continue
-        span = match.group().strip()
-        if not any(span in text or text in span for text in bound_text):
-            orphans.append(span)
+    orphans = unbound_spans(ctx)
     if orphans:
         return GateResult(
             gate=name,
@@ -949,8 +982,24 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         # Refusing it for showing no limit would punish the one behaviour here
         # that cannot mislead anybody.
         return GateResult(gate=name, verdict=Verdict.skip, detail="asked which product was meant")
+    if ctx.answer.guidance:
+        # Says where the answer is, claims nothing about what it is. There is
+        # no requirement to hold it to, and refusing it would send the
+        # customer back to a handoff that told them less.
+        return GateResult(gate=name, verdict=Verdict.skip, detail="directed to where the answer is")
 
     intent = ctx.ask.intent if ctx.ask is not None else classify(ctx.question)
+    # Not "we did not find it" — "it is not in here to find". A claim's
+    # progress, a refund date, a password: no edition of this corpus carries
+    # them, so an answer that appears to have one was written from something
+    # adjacent. The pipeline routes these before retrieval; this is the
+    # guarantee for a draft that arrived by any other path.
+    if intent in OUT_OF_CORPUS:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail=f"{intent.value}: no policy document can settle this",
+        )
     requirement = REQUIREMENTS.get(intent)
     if requirement is None or not requirement.checkable:
         return GateResult(gate=name, verdict=Verdict.skip, detail=f"{intent.value}: unconstrained")

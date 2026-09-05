@@ -11,15 +11,11 @@
       ]
     },
     "situational-phrasing-does-not-reach-the-benefit": {
-      "note": "Cut from 13 to 7 by the benefit vocabulary in okf/vocabulary.yaml, which bridges 'my place was broken into' to `contents`. What remains are phrasings no authored term covers yet — the file is corpus content and grows by being edited.",
-      "count": 7,
+      "note": "Cut from 13 to 7 by the benefit vocabulary in okf/vocabulary.yaml, which bridges 'my place was broken into' to `contents`. What remains are phrasings no authored term covers yet — the file is corpus content and grows by being edited. Cut again to 3 in v2.6: the incident lexicon in api.router reads 'the airline lost my suitcase' as a travel-line incident, so the four baggage-loss scenarios now reach the benefit. The three medical-expenses phrasings remain.",
+      "count": 3,
       "cases": [
-        "fig-travel-2026-1-all-baggage-loss-per-item-limit-scenario",
-        "fig-travel-2026-1-tier-1-baggage-loss-limit-scenario",
         "fig-travel-2026-1-tier-1-medical-expenses-limit-scenario",
-        "fig-travel-2026-1-tier-2-baggage-loss-limit-scenario",
         "fig-travel-2026-1-tier-2-medical-expenses-limit-scenario",
-        "fig-travel-2026-1-tier-3-baggage-loss-limit-scenario",
         "fig-travel-2026-1-tier-3-medical-expenses-limit-scenario"
       ]
     },

@@ -23,7 +23,7 @@ from harness import Channel, ChannelRender, Claim, Figure, GroundedAnswer, Sessi
 # unbound and is refused — so there is one, and this is the one.
 from harness.ask import Ask, ask_about, asked_benefits
 from harness.gates import NUMERIC_SPAN_RE
-from harness.intent import REQUIREMENTS, Intent, classify
+from harness.intent import REQUIREMENTS, Intent, classify, classify_topic
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.page import Lifecycle
 from okf.sources import OFFER_QUESTION_RE
@@ -658,7 +658,13 @@ def faq_pick(pages: list[Page], question: str, intent: Intent, product: Page) ->
     if not asked:
         return None
     entries = [(h, b) for h, b in split_sections(faq) if h and b.strip()]
-    same_intent_count = sum(1 for h, _ in entries if intent is not Intent.unknown and classify(h) is intent)
+    # Headings are read as topics, not as questions. `classify` would call a
+    # heading about paying the renewal premium `payment` — an intent that
+    # means "no document has this" — and this count would lose it, which
+    # changes how strict the match below is. A heading is never out of corpus.
+    same_intent_count = sum(
+        1 for h, _ in entries if intent is not Intent.unknown and classify_topic(h) is intent
+    )
     scored: list[tuple[float, str, str]] = []
     for heading, body in entries:
         entry = _faq_words(heading, product_words)
@@ -672,7 +678,7 @@ def faq_pick(pages: list[Page], question: str, intent: Intent, product: Page) ->
             if any(a == e or difflib.SequenceMatcher(None, a, e).ratio() >= 0.85 for e in entry)
         )
         overlap = shared / len(asked | entry) if asked | entry else 0.0
-        same_intent = intent is not Intent.unknown and classify(heading) is intent
+        same_intent = intent is not Intent.unknown and classify_topic(heading) is intent
         score = overlap + (0.25 if same_intent else 0.0)
         # The one FAQ entry with the customer's intent is the customer's
         # question even when the words differ: "What does it not cover?" is
