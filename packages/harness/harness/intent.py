@@ -199,7 +199,9 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # real page, and exactly what the sender of that email wanted.
             r"|\bi (?:got|received|have had|had) (?:an?|this|some) "
             r"(?:e-?mail|sms|message|text|call|whatsapp|letter|otp)\b"
-            r"|\bunauthorised|\bsomeone (?:used|accessed|hacked)\b",
+            r"|\bunauthorised|\bsomeone (?:used|accessed|hacked)\b"
+            r"|\bclaiming to be\b"
+            r"|\bsomeone (?:called|contacted|emailed|messaged|texted) me\b",
             re.I,
         ),
     ),
@@ -225,7 +227,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bhow (?:long|much longer) .{0,30}\b(?:take|takes|until|before) .{0,20}"
             r"(?:pay|paid|payout|settle|approv|process)"
             r"|\b(?:when|how soon) will .{0,30}\b(?:be )?(?:paid|pay out|payout|settled|approved|processed)\b"
-            r"|\b(?:has|have) (?:my|the) (?:claim|application) been\b"
+            r"|\b(?:has|have) (?:my|the) (?:claim|application|refund|payment)[\w\s]{0,14}?been\b"
+            r"|\bwhen will (?:my|the) [\w\s]{0,20}?reach (?:my|the) bank\b"
             r"|\b(?:is|are) (?:my|the) (?:claim|application|refund|payout|policy)"
             r" (?:approved|processed|ready|done|settled|paid|through)\b"
             r"|\bmy claim (?:was|is|has been) (?:rejected|declined|denied|approved|pending)\b"
@@ -267,7 +270,21 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # traded a good answer for a link. The forms that belong here name
             # a *schedule* or a *method*, and those are matched above.
             r"|\bpayment (?:method|mode|option|plan)s?\b"
-            r"|\bhow (?:do|can) i pay (?:my|the) (?:premium|policy|bill|instal?ment)\b"
+            r"|\b(?:how |can |could |may )?i pay (?:my|the) [\w\s]{0,16}?"
+            r"(?:premium|policy|bill|instal?ment)s?\b"
+            # A method, whatever qualifier precedes it: "by credit card",
+            # "with my Visa". The method word is what makes it an account
+            # action; "pay for Tiq Travel Insurance" names no method and is a
+            # question about buying, which the product page answers.
+            r"|\b(?:can|could|may|do) i pay (?:by|via|with|using)\b"
+            r"|\bchange how often i pay\b|\bhow often i pay\b"
+            r"|\b(?:next )?premium (?:payment )?(?:is )?due\b"
+            r"|\breceipt for (?:my |the )?(?:premium|payment)\b"
+            # The customer's own money moving, or failing to
+            r"|\bmy (?:payment|card|giro|direct debit)\b[\w\s]{0,16}"
+            r"(?:fail|declin|bounce|reject|not going through)"
+            r"|\bi made a payment\b|\bhow do i get a refund\b"
+            r"|\b(?:why )?have ?n.?t i received my refund\b"
             r"|\binstal?ments?\b|\bgiro\b|\bpaynow\b"
             r"|\b(?:use|pay with|pay using) (?:my )?(?:cpf|medisave|srs)\b"
             # The refund half, and it is deliberately narrow. "What do I get

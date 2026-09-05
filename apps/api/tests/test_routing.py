@@ -256,3 +256,45 @@ def test_paying_for_a_plan_is_not_paying_a_premium() -> None:
         "when will the refund reach me?",
     ):
         assert classify(account_action) is Intent.payment, account_action
+
+
+@pytest.mark.parametrize(
+    ("question", "intent"),
+    [
+        # The account-state forms customers actually type, taken from the
+        # golden dataset's own handoff cases rather than invented here.
+        ("Can I pay by credit card?", Intent.payment),
+        ("Can I pay my overdue premiums?", Intent.payment),
+        ("My payment failed", Intent.payment),
+        ("My card was declined", Intent.payment),
+        ("Can I change how often I pay my premium?", Intent.payment),
+        ("When is my next premium payment due?", Intent.payment),
+        ("Can I get a receipt for my premium payment?", Intent.payment),
+        ("How do I get a refund?", Intent.payment),
+        ("Has my claim payment been processed?", Intent.claim_status),
+        ("When will my claim payment reach my bank account?", Intent.claim_status),
+        ("Someone called me claiming to be your agent and asked for payment", Intent.contact),
+    ],
+)
+def test_the_account_state_questions_route(question: str, intent: Intent) -> None:
+    assert classify(question) is intent
+    assert intent in OUT_OF_CORPUS
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        # ...and the payment questions a policy document *does* answer. Each
+        # of these is a `product_fact` case in the golden dataset, and routing
+        # any of them would trade a real answer for a link.
+        "How do I pay for Tiq Travel Insurance?",
+        "Is there a grace period for paying premiums on Term Life Insurance?",
+        "What happens to Term Life Insurance if I stop paying premiums?",
+        "Why do I have to pay an excess on Private Car Insurance?",
+        "Do I have to pay the hospital first and claim later under Tiq Personal Accident?",
+        "What benefits does Cancer Insurance pay?",
+        "What is the maximum Cancer Insurance will pay out?",
+    ],
+)
+def test_a_payment_question_the_corpus_answers_is_never_routed(question: str) -> None:
+    assert classify(question) not in OUT_OF_CORPUS, question
