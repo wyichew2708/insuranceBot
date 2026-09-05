@@ -122,3 +122,76 @@ it is.
 
 Acceptance: every case-level loss against 1333/1711 is either one of the 20
 above or is explained, and `product_fact` does not fall.
+
+## Measured
+
+Full conversation suite on `okf-real`, deterministic composer, 1,711 cases,
+against v2.3.1's 1333/1711.
+
+```
+                                v2.3.1              v2.4
+overall                     1333/1711  77.9%    1341/1711  78.4%
+  whole conversations        198/355   55.8%     199/355   56.1%
+  turns                     1180/1373  85.9%    1181/1373  86.0%
+  product_fact               974/1092  89.2%     974/1092  89.2%
+  directory                   14/19    73.7%      19/19   100.0%
+  handoff                     96/179   53.6%      98/179   54.7%
+  discover journey           101/112   90.2%     107/112   95.5%
+owed a handoff, did not give one    87                 85
+```
+
+Case by case: **8 gained, 0 lost.** The seed gate is unchanged at 97/130,
+golden 9/9, with a failing set byte-identical to the base branch's. 892
+tests, mypy and ruff clean.
+
+By router layer, on the 1,711 cases:
+
+```
+layer 1   product 1149/1464   account_state 124/175   advice 48/48
+          browse 15/18        smalltalk 4/4           entity 1/1   emergency 0/1
+layer 2   named 934/1054      carried 174/278         n/a 192/247
+          none 31/112         inferred 5/14           ambiguous 5/6
+layer 3   application 76/77   exclusions 127/132      coverage 252/266
+          eligibility 48/59   general 438/547         claims 69/96
+          conditions 79/141   limits 12/22            price 36/79
+          documents 10/43
+```
+
+Layer 2 is the useful one. 1,346 of the 1,711 cases ran with retrieval scoped to one
+product (named, carried or inferred) and lost nothing to the scope. The 112
+`none` cases — no product named, nothing carried, and the corpus did not
+settle it — pass at 27.7%, and that is where the remaining failures that are
+about *which product* live; layer 3 says the rest are about content:
+`documents` 10/43 and `price` 36/79 are the two handlers whose pages do not
+exist for most products.
+
+### What the plan got wrong
+
+The plan predicted that the twenty situation-opener cases ("the airline lost
+my suitcase in Tokyo" → must cite `travel-insurance`) would be asked which
+travel product and fail as written. They pass. The rule as built defers an
+unnamed product to the corpus first and asks only when the corpus does not
+settle it — and for those openers it does: one product's pages load and
+nothing ties. That is the right rule, and it is why the change lost nothing;
+the prediction assumed asking *before* reading, which would have been asking
+where the answer was already clear.
+
+Three things the first full run found and the change now includes:
+
+- **A category typed as an alias.** "travel insurance" is one product's alias
+  and four products' category. The name index resolved it as a name, so the
+  customer who typed the category was answered about the flagship without
+  being asked. A phrase that is one head word plus generic words and sits in
+  two or more product titles is now a guess with those products as options —
+  and a *need* for it ("I need travel insurance") is shopping, listed by the
+  directory the way "I need life insurance" always was.
+- **A tie on generic words.** "how much can I claim for a lost bag?" tied
+  Term Life, Whole Life and Maid a hair over the confidence floor on "how
+  much", "claim" and "lost", with "bag" — the one word that says what the
+  question is about — matched by none of them. A lexical tie is now named as
+  a choice only when some tied product carries the question's most
+  informative term (`tie_on_subject`); otherwise the turn is asked about
+  openly.
+- **Counts in the overview.** The lines overview carried product counts and
+  the numeric-binding gate blocked every one of them as an unbound figure.
+  The counts are gone; that alone was 37 buy-journey cases in an interim run.

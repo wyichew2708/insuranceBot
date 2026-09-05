@@ -1,61 +1,63 @@
 ### Measured, today
 
-Two columns: the v2.3 build that produced this dataset's first score, and the
-same suite after the routing change (v2.3.1) that its findings prompted.
+Three columns: the v2.3 build that produced this dataset's first score, the
+same suite after the routing change (v2.3.1) that its findings prompted, and
+after v2.4 — retrieval scoped to the resolved product, the three-layer router,
+and asking when the product is unsure (`DESIGN-v2.4.md`).
 
 ```
-Conversation golden dataset          v2.3            v2.3.1 (routing)
+Conversation golden dataset          v2.3         v2.3.1 (routing)     v2.4 (scoped)  
 
-overall                        1209/1711  70.7%    1333/1711   77.9%
-  whole conversations           132/355   37.2%     198/355    55.8%
-  turns                         994/1373  72.4%    1180/1373   85.9%
-  context-dependent turns       638/810   78.8%     705/810    87.0%
+  overall                       1209/1711  70.7%   1333/1711  77.9%   1341/1711  78.4%
+    whole conversations          132/355   37.2%    198/355   55.8%    199/355   56.1%
+    turns                        994/1373  72.4%   1180/1373  85.9%   1181/1373  86.0%
+    context-dependent turns      638/810   78.8%    705/810   87.0%    705/810   87.0%
 
 turns by kind
-  pivot                          18/165   10.9%     124/165    75.2%
-  switch                          1/4     25.0%       1/4      25.0%
-  escalate                        1/3     33.3%       3/3     100.0%
-  attack                          1/2     50.0%       1/2      50.0%
-  drill                         219/304   72.0%     291/304    95.7%
-  opener                        270/355   76.1%     275/355    77.5%
-  repeat                          7/9     77.8%       7/9      77.8%
-  ellipsis                      395/448   88.2%     396/448    88.4%
-  advice                         39/40    97.5%      39/40     97.5%
-  pick / recover / correction              100%                 100%
+    switch                         1/4     25.0%      1/4     25.0%      1/4     25.0%
+    attack                         1/2     50.0%      1/2     50.0%      1/2     50.0%
+    pivot                         18/165   10.9%    124/165   75.2%    124/165   75.2%
+    opener                       270/355   76.1%    275/355   77.5%    276/355   77.7%
+    repeat                         7/9     77.8%      7/9     77.8%      7/9     77.8%
+    ellipsis                     395/448   88.2%    396/448   88.4%    396/448   88.4%
+    drill                        219/304   72.0%    291/304   95.7%    291/304   95.7%
+    advice                        39/40    97.5%     39/40    97.5%     39/40    97.5%
+    escalate                       1/3     33.3%      3/3    100.0%      3/3    100.0%
+    correction / recover / closer / pick             100%               100%               100%
 
 by contract
-  handoff                        43/179   24.0%      96/179    53.6%
-  out_of_scope                    3/12    25.0%       8/12     66.7%
-  conversation                  132/355   37.2%     198/355    55.8%
-  entity_fact                     2/4     50.0%       2/4      50.0%
-  advice_boundary                11/15    73.3%      11/15     73.3%
-  clarify                        11/15    73.3%      11/15     73.3%
-  directory                      14/19    73.7%      14/19     73.7%
-  product_fact                  974/1092  89.2%     974/1092   89.2%
-  corpus_fact                    19/20    95.0%      19/20     95.0%
+    entity_fact                    2/4     50.0%      2/4     50.0%      2/4     50.0%
+    handoff                       43/179   24.0%     96/179   53.6%     98/179   54.7%
+    conversation                 132/355   37.2%    198/355   55.8%    199/355   56.1%
+    out_of_scope                   3/12    25.0%      8/12    66.7%      8/12    66.7%
+    advice_boundary               11/15    73.3%     11/15    73.3%     11/15    73.3%
+    clarify                       11/15    73.3%     11/15    73.3%     11/15    73.3%
+    product_fact                 974/1092  89.2%    974/1092  89.2%    974/1092  89.2%
+    corpus_fact                   19/20    95.0%     19/20    95.0%     19/20    95.0%
+    directory                     14/19    73.7%     14/19    73.7%     19/19   100.0%
 
 by journey
-  pay                             3/23    13.0%      18/23     78.3%
-  service                         7/26    26.9%      18/26     69.2%
-  quote                          36/125   28.8%      71/125    56.8%
-  support                        18/57    31.6%      32/57     56.1%
-  cancel                         62/116   53.4%      68/116    58.6%
-  renew                          34/60    56.7%      35/60     58.3%
-  claim                         249/357   69.7%     286/357    80.1%
-  apply                          43/54    79.6%      46/54     85.2%
-  policy                        405/492   82.3%     406/492    82.5%
-  eligibility                   199/231   86.1%     200/231    86.6%
-  evaluate                       52/58    89.7%      52/58     89.7%
-  discover                      101/112   90.2%     101/112    90.2%
+    support                       18/57    31.6%     32/57    56.1%     32/57    56.1%
+    quote                         36/125   28.8%     71/125   56.8%     71/125   56.8%
+    renew                         34/60    56.7%     35/60    58.3%     35/60    58.3%
+    cancel                        62/116   53.4%     68/116   58.6%     69/116   59.5%
+    service                        7/26    26.9%     18/26    69.2%     19/26    73.1%
+    pay                            3/23    13.0%     18/23    78.3%     18/23    78.3%
+    claim                        249/357   69.7%    286/357   80.1%    286/357   80.1%
+    policy                       405/492   82.3%    406/492   82.5%    406/492   82.5%
+    apply                         43/54    79.6%     46/54    85.2%     46/54    85.2%
+    eligibility                  199/231   86.1%    200/231   86.6%    200/231   86.6%
+    evaluate                      52/58    89.7%     52/58    89.7%     52/58    89.7%
+    discover                     101/112   90.2%    101/112   90.2%    107/112   95.5%
 
-owed a handoff and did not give one         145                  87
+owed a handoff and did not give one          145                 87                 85
   ANSWERED — a substantive reply it could not support
-                                             82                  51
-  asked which product instead of handing off  62                  35
-  blocked by a gate rather than handed off     1                   1
+                                              82                 51                 50
+  asked which product instead of handing off  62                 35                 33
+  blocked by a gate rather than handed off     1                  1                  2
 ```
 
-Case by case: **124 gained, 0 lost.** An earlier cut of this branch lost three
+v2.3.1 against v2.3, case by case: **124 gained, 0 lost.** An earlier cut of this branch lost three
 cancel/renew turns on Cancer Insurance, and the first explanation offered for
 them — order-dependence in the batch — was wrong. Every "isolation" replay
 behind that claim had silently run against the seed bundle, which has no
@@ -70,6 +72,27 @@ which agrees with the pre-split classifier on all 467 FAQ headings in the
 corpus, and the three return base's answers. The suite itself is deterministic:
 run forwards and reversed it produces byte-identical answers on all 1,711
 cases.
+
+**v2.4 against v2.3.1: 8 gained, 0 lost.** Every gain is one of two things.
+Five are directory turns ("what insurance products do you offer?", "I need
+life insurance") that were previously answered with a two-product coin toss
+dressed as a clarifying question and now get the catalogue's lines or the
+line's products. Three are turns that named no product and asked something
+only a product page could settle ("has my cancellation gone through?"): the
+router deferred the product to the corpus, the corpus settled on one, retrieval
+was scoped to it, it held nothing on the point, and the turn was handed off
+instead of answered from whichever page sorted first. Nothing lost means the
+scoping — 1,346 of the 1,711 cases now retrieve from one product's pages and
+documents only — cost no answer the wider search had been getting right. The
+class of turn that is asked about rather than guessed grew where the plan said
+it would (a *question* about a bare category, "does travel insurance cover
+skiing?") and not where it did not: the situation openers ("the airline lost
+my suitcase") resolve to one product on the corpus alone, and the rule is to
+ask only when the corpus does not settle it. What did not move is the product
+fact rate, 974/1092, which is now bounded by content — the 31 products without
+benefit tables, the wordings that were never supplied — and not by retrieval
+picking the wrong product. The seed gate is unchanged at 97/130 with a failing
+set byte-identical to the base branch's.
 
 ### Reading the numbers
 
