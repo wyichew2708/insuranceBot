@@ -257,10 +257,17 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.payment,
         re.compile(
-            r"\b(?:pay|paying|payment)\s+(?:it\s+)?(?:by|via|with|using|through|in)\s+"
+            r"\b(?:pay|paying|payment)\s+(?:for\s+)?(?:it\s+|this\s+|that\s+)?"
+            r"(?:by|via|with|using|through|in)\s+"
             r"(?:instal?ments?|monthly|cash|card|giro|paynow|nets|medisave|cpf|srs|cheque)\b"
             r"|\bpay (?:it )?(?:monthly|yearly|annually|quarterly|in instal?ments?)\b"
-            r"|\bcan i pay\b|\bhow (?:do|can) i pay\b|\bpayment (?:method|mode|option|plan)s?\b"
+            # NOT a bare "how do I pay". "How do I pay for Tiq Travel
+            # Insurance?" is a question about buying a plan, the product page
+            # answers it, and the dataset expects it answered — routing it
+            # traded a good answer for a link. The forms that belong here name
+            # a *schedule* or a *method*, and those are matched above.
+            r"|\bpayment (?:method|mode|option|plan)s?\b"
+            r"|\bhow (?:do|can) i pay (?:my|the) (?:premium|policy|bill|instal?ment)\b"
             r"|\binstal?ments?\b|\bgiro\b|\bpaynow\b"
             r"|\b(?:use|pay with|pay using) (?:my )?(?:cpf|medisave|srs)\b"
             # The refund half, and it is deliberately narrow. "What do I get

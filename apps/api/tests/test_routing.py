@@ -119,6 +119,11 @@ def test_the_question_is_classified_as_the_thing_it_is(question: str, intent: In
         # questions into refusals. The object is the whole difference.
         ("how much?", Intent.unknown),
         ("how much", Intent.unknown),
+        # "How do I pay for X" is a question about buying a plan and the
+        # product page answers it. Only a *schedule* or a *method* is an
+        # account action. An early cut routed this and traded a good answer
+        # for a link.
+        ("How do I pay for Tiq Travel Insurance?", Intent.unknown),
     ],
 )
 def test_a_question_the_corpus_answers_is_not_routed_away(question: str, intent: Intent) -> None:
@@ -237,3 +242,17 @@ def test_the_object_is_what_makes_how_much_a_price_question() -> None:
     assert classify("just the price then") is Intent.price
     assert classify("how much?") is not Intent.price
     assert classify("how much can I claim?") is Intent.limit
+
+
+def test_paying_for_a_plan_is_not_paying_a_premium() -> None:
+    """One is how you buy it — the product page answers that. The other is an
+    instruction to a ledger this system cannot see."""
+    assert classify("How do I pay for Tiq Travel Insurance?") is not Intent.payment
+    for account_action in (
+        "how do I pay my premium",
+        "can I pay monthly?",
+        "can I pay for it with MediSave?",
+        "what payment methods do you take?",
+        "when will the refund reach me?",
+    ):
+        assert classify(account_action) is Intent.payment, account_action
