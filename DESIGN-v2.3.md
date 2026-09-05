@@ -205,3 +205,139 @@ against injected hits, and unmeasured on real embeddings.
   fallback, and that trade needs a measurement rather than a coefficient.
 - Everything still open from v2.2: the 20 conflict tickets, the LLM WIKI
   drafts the cross-check left unentailed, and the GPU deployment.
+
+---
+
+# v2.3.1 — Routing: a refusal with somewhere to go
+
+The measurement above produced one finding large enough to act on before
+anything else. Of 379 failing turns on the golden conversation dataset, **237
+are a single mode**: a question no policy document can answer, answered anyway
+from whichever product page retrieval was holding.
+
+| the customer said | after | the bot answered with |
+|---|---|---|
+| *"where is my claim now?"* | four turns on how to claim | the claim-notification clause |
+| *"when will the refund reach me?"* | cancelling a policy | the terms of a 2024 promotion |
+| *"can I pay monthly?"* | two turns on a CI plan | the S$20,000 death benefit clause |
+| *"will the premium be higher?"* | a 72-year-old's cover | the leisure scuba diving list |
+| *"I got an email asking me to confirm my policy details"* | — | *"Please log in to TiqConnect to update your details"* |
+
+The last one is the argument. Every gate passed it: the sentence is a faithful
+quotation of a real, approved, dated page. It is also precisely the instruction
+the sender of a phishing email wants a customer to follow. **Groundedness is not
+aboutness**, and no provenance check will ever catch this class — the answer's
+provenance is impeccable and its subject is wrong.
+
+## Why it happens
+
+`classify` had no reading for these questions, so they fell to
+`Intent.unknown`, which `gate_answerability` documents as *unconstrained* and
+passes on purpose. Measured on the base:
+
+```
+unknown   where is my claim now?          unknown   can I pay monthly?
+unknown   when will the refund reach me?  unknown   I moved house last week
+unknown   how much is it?                 unknown   is this email really from you?
+claim     what is my claim status         ← worse: read as a *procedure* question
+```
+
+`how much is it?` unclassified is the largest single line in the failure table
+— 78 turns. Asked cold it names no product and the bot has little to say; asked
+on turn three it has a product in hand and answers from its pages. Context
+turns a shrug into a wrong answer, which is why the single-turn suite never
+saw this.
+
+## What changed
+
+**A refusal is not the fix; a refusal with a destination is.** "I'm passing you
+to a colleague" is a dead end — the customer cannot act on it and has no reason
+to believe a rephrasing will not work. So the five intents split out of
+`unknown` are refused *and routed*.
+
+### 1. Five intents the corpus can never settle — `harness.intent`
+
+`claim_status`, `servicing`, `payment`, `account`, `contact`, collected in
+`OUT_OF_CORPUS`. The distinction they draw is not a confidence threshold. Every
+other intent is a question about a **product**, and a better corpus would
+answer it. These are questions about a **customer** — their claim, their money,
+their account, their need for a person — and no edition of any policy document
+has ever contained the answer.
+
+Each pattern sits in front of the one that used to swallow it. `claim_status`
+precedes `claim`, whose own pattern lists `claim status`. `payment` precedes
+`limit`, which matched *"how much will I get back"* on the word `get`.
+
+### 2. Routed before retrieval — `api.route`, tier 1
+
+An out-of-corpus turn never enters retrieval: no page budget, no model call, no
+eight gates to establish what the intent already settled. It is answered from
+the registry and marked `handoff`.
+
+`gate_answerability` fails the same set outright. The routing is the useful
+behaviour; **the gate is the guarantee** — a draft that reaches the composer by
+some other path is still refused rather than delivered.
+
+### 3. Routed after the gates — tier 2
+
+Everything else is a real product question the corpus may well answer, and when
+it does nothing here runs. When the answerability gate refuses, the existing
+`shortfall` sentence gains the page that does know: the promotions page for an
+offer, the online renewal route for a general-insurance renewal, the plan's own
+page for a published figure the composer could not reach.
+
+Any *other* gate failure gets the contact page and nothing else. A groundedness
+failure means the draft was faulty, which says nothing about where the answer
+lives — offering the promotions page there would imply the corpus was asked and
+found wanting, and it was not.
+
+### 4. The registry — `okf.destinations`
+
+Five addresses, supplied by the product owner on 2026-09-05, committed as a
+table. Never model-generated, never lifted from a search result, for the same
+reason the channel registry is not: **a URL handed to a customer is an
+instruction**, and an instruction assembled at runtime out of retrieved text is
+an instruction an attacker can write.
+
+Each entry records its provenance, and a test enforces it. Four are in the
+2026-08-25 crawl at status 200, so the corpus is evidence for them. The two
+`/LoginPortal/#/` routes are not and cannot be — they are client-side fragments
+behind a login, which no crawler resolves — so they claim `owner`, and the test
+asserts that anything claiming `owner` is one of them.
+
+**The product's own page is deliberately not in the registry.** It is already
+in the corpus, on each product page's `channel/direct` binding, and the
+channel-coherence gate already treats it as this route's own address. Copying
+37 URLs into a Python file would create a second place for them to rot.
+
+`renews_online` resolves the renewal destination rather than tabling it: a
+general-insurance policy renews through the online renewal route and a life,
+protection or savings policy does not, so one page for every renewal question
+would be wrong for a third of the catalogue.
+
+### 5. Fraud goes to a person, and only to a person
+
+A message the customer is checking the provenance of never reaches retrieval
+and never receives the portal. Telling someone who may have just been phished
+to go and log in somewhere is the answer this whole change exists to stop
+giving.
+
+## Cost, and what it does not do
+
+Out-of-corpus turns get **cheaper** — they were spending a retrieval, a model
+call and eight gates to produce a wrong answer.
+
+Two deliberate omissions:
+
+- **A bare *"how much will I get back?"* is still read as a limit.** After a
+  cancelled *policy* it is a premium refund; after a cancelled *trip* it is the
+  trip-cancellation benefit, which is a figure in the benefit table. An early
+  cut read the second as the first and sent three real figure questions to the
+  customer portal. Only the forms that name a refund, or ask when one lands,
+  route — the safe half of the ambiguity, and the eval pays for the rest.
+- **Family B is untouched.** 115 turns are the opposite failure: the bot
+  refuses a question the corpus *does* answer — *"I want to cancel Commercial
+  Vehicle Insurance"* when `conditions.md` carries the clause. That is a
+  query-formulation problem and routing must not paper over it; a destination
+  offered instead of an answer the corpus holds is a regression wearing a
+  helpful face.

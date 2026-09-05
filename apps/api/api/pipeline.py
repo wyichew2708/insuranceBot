@@ -28,8 +28,9 @@ from harness import (
     run_gates,
 )
 from harness.ask import Ask, read_ask
+from harness.contracts import Link
 from harness.gates import ADVICE_SEEKING_RE
-from harness.intent import Intent, classify, smalltalk_kind
+from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
 from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
@@ -53,13 +54,16 @@ from api.retrieval import (
     unsupported_term,
     wiki_read,
 )
+from api.route import destinations_for, links_for, routed_refusal
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
 from api.suggest import closing_question, suggest_next
 from api.understand import Understanding, understand, worth_resolving
 from api.vectors import searcher_for
 from okf import (
+    DESTINATIONS,
     Bundle,
+    Desk,
     Page,
     PageType,
     expand_abbreviations,
@@ -67,6 +71,15 @@ from okf import (
     load_abbreviations,
     load_vocabulary,
     term_idf,
+)
+
+#: The destination a refusal can always give, whatever went wrong. Built once
+#: rather than per turn, and from the registry rather than from a literal, so
+#: there is exactly one place the address is written down.
+CONTACT_LINK = Link(
+    label=DESTINATIONS[Desk.contact].label,
+    url=DESTINATIONS[Desk.contact].url,
+    desk=Desk.contact.value,
 )
 
 HANDOFF = (
@@ -535,6 +548,46 @@ def _answer_turn(
         return _finish(
             trace,
             GroundedAnswer(answer=OFF_TOPIC, smalltalk=True, confidence=1.0),
+            bundle,
+            session,
+            question,
+            raw_root,
+            [],
+            ask=ask,
+        )
+
+    # Before retrieval, and the reason is not cost. A question about where a
+    # claim got to, when a refund lands, whether an address change went
+    # through, a password, or a request for a person is not a gap in the
+    # corpus — it is not the kind of thing a policy document contains. Sent
+    # through retrieval anyway it finds the nearest page and answers from it:
+    # "where is my claim now?" came back with the claim-notification clause,
+    # "when will the refund reach me?" with the terms of a 2024 promotion, and
+    # a customer checking whether an email was a phishing attempt was told to
+    # log in and update their details. 237 of 379 failing turns on the golden
+    # conversation dataset are this one mode.
+    #
+    # So they are refused here, deterministically, and — the half that makes
+    # the refusal worth giving — pointed at the page that does know.
+    if ask.intent in OUT_OF_CORPUS:
+        routed_intent = ask.intent
+        focus = bundle.get(ask.product_page) if ask.product_page else None
+        with trace.stage("route") as detail:
+            detail["intent"] = routed_intent.value
+            detail["product"] = focus.id if focus is not None else ""
+            detail["destinations"] = [d.url for d in destinations_for(routed_intent, focus, question)]
+        return _finish(
+            trace,
+            GroundedAnswer(
+                answer=routed_refusal(routed_intent, focus, question),
+                # A handoff, not smalltalk: something is being passed on, and
+                # the coverage gates must skip it because it asserts nothing
+                # about cover. It carries no claims for the same reason — the
+                # destinations are a registry, not a reading of a page.
+                handoff=True,
+                destinations=links_for(routed_intent, focus, question),
+                confidence=1.0,
+            ),
             bundle,
             session,
             question,
@@ -1045,11 +1098,27 @@ def _answer_turn(
         # premium is not published can go and get a quote; a customer told that
         # about a groundedness failure has been told something false.
         failed = {r.gate for r in results if r.blocking}
-        refusal = shortfall(question, product) if failed == {"answerability"} else HANDOFF
+        # Tier 2 of the routing. An answerability refusal has established
+        # something specific — the corpus does not carry this — so it can name
+        # the page that does: the promotions page for an offer, the plan's own
+        # page for a published figure the composer could not reach. Any other
+        # gate means the draft was faulty, which says nothing about where the
+        # answer lives, so those get the one destination that is always true
+        # and nothing that would imply the corpus was asked and found wanting.
+        settled = failed == {"answerability"}
+        intent = classify(question)
+        refusal = shortfall(question, product) if settled else HANDOFF
+        links = links_for(intent, product, question) if settled else [CONTACT_LINK]
+        tail = (
+            routed_refusal(intent, product, question, opener=refusal)
+            if settled
+            else f"{refusal} {DESTINATIONS[Desk.contact].sentence}"
+        )
         envelope = AnswerEnvelope(
             answer=GroundedAnswer(
-                answer=refusal,
+                answer=tail,
                 handoff=True,
+                destinations=links,
                 # Preserve what the turn established: an advice question that
                 # gets blocked still needs the adviser handoff downstream.
                 advice_flag=draft.advice_flag,

@@ -19,7 +19,7 @@ from okf.sources import UNKNOWN, may_support, source_class
 
 from harness.ask import Ask, asked_benefits
 from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
-from harness.intent import REQUIREMENTS, classify
+from harness.intent import OUT_OF_CORPUS, REQUIREMENTS, classify
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
 # Currency amounts, percentages, quantities with a time unit, or any bare
@@ -951,6 +951,17 @@ def gate_answerability(ctx: GateContext) -> GateResult:
         return GateResult(gate=name, verdict=Verdict.skip, detail="asked which product was meant")
 
     intent = ctx.ask.intent if ctx.ask is not None else classify(ctx.question)
+    # Not "we did not find it" — "it is not in here to find". A claim's
+    # progress, a refund date, a password: no edition of this corpus carries
+    # them, so an answer that appears to have one was written from something
+    # adjacent. The pipeline routes these before retrieval; this is the
+    # guarantee for a draft that arrived by any other path.
+    if intent in OUT_OF_CORPUS:
+        return GateResult(
+            gate=name,
+            verdict=Verdict.fail,
+            detail=f"{intent.value}: no policy document can settle this",
+        )
     requirement = REQUIREMENTS.get(intent)
     if requirement is None or not requirement.checkable:
         return GateResult(gate=name, verdict=Verdict.skip, detail=f"{intent.value}: unconstrained")

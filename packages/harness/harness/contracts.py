@@ -120,6 +120,16 @@ class GateResult(BaseModel):
         return self.verdict == Verdict.fail
 
 
+class Link(BaseModel):
+    """One place a customer can be sent."""
+
+    label: str
+    url: str
+    #: The back-office function it belongs to (`okf.destinations.Desk`), or
+    #: "product" for the plan's own page.
+    desk: str = ""
+
+
 class GroundedAnswer(BaseModel):
     answer: str
     claims: list[Claim] = Field(default_factory=list)
@@ -147,6 +157,13 @@ class GroundedAnswer(BaseModel):
     #: was just asked and what the corpus holds for the product; never a
     #: question the corpus cannot answer.
     suggestions: list[str] = Field(default_factory=list)
+    #: Where to send a customer this turn could not answer, best first. Drawn
+    #: from the committed registry in `okf.destinations`, never from retrieved
+    #: text — a URL handed to a customer is an instruction, and an instruction
+    #: assembled out of a search result is one an attacker can write. Carried
+    #: structurally as well as in the prose so a client can render them as
+    #: buttons rather than parsing them back out of a sentence.
+    destinations: list[Link] = Field(default_factory=list)
 
 
 class AnswerRequest(BaseModel):
