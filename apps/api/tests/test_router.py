@@ -268,6 +268,10 @@ def test_a_bare_category_alias_is_asked_about_and_a_branded_name_is_not() -> Non
     single_q = "does home insurance cover flood?"
     single = route(real, read_ask(real, single_q), single_q)
     assert single.layer2 is Layer2.named, "one product carries 'home'; the alias is a name"
+    # A *need* for the category is shopping, and is listed rather than asked.
+    need_q = "I need travel insurance"
+    need = route(real, read_ask(real, need_q), need_q)
+    assert need.layer1 is Layer1.browse and not need.clarify
 
 
 @pytest.mark.skipif(not (REAL / "catalogue.yaml").exists(), reason="real bundle not in this checkout")

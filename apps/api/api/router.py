@@ -262,6 +262,17 @@ def _layer2(bundle: Bundle, ask: Ask, question: str) -> tuple[Layer2, str | None
 def route(bundle: Bundle, ask: Ask, question: str) -> Decision:
     """The three-layer decision for this turn."""
     layer1, why1 = _layer1(ask, question)
+    # A need for a category is shopping, whichever alias the catalogue gives
+    # the category. "I need travel insurance" is answered the way "I need
+    # life insurance" is — with the line's products listed — not with a
+    # guess at one of them dressed as a question.
+    if (
+        layer1 is Layer1.product
+        and ask.named
+        and NEED_RE.search(question)
+        and _category_members(bundle, ask, question)
+    ):
+        layer1, why1 = Layer1.browse, "a need for a category, not a product"
     if layer1 is not Layer1.product:
         # Layer 1 settled it. A product may still be known — an account-state
         # question about a named plan routes with that plan's page — but no
