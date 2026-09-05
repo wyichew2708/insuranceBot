@@ -20,7 +20,7 @@ import pytest
 from api.pipeline import answer_question
 from api.route import DESKS, FRAUD_RE, destinations_for, links_for, routed_refusal
 from api.settings import Settings
-from harness.intent import OUT_OF_CORPUS, Intent, classify
+from harness.intent import OUT_OF_CORPUS, Intent, classify, classify_topic
 
 from conftest import make_session
 from okf import DESTINATIONS, Bundle, Desk, desk_url, landing_for, renews_online
@@ -298,3 +298,91 @@ def test_the_account_state_questions_route(question: str, intent: Intent) -> Non
 )
 def test_a_payment_question_the_corpus_answers_is_never_routed(question: str) -> None:
     assert classify(question) not in OUT_OF_CORPUS, question
+
+
+# --- headings are topics, not questions ------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("heading", "topic"),
+    [
+        # The six FAQ headings in the real corpus whose intent the out-of-corpus
+        # split moved away from a real topic. Each is corpus: the paragraph
+        # under it is the answer, so it cannot be "out of corpus", and the
+        # composer matching it against a customer's question must read it as
+        # what it is about.
+        ("When will GIRO deductions be made for the renewal premium?", Intent.renewal),
+        ("When will Giro deductions be made for the renewal premium ?", Intent.renewal),
+        ("Am I able to auto-renew my policy via GIRO?", Intent.renewal),
+        ("What are my premium payment options?", Intent.price),
+        ("What is covered under Cyber Fraud?", Intent.coverage),
+    ],
+)
+def test_a_heading_is_read_as_its_topic(heading: str, topic: Intent) -> None:
+    assert classify_topic(heading) is topic
+    assert classify_topic(heading) not in OUT_OF_CORPUS
+
+
+def test_topic_reading_never_yields_an_out_of_corpus_intent() -> None:
+    """By construction — and the property `faq_pick` relies on. The three
+    cancer insurance turns this guards were lost because a renewal heading,
+    read as a question, became `payment`, the same-intent count fell from two
+    to one, and a low-overlap FAQ entry led the answer straight into the
+    entitlement gate."""
+    for question in (
+        "where is my claim now?",
+        "can I pay monthly?",
+        "I forgot my password",
+        "let me speak to someone",
+        "I moved house last week",
+        "When will GIRO deductions be made for the renewal premium?",
+    ):
+        assert classify_topic(question) not in OUT_OF_CORPUS, question
+
+
+def test_the_question_reading_and_the_topic_reading_differ_only_off_corpus() -> None:
+    """Where `classify` gives an in-corpus intent, the two agree; the topic
+    reading is `classify` with the out-of-corpus patterns skipped and nothing
+    else."""
+    for text in (
+        "how do I renew it?",
+        "what is not covered",
+        "how much can I claim for a lost bag?",
+        "who underwrites this",
+        "what does it cover?",
+    ):
+        assert classify(text) is classify_topic(text), text
+
+
+# --- fraud is something reported, never something covered -------------------
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        "What is covered under Cyber Fraud?",
+        "Does Personal Cyber Insurance cover fraud?",
+        "does it cover credit card fraud?",
+        "am I covered for online fraud?",
+    ],
+)
+def test_a_cover_question_about_fraud_is_not_routed(question: str) -> None:
+    """A bare `fraud` sent these to the contact page. They are coverage
+    questions on the cyber product, and the corpus answers them."""
+    assert classify(question) not in OUT_OF_CORPUS
+    assert not FRAUD_RE.search(question)
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        "I want to report suspected insurance fraud",
+        "is this email a fraud?",
+        "someone made a fraudulent claim on my card",
+        "is this a scam?",
+        "I got a phishing email",
+    ],
+)
+def test_a_fraud_report_is_routed_to_a_person(question: str) -> None:
+    assert classify(question) is Intent.contact
+    assert FRAUD_RE.search(question) or "report" in question

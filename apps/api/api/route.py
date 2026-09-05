@@ -35,7 +35,10 @@ from okf import DESTINATIONS, Desk, Destination, Page, landing_for, renews_onlin
 #: attempt wants a customer to follow. Nothing about this may come from
 #: retrieval.
 FRAUD_RE = re.compile(
-    r"\bphish(?:ing)?\b|\bscam(?:mer|med)?\b|\bfraud(?:ulent)?\b|\bunauthorised\b"
+    r"\bphish(?:ing)?\b|\bscam(?:mer|med)?\b|\bunauthorised\b"
+    r"|\bfraud(?:ulent)?\s+(?:e-?mail|sms|message|text|call(?:er)?|website|link|transaction|charge|claim)\b"
+    r"|\b(?:report(?:ing)?|suspect(?:ed)?|victim of|targeted by)\b[\w\s]{0,30}\bfraud\b"
+    r"|\b(?:is|was) (?:this|that|it)[\w\s]{0,12}\bfraud\b"
     r"|\bsomeone (?:used|accessed|hacked)\b|\bdid ?n.t request\b|\bnever requested\b"
     r"|\b(?:is|was) (?:this|that|it) (?:email|sms|message|text|call|really|actually)"
     r"|\breally from (?:you|etiqa|tiq)\b|\botp\b"

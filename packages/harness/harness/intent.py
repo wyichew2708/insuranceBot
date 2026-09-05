@@ -186,7 +186,14 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # Fraud and phishing. A customer checking whether a message is
             # genuine must never be answered out of the corpus, whatever the
             # corpus happens to say about updating your details.
-            r"|\bphish(?:ing)?\b|\bscam(?:mer|med)?\b|\bfraud(?:ulent)?\b"
+            # "fraud" only as something being reported or suspected. The bare
+            # word read "does it cover credit card fraud?" and "what is covered
+            # under Cyber Fraud?" as a customer in distress — coverage
+            # questions on the cyber product, sent to a contact page.
+            r"|\bphish(?:ing)?\b|\bscam(?:mer|med)?\b"
+            r"|\bfraud(?:ulent)?\s+(?:e-?mail|sms|message|text|call(?:er)?|website|link|transaction|charge|claim)\b"
+            r"|\b(?:report(?:ing)?|suspect(?:ed)?|victim of|targeted by)\b[\w\s]{0,30}\bfraud\b"
+            r"|\b(?:is|was) (?:this|that|it)[\w\s]{0,12}\bfraud\b"
             r"|\b(?:is|was) (?:this|that|it) (?:email|sms|message|text|call|really|actually)"
             r" .{0,24}from you\b"
             r"|\b(?:really|actually) from (?:you|etiqa|tiq)\b"
@@ -497,6 +504,42 @@ OUT_OF_CORPUS: frozenset[Intent] = frozenset(
         Intent.contact,
     }
 )
+
+
+def classify_topic(text: str) -> Intent:
+    """What a piece of *corpus* text is about — a heading, a section title.
+
+    `classify` reads a customer's question and decides, among other things,
+    whether any document could answer it: five of its intents mean "no policy
+    document has this" and are routed before retrieval. That reading is wrong
+    for text that came *out of* a document. A FAQ heading titled "When will
+    GIRO deductions be made for the renewal premium?" is not an out-of-corpus
+    question — it is corpus, and the paragraph under it is the answer. Read
+    with `classify` it becomes `payment`; read as a topic it is `renewal`,
+    which is what the composer matching it against a renewal question needs.
+
+    Measured when the split was introduced: 33 of 467 FAQ headings changed
+    intent under `classify`, six of them away from a real topic, and
+    `faq_pick` — which counts headings sharing the question's intent to
+    decide how strict to be — picked a different entry on three cancer
+    insurance turns and lost all three to the entitlement gate. This function
+    is `classify` with the out-of-corpus patterns skipped, and on every FAQ
+    heading in the real corpus it agrees with what `classify` said before the
+    split existed.
+    """
+    text = (text or "").strip()
+    if not text:
+        return Intent.unknown
+    if smalltalk_kind(text):
+        return Intent.smalltalk
+    if BROWSE_RE.search(text):
+        return Intent.browse
+    for intent, pattern in _PATTERNS:
+        if intent in OUT_OF_CORPUS:
+            continue
+        if pattern.search(text):
+            return intent
+    return Intent.unknown
 
 
 @dataclass(frozen=True)
