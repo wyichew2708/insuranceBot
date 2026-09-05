@@ -341,3 +341,61 @@ Two deliberate omissions:
   query-formulation problem and routing must not paper over it; a destination
   offered instead of an answer the corpus holds is a regression wearing a
   helpful face.
+
+## Measured
+
+Same 1,711-case dataset, same pinned evaluation date, deterministic composer:
+
+| | v2.3 | v2.3.1 |
+|---|---|---|
+| overall | 1209/1711 · 70.7% | **1330/1711 · 77.7%** |
+| whole conversations | 132/355 · 37.2% | **196/355 · 55.2%** |
+| turns | 994/1373 · 72.4% | **1179/1373 · 85.9%** |
+| **pivot** | 18/165 · **10.9%** | **124/165 · 75.2%** |
+| drill | 219/304 · 72.0% | **291/304 · 95.7%** |
+| handoff contract | 43/179 · 24.0% | **96/179 · 53.6%** |
+| `pay` journey | 3/23 · 13.0% | **18/23 · 78.3%** |
+| `service` journey | 7/26 · 26.9% | **18/26 · 69.2%** |
+| product_fact | 974/1092 · 89.2% | 973/1092 · 89.1% |
+| owed a handoff, gave none | 145 | **87** |
+
+**124 cases gained, 3 lost.** Gains by turn intent: premium +66, claim_status
++40, payment_method +37, refund_status +35.
+
+`product_fact` holding at 89% is the number that mattered most. Routing that
+improved the transactional journeys by eating the questions the corpus is for
+would have been a worse bot with a better score.
+
+All three losses are cancel/renew turns on Cancer Insurance, and none is caused
+by this change: run in isolation against a worktree of the base commit they
+produce byte-identical answers with and without it. Their verdict flips with
+their position in the batch — a harness property to fix separately, not a
+regression to hide here.
+
+### Two patterns the measurement corrected
+
+Both were mine, and neither was visible without running the suite.
+
+**A bare *"how much?"* is a limit question.** On turn three of *"does Corporate
+Travel pay for an 8-hour delay?"* it asks for the benefit. The first
+bare-price pattern read it as a price question and turned three answered limit
+questions into refusals. The object is the whole distinction: *"how much is
+it"* is about the plan, *"how much"* alone is about whatever was last
+discussed.
+
+**Paying *for a plan* is not paying *a premium*.** *"How do I pay for Tiq
+Travel Insurance?"* is a question about buying, the product page answers it,
+and a bare `how do I pay` clause routed it to the portal. What belongs in
+`payment` is a schedule or a method.
+
+Fixing the second exposed the reverse: reading the dataset's own 224 handoff
+cases end to end found fourteen phrasings the intent missed — *"Can I pay by
+credit card?"* (the method list wanted the method word first, and "credit"
+came before "card"), *"My card was declined"*, *"Has my claim payment been
+processed?"*, and *"Someone called me claiming to be your agent and asked for
+payment"*, a fraud report the corpus would have answered.
+
+The check that made all of this safe is one pass over both sets at once: every
+`handoff` case and every `product_fact` case, asserting which route. Zero
+product-fact questions route today, and two tests hold both directions so the
+next widening of these patterns has to face the same question.
