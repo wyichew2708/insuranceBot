@@ -717,6 +717,39 @@ def unsupported_term(bundle: Bundle, question: str, admitted: list[tuple[Page, f
     return ""
 
 
+def tie_on_subject(bundle: Bundle, question: str, product_keys: list[str]) -> bool:
+    """Whether a lexical tie among these products was reached on the question's
+    subject, or only on its verb.
+
+    The scorer credits every shared word, so on "how much can I claim for a
+    lost bag?" a life-insurance FAQ that says "how much", "claim" and "lost my
+    policy" ties with the next such FAQ just over the confidence floor — and the
+    one word that says what the question is about, "bag", is matched by
+    neither. Naming those products as a choice offers the customer two wrong
+    answers with confidence.
+
+    A tie is a choice only where some tied product carries the question's most
+    informative term: the rarest word in it by the same weighting the score
+    uses, a word the corpus has never seen counting as rarest of all. A tie
+    without it is a tie on generic words and is asked about openly.
+    """
+    terms = subject_terms(question)
+    if not terms or not product_keys:
+        return False
+    idf = term_idf(bundle)
+    strongest = max(idf.get(term, 1.0) for term in terms)
+    pivotal = {term for term in terms if idf.get(term, 1.0) >= strongest - 1e-9}
+    tied = set(product_keys)
+    for page in bundle.pages.values():
+        if bundle.product_key(page) not in tied:
+            continue
+        fm = page.frontmatter
+        surface = keywords(" ".join([fm.title, " ".join(fm.aliases), fm.id.replace("/", " ")]))
+        if pivotal & (surface | keywords(page.body)):
+            return True
+    return False
+
+
 def needs_rag(
     question: str,
     admitted: list[tuple[Page, float]],

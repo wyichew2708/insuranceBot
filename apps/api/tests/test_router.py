@@ -247,3 +247,37 @@ def test_a_definition_answers_without_a_product(bundle: Bundle, settings: Settin
     env, trace = ask(bundle, settings, "what does excess mean?")
     assert not env.answer.clarifying
     assert trace.route["layer3"] == "definition"
+
+
+# --- a category typed as an alias is a guess -------------------------------
+
+
+@pytest.mark.skipif(not (REAL / "catalogue.yaml").exists(), reason="real bundle not in this checkout")
+def test_a_bare_category_alias_is_asked_about_and_a_branded_name_is_not() -> None:
+    """ "travel insurance" is one product's alias and four products' category.
+    The customer typed the category. "Tiq Travel Insurance" keeps its brand
+    word and is that product's name."""
+    real = Bundle.load(REAL)
+    q = "does travel insurance cover skiing?"
+    generic = route(real, read_ask(real, q), q)
+    assert generic.layer2 is Layer2.guessed and generic.clarify
+    assert len(generic.options) >= 3 and generic.options[0].endswith("/travel-insurance")
+    branded_q = "What does Tiq Travel Insurance cover?"
+    branded = route(real, read_ask(real, branded_q), branded_q)
+    assert branded.layer2 is Layer2.named and not branded.clarify
+    single_q = "does home insurance cover flood?"
+    single = route(real, read_ask(real, single_q), single_q)
+    assert single.layer2 is Layer2.named, "one product carries 'home'; the alias is a name"
+
+
+@pytest.mark.skipif(not (REAL / "catalogue.yaml").exists(), reason="real bundle not in this checkout")
+def test_a_tie_with_nothing_read_asks_openly_rather_than_listing_junk() -> None:
+    import datetime as dt
+
+    real = Bundle.load(REAL)
+    settings = Settings(bundle_path=REAL)
+    session = make_session(today=dt.date(2026, 9, 4))
+    env, trace = answer_question(real, "how much can I claim for a lost bag?", session, settings)  # type: ignore[arg-type]
+    assert env.answer.clarifying
+    assert not env.answer.claims, "no product was read, so none is named"
+    assert trace.route["layer2"] == "none"

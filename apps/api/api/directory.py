@@ -279,10 +279,12 @@ def lines_overview(bundle: Bundle) -> GroundedAnswer | None:
         first = pages[0]
         shown.append(first)
         label = line.replace("-", " and ")
-        parts.append(f"{label} ({len(pages)}, e.g. {first.frontmatter.title.split(' — ')[0]})")
-    total = len(roots)
+        parts.append(f"{label} (for example {first.frontmatter.title.split(' — ')[0]})")
+    # No counts. A bare number in an answer is a figure the numeric-binding
+    # gate expects to find in a benefit-table row, and "37 products" is not
+    # in one; the first cut of this sentence was blocked for exactly that.
     answer = (
-        f"We offer {total} products across {len(by_line)} lines: "
+        "We offer insurance across these lines: "
         + "; ".join(parts)
         + ". Tell me the line or the plan you have in mind and I'll give you its detail."
     )

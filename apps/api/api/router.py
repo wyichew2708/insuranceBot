@@ -39,9 +39,17 @@ from enum import Enum
 from harness.ask import Ask
 from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import OUT_OF_CORPUS, Intent, smalltalk_kind
+from okf.names import index_for
 
 from api.guardrails import medical_emergency
 from okf import Bundle, Scope
+
+#: Words that say "an insurance product" without saying which. A phrase that
+#: is nothing but one head word and these — "travel insurance" — is a
+#: category the customer typed, even where the catalogue also lists it as
+#: one product's alias. "Tiq Travel Insurance" keeps its brand word and is a
+#: name.
+_GENERIC = frozenset({"insurance", "cover", "coverage", "plan", "policy", "protection", "the", "a", "an"})
 
 
 class Layer1(str, Enum):
@@ -204,8 +212,40 @@ def _layer1(ask: Ask, question: str) -> tuple[Layer1, str]:
     return Layer1.product, ""
 
 
-def _layer2(ask: Ask) -> tuple[Layer2, str | None, tuple[str, ...], str]:
+def _category_members(bundle: Bundle, ask: Ask, question: str) -> tuple[str, ...]:
+    """Products a bare category alias could mean, or () where it is a name.
+
+    The name index resolves "travel insurance" to the one product that lists
+    it as an alias. Four products carry "travel" in their titles. The customer
+    typed the category, not the product, and the product owner's rule is that
+    a category is asked about. Only a phrase that is a single head word plus
+    generic words counts: "tiq travel insurance" and "travel infinite" both
+    keep a distinguishing word and stay names.
+    """
+    if ask.named_by != "alias" or not ask.product_page:
+        return ()
+    index = index_for(bundle)
+    hits = index.named(question)
+    if not hits:
+        return ()
+    head = [w for w in hits[0].phrase.split() if w not in _GENERIC]
+    if len(head) != 1:
+        return ()
+    word = head[0]
+    members = tuple(
+        sorted(
+            (pid for pid, title in index.titles.items() if word in title.split()),
+            key=lambda pid: (pid != ask.product_page, pid),
+        )
+    )
+    return members if len(members) >= 2 else ()
+
+
+def _layer2(bundle: Bundle, ask: Ask, question: str) -> tuple[Layer2, str | None, tuple[str, ...], str]:
     if ask.named:
+        members = _category_members(bundle, ask, question)
+        if members:
+            return Layer2.guessed, ask.product, members, "a category typed as an alias"
         return Layer2.named, ask.product, (), f"named by {ask.named_by}"
     if ask.named_by == "history" and ask.resolved:
         return Layer2.carried, ask.product, (), "carried from an earlier turn"
@@ -228,7 +268,7 @@ def route(bundle: Bundle, ask: Ask, question: str) -> Decision:
         # retrieval scope is needed because nothing is retrieved.
         product = ask.product if ask.resolved else None
         return Decision(layer1, Layer2.n_a, Layer3.n_a, product=product, reason=why1)
-    layer2, product, options, why2 = _layer2(ask)
+    layer2, product, options, why2 = _layer2(bundle, ask, question)
     layer3 = HANDLER_FOR.get(ask.intent, Layer3.general)
     # Retrieval is scoped to a product the customer named or that the
     # conversation carries. A guess is asked about instead of scoped to, and

@@ -52,6 +52,7 @@ from api.retrieval import (
     needs_rag,
     product_family_pages,
     rag_search,
+    tie_on_subject,
     unsupported_term,
     wiki_read,
 )
@@ -633,13 +634,13 @@ def _answer_turn(
     # — matched no directory line and fell through to a product
     # clarification. The reply is the shape of the catalogue.
     if decision.layer1 is Layer1.browse and not seeking_advice:
-        listed = directory_answer(bundle, question)
-        # The overview is for a shopper who named nothing. One who named a
-        # line this insurer does not write — "kidnap and ransom cover" — is
-        # told so further down, never shown the catalogue as if it were the
-        # nearest thing (`api.directory.answer` says as much of `None`).
-        if listed is None and not unsupported_term(bundle, question, []):
-            listed = lines_overview(bundle)
+        # A shopper who named a line this insurer does not write — "kidnap
+        # and ransom cover" — is told so further down, never shown the
+        # nearest thing we do sell (`api.directory.answer` says as much of
+        # `None`, and on the real corpus "ransom" found Property Insurance).
+        listed = None
+        if not unsupported_term(bundle, question, []):
+            listed = directory_answer(bundle, question) or lines_overview(bundle)
         if listed is not None:
             with trace.stage("directory") as detail:
                 detail["listed"] = [c.source_id for c in listed.claims]
@@ -757,7 +758,17 @@ def _answer_turn(
             and not seeking_advice
             and len(trace.ambiguous_products) >= 2
         ):
-            asked = lexical_clarification(bundle, trace.ambiguous_products)
+            # A tie reached on the question's subject is a real choice and
+            # is named. A tie reached on its generic words alone — "how much
+            # can I claim for a lost bag?" tied Term Life, Whole Life and
+            # Maid on "how much", "claim" and "lost", with "bag" matched by
+            # none of them — is not, and naming it would be naming three
+            # wrong products with confidence. That tie is asked about openly.
+            asked = (
+                lexical_clarification(bundle, trace.ambiguous_products)
+                if tie_on_subject(bundle, question, trace.ambiguous_products)
+                else open_clarification()
+            )
             if asked is not None:
                 with trace.stage("clarify") as detail:
                     detail["from"] = "lexical tie"
@@ -804,7 +815,13 @@ def _answer_turn(
                     scope = decision.scope
                     trace.route = decision.as_trace()
                 elif undecided and not unsupported_term(bundle, question, admitted):
-                    tied = list(trace.ambiguous_products) or sorted(loaded_products)
+                    # Name options only among products whose pages were
+                    # actually read. A tie with nothing loaded is a tie on
+                    # generic words — "how much can I claim for a lost bag?"
+                    # tied Term Life, Whole Life and Maid at a score of
+                    # nothing — and listing it would be naming three wrong
+                    # products with confidence. That turn is asked openly.
+                    tied = sorted(loaded_products) if loaded_products else []
                     roots = [r for r in (_root_page(bundle, key) for key in tied) if r is not None]
                     asked = clarification(bundle, [r.id for r in roots]) if 2 <= len(roots) <= 3 else None
                     if asked is None:
