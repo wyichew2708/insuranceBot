@@ -6,10 +6,10 @@ same suite after the routing change (v2.3.1) that its findings prompted.
 ```
 Conversation golden dataset          v2.3            v2.3.1 (routing)
 
-overall                        1209/1711  70.7%    1330/1711   77.7%
-  whole conversations           132/355   37.2%     196/355    55.2%
-  turns                         994/1373  72.4%    1179/1373   85.9%
-  context-dependent turns       638/810   78.8%     704/810    86.9%
+overall                        1209/1711  70.7%    1333/1711   77.9%
+  whole conversations           132/355   37.2%     198/355    55.8%
+  turns                         994/1373  72.4%    1180/1373   85.9%
+  context-dependent turns       638/810   78.8%     705/810    87.0%
 
 turns by kind
   pivot                          18/165   10.9%     124/165    75.2%
@@ -19,19 +19,19 @@ turns by kind
   drill                         219/304   72.0%     291/304    95.7%
   opener                        270/355   76.1%     275/355    77.5%
   repeat                          7/9     77.8%       7/9      77.8%
-  ellipsis                      395/448   88.2%     395/448    88.2%
+  ellipsis                      395/448   88.2%     396/448    88.4%
   advice                         39/40    97.5%      39/40     97.5%
   pick / recover / correction              100%                 100%
 
 by contract
   handoff                        43/179   24.0%      96/179    53.6%
   out_of_scope                    3/12    25.0%       8/12     66.7%
-  conversation                  132/355   37.2%     196/355    55.2%
+  conversation                  132/355   37.2%     198/355    55.8%
   entity_fact                     2/4     50.0%       2/4      50.0%
   advice_boundary                11/15    73.3%      11/15     73.3%
   clarify                        11/15    73.3%      11/15     73.3%
   directory                      14/19    73.7%      14/19     73.7%
-  product_fact                  974/1092  89.2%     973/1092   89.1%
+  product_fact                  974/1092  89.2%     974/1092   89.2%
   corpus_fact                    19/20    95.0%      19/20     95.0%
 
 by journey
@@ -39,11 +39,11 @@ by journey
   service                         7/26    26.9%      18/26     69.2%
   quote                          36/125   28.8%      71/125    56.8%
   support                        18/57    31.6%      32/57     56.1%
-  cancel                         62/116   53.4%      66/116    56.9%
+  cancel                         62/116   53.4%      68/116    58.6%
   renew                          34/60    56.7%      35/60     58.3%
   claim                         249/357   69.7%     286/357    80.1%
   apply                          43/54    79.6%      46/54     85.2%
-  policy                        405/492   82.3%     405/492    82.3%
+  policy                        405/492   82.3%     406/492    82.5%
   eligibility                   199/231   86.1%     200/231    86.6%
   evaluate                       52/58    89.7%      52/58     89.7%
   discover                      101/112   90.2%     101/112    90.2%
@@ -55,167 +55,25 @@ owed a handoff and did not give one         145                  87
   blocked by a gate rather than handed off     1                   1
 ```
 
-Case by case: **124 gained, 3 lost.** All three losses are cancel/renew turns
-on Cancer Insurance, and none of them is caused by the change — run in
-isolation against a worktree of the base commit they produce byte-identical
-answers with and without it. Their verdict flips with their position in the
-1,711-case batch, which is a property of the harness worth fixing separately
-and not a regression to attribute here.
-
-# Evaluating the bot
-
-Six suites, what each one is actually testing, how to run it, and how to read a
-failure. Every number here was measured on this repository — the run log is
-quoted, not summarised from memory.
-
-**Everything is offline and free by default.** `LLM_PROVIDER=deterministic`
-means no network, no key, no cost. A configured model makes up to three calls
-per case — screen the question, write the answer, screen the answer — so a
-25,791-case suite becomes ~77,000 billed requests. The Makefile targets pin the
-provider for exactly that reason; the `-live` variants are the ones that spend
-money.
-
----
-
-## The one command
-
-```bash
-make ci
-```
-
-Lint, typecheck, 620 tests, bundle lint, guardrail backtest, curated suites,
-seed auto-eval, fixture compile, fixture auto-eval. Exits non-zero if any gate
-fails. This is what has to be green before a push.
-
----
-
-## 1. Unit tests
-
-```bash
-make test                                 # or: uv run pytest
-uv run pytest apps/compiler -q            # one package
-uv run pytest -k exclusion -q             # one topic
-```
-
-```
-620 passed, 2 skipped
-```
-
-The two skips are network-dependent. A `conftest.py` autouse fixture forces
-`LLM_PROVIDER=deterministic` for the whole suite, so a populated `.env` cannot
-silently turn `pytest` into a billed run — a mistake that once cost ~1,830 API
-calls per invocation.
-
----
-
-## 2. Curated suites — the regression gate
-
-```bash
-make evals                                # deterministic, gate 100%
-make evals-live                           # against whatever .env configures
-uv run python -m evals.runner --suite golden --gate 1.0
-```
-
-Four YAML suites in `evals/suites/`, 21 cases, hand-written:
-
-| suite | what it pins |
-|---|---|
-| `golden` | the answers that must never change |
-| `merge-consistency` | one product, several routes to market, identical facts |
-| `adversarial` | injection, entitlement probing, advice-seeking |
-| `staleness` | live promotions quotable, expired ones not, overdue pages demoted |
-
-```
-overall 21/21 (100.0%), gate 100%
-```
-
-The gate is **100%** and should stay there. These are not sampled behaviours;
-they are the contract. A failure here is a regression, full stop.
-
-`evals-live` exits 2 if any case was silently served by the deterministic
-fallback — a case served by the fallback measured the fallback, not the model.
-`--allow-fallback` overrides that when you mean it.
-
----
-
-## 3. Auto-evaluation — the suite that grows with the corpus
-
-```bash
-make autoeval                             # seed bundle, gate 0.91
-make autoeval-web                         # fixture bundle, gate 0.94
-make autoeval-live                        # seed bundle, real model, costs money
-
-# any bundle, any gate:
-LLM_PROVIDER=deterministic GUARDRAILS=rules \
-uv run python -m evalgen.cli --bundle okf-real --out .eval-reports/real \
-  --gate 0.95 --min-per-product 100 all
-```
-
-Subcommands: `generate` (derive the suite), `run` (execute and score),
-`report` (render), `all` (the lot). The suite is written to disk before it runs,
-so you can read exactly which questions were asked and what evidence each
-expected.
-
-Nothing is hand-written. Every case is derived from something already in the
-bundle — a benefit-table row becomes "what is the X limit?" pinned to that row
-id and tier; an authored alias becomes a question; an exclusions section becomes
-"are X covered?"; a product line the corpus does *not* carry becomes a case that
-must hand off rather than answer from the nearest neighbour.
-
-Two consequences. The suite **grows with the corpus** — publish fifty product
-pages and their questions appear without anyone writing YAML. And coverage is
-**measurable**: any page no question reaches is named in the report.
-
-`--min-per-product 100` fails the run if any product has fewer than 100 cases
-attributable to it, so a product the corpus barely describes cannot look strong
-by being asked less.
-
-### Measured, today
-
-| bundle | cases | accuracy | gate | |
-|---|---|---|---|---|
-| `okf` seed | 604 | **95.0%** | 0.91 | pass |
-| `okf-web` fixture | 4,193 | **94.7%** | 0.94 | pass |
-| `okf-real` | 25,791 | **82.3%** | — | no gate set |
-
-Real corpus detail:
-
-```
-  accuracy              82.3%   (25791 cases)
-  citation F1           0.837
-  figure exact match    79.5%
-  numeric binding      100.0%   (0 unbound)
-  safety                61.2%   (0 leaks)
-  failure shape       1791 unsafe / 2772 safe misses
-  recall@1 / @3 / MRR 0.79 / 0.97 / 0.91
-  latency p50/p95     118.49 / 516.52 ms
-  corpus reach          97.5%   (rows 88%)
-```
-
-The real corpus has no gate because it is not a regression suite — it is a
-measurement of a corpus that is still being built. It takes **~2 hours**, so
-run it in batches:
-
-```bash
-uv run python scripts/eval_batches.py --bundle okf-real \
-  --suite .eval-reports/real-suite.json --batch-size 1000
-uv run python scripts/eval_batches.py --bundle okf-real --report-only
-```
-
-Each batch is written to `.eval-reports/batches/batch-NNNN.json` the moment it
-finishes and prints its own pass rate, a running total and an ETA. A rerun
-skips what is already on disk, so a kill costs one batch rather than two
-hours — which had already happened three times before this existed. The score
-is computed from the files rather than from memory, so `--report-only`
-reproduces it after a crash, on another machine, or a week later.
-
-Deterministic and pinned to it: a configured model would make this three API
-calls per case, about 78,000 for one pass, which is not a thing to start by
-accident. `--live` opts in.
+Case by case: **124 gained, 0 lost.** An earlier cut of this branch lost three
+cancel/renew turns on Cancer Insurance, and the first explanation offered for
+them — order-dependence in the batch — was wrong. Every "isolation" replay
+behind that claim had silently run against the seed bundle, which has no
+Cancer Insurance product, so base and branch agreed because neither could
+find the page. Replayed against the real bundle, base answered and the branch
+did not. The cause was `faq_pick` applying a *question* classifier to FAQ
+*headings*: the new `payment` pattern read "When will GIRO deductions be made
+for the renewal premium?" as out-of-corpus, the count of renewal headings fell
+from two to one, a low-overlap FAQ entry led the answer, and the entitlement
+gate rightly blocked it. Headings are now read as topics (`classify_topic`),
+which agrees with the pre-split classifier on all 467 FAQ headings in the
+corpus, and the three return base's answers. The suite itself is deterministic:
+run forwards and reversed it produces byte-identical answers on all 1,711
+cases.
 
 ### Reading the numbers
 
-**77.7% is the least useful number here.** The breakdown is the measurement.
+**77.9% is the least useful number here.** The breakdown is the measurement.
 
 **The pivot was the finding, and routing was the answer.** A pivot is the turn
 where the customer crosses from what the corpus knows to what only a system
@@ -249,7 +107,7 @@ context-dependent turns 86.9% say the history it carries genuinely works.
 was never memory — it was noticing the customer had changed gear.
 
 **Product knowledge is the strong half and stayed there.** `product_fact` 89.2%
-→ 89.1% across all 37 products: routing did not eat the questions the corpus is
+→ 89.2% across all 37 products: routing did not eat the questions the corpus is
 for, which was the risk worth measuring. The formerly weak journeys were the
 transactional ones — `pay` 13.0% → 78.3%, `service` 26.9% → 69.2%, `support`
 31.6% → 56.1% — where the corpus holds nothing and the honest reply is a
@@ -261,7 +119,7 @@ as a limit. After a cancelled *policy* it is a premium refund; after a
 cancelled *trip* it is the trip-cancellation benefit, a figure in the benefit
 table. An early cut read the second as the first and sent three real figure
 questions to the customer portal, so only the forms that name a refund route.
-Separately, `cancel` at 56.9% and `quote` at 56.8% are the opposite failure —
+Separately, `cancel` at 58.6% and `quote` at 56.8% are the opposite failure —
 the bot refusing what the corpus does hold — which routing must not paper over.
 
 **A failing case is not always a bot defect.** The first cut of this dataset

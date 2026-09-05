@@ -348,33 +348,27 @@ Same 1,711-case dataset, same pinned evaluation date, deterministic composer:
 
 | | v2.3 | v2.3.1 |
 |---|---|---|
-| overall | 1209/1711 · 70.7% | **1330/1711 · 77.7%** |
-| whole conversations | 132/355 · 37.2% | **196/355 · 55.2%** |
-| turns | 994/1373 · 72.4% | **1179/1373 · 85.9%** |
+| overall | 1209/1711 · 70.7% | **1333/1711 · 77.9%** |
+| whole conversations | 132/355 · 37.2% | **198/355 · 55.8%** |
+| turns | 994/1373 · 72.4% | **1180/1373 · 85.9%** |
 | **pivot** | 18/165 · **10.9%** | **124/165 · 75.2%** |
 | drill | 219/304 · 72.0% | **291/304 · 95.7%** |
 | handoff contract | 43/179 · 24.0% | **96/179 · 53.6%** |
 | `pay` journey | 3/23 · 13.0% | **18/23 · 78.3%** |
 | `service` journey | 7/26 · 26.9% | **18/26 · 69.2%** |
-| product_fact | 974/1092 · 89.2% | 973/1092 · 89.1% |
+| product_fact | 974/1092 · 89.2% | 974/1092 · 89.2% |
 | owed a handoff, gave none | 145 | **87** |
 
-**124 cases gained, 3 lost.** Gains by turn intent: premium +66, claim_status
+**124 cases gained, 0 lost.** Gains by turn intent: premium +66, claim_status
 +40, payment_method +37, refund_status +35.
 
-`product_fact` holding at 89% is the number that mattered most. Routing that
-improved the transactional journeys by eating the questions the corpus is for
-would have been a worse bot with a better score.
+`product_fact` holding at exactly base's figure is the number that mattered
+most. Routing that improved the transactional journeys by eating the questions
+the corpus is for would have been a worse bot with a better score.
 
-All three losses are cancel/renew turns on Cancer Insurance, and none is caused
-by this change: run in isolation against a worktree of the base commit they
-produce byte-identical answers with and without it. Their verdict flips with
-their position in the batch — a harness property to fix separately, not a
-regression to hide here.
+### Three defects the measurement corrected
 
-### Two patterns the measurement corrected
-
-Both were mine, and neither was visible without running the suite.
+All three were mine, and none was visible without running the suite.
 
 **A bare *"how much?"* is a limit question.** On turn three of *"does Corporate
 Travel pay for an 8-hour delay?"* it asks for the benefit. The first
@@ -395,7 +389,28 @@ came before "card"), *"My card was declined"*, *"Has my claim payment been
 processed?"*, and *"Someone called me claiming to be your agent and asked for
 payment"*, a fraud report the corpus would have answered.
 
+**A heading is never out of corpus.** An earlier cut lost three cancel/renew
+turns on Cancer Insurance, and the first explanation — order-dependence in the
+batch — was wrong: every "isolation" replay behind it had silently run against
+the seed bundle, which has no Cancer Insurance product, so base and branch
+agreed because neither could find the page. Against the real bundle, base
+answered and the branch did not. `faq_pick` counts FAQ headings whose
+`classify()` matches the question's intent to decide how strict to be; the new
+`payment` pattern read *"When will GIRO deductions be made for the renewal
+premium?"* as out-of-corpus, the renewal count fell from two to one, a
+low-overlap FAQ entry led on the lenient threshold, and its first sentence —
+*"The premium for your policy is guaranteed"* — is an entitlement assertion to
+an anonymous session, which that gate rightly blocks. The defect was applying
+a *question* classifier to *corpus text*. `classify_topic` is `classify` with
+the out-of-corpus patterns skipped; on all 467 FAQ headings in the real corpus
+it agrees exactly with what `classify` said before the split existed, and
+`faq_pick` now reads headings through it. The same scan found a bare `fraud`
+sending *"does it cover credit card fraud?"* to the contact page; fraud is now
+something reported or suspected, never something covered.
+
 The check that made all of this safe is one pass over both sets at once: every
 `handoff` case and every `product_fact` case, asserting which route. Zero
-product-fact questions route today, and two tests hold both directions so the
-next widening of these patterns has to face the same question.
+product-fact questions route today, and the suite is deterministic — forwards
+and reversed produce byte-identical answers on all 1,711 cases. Two tests hold
+both directions of the routing patterns, and five more pin the moved headings,
+so the next widening of these patterns has to face the same questions.
