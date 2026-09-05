@@ -186,8 +186,10 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bspeak to (?:a |an |the )?"
             r"(?:claims officer|financial adviser|financial advisor|adviser|advisor)\b"
             r"|\bnobody has helped\b|\bprovide feedback\b|\bgive feedback\b|\bbecome an agent\b"
+            # Where the network is, not what it is: "what is a panel doctor" and
+            # "does it have to be a panel hospital" are answered by the pages.
             r"|\bnearest (?:panel )?(?:clinic|hospital|workshop|branch)\b"
-            r"|\bpanel (?:clinics?|hospitals?|workshops?|doctors?)\b"
+            r"|\b(?:list|directory) of (?:panel )?(?:clinics|hospitals|workshops)\b"
             r"|\bmedishield\b|\bcareshield\b|\beldershield\b"
             r"|\bdownload (?:your|the) app\b|\b(?:this )?chatbot\b"
             r"|\b(?:app|website|site|portal) (?:is |isn.t |is not |not )(?:working|loading|down)\b"
@@ -253,7 +255,9 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bwithdraw my consent\b|\bmarketing consent\b"
             r"|\b(?:on|in|with|for) my application\b|\bhas my (?:policy|plan|cover) been renewed\b"
             r"|\bwhy did my (?:policy|plan|cover) lapse\b|\bmy (?:policy|plan|cover) (?:has )?lapsed\b"
-            r"|\b(?:do|will|why do) i need (?:a |to (?:go for |take |do )?)?medical "
+            # "Why do I need a medical examination?" is about the customer's own
+            # application; "Will I need one for Term Life?" is a product question.
+            r"|\bwhy do i need (?:a |to (?:go for |take |do )?)?medical "
             r"(?:examination|exam|check|check-up|underwriting)\b"
             r"|\b(?:keep|retain|store|hold) my (?:personal )?data\b"
             r"|\bnot receiving (?:the |my )?otp\b"

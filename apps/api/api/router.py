@@ -284,10 +284,15 @@ _INCIDENT_FAMILIES: tuple[tuple[re.Pattern[str], tuple[str, ...]], ...] = (
     (re.compile(r"\b(?:my (?:maid|helper|domestic worker)|fdw)\b", re.I), ("maid",)),
     (re.compile(r"\b(?:my (?:dog|cat|pet|puppy|kitten)|the vet)\b", re.I), ("pet",)),
 )
-#: What makes a turn an incident rather than a question: something happened.
+#: What makes a turn an incident rather than a question: something happened,
+#: to the customer or theirs, in the past tense. "Does Business Owners Super
+#: Suite include work injury compensation?" has an injury in it and is a
+#: coverage question; "I fell off my bike and broke my wrist" is an incident.
 INCIDENT_RE = re.compile(
-    r"\b(?:lost|stolen|delayed|cancelled|damaged|broke|broken|fell|had an accident|crashed|flooded"
-    r"|burgl\w+|injur\w+|admitted|hospitali[sz]ed|died|passed away)\b",
+    r"\b(?:i|we|my \w+|someone|somebody|the airline|they|thieves)\b[\w\s]{0,24}?"
+    r"\b(?:lost|stole|stolen|delayed|cancelled|damaged|broke|broken|fell|crashed|flooded|burgl\w+"
+    r"|injured|hurt|admitted|hospitali[sz]ed|died|passed away)\b"
+    r"|\bhad an accident\b|\bbroke into\b",
     re.I,
 )
 
