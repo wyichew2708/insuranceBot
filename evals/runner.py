@@ -184,6 +184,11 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
                 "failures": turn_failures,
                 "answer": envelope.answer.answer[:300],
                 "observed": _observed(envelope, trace),
+                # The router's three layers, flat, so the report can group by
+                # them: a score by layer says which decision is the wrong one.
+                "route1": (trace.route or {}).get("layer1", ""),
+                "route2": (trace.route or {}).get("layer2", ""),
+                "route3": (trace.route or {}).get("layer3", ""),
             }
         )
     assert envelope is not None and trace is not None  # `turns` is never empty
@@ -202,6 +207,9 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
         "composer": trace.composer,
         "turn_results": scored,
         "observed": _observed(envelope, trace),
+        "route1": (trace.route or {}).get("layer1", ""),
+        "route2": (trace.route or {}).get("layer2", ""),
+        "route3": (trace.route or {}).get("layer3", ""),
     }
 
 
@@ -221,6 +229,7 @@ def _observed(envelope: Any, trace: Any) -> dict[str, Any]:
         "smalltalk": envelope.answer.smalltalk,
         "rag_used": trace.rag_used,
         "claims": len(envelope.answer.claims),
+        "route": dict(getattr(trace, "route", {}) or {}),
     }
 
 

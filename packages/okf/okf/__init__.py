@@ -60,6 +60,7 @@ from okf.page import (
     parse_page,
     render_page,
 )
+from okf.scope import SHARED, UNKNOWN, Scope, raw_product_index
 from okf.tables import (
     BenefitTables,
     MissingRow,
@@ -88,10 +89,12 @@ __all__ = [
     "GENERAL_LINES",
     "LINKED",
     "NOT_RENEWABLE",
+    "SHARED",
     "TYPED",
     "UEN",
     "UNCOMPILED_MARK",
     "UNDERWRITER",
+    "UNKNOWN",
     "Abbreviations",
     "BenefitTables",
     "Bundle",
@@ -116,6 +119,7 @@ __all__ = [
     "PageType",
     "ResolvedFigure",
     "Route",
+    "Scope",
     "Severity",
     "Status",
     "Surface",
@@ -140,6 +144,7 @@ __all__ = [
     "normalise",
     "parse_page",
     "plan_for",
+    "raw_product_index",
     "render_page",
     "renews_online",
     "resolve_channel_tokens",

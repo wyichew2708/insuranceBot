@@ -107,6 +107,9 @@ def main() -> int:
         lines += _table("Turns by contract", _group(turns, "contract"))
         lines += _table("Conversations by archetype", _group(convos, "archetype"))
 
+    lines += _table("By router layer 1 — what kind of turn", _group(results, "route1"))
+    lines += _table("By router layer 2 — which product, how surely", _group(results, "route2"))
+    lines += _table("By router layer 3 — which handler", _group(results, "route3"))
     lines += _table("By behaviour contract — what kind of reply was owed", _group(results, "contract"))
     lines += _table("By journey — where in the lifecycle", _group(results, "journey"))
     lines += _table("By intent — weakest 25", _group(results, "intent"), limit=25)

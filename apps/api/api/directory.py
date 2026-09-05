@@ -252,3 +252,39 @@ def answer(bundle: Bundle, question: str) -> GroundedAnswer | None:
         claims=claims,
         confidence=1.0,
     )
+
+
+def lines_overview(bundle: Bundle) -> GroundedAnswer | None:
+    """What is sold, by line, when the shopper named no line at all.
+
+    "What insurance products do you offer?" matched no line and fell through
+    to a product clarification — a question answered with a question. The
+    right reply is the shape of the catalogue: the lines, one product from
+    each so every name resolves to a page, and an invitation to pick a line.
+    Not `clarifying`: it delivers something, and the customer can act on it.
+    """
+    roots = [
+        page
+        for page in bundle.pages.values()
+        if page.frontmatter.type == PageType.product and page.id.count("/") == 2
+    ]
+    if not roots:
+        return None
+    by_line: dict[str, list[Page]] = {}
+    for page in sorted(roots, key=lambda p: p.id):
+        by_line.setdefault(page.id.split("/")[1], []).append(page)
+    shown: list[Page] = []
+    parts: list[str] = []
+    for line, pages in by_line.items():
+        first = pages[0]
+        shown.append(first)
+        label = line.replace("-", " and ")
+        parts.append(f"{label} ({len(pages)}, e.g. {first.frontmatter.title.split(' — ')[0]})")
+    total = len(roots)
+    answer = (
+        f"We offer {total} products across {len(by_line)} lines: "
+        + "; ".join(parts)
+        + ". Tell me the line or the plan you have in mind and I'll give you its detail."
+    )
+    claims = [Claim(text=p.frontmatter.title, source_id=p.id, locator=p.id) for p in shown]
+    return GroundedAnswer(answer=answer, claims=claims, confidence=1.0)

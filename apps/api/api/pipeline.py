@@ -34,9 +34,10 @@ from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
 from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
-from api.clarify import clarification, lexical_clarification
+from api.clarify import clarification, lexical_clarification, open_clarification
 from api.compose import compose, shortfall
 from api.directory import answer as directory_answer
+from api.directory import lines_overview
 from api.entity import answer as entity_answer
 from api.gates_ext import advice_required
 from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency, redact_pii
@@ -55,6 +56,8 @@ from api.retrieval import (
     wiki_read,
 )
 from api.route import destinations_for, links_for, routed_refusal
+from api.router import Layer1, Layer2
+from api.router import route as route_turn
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
 from api.suggest import closing_question, suggest_next
@@ -336,6 +339,18 @@ def _ask_from_trace(trace: Trace) -> Ask | None:
     return None
 
 
+def _root_page(bundle: Bundle, product_key: str) -> Page | None:
+    """The product's own page for a benefit-table key, or None."""
+    for page in bundle.pages.values():
+        if (
+            page.frontmatter.type == PageType.product
+            and page.id.count("/") == 2
+            and bundle.product_key(page) == product_key
+        ):
+            return page
+    return None
+
+
 def _answer_turn(
     bundle: Bundle,
     question: str,
@@ -398,6 +413,17 @@ def _answer_turn(
     ask = read_ask(bundle, question, list(history or []))
     with trace.stage("ask") as detail:
         detail.update(ask.as_trace())
+
+    # The three-layer decision, made once and written down. The branches
+    # below are its handlers; what is new is that the trace and the
+    # evaluation can say which layer a turn went through, and that a guess
+    # at the product is asked about rather than answered (`api.router`).
+    decision = route_turn(bundle, ask, question)
+    trace.route = decision.as_trace()
+    with trace.stage("router") as detail:
+        detail.update(decision.as_trace())
+        if decision.options:
+            detail["options"] = list(decision.options)
 
     # After screening, before retrieval. A greeting is not a question the
     # corpus can fail to answer, and routing one through retrieval replies to
@@ -603,24 +629,53 @@ def _answer_turn(
     # paths defer to it.
     seeking_advice = bool(ADVICE_SEEKING_RE.search(question))
 
-    # Two products, and nothing in the question to separate them — the model
-    # could not choose, the customer named two, or the phrase is a category
-    # with no flagship ("cancer insurance" inside three titles). Ask.
-    if ask.ambiguous and ask.family and not seeking_advice:
-        asked = clarification(bundle, list(ask.family))
-        if asked is not None:
-            with trace.stage("clarify") as detail:
-                detail["options"] = [c.source_id for c in asked.claims]
+    # Shopping with no line named — "what insurance products do you offer?"
+    # — matched no directory line and fell through to a product
+    # clarification. The reply is the shape of the catalogue.
+    if decision.layer1 is Layer1.browse and not seeking_advice:
+        listed = directory_answer(bundle, question)
+        # The overview is for a shopper who named nothing. One who named a
+        # line this insurer does not write — "kidnap and ransom cover" — is
+        # told so further down, never shown the catalogue as if it were the
+        # nearest thing (`api.directory.answer` says as much of `None`).
+        if listed is None and not unsupported_term(bundle, question, []):
+            listed = lines_overview(bundle)
+        if listed is not None:
+            with trace.stage("directory") as detail:
+                detail["listed"] = [c.source_id for c in listed.claims]
             return _finish(
                 trace,
-                asked,
+                listed,
                 bundle,
                 session,
                 question,
                 raw_root,
-                [c.source_id for c in asked.claims],
+                [c.source_id for c in listed.claims],
                 ask=ask,
             )
+
+    # Unsure which product: ask. Three cases, one behaviour. `ambiguous` — the
+    # customer named two, or the model could not choose. `guessed` — the
+    # customer named a category and the code had picked its flagship; that
+    # is a reading, not the customer's word. `none` on a handler whose answer
+    # depends on the product — cover, exclusions, a limit, how to claim.
+    if decision.clarify and not seeking_advice:
+        asked = clarification(bundle, list(decision.options)) if decision.options else None
+        if asked is None:
+            asked = open_clarification()
+        with trace.stage("clarify") as detail:
+            detail["layer2"] = decision.layer2.value
+            detail["options"] = [c.source_id for c in asked.claims]
+        return _finish(
+            trace,
+            asked,
+            bundle,
+            session,
+            question,
+            raw_root,
+            [c.source_id for c in asked.claims],
+            ask=ask,
+        )
 
     # The product this turn is about, as the Ask read it: named by the
     # customer, carried from an earlier turn, the flagship of a category, or
@@ -628,7 +683,8 @@ def _answer_turn(
     # candidate — it is the answer to "which product", and it overrules the
     # lexical rank below. Eleven answers in a 1,000-case sample cited a
     # sibling rider of the one the question named in full, all at 0.99.
-    focus_override = ask.product if ask.resolved and not ask.ambiguous else None
+    focus_override = decision.product if decision.layer2 in (Layer2.named, Layer2.carried) else None
+    scope = decision.scope
 
     try:
         # Dense recall, where an index is configured. No stage at all on the
@@ -719,8 +775,54 @@ def _answer_turn(
 
         with trace.stage("wiki-read") as detail:
             pages = wiki_read(
-                bundle, admitted, trace, budget, settings.wiki_read_limit, session.today, question
+                bundle, admitted, trace, budget, settings.wiki_read_limit, session.today, question, scope
             )
+            # An unnamed product, settled or not by what the corpus produced.
+            # One product's pages and nothing else's: the corpus can answer,
+            # and the rest of the turn is scoped to it as if it had been
+            # named. Several products, or none: the handler's answer depends
+            # on which, and the customer is asked rather than answered from
+            # whichever scored first.
+            if decision.needs_product:
+                loaded_products = {
+                    bundle.product_key(page) for page in pages if page.id.startswith("product/")
+                }
+                # The filter narrows to one product whenever any focus wins,
+                # so "one product loaded" alone proves little. What proves the
+                # corpus can settle it is one product loaded *and* the
+                # filter's own tie detector silent: `ambiguous_products` is
+                # every product within the focus margin of the leader.
+                settled = len(loaded_products) == 1 and not trace.ambiguous_products
+                # Asked only where there is something to choose between. A
+                # turn that loaded no product at all is not a choice: a stale
+                # bundle, or a line this insurer does not write ("crop
+                # insurance"), and both already have their own honest reply
+                # further down — a handoff, and "we do not carry that".
+                undecided = bool(trace.ambiguous_products) or len(loaded_products) >= 2
+                if settled:
+                    decision = decision.inferred(next(iter(loaded_products)))
+                    scope = decision.scope
+                    trace.route = decision.as_trace()
+                elif undecided and not unsupported_term(bundle, question, admitted):
+                    tied = list(trace.ambiguous_products) or sorted(loaded_products)
+                    roots = [r for r in (_root_page(bundle, key) for key in tied) if r is not None]
+                    asked = clarification(bundle, [r.id for r in roots]) if 2 <= len(roots) <= 3 else None
+                    if asked is None:
+                        asked = open_clarification()
+                    with trace.stage("clarify") as detail:
+                        detail["layer2"] = "none"
+                        detail["products_loaded"] = sorted(loaded_products)
+                        detail["tied"] = tied[:8]
+                    return _finish(
+                        trace,
+                        asked,
+                        bundle,
+                        session,
+                        question,
+                        raw_root,
+                        [c.source_id for c in asked.claims],
+                        ask=ask,
+                    )
             # The product's published FAQ rides along whenever the product is
             # known: the composer answers a question the insurer has already
             # answered with that answer, and the page has to be loaded for
@@ -786,8 +888,13 @@ def _answer_turn(
                     must_include=unsupported_term(bundle, question, admitted),
                     dense=raw_dense,
                     dense_floor=settings.vector_raw_floor,
+                    # The product scope reaches the raw sources too: a
+                    # wording tagged to another product is not a fallback.
+                    admit=(lambda rel: scope.allows_raw(bundle, rel)) if scope.scoped else None,
                 )
                 detail["hits"] = [f"{h.found_by}:{h.source_path}#{h.locator}" for h in trace.rag_hits]
+                if scope.scoped:
+                    detail["scope"] = scope.describe()
             # A product the Ask resolved is never "starved": the words may
             # have scored nothing — a misspelling, "ok what about travel then"
             # — but the product's pages are loaded and the customer named it.
