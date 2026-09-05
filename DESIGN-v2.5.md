@@ -121,3 +121,70 @@ fall; the seed gate's failing set does not grow; and the safety tests keep
 their teeth — a model's invented figure never reaches the customer, a fraud
 report never receives the portal, a number the pages do not state is never
 asserted.
+
+## Measured
+
+Full conversation suite on `okf-real`, deterministic composer, 1,711 cases,
+against v2.4's 1341/1711.
+
+```
+                                  v2.4                v2.5
+overall                      1341/1711  78.4%    1519/1711  88.8%
+  whole conversations         199/355   56.1%     278/355   78.3%
+  turns                      1181/1373  86.0%    1281/1373  93.3%
+  pivot turns                 124/165   75.2%     156/165   94.5%
+  product_fact                974/1092  89.2%    1016/1092  93.0%
+  handoff contract             98/179   54.7%     149/179   83.2%
+  quote journey                71/125   56.8%     114/125   91.2%
+  cancel journey               69/116   59.5%      97/116   83.6%
+owed a handoff, did not give one     85                 32
+```
+
+Case by case: **186 gained, 8 lost.** 923 tests, mypy and ruff clean. Seed
+gate 98/130 (one field-test case newly passing, none newly failing), golden
+9/9.
+
+By rule, on the gains: the 37 compound conversations (rule 4); 21 `wants-out`
+cancellations, 11 claim-procedure turns, 6 renewals, 5 cancellations and the
+`never-names-it-again` and `incident-then-claim` follow-ups that
+numeric-binding had refused (rules 1 and 3); and the account-state, price,
+document, billing, dispute and application turns that were answered from a
+page (rule 2). By router layer 2, `carried` turns rise from 174/278 to
+225/277 and `n/a` (the account-state and advice turns) from 192/247 to
+277/302.
+
+### What the first full run found
+
+- **Eight eligibility passes were vacuous.** *"Who is eligible to buy Pet
+  Insurance?"* had passed on a paragraph about core vaccines; *"What is the
+  maximum entry age for Pet Insurance?"* on the deductible definition;
+  Premier Solutions on a marketing sentence. The dataset asked that the
+  product be cited, and it was — by an answer to a different question. They
+  now classify as eligibility, the answerability gate sees none in the
+  draft, and the reply is the eligibility steps. Recorded as losses here and
+  as dataset findings; the fix is an eligibility page that states the age.
+- **The trim needs a settled product.** *"How do I contact my agent?"* named
+  no product, a lexical tie sorted Business Owners Super Suite first, and
+  dropping the unbound numbers delivered its overview. A draft is trimmed
+  only where the product is named, carried or inferred; otherwise the turn
+  gets the steps. *"Contact my agent"* goes to a person.
+- **A question about data use is a corpus question.** *"How is my personal
+  data used?"* is answered by the privacy page; *"a copy of the personal data
+  you hold on me"* is a request about one's own record. The pattern now
+  separates them. *"How long do you keep my personal data?"* went the other
+  way — the dataset wants a handoff, the privacy clause answers it — and is
+  the one case v2.5's second cut lost against its first.
+
+### What remains
+
+192 failures. 111 are turns guided where the dataset expected an answer,
+almost entirely content the pages do not hold — document requests 28/46,
+claim steps 11/112, renewal 9/43 — and the guidance is the right reply until
+the page exists. 47 are answers where a handoff was owed, half of them shapes
+the intent reader still misses (*"get me a quote"*, *"how is my premium
+calculated?"*, *"what are your most popular plans?"*). 19 are answered from the
+wrong product, 16 of them the situation openers (*"the airline lost my
+suitcase"*) whose words the corpus does not use; that is the vocabulary bridge
+and the incident-as-claim reading proposed in the v2.5 plan and not built
+here. The rest are four directory misses and three entity turns.
+
