@@ -292,10 +292,13 @@ def test_a_model_that_invents_a_figure_is_blocked(
     envelope, trace = answer_question(
         bundle, "What is the overseas medical expenses limit?", make_session(), settings
     )
-    assert not envelope.delivered
-    numeric = next(g for g in envelope.gates if g.gate == "numeric-binding")
-    assert numeric.verdict.value == "fail"
-    assert "99,000,000" in numeric.detail
+    # v2.5: the draft is refused and the customer gets the steps to the real
+    # answer instead of a colleague — never the invented figure, and never a
+    # trimmed version of a model's draft. The refusal stays on the record.
+    assert "99,000,000" not in envelope.answer.answer
+    assert envelope.answer.handoff and envelope.answer.guidance
+    assert any("numeric-binding" in u and "99,000,000" in u for u in envelope.answer.unresolved)
+    assert trace.blocked_draft and "99,000,000" in trace.blocked_draft
     assert trace.composer == "lying:test"
 
 

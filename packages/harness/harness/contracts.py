@@ -153,6 +153,12 @@ class GroundedAnswer(BaseModel):
     # about cover, so the coverage gates have nothing to check, but it does
     # name products and carries a claim for each, so provenance still applies.
     clarifying: bool = False
+    #: A direction, not an answer: the corpus could not settle the question
+    #: and the reply says, step by step, where and how the customer gets the
+    #: real answer. It claims nothing about cover — the answerability gate has
+    #: nothing to hold it to — and it is never a fluent paragraph about
+    #: something adjacent, which is what that gate exists to refuse.
+    guidance: bool = False
     #: Questions the customer could ask next, offered as taps. Built from what
     #: was just asked and what the corpus holds for the product; never a
     #: question the corpus cannot answer.

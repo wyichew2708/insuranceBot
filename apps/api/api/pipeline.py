@@ -10,6 +10,8 @@ the pages it considered and rejected.
 from __future__ import annotations
 
 import contextlib
+import dataclasses
+import re
 import threading
 from pathlib import Path
 from typing import Any
@@ -19,6 +21,7 @@ from harness import (
     AuthLevel,
     Budget,
     BudgetExhausted,
+    Figure,
     GateContext,
     GroundedAnswer,
     Judge,
@@ -29,18 +32,19 @@ from harness import (
 )
 from harness.ask import Ask, read_ask
 from harness.contracts import Link
-from harness.gates import ADVICE_SEEKING_RE
+from harness.gates import ADVICE_SEEKING_RE, NUMERIC_SPAN_RE, unbound_spans
 from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
 from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
 from api.clarify import clarification, lexical_clarification, open_clarification
-from api.compose import compose, shortfall
+from api.compose import compose
 from api.directory import answer as directory_answer
 from api.directory import lines_overview
 from api.entity import answer as entity_answer
 from api.gates_ext import advice_required
 from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency, redact_pii
+from api.guidance import guidance
 from api.llm import Draft, LLMProvider, provider_for
 from api.memory import SessionMemory
 from api.present import bulletise, digest, present_overview, section_chips
@@ -56,11 +60,12 @@ from api.retrieval import (
     unsupported_term,
     wiki_read,
 )
-from api.route import destinations_for, links_for, routed_refusal
-from api.router import Layer1, Layer2
+from api.route import FRAUD_OPENER, FRAUD_RE, destinations_for
+from api.router import Layer1, Layer2, Layer3
 from api.router import route as route_turn
 from api.settings import Settings
 from api.sor import NotEntitled, policy_summary
+from api.split import split_questions
 from api.suggest import closing_question, suggest_next
 from api.understand import Understanding, understand, worth_resolving
 from api.vectors import searcher_for
@@ -72,6 +77,7 @@ from okf import (
     PageType,
     expand_abbreviations,
     expand_vocabulary,
+    landing_for,
     load_abbreviations,
     load_vocabulary,
     term_idf,
@@ -94,6 +100,19 @@ HANDOFF = (
 #: A turn the input screen refused. Deliberately says nothing about *why* — a
 #: refusal that explains which rule it tripped is a probe's reward, and tells
 #: the next attempt what to avoid.
+#: "How much will I get back?" two turns after "I want to cancel X" is a
+#: refund question — the customer's own money, which no product page carries —
+#: and not the limit question its words make it on its own. Read with the
+#: conversation, not the sentence.
+REFUND_FOLLOWUP_RE = re.compile(
+    r"\brefund|\b(?:get|getting|receive|receiving|have|having)\b[\w\s]{0,16}\bback\b|\bmoney back\b",
+    re.I,
+)
+CANCEL_CONTEXT_RE = re.compile(r"\b(?:cancel|cancell?ation|terminate|surrender|free.look|cooling)\w*", re.I)
+#: The age words an eligibility answer is allowed to keep its figures for.
+AGE_RE = re.compile(r"\bage\b|\baged\b|\byears? old\b|\byears of age\b|\bentry age\b", re.I)
+PRICED_LABELS = ("premium", "price", "cost")
+
 REFUSED = (
     "I can't help with that one. If you have a question about a policy or a product, "
     "I'm happy to take it — otherwise I can put you through to a colleague."
@@ -314,12 +333,158 @@ def answer_question(
     recalled = memory.recall(session.session_id)
     turns = list(history) if history else recalled.questions
     provider = provider or provider_for(settings)
-    envelope, trace = _answer_turn(bundle, question, session, settings, turns, provider, on_stage)
+    # Two questions in one breath are two turns, each routed to its own
+    # handler, answered in order with the earlier parts as history, and put
+    # back together (`api.split`, `_consolidate`).
+    parts = split_questions(question)
+    if len(parts) > 1:
+        envelopes: list[AnswerEnvelope] = []
+        traces: list[Trace] = []
+        for index, part in enumerate(parts):
+            part_envelope, part_trace = _answer_turn(
+                bundle, part, session, settings, [*turns, *parts[:index]], provider, on_stage
+            )
+            envelopes.append(part_envelope)
+            traces.append(part_trace)
+        envelope, trace = _consolidate(parts, envelopes, traces)
+    else:
+        envelope, trace = _answer_turn(bundle, question, session, settings, turns, provider, on_stage)
     ask = _ask_from_trace(trace)
     envelope.summary = memory.remember(session.session_id, question, envelope, ask)
     if envelope.delivered and not envelope.answer.smalltalk:
         memory.refine_later(session.session_id, question, envelope.answer.answer, provider)
     return envelope, trace
+
+
+def _consolidate(
+    parts: list[str], envelopes: list[AnswerEnvelope], traces: list[Trace]
+) -> tuple[AnswerEnvelope, Trace]:
+    """One reply from the parts' replies, and one trace that says it was several.
+
+    The text is the parts in order. Claims, figures and destinations are the
+    union — each part's own gates have already held them, and the gate
+    results travel with the envelope so a reader sees every verdict. A
+    handoff only where every part handed off; delivered where any part was.
+    """
+    answers = [e.answer for e in envelopes]
+    links: list[Link] = []
+    for answer in answers:
+        for link in answer.destinations:
+            if all(link.url != seen.url for seen in links):
+                links.append(link)
+    merged = GroundedAnswer(
+        answer="\n\n".join(a.answer.strip() for a in answers if a.answer.strip()),
+        claims=[c for a in answers for c in a.claims],
+        figures=[f for a in answers for f in a.figures],
+        channel_render=next((a.channel_render for a in answers if a.channel_render is not None), None),
+        advice_flag=any(a.advice_flag for a in answers),
+        confidence=min(a.confidence for a in answers),
+        unresolved=[u for a in answers for u in a.unresolved],
+        handoff=all(a.handoff for a in answers),
+        smalltalk=all(a.smalltalk for a in answers),
+        clarifying=any(a.clarifying for a in answers),
+        guidance=all(a.guidance for a in answers),
+        suggestions=answers[-1].suggestions,
+        destinations=links,
+    )
+    trace = traces[0]
+    trace.route = {**trace.route, "parts": str(len(parts))}
+    for index, (part, part_trace, part_envelope) in enumerate(
+        zip(parts, traces, envelopes, strict=True), start=1
+    ):
+        route = part_trace.route
+        summary = f"{route.get('layer1', '')}/{route.get('layer2', '')}/{route.get('layer3', '')}"
+        trace.route[f"part{index}"] = summary
+        trace.note(f"part {index} {part!r}: routed {summary}, delivered={part_envelope.delivered}")
+    trace.gates = [g for e in envelopes for g in e.gates]
+    delivered = any(e.delivered for e in envelopes)
+    trace.delivered = delivered
+    trace.answer = merged.model_dump(mode="json")
+    return AnswerEnvelope(
+        answer=merged, gates=trace.gates, delivered=delivered, trace_id=trace.trace_id
+    ), trace
+
+
+def _priced(draft: GroundedAnswer) -> bool:
+    """A bound figure that is a premium, price or cost — not the plan's FAQ."""
+    return any(f.is_bound and any(w in f.label.lower() for w in PRICED_LABELS) for f in draft.figures)
+
+
+def _wording_pointer(bundle: Bundle, product: Page | None) -> str:
+    """Where the figures that were left out can be read. No digits in it."""
+    from api.guidance import root_page
+
+    root = root_page(bundle, product)
+    url = landing_for(root) if root is not None else None
+    if url and not re.search(r"\d{2,}", url):
+        return (
+            "The exact figures — time limits, amounts and ages — are in the policy wording, "
+            f"on the plan's page: {url}"
+        )
+    return (
+        "The exact figures — time limits, amounts and ages — are in the policy wording, "
+        "which the plan's page links to."
+    )
+
+
+def _strip_unbound(draft: GroundedAnswer, orphans: list[str], pointer: str) -> GroundedAnswer | None:
+    """The draft without the lines that carry an unbound figure, or None if
+    nothing substantive is left. The claims those lines made go with them.
+
+    Lines are found from the figure's position in the text, not by searching
+    for its digits: a span the gate read across a line break ("S$" at the
+    end of one table cell, "3" at the start of the next) names two lines,
+    and a bare "3" searched for would name every line with a 3 in it.
+    """
+    if not orphans:
+        return None
+    text = draft.answer
+    wanted = {" ".join(o.split()) for o in orphans}
+    starts: list[int] = [0] + [i + 1 for i, ch in enumerate(text) if ch == "\n"]
+    lines = text.split("\n")
+
+    def line_of(offset: int) -> int:
+        return max(i for i, start in enumerate(starts) if start <= offset)
+
+    doomed: set[int] = set()
+    for match in NUMERIC_SPAN_RE.finditer(text):
+        if " ".join(match.group().split()) in wanted:
+            doomed.update(range(line_of(match.start()), line_of(max(match.start(), match.end() - 1)) + 1))
+    kept = [line for i, line in enumerate(lines) if i not in doomed]
+    dropped = [line for i, line in enumerate(lines) if i in doomed]
+    remaining = re.sub(r"\n{3,}", "\n\n", "\n".join(kept)).strip()
+    gone = "\n".join(dropped)
+    claims = [
+        c
+        for c in draft.claims
+        if not (c.text and c.text in gone) and not any(len(d) > 20 and d.strip() in c.text for d in dropped)
+    ]
+    if not remaining or not claims or not re.search(r"[A-Za-z]{4,}", remaining):
+        return None
+    return draft.model_copy(
+        update={
+            "answer": f"{remaining}\n\n{pointer}",
+            "claims": claims,
+            "figures": [f for f in draft.figures if f.is_bound],
+            "confidence": min(draft.confidence, 0.6),
+        }
+    )
+
+
+def _bind_ages(draft: GroundedAnswer, orphans: list[str]) -> GroundedAnswer | None:
+    """Bind an unbound figure in an age sentence to the page the sentence
+    came from; the numeric-binding gate re-reads that page to confirm it.
+    None where no orphan sits in an age sentence."""
+    added: list[Figure] = []
+    for claim in draft.claims:
+        if not claim.text or not AGE_RE.search(claim.text):
+            continue
+        for orphan in orphans:
+            if orphan in claim.text and not any(f.text == orphan for f in added):
+                added.append(Figure(label="age", text=orphan, page_ref=claim.source_id))
+    if not added:
+        return None
+    return draft.model_copy(update={"figures": [*draft.figures, *added]})
 
 
 def _ask_from_trace(trace: Trace) -> Ask | None:
@@ -412,6 +577,10 @@ def _answer_turn(
     # turns "Tiq PA Insurance" into another product's title — and everything
     # downstream reads this object rather than re-deriving its own guess.
     ask = read_ask(bundle, question, list(history or []))
+    recent = (history or [])[-3:]
+    if REFUND_FOLLOWUP_RE.search(question) and any(CANCEL_CONTEXT_RE.search(t) for t in recent):
+        ask = dataclasses.replace(ask, intent=Intent.payment)
+        trace.note("read as a refund question: the conversation is about a cancellation")
     with trace.stage("ask") as detail:
         detail.update(ask.as_trace())
 
@@ -603,17 +772,14 @@ def _answer_turn(
             detail["intent"] = routed_intent.value
             detail["product"] = focus.id if focus is not None else ""
             detail["destinations"] = [d.url for d in destinations_for(routed_intent, focus, question)]
+        # Not a refusal: the steps to the real answer, from the guidance
+        # table (`api.guidance`). A fraud report keeps its safety line first
+        # and goes to a person and nowhere else.
+        fraud = routed_intent is Intent.contact and bool(FRAUD_RE.search(question))
         return _finish(
             trace,
-            GroundedAnswer(
-                answer=routed_refusal(routed_intent, focus, question),
-                # A handoff, not smalltalk: something is being passed on, and
-                # the coverage gates must skip it because it asserts nothing
-                # about cover. It carries no claims for the same reason — the
-                # destinations are a registry, not a reading of a page.
-                handoff=True,
-                destinations=links_for(routed_intent, focus, question),
-                confidence=1.0,
+            guidance(
+                bundle, raw_root, routed_intent, focus, question, opener=FRAUD_OPENER if fraud else None
             ),
             bundle,
             session,
@@ -1184,6 +1350,16 @@ def _answer_turn(
             detail["scores"] = [str(sc) for sc in outgoing.scores]
     trace.gates.append(outgoing.as_gate("guardrail-output"))
 
+    # A price with no premium figure bound to it is not a price; it is the
+    # FAQ's description of the plan, and "How much does Tiq CashSaver cost?"
+    # was answered with one. The owner's rule: say how to get the real price.
+    if decision.layer3 is Layer3.price and not _priced(draft):
+        guide = guidance(bundle, raw_root, Intent.price, product, question)
+        guide.advice_flag = draft.advice_flag
+        trace.blocked_draft = draft.answer
+        trace.note("no premium figure bound: the quote steps instead of the draft")
+        return _finish(trace, guide, bundle, session, question, raw_root, [p.id for p in pages], judge, ask)
+
     with trace.stage("gates") as detail:
         ctx = GateContext(
             answer=draft,
@@ -1229,20 +1405,50 @@ def _answer_turn(
         # gate means the draft was faulty, which says nothing about where the
         # answer lives, so those get the one destination that is always true
         # and nothing that would imply the corpus was asked and found wanting.
-        settled = failed == {"answerability"}
-        intent = classify(question)
-        refusal = shortfall(question, product) if settled else HANDOFF
-        links = links_for(intent, product, question) if settled else [CONTACT_LINK]
-        tail = (
-            routed_refusal(intent, product, question, opener=refusal)
-            if settled
-            else f"{refusal} {DESTINATIONS[Desk.contact].sentence}"
-        )
+        intent = ask.intent if ask is not None else classify(question)
+        loaded_ids = [p.id for p in pages]
+        # The owner's rules (v2.5). A number the draft could not bind is
+        # dropped and the rest is delivered as the generic reply — unless the
+        # customer asked who can buy, where the age requirement is the answer
+        # and is bound to the page that states it. Where nothing loaded
+        # settles the question, the reply is the steps to the real answer,
+        # not a colleague. Every other gate means the draft itself was faulty,
+        # which is not a thing to reshape: that is still a handoff.
+        soft = failed <= {"numeric-binding", "answerability"} and not _fail_closed(outgoing, settings)
+        if soft and failed == {"numeric-binding"}:
+            orphans = unbound_spans(ctx)
+            if intent is Intent.eligibility:
+                aged = _bind_ages(draft, orphans)
+                if aged is not None:
+                    trace.note("age figures bound to the eligibility page that states them")
+                    aged_envelope, aged_trace = _finish(
+                        trace, aged, bundle, session, question, raw_root, loaded_ids, judge, ask
+                    )
+                    if aged_envelope.delivered:
+                        return aged_envelope, aged_trace
+            # Trimmed only where the composer quoted the pages: an unbound
+            # number there is page text the gate cannot tie to a row. A
+            # model's draft with an unbound number is a model that invented
+            # one, and the rest of its draft is not trusted line by line.
+            generic = (
+                _strip_unbound(draft, orphans, _wording_pointer(bundle, product))
+                if trace.composer == "deterministic"
+                else None
+            )
+            if generic is not None:
+                trace.note(f"unbound figures removed and the rest delivered: {sorted(set(orphans))}")
+                return _finish(trace, generic, bundle, session, question, raw_root, loaded_ids, judge, ask)
+        if soft:
+            guide = guidance(bundle, raw_root, intent, product, question)
+            guide.advice_flag = draft.advice_flag
+            guide.unresolved = [f"{r.gate}: {r.detail}" for r in results if r.blocking]
+            trace.note(f"the steps to the answer instead of the draft: {', '.join(sorted(failed))}")
+            return _finish(trace, guide, bundle, session, question, raw_root, loaded_ids, judge, ask)
         envelope = AnswerEnvelope(
             answer=GroundedAnswer(
-                answer=tail,
+                answer=f"{HANDOFF} {DESTINATIONS[Desk.contact].sentence}",
                 handoff=True,
-                destinations=links,
+                destinations=[CONTACT_LINK],
                 # Preserve what the turn established: an advice question that
                 # gets blocked still needs the adviser handoff downstream.
                 advice_flag=draft.advice_flag,

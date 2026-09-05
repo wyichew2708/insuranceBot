@@ -182,6 +182,10 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"(?:a\s+)?(?:someone|somebody|a\s+person|a\s+human|an?\s+agent|an?\s+adviser|staff)"
             r"|\b(?:real|actual|human)\s+(?:person|being|agent)\b"
             r"|\b(?:i want to |i.d like to |let me )?(?:make a )?complain(?:t|ts)?\b"
+            r"|\b(?:operating|opening|office|business|working) hours\b|\bwhen are you open\b"
+            r"|\bspeak to (?:a |an |the )?"
+            r"(?:claims officer|financial adviser|financial advisor|adviser|advisor)\b"
+            r"|\bnobody has helped\b|\bprovide feedback\b|\bgive feedback\b|\bbecome an agent\b"
             r"|\bescalate\b|\bspeak to (?:your )?(?:a )?(?:manager|supervisor)\b"
             # Fraud and phishing. A customer checking whether a message is
             # genuine must never be answered out of the corpus, whatever the
@@ -217,6 +221,27 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
         re.compile(
             r"\b(?:log|sign)\s?(?:in|on)\b|\blogin\b|\bpassword\b|\bmy account\b"
             r"|\b(?:customer|policy) portal\b|\btiqconnect\b|\blocked out\b"
+            # The customer's own record: number, dates, status, people on it,
+            # documents, agent, data. No product page has any of it.
+            r"|\bmy policy number\b|\bpolicy number for\b"
+            r"|\b(?:when|what date) (?:does|will|did) my (?:policy|cover|plan) "
+            r"(?:expire|end|lapse)\b"
+            r"|\bis my (?:policy|cover|plan) (?:still )?(?:active|in force|valid|live|renewed|lapsed)\b"
+            r"|\bmy (?:policy|plan|cover) (?:expiry|expiration|renewal|start) date\b"
+            r"|\b(?:beneficiary|nominee|limit|excess|tier) on my (?:policy|plan)\b|\bmy annual limit\b"
+            r"|\b(?:save|finish|complete|continue|resume|cancel|amend|change) my application\b"
+            r"|\bhaven.t (?:completed|finished) my application\b|\bwrong information on my application\b"
+            r"|\b(?:did ?n.t|have ?n.t|never) (?:receive|received|get|got) (?:a |my |the )?"
+            r"(?:confirmation|policy documents?|renewal notice|policy|certificate|receipt|invoice)\b"
+            r"|\b(?:download|copy of|email me|send me) my "
+            r"(?:policy|documents?|certificate|schedule|invoice)\b"
+            r"|\bmy (?:certificate of insurance|tax invoice|policy schedule)\b"
+            r"|\bmy policy document has\b|\bwhen will i (?:receive|get) my renewal notice\b"
+            r"|\bwho is my (?:insurance )?(?:agent|adviser|advisor)\b"
+            r"|\bchange my (?:agent|adviser|advisor)\b"
+            r"|\bmy (?:personal )?data\b|\bwithdraw my consent\b|\bmarketing consent\b"
+            r"|\bnot receiving (?:the |my )?otp\b"
+            r"|\botp\b[\w\s]{0,12}\bnot (?:coming|arriving|received)\b"
             r"|\b(?:reset|change) my (?:password|username|pin)\b",
             re.I,
         ),
@@ -238,6 +263,13 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bwhen will (?:my|the) [\w\s]{0,20}?reach (?:my|the) bank\b"
             r"|\b(?:is|are) (?:my|the) (?:claim|application|refund|payout|policy)"
             r" (?:approved|processed|ready|done|settled|paid|through)\b"
+            r"|\bwhy (?:was|is|has) my (?:claim|application) (?:been )?"
+            r"(?:rejected|declined|denied|delayed|taking so long)\b"
+            r"|\bwhy (?:hasn.t|has not|isn.t) my (?:claim|application|refund|policy)\b"
+            r"|\bappeal (?:a |the |my )?(?:rejected |declined )?claim\b"
+            r"|\bappeal (?:a |the |your )?claim decision\b"
+            r"|\bdisagree with (?:your|the) claim decision\b|\bamend a claim\b|\bforgot to attach\b"
+            r"|\bhow much will i (?:receive|get) for my claim\b"
             r"|\bmy claim (?:was|is|has been) (?:rejected|declined|denied|approved|pending)\b"
             r"|\b(?:chase|chasing|follow up on) (?:my|the) claim\b"
             r"|\bstill (?:waiting|pending)\b",
@@ -256,6 +288,9 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bi (?:have )?(?:moved|relocated)\b|\bmoved (?:house|home|address)\b"
             r"|\bchange of (?:address|name|details|nominee|beneficiary)\b"
             r"|\b(?:upgrade|downgrade) my (?:plan|policy|cover|tier)\b"
+            r"|\badd my (?:wife|husband|spouse|partner|child|children|son|daughter|employees?|staff) to\b"
+            r"|\b(?:increase|reduce|lower|raise) my (?:coverage|cover|sum insured|sum assured)\b"
+            r"|\bcancel (?:just )?(?:one|a|the) rider\b"
             r"|\btransfer (?:my|the) policy\b",
             re.I,
         ),
@@ -276,6 +311,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # answers it, and the dataset expects it answered — routing it
             # traded a good answer for a link. The forms that belong here name
             # a *schedule* or a *method*, and those are matched above.
+            r"|\bwhy (?:is|was|did) my premium\b|\bcalculate my premium\b|\bhow much do i owe\b"
+            r"|\bcharged (?:twice|the wrong amount|incorrectly)\b|\bdouble.charged\b"
             r"|\bpayment (?:method|mode|option|plan)s?\b"
             r"|\b(?:how |can |could |may )?i pay (?:my|the) [\w\s]{0,16}?"
             r"(?:premium|policy|bill|instal?ment)s?\b"
@@ -382,7 +419,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.eligibility,
         re.compile(
-            r"\b(am i eligible|eligibilit|who can (buy|apply|purchase)|can i (buy|apply|purchase|get)"
+            r"\b(am i eligible|eligibilit|who is eligible|eligible (?:to|for)|who can (buy|apply|purchase)"
+            r"|can i (buy|apply|purchase|get)|who qualifies|age requirements?|entry age"
             r"|do i qualify|age limit|more than \d+ years old|minimum age|maximum age"
             r"|can my (child|spouse|wife|husband|parent))\b",
             re.I,
