@@ -186,6 +186,7 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bspeak to (?:a |an |the )?"
             r"(?:claims officer|financial adviser|financial advisor|adviser|advisor)\b"
             r"|\bnobody has helped\b|\bprovide feedback\b|\bgive feedback\b|\bbecome an agent\b"
+            r"|\bcontact my (?:agent|adviser|advisor)\b"
             r"|\bescalate\b|\bspeak to (?:your )?(?:a )?(?:manager|supervisor)\b"
             # Fraud and phishing. A customer checking whether a message is
             # genuine must never be answered out of the corpus, whatever the
@@ -239,7 +240,10 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bmy policy document has\b|\bwhen will i (?:receive|get) my renewal notice\b"
             r"|\bwho is my (?:insurance )?(?:agent|adviser|advisor)\b"
             r"|\bchange my (?:agent|adviser|advisor)\b"
-            r"|\bmy (?:personal )?data\b|\bwithdraw my consent\b|\bmarketing consent\b"
+            # A request about the customer's own data record — a copy, consent —
+            # not a question about how data is used, which the privacy page answers.
+            r"|\bcopy of (?:the |my )?personal data\b|\bdata you hold on me\b"
+            r"|\bwithdraw my consent\b|\bmarketing consent\b"
             r"|\bnot receiving (?:the |my )?otp\b"
             r"|\botp\b[\w\s]{0,12}\bnot (?:coming|arriving|received)\b"
             r"|\b(?:reset|change) my (?:password|username|pin)\b",

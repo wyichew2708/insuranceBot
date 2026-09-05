@@ -1415,7 +1415,13 @@ def _answer_turn(
         # not a colleague. Every other gate means the draft itself was faulty,
         # which is not a thing to reshape: that is still a handoff.
         soft = failed <= {"numeric-binding", "answerability"} and not _fail_closed(outgoing, settings)
-        if soft and failed == {"numeric-binding"}:
+        # Trimmed only where the product is settled — named, carried or
+        # inferred. With no product, the draft is whichever pages a lexical
+        # tie sorted first, and "How do I contact my agent?" was delivered a
+        # trimmed Business Owners Super Suite overview. That turn gets the
+        # steps instead.
+        settled_product = decision.layer2 in (Layer2.named, Layer2.carried, Layer2.inferred)
+        if soft and failed == {"numeric-binding"} and settled_product:
             orphans = unbound_spans(ctx)
             if intent is Intent.eligibility:
                 aged = _bind_ages(draft, orphans)
