@@ -401,8 +401,14 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.price,
         re.compile(
+            # A bare "how much?" is deliberately NOT here. On turn three of
+            # "does Corporate Travel pay for an 8-hour delay?" it asks for the
+            # *benefit*, and reading it as a price question turned three
+            # answered limit questions into refusals. The object separates
+            # them: "how much is it" is about the plan; "how much" alone is
+            # about whatever was last discussed, which is a limit.
             r"^\s*(?:and\s+|so\s+|ok(?:ay)?,?\s+|just\s+)?"
-            r"(?:how much(?:\s+is\s+(?:it|this|that|the plan|the policy|the cover(?:age)?))?"
+            r"(?:how much\s+is\s+(?:it|this|that|the plan|the policy|the cover(?:age)?)"
             r"|what.{0,4}s? the (?:price|cost|premium)|the (?:price|cost|premium)"
             r"|price|cost|premium)\s*(?:then|please|pls)?\s*[?.!]*\s*$"
             r"|\bhow much (?:is|would) (?:it|this|that|the (?:plan|policy|cover(?:age)?))\b"

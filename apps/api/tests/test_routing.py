@@ -112,6 +112,13 @@ def test_the_question_is_classified_as_the_thing_it_is(question: str, intent: In
         ("how do I buy it", Intent.application),
         ("who underwrites this", Intent.entity),
         ("how much does travel insurance cost a year", Intent.price),
+        # A bare "how much?" is the one that has to stay out of `price`. On
+        # turn three of "does Corporate Travel pay for an 8-hour delay?" it
+        # asks for the benefit, and an early cut of the bare-price pattern
+        # read it as a price question and turned three answered limit
+        # questions into refusals. The object is the whole difference.
+        ("how much?", Intent.unknown),
+        ("how much", Intent.unknown),
     ],
 )
 def test_a_question_the_corpus_answers_is_not_routed_away(question: str, intent: Intent) -> None:
@@ -221,3 +228,12 @@ def test_todays_date_does_not_change_a_routed_answer(bundle: Bundle, settings: S
     first, _ = ask(bundle, settings, "let me speak to someone", today=dt.date(2026, 1, 1))
     later, _ = ask(bundle, settings, "let me speak to someone", today=dt.date(2027, 1, 1))
     assert first.answer.answer == later.answer.answer
+
+
+def test_the_object_is_what_makes_how_much_a_price_question() -> None:
+    """ "How much is it" is about the plan. "How much" alone is about whatever
+    was last discussed, and on this corpus that is a benefit."""
+    assert classify("how much is it?") is Intent.price
+    assert classify("just the price then") is Intent.price
+    assert classify("how much?") is not Intent.price
+    assert classify("how much can I claim?") is Intent.limit
