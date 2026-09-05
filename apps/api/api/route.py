@@ -40,6 +40,8 @@ FRAUD_RE = re.compile(
     r"|\b(?:report(?:ing)?|suspect(?:ed)?|victim of|targeted by)\b[\w\s]{0,30}\bfraud\b"
     r"|\b(?:is|was) (?:this|that|it)[\w\s]{0,12}\bfraud\b"
     r"|\bsomeone (?:used|accessed|hacked)\b|\bdid ?n.t request\b|\bnever requested\b"
+    r"|\bwithout my (?:permission|consent|knowledge)\b|\busing my identity\b|\bidentity (?:theft|fraud)\b"
+    r"|\bthat i did not (?:submit|make|file|buy|purchase|authori[sz]e)\b"
     r"|\b(?:is|was) (?:this|that|it) (?:email|sms|message|text|call|really|actually)"
     r"|\breally from (?:you|etiqa|tiq)\b|\botp\b"
     r"|\bi (?:got|received|have had|had) (?:an?|this|some) "
@@ -75,6 +77,24 @@ FRAUD_OPENER = (
     "with any of your details. I can't verify a message from here — check it with "
     "us directly first."
 )
+
+#: A fraud that is not a message — a policy used without permission, a claim
+#: the customer did not file, an identity used to buy cover. Nothing to
+#: "not act on"; the one instruction is to report it, to us, now.
+FRAUD_REPORT_OPENER = (
+    "That needs a person straight away. Please report it to us directly and don't share your "
+    "details with anyone who contacts you about it — a colleague will secure the policy and take it "
+    "from there."
+)
+MESSAGE_RE = re.compile(
+    r"\b(?:e-?mail|sms|message|text|call(?:er)?|whatsapp|letter|link|website|otp)\b", re.I
+)
+
+
+def fraud_opener(question: str) -> str:
+    """The safety line for a fraud report: about a message, or about a record."""
+    return FRAUD_OPENER if MESSAGE_RE.search(question) else FRAUD_REPORT_OPENER
+
 
 #: intent → desks, most specific first. Only for the intents that reach a
 #: desk. An intent absent from this map routes to the product's own page and

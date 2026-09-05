@@ -25,6 +25,9 @@ from okf import ALL_CHANNELS, Bundle, Status, spec_for
 # Currency amounts, percentages, quantities with a time unit, or any bare
 # multi-digit number. A hallucinated "4 hours" must be caught as surely as a
 # hallucinated limit.
+#: Singapore's ambulance and police numbers, bound by construction.
+EMERGENCY_NUMBERS = ("995", "999")
+
 NUMERIC_SPAN_RE = re.compile(
     r"(?:S?\$\s?\d[\d,]*(?:\.\d+)?)"
     r"|(?:\b\d+(?:\.\d+)?\s?%)"
@@ -62,7 +65,9 @@ ADVICE_SEEKING_RE = re.compile(
     r"(?:suitable|right|best|good) for (?:me|us|my)|"
     r"(?:cheapest|best|right) (?:plan|policy|one|cover) (?:i|we) should|"
     r"how much (?:\w+ )?(?:insurance|cover|coverage) do (?:i|we) need|"
-    r"what (?:insurance|cover) does my \w+ need|most popular (?:plans?|products?|policies))\b",
+    r"what (?:insurance|cover) does my \w+ need|most popular (?:plans?|products?|policies)|"
+    # Cover for someone else's circumstances is a recommendation about them.
+    r"insurance for my (?:elderly )?parents)\b",
     re.IGNORECASE,
 )
 
@@ -236,6 +241,10 @@ def unbound_spans(ctx: GateContext) -> list[str]:
             if spec is not None:
                 bound_text.extend(spec.contact_values())
     bound_text.extend(_channel_values(ctx))
+    # The jurisdiction's emergency numbers. The medical-emergency reply says
+    # "call 995"; that is a constant of Singapore, not a figure read from a
+    # document, and it must never be trimmed or refused.
+    bound_text.extend(EMERGENCY_NUMBERS)
     # A benefit the customer named by its number — "section 99", "section 6"
     # — is an identifier the answer may echo ("the pages do not address
     # section 99"), not a figure it asserts. Only the codes the question

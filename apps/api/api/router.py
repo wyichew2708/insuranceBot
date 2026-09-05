@@ -241,6 +241,70 @@ def _category_members(bundle: Bundle, ask: Ask, question: str) -> tuple[str, ...
     return members if len(members) >= 2 else ()
 
 
+#: An incident with no product named, read for the line it belongs to. "The
+#: airline lost my suitcase in Tokyo" tells us the line — travel — and nothing
+#: about which travel plan; that is a guess with the line's products as the
+#: options, and the rule for a guess is to ask. The families are resolved
+#: against product titles, so a plan added to the catalogue joins its line
+#: without a code change. Injury is read before motor: "fell off my bike and
+#: broke my wrist" is a personal-accident matter, not a motorcycle one.
+_INCIDENT_FAMILIES: tuple[tuple[re.Pattern[str], tuple[str, ...]], ...] = (
+    (
+        re.compile(
+            r"\b(?:fell|fracture[sd]?|broke my (?:wrist|arm|leg|ankle|hand|foot|collarbone)"
+            r"|injur(?:ed|y|ies)|sprain(?:ed)?)\b",
+            re.I,
+        ),
+        ("accident", "safety"),
+    ),
+    (
+        re.compile(
+            r"\b(?:airline|flight|airport|suitcase|luggage|baggage|overseas|abroad|my trip"
+            r"|hotel booking|tour)\b",
+            re.I,
+        ),
+        ("travel",),
+    ),
+    (
+        re.compile(
+            r"\b(?:broke into|burglar\w*|break-in|my (?:flat|hdb|house|home|apartment|condo)|flooded"
+            r"|pipe burst|fire (?:in|at) my)\b",
+            re.I,
+        ),
+        ("home", "fire"),
+    ),
+    (
+        re.compile(
+            r"\b(?:my (?:car|vehicle|motorcycle|motorbike)|windscreen|collision|crash(?:ed)?|rear-ended"
+            r"|knocked (?:into|down)|had an accident|accident on the road)\b",
+            re.I,
+        ),
+        ("car", "motorcycle", "vehicle"),
+    ),
+    (re.compile(r"\b(?:my (?:maid|helper|domestic worker)|fdw)\b", re.I), ("maid",)),
+    (re.compile(r"\b(?:my (?:dog|cat|pet|puppy|kitten)|the vet)\b", re.I), ("pet",)),
+)
+#: What makes a turn an incident rather than a question: something happened.
+INCIDENT_RE = re.compile(
+    r"\b(?:lost|stolen|delayed|cancelled|damaged|broke|broken|fell|had an accident|crashed|flooded"
+    r"|burgl\w+|injur\w+|admitted|hospitali[sz]ed|died|passed away)\b",
+    re.I,
+)
+
+
+def _incident_family(bundle: Bundle, ask: Ask, question: str) -> tuple[str, ...]:
+    """The line's product pages for an incident that named no plan, or ()."""
+    if ask.named or ask.resolved or not INCIDENT_RE.search(question):
+        return ()
+    index = index_for(bundle)
+    for pattern, words in _INCIDENT_FAMILIES:
+        if pattern.search(question):
+            return tuple(
+                sorted(pid for pid, title in index.titles.items() if any(w in title.split() for w in words))
+            )
+    return ()
+
+
 def _layer2(bundle: Bundle, ask: Ask, question: str) -> tuple[Layer2, str | None, tuple[str, ...], str]:
     if ask.named:
         members = _category_members(bundle, ask, question)
@@ -249,6 +313,21 @@ def _layer2(bundle: Bundle, ask: Ask, question: str) -> tuple[Layer2, str | None
         return Layer2.named, ask.product, (), f"named by {ask.named_by}"
     if ask.named_by == "history" and ask.resolved:
         return Layer2.carried, ask.product, (), "carried from an earlier turn"
+    incident = _incident_family(bundle, ask, question)
+    if len(incident) >= 2:
+        return (
+            Layer2.guessed,
+            index_for(bundle).keys.get(incident[0]),
+            incident,
+            "an incident that names a line",
+        )
+    if len(incident) == 1:
+        return (
+            Layer2.inferred,
+            index_for(bundle).keys.get(incident[0]),
+            (),
+            "an incident that names one plan's line",
+        )
     if ask.ambiguous and ask.family:
         return Layer2.ambiguous, None, tuple(ask.family), ask.family_phrase or "several candidates"
     if ask.resolved and ask.named_by in ("flagship", "model"):
@@ -284,5 +363,6 @@ def route(bundle: Bundle, ask: Ask, question: str) -> Decision:
     # Retrieval is scoped to a product the customer named or that the
     # conversation carries. A guess is asked about instead of scoped to, and
     # an open turn reads the whole corpus, as before.
-    scope = Scope.for_product(product) if layer2 in (Layer2.named, Layer2.carried) else Scope.open()
+    settled = (Layer2.named, Layer2.carried, Layer2.inferred)
+    scope = Scope.for_product(product) if layer2 in settled else Scope.open()
     return Decision(layer1, layer2, layer3, product=product, options=options, reason=why2, scope=scope)

@@ -226,3 +226,48 @@ def test_real_document_links_are_the_products_own() -> None:
     links = document_links(real, REAL / "raw", real.get("product/general/travel-infinite"))
     assert links and all("etiqa.com.sg" in link.url for link in links)
     assert all("travel-infinite" in link.label.lower().replace(" ", "-") for link in links)
+
+
+# --- v2.6 ------------------------------------------------------------------------
+
+
+def test_a_price_question_with_no_plan_is_the_quote_steps_not_a_menu(
+    bundle: Bundle, settings: Settings
+) -> None:
+    for question in ("Get me a quote", "How much does insurance cost for a family of four?"):
+        env, trace = ask(bundle, settings, question, policy_id=None)
+        assert env.answer.handoff and env.answer.guidance, question
+        assert not env.answer.clarifying, (
+            "the price of any plan is not in the corpus; there is nothing to choose"
+        )
+        assert "Get a quote" in env.answer.answer
+        assert trace.route["layer3"] == "price"
+
+
+def test_an_emergency_is_a_handoff_and_keeps_the_number(bundle: Bundle, settings: Settings) -> None:
+    env, _ = ask(bundle, settings, "I am having chest pains, what should I do")
+    assert env.delivered and env.answer.handoff and env.answer.smalltalk
+    assert "995" in env.answer.answer
+
+
+def test_a_misused_record_gets_the_report_line_not_the_message_line(
+    bundle: Bundle, settings: Settings
+) -> None:
+    env, _ = ask(bundle, settings, "Someone has used my policy without my permission", policy_id=None)
+    assert env.answer.handoff
+    assert "report it to us directly" in env.answer.answer
+    assert "don't act on that message" not in env.answer.answer.lower()
+    env2, _ = ask(bundle, settings, "I got an email asking me to confirm my policy details", policy_id=None)
+    assert "don't act on that message" in env2.answer.answer.lower()
+
+
+@real_only
+def test_real_openers_ask_about_the_whole_line() -> None:
+    real = Bundle.load(REAL)
+    settings = Settings(bundle_path=REAL)
+    session = make_session(policy_id=None, today=dt.date(2026, 9, 4))
+    env, trace = answer_question(real, "the airline lost my suitcase in Tokyo", session, settings)  # type: ignore[arg-type]
+    assert env.answer.clarifying
+    cited = {real.product_key(real.get(c.source_id)) for c in env.answer.claims}  # type: ignore[arg-type]
+    assert {"travel-insurance", "travel-infinite", "travel-takaful", "corporate-travel"} <= cited
+    assert trace.route["layer2"] == "guessed"

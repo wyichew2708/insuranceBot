@@ -186,6 +186,13 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bspeak to (?:a |an |the )?"
             r"(?:claims officer|financial adviser|financial advisor|adviser|advisor)\b"
             r"|\bnobody has helped\b|\bprovide feedback\b|\bgive feedback\b|\bbecome an agent\b"
+            r"|\bnearest (?:panel )?(?:clinic|hospital|workshop|branch)\b"
+            r"|\bpanel (?:clinics?|hospitals?|workshops?|doctors?)\b"
+            r"|\bmedishield\b|\bcareshield\b|\beldershield\b"
+            r"|\bdownload (?:your|the) app\b|\b(?:this )?chatbot\b"
+            r"|\b(?:app|website|site|portal) (?:is |isn.t |is not |not )(?:working|loading|down)\b"
+            r"|\bwithout my (?:permission|consent|knowledge)\b|\busing my identity\b"
+            r"|\bidentity (?:theft|fraud)\b|\bthat i did not (?:submit|make|file|buy|purchase|authori[sz]e)\b"
             r"|\bcontact my (?:agent|adviser|advisor)\b"
             r"|\bescalate\b|\bspeak to (?:your )?(?:a )?(?:manager|supervisor)\b"
             # Fraud and phishing. A customer checking whether a message is
@@ -244,6 +251,11 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # not a question about how data is used, which the privacy page answers.
             r"|\bcopy of (?:the |my )?personal data\b|\bdata you hold on me\b"
             r"|\bwithdraw my consent\b|\bmarketing consent\b"
+            r"|\b(?:on|in|with|for) my application\b|\bhas my (?:policy|plan|cover) been renewed\b"
+            r"|\bwhy did my (?:policy|plan|cover) lapse\b|\bmy (?:policy|plan|cover) (?:has )?lapsed\b"
+            r"|\b(?:do|will|why do) i need (?:a |to (?:go for |take |do )?)?medical "
+            r"(?:examination|exam|check|check-up|underwriting)\b"
+            r"|\b(?:keep|retain|store|hold) my (?:personal )?data\b"
             r"|\bnot receiving (?:the |my )?otp\b"
             r"|\botp\b[\w\s]{0,12}\bnot (?:coming|arriving|received)\b"
             r"|\b(?:reset|change) my (?:password|username|pin)\b",
@@ -292,7 +304,8 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bi (?:have )?(?:moved|relocated)\b|\bmoved (?:house|home|address)\b"
             r"|\bchange of (?:address|name|details|nominee|beneficiary)\b"
             r"|\b(?:upgrade|downgrade) my (?:plan|policy|cover|tier)\b"
-            r"|\badd my (?:wife|husband|spouse|partner|child|children|son|daughter|employees?|staff) to\b"
+            r"|\badd (?:my |our )?(?:wife|husband|spouse|partner|child|children|son|daughter"
+            r"|employees?|staff|members?|dependants?|dependents?) to\b"
             r"|\b(?:increase|reduce|lower|raise) my (?:coverage|cover|sum insured|sum assured)\b"
             r"|\bcancel (?:just )?(?:one|a|the) rider\b"
             r"|\btransfer (?:my|the) policy\b",
@@ -315,7 +328,7 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # answers it, and the dataset expects it answered — routing it
             # traded a good answer for a link. The forms that belong here name
             # a *schedule* or a *method*, and those are matched above.
-            r"|\bwhy (?:is|was|did) my premium\b|\bcalculate my premium\b|\bhow much do i owe\b"
+            r"|\bwhy (?:is|was|did|has) my premium\b|\bcalculate my premium\b|\bhow much do i owe\b"
             r"|\bcharged (?:twice|the wrong amount|incorrectly)\b|\bdouble.charged\b"
             r"|\bpayment (?:method|mode|option|plan)s?\b"
             r"|\b(?:how |can |could |may )?i pay (?:my|the) [\w\s]{0,16}?"
@@ -356,6 +369,14 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
     (
         Intent.price,
         re.compile(
+            # "Get me a quote", the fees and taxes on a premium, what moves it:
+            # all price questions with no price in any document.
+            r"\b(?:get|request|need|want|give) (?:me )?(?:a |an )?[\w\s]{0,20}?quote\b"
+            r"|\bhow do i get (?:a |an )?[\w\s]{0,20}?quote\b"
+            r"|\b(?:administrative|admin|processing|service) fees?\b|\bgst\b"
+            r"|\bfactors? (?:that )?(?:affect|determine)s? (?:my |the )?premium\b"
+            r"|\b(?:reduce|lower|cut) my premium\b|\bhigher premium\b"
+            r"|\bpremium (?:is )?(?:calculated|computed|determined|worked out)\b|"
             r"\b(how much (does|do|is|would) .{0,40}(cost|premium)|what.{0,12}(the )?(premium|price|cost)"
             r"|cost me|per (year|month|annum)|how much to (buy|get)|cheap(er|est)?\b)",
             re.I,

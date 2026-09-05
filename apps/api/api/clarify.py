@@ -102,7 +102,7 @@ def lexical_clarification(bundle: Bundle, product_keys: list[str]) -> GroundedAn
     return clarification(bundle, [page.id for page in pages])
 
 
-def clarification(bundle: Bundle, product_ids: list[str]) -> GroundedAnswer | None:
+def clarification(bundle: Bundle, product_ids: list[str], limit: int = MAX_OPTIONS) -> GroundedAnswer | None:
     """Ask which of these was meant, or None if there is nothing to ask about.
 
     None where fewer than two products resolve: one product is not a choice,
@@ -111,7 +111,7 @@ def clarification(bundle: Bundle, product_ids: list[str]) -> GroundedAnswer | No
     products = [page for page in (bundle.get(pid) for pid in product_ids) if page is not None]
     if len(products) < 2:
         return None
-    shown = products[:MAX_OPTIONS]
+    shown = products[:limit]
     return GroundedAnswer(
         # One claim per option, so every name in the question resolves to the
         # page it was read from and reference-integrity has something to check.

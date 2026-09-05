@@ -285,3 +285,38 @@ def test_a_tie_with_nothing_read_asks_openly_rather_than_listing_junk() -> None:
     assert env.answer.clarifying
     assert not env.answer.claims, "no product was read, so none is named"
     assert trace.route["layer2"] == "none"
+
+
+# --- an incident names a line --------------------------------------------------
+
+
+@pytest.mark.skipif(not (REAL / "catalogue.yaml").exists(), reason="real bundle not in this checkout")
+@pytest.mark.parametrize(
+    ("statement", "word", "members"),
+    [
+        ("the airline lost my suitcase in Tokyo", "travel", 4),
+        ("I just had an accident", "vehicle", 3),
+        ("someone broke into my flat last night", "home", 2),
+        ("I fell off my bike and broke my wrist", "accident", 3),
+    ],
+)
+def test_an_incident_with_no_plan_named_is_a_guess_at_its_line(
+    statement: str, word: str, members: int
+) -> None:
+    real = Bundle.load(REAL)
+    decision = route(real, read_ask(real, statement), statement)
+    assert decision.layer2 is Layer2.guessed and decision.clarify
+    assert len(decision.options) == members
+    titles = [real.get(pid).frontmatter.title.lower() for pid in decision.options]  # type: ignore[union-attr]
+    assert any(word in t for t in titles)
+
+
+@pytest.mark.skipif(not (REAL / "catalogue.yaml").exists(), reason="real bundle not in this checkout")
+def test_a_question_that_is_not_an_incident_is_not_read_as_one() -> None:
+    real = Bundle.load(REAL)
+    q = "does the airline pay for a lost suitcase or does the insurer?"
+    # No incident verb in the past tense about the customer: "lost" is there, so
+    # this *is* read as a travel incident — the line is right and the ask is safe.
+    assert route(real, read_ask(real, q), q).layer2 is Layer2.guessed
+    q2 = "what is the baggage limit?"
+    assert route(real, read_ask(real, q2), q2).layer2 is not Layer2.guessed

@@ -37,7 +37,7 @@ from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
 from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
-from api.clarify import clarification, lexical_clarification, open_clarification
+from api.clarify import LISTABLE, MAX_OPTIONS, clarification, lexical_clarification, open_clarification
 from api.compose import compose
 from api.directory import answer as directory_answer
 from api.directory import lines_overview
@@ -60,7 +60,7 @@ from api.retrieval import (
     unsupported_term,
     wiki_read,
 )
-from api.route import FRAUD_OPENER, FRAUD_RE, destinations_for
+from api.route import FRAUD_RE, destinations_for, fraud_opener
 from api.router import Layer1, Layer2, Layer3
 from api.router import route as route_turn
 from api.settings import Settings
@@ -720,7 +720,7 @@ def _answer_turn(
             detail["routed"] = "care"
         return _finish(
             trace,
-            GroundedAnswer(answer=MEDICAL_EMERGENCY, smalltalk=True, confidence=1.0),
+            GroundedAnswer(answer=MEDICAL_EMERGENCY, smalltalk=True, handoff=True, confidence=1.0),
             bundle,
             session,
             question,
@@ -779,8 +779,32 @@ def _answer_turn(
         return _finish(
             trace,
             guidance(
-                bundle, raw_root, routed_intent, focus, question, opener=FRAUD_OPENER if fraud else None
+                bundle,
+                raw_root,
+                routed_intent,
+                focus,
+                question,
+                opener=fraud_opener(question) if fraud else None,
             ),
+            bundle,
+            session,
+            question,
+            raw_root,
+            [],
+            ask=ask,
+        )
+
+    # A price question with no plan in hand is not a which-plan question.
+    # "Get me a quote" and "how much does insurance cost for a family of
+    # four?" were asked to choose between Home and Cyber; the price of any of
+    # them is not in the corpus, and the quote steps are the same for all.
+    if ask.intent is Intent.price and not ask.resolved and decision.layer1 is Layer1.product:
+        with trace.stage("route") as detail:
+            detail["intent"] = Intent.price.value
+            detail["product"] = ""
+        return _finish(
+            trace,
+            guidance(bundle, raw_root, Intent.price, None, question),
             bundle,
             session,
             question,
@@ -827,7 +851,10 @@ def _answer_turn(
     # is a reading, not the customer's word. `none` on a handler whose answer
     # depends on the product — cover, exclusions, a limit, how to claim.
     if decision.clarify and not seeking_advice:
-        asked = clarification(bundle, list(decision.options)) if decision.options else None
+        # A guess at a line lists the line: a customer who said "my flight was
+        # delayed" is choosing among every travel plan, not the first three.
+        limit = max(MAX_OPTIONS, min(len(decision.options), LISTABLE))
+        asked = clarification(bundle, list(decision.options), limit=limit) if decision.options else None
         if asked is None:
             asked = open_clarification()
         with trace.stage("clarify") as detail:
@@ -850,7 +877,9 @@ def _answer_turn(
     # candidate — it is the answer to "which product", and it overrules the
     # lexical rank below. Eleven answers in a 1,000-case sample cited a
     # sibling rider of the one the question named in full, all at 0.99.
-    focus_override = decision.product if decision.layer2 in (Layer2.named, Layer2.carried) else None
+    focus_override = (
+        decision.product if decision.layer2 in (Layer2.named, Layer2.carried, Layer2.inferred) else None
+    )
     scope = decision.scope
 
     try:
@@ -1414,7 +1443,13 @@ def _answer_turn(
         # settles the question, the reply is the steps to the real answer,
         # not a colleague. Every other gate means the draft itself was faulty,
         # which is not a thing to reshape: that is still a handoff.
-        soft = failed <= {"numeric-binding", "answerability"} and not _fail_closed(outgoing, settings)
+        # `guardrail-output` joins the soft set: the draft carried something the
+        # screen refuses to show — an external link, a leaked clause — and the
+        # steps to the answer carry neither. It never joins the trim: a draft
+        # the screen refused is not reshaped, it is replaced.
+        soft = failed <= {"numeric-binding", "answerability", "guardrail-output"} and not _fail_closed(
+            outgoing, settings
+        )
         # Trimmed only where the product is settled — named, carried or
         # inferred. With no product, the draft is whichever pages a lexical
         # tie sorted first, and "How do I contact my agent?" was delivered a
