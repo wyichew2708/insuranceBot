@@ -37,14 +37,32 @@ from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
 from harness.trace import LoadedPage, StageListener
 from okf.tables import find_tokens
 
-from api.clarify import LISTABLE, MAX_OPTIONS, clarification, lexical_clarification, open_clarification
+from api.clarify import (
+    LISTABLE,
+    MAX_OPTIONS,
+    clarification,
+    did_you_mean,
+    lexical_clarification,
+    open_clarification,
+    typo_clarification,
+)
 from api.compose import compose
 from api.directory import answer as directory_answer
 from api.directory import lines_overview
+from api.domain import decline, off_domain
 from api.entity import answer as entity_answer
 from api.gates_ext import advice_required
-from api.guardrails import MEDICAL_EMERGENCY, Guard, Screening, guard_for, medical_emergency, redact_pii
-from api.guidance import guidance
+from api.guardrails import (
+    MEDICAL_EMERGENCY,
+    Guard,
+    Screening,
+    guard_for,
+    medical_emergency,
+    named_third_party,
+    redact_pii,
+    third_party_screening,
+)
+from api.guidance import adviser_referral, guidance, wants_a_recommendation
 from api.llm import Draft, LLMProvider, provider_for
 from api.memory import SessionMemory
 from api.present import bulletise, digest, present_overview, section_chips
@@ -615,6 +633,34 @@ def _answer_turn(
         # one that passed it. Skipping on the record is the point.
         return _finish(trace, answer, bundle, session, question, raw_root, [], ask=ask)
 
+    # Somebody else's record. The rule layer screens the phrasings that need no
+    # catalogue ("my friend's policy"); this is the one that does, because a
+    # capitalised name is a product as often as it is a person. Refused rather
+    # than guided: the account guidance says "log in and open My Policies",
+    # which is the right answer for your own policy and an instruction to go
+    # looking for someone else's.
+    if named_third_party(bundle, question):
+        return _refusal(trace, third_party_screening(), "guardrail-input", "a third party's record")
+
+    # Not a question about insurance at all. Screened here for the same reason
+    # smalltalk is: the corpus cannot fail to answer a question that was never
+    # asked of it, and letting one through costs a page budget to arrive at a
+    # paragraph of policy wording about something else entirely. `gate_domain`
+    # blocks the reply, so nothing here is counted as an answer.
+    if off_domain(bundle, question, ask):
+        with trace.stage("domain") as detail:
+            detail["off_domain"] = True
+        return _finish(trace, decline(bundle), bundle, session, question, raw_root, [], ask=ask)
+
+    # A recommendation, which no page can give and a licensed adviser must.
+    # Routed here rather than flagged after composition: retrieval for "should
+    # I buy this or that" returns the pages either plan happens to rank for,
+    # and the adviser sentence was being appended to four paragraphs of them.
+    if wants_a_recommendation(question):
+        with trace.stage("advice") as detail:
+            detail["referred"] = True
+        return _finish(trace, adviser_referral(bundle), bundle, session, question, raw_root, [], ask=ask)
+
     # A shopper, not a questioner. "what life products" and "looking for a CI
     # plan" ask what exists; retrieval finds the best single page and answers
     # from its prose, which is how "what life products" came back as Products
@@ -947,6 +993,29 @@ def _answer_turn(
         # A misspelt product we *do* carry does not reach this — the model
         # resolves "trvael insurance" and sets a focus long before the tie.
         missing_line = unsupported_term(bundle, question, admitted)
+        # ...unless the word we have never seen is one letter away from one we
+        # have. The comment above is right that the model resolves "trvael
+        # insurance" before the tie — but only where a model is configured, and
+        # the deterministic path is what CI, the eval suites and every offline
+        # deployment run. Without this, "mediacl insurance" was refused outright.
+        if missing_line and not focus_override:
+            meant = did_you_mean(bundle, missing_line)
+            asked = typo_clarification(bundle, meant) if meant else None
+            if asked is not None:
+                with trace.stage("clarify") as detail:
+                    detail["from"] = "misspelt product name"
+                    detail["typo"] = missing_line
+                    detail["options"] = meant[:4]
+                return _finish(
+                    trace,
+                    asked,
+                    bundle,
+                    session,
+                    question,
+                    raw_root,
+                    [c.source_id for c in asked.claims],
+                    ask=ask,
+                )
         if (
             not focus_override
             and not missing_line

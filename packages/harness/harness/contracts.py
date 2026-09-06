@@ -159,6 +159,11 @@ class GroundedAnswer(BaseModel):
     #: nothing to hold it to — and it is never a fluent paragraph about
     #: something adjacent, which is what that gate exists to refuse.
     guidance: bool = False
+    #: The question was not about insurance at all. Set by the router before
+    #: retrieval and enforced by `gate_domain`, which blocks it: the reply says
+    #: what this can help with and offers a person, and it must never be
+    #: counted as an answer, because there was no question here to answer.
+    off_domain: bool = False
     #: Questions the customer could ask next, offered as taps. Built from what
     #: was just asked and what the corpus holds for the product; never a
     #: question the corpus cannot answer.

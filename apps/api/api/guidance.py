@@ -30,6 +30,7 @@ from pathlib import Path
 
 from harness import Claim, GroundedAnswer
 from harness.contracts import Link
+from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import Intent
 
 from okf import DESTINATIONS, Bundle, Desk, Page, PageType, landing_for, raw_product_index, renews_online
@@ -427,3 +428,67 @@ def guidance(
         destinations=links,
         confidence=1.0,
     )
+
+
+#: A recommendation is not a fact the corpus can supply, and unlike a claim's
+#: progress it is not merely absent — giving one is regulated. Measured before
+#: this existed: "should i buy bitcoin or tesla stock" returned four paragraphs
+#: of business-property reinstatement conditions with "I'll connect you with a
+#: licensed adviser" appended, delivered; "which should i buy" for travel
+#: returned the country-selection step from a quote page. In both the adviser line
+#: was true and everything above it was noise.
+#:
+#: Says what this can do before what it cannot, because a customer who asked
+#: for a recommendation and is told only "no" has been refused; one who is told
+#: "not that, but I can tell you what each covers" has been given the next move.
+ADVICE_REFERRAL = (
+    "Choosing between plans depends on your circumstances, and that is a "
+    "licensed adviser's call rather than mine — I answer from published product "
+    "documents.\n\n"
+    "What I can do is give you the facts to compare: name any plan and I'll tell "
+    "you what it covers, what it excludes, and who is eligible.\n\n"
+    "For a recommendation, speak to one of our advisers: {contact}"
+)
+
+
+def adviser_referral(bundle: Bundle) -> GroundedAnswer:
+    """The reply to a request for a recommendation.
+
+    `advice_flag` is what `gate_advice_boundary` looks for, and setting it here
+    rather than after composition is the point: the boundary is a reason not to
+    retrieve, not a sentence to add to whatever retrieval happened to return.
+    """
+    contact = DESTINATIONS[Desk.contact]
+    return GroundedAnswer(
+        answer=ADVICE_REFERRAL.format(contact=contact.url),
+        advice_flag=True,
+        handoff=True,
+        guidance=True,
+        confidence=1.0,
+        destinations=[Link(label=contact.label, url=contact.url)],
+    )
+
+
+#: The shapes in `ADVICE_SEEKING_RE` that state a need rather than ask us to
+#: choose. "I need insurance for my elderly parents" is a shopper opening a
+#: conversation: the useful reply is what we sell for them, and the catalogue
+#: gives it. The phrase is in the seeking pattern because *recommending* for
+#: someone else's circumstances is regulated — a rule about what an answer may
+#: say, not a reason to refuse the question.
+#:
+#: Measured: routing these to the adviser as well cost `need-parents`, whose
+#: contract is a directory listing, and gained nothing.
+NEED_NOT_CHOICE_RE = re.compile(
+    r"\bneed\s+insurance\s+for\s+my\b|\bwhat\s+(?:insurance|cover)\s+does\s+my\s+\w+\s+need\b",
+    re.I,
+)
+
+
+def wants_a_recommendation(question: str) -> bool:
+    """Whether the turn asks which one to take, rather than what there is.
+
+    The line between them is the whole reason this is a function: both are
+    regulated once *answered* with a recommendation, and only one of them is a
+    question the catalogue can settle.
+    """
+    return bool(ADVICE_SEEKING_RE.search(question)) and not NEED_NOT_CHOICE_RE.search(question)

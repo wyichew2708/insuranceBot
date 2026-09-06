@@ -333,6 +333,7 @@ def test_every_gate_runs_regardless_of_earlier_failures(bundle: Bundle) -> None:
     results = run_gates(ctx(bundle, GroundedAnswer(answer="x", handoff=True)))
     assert len(results) == len(ALL_GATES)
     assert {r.gate for r in results} == {
+        "domain",
         "entitlement-assertion",
         "about-the-ask",
         "supporting-sources",

@@ -67,7 +67,14 @@ ADVICE_SEEKING_RE = re.compile(
     r"how much (?:\w+ )?(?:insurance|cover|coverage) do (?:i|we) need|"
     r"what (?:insurance|cover) does my \w+ need|most popular (?:plans?|products?|policies)|"
     # Cover for someone else's circumstances is a recommendation about them.
-    r"insurance for my (?:elderly )?parents)\b",
+    r"insurance for my (?:elderly )?parents|"
+    # Whether to leave another insurer for this one is the same regulated
+    # question as which plan to buy, and a tester asked it in the form the
+    # verbs above all miss: "should i cancel my policy with <insurer> and move
+    # to etiqa". It was answered by asking which policy they meant.
+    r"should (?:i|we) (?:cancel|switch|move|change|stay with|leave|drop|stick with)\b|"
+    r"(?:switch|move|change) (?:to|over to) (?:etiqa|tiq|you|your)\b|"
+    r"is \w[\w\s]{0,30}? better than)\b",
     re.IGNORECASE,
 )
 
@@ -1115,6 +1122,32 @@ ENTITLEMENT_ASSERTION_RE = re.compile(
 )
 
 
+def gate_domain(ctx: GateContext) -> GateResult:
+    """Was this a question about insurance at all?
+
+    `gate_answerability` asks whether *this corpus* can settle the question,
+    and lets an unrecognised intent through on the reasoning that refusing a
+    broad question is worse than answering it broadly. That is right for
+    every question a customer of an insurer asks, and wrong for "what is the
+    capital of France" — which, measured on the real corpus, was answered from
+    a business-interruption page, delivered, with a sum-insured limit in it.
+
+    The decision is `api.domain.off_domain`, made before retrieval so the turn
+    costs no pages and no model call. This is what makes it stick. A reply to a
+    question that was never ours says what we can help with and offers a
+    person; that is a useful thing to send and a false thing to record as an
+    answer, so it is blocking and the envelope is undelivered.
+    """
+    name = "domain"
+    if not ctx.answer.off_domain:
+        return GateResult(gate=name, verdict=Verdict.skip, detail="a question about the products")
+    return GateResult(
+        gate=name,
+        verdict=Verdict.fail,
+        detail="not a question about insurance: nothing was answered from the corpus",
+    )
+
+
 def gate_entitlement_assertion(ctx: GateContext) -> GateResult:
     """Nothing may be confirmed about a customer the system cannot see.
 
@@ -1233,6 +1266,7 @@ ALL_GATES = [
     gate_advice_boundary,
     gate_groundedness,
     gate_answerability,
+    gate_domain,
     gate_entitlement_assertion,
     gate_about_the_ask,
     gate_supporting_sources,
