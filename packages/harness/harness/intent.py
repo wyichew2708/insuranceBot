@@ -243,8 +243,11 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             r"|\bhaven.t (?:completed|finished) my application\b|\bwrong information on my application\b"
             r"|\b(?:did ?n.t|have ?n.t|never) (?:receive|received|get|got) (?:a |my |the )?"
             r"(?:confirmation|policy documents?|renewal notice|policy|certificate|receipt|invoice)\b"
-            r"|\b(?:download|copy of|email me|send me) my "
+            r"|\b(?:download|copy of|email me|send me|resend|reissue) my (?:own )?"
             r"(?:policy|documents?|certificate|schedule|invoice)\b"
+            r"|\b(?:lost|misplaced|can.t find|cannot find) my "
+            r"(?:policy|policy documents?|documents?|certificate)\b"
+            r"|\bmy own policy documents?\b"
             r"|\bmy (?:certificate of insurance|tax invoice|policy schedule)\b"
             r"|\bmy policy document has\b|\bwhen will i (?:receive|get) my renewal notice\b"
             r"|\bwho is my (?:insurance )?(?:agent|adviser|advisor)\b"
@@ -334,6 +337,10 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
             # a *schedule* or a *method*, and those are matched above.
             r"|\bwhy (?:is|was|did|has) my premium\b|\bcalculate my premium\b|\bhow much do i owe\b"
             r"|\bcharged (?:twice|the wrong amount|incorrectly)\b|\bdouble.charged\b"
+            # A refund asked in the same breath as the cancellation: the customer's
+            # own money, not the policy's terms.
+            r"|\b(?:get|receive|have) [\w\s]{0,12}?back (?:if|when|after|should) i cancel\b"
+            r"|\brefund(?:ed)? (?:if|when|after|should) i cancel\b"
             r"|\bpayment (?:method|mode|option|plan)s?\b"
             r"|\b(?:how |can |could |may )?i pay (?:my|the) [\w\s]{0,16}?"
             r"(?:premium|policy|bill|instal?ment)s?\b"

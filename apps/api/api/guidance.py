@@ -49,6 +49,7 @@ class Topic(str, Enum):
     eligibility = "eligibility"
     apply = "apply"
     contact = "contact"
+    promotions = "promotions"
     generic = "generic"
 
 
@@ -238,6 +239,20 @@ GUIDES: dict[Topic, Guide] = {
         handoff=True,
         desks=(Desk.contact,),
     ),
+    Topic.promotions: Guide(
+        opener=(
+            "I don't have a current offer for {product} in the pages I answer from — offers change "
+            "often and are not in the product documents. Here's where they are:"
+        ),
+        steps=(
+            f"Current promotions and their terms are listed here: {_URL['promotions']}",
+            "A discount that applies to your own policy or renewal shows on the quote, or in the customer "
+            f"portal: {_URL['portal']}",
+            f"To check whether one applies to you, contact us: {_URL['contact']}",
+        ),
+        handoff=True,
+        desks=(Desk.promotions, Desk.portal, Desk.contact),
+    ),
     Topic.generic: Guide(
         opener="The pages I answer from don't settle that for {product}. Here's where the answer is:",
         steps=(
@@ -298,6 +313,8 @@ def topic_for(intent: Intent, question: str) -> Topic:
         return Topic.eligibility
     if intent is Intent.application:
         return Topic.apply
+    if intent is Intent.offer:
+        return Topic.promotions
     return Topic.generic
 
 
