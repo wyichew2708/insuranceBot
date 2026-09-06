@@ -296,7 +296,7 @@ def test_a_model_that_invents_a_figure_is_blocked(
     # answer instead of a colleague — never the invented figure, and never a
     # trimmed version of a model's draft. The refusal stays on the record.
     assert "99,000,000" not in envelope.answer.answer
-    assert envelope.answer.handoff and envelope.answer.guidance
+    assert envelope.answer.guidance, "the steps to the answer, not the model's draft"
     assert any("numeric-binding" in u and "99,000,000" in u for u in envelope.answer.unresolved)
     assert trace.blocked_draft and "99,000,000" in trace.blocked_draft
     assert trace.composer == "lying:test"

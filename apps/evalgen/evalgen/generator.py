@@ -1042,10 +1042,14 @@ def gap_probe_cases(bundle: Bundle) -> list[GeneratedCase]:
         key = bundle.product_key(page)
         for probe in GAP_PROBES:
             target = _answerable(bundle, page, probe.needs)
+            # A gap is guided, not answered: the steps to the real answer
+            # (the product owner's rule) or a person. What must not happen
+            # is a substantive reply composed from a page that does not
+            # hold it.
             expect = (
                 Expectation(expect_delivered=True, relevant_pages=[target, page.id])
                 if target
-                else Expectation(expect_handoff=True)
+                else Expectation(expect_guided=True)
             )
             cases.extend(
                 _expand(

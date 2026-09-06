@@ -56,6 +56,12 @@ class Topic(str, Enum):
 class Guide:
     opener: str
     steps: tuple[str, ...]
+    #: Whether the answer lives with a person or on the customer's own record
+    #: (a handoff with steps), or the steps *are* the answer and the customer
+    #: follows them alone (a direction, delivered as one). The product owner's
+    #: rule is the second wherever it holds: "guide the user to get the real
+    #: answer themselves". The evaluation's contracts read this flag.
+    handoff: bool
     #: Registry desks the steps use, for the structured link list.
     desks: tuple[Desk, ...] = ()
 
@@ -77,6 +83,7 @@ GUIDES: dict[Topic, Guide] = {
             "change the options to compare.",
             f"For a life or savings plan, an adviser can prepare the quote with you: {_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.contact,),
     ),
     Topic.refund: Guide(
@@ -92,6 +99,7 @@ GUIDES: dict[Topic, Guide] = {
             f"on {_PLAN}.",
             f"To have it confirmed by a person, contact us with your policy number: {_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.payment: Guide(
@@ -106,6 +114,7 @@ GUIDES: dict[Topic, Guide] = {
             "A charge that looks wrong is corrected from the record — contact us with the policy "
             f"number and the date of the charge: {_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.policy_record: Guide(
@@ -121,6 +130,7 @@ GUIDES: dict[Topic, Guide] = {
             "If you can't log in, contact us and a colleague will verify you and read it back: "
             f"{_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.application: Guide(
@@ -131,6 +141,7 @@ GUIDES: dict[Topic, Guide] = {
             "To change something you entered, or if no confirmation arrived, contact us with the "
             f"name and email used on the application: {_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.claims: Guide(
@@ -146,6 +157,7 @@ GUIDES: dict[Topic, Guide] = {
             f"{_URL['portal']}",
             f"The full claim conditions are in the policy wording, on {_PLAN}.",
         ),
+        handoff=False,
         desks=(Desk.claims, Desk.portal),
     ),
     Topic.claim_status: Guide(
@@ -160,6 +172,7 @@ GUIDES: dict[Topic, Guide] = {
             "To add a document, amend a claim or appeal a decision, contact us with the claim "
             f"reference: {_URL['contact']}",
         ),
+        handoff=True,
         desks=(Desk.portal, Desk.claims, Desk.contact),
     ),
     Topic.cancellation: Guide(
@@ -170,6 +183,7 @@ GUIDES: dict[Topic, Guide] = {
             f"Or contact us with the policy number and the date you want the cover to end: {_URL['contact']}",
             f"The free-look, refund and notice terms are in the policy wording, on {_PLAN}.",
         ),
+        handoff=False,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.renewal: Guide(
@@ -180,6 +194,7 @@ GUIDES: dict[Topic, Guide] = {
             f"If the policy has already expired, contact us and a colleague will check whether it "
             f"can still be renewed: {_URL['contact']}",
         ),
+        handoff=False,
         desks=(Desk.renewal, Desk.contact),
     ),
     Topic.documents: Guide(
@@ -190,6 +205,7 @@ GUIDES: dict[Topic, Guide] = {
             f"{_URL['portal']}",
             f"For a copy sent to you, contact us with your policy number: {_URL['contact']}",
         ),
+        handoff=False,
         desks=(Desk.portal, Desk.contact),
     ),
     Topic.eligibility: Guide(
@@ -203,6 +219,7 @@ GUIDES: dict[Topic, Guide] = {
             "before anything is bought.",
             f"If your situation is unusual, contact us and a colleague can confirm it: {_URL['contact']}",
         ),
+        handoff=False,
         desks=(Desk.contact,),
     ),
     Topic.apply: Guide(
@@ -212,11 +229,13 @@ GUIDES: dict[Topic, Guide] = {
             "Enter your details, pick the plan tier and pay online.",
             f"Your policy documents arrive by email and sit in the customer portal: {_URL['portal']}",
         ),
+        handoff=False,
         desks=(Desk.portal,),
     ),
     Topic.contact: Guide(
         opener="Of course — that one needs a person.",
         steps=(f"Contact us — the page has the hotline, email and opening hours: {_URL['contact']}",),
+        handoff=True,
         desks=(Desk.contact,),
     ),
     Topic.generic: Guide(
@@ -226,6 +245,7 @@ GUIDES: dict[Topic, Guide] = {
             f"For your own policy, log in to the customer portal: {_URL['portal']}",
             f"A colleague can confirm anything the pages leave open: {_URL['contact']}",
         ),
+        handoff=False,
         desks=(Desk.portal, Desk.contact),
     ),
 }
@@ -242,6 +262,7 @@ _NO_RENEWAL = Guide(
         f"Log in to the customer portal to see the premium due and the payment dates: {_URL['portal']}",
         f"To change the payment method or frequency, contact us with your policy number: {_URL['contact']}",
     ),
+    handoff=False,
     desks=(Desk.portal, Desk.contact),
 )
 
@@ -384,9 +405,7 @@ def guidance(
     return GroundedAnswer(
         answer=text,
         claims=claims,
-        # A handoff with steps: this system did not answer, and says where the
-        # answer is. The flag is what the contract and the evaluation read.
-        handoff=True,
+        handoff=guide.handoff,
         guidance=True,
         destinations=links,
         confidence=1.0,

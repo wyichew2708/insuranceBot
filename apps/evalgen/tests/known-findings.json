@@ -18,23 +18,6 @@
         "fig-travel-2026-1-tier-2-medical-expenses-limit-scenario",
         "fig-travel-2026-1-tier-3-medical-expenses-limit-scenario"
       ]
-    },
-    "unanswerable-question-answered-with-off-topic-prose": {
-      "note": "Cut from 32 by the answerability gate. What remains are claim and buy probes on products whose journey pages the corpus does carry, where a cited journey page satisfies the gate but the answer still misses.",
-      "count": 11,
-      "cases": [
-        "gap-product-general-home-buy",
-        "gap-product-general-home-buy-1",
-        "gap-product-general-home-freelook",
-        "gap-product-general-home-freelook-1",
-        "gap-product-general-travel-freelook",
-        "gap-product-general-travel-freelook-1",
-        "gap-product-general-travel-renewal",
-        "gap-product-motor-private-car-buy",
-        "gap-product-motor-private-car-buy-1",
-        "gap-product-motor-private-car-freelook",
-        "gap-product-motor-private-car-freelook-1"
-      ]
     }
   }
 }

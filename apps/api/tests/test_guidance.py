@@ -87,8 +87,7 @@ def test_each_intent_has_its_steps(intent: Intent, question: str, topic: Topic) 
 def test_guidance_names_the_product_and_carries_no_figures(bundle: Bundle) -> None:
     product = bundle.get("product/general/travel")
     answer = guidance(bundle, bundle.root / "raw", Intent.claim, product, "how do I make a claim?")
-    # A handoff with steps: the flag the contract reads, and the steps the customer follows.
-    assert answer.guidance and answer.handoff
+    assert answer.guidance and not answer.handoff, "the steps are the answer; nobody is handed to"
     assert [c.source_id for c in answer.claims] == ["product/general/travel"]
     assert "Claims and services" in " ".join(link.label for link in answer.destinations)
     # No bare number in the prose: the numeric-binding gate would read it as a figure.
@@ -215,7 +214,7 @@ def test_real_cancellation_and_documents_get_steps_not_a_colleague() -> None:
     ):
         session = make_session(policy_id=None, today=dt.date(2026, 9, 4))
         env, _ = answer_question(real, question, session, settings)  # type: ignore[arg-type]
-        assert env.delivered and env.answer.guidance and env.answer.handoff, question
+        assert env.delivered and env.answer.guidance and not env.answer.handoff, question
         assert needle in env.answer.answer.lower()
         assert env.answer.claims and env.answer.claims[0].source_id.startswith("product/")
 
