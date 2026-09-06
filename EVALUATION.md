@@ -1,6 +1,6 @@
 ### Measured, today
 
-Six columns: the v2.3 build that produced this dataset's first score; the
+Seven columns: the v2.3 build that produced this dataset's first score; the
 same suite after the routing change (v2.3.1) that its findings prompted; after
 v2.4 — retrieval scoped to the resolved product, the three-layer router, and
 asking when the product is unsure (`DESIGN-v2.4.md`); after v2.5 — the steps
@@ -9,54 +9,58 @@ not bind, and both halves of a compound question answered (`DESIGN-v2.5.md`);
 after v2.6 — an incident read for its line, a price with no plan as the quote
 steps (`DESIGN-v2.6.md`); and after v2.7 — a direction delivered as an answer
 and a handoff kept for a person, with the generated suite's gap contract
-following the same rule (`DESIGN-v2.7.md`).
+following the same rule (`DESIGN-v2.7.md`); and after v2.8 — the questions
+it declines: off-domain turns refused rather than answered from the nearest
+policy page, a recommendation referred before retrieval instead of after, a
+misspelt product asked about, and a named third party's record refused
+(`DESIGN-v2.8.md`).
 
 ```
-Conversation golden dataset    v2.3         v2.3.1         v2.4          v2.5          v2.6          v2.7     
+Conversation golden dataset    v2.3         v2.3.1         v2.4          v2.5          v2.6          v2.7          v2.8     
 
-  overall                  1209/1711 71% 1333/1711 78% 1341/1711 78% 1519/1711 89% 1561/1711 91% 1675/1711 98%
-    whole conversations     132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%
-    turns                   994/1373 72% 1180/1373 86% 1181/1373 86% 1281/1373 93% 1298/1373 95% 1345/1373 98%
-    context-dependent turns 638/810  79%  705/810  87%  705/810  87%  761/810  94%  762/810  94%  794/810  98%
+  overall                  1209/1711 71% 1333/1711 78% 1341/1711 78% 1519/1711 89% 1561/1711 91% 1675/1711 98% 1680/1711 98%
+    whole conversations     132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%  336/355  95%
+    turns                   994/1373 72% 1180/1373 86% 1181/1373 86% 1281/1373 93% 1298/1373 95% 1345/1373 98% 1348/1373 98%
+    context-dependent turns 638/810  79%  705/810  87%  705/810  87%  761/810  94%  762/810  94%  794/810  98%  796/810  98%
 
 turns by kind
-    switch                    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%
-    attack                    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%
-    repeat                    7/9    78%    7/9    78%    7/9    78%    8/9    89%    8/9    89%    8/9    89%
-    pivot                    18/165  11%  124/165  75%  124/165  75%  156/165  95%  157/165  95%  157/165  95%
-    opener                  270/355  76%  275/355  77%  276/355  78%  318/355  90%  333/355  94%  348/355  98%
-    ellipsis                395/448  88%  396/448  88%  396/448  88%  414/448  92%  414/448  92%  442/448  99%
-    drill                   219/304  72%  291/304  96%  291/304  96%  297/304  98%  298/304  98%  302/304  99%
-    advice                   39/40   98%   39/40   98%   39/40   98%   40/40  100%   40/40  100%   40/40  100%
-    escalate                  1/3    33%    3/3   100%    3/3   100%    3/3   100%    3/3   100%    3/3   100%
+    switch                    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%    2/4    50%
+    attack                    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%
+    repeat                    7/9    78%    7/9    78%    7/9    78%    8/9    89%    8/9    89%    8/9    89%    8/9    89%
+    pivot                    18/165  11%  124/165  75%  124/165  75%  156/165  95%  157/165  95%  157/165  95%  157/165  95%
+    opener                  270/355  76%  275/355  77%  276/355  78%  318/355  90%  333/355  94%  348/355  98%  348/355  98%
+    ellipsis                395/448  88%  396/448  88%  396/448  88%  414/448  92%  414/448  92%  442/448  99%  444/448  99%
+    drill                   219/304  72%  291/304  96%  291/304  96%  297/304  98%  298/304  98%  302/304  99%  302/304  99%
+    advice                   39/40   98%   39/40   98%   39/40   98%   40/40  100%   40/40  100%   40/40  100%   40/40  100%
+    escalate                  1/3    33%    3/3   100%    3/3   100%    3/3   100%    3/3   100%    3/3   100%    3/3   100%
     correction / closer / recover / pick         100%          100%          100%          100%          100%          100%
 
 by contract
-    entity_fact               2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%
-    clarify                  11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%
-    conversation            132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%
-    corpus_fact              19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%
-    handoff                  43/179  24%   96/179  54%   98/179  55%  149/179  83%  174/179  97%  174/179  97%
-    product_fact            974/1092 89%  974/1092 89%  974/1092 89% 1016/1092 93% 1016/1092 93% 1090/1092100%
-    directory                14/19   74%   14/19   74%   19/19  100%   19/19  100%   19/19  100%   19/19  100%
-    advice_boundary          11/15   73%   11/15   73%   11/15   73%   15/15  100%   15/15  100%   15/15  100%
-    out_of_scope              3/12   25%    8/12   67%    8/12   67%   10/12   83%   12/12  100%   12/12  100%
+    entity_fact               2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%
+    clarify                  11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%
+    conversation            132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%  336/355  95%
+    corpus_fact              19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%
+    handoff                  43/179  24%   96/179  54%   98/179  55%  149/179  83%  174/179  97%  174/179  97%  176/179  98%
+    product_fact            974/1092 89%  974/1092 89%  974/1092 89% 1016/1092 93% 1016/1092 93% 1090/1092100% 1090/1092100%
+    directory                14/19   74%   14/19   74%   19/19  100%   19/19  100%   19/19  100%   19/19  100%   19/19  100%
+    advice_boundary          11/15   73%   11/15   73%   11/15   73%   15/15  100%   15/15  100%   15/15  100%   15/15  100%
+    out_of_scope              3/12   25%    8/12   67%    8/12   67%   10/12   83%   12/12  100%   12/12  100%   12/12  100%
 
 by journey
-    support                  18/57   32%   32/57   56%   32/57   56%   40/57   70%   47/57   82%   47/57   82%
-    service                   7/26   27%   18/26   69%   19/26   73%   23/26   88%   24/26   92%   24/26   92%
-    renew                    34/60   57%   35/60   58%   35/60   58%   44/60   73%   48/60   80%   57/60   95%
-    pay                       3/23   13%   18/23   78%   18/23   78%   22/23   96%   22/23   96%   22/23   96%
-    discover                101/112  90%  101/112  90%  107/112  96%  107/112  96%  108/112  96%  108/112  96%
-    evaluate                 52/58   90%   52/58   90%   52/58   90%   57/58   98%   57/58   98%   57/58   98%
-    claim                   249/357  70%  286/357  80%  286/357  80%  319/357  89%  334/357  94%  351/357  98%
-    eligibility             199/231  86%  200/231  87%  200/231  87%  208/231  90%  209/231  90%  228/231  99%
-    policy                  405/492  82%  406/492  83%  406/492  83%  436/492  89%  437/492  89%  486/492  99%
-    cancel                   62/116  53%   68/116  59%   69/116  59%   97/116  84%   97/116  84%  116/116 100%
-    apply                    43/54   80%   46/54   85%   46/54   85%   52/54   96%   53/54   98%   54/54  100%
-    quote                    36/125  29%   71/125  57%   71/125  57%  114/125  91%  125/125 100%  125/125 100%
+    support                  18/57   32%   32/57   56%   32/57   56%   40/57   70%   47/57   82%   47/57   82%   49/57   86%
+    service                   7/26   27%   18/26   69%   19/26   73%   23/26   88%   24/26   92%   24/26   92%   25/26   96%
+    renew                    34/60   57%   35/60   58%   35/60   58%   44/60   73%   48/60   80%   57/60   95%   57/60   95%
+    pay                       3/23   13%   18/23   78%   18/23   78%   22/23   96%   22/23   96%   22/23   96%   23/23  100%
+    discover                101/112  90%  101/112  90%  107/112  96%  107/112  96%  108/112  96%  108/112  96%  108/112  96%
+    evaluate                 52/58   90%   52/58   90%   52/58   90%   57/58   98%   57/58   98%   57/58   98%   58/58  100%
+    claim                   249/357  70%  286/357  80%  286/357  80%  319/357  89%  334/357  94%  351/357  98%  351/357  98%
+    eligibility             199/231  86%  200/231  87%  200/231  87%  208/231  90%  209/231  90%  228/231  99%  228/231  99%
+    policy                  405/492  82%  406/492  83%  406/492  83%  436/492  89%  437/492  89%  486/492  99%  486/492  99%
+    cancel                   62/116  53%   68/116  59%   69/116  59%   97/116  84%   97/116  84%  116/116 100%  116/116 100%
+    apply                    43/54   80%   46/54   85%   46/54   85%   52/54   96%   53/54   98%   54/54  100%   54/54  100%
+    quote                    36/125  29%   71/125  57%   71/125  57%  114/125  91%  125/125 100%  125/125 100%  125/125 100%
 
-owed a handoff and did not give one     145      87      85      32       5       5
+owed a handoff and did not give one     145      87      85      32       5       5       3
   ANSWERED — a substantive reply it could not support
                                          82      51      50      18       5       5
   asked which product instead of handing off 62    35      33      13       0       0
@@ -179,6 +183,29 @@ that expect a clarification; two entity turns that want the underwriter
 named; the weather, an injection phrased without *"previous"*, and a
 guarantee, which the deterministic guard does not read; and five
 wrong-product turns, three of them a hospital admission with no line word.
+
+**v2.8 against v2.7: 5 gained, 0 lost — 1680/1711 — and the first version
+measured on what it *declines*.** Run against `okf-real` rather than the seed
+bundle, the 109-case field test scored 86 and showed a failure class the seed
+run hides: *"what is the capital of france"* answered from a
+business-interruption clause, *"who won the election"* from the travel
+definitions, *"should i buy bitcoin or tesla stock"* from four paragraphs of
+reinstatement conditions with the adviser sentence appended — all delivered,
+all with pages cited and figures bound. Retrieval always has a nearest
+neighbour, and below the confidence floor the RAG fallback answers from the
+best section rather than a good one. A domain test now refuses a turn when
+nothing in it is about insurance *and* it names something the corpus has never
+heard of; both halves are needed, since the first alone refuses *"what do I
+have to declare?"* and the second alone refuses *"the airline lost my suitcase
+in Tokyo"*. Sized before it shipped: 6 of 2,893 conversation turns flagged,
+none in a passing case. A recommendation is now referred before retrieval
+rather than after it, a misspelt product name is asked about instead of
+refused, and a named third party's policy number is refused instead of being
+answered with how to log in. Field test 86→98, seed gate 98→105, nothing
+skipped or relaxed to move either. What remains (31): two entity turns, four
+clarify turns, and follow-ups whose meaning is entirely in the turn before —
+*"why?"* after a rejected claim, *"and my phone number"* mid-address-change —
+which the domain test deliberately does not read carried context to settle.
 
 ### Reading the numbers
 
