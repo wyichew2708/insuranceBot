@@ -12,7 +12,7 @@ The four layers, wired into loops rather than chosen between:
 | **LLM Wiki** — knowledge compiled once, not re-discovered per query | `okf/wiki/` — one canonical page per product |
 | **OKF** — the portable, lintable file format | `packages/okf` — frontmatter schema, graph, linter |
 | **RAG** — the long tail and the raw source of truth | `apps/api/api/retrieval.py` — hybrid fallback over `okf/raw/` |
-| **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, eight gates, budgets, traces |
+| **Harness** — what makes it safe to answer at 2am | `packages/harness` — contracts, twelve gates, budgets, traces |
 
 Retrieval itself is three layers, and the point is that each closes a failure
 the other two cannot — see [DESIGN-v2.3.md](DESIGN-v2.3.md):
@@ -486,8 +486,13 @@ okf-web/                build output: crawled + compiled. `make knowledge` regen
 fixtures/               the synthetic two-host site the crawler is proved against
 packages/okf/           page model, frontmatter schema, tables, graph, linter, corpus IDF
   graph.py              typed edges, containment, reverse index, deterministic walks
-packages/harness/       contracts, eight gates, budgets, traces
+packages/harness/       contracts, twelve gates, budgets, traces
 apps/api/               serve loop, debug console, content studio, content API
+  pipeline.py           the turn end to end: screen, read, route, retrieve, compose, gate
+  router.py             the three-layer product decision — named, carried, inferred
+  domain.py             whether the question is about insurance at all
+  guidance.py           the steps to the real answer, and the adviser referral
+  clarify.py            asking which product was meant, a misspelt one included
 apps/crawler/           allowlist + robots policy, extraction, dated snapshots
 apps/compiler/          snapshot → wiki compile, fact extraction, conflicts, impact
 evals/suites/           golden · merge-consistency · adversarial · staleness ·
@@ -550,34 +555,54 @@ Nobody has read these pages. That is a decision to make, not a step to skip.
 
 ## Multi-turn
 
-A hundred generated conversations, 325 turns, eight archetypes — a customer
-exploring, a customer correcting themselves, an attacker mid-conversation,
-someone asking for advice at the end. Run against all three bundles:
+The golden conversation dataset: **1,711 cases over all 37 products**, of which
+355 are multi-turn journeys scored turn by turn rather than on their last
+answer — a case that answered every question is not the same as one that got
+the first three wrong and recovered. `make conversation-eval` runs it in about
+six minutes and writes the grouped report to `.eval-reports/conversation.md`.
 
-| | seed (3 products) | fixture (22) | real (108+) |
-|---|---|---|---|
-| whole conversations | 96.0% | 56.0% | 46.0% |
-| turns overall | 98.8% | 74.8% | 67.4% |
-| standalone turns | 100.0% | 85.4% | 79.4% |
-| context-dependent turns | 96.8% | 57.9% | 48.4% |
-| self-contradictions | 0 | 0 | 0 |
-| attacks held | 24/24 | 24/24 | 24/24 |
-| answered the next turn | 12/12 | 12/12 | 10/12 |
+| | v2.3 | today (v2.8) |
+|---|---|---|
+| overall | 1209/1711 · 70.7% | **1680/1711 · 98.2%** |
+| whole conversations, every turn right | 132/355 · 37.2% | **336/355 · 94.6%** |
+| turns | 994/1373 · 72.4% | **1348/1373 · 98.2%** |
+| context-dependent turns | 638/810 · 78.8% | **796/810 · 98.3%** |
+| pivot turns | 18/165 · 10.9% | **157/165 · 95.2%** |
+| owed a handoff and did not give one | 145 | **3** |
 
-**Nothing the customer said earlier is carried.** The session holds channel,
-auth level and policy context; the question text does not accumulate. That is
-what the context-dependent row measures, and the three columns show the shape
-of the problem clearly: an elliptical follow-up — "and the premier tier?" —
-retrieves on the fragment alone, which lands on the right product when there
-are three of them and lands anywhere when there are a hundred. The seed
-bundle's 96.8% is not the system resolving reference; it is a corpus small
-enough that failing to resolve it does not matter.
+**The customer's earlier turns are carried.** `answer_question` takes a
+`history` list and uses it for one purpose: restoring a subject to a turn that
+names none — *"what's the coverage"* after *"term life"*. It is supplied by the
+client rather than held server-side, so the service stays stateless and a turn
+is reproducible from its own request, and a turn that stands on its own ignores
+it entirely.
 
-What holds across all three is what the gates own: no conversation ever gave
-two different figures for one fact, and every attack was refused mid-thread
-without the bot then punishing the customer by staying refusing.
+What context does *not* do is make a turn ours. A conversation that has been
+about travel does not make the next thing said a question about travel, so the
+domain test reads the turn's own words — see below.
 
-## The eight gates (§F.2)
+The column on the left is where this started and is kept because it is the
+argument for running conversations rather than questions: the failure it names
+— the **pivot**, where a customer crosses from what the corpus knows to what
+only a system knows (*"and how much is it?"*, *"where is my claim now?"*) —
+was invisible to a single-turn suite, because context made it worse rather than
+better. Asked cold, *"how much is it?"* names no product and the bot has little
+to say; asked on turn three it has a product in hand and keeps answering from
+its pages. `DESIGN-v2.3.md` through `DESIGN-v2.8.md` are the work that closed
+it, and `EVALUATION.md` carries the column-by-column table.
+
+What held throughout is what the gates own: no conversation ever gave two
+different figures for one fact, and every attack was refused mid-thread without
+the bot then punishing the customer by staying refusing.
+
+## The twelve gates (§F.2)
+
+Every one runs on every turn, whatever the earlier verdicts: the console shows
+the full picture, and partial verdicts hide root causes. The list is read from
+`harness.gates.ALL_GATES` rather than written down twice.
+
+The first eight are **provenance** — they check that what the answer says came
+from where it claims:
 
 | Gate | Blocks when |
 |---|---|
@@ -588,7 +613,51 @@ without the bot then punishing the customer by staying refusing.
 | exclusion-completeness | coverage is asserted without the exclusion page having been read |
 | advice-boundary | advice is sought or the product is regulated, and no adviser handoff |
 | groundedness | a claim is not entailed by the pages actually loaded |
-| answerability | nothing loaded could settle the question that was asked |
+| supporting-sources | a claim rests on a blog post or press release rather than the product page or a document |
+
+The last four ask a different question — not *is this true* but **was this a
+question to take, and is it the one that was asked**. Each was added because
+the provenance eight passed something they should not have:
+
+| Gate | Blocks when | Added because |
+|---|---|---|
+| answerability | nothing loaded could settle the question asked | of 3,130 failing cases, 1,177 were answered when nothing in the corpus could |
+| domain | the question was not about insurance at all | *"what is the capital of france"* was answered from a business-interruption clause, delivered, with a sum-insured limit in it |
+| entitlement-assertion | the answer confirms something about a customer the session cannot see | a promotion page says an offer exists; it cannot say who holds it |
+| about-the-ask | the answer is about a product other than the one the customer named | eleven cases in a 1,000-case sample, all at 0.99 confidence — a rider's exclusions read out as its sibling's |
+
+## What it will not answer
+
+A retrieval system always has a nearest neighbour. Scored against 37 products,
+a bag of words returns *something* for any question, and where the score is
+poor the RAG fallback answers from the best section it can find rather than
+from a section that is any good. Measured before this was closed: *"what is the
+capital of france"* came back with a business-interruption clause and a
+sum-insured limit, delivered, with pages cited and figures bound.
+
+So four kinds of turn are decided before retrieval runs, and each is enforced
+by a gate afterwards so a draft arriving by any other path is still stopped.
+`DESIGN-v2.8.md` has the measurements; `api/domain.py` and `api/guidance.py`
+are the code.
+
+| The customer says | What comes back |
+|---|---|
+| *"what is the capital of france"*, *"who won the election"* | not about insurance at all — a short note on what this can help with, a route to a person, and **nothing delivered** |
+| *"which plan is best for me?"*, *"should I move to Etiqa?"* | a recommendation is a licensed adviser's call: the referral alone, never a policy page with an adviser line appended |
+| *"mediacl insurance"*, *"cancr plan"* | a misspelt product is asked about — *"did you mean Cancer Insurance?"* — while a line we do not write (*"crop insurance"*) stays a refusal |
+| *"what is the policy number for John Tan"* | somebody else's record, refused rather than answered with how to log in |
+
+Two rules keep the domain test from over-reaching, and both are load-bearing:
+
+- A question is off domain only when **nothing in it is about insurance** *and*
+  it **names something the corpus has never heard of**. On the first test
+  alone, *"what do I have to declare?"* is refused; on the second alone, *"the
+  airline lost my suitcase in Tokyo"* is — and it is the incident, not the
+  vocabulary, that makes that one ours.
+- A product carried in from an earlier turn is **not** a signal. A conversation
+  that has been about travel does not make the next thing said a question about
+  travel, which is exactly how *"cool, anyway what do you think about the
+  weather lately"* came to be answered from the travel pages.
 
 ## Guardrails (§F.4)
 
@@ -756,7 +825,7 @@ VECTOR_FLOOR=0.55       VECTOR_RAW_FLOOR=0.5
 Built: the OKF bundle contract and linter, wiki-first retrieval with typed,
 question-ordered graph traversal, deterministic numeric binding, a hybrid
 lexical + dense RAG fallback over `raw/`, the SOR
-entitlement stub, all eight gates, budgets, full tracing, the debug console,
+entitlement stub, all twelve gates, budgets, full tracing, the debug console,
 conflict detection with impact analysis, the four eval suites wired to a CI
 gate, a 1,711-case golden conversation dataset over all 37 products — 355 of
 them multi-turn journeys scored turn by turn —
@@ -765,30 +834,17 @@ canonical pages, benefit-table CSVs and website defect tickets, and the content
 studio — review, scan-and-verify, authoring, status workflow, tagging,
 in-process evaluation and the integration registry.
 
+Built since, and each the subject of its own design note: conversational
+memory and the three-layer router (`DESIGN-v2.3.md`, `DESIGN-v2.4.md`), which
+between them took the **pivot** — a customer crossing from what the corpus
+knows to what only a system knows — from 10.9% to 95.2%; the guidance registry
+that answers an unanswerable question with the steps to the real answer
+(`DESIGN-v2.5.md` through `DESIGN-v2.7.md`); and the domain test, adviser
+referral, near-miss product resolver and named-third-party refusal that decide
+what the assistant will *not* answer (`DESIGN-v2.8.md`).
+
 Not built:
 
-- **Knowing when the customer has changed gear.** The largest finding of the
-  golden conversation dataset (`make conversation-eval`, EVALUATION.md §4a),
-  and the reason it is worth running conversations rather than questions.
-  Turn accuracy is 72.4%; whole-journey accuracy is **37.2%**. The gap is
-  almost entirely one turn kind: the **pivot**, where a customer crosses from
-  what the corpus knows to what only a system knows — *"and how much is it?"*,
-  *"where is my claim now?"* — which scores **10.9%**. Every failure is the
-  same: it answers instead of handing off. Four turns about how to claim, then
-  "where is my claim now?" answered with the policy's claim-notification
-  clause.
-
-  Context makes it worse rather than better, which is why a single-turn suite
-  could not find it: asked cold, "how much is it?" names no product and the bot
-  has little to say; asked on turn three it has a product in hand and keeps
-  answering from its pages. Every gate passes — they check that an answer is
-  grounded, not that the question was one to take. The corpus cannot hold a
-  premium, a claim status or a phishing verdict, and the bot needs to say so
-  rather than retrieve the nearest clause.
-
-  What is *not* broken is memory: `ellipsis` turns score 88.2% and
-  context-dependent turns 78.8%, so following a subject through a conversation
-  works.
 - **Composing answers from retrieved clauses** (their K4). A historic-version
   question correctly triggers RAG, retrieves that version's wording, and is
   then **blocked by `version-coherence` and handed off** rather than answered
@@ -822,11 +878,6 @@ Not built:
   from running the field test and the FAQ suite against a live index, which
   needs the GPU box. The suites in this repo run without one and so cannot
   move on this work — they show it costs nothing, not that it earns anything.
-- **Conversational memory.** A session carries channel, auth and policy;
-  it does not carry what was said. Measured cost above — context-dependent
-  turns fall from 96.8% to 48.4% as the corpus grows from 3 products to 108,
-  because an elliptical follow-up is retrieved on its own words. The
-  conversation suite exists to keep that number honest while it is unfixed.
 - **Benefit tables for most of the real corpus.** 10 of 108 products have
   one. This is the single largest source of failure on `okf-real` and it is a
   document-extraction problem, not a retrieval one: the schedules are PDF
