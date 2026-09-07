@@ -1,3 +1,106 @@
+# Evaluation
+
+## How to run an evaluation
+
+Everything below runs **offline, free and deterministically** — no key, no
+network, no GPU. `LLM_PROVIDER=deterministic` is what CI uses and what every
+number in this document was produced with, so a run here reproduces a run
+there byte for byte. That property is the point: a suite whose answers drift
+between runs cannot tell you whether your change helped.
+
+### Which suite answers which question
+
+| You want to know | Run | Takes |
+|---|---|---|
+| did I break anything CI will catch | `make evals` | ~1 min |
+| did I break anything at all | `make test` | ~1 min |
+| did the change help or hurt, across the whole corpus | `make conversation-eval` | ~6 min |
+| how it handles questions phrased the way customers phrase them | `uv run python evals/runner.py --suite field-test --bundle okf-real --gate 0` | ~1 min |
+| is the corpus itself sound | `make lint-bundle` and `make conflicts` | seconds |
+
+`make evals` is the **gate**: threshold 100%, and the step CI fails on. It runs
+against the *seed* bundle — a few fixture pages — which makes it fast and makes
+it blind to anything that needs the real corpus. Five of the seven suites run
+there (adversarial, field-test, golden, merge-consistency, staleness, 130 cases
+between them); `conversation` and `faq-customer` declare `bundle: okf-real` at
+the top of the file and are **skipped rather than failed**, because they are
+generated from that corpus and every case in them would fail against the seed.
+
+`field-test` is the one to know about: 109 questions four testers wrote by
+asking the way customers ask. It carries no `bundle:` marker, so CI scores it
+against the seed bundle, where a dozen of its cases assert product ids the seed
+catalogue does not contain. Run it against the corpus it was written for and it
+says something quite different — which is the fourth row below, and why
+`evals/reports/` keeps both numbers.
+
+`make conversation-eval` is the **instrument**: 1,711 cases over all 37 real
+products, 355 of them multi-turn journeys scored turn by turn. It is
+deliberately not a gate. Its job is the breakdown, not a pass or a fail, and
+you read it rather than trust it.
+
+### The loop that matters
+
+A number on its own tells you almost nothing. What tells you something is the
+same suite before and after your change, compared case by case:
+
+```bash
+# 1. Baseline, before you touch anything.
+make conversation-eval && cp .eval-reports/conversation.json /tmp/before.json
+
+# 2. Make the change.
+
+# 3. Measure again.
+make conversation-eval && cp .eval-reports/conversation.json /tmp/after.json
+
+# 4. Compare — and read the LOST list first.
+uv run python scripts/diff_runs.py /tmp/before.json /tmp/after.json --show-lost
+```
+
+**Read the losses before the gains.** A change that gains forty cases and
+loses three is usually not a good change: the three are a behaviour someone
+relied on, and the forty are often one pattern firing repeatedly. Every version
+from v2.4 to v2.8 was held to *zero lost*, and each time the first cut lost
+something and was narrowed until it did not.
+
+### Sizing a change before you write it
+
+The cheapest evaluation is the one you run on a rule rather than on the code.
+Before the v2.8 domain test existed, its rule was applied to all 2,893
+conversation turns as a plain function, cross-referenced against which cases
+were passing, and the answer — 6 turns flagged, none in a passing case — is
+what made it safe to build. A rule you cannot size this way is a rule you
+should not ship.
+
+### Rules
+
+- **Never skip, disable, relax or quarantine a case to make a suite green.**
+  The gate is 100% because it is small and every case in it is a behaviour
+  that must not regress. A case that fails is either a bug to fix or a finding
+  to record in `apps/evalgen/tests/known-findings.json` with a note saying why
+  — and that note is the honest alternative to lowering a gate.
+- **Compare like with like.** The conversation and FAQ suites are generated
+  from `okf-real` and are skipped against the seed bundle rather than failed.
+  Naming a suite explicitly still runs it, so `--suite conversation` against
+  the seed bundle is a thing you can do on purpose and rarely a thing you want.
+- **Quote numbers from a report, not from memory.** `evals/reports/` holds the
+  committed snapshots behind the figures in this document — the conversation
+  report, the field test against `okf-real`, and the seed gate CI runs — so a
+  reviewer can check a claim without a six-minute run.
+
+### When the corpus changes
+
+A compile changes the catalogue, so the golden dataset has to be regenerated
+from the authored taxonomy and committed — a golden dataset that moves under
+you is not one:
+
+```bash
+make corpus-compile          # raw/ + crawl snapshots  →  wiki/
+make conversation-suite      # taxonomy               →  evals/suites/conversation.yaml
+make conversation-eval       # score it
+```
+
+---
+
 ### Measured, today
 
 Seven columns: the v2.3 build that produced this dataset's first score; the
