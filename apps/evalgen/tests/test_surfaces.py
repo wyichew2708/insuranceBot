@@ -160,15 +160,17 @@ def test_the_suite_reports_facts_alongside_cases(bundle: Bundle) -> None:
         assert 0 < facts[product] < n
 
 
-def test_gap_probes_expect_a_handoff_only_where_the_corpus_is_silent(bundle: Bundle) -> None:
+def test_gap_probes_expect_guidance_only_where_the_corpus_is_silent(bundle: Bundle) -> None:
     suite = generate(bundle, BUNDLE_ROOT, TODAY)
     probes = {c.id: c for c in suite.cases if c.id.startswith("gap-")}
     # Travel publishes a claims journey, so its claim probe must be answered.
     claim = probes["gap-product-general-travel-claim"]
-    assert claim.expect.expect_handoff is None
+    assert claim.expect.expect_handoff is None and claim.expect.expect_guided is None
     assert "journey/claim/travel" in claim.expect.relevant_pages
     # No product in this corpus carries a premium, so every premium probe must
-    # hand off rather than improvise a price.
+    # be guided — the steps to a quote, or a person — rather than improvise a
+    # price. A substantive answer is the one thing the contract refuses.
     for case_id, case in probes.items():
         if "-premium" in case_id:
-            assert case.expect.expect_handoff is True
+            assert case.expect.expect_guided is True
+            assert case.expect.expect_delivered is None

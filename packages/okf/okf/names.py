@@ -122,6 +122,13 @@ class ProductNameIndex:
             if any(name.phrase in k.phrase for k in kept):
                 continue
             kept.append(name)
+        # A title outranks another product's alias. "Does Business Owners
+        # Super Suite include work injury compensation?" names the suite by
+        # its title and Casualty Insurance by an alias that is really a
+        # benefit; the customer typed one product's full name, and that is
+        # the product. Two titles remain two products.
+        if any(k.kind == "title" for k in kept):
+            kept = [k for k in kept if k.kind == "title"]
         if kept:
             return kept
         return self._fuzzy(haystack)

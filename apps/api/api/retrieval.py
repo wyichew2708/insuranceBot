@@ -14,6 +14,7 @@ from __future__ import annotations
 import datetime as dt
 import math
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -23,7 +24,7 @@ from okf.names import index_for
 from okf.sources import OFFER_QUESTION_RE, may_support, page_type_of_text
 
 from api.vectors import RawHit, VectorHits
-from okf import Bundle, Page, PageType, Status, term_idf
+from okf import Bundle, Page, PageType, Scope, Status, term_idf
 
 # The body is corroborating evidence, not the primary signal: frontmatter is
 # the curated surface and should still dominate.
@@ -558,6 +559,7 @@ def wiki_read(
     limit: int,
     today: dt.date | None = None,
     question: str = "",
+    scope: Scope | None = None,
 ) -> list[Page]:
     """Load whole pages, then follow the graph. Bounded by the page budget,
     which is a defined exit rather than a silent truncation.
@@ -576,8 +578,18 @@ def wiki_read(
     seen: set[str] = set()
     when = today or dt.date.today()
 
+    rejected_by_scope = 0
+
     def take(page: Page, via: str, hop: int, edge: str = "") -> bool:
+        nonlocal rejected_by_scope
         if page.id in seen or len(pages) >= limit or budget.would_exceed_pages():
+            return False
+        # The scope is the product the customer named. The filter already kept
+        # other products' pages out of the seeds; the walk and the reverse
+        # rescue could still reach one along a `ref` edge or back from a
+        # shared concept. Nothing crosses here.
+        if scope is not None and not scope.allows_page(bundle, page):
+            rejected_by_scope += 1
             return False
         seen.add(page.id)
         pages.append(page)
@@ -664,6 +676,9 @@ def wiki_read(
     # Spend anything left over on the next-best seeds.
     for page, _score in seeds[seed_limit:]:
         take(page, "filter", 0)
+    if rejected_by_scope:
+        label = scope.describe() if scope else "open"
+        trace.note(f"scope {label}: {rejected_by_scope} page(s) outside the product not read")
     return pages
 
 
@@ -700,6 +715,39 @@ def unsupported_term(bundle: Bundle, question: str, admitted: list[tuple[Page, f
             return ""
         return str(token)
     return ""
+
+
+def tie_on_subject(bundle: Bundle, question: str, product_keys: list[str]) -> bool:
+    """Whether a lexical tie among these products was reached on the question's
+    subject, or only on its verb.
+
+    The scorer credits every shared word, so on "how much can I claim for a
+    lost bag?" a life-insurance FAQ that says "how much", "claim" and "lost my
+    policy" ties with the next such FAQ just over the confidence floor — and the
+    one word that says what the question is about, "bag", is matched by
+    neither. Naming those products as a choice offers the customer two wrong
+    answers with confidence.
+
+    A tie is a choice only where some tied product carries the question's most
+    informative term: the rarest word in it by the same weighting the score
+    uses, a word the corpus has never seen counting as rarest of all. A tie
+    without it is a tie on generic words and is asked about openly.
+    """
+    terms = subject_terms(question)
+    if not terms or not product_keys:
+        return False
+    idf = term_idf(bundle)
+    strongest = max(idf.get(term, 1.0) for term in terms)
+    pivotal = {term for term in terms if idf.get(term, 1.0) >= strongest - 1e-9}
+    tied = set(product_keys)
+    for page in bundle.pages.values():
+        if bundle.product_key(page) not in tied:
+            continue
+        fm = page.frontmatter
+        surface = keywords(" ".join([fm.title, " ".join(fm.aliases), fm.id.replace("/", " ")]))
+        if pivotal & (surface | keywords(page.body)):
+            return True
+    return False
 
 
 def needs_rag(
@@ -751,6 +799,7 @@ def rag_search(
     must_include: str = "",
     dense: list[RawHit] | None = None,
     dense_floor: float = 0.5,
+    admit: Callable[[str], bool] | None = None,
 ) -> list[RagHit]:
     """Search raw/ sections — lexically, and by similarity where an index is
     configured. Structure-aware: an exclusion is never split from its parent
@@ -777,6 +826,11 @@ def rag_search(
     if terms and raw_root.is_dir():
         for path in sorted(raw_root.rglob("*.md")):
             rel = f"raw/{path.relative_to(raw_root)}"
+            # The product scope, before the file is even read. A document
+            # tagged to another product is not evidence for this one, however
+            # many words it shares with the question.
+            if admit is not None and not admit(rel):
+                continue
             text = path.read_text(errors="ignore")
             if not _admissible(rel, question, version, page_type=page_type_of_text(text)):
                 continue
@@ -809,7 +863,7 @@ def rag_search(
                 )
     lexical.sort(key=lambda h: -h.score)
 
-    admitted_dense = _dense_hits(dense or [], question, version, must_include, dense_floor)
+    admitted_dense = _dense_hits(dense or [], question, version, must_include, dense_floor, admit)
     if not admitted_dense:
         # No index, or nothing survived the filters. Byte-for-byte the lexical
         # fallback as it was, scores included — a deployment without pgvector
@@ -834,7 +888,12 @@ def _admissible(rel: str, question: str, version: str | None, page_type: str) ->
 
 
 def _dense_hits(
-    hits: list[RawHit], question: str, version: str | None, must_include: str, floor: float
+    hits: list[RawHit],
+    question: str,
+    version: str | None,
+    must_include: str,
+    floor: float,
+    admit: Callable[[str], bool] | None = None,
 ) -> list[RagHit]:
     """The index's raw hits, filtered by everything the lexical pass filters by.
 
@@ -846,6 +905,8 @@ def _dense_hits(
     out: list[RagHit] = []
     for hit in hits:
         if hit.similarity < floor:
+            continue
+        if admit is not None and not admit(hit.source_path):
             continue
         if not _admissible(hit.source_path, question, version, page_type=page_type_of_text(hit.content)):
             continue

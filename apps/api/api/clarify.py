@@ -25,9 +25,16 @@ been claimed about cover yet.
 
 from __future__ import annotations
 
+import difflib
+
 from harness import Claim, GroundedAnswer
+from okf.names import index_for
 
 from okf import Bundle, Page, PageType
+
+PRODUCT_HEAD_WORDS = frozenset(
+    {"insurance", "cover", "coverage", "plan", "plans", "policy", "policies", "protection", "takaful"}
+)
 
 #: More than this and it is not a question, it is a menu. The model is asked
 #: for at most four; beyond three the honest move is to list rather than ask.
@@ -102,7 +109,7 @@ def lexical_clarification(bundle: Bundle, product_keys: list[str]) -> GroundedAn
     return clarification(bundle, [page.id for page in pages])
 
 
-def clarification(bundle: Bundle, product_ids: list[str]) -> GroundedAnswer | None:
+def clarification(bundle: Bundle, product_ids: list[str], limit: int = MAX_OPTIONS) -> GroundedAnswer | None:
     """Ask which of these was meant, or None if there is nothing to ask about.
 
     None where fewer than two products resolve: one product is not a choice,
@@ -111,12 +118,86 @@ def clarification(bundle: Bundle, product_ids: list[str]) -> GroundedAnswer | No
     products = [page for page in (bundle.get(pid) for pid in product_ids) if page is not None]
     if len(products) < 2:
         return None
-    shown = products[:MAX_OPTIONS]
+    shown = products[:limit]
     return GroundedAnswer(
         # One claim per option, so every name in the question resolves to the
         # page it was read from and reference-integrity has something to check.
         answer=question_for(shown),
         claims=[Claim(text=_name(p), source_id=p.id, locator=p.id) for p in shown],
+        clarifying=True,
+        confidence=1.0,
+    )
+
+
+#: How close a misspelling has to be. `difflib`'s ratio, so 0.8 admits one
+#: transposition or a dropped letter in a word of ordinary length — "mediacl"
+#: for "medical", "trvael" for "travel" — and rejects a word that merely
+#: shares a prefix. Tuned on the field test's own typos rather than in the
+#: abstract: at 0.7 "cancr" also matched "cancel", which is a different
+#: journey entirely.
+TYPO_RATIO = 0.8
+
+
+def did_you_mean(bundle: Bundle, token: str) -> list[str]:
+    """Product pages whose name contains a word this one is a misspelling of.
+
+    The model path resolves "trvael insurance" before retrieval ever sees it,
+    and the deterministic path — which is what CI, the eval suites and any
+    offline deployment run — had nothing, so a single transposed letter turned
+    a product we sell into "I could not establish that from our approved
+    product pages. Let me pass you to a colleague." A customer who mistypes is
+    the easiest customer to help and was getting the worst answer in the
+    system.
+
+    Returns page ids, most plausible first, or [] when the word is not a near
+    miss of anything — which is the ordinary case for a line we do not carry
+    ("crop insurance"), and must stay a refusal rather than becoming a guess.
+    """
+    index = index_for(bundle)
+    vocabulary: dict[str, set[str]] = {}
+    for page_id, title in index.titles.items():
+        for word in title.split():
+            if len(word) > 3 and word not in PRODUCT_HEAD_WORDS:
+                vocabulary.setdefault(word, set()).add(page_id)
+    for name in index.names:
+        for word in name.phrase.split():
+            if len(word) > 3 and word not in PRODUCT_HEAD_WORDS:
+                vocabulary.setdefault(word, set()).add(name.page_id)
+    if token in vocabulary:
+        return []
+    close = difflib.get_close_matches(token, sorted(vocabulary), n=3, cutoff=TYPO_RATIO)
+    if not close:
+        return []
+    hits: list[str] = []
+    for word in close:
+        for page_id in sorted(vocabulary[word]):
+            if page_id not in hits:
+                hits.append(page_id)
+    return hits
+
+
+def typo_clarification(bundle: Bundle, page_ids: list[str]) -> GroundedAnswer | None:
+    """Ask whether a misspelt word meant one of these products.
+
+    Unlike `clarification`, one option is enough. A tie of one is not a choice
+    and there is nothing to ask about; a misspelling resolving to one product
+    is a different thing — the customer wrote a word, we think we know which
+    plan they meant, and confirming it costs a turn where guessing wrong costs
+    an answer about the wrong policy.
+    """
+    products = [page for page in (bundle.get(pid) for pid in page_ids) if page is not None]
+    if not products:
+        return None
+    shown = products[:MAX_OPTIONS]
+    if len(shown) > 1:
+        return clarification(bundle, [p.id for p in shown])
+    only = shown[0]
+    return GroundedAnswer(
+        answer=(
+            f"I don't have a plan by that name — did you mean {_name(only)}? "
+            "Say the word and I'll give you its cover, exclusions or claim steps."
+        ),
+        claims=[Claim(text=_name(only), source_id=only.id, locator=only.id)],
         clarifying=True,
         confidence=1.0,
     )

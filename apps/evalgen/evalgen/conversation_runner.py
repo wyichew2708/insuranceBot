@@ -37,6 +37,10 @@ def _turn_failures(turn: Turn, envelope: AnswerEnvelope, trace: Trace) -> list[s
         out.append(f"advice_flag={answer.advice_flag}, expected {expect.expect_advice_flag}")
     if expect.expect_handoff is not None and answer.handoff != expect.expect_handoff:
         out.append(f"handoff={answer.handoff}, expected {expect.expect_handoff}")
+    if expect.expect_guided is not None:
+        guided = bool(answer.handoff or getattr(answer, "guidance", False))
+        if guided != expect.expect_guided:
+            out.append(f"guided={guided}, expected {expect.expect_guided}")
     return out
 
 

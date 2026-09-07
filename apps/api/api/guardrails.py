@@ -48,6 +48,8 @@ from typing import Any
 from harness import GateResult, Verdict
 
 from api.llm import LLMProvider, provider_for
+from api.retrieval import named_products
+from okf import Bundle
 
 
 class Risk(str, Enum):
@@ -473,6 +475,25 @@ THIRD_PARTY_RE = re.compile(
     r"|\b(?:list|show|give|send)\s+(?:me\s+)?(?:all|every|each)\s+(?:the\s+)?"
     r"(?:customer|customers|policyholder|policyholders)\b",
     re.IGNORECASE,
+)
+
+#: The named third party the comment above promised and the pattern never
+#: matched: "what is the policy number for John Tan". Case-sensitive and kept
+#: separate for that reason — the whole signal is the capital letters, and
+#: folding case would make "the policy wording for tiq home insurance" a
+#: privacy incident.
+#:
+#: Narrow on both sides. The record words are the ones that identify a person's
+#: file (`number`, `status`, `details`, `record`), never `wording` or `document`
+#: — those name published papers and every product has them. And the name must
+#: not run into a product head word, because "Tiq Home Insurance" and "Invest
+#: Smart Vista" are capitalised too, and asking for their policy wording is the
+#: single most ordinary question this system answers.
+NAMED_THIRD_PARTY_RE = re.compile(
+    r"\b(?:policy|claim|account|premium)\s+(?:number|status|details|record|history)\s+"
+    r"(?:of|for|belonging\s+to)\s+(?:Mr|Mrs|Ms|Dr|Mdm)?\.?\s*"
+    r"[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+"
+    r"(?!\s*(?:Insurance|Plan|Policy|Cover|Takaful|Assurance))"
 )
 
 #: Distress that should reach a person quickly. Flagged, never blocked — a
@@ -1095,4 +1116,27 @@ def guard_for(settings: Any, provider: LLMProvider | None = None) -> Guard:
         model=getattr(settings, "guardrail_model", "") or "",
         max_tokens=getattr(settings, "guardrail_max_tokens", 512),
         enabled=choice != "rules",
+    )
+
+
+def named_third_party(bundle: Bundle, question: str) -> bool:
+    """Whether the turn asks for a *named person's* record.
+
+    Kept out of `screen_input_rules` because it cannot be decided from the text
+    alone: "policy details for Invest Smart Vista" is capitalised exactly like
+    "policy number for John Tan", and only the catalogue knows which of the two
+    is a product. The rule layer is deliberately bundle-free — this is the one
+    entitlement check that needs to look something up, so it runs in the
+    pipeline and reports its verdict the same way.
+    """
+    if not NAMED_THIRD_PARTY_RE.search(question):
+        return False
+    return not named_products(bundle, question)
+
+
+def third_party_screening() -> Screening:
+    """The blocking verdict for `named_third_party`, shaped like a rule hit."""
+    return Screening(
+        findings=[Finding("entitlement", Risk.block, "asks after a named third party's record", "rules")],
+        checked_by=["rules"],
     )
