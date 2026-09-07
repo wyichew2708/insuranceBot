@@ -50,6 +50,12 @@ class Expectation(BaseModel):
     must_not_contain: list[str] = Field(default_factory=list)
     expect_delivered: bool | None = None
     expect_handoff: bool | None = None
+    #: The turn must not be answered as if the corpus held it: either a
+    #: handoff (a person or the customer's own record holds the answer) or a
+    #: guidance reply (the steps to the answer, delivered as a direction).
+    #: The product owner's rule for a gap is the second wherever it applies;
+    #: this expectation accepts both and refuses a substantive answer.
+    expect_guided: bool | None = None
     expect_advice_flag: bool | None = None
     expect_rag: bool | None = None
     expect_gate_fail: list[str] = Field(default_factory=list)

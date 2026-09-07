@@ -111,6 +111,11 @@ class Trace(BaseModel):
     stages: list[StageTiming] = Field(default_factory=list)
     budget: dict[str, Any] = Field(default_factory=dict)
     composer: str = ""
+    #: The router's decision for this turn — `layer1` (what kind of turn),
+    #: `layer2` (which product, and how surely), `layer3` (which handler) —
+    #: plus the retrieval scope it produced. Recorded so the evaluation can
+    #: group by it: a score by router layer says which layer is wrong.
+    route: dict[str, str] = Field(default_factory=dict)
     notes: list[str] = Field(default_factory=list)
     # The draft a gate refused to deliver. Kept for the debug console — a
     # blocked answer you cannot inspect teaches you nothing.

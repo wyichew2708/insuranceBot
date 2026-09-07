@@ -1,367 +1,365 @@
-# Evaluating the bot
+# Evaluation
 
-Six suites, what each one is actually testing, how to run it, and how to read a
-failure. Every number here was measured on this repository — the run log is
-quoted, not summarised from memory.
+## How to run an evaluation
 
-**Everything is offline and free by default.** `LLM_PROVIDER=deterministic`
-means no network, no key, no cost. A configured model makes up to three calls
-per case — screen the question, write the answer, screen the answer — so a
-25,791-case suite becomes ~77,000 billed requests. The Makefile targets pin the
-provider for exactly that reason; the `-live` variants are the ones that spend
-money.
+Everything below runs **offline, free and deterministically** — no key, no
+network, no GPU. `LLM_PROVIDER=deterministic` is what CI uses and what every
+number in this document was produced with, so a run here reproduces a run
+there byte for byte. That property is the point: a suite whose answers drift
+between runs cannot tell you whether your change helped.
 
----
+### Which suite answers which question
 
-## The one command
+| You want to know | Run | Takes |
+|---|---|---|
+| did I break anything CI will catch | `make evals` | ~1 min |
+| did I break anything at all | `make test` | ~1 min |
+| did the change help or hurt, across the whole corpus | `make conversation-eval` | ~6 min |
+| how it handles questions phrased the way customers phrase them | `uv run python evals/runner.py --suite field-test --bundle okf-real --gate 0` | ~1 min |
+| is the corpus itself sound | `make lint-bundle` and `make conflicts` | seconds |
 
-```bash
-make ci
-```
+`make evals` is the **gate**: threshold 100%, and the step CI fails on. It runs
+against the *seed* bundle — a few fixture pages — which makes it fast and makes
+it blind to anything that needs the real corpus. Five of the seven suites run
+there (adversarial, field-test, golden, merge-consistency, staleness, 130 cases
+between them); `conversation` and `faq-customer` declare `bundle: okf-real` at
+the top of the file and are **skipped rather than failed**, because they are
+generated from that corpus and every case in them would fail against the seed.
 
-Lint, typecheck, 620 tests, bundle lint, guardrail backtest, curated suites,
-seed auto-eval, fixture compile, fixture auto-eval. Exits non-zero if any gate
-fails. This is what has to be green before a push.
+`field-test` is the one to know about: 109 questions four testers wrote by
+asking the way customers ask. It carries no `bundle:` marker, so CI scores it
+against the seed bundle, where a dozen of its cases assert product ids the seed
+catalogue does not contain. Run it against the corpus it was written for and it
+says something quite different — which is the fourth row below, and why
+`evals/reports/` keeps both numbers.
 
----
+`make conversation-eval` is the **instrument**: 1,711 cases over all 37 real
+products, 355 of them multi-turn journeys scored turn by turn. It is
+deliberately not a gate. Its job is the breakdown, not a pass or a fail, and
+you read it rather than trust it.
 
-## 1. Unit tests
+### The loop that matters
 
-```bash
-make test                                 # or: uv run pytest
-uv run pytest apps/compiler -q            # one package
-uv run pytest -k exclusion -q             # one topic
-```
-
-```
-620 passed, 2 skipped
-```
-
-The two skips are network-dependent. A `conftest.py` autouse fixture forces
-`LLM_PROVIDER=deterministic` for the whole suite, so a populated `.env` cannot
-silently turn `pytest` into a billed run — a mistake that once cost ~1,830 API
-calls per invocation.
-
----
-
-## 2. Curated suites — the regression gate
+A number on its own tells you almost nothing. What tells you something is the
+same suite before and after your change, compared case by case:
 
 ```bash
-make evals                                # deterministic, gate 100%
-make evals-live                           # against whatever .env configures
-uv run python -m evals.runner --suite golden --gate 1.0
+# 1. Baseline, before you touch anything.
+make conversation-eval && cp .eval-reports/conversation.json /tmp/before.json
+
+# 2. Make the change.
+
+# 3. Measure again.
+make conversation-eval && cp .eval-reports/conversation.json /tmp/after.json
+
+# 4. Compare — and read the LOST list first.
+uv run python scripts/diff_runs.py /tmp/before.json /tmp/after.json --show-lost
 ```
 
-Four YAML suites in `evals/suites/`, 21 cases, hand-written:
+**Read the losses before the gains.** A change that gains forty cases and
+loses three is usually not a good change: the three are a behaviour someone
+relied on, and the forty are often one pattern firing repeatedly. Every version
+from v2.4 to v2.8 was held to *zero lost*, and each time the first cut lost
+something and was narrowed until it did not.
 
-| suite | what it pins |
-|---|---|
-| `golden` | the answers that must never change |
-| `merge-consistency` | one product, several routes to market, identical facts |
-| `adversarial` | injection, entitlement probing, advice-seeking |
-| `staleness` | live promotions quotable, expired ones not, overdue pages demoted |
+### Sizing a change before you write it
 
-```
-overall 21/21 (100.0%), gate 100%
-```
+The cheapest evaluation is the one you run on a rule rather than on the code.
+Before the v2.8 domain test existed, its rule was applied to all 2,893
+conversation turns as a plain function, cross-referenced against which cases
+were passing, and the answer — 6 turns flagged, none in a passing case — is
+what made it safe to build. A rule you cannot size this way is a rule you
+should not ship.
 
-The gate is **100%** and should stay there. These are not sampled behaviours;
-they are the contract. A failure here is a regression, full stop.
+### Rules
 
-`evals-live` exits 2 if any case was silently served by the deterministic
-fallback — a case served by the fallback measured the fallback, not the model.
-`--allow-fallback` overrides that when you mean it.
+- **Never skip, disable, relax or quarantine a case to make a suite green.**
+  The gate is 100% because it is small and every case in it is a behaviour
+  that must not regress. A case that fails is either a bug to fix or a finding
+  to record in `apps/evalgen/tests/known-findings.json` with a note saying why
+  — and that note is the honest alternative to lowering a gate.
+- **Compare like with like.** The conversation and FAQ suites are generated
+  from `okf-real` and are skipped against the seed bundle rather than failed.
+  Naming a suite explicitly still runs it, so `--suite conversation` against
+  the seed bundle is a thing you can do on purpose and rarely a thing you want.
+- **Quote numbers from a report, not from memory.** `evals/reports/` holds the
+  committed snapshots behind the figures in this document — the conversation
+  report, the field test against `okf-real`, and the seed gate CI runs — so a
+  reviewer can check a claim without a six-minute run.
 
----
+### When the corpus changes
 
-## 3. Auto-evaluation — the suite that grows with the corpus
+A compile changes the catalogue, so the golden dataset has to be regenerated
+from the authored taxonomy and committed — a golden dataset that moves under
+you is not one:
 
 ```bash
-make autoeval                             # seed bundle, gate 0.91
-make autoeval-web                         # fixture bundle, gate 0.94
-make autoeval-live                        # seed bundle, real model, costs money
-
-# any bundle, any gate:
-LLM_PROVIDER=deterministic GUARDRAILS=rules \
-uv run python -m evalgen.cli --bundle okf-real --out .eval-reports/real \
-  --gate 0.95 --min-per-product 100 all
+make corpus-compile          # raw/ + crawl snapshots  →  wiki/
+make conversation-suite      # taxonomy               →  evals/suites/conversation.yaml
+make conversation-eval       # score it
 ```
 
-Subcommands: `generate` (derive the suite), `run` (execute and score),
-`report` (render), `all` (the lot). The suite is written to disk before it runs,
-so you can read exactly which questions were asked and what evidence each
-expected.
-
-Nothing is hand-written. Every case is derived from something already in the
-bundle — a benefit-table row becomes "what is the X limit?" pinned to that row
-id and tier; an authored alias becomes a question; an exclusions section becomes
-"are X covered?"; a product line the corpus does *not* carry becomes a case that
-must hand off rather than answer from the nearest neighbour.
-
-Two consequences. The suite **grows with the corpus** — publish fifty product
-pages and their questions appear without anyone writing YAML. And coverage is
-**measurable**: any page no question reaches is named in the report.
-
-`--min-per-product 100` fails the run if any product has fewer than 100 cases
-attributable to it, so a product the corpus barely describes cannot look strong
-by being asked less.
+---
 
 ### Measured, today
 
-| bundle | cases | accuracy | gate | |
-|---|---|---|---|---|
-| `okf` seed | 604 | **95.0%** | 0.91 | pass |
-| `okf-web` fixture | 4,193 | **94.7%** | 0.94 | pass |
-| `okf-real` | 25,791 | **82.3%** | — | no gate set |
-
-Real corpus detail:
-
-```
-  accuracy              82.3%   (25791 cases)
-  citation F1           0.837
-  figure exact match    79.5%
-  numeric binding      100.0%   (0 unbound)
-  safety                61.2%   (0 leaks)
-  failure shape       1791 unsafe / 2772 safe misses
-  recall@1 / @3 / MRR 0.79 / 0.97 / 0.91
-  latency p50/p95     118.49 / 516.52 ms
-  corpus reach          97.5%   (rows 88%)
-```
-
-The real corpus has no gate because it is not a regression suite — it is a
-measurement of a corpus that is still being built. It takes **~2 hours**, so
-run it in batches:
-
-```bash
-uv run python scripts/eval_batches.py --bundle okf-real \
-  --suite .eval-reports/real-suite.json --batch-size 1000
-uv run python scripts/eval_batches.py --bundle okf-real --report-only
-```
-
-Each batch is written to `.eval-reports/batches/batch-NNNN.json` the moment it
-finishes and prints its own pass rate, a running total and an ETA. A rerun
-skips what is already on disk, so a kill costs one batch rather than two
-hours — which had already happened three times before this existed. The score
-is computed from the files rather than from memory, so `--report-only`
-reproduces it after a crash, on another machine, or a week later.
-
-Deterministic and pinned to it: a configured model would make this three API
-calls per case, about 78,000 for one pass, which is not a thing to start by
-accident. `--live` opts in.
-
-### Reading the numbers
-
-**`numeric binding` is the one that must never move.** 100.0% with 0 unbound
-means no number reached an answer without a benefit-table row or a verified
-quotation behind it. If this drops below 100, stop and find out why before
-looking at anything else.
-
-**`failure shape` splits failures by what they cost you.** A *safe miss* is a
-refusal or handoff where an answer existed — annoying. An *unsafe* failure is an
-answer that was wrong, uncited, or cited the wrong page — dangerous. 1,791 of
-25,791 is a 6.9% unsafe rate, against 21.1% on the previous real-corpus run.
-
-**`corpus reach`** names pages no question touched and rows no answer exercised.
-Low reach means the generator cannot see part of your corpus, which usually
-means those pages lack aliases.
-
-**`accuracy` alone is not comparable across bundles.** Different corpora
-generate different case mixes. 82.3% on the real corpus against 95.0% on the
-seed is not "the real corpus is worse at answering" — it is that 4,563 of its
-failures are `fig-*` cases, because 10 of its 108 products have a benefit table.
-The text tier is compiled; the figure tier is thin.
-
----
-
-## 4. Multi-turn conversations
-
-There is no Makefile target; it runs from the test suite or a three-line script:
-
-```python
-from evalgen.conversations import generate
-from evalgen.conversation_runner import run_suite, summarise
-from okf import Bundle
-from api.settings import Settings
-
-root = Path("okf-real")
-bundle = Bundle.load(root)
-report = run_suite(bundle, Settings(bundle_path=root), generate(bundle, str(root)))
-print(summarise(report))
-```
-
-100 conversations, 325 turns, eight archetypes: a customer exploring, one
-correcting themselves, one switching topics, an attacker mid-thread, someone
-asking for advice at the end. Deterministic — the same bundle yields the same
-suite, so two runs are comparable.
-
-| | seed (3 products) | fixture (22) | real (108+) |
-|---|---|---|---|
-| whole conversations | 96.0% | 56.0% | 46.0% |
-| turns overall | 98.8% | 74.8% | 67.4% |
-| standalone turns | 100.0% | 85.4% | 79.4% |
-| context-dependent turns | 96.8% | 57.9% | 48.4% |
-| self-contradictions | 0 | 0 | 0 |
-| attacks held | 24/24 | 24/24 | 24/24 |
-| answered the next turn | 12/12 | 12/12 | 10/12 |
-
-**Whole-conversation rate is the honest number.** Customers do not experience
-turns, they experience conversations, so one bad turn spoils the exchange and
-the conversation rate is never above the turn rate.
-
-**Nothing the customer said earlier is carried.** The session holds channel,
-auth level and policy; the question text does not accumulate. That is what
-`context-dependent` measures, and the three columns show the shape of it: an
-elliptical follow-up — "and the premier tier?" — is retrieved on its own words,
-which lands on the right product when there are three and lands anywhere when
-there are a hundred. The seed bundle's 96.8% is not the system resolving
-reference; it is a corpus small enough that failing to resolve it does not
-matter.
-
-Two rows hold everywhere, and they are the ones the gates own: **no conversation
-ever gave two different figures for one fact**, and every attack was refused
-mid-thread without the bot then punishing the customer by staying refusing.
-
----
-
-## 4a. The golden conversation dataset — end-to-end, by customer journey
-
-```bash
-make conversation-suite     # regenerate from the taxonomy after a compile
-make conversation-eval      # score it; writes .eval-reports/conversation.{json,md}
-```
-
-1,711 cases over all 37 catalogue products — **1,356 single questions and 355
-multi-turn conversations carrying 1,373 scored turns** — covering the customer
-journey end to end: discovery, quote, eligibility, application, policy
-information, servicing, renewal, cancellation, payment, claims, disputes,
-fraud, account support, regulatory questions and emergencies. Generated by
-`scripts/conversation_suite.py` from `evals/taxonomy/conversation.yaml`, which
-is the file to read and argue with.
-
-**What makes it a golden set rather than a question list.** Roughly a third of
-what customers ask an insurer's chatbot cannot be answered from a knowledge
-corpus at all — "what is my claim status", "I forgot my password", "someone
-used my policy" — and for those the correct reply is a handoff. A dataset that
-expected answers there would score the bot highest for its most dangerous
-behaviour. So every template names a **behaviour contract**, and the contracts
-are declared once, in the taxonomy, where they can be disagreed with:
-
-| contract | what a correct reply is | cases |
-|---|---|---:|
-| `product_fact` | answered from this product's own pages, citing it | 1,092 |
-| `handoff` | needs a system or a human; say so and pass it on | 179 |
-| `corpus_fact` | answered from the corpus, product not pinned | 20 |
-| `directory` | a list of what exists; naming one winner is the failure | 19 |
-| `advice_boundary` | flagged for an adviser, and no recommendation leaves | 15 |
-| `clarify` | genuinely ambiguous; asking is the right answer | 15 |
-| `out_of_scope` | not an insurance question — app support, login | 12 |
-| `entity_fact` | who underwrites it; one page states it | 4 |
-
-Every case also carries the three-layer label — journey, intent, entity — and
-the report groups by each, because one pass rate over 1,711 cases is a number
-that moves for reasons you cannot see.
-
-### Conversations, and why every turn is scored
-
-Customers do not ask one question. They open broadly, drill down, drop the
-subject halfway through a sentence, get the product wrong and correct
-themselves, lose patience, and hand an attacker the third turn of an otherwise
-ordinary chat. 42 authored conversations cover those shapes and expand across
-the catalogue to 355 journeys.
-
-**Each turn carries its own contract.** A journey scored only on its last turn
-cannot tell a bot that answered all five from one that answered the fifth — and
-to a customer those are very different products. Three fields do the work:
-
-| | |
-|---|---|
-| `kind` | what the turn does to the conversation — `opener`, `drill`, `ellipsis`, `pivot`, `switch`, `correction`, `repeat`, `escalate`, `attack`, `recover` |
-| `needs_context` | whether it is answerable at all without the turns before it. Scored apart, because a bot that loses the subject fails these and only these |
-| `contract` | per turn, so a journey can move from `product_fact` to `handoff` when the customer crosses from what the corpus knows to what only a system does |
-
-That last crossing is the `pivot` turn, and it is the most common shape in real
-traffic: four good answers about cover, then *"and how much is it?"*.
-
-The evaluation date is pinned to 2026-09-04. `okf-real` pages are review-due
-2026-12-02, so a suite that let the session default to the wall clock would
-pass today and fail every case on 2026-12-03 for a reason that is not the bot's.
-
-### Measured, today
+Seven columns: the v2.3 build that produced this dataset's first score; the
+same suite after the routing change (v2.3.1) that its findings prompted; after
+v2.4 — retrieval scoped to the resolved product, the three-layer router, and
+asking when the product is unsure (`DESIGN-v2.4.md`); after v2.5 — the steps
+to the real answer instead of a refusal, a generic reply where a figure will
+not bind, and both halves of a compound question answered (`DESIGN-v2.5.md`);
+after v2.6 — an incident read for its line, a price with no plan as the quote
+steps (`DESIGN-v2.6.md`); and after v2.7 — a direction delivered as an answer
+and a handoff kept for a person, with the generated suite's gap contract
+following the same rule (`DESIGN-v2.7.md`); and after v2.8 — the questions
+it declines: off-domain turns refused rather than answered from the nearest
+policy page, a recommendation referred before retrieval instead of after, a
+misspelt product asked about, and a named third party's record refused
+(`DESIGN-v2.8.md`).
 
 ```
-Conversation golden dataset — 1209/1711 (70.7%)
+Conversation golden dataset    v2.3         v2.3.1         v2.4          v2.5          v2.6          v2.7          v2.8     
 
-Conversations — 355 journeys, 1373 scored turns
-  whole conversations   132/355    37.2%   (every turn right)
-  turns overall         994/1373   72.4%
-  context-dependent     638/810    78.8%   (unanswerable without the turns before)
+  overall                  1209/1711 71% 1333/1711 78% 1341/1711 78% 1519/1711 89% 1561/1711 91% 1675/1711 98% 1680/1711 98%
+    whole conversations     132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%  336/355  95%
+    turns                   994/1373 72% 1180/1373 86% 1181/1373 86% 1281/1373 93% 1298/1373 95% 1345/1373 98% 1348/1373 98%
+    context-dependent turns 638/810  79%  705/810  87%  705/810  87%  761/810  94%  762/810  94%  794/810  98%  796/810  98%
 
-turns by kind                        by journey
-  pivot        18/165   10.9%          pay             3/23    13.0%
-  switch        1/4     25.0%          service         7/26    26.9%
-  escalate      1/3     33.3%          quote          36/125   28.8%
-  attack        1/2     50.0%          support        18/57    31.6%
-  drill       219/304   72.0%          cancel         62/116   53.4%
-  opener      270/355   76.1%          renew          34/60    56.7%
-  repeat        7/9     77.8%          claim         249/357   69.7%
-  ellipsis    395/448   88.2%          apply          43/54    79.6%
-  advice       39/40    97.5%          policy        405/492   82.3%
-  pick         38/38   100.0%          eligibility   199/231   86.1%
-  recover       3/3    100.0%          evaluate       52/58    89.7%
-  correction    1/1    100.0%          discover      101/112   90.2%
+turns by kind
+    switch                    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%    1/4    25%    2/4    50%
+    attack                    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%    1/2    50%
+    repeat                    7/9    78%    7/9    78%    7/9    78%    8/9    89%    8/9    89%    8/9    89%    8/9    89%
+    pivot                    18/165  11%  124/165  75%  124/165  75%  156/165  95%  157/165  95%  157/165  95%  157/165  95%
+    opener                  270/355  76%  275/355  77%  276/355  78%  318/355  90%  333/355  94%  348/355  98%  348/355  98%
+    ellipsis                395/448  88%  396/448  88%  396/448  88%  414/448  92%  414/448  92%  442/448  99%  444/448  99%
+    drill                   219/304  72%  291/304  96%  291/304  96%  297/304  98%  298/304  98%  302/304  99%  302/304  99%
+    advice                   39/40   98%   39/40   98%   39/40   98%   40/40  100%   40/40  100%   40/40  100%   40/40  100%
+    escalate                  1/3    33%    3/3   100%    3/3   100%    3/3   100%    3/3   100%    3/3   100%    3/3   100%
+    correction / closer / recover / pick         100%          100%          100%          100%          100%          100%
 
 by contract
-  handoff           43/179   24.0%     directory       14/19   73.7%
-  out_of_scope       3/12    25.0%     product_fact   974/1092 89.2%
-  conversation     132/355   37.2%     corpus_fact     19/20   95.0%
-  entity_fact        2/4     50.0%
-  advice_boundary   11/15    73.3%
-  clarify           11/15    73.3%
+    entity_fact               2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%    2/4    50%
+    clarify                  11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%   11/15   73%
+    conversation            132/355  37%  198/355  56%  199/355  56%  278/355  78%  293/355  83%  333/355  94%  336/355  95%
+    corpus_fact              19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%   19/20   95%
+    handoff                  43/179  24%   96/179  54%   98/179  55%  149/179  83%  174/179  97%  174/179  97%  176/179  98%
+    product_fact            974/1092 89%  974/1092 89%  974/1092 89% 1016/1092 93% 1016/1092 93% 1090/1092100% 1090/1092100%
+    directory                14/19   74%   14/19   74%   19/19  100%   19/19  100%   19/19  100%   19/19  100%   19/19  100%
+    advice_boundary          11/15   73%   11/15   73%   11/15   73%   15/15  100%   15/15  100%   15/15  100%   15/15  100%
+    out_of_scope              3/12   25%    8/12   67%    8/12   67%   10/12   83%   12/12  100%   12/12  100%   12/12  100%
 
-owed a handoff and did not give one — 145:
-   82  ANSWERED — a substantive reply it could not support
-   62  asked which product instead of handing off
-    1  blocked by a gate rather than handed off
+by journey
+    support                  18/57   32%   32/57   56%   32/57   56%   40/57   70%   47/57   82%   47/57   82%   49/57   86%
+    service                   7/26   27%   18/26   69%   19/26   73%   23/26   88%   24/26   92%   24/26   92%   25/26   96%
+    renew                    34/60   57%   35/60   58%   35/60   58%   44/60   73%   48/60   80%   57/60   95%   57/60   95%
+    pay                       3/23   13%   18/23   78%   18/23   78%   22/23   96%   22/23   96%   22/23   96%   23/23  100%
+    discover                101/112  90%  101/112  90%  107/112  96%  107/112  96%  108/112  96%  108/112  96%  108/112  96%
+    evaluate                 52/58   90%   52/58   90%   52/58   90%   57/58   98%   57/58   98%   57/58   98%   58/58  100%
+    claim                   249/357  70%  286/357  80%  286/357  80%  319/357  89%  334/357  94%  351/357  98%  351/357  98%
+    eligibility             199/231  86%  200/231  87%  200/231  87%  208/231  90%  209/231  90%  228/231  99%  228/231  99%
+    policy                  405/492  82%  406/492  83%  406/492  83%  436/492  89%  437/492  89%  486/492  99%  486/492  99%
+    cancel                   62/116  53%   68/116  59%   69/116  59%   97/116  84%   97/116  84%  116/116 100%  116/116 100%
+    apply                    43/54   80%   46/54   85%   46/54   85%   52/54   96%   53/54   98%   54/54  100%   54/54  100%
+    quote                    36/125  29%   71/125  57%   71/125  57%  114/125  91%  125/125 100%  125/125 100%  125/125 100%
+
+owed a handoff and did not give one     145      87      85      32       5       5       3
+  ANSWERED — a substantive reply it could not support
+                                         82      51      50      18       5       5
+  asked which product instead of handing off 62    35      33      13       0       0
+  blocked by a gate rather than handed off   1       1       2       1       0       0
 ```
+
+v2.3.1 against v2.3, case by case: **124 gained, 0 lost.** An earlier cut of this branch lost three
+cancel/renew turns on Cancer Insurance, and the first explanation offered for
+them — order-dependence in the batch — was wrong. Every "isolation" replay
+behind that claim had silently run against the seed bundle, which has no
+Cancer Insurance product, so base and branch agreed because neither could
+find the page. Replayed against the real bundle, base answered and the branch
+did not. The cause was `faq_pick` applying a *question* classifier to FAQ
+*headings*: the new `payment` pattern read "When will GIRO deductions be made
+for the renewal premium?" as out-of-corpus, the count of renewal headings fell
+from two to one, a low-overlap FAQ entry led the answer, and the entitlement
+gate rightly blocked it. Headings are now read as topics (`classify_topic`),
+which agrees with the pre-split classifier on all 467 FAQ headings in the
+corpus, and the three return base's answers. The suite itself is deterministic:
+run forwards and reversed it produces byte-identical answers on all 1,711
+cases.
+
+**v2.4 against v2.3.1: 8 gained, 0 lost.** Every gain is one of two things.
+Five are directory turns ("what insurance products do you offer?", "I need
+life insurance") that were previously answered with a two-product coin toss
+dressed as a clarifying question and now get the catalogue's lines or the
+line's products. Three are turns that named no product and asked something
+only a product page could settle ("has my cancellation gone through?"): the
+router deferred the product to the corpus, the corpus settled on one, retrieval
+was scoped to it, it held nothing on the point, and the turn was handed off
+instead of answered from whichever page sorted first. Nothing lost means the
+scoping — 1,346 of the 1,711 cases now retrieve from one product's pages and
+documents only — cost no answer the wider search had been getting right. The
+class of turn that is asked about rather than guessed grew where the plan said
+it would (a *question* about a bare category, "does travel insurance cover
+skiing?") and not where it did not: the situation openers ("the airline lost
+my suitcase") resolve to one product on the corpus alone, and the rule is to
+ask only when the corpus does not settle it. What did not move is the product
+fact rate, 974/1092, which is now bounded by content — the 31 products without
+benefit tables, the wordings that were never supplied — and not by retrieval
+picking the wrong product. The seed gate is unchanged at 97/130 with a failing
+set byte-identical to the base branch's.
+
+**v2.5 against v2.4: 186 gained, 8 lost — 1519/1711.** The gains are the four
+owner rules doing what they say. The 37 compound conversations (*"what does X
+cover and how much does it cost?"*) are answered in two parts and pass as a
+block. The `wants-out` cancellations, the claim steps and the renewal and
+cancellation terms that numeric-binding had been refusing over a bare "15
+days" are delivered without the unbound line, or as the steps to the answer.
+The customer's own record — policy number, expiry, application progress, own
+documents, premium, refund — is guided rather than answered from whichever
+page sorted first: *owed a handoff and did not give one* falls from 85 to 32,
+and the `pivot` turns, the finding this dataset was built around, reach
+156/165. `product_fact` rises to 1016/1092 because drafts that were correct
+apart from an unbound number are now delivered.
+
+The eight losses are one shape and are not regressions in behaviour: eight
+eligibility questions (*"Who is eligible to buy Pet Insurance?"*, *"What is
+the maximum entry age for Travel Infinite?"*) that v2.4 had passed on a
+vaccination paragraph, a deductible definition or a marketing blurb — the
+dataset asked for the product to be cited and it was, by an answer to a
+different question. They now classify as eligibility, the answerability gate
+sees no eligibility in the draft, and the reply is the eligibility steps,
+which the contract counts as a handoff. The honest fix is content: the
+eligibility pages for these products carry no entry age. This is the same
+vacuous-pass class the dataset-quality note describes, and the eight are now
+listed there.
+
+What remains (192): 111 turns guided where the dataset expected an answer,
+which is almost entirely content the pages do not hold (document requests
+28/46, claim steps 11/112, renewal 9/43); 47 answers where a handoff was owed,
+half of them shapes the intent reader still misses (*"get me a quote"*, *"how
+is my premium calculated?"*, *"what are your most popular plans?"*); 19
+answered from the wrong product, 16 of them the situation openers (*"the
+airline lost my suitcase"*) that name no product and whose words the corpus
+does not use; and a handful of directory and entity misses. The seed gate is
+98/130 — one field-test case newly passing, none newly failing, golden 9/9.
+
+**v2.6 against v2.5: 42 gained, 0 lost — 1561/1711.** The situation openers
+(*"the airline lost my suitcase in Tokyo"*, *"someone broke into my flat"*)
+are read for the line they belong to and asked about with every plan in that
+line named, so the fourteen `arrives-mid-loss` conversations pass whichever
+travel or motor plan the expansion asserts. A price question with no plan in
+hand (*"get me a quote"*, *"how much does insurance cost for a family of
+four?"*) is the quote steps rather than a choice between Home and Cyber, and
+the `quote` journey reaches 125/125. Fraud reports about a record, the app
+and the bot, data retention, panel-clinic locations and the remaining
+account-state shapes are guided: *owed a handoff and did not give one* falls
+from 32 to 5, and the `handoff` contract reaches 174/179. `product_fact`
+holds at 1016/1092. The first cut lost five cases to three patterns reaching
+too far — an "injury" inside a coverage question read as an incident, "panel
+hospital" read as a where-is question, "will I need a medical examination for
+Term Life" read as an application question — and the second cut narrows each
+to its shape. What remains (150) is now almost entirely content: 119 turns
+guided where the dataset expected an answer the pages do not hold (document
+requests 28/46, claim steps 10/112, renewal 9/43), 19 answers where a handoff
+was owed, 5 wrong-product turns, and 7 directory and entity misses.
+
+**v2.7 against v2.6: 114 gained, 0 lost — 1675/1711.** One decision, reversed
+where it was wrong. v2.5 flagged every guidance reply as a handoff. That is
+right where the answer lives with a person or on the customer's own record —
+a quote, a refund, a payment, the policy record, an application, a claim's
+progress — and wrong where the steps are the answer: where the wording is and
+how to download it, how to cancel, how to renew, how to make the claim, how to
+check eligibility, how to buy. A customer told where the wording is has not
+been handed to anyone. The guide now carries the distinction per topic; the
+`product_fact` contract, which asks for a cited product and no handoff, reads
+it as it always did and reaches 1090/1092. The generated suite's gap contract
+follows the same rule — a probe the corpus is silent on must be *guided*, by
+steps or by a person, and never answered from a page that does not hold it —
+and eleven recorded findings on buy, free-look and renewal probes are retired
+on it. A product title now outranks another product's alias in the name
+index. The first cut lost four cases (an offer with no page, a lost document,
+a refund asked in the same breath as the cancellation) and the second cut
+classifies each to its desk. What remains (36): a dozen conversation
+follow-ups the contract marks as handoffs (*"how much will it be?"* in a
+renewal season, *"and my phone number"*, *"why?"* after a rejected claim);
+three *"I am diabetic"* openers and three *"which plan covers…"* questions
+that expect a clarification; two entity turns that want the underwriter
+named; the weather, an injection phrased without *"previous"*, and a
+guarantee, which the deterministic guard does not read; and five
+wrong-product turns, three of them a hospital admission with no line word.
+
+**v2.8 against v2.7: 5 gained, 0 lost — 1680/1711 — and the first version
+measured on what it *declines*.** Run against `okf-real` rather than the seed
+bundle, the 109-case field test scored 86 and showed a failure class the seed
+run hides: *"what is the capital of france"* answered from a
+business-interruption clause, *"who won the election"* from the travel
+definitions, *"should i buy bitcoin or tesla stock"* from four paragraphs of
+reinstatement conditions with the adviser sentence appended — all delivered,
+all with pages cited and figures bound. Retrieval always has a nearest
+neighbour, and below the confidence floor the RAG fallback answers from the
+best section rather than a good one. A domain test now refuses a turn when
+nothing in it is about insurance *and* it names something the corpus has never
+heard of; both halves are needed, since the first alone refuses *"what do I
+have to declare?"* and the second alone refuses *"the airline lost my suitcase
+in Tokyo"*. Sized before it shipped: 6 of 2,893 conversation turns flagged,
+none in a passing case. A recommendation is now referred before retrieval
+rather than after it, a misspelt product name is asked about instead of
+refused, and a named third party's policy number is refused instead of being
+answered with how to log in. Field test 86→98, seed gate 98→105, nothing
+skipped or relaxed to move either. What remains (31): two entity turns, four
+clarify turns, and follow-ups whose meaning is entirely in the turn before —
+*"why?"* after a rejected claim, *"and my phone number"* mid-address-change —
+which the domain test deliberately does not read carried context to settle.
 
 ### Reading the numbers
 
-**70.7% is the least useful number here.** The breakdown is the measurement.
+**77.9% is the least useful number here.** The breakdown is the measurement.
 
-**37.2% of journeys get through clean.** Turn accuracy is 72.4%, whole-journey
-accuracy is 37.2%, and the gap between them is the entire argument for testing
-conversations. A customer does not experience 72% — they experience whether
-their five-turn journey had a bad answer in it, and most did.
+**The pivot was the finding, and routing was the answer.** A pivot is the turn
+where the customer crosses from what the corpus knows to what only a system
+knows: *"and how much is it?"*, *"where is my claim now?"*, *"when will the
+refund reach me?"*. At v2.3 the bot got **18 of 165**, and every failure was
+one mode — it answered instead of handing off:
 
-**`pivot` at 10.9% is the finding.** A pivot is the turn where the customer
-crosses from what the corpus knows to what only a system knows: *"and how much
-is it?"*, *"where is my claim now?"*, *"can you send me my policy?"*. The bot
-gets 18 of 165 right, and the failures are all one mode — it answers instead of
-handing off:
-
-| the customer said | after | the bot answered with |
+| the customer said | after | v2.3 answered with |
 |---|---|---|
-| *"where is my claim now?"* | four turns about how to claim | the policy's claim-notification clause |
+| *"where is my claim now?"* | four turns about how to claim | the claim-notification clause |
+| *"when will the refund reach me?"* | cancelling a policy | the terms of a 2024 promotion |
 | *"how much is it?"* | four turns about travel cover | a clause about cover beyond age 70 |
-| *"just the price then"* | being asked for cover and price together | the product description again |
+| *"I got an email asking me to confirm my policy details"* | — | *"Please log in to TiqConnect to update your details"* |
 
-**Conversation makes this worse, not better** — which is why a single-turn
-suite could not find it. Asked cold, *"how much is it?"* names no product and
-the bot has little to say. Asked on turn three, it has a product in hand and
-confidently keeps answering from its pages. Having context turns a shrug into a
-wrong answer.
+Every gate passed that last one: the sentence is a faithful quotation of a
+real, approved, dated page, and it is also what a phishing sender wants a
+customer to do. **Groundedness is not aboutness.** v2.3.1 classifies those
+turns instead of leaving them `unknown` — which `gate_answerability`
+documents as *unconstrained* and passes on purpose — refuses them before
+retrieval, and names the page that does know. `pivot` **10.9% → 75.2%**.
 
-**The pipeline follows a subject well.** `ellipsis` 88.2% and context-dependent
-turns 78.8% say the history the pipeline carries genuinely works: *"and the
-exclusions?"* four turns in mostly lands. `recover` 3/3 says an attack midway
-does not poison the turn after it. What fails is not memory — it is knowing
-when the customer has changed gear.
+**Conversation made it worse, not better** — which is why a single-turn suite
+could not find it. Asked cold, *"how much is it?"* names no product and the
+bot has little to say. Asked on turn three it has a product in hand and
+confidently keeps answering from its pages. Having context turned a shrug into
+a wrong answer.
 
-**Product knowledge is the strong half.** `product_fact` at 89.2% across all 37
-products says retrieval and composition mostly work when the corpus holds the
-answer. The weak journeys — `pay` 13.0%, `service` 26.9%, `quote` 28.8% — are
-the transactional ones, where the corpus holds nothing and the honest reply is
-the one the bot is not giving.
+**The pipeline follows a subject well, and always did.** `ellipsis` 88.2% and
+context-dependent turns 86.9% say the history it carries genuinely works.
+`recover` 3/3 says an attack midway does not poison the turn after. What failed
+was never memory — it was noticing the customer had changed gear.
+
+**Product knowledge is the strong half and stayed there.** `product_fact` 89.2%
+→ 89.2% across all 37 products: routing did not eat the questions the corpus is
+for, which was the risk worth measuring. The formerly weak journeys were the
+transactional ones — `pay` 13.0% → 78.3%, `service` 26.9% → 69.2%, `support`
+31.6% → 56.1% — where the corpus holds nothing and the honest reply is a
+destination.
+
+**What is left is the other failure.** 87 turns still owe a handoff, and 28 of
+them are one deliberate omission: a bare *"how much will I get back?"* is read
+as a limit. After a cancelled *policy* it is a premium refund; after a
+cancelled *trip* it is the trip-cancellation benefit, a figure in the benefit
+table. An early cut read the second as the first and sent three real figure
+questions to the customer portal, so only the forms that name a refund route.
+Separately, `cancel` at 58.6% and `quote` at 56.8% are the opposite failure —
+the bot refusing what the corpus does hold — which routing must not paper over.
 
 **A failing case is not always a bot defect.** The first cut of this dataset
 asserted `advice_flag: false` on every product fact and scored Tiq Invest — the
