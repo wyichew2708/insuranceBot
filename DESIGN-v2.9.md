@@ -307,7 +307,54 @@ lists it as *needs analysis plus deterministic recommendation rules*. Not
 here: a recommendation is a licensed adviser's call, and a rule that produces
 one is advice with a different author.
 
-### 3.6 Close the open measurements
+### 3.6 Guide the customer — a greeting map, a browse tree, journey-aware chips
+
+The suggestion chips, the directory, the clarification options and the guidance
+destinations already steer a customer one hop at a time. What is missing is the
+first hop and the path between hops: the greeting is a paragraph, the starters
+are product names written into code, chips vanish on a handoff, and the
+customer learns what the bot cannot do only by asking.
+
+`GUIDANCE-MAP.md` is the full reference, generated from the bundle: six
+branches on the greeting (product information, claims, my policy, buy and
+quote, promotions, help and contact), the line → plan → topic-ring browse
+tree for all 37 plans, a journey-ordered next-chip table per intent, and the
+coverage matrix that shows, per plan, which ring topics the pages hold.
+
+Three rules carry over from the chips as built. Every node is a literal
+question the corpus answers or a registry destination, generated at load
+time and never model-written, so a tapped chip is a delivered answer by
+construction. No node carries a digit. A question node is offered only while
+its page is approved and in its window; a topic the pages lack is omitted,
+and the reply falls to the guidance steps.
+
+Two changes to the runtime. Chips stay on guidance and handoff replies,
+restricted to the plan in play, so a refusal ends with a way to stay in the
+conversation. Next-topic order follows the journey sequence in the
+conversation taxonomy, and the session memory's per-turn intents suppress a
+topic already answered — the first consumer of the memory on the request
+path, and deterministic.
+
+Proved by a generated suite that asks every chip the map and the per-turn
+tables offer and asserts each reply is delivered, and by two report rows:
+dead-end rate (turns ending in a handoff with no chip) and chip coverage
+(plans whose overview offers at least three topics).
+
+### 3.7 Conversation memory — typed state, not a prose summary
+
+Not a token problem: the model sees at most the last three questions, only
+in the product-resolution call, and the rest of the turn reads the history
+deterministically. What the memory lacks is a consumer and a bound. The
+rolling prose summary is written on every turn and read by nothing on the
+request path; the session file grows without limit. So: carry the typed
+state (product, intent, and the §3.2 entity slots) as the recalled record and
+retire raw-question recall where a slot answers the same need; keep the last
+N turn records and expire idle session files, which is retention rather than
+summarisation and matters more for a PII-sensitive deployment than for
+tokens; keep the background model refinement as it is, off the request path,
+once the summary has a reader — the handover payload is the obvious one.
+
+### 3.8 Close the open measurements
 
 Three items already on the list, restated so they are not lost behind the
 new ones. **Measure the dense layer** on the GPU host; `VECTOR_FLOOR`,
