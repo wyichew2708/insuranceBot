@@ -72,6 +72,7 @@ running it, and every output they quote is what the command printed:
 | **[CORPUS.md](CORPUS.md)** | build the corpus — crawl, parse the PDFs, read the FAQs, compile, lint, review |
 | **[EVALUATION.md](EVALUATION.md)** | measure it — six suites, what each tests, and how to read a failure |
 | **[DESIGN-answering.md](DESIGN-answering.md)** | a proposal, not yet built — why selection is the weak half and what would replace it |
+| **[DESIGN-v2.9.md](DESIGN-v2.9.md)** | a proposal, not yet built — the controlled agentic RAG review read against v2.8: what is already here, where it deliberately differs, and the tool path, entities and benefit-level graph still to build |
 
 The rest of this README is the design: what the system is and why it is shaped
 this way.
