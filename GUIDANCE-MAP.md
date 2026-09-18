@@ -1,22 +1,21 @@
 # Guidance map — what the assistant can be asked, and where it leads
 
-Generated from `okf-real` by walking the bundle; regenerate rather than edit.
-A reference for the greeting map, the browse tree and the follow-on chips proposed in
-`DESIGN-v2.9.md` §3.7. Every node is one of three things, and the legend is the rule:
+Generated from `okf-real` by `scripts/guidance_map.py` (`make guidance-map`);
+regenerate rather than edit. The reference for the greeting map, the browse tree and
+the follow-on chips in `DESIGN-v2.9.md` §3 (A2). Every node is one of three things:
 
 | Mark | Node | What tapping it does |
 |---|---|---|
 | ✎ | a question the corpus answers | sends that exact question; the reply is delivered, by construction |
 | ↗ | a destination | opens a registry address (portal, claims, renewal, promotions, contact) |
-| ◌ | a topic the pages do not hold for this product | not shown as a chip; the reply falls to the desk with steps |
+| ◌ | a topic the pages do not hold for this plan | not shown as a chip; the reply falls to the steps |
 
 No node is model-written, none carries a digit, and a ✎ node is offered only while the
 page behind it is approved and in its effective window.
 
 ## The greeting
 
-> Hi. I answer from Etiqa's policy wordings and product pages, and I'll point you to the
-> right place for anything about your own policy. Pick a branch or just ask.
+> Hi. I answer from Etiqa's policy wordings and product pages, and I'll point you to the right place for anything about your own policy. Pick a branch or just ask.
 
 Then six branches. The tree below is the full expansion.
 
@@ -24,7 +23,7 @@ Then six branches. The tree below is the full expansion.
 
 ```
 Etiqa assistant
-├─ Product information    what a plan covers, excludes, costs to claim on, who can buy it
+├─ Product information    what a plan covers, excludes, needs to claim on, who can buy it
 ├─ Claims                 how to claim, what to send, where to track it
 ├─ My policy              log in, renew, update, cancel — the customer's own record
 ├─ Buy and quote          the lines sold, how to buy, where a price comes from
@@ -34,9 +33,8 @@ Etiqa assistant
 
 ## Branch 1 — Product information
 
-37 approved products across 8 lines. Line → product → the topic ring.
-The ring has the same shape for every product; a topic appears only where the pages hold it
-(see the matrix at the end).
+37 approved plans across 8 lines. Line → plan → the topic ring. The ring has
+the same shape for every plan; a topic appears only where the pages hold it (see the matrix).
 
 ```
 Product information
@@ -89,7 +87,7 @@ Product information
 │   ├─ Premier Solutions
 ├─ Tell me what happened          an incident names its line; the plans in that line are offered
 │     ✎ my flight was delayed · ✎ the airline lost my bag · ✎ someone broke into my flat
-│     ✎ my helper is unwell · ✎ I had a car accident · ✎ my dog needs the vet
+│     ✎ my helper is unwell · ✎ i had a car accident · ✎ my dog needs the vet
 └─ Insurance terms
       ✎ What does commencement date mean?
       ✎ What does excess mean?
@@ -97,31 +95,31 @@ Product information
       ✎ What does policy schedule mean?
 ```
 
-### The topic ring (every product)
+### The topic ring (every plan)
 
 ```
-<Product>
-  ✎ What does <Product> cover?                           needs: always
-  ✎ What does <Product> not cover?                       needs: exclusions page
-  ✎ What are the cover limits for <Product>?             needs: benefits or cover page
-  ✎ Who can buy <Product>?                               needs: eligibility or FAQ page
-  ✎ How do I buy <Product>?                              needs: a channel binding
-  ✎ Is there a promotion for <Product>?                  needs: a live promotion page
-  ✎ How do I make a claim on <Product>?                  needs: claims page or claim journey
-  ✎ What documents do I need to claim on <Product>?      needs: claims page or claim journey
-  ✎ What do the terms in <Product> mean?                 needs: definitions page
-  ✎ How do I cancel or renew <Product>?                  needs: conditions page
-  ✎ Compare <Product> with <another plan>                v2.9 compare intent; bound table
+<Plan>
+  ✎ What does <Plan> cover?                              needs: always
+  ✎ What does <Plan> not cover?                          needs: exclusions page
+  ✎ What are the cover limits for <Plan>?                needs: benefits or cover page
+  ✎ Who can buy <Plan>?                                  needs: eligibility or FAQ page
+  ✎ How do I buy <Plan>?                                 needs: a channel binding
+  ✎ Is there a promotion for <Plan>?                     needs: a live promotion page
+  ✎ How do I make a claim on <Plan>?                     needs: claims page or claim journey
+  ✎ What documents do I need to claim on <Plan>?         needs: claims page or claim journey
+  ✎ What do the terms in <Plan> mean?                    needs: definitions page
+  ✎ How do I cancel or renew <Plan>?                     needs: conditions page
+  ✎ Compare <Plan> with <another plan>                   compare intent (A4); a bound table
 ```
 
-After any ring answer the section chips of that page follow ("<heading> — <Product>"),
-then a "back to <line>" chip.
+After any ring answer the section chips of that page follow ("<heading> — <Plan>"), then
+a "back to <line>" chip.
 
 ## Branch 2 — Claims
 
 ```
 Claims
-├─ ✎ How do I make a claim?                 → asks which product, then that product's steps
+├─ ✎ How do I make a claim?                 → asks which plan, then that plan's steps
 ├─ ✎ What documents does a claim need?       → same, then the documents section
 ├─ ✎ How long does a claim take?             → only where a page states it; else the claims desk
 ├─ ↗ Track my claim                          Customer portal
@@ -141,12 +139,12 @@ guidance table; the addresses from the registry.
 ```
 My policy
 ├─ ↗ Log in and view my policy               Customer portal
-├─ ↗ Renew online                            Online renewal  (general insurance only; life and savings do not renew)
+├─ ↗ Renew online                            Online renewal  (general insurance only)
 ├─ Update my details                         steps → portal, then a person
 │     nominee · address · contact · bank · add or remove a driver or dependant
 ├─ Cancel, refund, payments                  steps → portal, then a person
 │     cancel · free-look · refund · pay by GIRO or card · premium due
-├─ ✎ Where is the policy wording for <Product>?   corpus: links the published document
+├─ ✎ Where is the policy wording for <Plan>?     corpus: links the published document
 └─ ✎ What is a policy schedule?              concept page
 ```
 
@@ -155,19 +153,19 @@ My policy
 ```
 Buy and quote
 ├─ ✎ Which kinds of insurance do you sell?   the lines, one example each
-├─ ✎ I need <line> insurance                 the products in that line
-├─ ✎ How do I buy <Product>?                 the channel route: online, agent, broker
+├─ ✎ I need <line> insurance                 the plans in that line
+├─ ✎ How do I buy <Plan>?                    the channel route: online, agent, broker
 ├─ ↗ Get a quote                             the plan's own page; "the price depends on your details"
 └─ ↗ Speak to an adviser                     a recommendation is a licensed adviser's call
 ```
 
 ## Branch 5 — Promotions
 
-63 promotion pages compiled; only those inside their validity window are ever offered.
+63 promotion pages compiled; only those inside their validity window are offered.
 
 ```
 Promotions
-├─ ✎ Is there a promotion for <Product>?     for the products in the matrix with an offer
+├─ ✎ Is there a promotion for <Plan>?        for the plans in the matrix with an offer
 └─ ↗ All current promotions                  Promotions
 ```
 
@@ -184,29 +182,28 @@ Help and contact
 
 ## Along the way — what to offer after each answer
 
-The chips after an answer follow the customer's journey, not only the last intent, and a
-topic already answered in this session is not offered again.
+Chips follow the customer's journey, not only the last intent, and a topic already answered
+in this session is not offered again.
 
 | After the customer asked | Offer next, in order | Why this order |
 |---|---|---|
-| a bare product name (overview) | not covered · limits · who can buy · how to buy | evaluate → apply |
+| a bare plan name (overview) | not covered · limits · who can buy · how to buy | evaluate, then apply |
 | what it covers | not covered · limits · how to claim · promotion | the exclusions belong beside the cover |
 | what it does not cover | what it covers · how to claim · how to buy | back to the positive, then forward |
 | the limits | not covered · who can buy · how to buy · compare | a figure question is a buying question |
-| who can buy | how to buy · promotion · what it covers | eligibility → apply |
-| how to buy | promotion · get a quote ↗ · what it covers | apply → price |
-| a promotion | how to buy · what it covers · not covered | offer → apply |
-| how to claim | documents needed · track my claim ↗ · not covered | claim → evidence → status |
+| who can buy | how to buy · promotion · what it covers | eligibility, then apply |
+| how to buy | promotion · get a quote ↗ · what it covers | apply, then price |
+| a promotion | how to buy · what it covers · not covered | offer, then apply |
+| how to claim | documents needed · track my claim ↗ · not covered | claim, evidence, status |
 | a claim-status or servicing handoff | documents needed · what it covers · talk to a person ↗ | stay in the conversation after a handoff |
-| a price handoff | how to buy · what it covers · limits | a quote is one tap away; the plan is still here |
+| a price handoff | how to buy · what it covers · limits | the quote is one tap away; the plan is still here |
 | a definition | what it covers · not covered | back to the product |
-| a clarification (which plan?) | the candidate plans; "I'm not sure which plan I have" → portal ↗ | the options are the chips |
-| off-topic or a greeting | the six branches | the map |
+| a clarification (which plan?) | the candidate plans · “I'm not sure which plan I have” ↗ | the options are the chips |
+| off-topic, or a greeting | the six branches | the map |
 
 ## Rules
 
-1. Nodes are generated from the bundle at load time, never written into code — product
-   names, lines, topics and promotions all come from the pages.
+1. Nodes are generated from the bundle at load time, never written into code.
 2. A ✎ node exists only if the page that answers it is approved and effective today.
 3. No digits anywhere in a node; a number in an answer must bind to a row.
 4. ↗ addresses come from the destination registry, never from retrieved text.
@@ -214,16 +211,16 @@ topic already answered in this session is not offered again.
    (`question` | `destination`), `label`, and `question` or `url`; children nest. A plain
    client flattens it to chips.
 6. The map is shown once. Per-turn chips take over; a "back to the start" chip returns.
-7. Proved by a generated suite that asks every chip the map and the per-turn tables offer
-   and asserts each reply is delivered; and by two report rows, dead-end rate and chip coverage.
+7. Proved by a generated suite that asks every chip the map and the per-turn table offer and
+   asserts each reply is delivered; and by two report rows, dead-end rate and chip coverage.
 
-## Coverage matrix — which ring topics each product can answer
+## Coverage matrix — which ring topics each plan can answer
 
-✓ the pages hold it · · they do not (the chip is omitted). *Bound rows* counts benefit-table
-rows, which is what lets a limit answer carry a figure; a product with none still answers a
-limit question with the wording and no number.
+✓ the pages hold it · they do not (the chip is omitted). *Bound rows* counts benefit-table
+rows, which is what lets a limit answer carry a figure; a plan with none still answers a limit
+question with the wording and no number.
 
-| Line | Product | coverage | exclusion | limit | eligibility | application | offer | claim | documents | definition | conditions | bound rows |
+| Line | Plan | coverage | exclusion | limit | eligibility | application | offer | claim | documents | definition | conditions | bound rows |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | General | Casualty Insurance | ✓ | ✓ | ✓ | · | ✓ | · | ✓ | ✓ | ✓ | ✓ | · |
 | General | Engineering Insurance | ✓ | ✓ | ✓ | · | ✓ | · | · | · | · | ✓ | · |
@@ -265,15 +262,16 @@ limit question with the wording and no number.
 
 ## Content gaps the map makes visible
 
-- **No route to buy** on 4 products (DIRECT – Etiqa term life II, DIRECT – Etiqa whole life, ePROTECT term life, ePROTECT safety): the how-to-buy chip is missing and the
-  application intent falls to the apply steps. A channel binding on each page closes it.
-- **No claim steps** on 6 products (Corporate Travel Insurance, DIRECT – Etiqa whole life, Engineering Insurance, Travel Takaful, eEASY savepro, Premier Solutions): the claims chip is missing and the
-  reply is the claims desk. A claims section or a claim journey page closes it.
-- **No eligibility page or FAQ** on 17 products: who-can-buy falls to the eligibility steps.
-  The eligibility table proposed in `DESIGN-v2.9.md` §3.3 closes it with bound ages.
-- **Benefit-table rows on 6 of 37 products** (HDB Fire Insurance, Pet Insurance, Tiq Maid Insurance, Tiq Travel Insurance, Travel Infinite, Invest vista): everywhere else a
-  limit answer is the wording with its figures trimmed. This is the single largest content gap
-  and a document-extraction problem, not a retrieval one.
+- **No route to buy** on 4 plans (ePROTECT safety, DIRECT – Etiqa term life II, DIRECT – Etiqa whole life, ePROTECT term life): the how-to-buy
+  chip is missing and the application intent falls to the apply steps. A channel binding on
+  each page closes it.
+- **No claim steps** on 6 plans (Engineering Insurance, Travel Takaful, DIRECT – Etiqa whole life, eEASY savepro, Corporate Travel Insurance, Premier Solutions): the claims chip
+  is missing and the reply is the claims desk. A claims section or a claim journey page closes it.
+- **No eligibility page or FAQ** on 17 plans: who-can-buy falls to the
+  eligibility steps. The eligibility table in `DESIGN-v2.9.md` §3 (C2) closes it with bound ages.
+- **Benefit-table rows on 6 of 37 plans** (HDB Fire Insurance, Pet Insurance, Tiq Maid Insurance, Tiq Travel Insurance, Travel Infinite, Invest vista):
+  everywhere else a limit answer is the wording with its figures trimmed. The single largest
+  content gap, and a document-extraction problem rather than a retrieval one.
 - **Policy servicing is uncompiled.** The crawled policy-services page is not a journey, so the
   My policy branch is desk-led. Compiling it into servicing journeys makes those steps corpus-backed.
 - **The app has no corpus content.** App and portal help is two buttons until its pages are compiled.

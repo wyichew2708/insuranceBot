@@ -1,0 +1,171 @@
+<title>Etiqa Assistant Guidance Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root {
+  --paper:#F2F4F6; --card:#FFFFFF; --ink:#18232C; --ink-2:#4B5966; --ink-3:#7E8A95; --line:#D9DFE5;
+  --q:#0E6E7A; --q-bg:#E3F1F3; --d:#A8681A; --d-bg:#F7ECDC; --x:#9AA4AE; --x-bg:#EEF1F3; --focus:#0E6E7A;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#111A21; --card:#18242D; --ink:#E7ECF0; --ink-2:#B4BFC8; --ink-3:#7F8C97; --line:#2A3841;
+    --q:#5CC1CC; --q-bg:#12333A; --d:#E2AB59; --d-bg:#3A2D17; --x:#6E7A85; --x-bg:#1F2A32; --focus:#5CC1CC;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#111A21; --card:#18242D; --ink:#E7ECF0; --ink-2:#B4BFC8; --ink-3:#7F8C97; --line:#2A3841;
+  --q:#5CC1CC; --q-bg:#12333A; --d:#E2AB59; --d-bg:#3A2D17; --x:#6E7A85; --x-bg:#1F2A32; --focus:#5CC1CC;
+}
+body { background:var(--paper); color:var(--ink); font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:15px; line-height:1.5; padding-inline:16px; padding-block:24px 48px; }
+.wrap { max-width:1120px; margin:0 auto; }
+h1,h2,h3 { font-family:"IBM Plex Serif",Georgia,serif; text-wrap:balance; margin:0; }
+h1 { font-size:clamp(26px,3.4vw,36px); font-weight:600; line-height:1.15; }
+h2 { font-size:20px; font-weight:600; margin-block:36px 12px; }
+h3 { font-size:16px; font-weight:600; margin-block:16px 8px; }
+p { max-width:68ch; margin:0 0 10px; color:var(--ink-2); }
+.eyebrow { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px; }
+.top { display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:start; }
+@media (max-width:760px) { .top { grid-template-columns:1fr; } }
+.greet { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
+.greet blockquote { margin:0 0 12px; padding-left:12px; border-left:3px solid var(--q); color:var(--ink); font-size:15px; }
+.legend { display:grid; gap:8px; font-size:14px; }
+.legend div { display:flex; gap:10px; align-items:flex-start; }
+.mk { display:inline-flex; width:22px; height:22px; border-radius:6px; align-items:center; justify-content:center; font-size:13px; flex:0 0 22px; }
+.q > .mk, .legend .lq { background:var(--q-bg); color:var(--q); }
+.d > .mk, .legend .ld { background:var(--d-bg); color:var(--d); }
+.x > .mk, .legend .lx { background:var(--x-bg); color:var(--x); }
+.branches { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-top:12px; }
+.branch { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+.branch > h3 { margin-top:0; display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+.branch > h3 small { font-family:"IBM Plex Sans",sans-serif; font-weight:400; color:var(--ink-3); font-size:12px; }
+ul { list-style:none; margin:0; padding:0; }
+li.n { display:flex; gap:10px; align-items:flex-start; padding:5px 0; }
+li.n.x { color:var(--ink-3); }
+li.n .desk { color:var(--d); text-decoration:none; border-bottom:1px dotted var(--d); margin-left:6px; font-size:13px; }
+li.note { color:var(--ink-3); font-size:13px; padding:4px 0 4px 32px; font-style:italic; }
+details { border-top:1px solid var(--line); }
+details > ul { padding-left:18px; padding-bottom:6px; }
+summary { cursor:pointer; padding:8px 0; display:flex; gap:10px; align-items:baseline; list-style:none; }
+summary::-webkit-details-marker { display:none; }
+summary::before { content:"\203A"; color:var(--ink-3); display:inline-block; transition:transform .15s; width:10px; }
+details[open] > summary::before { transform:rotate(90deg); }
+summary .t { font-weight:500; }
+summary .sub { color:var(--ink-3); font-size:12px; }
+summary:focus-visible { outline:2px solid var(--focus); outline-offset:2px; border-radius:4px; }
+.tools { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 12px; align-items:center; }
+.tools button, .tools input { font:inherit; font-size:13px; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:6px; padding:6px 10px; }
+.tools button { cursor:pointer; }
+.tools input { min-width:220px; }
+.tools button:focus-visible, .tools input:focus-visible { outline:2px solid var(--focus); outline-offset:1px; }
+.hit > summary .t { background:var(--q-bg); border-radius:3px; padding:0 3px; }
+.tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+table { border-collapse:collapse; font-size:13px; min-width:860px; }
+th, td { padding:6px 8px; text-align:center; border-bottom:1px solid var(--line); white-space:nowrap; }
+th { font-weight:500; color:var(--ink-2); text-transform:lowercase; letter-spacing:.02em; position:sticky; top:0; background:var(--card); }
+td.ln { text-align:left; color:var(--ink-3); }
+td.pt { text-align:left; font-weight:500; }
+td.y { color:var(--q); }
+td.no { color:var(--x); }
+td.num { font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; }
+.journey th, .journey td { text-align:left; white-space:normal; }
+.journey table { min-width:640px; }
+.gaps li { padding:4px 0; color:var(--ink-2); max-width:78ch; }
+.gaps li b { color:var(--ink); }
+@media (prefers-reduced-motion: reduce) { summary::before { transition:none; } }
+</style>
+<div class="wrap">
+  <div class="eyebrow">Reference · generated from the bundle by scripts/guidance_map.py · {{N}} plans · {{LINES}} lines</div>
+  <h1>What the assistant can be asked, and where each path leads</h1>
+  <p>The greeting map, the browse tree and the follow-on chips for the Etiqa assistant. Every node is a literal question the corpus answers, a registry destination, or a topic the pages do not hold — nothing a model wrote.</p>
+
+  <div class="top">
+    <div class="greet">
+      <div class="eyebrow">The greeting</div>
+      <blockquote>{{GREETING}}</blockquote>
+      <p>Then the six branches below. The map is shown once; after that the chips under each answer take over, and “back to the start” returns here.</p>
+    </div>
+    <div class="greet">
+      <div class="eyebrow">Legend</div>
+      <div class="legend">
+        <div><span class="mk lq">✎</span><span><b>A question the corpus answers.</b> Tapping sends that exact question. Offered only while the page behind it is approved and in its window.</span></div>
+        <div><span class="mk ld">↗</span><span><b>A destination.</b> Opens a registry address — portal, claims, renewal, promotions, contact. Never a URL from retrieved text.</span></div>
+        <div><span class="mk lx">◌</span><span><b>Not held for this plan.</b> The chip is omitted; asked anyway, the reply is the steps to the real answer.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Level 1 — six branches</h2>
+  <div class="branches">
+    <div class="branch"><h3>Product information <small>{{N}} plans</small></h3><ul>{{BRANCH_PRODUCT}}</ul></div>
+    <div class="branch"><h3>Claims</h3><ul>{{BRANCH_CLAIMS}}</ul></div>
+    <div class="branch"><h3>My policy <small>destination-led</small></h3><ul>{{BRANCH_POLICY}}</ul></div>
+    <div class="branch"><h3>Buy and quote</h3><ul>{{BRANCH_BUY}}</ul></div>
+    <div class="branch"><h3>Promotions <small>{{PROMOTIONS}} pages, live ones only</small></h3><ul>{{BRANCH_PROMO}}</ul></div>
+    <div class="branch"><h3>Help and contact</h3><ul>{{BRANCH_HELP}}</ul></div>
+  </div>
+
+  <h2>Branch 1, expanded — line → plan → topic ring</h2>
+  <p>Open a line, then a plan. The ring is the same shape for every plan; a topic is shown as ◌ where the pages do not hold it, so the gaps read at a glance.</p>
+  <div class="tools">
+    <input id="filter" type="search" placeholder="Find a plan or alias…" aria-label="Find a plan">
+    <button id="expand" type="button">Expand all</button>
+    <button id="collapse" type="button">Collapse all</button>
+  </div>
+  <div class="branch" id="tree">
+    {{LINES_HTML}}
+    <details><summary><span class="t">Tell me what happened</span><span class="sub">an incident names its line</span></summary><ul>{{INCIDENT_HTML}}</ul></details>
+    <details><summary><span class="t">Insurance terms</span><span class="sub">{{CONCEPTS}} concept pages</span></summary><ul>{{CONCEPT_HTML}}</ul></details>
+  </div>
+
+  <h2>Claims, expanded</h2>
+  <div class="branch"><ul>{{CLAIMS_EXPANDED}}</ul></div>
+
+  <h2>Along the way — what to offer after each answer</h2>
+  <p>Chips follow the customer's journey rather than the last intent alone, and a topic already answered in this session is not offered again.</p>
+  <div class="tablewrap journey"><table>
+    <thead><tr><th>After the customer asked</th><th>Offer next, in order</th><th>Why this order</th></tr></thead>
+    <tbody>{{NEXT_ROWS}}</tbody>
+  </table></div>
+
+  <h2>Coverage matrix — which ring topics each plan can answer</h2>
+  <p>✓ the pages hold it; · they do not, and the chip is omitted. <em>Bound rows</em> is the count of benefit-table rows, which is what lets a limit answer carry a figure; a plan with none still answers a limit question with the wording and no number.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="text-align:left">line</th><th style="text-align:left">plan</th>{{HEAD_CELLS}}<th>bound rows</th></tr></thead>
+    <tbody>{{MATRIX_ROWS}}</tbody>
+  </table></div>
+
+  <h2>Content gaps the map makes visible</h2>
+  <ul class="gaps">{{GAPS}}</ul>
+
+  <h2>Rules</h2>
+  <ul class="gaps">
+    <li>Nodes are generated from the bundle at load time, never written into code.</li>
+    <li>A ✎ node exists only if the page that answers it is approved and effective today.</li>
+    <li>No digits in a node; a number in an answer must bind to a row.</li>
+    <li>↗ addresses come from the destination registry, never from retrieved text.</li>
+    <li>The map rides on the greeting envelope as a typed <code>map</code> field; a plain client flattens it to chips.</li>
+    <li>Proved by a generated suite that asks every chip and asserts each reply is delivered, plus two report rows: dead-end rate and chip coverage.</li>
+  </ul>
+</div>
+<script>
+(function () {
+  var tree = document.getElementById('tree');
+  var all = tree.querySelectorAll('details');
+  document.getElementById('expand').addEventListener('click', function () { all.forEach(function (d) { d.open = true; }); });
+  document.getElementById('collapse').addEventListener('click', function () { all.forEach(function (d) { d.open = false; }); });
+  var filter = document.getElementById('filter');
+  filter.addEventListener('input', function () {
+    var q = filter.value.trim().toLowerCase();
+    all.forEach(function (d) { d.classList.remove('hit'); });
+    if (!q) return;
+    all.forEach(function (d) {
+      var s = d.querySelector(':scope > summary');
+      if (s && s.textContent.toLowerCase().indexOf(q) !== -1) {
+        d.classList.add('hit'); d.open = true;
+        var p = d.parentElement.closest('details');
+        while (p) { p.open = true; p = p.parentElement.closest('details'); }
+      }
+    });
+  });
+})();
+</script>
