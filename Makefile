@@ -130,6 +130,12 @@ llm-wiki:
 lint-bundle:
 	uv run python scripts/lint_bundle.py
 
+# The guidance map — what the assistant offers before the customer types —
+# walked out of the real bundle. GUIDANCE-MAP.md is committed; the HTML lands
+# with the other reports.
+guidance-map:
+	uv run python scripts/guidance_map.py --bundle okf-real --md GUIDANCE-MAP.md --html .eval-reports/guidance-map.html
+
 conflicts:
 	uv run python -m compiler.cli conflicts
 
