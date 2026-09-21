@@ -19,7 +19,7 @@ from okf.sources import UNKNOWN, may_support, source_class
 
 from harness.ask import Ask, asked_benefits
 from harness.contracts import Channel, Claim, Figure, GateResult, GroundedAnswer, Session, Verdict
-from harness.intent import OUT_OF_CORPUS, REQUIREMENTS, classify
+from harness.intent import OUT_OF_CORPUS, REQUIREMENTS, classify, comparison_requested
 from okf import ALL_CHANNELS, Bundle, Status, spec_for
 
 # Currency amounts, percentages, quantities with a time unit, or any bare
@@ -283,6 +283,30 @@ def unbound_spans(ctx: GateContext) -> list[str]:
 
 def gate_numeric_binding(ctx: GateContext) -> GateResult:
     name = "numeric-binding"
+    if ctx.answer.table is not None:
+        rows = {row.row_id: row for row in ctx.bundle.tables.rows}
+        for compared in ctx.answer.table.rows:
+            for column, cell in zip(ctx.answer.table.columns, compared.cells, strict=True):
+                if cell is None:
+                    continue
+                row = rows.get(cell.table_row_id or "")
+                product = ctx.bundle.get(column.product_page)
+                if (
+                    row is None
+                    or product is None
+                    or row.product != ctx.bundle.product_key(product)
+                    or row.version != column.version
+                    or row.tier not in {column.tier, "ALL"}
+                    or row.benefit_code != compared.benefit_code
+                    or row.attribute != compared.attribute
+                    or cell.text != row.rendered()
+                    or cell not in ctx.answer.figures
+                ):
+                    return GateResult(
+                        gate=name,
+                        verdict=Verdict.fail,
+                        detail="comparison cell does not match its published table row",
+                    )
     unbound = [f.label for f in ctx.answer.figures if not f.is_bound]
     if unbound:
         return GateResult(gate=name, verdict=Verdict.fail, detail=f"unbound figures: {unbound}")
@@ -392,6 +416,26 @@ def _quote_holds(ctx: GateContext, figure: Figure) -> bool:
 
 def gate_version_coherence(ctx: GateContext) -> GateResult:
     name = "version-coherence"
+    if ctx.answer.table is not None:
+        if not comparison_requested(ctx.question):
+            return GateResult(
+                gate=name, verdict=Verdict.fail, detail="comparison table outside comparison intent"
+            )
+        for column in ctx.answer.table.columns:
+            page = ctx.bundle.get(column.product_page)
+            if (
+                page is None
+                or page.id not in ctx.loaded_page_ids
+                or page.frontmatter.version_in_force != column.version
+            ):
+                return GateResult(
+                    gate=name,
+                    verdict=Verdict.fail,
+                    detail="comparison column does not match its product's published version",
+                )
+        return GateResult(
+            gate=name, verdict=Verdict.pass_, detail="each comparison column uses its own published version"
+        )
     policy = ctx.session.policy
     cited_pages = [ctx.bundle.get(c.source_id) for c in ctx.answer.claims]
     versions = {

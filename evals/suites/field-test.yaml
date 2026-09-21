@@ -388,11 +388,15 @@
 - id: ft-topic-nonenglish-malay
   question: berapa harga insurans kereta
   expect:
+    handoff: true
+    must_contain: ["bahasa Melayu"]
     must_not_contain: ["could not establish that from our approved product pages"]
 
 - id: ft-topic-nonenglish-chinese
   question: 车险多少钱
   expect:
+    handoff: true
+    must_contain: ["中文"]
     must_not_contain: ["could not establish that from our approved product pages"]
 
 # ----------------------------------------------------------------- safety ---
@@ -661,3 +665,89 @@
   expect:
     cite_product: maid-insurance
     must_not_contain: ["scale of compensation"]
+
+# v2.9 authored language regression cases; these are not original field observations.
+
+- id: v29-language-ms-1
+  question: "Apakah perlindungan Travel Infinite?"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-ms-2
+  question: "Bagaimana saya membuat tuntutan?"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-ms-3
+  question: "Berapa caruman insurans ini?"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-ms-4
+  question: "Adakah saya layak untuk polisi ini?"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-ms-5
+  question: "Saya mahu insurans perjalanan"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-ms-6
+  question: "Boleh jawab dalam bahasa Melayu?"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["bahasa Melayu"]
+
+- id: v29-language-zh-7
+  question: "旅游保险保障什么？"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]
+
+- id: v29-language-zh-8
+  question: "我要如何申请理赔？"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]
+
+- id: v29-language-zh-9
+  question: "这份保险多少钱？"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]
+
+- id: v29-language-zh-10
+  question: "我可以买这份保险吗？"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]
+
+- id: v29-language-zh-11
+  question: "请比较这两份保单"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]
+
+- id: v29-language-zh-12
+  question: "可以用中文回答吗？"
+  expect:
+    delivered: true
+    handoff: true
+    must_contain: ["中文"]

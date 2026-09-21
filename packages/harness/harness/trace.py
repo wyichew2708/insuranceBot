@@ -86,6 +86,8 @@ class Trace(BaseModel):
     created_at: float = Field(default_factory=time.time)
 
     entities: list[str] = Field(default_factory=list)
+    slots: dict[str, Any] = Field(default_factory=dict)
+    language: str = "en"
     #: Product keys the lexical layer could not choose between. Recorded rather
     #: than resolved: a tie broken alphabetically is a fact about the alphabet,
     #: and the caller is better placed to decide whether to ask the customer.
@@ -116,6 +118,8 @@ class Trace(BaseModel):
     #: plus the retrieval scope it produced. Recorded so the evaluation can
     #: group by it: a score by router layer says which layer is wrong.
     route: dict[str, str] = Field(default_factory=dict)
+    #: The workflow that actually answered, including post-router fallbacks.
+    handler: str = ""
     notes: list[str] = Field(default_factory=list)
     # The draft a gate refused to deliver. Kept for the debug console — a
     # blocked answer you cannot inspect teaches you nothing.

@@ -61,6 +61,7 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=ROOT / ".eval-reports")
     parser.add_argument("--gate", type=float, default=0.0, help="minimum overall pass rate")
     args = parser.parse_args()
+    args.out = args.out.resolve()
 
     from api.settings import Settings
 
@@ -81,6 +82,26 @@ def main() -> int:
         f"Bundle `{args.bundle.name}`, deterministic composer, "
         f"{len({r.get('product') for r in results if r.get('product')})} products.",
     ]
+    from evals.interaction import interaction_metrics
+
+    metrics = interaction_metrics(results)
+    lines += [
+        "\n## Interaction metrics\n",
+        "| Metric | count | denominator | rate |",
+        "|---|---:|---:|---:|",
+        *[
+            f"| {name} | {m['count']} | {m['total']} | "
+            + (f"{m['rate']:.1%}" if m["rate"] is not None else "n/a")
+            + " |"
+            for name, m in metrics.items()
+        ],
+        "Selection uses only turns labelled with an expected product; clarification uses all executed turns. "
+        "A dead end is a handoff with neither a suggestion nor a destination, including safety refusals. "
+        "Chip coverage uses product-scoped coverage/general handlers "
+        "and requires at least three suggestions.",
+    ]
+    report["interaction_metrics"] = metrics
+    (args.out / "conversation.json").write_text(json.dumps(report, indent=2, default=str))
     # Conversations are scored twice over, and the two numbers answer different
     # questions. Turn accuracy is how often the bot is right. Conversation
     # accuracy is how often a customer got all the way through a journey
@@ -186,7 +207,8 @@ def main() -> int:
         print(f"\n  owed a handoff and did not give one — {len(owed_handoff)}:")
         for mode, count in severity.most_common():
             print(f"    {count:5d}  {mode}")
-    print(f"\n  report  {(args.out / 'conversation.md').relative_to(ROOT)}")
+    report_path = args.out / "conversation.md"
+    print(f"\n  report  {report_path.relative_to(ROOT) if report_path.is_relative_to(ROOT) else report_path}")
     if report["pass_rate"] < args.gate:
         print(f"\nFAIL: {report['pass_rate']:.1%} below gate {args.gate:.0%}", file=sys.stderr)
         return 1

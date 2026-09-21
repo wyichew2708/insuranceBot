@@ -44,6 +44,7 @@ class Intent(str, Enum):
     browse = "browse"  # what do you sell, show me your life plans
     entity = "entity"  # who underwrites this, which legal entity
     offer = "offer"  # is there a promotion, a discount, cashback
+    compare = "compare"  # factual side-by-side product or tier comparison
 
     # --- the five the corpus can never settle ------------------------------
     # Not gaps in the wiki. A policy wording says what a claim requires; no
@@ -527,6 +528,10 @@ _PATTERNS: tuple[tuple[Intent, re.Pattern[str]], ...] = (
         re.compile(r"\b(cover(s|ed|age|ages)?|include(s|d)?|protect(s|ion)?|benefit(s)?)\b", re.I),
     ),
 )
+
+
+def comparison_requested(question: str) -> bool:
+    return bool(re.search(r"\b(?:compare|comparison|versus|vs)\b|\bdifferences? between\b", question, re.I))
 
 
 def classify(question: str) -> Intent:

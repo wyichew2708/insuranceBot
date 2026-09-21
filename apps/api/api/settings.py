@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,6 +27,8 @@ class Settings(BaseSettings):
     # directly and must stay stateless; `off` relies on the client's `history`.
     #   auto | on | off
     memory: str = "auto"
+    memory_max_turns: int = Field(default=20, ge=6)
+    memory_idle_ttl_seconds: float = Field(default=86400, gt=0, allow_inf_nan=False)
     state_dir: Path = Path(".state")
     llm_timeout_s: float = 30.0
 

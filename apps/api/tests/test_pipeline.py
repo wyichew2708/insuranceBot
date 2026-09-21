@@ -217,6 +217,7 @@ def test_every_stage_is_traced(bundle: Bundle, settings: Settings) -> None:
         "present",
         "guardrail-output",
         "gates",
+        "handler",
     ]
     assert trace.candidates and trace.rejected
     assert trace.budget["pages_loaded"] > 0

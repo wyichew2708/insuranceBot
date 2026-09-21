@@ -15,11 +15,12 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, StreamingResponse
-from harness import AnswerEnvelope, AnswerRequest, Channel, TraceStore
+from harness import AnswerEnvelope, AnswerRequest, Channel, Session, TraceStore
 from pydantic import BaseModel
 
 from api.cms import configure as configure_cms
 from api.cms import router as cms_router
+from api.navigation import greeting_map, starter_questions
 from api.pipeline import answer_question
 from api.settings import Settings, get_settings
 from okf import Bundle, lint_bundle
@@ -78,6 +79,16 @@ async def healthz() -> dict[str, str]:
 async def readyz() -> dict[str, Any]:
     loaded = bundle()
     return {"status": "ready", "pages": len(loaded.pages), "table_rows": len(loaded.tables)}
+
+
+@app.get("/v1/navigation")
+async def navigation(channel: Channel = Channel.direct) -> dict[str, Any]:
+    session = Session(session_id="navigation", channel=channel)
+    loaded = bundle()
+    return {
+        "map": [node.model_dump(mode="json") for node in greeting_map(loaded, session)],
+        "suggestions": starter_questions(loaded, session.today),
+    }
 
 
 @app.get("/", response_class=HTMLResponse)

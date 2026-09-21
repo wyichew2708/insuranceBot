@@ -1,6 +1,6 @@
 # v2.9 — Controlled agentic RAG: what v2.8 already is, and what to build next
 
-A proposal, not yet built. It consolidates three reviews of the v2.8 build into
+A development plan, in progress on `codex/v2.9`. It consolidates three reviews of the v2.8 build into
 one plan: a design review recommending a *controlled agentic RAG* architecture
 for a customer-facing enquiry assistant (§1–2), a review of how a customer is
 guided through what the assistant can do (§3, phase A), and a review of the
@@ -10,6 +10,60 @@ version since v2.4 was held to, and §5 says how each is proved.
 An earlier cut of the architecture review was written against `main`, which
 stops at v1. It is withdrawn; nothing in it survives contact with
 `DESIGN-v2.3.md` through `DESIGN-v2.8.md`.
+
+### Current development status
+
+On `codex/v2.9`: A1 handler extraction, A2 navigation/chips, A3 retained typed
+memory and A4 grounded comparison are implemented. B1 deterministic slots and
+B2 localised handoffs for the English-only corpus are implemented. Interaction
+metrics now expose remaining guidance gaps; acceptance targets are not all met.
+C's tool adapters and trusted entitlement/value checks, D's benefit graph, and
+the environment-dependent E work remain pending. See
+[`evals/reports/v2.9-foundation.md`](evals/reports/v2.9-foundation.md) for measured
+results and limitations. No production release is implied.
+
+### Implementation review — September 2026
+
+The starting code already implements v2.8. Work originally started under
+`codex/v2.8` has moved to `codex/v2.9`; this branch carries the retention work
+and Phases A and B development. The architecture inventory below describes the
+starting point, not a claim that every proposed feature has shipped.
+
+Code review identified these implementation constraints:
+
+- Routing precedence includes checks after the initial router decision. A1
+  preserves those checks; the trace's `handler` records the workflow that
+  actually answered, independently of the initial layer labels.
+- Catalogue metadata is a separate evidence permission from wiki clauses.
+  Account guidance may name a plan and link its purchase page, but may not
+  retrieve policy clauses, raw evidence, or customer records.
+- The existing early workflows gate their replies directly; the knowledge
+  workflow owns output screening, gates and the bounded soft-failure paths.
+  A1 preserves those semantics instead of silently changing screening while
+  refactoring. The contract therefore returns the verified envelope and trace.
+- Knowledge intents currently share one workflow. They have separate registry
+  entries; a separate module is warranted when an intent's execution differs,
+  including phase C's tool-backed price and eligibility paths.
+- Quotes are public. Anonymous sessions with complete inputs and a configured
+  quote tool must receive the same bound quote as authenticated sessions.
+  Authentication and record ownership are mandatory for claim/policy tools.
+- `DESTINATIONS` is a service-link registry, not a country vocabulary. B1 needs
+  an authored travel-destination vocabulary before destination selection.
+- Phase C must ship fixture adapters explicitly enabled for development/tests;
+  no synthetic premium or eligibility decision should be served by default.
+- A `Figure.sor_field` currently counts as a binding without checking the
+  value against a tool response. Before C ships, the gate context must carry
+  trusted tool results and numeric binding must verify field name and value.
+  Claim provenance must likewise recognise those results instead of treating
+  a tool name as a wiki page id.
+- The current entitlement gate skips when `session.policy` is present, not
+  when authentication has actually been verified. C must require verified
+  authentication plus record ownership; a client-supplied policy object is
+  not proof of either. This is a prerequisite for tool delivery, not an A1
+  routing change.
+- GPU retrieval measurements and production system-of-record integrations
+  need their respective environments. Offline fixture acceptance does not
+  establish production readiness or fill the authored content backlog.
 
 ---
 
@@ -153,11 +207,11 @@ Handler
   evidence        which sources it may load: wiki · raw · sor · registry · none
   budget          pages, tool calls, wall clock — the Budget it is charged
   gate_profile    which gates may soft-fail into a trim or a guide
-  run(turn) -> GroundedAnswer
+  run(turn) -> (AnswerEnvelope, Trace)
 ```
 
 The pipeline becomes: screen → read the Ask → route → look up the handler →
-run → screen → gate. Nothing about any answer changes. The proof is the one
+run its existing screening/gating path. Nothing about any answer changes. The proof is the one
 the suite already gives: the conversation suite produces byte-identical
 answers forwards and reversed, so the refactor is accepted when all 1,711
 answers are byte-identical to v2.8's. What it buys: the trace names the
@@ -211,6 +265,18 @@ refinement as it is, off the request path, once the summary has a reader —
 the handover payload is the obvious one, and A2's suppression of answered
 topics is the other.
 
+Development on `codex/v2.9` includes the retention portion of A3:
+`MEMORY_MAX_TURNS` defaults to 20 (minimum 6, preserving the recall window),
+and `MEMORY_IDLE_TTL_SECONDS` defaults to 86400. Existing records are trimmed
+when loaded. Expiry is measured from the last recorded turn; reads and model
+summary refinements do not extend it. Memory access sweeps idle files at most
+once per minute, including sessions not revisited; cleanup is not scheduled
+while the server is idle or stopped. Delayed refinements cannot overwrite a
+newer turn or recreate an expired record. Typed state now carries the product,
+answered topics and validated entity slots. Guidance suppresses answered topics,
+and a handoff carries the rolling summary. Explicit client history replaces
+server state, including when it is an empty list.
+
 **A4 Compare intent.** *"Compare Entry with Luxury"* names two products, and
 the clarify policy since v2.2 is that two full names in one turn asks which
 was meant. For a comparison that is the wrong reply. A `compare` intent (two
@@ -231,8 +297,8 @@ a quote or an eligibility check needs. Read deterministically where the shape
 is unmistakable (an age, a date, a duration) and by the model where it is
 not, under the same three constraints `api/understand.py` puts on product
 selection: a typed schema, validation against what the value can be (an age
-is an integer in a bounded range, a destination resolves against the bundle's
-`destinations` vocabulary), and fall-through to *unset* on any failure. An
+is an integer in a bounded range, a destination resolves against a new authored
+travel-destination vocabulary, separate from service URLs), and fall-through to *unset* on any failure. An
 entity is carried in `SessionMemory` the way the product is (A3), so *"and
 for twelve days?"* keeps the destination from the turn before. Changes no
 answer until phase C consumes it.
@@ -246,14 +312,35 @@ broken bot. Chips follow the turn's language. Measured on the field test's
 Malay case, then on a dozen authored Malay and Chinese turns added to
 `field-test.yaml`.
 
+Implementation status: the deterministic B1 path stores bounded ages, ISO dates,
+durations (including written numbers through twenty), current product tier
+candidates, explicit sums/currencies, and explicitly labelled vehicle/occupation
+text. Destination names use a small authored country-code vocabulary; it is
+neither a covered-destination list nor an exhaustive country catalogue. Product
+changes reset slots. Ambiguous/invalid values remain unset; no model extraction
+is enabled. Inputs are self-reported and must be validated again by a tool;
+they establish neither eligibility nor authentication. Entity extraction is
+currently recorded after dispatch; phase C must move input resolution ahead of
+its tool call without weakening input screening.
+
+B2 implements deterministic Malay/Chinese detection and a screened, localised
+handoff with a localised contact link for the current English-only corpus.
+It does not translate policy facts or promise a live transfer. Twelve authored
+language cases supplement the original field-test cases. Language-tagged
+retrieval and a model second opinion remain future work when approved
+non-English content exists. The chat's surrounding navigation remains English.
+
 ### Phase C — the tool path
 
 The review's whole right-hand column. Every one of these is guided or handed
 off in v2.8, and the guidance is correct until the system that holds the
 answer can be asked. The principle does not change: **the system of record
 decides the fact; the composer binds it; the gates check the binding.**
-`Figure.sor_field` already exists for exactly this and is already checked by
-numeric-binding. What is missing is the tools that produce such figures.
+`Figure.sor_field` already exists for exactly this, but currently only makes
+a figure count as bound. The tools and verification against their actual
+returned values are both missing. Extend `GateContext` with trusted tool
+results and teach numeric binding and source-integrity gates to verify them
+before enabling these handlers.
 
 `api/tools/`, one module per system, all behind one envelope:
 
@@ -296,15 +383,18 @@ already refuses a price answer with no premium-labelled figure; with a tool
 it passes on the tool's figure and on nothing else.
 
 **Entitlement is a predicate on the session, never on the answer (C3, C4).**
-The `entitlement-assertion` gate skips on an authenticated session because
-the system of record is then the authority. That stays exactly as it is: a
-tool that needs authentication raises `NotEntitled` on an anonymous session
-and the handler falls to the guidance reply, which is what the customer gets
-today.
+The existing gate skips whenever a policy object is present; this must not
+be carried forward as an authorization boundary. The tools must require
+verified authentication and confirm record ownership independently of client
+input. A tool raises `NotEntitled` if either check fails, and the handler
+falls to the existing guidance reply. Tests must include anonymous sessions
+with forged policy objects and authenticated requests for another person's
+policy or claim, as well as the ordinary anonymous case.
 
-The dataset's contract moves where the tool exists: a `price` turn on an
-authenticated session with a configured quote tool expects a bound premium;
-the same turn anonymous, or with no tool, expects the quote steps. Both are in
+The dataset's contract moves where the tool exists: a `price` turn with complete
+inputs and a configured public quote tool expects a bound premium, on both
+anonymous and authenticated sessions. Missing inputs prompt for the missing
+slots; absent or unavailable tools retain the quote steps. All paths are in
 the suite; the fixture tool runs in CI; the report gains a `tool` column
 beside `layer3`.
 
@@ -401,7 +491,7 @@ above was checked against them:
 | A4 compare | compare cases return a bound table; the two-names clarification still fires where no comparative is present |
 | B1 entities | entity fixture (≥ 100 labelled turns) ≥ 0.9 slot accuracy; zero lost |
 | B2 language | the field test's Malay case passes; a dozen authored Malay and Chinese turns pass; zero lost |
-| C1–C4 tools | new authenticated quote, eligibility, claim-status and policy cases pass against the fixtures; SoR values in answers match tool results exactly; entitlement leaks 0; every tool-down case returns today's guidance; zero lost |
+| C1–C4 tools | public quote and eligibility cases, authenticated claim-status and policy cases pass against explicitly enabled fixtures; SoR values in answers match trusted tool results exactly; forged policy objects and cross-customer requests denied; entitlement leaks 0; every tool-down case returns today's guidance; zero lost |
 | D benefit graph | `incident-multi-benefit` archetype ≥ 90% whole conversations; exclusion-completeness and numeric-binding unchanged at 100% |
 | all | seed gate no newly failing case; guardrail backtest 0 false positives; `known-findings.json` shrinks or holds |
 

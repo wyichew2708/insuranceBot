@@ -74,6 +74,7 @@ class Layer2(str, Enum):
 
 
 class Layer3(str, Enum):
+    compare = "compare"
     coverage = "coverage"
     exclusions = "exclusions"
     limits = "limits"
@@ -91,6 +92,7 @@ class Layer3(str, Enum):
 
 #: Intent → the handler that owns it. Anything not here is `general`.
 HANDLER_FOR: dict[Intent, Layer3] = {
+    Intent.compare: Layer3.compare,
     Intent.coverage: Layer3.coverage,
     Intent.exclusion: Layer3.exclusions,
     Intent.limit: Layer3.limits,

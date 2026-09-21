@@ -144,6 +144,14 @@ textarea:focus{outline:none;border-color:var(--accent)}
   .bubble li { margin: 2px 0; }
   .bubble .lead { margin-bottom: 4px; }
   .options.next button { border-style: dashed; }
+.navigation-group { margin: .5rem 0; min-width: 12rem; }
+.navigation-group summary { cursor: pointer; padding: .35rem 0; font-weight: 600; }
+.navigation-group > div { padding-left: .75rem; display: flex; flex-direction: column; gap: .35rem; }
+.navigation-group .chip { text-align: left; text-decoration: none; }
+.comparison { overflow-x: auto; margin: 1rem 0; }
+.comparison table { width: 100%; border-collapse: collapse; text-align: left; }
+.comparison caption { text-align: left; margin-bottom: .5rem; font-weight: 600; }
+.comparison th, .comparison td { padding: .6rem; border-bottom: 1px solid var(--line); min-width: 8rem; }
 </style>
 
 <header>
@@ -242,45 +250,42 @@ $("#settings-btn").onclick = e => {
   } catch { $("#corpus").textContent = "offline"; }
 })();
 
-/* Starter questions drawn from the bundle's own product pages, so they are
-   answerable in whichever corpus is mounted rather than hard-coded to one. */
-const FALLBACK = [
-  "What is not covered by fire insurance?",
-  "How do I make a claim?",
-  "What is the free-look period?",
-  "Which plan should I buy?",
-];
-(async () => {
-  let qs = FALLBACK;
-  try {
-    const ids = (await fetch("/v1/bundle").then(r => r.json())).page_ids || [];
-    // Only products whose *contract* compiled into a page. A product with an
-    // exclusions or claims child can answer that question from its wording;
-    // one without would send the customer straight into a refusal, which is a
-    // poor thing to put on the welcome screen.
-    const withChild = suffix => [...new Set(ids
-      .filter(id => id.endsWith("/" + suffix))
-      .map(id => id.slice(0, -(suffix.length + 1)))
-      .filter(id => /^product\/[^/]+\/[^/]+$/.test(id))
-      .map(id => id.split("/").pop().replace(/-/g, " ")))];
-    const exc = withChild("exclusions"), clm = withChild("claims"), cov = withChild("cover");
-    const pick = (a, n) => a.length ? a[Math.floor(n * a.length)] : null;
-    const built = [
-      pick(exc, 0.17) && `What is not covered by ${pick(exc, 0.17)}?`,
-      pick(clm, 0.43) && `How do I make a claim on ${pick(clm, 0.43)}?`,
-      pick(cov, 0.71) && `What does ${pick(cov, 0.71)} cover?`,
-      "What is the free-look period?",
-    ].filter(Boolean);
-    if (built.length >= 3) qs = built;
-  } catch {}
-  $("#chips").innerHTML = "";
-  for (const q of qs) {
-    const c = document.createElement("button");
-    c.className = "chip"; c.textContent = q;
-    c.onclick = () => { box.value = q; ask(); };
-    $("#chips").append(c);
+/* The same approved catalogue map the greeting envelope carries. */
+function renderNavigation(nodes) {
+  return (nodes || []).map(node => {
+    const label = escapeHtml(node.label || "");
+    if (node.kind === "group") {
+      return `<details class="navigation-group"><summary>${label}</summary><div>${renderNavigation(node.children)}</div></details>`;
+    }
+    if (node.kind === "question" && node.question) {
+      return `<button class="chip" data-pick="${escapeHtml(node.question)}">${label}</button>`;
+    }
+    if (node.kind === "destination" && /^https:\/\//i.test(node.url || "")) {
+      return `<a class="chip" href="${escapeHtml(node.url)}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
+    }
+    return "";
+  }).join("");
+}
+function renderComparison(table) {
+  if (!table) return "";
+  return `<div class="comparison"><table><caption>Published benefit comparison</caption><thead><tr><th scope="col">Benefit</th>${table.columns.map(c => `<th scope="col">${escapeHtml(c.label)}</th>`).join("")}</tr></thead><tbody>${table.rows.map(r => `<tr><th scope="row">${escapeHtml(r.label)}</th>${r.cells.map(c => `<td>${c ? escapeHtml(c.text) : "Not published"}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function bindPicks(element) {
+  for (const pick of element.querySelectorAll("[data-pick]")) {
+    pick.onclick = () => { box.value = pick.dataset.pick; ask(); };
   }
-})();
+}
+async function loadNavigation() {
+  try {
+    const response = await fetch(`/v1/navigation?channel=${encodeURIComponent($("#channel").value)}`);
+    if (!response.ok) throw new Error("navigation unavailable");
+    const data = await response.json();
+    $("#chips").innerHTML = renderNavigation(data.map);
+    bindPicks($("#chips"));
+  } catch { $("#chips").textContent = "Ask about a product, or type help to get started."; }
+}
+loadNavigation();
+$("#channel").addEventListener("change", loadNavigation);
 
 /* ---- policies from the system of record ---- */
 (async () => {
@@ -434,10 +439,13 @@ async function ask() {
         "</div>";
     }
 
+    const handoffLabel = ({ms: "Sila hubungi pasukan kami", zh: "请联系我们的团队"})[env.language];
     let head = "";
     if (a.smalltalk) {
       // A greeting is not a handoff and must not be dressed as one.
       head = "";
+    } else if (handoffLabel && a.handoff) {
+      head = `<div class="tag handoff">${escapeHtml(handoffLabel)}</div>`;
     } else if (!env.delivered) {
       // A blocked answer is not shown. The customer gets the refusal, and
       // the reason lives in the trace where it belongs.
@@ -467,10 +475,13 @@ async function ask() {
         a.suggestions.map(s => `<button data-pick="${escapeHtml(s)}">${escapeHtml(s)}</button>`).join("") +
         "</div>";
     }
-    bubble.innerHTML = head + render(a.answer || "", a.figures) + options + next + sources;
-    for (const pick of bubble.querySelectorAll("[data-pick]")) {
-      pick.onclick = () => { box.value = pick.dataset.pick; ask(); };
-    }
+    const responseText = a.table ? (a.answer || "").split("\n- ")[0] : (a.answer || "");
+    bubble.innerHTML = head + render(responseText, a.figures) +
+      (env.delivered ? renderComparison(a.table) : "") + options +
+      renderNavigation(env.map) + renderNavigation((a.destinations || []).map(link => ({
+        kind: "destination", label: link.label, url: link.url
+      }))) + next + sources;
+    bindPicks(bubble);
   } catch (err) {
     bubble.innerHTML = `<p class="err">Could not reach the service — ${escapeHtml(String(err))}</p>`;
   } finally {

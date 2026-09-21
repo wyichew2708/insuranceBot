@@ -9,11 +9,12 @@ from __future__ import annotations
 
 import datetime as dt
 from enum import Enum
+from typing import Literal
 
 # The distribution-channel taxonomy is domain knowledge, so it lives in okf and
 # is re-exported here: a session binds to a route to market, never to a brand.
 from okf.channels import Channel as Channel
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class AuthLevel(str, Enum):
@@ -175,6 +176,29 @@ class GroundedAnswer(BaseModel):
     #: structurally as well as in the prose so a client can render them as
     #: buttons rather than parsing them back out of a sentence.
     destinations: list[Link] = Field(default_factory=list)
+    table: ComparisonTable | None = None
+
+
+class ComparisonColumn(BaseModel):
+    label: str
+    product_page: str
+    version: str
+    tier: str
+
+
+class ComparisonRow(BaseModel):
+    benefit_code: str
+    attribute: str
+    label: str
+    cells: list[Figure | None] = Field(min_length=2, max_length=2)
+
+
+class ComparisonTable(BaseModel):
+    columns: list[ComparisonColumn] = Field(min_length=2, max_length=2)
+    rows: list[ComparisonRow]
+
+
+GroundedAnswer.model_rebuild()
 
 
 class AnswerRequest(BaseModel):
@@ -189,6 +213,7 @@ class AnswerRequest(BaseModel):
 
 
 class AnswerEnvelope(BaseModel):
+    language: Literal["en", "ms", "zh"] = "en"
     """What the API returns: the answer plus everything needed to debug it."""
 
     answer: GroundedAnswer
@@ -198,3 +223,30 @@ class AnswerEnvelope(BaseModel):
     #: One line remembered about this turn — product, intent, what was asked,
     #: what was answered — and the same line is what the session memory holds.
     summary: str = ""
+    map: list[NavigationNode] = Field(default_factory=list)
+    handover_summary: str = ""
+
+
+class NavigationNode(BaseModel):
+    """An authored question, trusted destination, or navigation group."""
+
+    kind: Literal["group", "question", "destination"]
+    label: str
+    question: str | None = None
+    url: str | None = None
+    children: list[NavigationNode] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def valid_target(self) -> NavigationNode:
+        if self.kind == "question" and (not self.question or self.url or self.children):
+            raise ValueError("question nodes require only a question target")
+        if self.kind == "destination" and (
+            not self.url or not self.url.startswith("https://") or self.question or self.children
+        ):
+            raise ValueError("destination nodes require only an HTTPS target")
+        if self.kind == "group" and (self.question or self.url):
+            raise ValueError("groups contain children, not targets")
+        return self
+
+
+AnswerEnvelope.model_rebuild()

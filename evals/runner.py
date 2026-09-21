@@ -164,7 +164,7 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
     history: list[str] = []
     scored: list[dict[str, Any]] = []
     envelope = trace = None
-    for turn in turns:
+    for index, turn in enumerate(turns):
         said = str(turn["say"])
         envelope, trace = answer_question(bundle, said, session, settings, history=list(history))
         history.append(said)
@@ -172,6 +172,8 @@ def _run_standard(bundle: Bundle, settings: Settings, case: dict[str, Any]) -> d
         scored.append(
             {
                 "say": said,
+                "expected_product": (turn.get("expect") or {}).get("cite_product")
+                or ((case.get("expect") or {}).get("cite_product") if index == len(turns) - 1 else None),
                 "kind": turn.get("kind", ""),
                 "intent": turn.get("intent", ""),
                 "contract": turn.get("contract", ""),
@@ -227,6 +229,11 @@ def _observed(envelope: Any, trace: Any) -> dict[str, Any]:
         "clarifying": envelope.answer.clarifying,
         "advice_flag": envelope.answer.advice_flag,
         "smalltalk": envelope.answer.smalltalk,
+        "handler": getattr(trace, "handler", ""),
+        "ask_intent": next((s.detail.get("intent") for s in trace.stages if s.name == "ask"), None),
+        "selected_product": (getattr(trace, "route", {}) or {}).get("product"),
+        "suggestions": len(envelope.answer.suggestions),
+        "destinations": len(envelope.answer.destinations),
         "rag_used": trace.rag_used,
         "claims": len(envelope.answer.claims),
         "route": dict(getattr(trace, "route", {}) or {}),
