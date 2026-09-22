@@ -79,6 +79,7 @@ products:
       - personal mobility
     replaces: [ePROTECT personal mobility]
     documents: [tiq-pa, personal-accident, eprotect-personal-mobility, personal-mobility]
+    plan_tiers: ["Enhanced Silver", "Enhanced Gold", "Enhanced Platinum"]
 
   # ---------------------------------------------------------------- Tiq — Home & Maid
   - slug: home-insurance
@@ -91,6 +92,7 @@ products:
       - https://www.etiqa.com.sg/personal/home-insurance
     aliases: [Tiq Home, Home Insurance, home contents insurance]
     documents: [tiq-home, home-insurance, home]
+    plan_tiers: ["Homeowner / Landlord", Tenant]
   - slug: maid-insurance
     name: Tiq Maid Insurance
     brand: tiq
@@ -102,6 +104,7 @@ products:
       - https://www.etiqa.com.sg/Online/quotation/eProtect-Maid
     aliases: [ePROTECT maid, Maid Insurance, Tiq Maid, domestic helper insurance, helper insurance]
     documents: [eprotect-maid, maid-insurance, maid]
+    plan_tiers: ["Plan A", "Plan B", "Plan C"]
 
   # ---------------------------------------------------------------- Tiq — Travel & Lifestyle
   - slug: travel-insurance
@@ -114,6 +117,7 @@ products:
       - https://www.etiqa.com.sg/personal/travel-insurance
     aliases: [Tiq Travel, Travel Insurance, travel cover]
     documents: [tiq-travel, eprotect-travel, travel-insurance]
+    plan_tiers: [Entry, Savvy, Luxury]
   - slug: personal-cyber-insurance
     name: Personal Cyber Insurance
     brand: tiq
@@ -134,6 +138,7 @@ products:
       - https://www.etiqa.com.sg/personal/pet-insurance
     aliases: [Tiq Pet Insurance, Tiq Pet, pet cover, dog insurance, cat insurance]
     documents: [pet-insurance, dash-pet, pet]
+    plan_tiers: [Pawsome, Pawmazing, Pawtastic, Pawfect]
 
   # ---------------------------------------------------------------- Tiq — Motor
   - slug: private-car-insurance
@@ -247,6 +252,7 @@ products:
     urls: [https://www.etiqa.com.sg/personal/travel-insurance/travel-infinite]
     aliases: [Etiqa Travel Infinite, infinite travel]
     documents: [travel-infinite]
+    plan_tiers: [Classic, Deluxe, Suite]
   - slug: travel-takaful
     name: Travel Takaful
     brand: etiqa
@@ -255,6 +261,7 @@ products:
     urls: [https://www.etiqa.com.sg/personal/travel-insurance/travel-takaful]
     aliases: [Etiqa Travel Takaful, takaful travel]
     documents: [travel-takaful, takaful]
+    plan_tiers: [Classic, Deluxe, Suite]
 
   # ---------------------------------------------------------------- Etiqa — HDB Fire
   - slug: fire-insurance
@@ -285,6 +292,7 @@ products:
     urls: [https://www.etiqa.com.sg/business-insurance/business-owners-super-suite]
     aliases: [BOSS, super suite, business owners suite, SME package]
     documents: [businessenterprisesolution, business-owners]
+    plan_tiers: ["Standard Suite", "Super Suite"]
   - slug: commercial-vehicle
     name: Commercial Vehicle Insurance
     brand: etiqa
@@ -317,6 +325,7 @@ products:
     urls: [https://www.etiqa.com.sg/business-insurance/corporate-travel]
     aliases: [corporate travel, business travel insurance, group travel]
     documents: [corporate-travel]
+    plan_tiers: ["Plan 1", "Plan 2", "Plan 3"]
   - slug: engineering
     name: Engineering Insurance
     brand: etiqa

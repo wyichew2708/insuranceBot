@@ -41,6 +41,13 @@ class Entry:
     #: Withdrawn products this one replaced. Their names are aliases of this
     #: entry, and the answer says the product was replaced.
     replaces: tuple[str, ...] = ()
+    #: The plans the product is sold in, in the order the product page lists
+    #: them: "Entry", "Savvy", "Luxury". The owner's list, not the crawl's —
+    #: a benefit table's column headers are where the crawl looked, and a
+    #: decorative banner row above them ("Most Popular") made the headers a
+    #: data row and money the plan name. Declared here, the compiler can find
+    #: the real header row in the table and refuse one that is not it.
+    plan_tiers: tuple[str, ...] = ()
 
     @property
     def legacy(self) -> bool:
@@ -107,7 +114,7 @@ def load_catalogue(bundle_root: Path) -> Catalogue | None:
     path = bundle_root / CATALOGUE_FILE
     if not path.exists():
         return None
-    data = yaml.safe_load(path.read_text()) or {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     entries: list[Entry] = []
     for raw in data.get("products", []):
         entries.append(
@@ -121,6 +128,7 @@ def load_catalogue(bundle_root: Path) -> Catalogue | None:
                 aliases=tuple(str(a) for a in raw.get("aliases", [])),
                 documents=tuple(str(d) for d in raw.get("documents", [])),
                 replaces=tuple(str(r) for r in raw.get("replaces", [])),
+                plan_tiers=tuple(str(t) for t in raw.get("plan_tiers", [])),
             )
         )
     return Catalogue(entries)

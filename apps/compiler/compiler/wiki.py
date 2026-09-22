@@ -438,7 +438,7 @@ def versions_from_documents(source_root: Path) -> dict[str, str]:
         return {}
     import json
 
-    data = json.loads(manifest.read_text())
+    data = json.loads(manifest.read_text(encoding="utf-8"))
     versions: dict[str, str] = {}
     for document in data.get("documents", []):
         match = VERSION_RE.search(str(document.get("url", "")))
@@ -693,15 +693,132 @@ def looks_like_a_benefit_table(table: Table) -> bool:
     return usable / len(labels) >= 0.6
 
 
-def pick_benefit_table(tables: list[Table]) -> Table | None:
+#: A cell that states a value rather than naming a plan: money, a percentage,
+#: a bare number, "NA", a tick. A plan's name is none of these.
+_NOT_A_PLAN_RE = re.compile(r"^\s*(?:\$?\s*[\d,.]+\s*%?|na|n/a|not covered|nil|-|—|✓|✗|✕|yes|no)?\s*$", re.I)
+
+
+def _tier_slug(cell: str, declared: list[str]) -> str:
+    """The catalogue's name for the plan this header cell names.
+
+    A column header carries whatever the page put in the cell — "Pawsome Get
+    Quote" is the plan name with its button caption glued on. The tier a
+    figure is filed under has to be the plan's name and nothing else, or a
+    customer asking about Pawsome matches nothing.
+    """
+    slug = slugify(cell)
+    for tier in declared:
+        want = slugify(tier)
+        if slug == want or slug.startswith(f"{want}-") or slug.endswith(f"-{want}"):
+            return want
+    return slug
+
+
+def _plan_row(cells: list[str], declared: list[str]) -> bool:
+    """Is this row the table's real header — the one naming the plans?"""
+    rest = [c.strip() for c in cells[1:]]
+    if len(rest) < 2 or any(_NOT_A_PLAN_RE.match(c) for c in rest):
+        return False
+    if len(set(slugify(c) for c in rest)) != len(rest):
+        return False  # a plan is named once; repeats are a data row
+    if not declared:
+        return all(len(c.split()) <= 4 for c in rest)
+    want = {slugify(t) for t in declared}
+    matched = {_tier_slug(c, declared) for c in rest} & want
+    return len(matched) >= min(2, len(want))
+
+
+def plan_header(table: Table, declared: list[str]) -> tuple[list[str], list[list[str]]]:
+    """The table's header and data rows, with a decorative banner stepped over.
+
+    The crawl takes a markdown table's first row as its header. On the product
+    pages a merged "Most Popular" banner sits above the plan names, so the row
+    that names the plans — `Plan Highlights | Entry | Savvy | Luxury` — became
+    the first data row, and whichever row followed became the header. That is
+    how Tiq Travel's plans came out as `1-000`, `1-000`, `3-000`: money read as
+    a plan name. The catalogue says what the plans are called, so the real
+    header can be found and everything above it dropped.
+    """
+    if _plan_row(table.header, declared):
+        return list(table.header), [list(r) for r in table.rows]
+    for i, row in enumerate(table.rows):
+        if len(row) == len(table.header) and _plan_row(row, declared):
+            return list(row), [list(r) for r in table.rows[i + 1 :]]
+    return list(table.header), [list(r) for r in table.rows]
+
+
+def declared_tiers(group: ProductGroup, rows: list[BenefitRow]) -> list[str]:
+    """The plans this product is sold in, for a page's frontmatter.
+
+    The catalogue's list where there is one — a customer asks about the Savvy
+    plan whether or not the crawl could read the benefit table, so the plans
+    are named on the page either way. Otherwise the tiers the table did yield,
+    minus any the rows never mention.
+    """
+    if group.entry and group.entry.plan_tiers:
+        return [slugify(t) for t in group.entry.plan_tiers]
+    return [t for t in group.tiers if any(r.tier == t for r in rows)]
+
+
+def stitch_plan_table(tables: list[Table], declared: list[str]) -> Table | None:
+    """One benefit table per page, rebuilt from the blocks it was split into.
+
+    The product pages render a single plan comparison, but the crawl sees a
+    run of small markdown tables: a merged "Most Popular" banner, then the row
+    naming the plans, then a block per benefit group whose own first row the
+    parser takes as a header. Read block by block, the plan names are in one
+    table and the values are in the next seven, so a limit gets filed under
+    whatever the following block began with — which is how Tiq Travel's plans
+    became `1-000`, `1-000` and `3-000`, two of them the same.
+
+    Once a block names the plans, every later block with the same column count
+    is a continuation of it, header row included. Returns the stitched table,
+    or none where no block on the page names the plans.
+    """
+    header: list[str] | None = None
+    rows: list[list[str]] = []
+    for table in tables:
+        cells = [list(table.header), *(list(r) for r in table.rows)]
+        start = next((i for i, row in enumerate(cells) if _plan_row(row, declared)), None)
+        if start is not None:
+            if header is None:
+                header = cells[start]
+            rest = cells[start + 1 :]
+        elif header is not None and len(table.header) == len(header):
+            rest = cells
+        else:
+            continue
+        rows.extend(r for r in rest if len(r) == len(header or []))
+    if header is None:
+        return None
+    return Table(header=header, rows=rows)
+
+
+def pick_benefit_table(tables: list[Table], declared: list[str] | None = None) -> Table | None:
     """The best benefit table on a page, or none.
 
     Largest-wins was the bug. Among tables that actually state benefits, more
     rows is still the right tie-break — but a page with no benefit table should
     contribute no benefit rows rather than its blog grid.
     """
+    declared = declared or []
     candidates = [t for t in tables if looks_like_a_benefit_table(t)]
-    return max(candidates, key=lambda t: len(t.rows)) if candidates else None
+    if not candidates:
+        return None
+    # A table that names the plans beats a bigger one that does not. The pages
+    # split one benefit table into several — a banner, then the plan names,
+    # then a block per benefit group — and taking the largest picked a block
+    # whose own first row was money, which is how a limit came to be filed
+    # under the plan "1-000".
+    if not declared:
+        return max(candidates, key=lambda t: len(t.rows))
+    return max(candidates, key=lambda t: (_names_plans(t, declared), len(t.rows)))
+
+
+def _names_plans(table: Table, declared: list[str]) -> bool:
+    if _plan_row(table.header, declared):
+        return True
+    return any(len(r) == len(table.header) and _plan_row(r, declared) for r in table.rows)
 
 
 def benefit_rows(
@@ -713,21 +830,31 @@ def benefit_rows(
         snapshot = group.product.get(host)
         if snapshot is None or not snapshot.tables:
             continue
-        table = pick_benefit_table(snapshot.tables)
+        declared = list(group.entry.plan_tiers) if group.entry else []
+        table = stitch_plan_table(snapshot.tables, declared) if declared else None
+        if table is None:
+            table = pick_benefit_table(snapshot.tables, declared)
         if table is None:
             report.skip("no table on the page states benefit values")
             continue
-        columns = table.header[1:]
+        header, data_rows = plan_header(table, declared)
+        columns = header[1:]
         # Transposed: the rows are variants and the columns are the measures.
         # "Flat Types | Premium | Sum Insured" reads the other way round from
         # "Benefit | Basic | Premier", and reading it the wrong way made the
         # flat type the benefit and the premium column the plan tier.
         transposed = sum(1 for c in columns if MEASURE_HEADER_RE.search(c)) > len(columns) / 2
-        tiers = ["ALL"] if len(table.header) == 2 else [slugify(h) for h in columns]
+        tiers = ["ALL"] if len(header) == 2 else [_tier_slug(h, declared) for h in columns]
+        # A plan is named, never priced. Where the header still reads as values
+        # the table is not one whose columns are plans, and attaching its cells
+        # to a made-up tier states a limit for a plan that does not exist.
+        if declared and tiers != ["ALL"] and not transposed and any(_NOT_A_PLAN_RE.match(h) for h in columns):
+            report.skip("table header states values, not plan names")
+            continue
         if not group.tiers and tiers != ["ALL"] and not transposed:
             group.tiers = tiers
-        for cells in table.rows:
-            if len(cells) != len(table.header):
+        for cells in data_rows:
+            if len(cells) != len(header):
                 report.skip("ragged table row")
                 continue
             label = cells[0]
@@ -785,7 +912,7 @@ def write_benefit_table(dest_root: Path, slug: str, rows: list[BenefitRow]) -> P
     directory = dest_root / "raw" / "benefit-tables"
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / f"{slug}.csv"
-    with path.open("w", newline="") as fh:
+    with path.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.writer(fh)
         writer.writerow(
             ["product", "version", "tier", "benefit_code", "attribute", "value", "unit", "source_ref"]
@@ -870,7 +997,7 @@ def _page(fm: Frontmatter, body: list[str]) -> Page:
 def _write(config: CompileConfig, page: Page, report: CompileReport) -> None:
     path = config.dest_root / "wiki" / f"{page.id}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_page(page))
+    path.write_text(render_page(page), encoding="utf-8")
     if page.id not in report.pages:
         report.pages.append(page.id)
 
@@ -1125,11 +1252,11 @@ def augment_cover_from_documents(config: CompileConfig, report: CompileReport) -
         product = cover.parent.with_suffix(".md")
         if not product.exists():
             continue
-        names, ref = cover_sections_from_documents(cover.read_text())
+        names, ref = cover_sections_from_documents(cover.read_text(encoding="utf-8"))
         if len(names) < 3 or not ref:
             continue
         line = f"The policy wording sets out cover under: {'; '.join(names)} [src:{ref}]."
-        text = product.read_text()
+        text = product.read_text(encoding="utf-8")
         if line in text:
             continue
         if "\n## What it covers\n" in text:
@@ -1144,7 +1271,7 @@ def augment_cover_from_documents(config: CompileConfig, report: CompileReport) -
             if marker is None:
                 continue
             text = text.replace(marker, "\n## What it covers\n\n" + line + "\n" + marker, 1)
-        product.write_text(text)
+        product.write_text(text, encoding="utf-8")
         augmented += 1
     if augmented:
         report.skip(f"product pages given the wording's sections of cover: {augmented}")
@@ -1267,7 +1394,7 @@ def emit_product(
             )
         )
 
-    tiers = [t for t in group.tiers if any(r.tier == t for r in rows)]
+    tiers = declared_tiers(group, rows)
     links = Links(
         benefits=f"{page_id}/benefits" if rows else None,
         exclusions=f"{page_id}/exclusions",
@@ -1446,7 +1573,7 @@ def emit_benefits(
         underwriter=LEGAL_NAME,
         line_of_business=line_of_business(group.slug, group.title),
         aliases=[f"{group.slug} benefits", f"{group.slug} limits", f"what does {group.slug} cover"],
-        plan_tiers=[t for t in group.tiers if any(r.tier == t for r in rows)],
+        plan_tiers=declared_tiers(group, rows),
         version_in_force=version,
         effective_from=_snapshot_date(ordered[0]),
         links=Links(exclusions=f"{page_id}/exclusions"),
@@ -1586,7 +1713,7 @@ def emit_faqs(
     if not source.exists():
         return []
     try:
-        pairs = json.loads(source.read_text())
+        pairs = json.loads(source.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         report.skip("faq index is not readable JSON")
         return []
@@ -2119,7 +2246,7 @@ def write_manifest(config: CompileConfig, hosts: list[str]) -> None:
         "# Written by `compiler.cli wiki` from the crawl snapshots under raw/web/.\n"
         "# Re-run the compile rather than patching a page: the wiki is a build output.\n"
     )
-    path.write_text(header + yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True))
+    path.write_text(header + yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True), encoding="utf-8")
 
 
 def write_conflicts(config: CompileConfig, report: CompileReport) -> None:
@@ -2136,7 +2263,8 @@ def write_conflicts(config: CompileConfig, report: CompileReport) -> None:
             f"- contradicted: `{conflict.dropped}` from `{conflict.dropped_source}`\n\n"
             "The wiki carries the higher-authority value. This ticket is against the\n"
             "**website**, not the wiki: two published surfaces disagree about the same\n"
-            "benefit and a customer can read either (§D.2).\n"
+            "benefit and a customer can read either (§D.2).\n",
+            encoding="utf-8",
         )
 
 
