@@ -468,7 +468,7 @@ async def ingest(
     from crawler.crawl import USER_AGENT
 
     report = IngestReport(backend=backend.name)
-    manifest = json.loads(manifest_path.read_text())
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     documents = manifest.get("documents", [])
     stamp = today or dt.date.today().isoformat()
 
@@ -515,7 +515,10 @@ async def ingest(
                 # address on the existing document rather than writing a
                 # duplicate or silently overwriting it.
                 existing = by_content[digest]
-                existing.write_text(existing.read_text().replace("\n---\n", f'\nalso_at: "{url}"\n---\n', 1))
+                existing.write_text(
+                    existing.read_text(encoding="utf-8").replace("\n---\n", f'\nalso_at: "{url}"\n---\n', 1),
+                    encoding="utf-8",
+                )
                 report.duplicates += 1
                 continue
             parsed = backend.parse(response.content, url)
@@ -537,7 +540,8 @@ async def ingest(
                 report.superseded += 1
                 continue
             path.write_text(
-                render_document(url, tier, parsed, stamp, modified=modified, superseded_by=superseded_by)
+                render_document(url, tier, parsed, stamp, modified=modified, superseded_by=superseded_by),
+                encoding="utf-8",
             )
             by_content[digest] = path
             if superseded_by is None:

@@ -146,7 +146,7 @@ def test_exclusions_are_lifted_onto_their_own_linked_page(compiled: Path) -> Non
 def test_disagreeing_websites_are_filed_as_defects_not_averaged(compiled: Path) -> None:
     tickets = sorted((compiled / "conflicts").glob("*.md"))
     assert tickets, "the fixture plants a stale figure on one brand's site"
-    text = tickets[0].read_text()
+    text = tickets[0].read_text(encoding="utf-8")
     assert "kept (higher authority)" in text and "contradicted" in text
     # The wiki carries one value, not both.
     bundle = Bundle.load(compiled)
@@ -217,7 +217,8 @@ def test_the_richer_page_wins_a_key_collision(tmp_path: Path) -> None:
         path = tmp_path / f"{slug}.md"
         path.write_text(
             f'---\nsource_url: "https://www.etiqa.com.sg/{slug}"\nhost: "www.etiqa.com.sg"\n'
-            f'title: "{title}"\npage_type: "product"\n---\n\n# {title}\n\n{body}\n'
+            f'title: "{title}"\npage_type: "product"\n---\n\n# {title}\n\n{body}\n',
+            encoding="utf-8",
         )
         g = ProductGroup(slug=slug, title=title)
         g.product["www.etiqa.com.sg"] = parse_snapshot(path, tmp_path)

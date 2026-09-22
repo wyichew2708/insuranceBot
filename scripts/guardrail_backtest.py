@@ -101,7 +101,7 @@ class Confusion:
 
 
 def load_scenarios() -> list[tuple[str, dict[str, Any]]]:
-    data = yaml.safe_load(SCENARIOS.read_text())
+    data = yaml.safe_load(SCENARIOS.read_text(encoding="utf-8"))
     return [(group, case) for group, cases in data.items() for case in cases]
 
 
@@ -116,7 +116,7 @@ def published_questions() -> list[str]:
     seen: set[str] = set()
     for path in CRAWL.rglob("*.md"):
         try:
-            text = path.read_text(errors="ignore")
+            text = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
         for match in QUESTION_RE.finditer(text):
@@ -133,7 +133,7 @@ def suite_questions() -> list[str]:
     for path in SUITES:
         if not path.exists():
             continue
-        suite = json.loads(path.read_text())
+        suite = json.loads(path.read_text(encoding="utf-8"))
         out += [c["question"] for c in suite["cases"]]
         out += [c["question"] for c in suite["merge_cases"]]
     return out
@@ -309,7 +309,7 @@ def main() -> int:
     }
 
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "guardrail-backtest.json").write_text(json.dumps(report, indent=2) + "\n")
+    (args.out / "guardrail-backtest.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     print(
         f"labelled corpus      {len(cases)} turns "

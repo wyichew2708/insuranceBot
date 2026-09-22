@@ -46,7 +46,7 @@ def _pct(value: float) -> str:
 
 def write_json(report: Report, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(report.model_dump_json(indent=2))
+    path.write_text(report.model_dump_json(indent=2), encoding="utf-8")
 
 
 def markdown(report: Report) -> str:
@@ -545,6 +545,6 @@ def write_all(report: Report, out_dir: Path) -> dict[str, Path]:
         "html": out_dir / "auto-eval.html",
     }
     write_json(report, paths["json"])
-    paths["markdown"].write_text(markdown(report))
-    paths["html"].write_text(html(report))
+    paths["markdown"].write_text(markdown(report), encoding="utf-8")
+    paths["html"].write_text(html(report), encoding="utf-8")
     return paths

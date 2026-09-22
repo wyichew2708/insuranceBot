@@ -59,7 +59,7 @@ You must notify Us within thirty (30) days of the event.
 def _doc(text: str = WORDING, tmp: Path | None = None) -> Document:
     assert tmp is not None
     path = tmp / "tiq-home-policy-wording-v9-20-oct-2023.md"
-    path.write_text(text)
+    path.write_text(text, encoding="utf-8")
     return parse_document(path, f"raw/wordings/{path.name}", "wordings")
 
 
@@ -190,7 +190,7 @@ def test_load_skips_campaigns_and_reads_both_tiers(tmp_path: Path) -> None:
     ):
         directory = tmp_path / "raw" / tier
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / name).write_text(WORDING)
+        (directory / name).write_text(WORDING, encoding="utf-8")
     loaded = load_documents(tmp_path)
     assert sorted(d.tier for d in loaded) == ["product-summaries", "wordings"]
 
@@ -199,6 +199,6 @@ def test_wordings_outrank_product_summaries(tmp_path: Path) -> None:
     for tier in ("wordings", "product-summaries"):
         directory = tmp_path / "raw" / tier
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / "tiq-home-policy-wording.md").write_text(WORDING)
+        (directory / "tiq-home-policy-wording.md").write_text(WORDING, encoding="utf-8")
     matched, _ = match_documents(load_documents(tmp_path), ["home"])
     assert [d.tier for d in matched["home"]] == ["wordings", "product-summaries"]

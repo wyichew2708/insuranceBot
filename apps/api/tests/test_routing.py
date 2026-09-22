@@ -55,7 +55,9 @@ def test_crawl_provenance_is_actually_in_the_crawl() -> None:
     manifest = Path(__file__).resolve().parents[3] / "okf-real/raw/web/crawl-manifest.json"
     if not manifest.exists():  # pragma: no cover - the seed bundle has no crawl
         pytest.skip("no crawl manifest in this checkout")
-    crawled = {str(p.get("url", "")).rstrip("/") for p in json.loads(manifest.read_text())["pages"]}
+    crawled = {
+        str(p.get("url", "")).rstrip("/") for p in json.loads(manifest.read_text(encoding="utf-8"))["pages"]
+    }
     for dest in DESTINATIONS.values():
         if dest.provenance.startswith("crawl "):
             assert dest.url.rstrip("/") in crawled, f"{dest.url} claims the crawl but is not in it"

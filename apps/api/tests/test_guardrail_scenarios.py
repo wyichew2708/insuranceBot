@@ -39,7 +39,7 @@ from guardrail_backtest import flip_points, load_scenarios, score_labelled  # no
 
 
 def _load() -> list[tuple[str, dict[str, Any]]]:
-    data = yaml.safe_load(SCENARIOS.read_text())
+    data = yaml.safe_load(SCENARIOS.read_text(encoding="utf-8"))
     return [(group, case) for group, cases in data.items() for case in cases]
 
 
@@ -119,7 +119,7 @@ def test_the_generated_eval_suites_pass_the_rules_untouched(suite_path: Path) ->
     shows without anyone having had to imagine the phrasing."""
     if not suite_path.exists():
         pytest.skip(f"{suite_path} not generated; run `make autoeval`")
-    suite = json.loads(suite_path.read_text())
+    suite = json.loads(suite_path.read_text(encoding="utf-8"))
     questions = [c["question"] for c in suite["cases"]] + [c["question"] for c in suite["merge_cases"]]
     raised = [(q, screen_input_rules(q).summary()) for q in questions if screen_input_rules(q).findings]
     assert not raised, f"{len(raised)} of {len(questions)} legitimate questions raised: {raised[:5]}"

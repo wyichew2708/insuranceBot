@@ -154,7 +154,7 @@ def test_authored_content_still_needs_a_source(client: TestClient, bundle_root: 
     # author actually supplied — provenance, not a placeholder.
     source = page["frontmatter"]["authority"][0]
     assert source == "raw/custom/concept-waiting-period.md"
-    written = (bundle_root / source).read_text()
+    written = (bundle_root / source).read_text(encoding="utf-8")
     assert "clause 3.1" in written and "author" in written
 
 

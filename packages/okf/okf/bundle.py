@@ -40,7 +40,7 @@ class Manifest:
     def load(cls, path: Path) -> Manifest:
         if not path.exists():
             return cls()
-        data = yaml.safe_load(path.read_text()) or {}
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         return cls(
             name=str(data.get("name", "etiqa-sg-knowledge")),
             okf_version=str(data.get("okf_version", "0.1")),
@@ -80,7 +80,7 @@ class Bundle:
         wiki = root / "wiki"
         for path in sorted(wiki.rglob("*.md")):
             try:
-                page = parse_page(path.read_text(), source_path=str(path.relative_to(root)))
+                page = parse_page(path.read_text(encoding="utf-8"), source_path=str(path.relative_to(root)))
             except Exception as exc:
                 errors.append(f"{path.relative_to(root)}: {exc}")
                 continue
@@ -274,7 +274,7 @@ def _contested(conflicts_dir: Path) -> frozenset[tuple[str, str, str]]:
         return frozenset()
     for path in sorted(conflicts_dir.glob("*.md")):
         try:
-            head = path.read_text(errors="ignore")[:400]
+            head = path.read_text(encoding="utf-8", errors="ignore")[:400]
         except OSError:
             continue
         m = _CONFLICT_TITLE_RE.search(head)

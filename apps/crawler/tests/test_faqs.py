@@ -85,6 +85,9 @@ def test_written_files_carry_the_question_as_a_heading(tmp_path: Path) -> None:
     ]
     stats = write(pairs, tmp_path)
     assert stats == {"products": 1, "pairs": 1}
-    body = (tmp_path / "tiq-travel.md").read_text()
+    body = (tmp_path / "tiq-travel.md").read_text(encoding="utf-8")
     assert "## What is covered?" in body and "Medical and baggage." in body
-    assert json.loads((tmp_path / "faq-pairs.json").read_text())[0]["question"] == "What is covered?"
+    assert (
+        json.loads((tmp_path / "faq-pairs.json").read_text(encoding="utf-8"))[0]["question"]
+        == "What is covered?"
+    )

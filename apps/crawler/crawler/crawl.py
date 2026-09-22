@@ -355,7 +355,7 @@ def write_snapshot(
     lines.append(page.text)
     for index, table in enumerate(page.tables, start=1):
         lines += ["", f"## Table {index}", "", table.as_markdown()]
-    path.write_text("\n".join(lines).rstrip() + "\n")
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
     return path
 
 

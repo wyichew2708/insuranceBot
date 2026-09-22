@@ -65,7 +65,7 @@ def _catalogue(root: Path) -> list[dict[str, Any]]:
     path = root / "catalogue.yaml"
     if not path.is_file():
         return []
-    data = yaml.safe_load(path.read_text()) or {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return list(data.get("products") or [])
 
 
@@ -74,7 +74,7 @@ def _manifest(root: Path) -> dict[str, dict[str, Any]]:
     path = root / "raw" / "web" / "crawl-manifest.json"
     if not path.is_file():
         return {}
-    data = json.loads(path.read_text())
+    data = json.loads(path.read_text(encoding="utf-8"))
     out: dict[str, dict[str, Any]] = {}
     for row in data.get("pages") or []:
         rel = str(row.get("path") or "")

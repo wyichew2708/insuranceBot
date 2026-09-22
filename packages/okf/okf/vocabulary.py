@@ -46,7 +46,7 @@ def load_vocabulary(bundle_root: Path) -> Vocabulary:
     if not path.exists():
         return {}
     try:
-        raw = yaml.safe_load(path.read_text()) or {}
+        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     except yaml.YAMLError:
         return {}
     benefits = raw.get("benefits") if isinstance(raw, dict) else None
@@ -65,7 +65,7 @@ def load_abbreviations(bundle_root: Path) -> Abbreviations:
     if not path.exists():
         return {}
     try:
-        raw = yaml.safe_load(path.read_text()) or {}
+        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     except yaml.YAMLError:
         return {}
     entries = raw.get("abbreviations") if isinstance(raw, dict) else None

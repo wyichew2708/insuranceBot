@@ -32,6 +32,8 @@ from okf import Bundle, Page, PageType, Status
 #: Products Liability at the top of "what life products".
 _NOISE = frozenset(
     [
+        "introduce",
+        "introduction",
         "what",
         "which",
         "show",

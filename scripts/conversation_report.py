@@ -74,7 +74,7 @@ def main() -> int:
     results = report["results"]
 
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "conversation.json").write_text(json.dumps(report, indent=2, default=str))
+    (args.out / "conversation.json").write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
 
     lines = [
         f"# Conversation golden dataset — {report['passed']}/{report['total']} ({report['pass_rate']:.1%})",
@@ -101,7 +101,7 @@ def main() -> int:
         "and requires at least three suggestions.",
     ]
     report["interaction_metrics"] = metrics
-    (args.out / "conversation.json").write_text(json.dumps(report, indent=2, default=str))
+    (args.out / "conversation.json").write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
     # Conversations are scored twice over, and the two numbers answer different
     # questions. Turn accuracy is how often the bot is right. Conversation
     # accuracy is how often a customer got all the way through a journey
@@ -178,7 +178,7 @@ def main() -> int:
     for mode, count in modes.most_common(20):
         lines.append(f"| {mode} | {count} |")
 
-    (args.out / "conversation.md").write_text("\n".join(lines) + "\n")
+    (args.out / "conversation.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("\n".join(lines[:4]))
     if convos:

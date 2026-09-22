@@ -831,7 +831,7 @@ def rag_search(
             # many words it shares with the question.
             if admit is not None and not admit(rel):
                 continue
-            text = path.read_text(errors="ignore")
+            text = path.read_text(encoding="utf-8", errors="ignore")
             if not _admissible(rel, question, version, page_type=page_type_of_text(text)):
                 continue
             for section, body in raw_sections(text):

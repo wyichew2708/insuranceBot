@@ -306,7 +306,7 @@ def load_suite(path: Path) -> tuple[str, list[dict[str, Any]]]:
     from `okf-real` and every case in them fails against the seed bundle,
     which is not a finding about the bot.
     """
-    data = yaml.safe_load(path.read_text()) or []
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or []
     if isinstance(data, dict):
         return str(data.get("bundle", "")), list(data.get("cases") or [])
     return "", list(data)

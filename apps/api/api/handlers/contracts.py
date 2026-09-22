@@ -49,6 +49,7 @@ class Turn:
     understanding: Understanding = field(default_factory=Understanding)
     seeking_advice: bool = False
     carried_from: str | None = None
+    comparison_base: str | None = None
     evidence: frozenset[Evidence] = frozenset()
     soft_gates: frozenset[str] = frozenset()
 

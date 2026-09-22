@@ -78,7 +78,7 @@ def load_authority_order(bundle_root: Path) -> list[str]:
     manifest = bundle_root / "okf.yaml"
     if not manifest.exists():
         return list(DEFAULT_AUTHORITY)
-    data = yaml.safe_load(manifest.read_text()) or {}
+    data = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
     order = data.get("authority_order")
     return [str(item) for item in order] if order else list(DEFAULT_AUTHORITY)
 
@@ -149,7 +149,7 @@ def write_conflicts(bundle_root: Path, conflicts: list[Conflict], today: dt.date
     written: list[Path] = []
     for conflict in conflicts:
         path = out_dir / f"{conflict.slug}.md"
-        path.write_text(conflict.as_markdown(today))
+        path.write_text(conflict.as_markdown(today), encoding="utf-8")
         written.append(path)
     return written
 

@@ -113,7 +113,9 @@ async def test_full_crawl_writes_dated_snapshots(tmp_path: Path) -> None:
         assert page.host in HOSTS
         assert not is_excluded(page.url)
 
-    snapshot = (config.out_dir / "web" / ETIQA / "2026-08-19" / "personal-travel.md").read_text()
+    snapshot = (config.out_dir / "web" / ETIQA / "2026-08-19" / "personal-travel.md").read_text(
+        encoding="utf-8"
+    )
     assert snapshot.startswith("---")
     assert '"product"' in snapshot and "content_hash" in snapshot
     assert "| Benefit |" in snapshot

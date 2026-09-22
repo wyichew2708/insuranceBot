@@ -39,7 +39,7 @@ def _key(result: dict[str, Any]) -> tuple[str, ...]:
 
 
 def _load(path: str) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
-    with open(path) as handle:
+    with open(path, encoding="utf-8") as handle:
         report = json.load(handle)
     return {r["id"]: r for r in report["results"]}, report
 

@@ -62,7 +62,7 @@ _MARKUP_RE = re.compile(r"\{\{[^}]*\}\}|<!--.*?-->|\[src:[^\]]*\]|[#|*_>`-]")
 
 
 def _raw_words(path: Path) -> int:
-    text = path.read_text(errors="replace")
+    text = path.read_text(encoding="utf-8", errors="replace")
     text = _FRONTMATTER_RE.sub("", text, count=1)
     return len(_MARKUP_RE.sub(" ", text).split())
 
@@ -130,7 +130,7 @@ def write_report(bundle_root: Path, sources: dict[str, SourceCoverage]) -> Path:
         "sources": {ref: s.as_dict() for ref, s in sorted(sources.items())},
     }
     out = bundle_root / "coverage.json"
-    out.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n")
+    out.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     return out
 
 

@@ -68,7 +68,9 @@ def test_missing_tables_are_named_and_linked(bundle: Bundle, settings: Settings)
 def test_comparison_does_not_choose_tiers_or_recommend(bundle: Bundle, settings: Settings) -> None:
     session = Session(session_id="choices")
     ambiguous, _ = answer_question(bundle, "Compare Travel Insurance with Home Insurance", session, settings)
-    assert ambiguous.answer.clarifying
+    assert ambiguous.delivered and not ambiguous.answer.clarifying
+    assert ambiguous.answer.table is None
+    assert "product-level comparison" in ambiguous.answer.answer
     two_names, _ = answer_question(bundle, "Home Insurance and Private Car Insurance", session, settings)
     assert two_names.answer.clarifying and two_names.answer.table is None
     advice, trace = answer_question(

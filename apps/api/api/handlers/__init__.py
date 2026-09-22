@@ -11,7 +11,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from types import MappingProxyType
 
-from harness import AnswerEnvelope, GroundedAnswer, Trace
+from harness import AnswerEnvelope, BudgetExhausted, GroundedAnswer, Trace
 from harness.contracts import GateResult, Verdict
 
 from api.handlers import (
@@ -29,6 +29,7 @@ from api.handlers import (
     off_topic,
     price,
     smalltalk,
+    travel_situation,
 )
 from api.handlers.contracts import Evidence, EvidenceViolation, Turn
 from api.router import Layer3
@@ -50,6 +51,7 @@ CATALOGUE = frozenset({Evidence.catalogue, Evidence.registry})
 KNOWLEDGE = frozenset(Evidence)
 SOFT_GATES = frozenset({"numeric-binding", "answerability", "guardrail-output"})
 _HANDLERS = {
+    "travel_situation": Handler("travel_situation", CATALOGUE | {Evidence.wiki}, travel_situation.run),
     "language": Handler("language", frozenset({Evidence.registry}), language.run),
     "smalltalk": Handler("smalltalk", CATALOGUE, smalltalk.run),
     "domain": Handler("off_topic", CATALOGUE, domain.run),
@@ -105,6 +107,16 @@ def dispatch(name: str, turn: Turn) -> Result | None:
         result = handler.run(turn)
         if result is not None:
             _validate(turn, result)
+    except BudgetExhausted as exc:
+        turn.trace.budget = turn.budget.snapshot()
+        turn.trace.delivered = False
+        answer = GroundedAnswer(
+            answer="I cannot complete this within this turn. Please contact our team for help.",
+            handoff=True,
+            unresolved=[str(exc)],
+        )
+        turn.trace.answer = answer.model_dump(mode="json")
+        result = (AnswerEnvelope(answer=answer, delivered=False, trace_id=turn.trace.trace_id), turn.trace)
     except EvidenceViolation as exc:
         turn.trace.note(f"handler contract refused: {exc}")
         turn.trace.delivered = False

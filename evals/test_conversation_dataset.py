@@ -24,13 +24,13 @@ SUITE = ROOT / "evals" / "suites" / "conversation.yaml"
 
 @pytest.fixture(scope="module")
 def taxonomy() -> dict[str, Any]:
-    loaded: dict[str, Any] = yaml.safe_load(TAXONOMY.read_text())
+    loaded: dict[str, Any] = yaml.safe_load(TAXONOMY.read_text(encoding="utf-8"))
     return loaded
 
 
 @pytest.fixture(scope="module")
 def suite() -> dict[str, Any]:
-    loaded: dict[str, Any] = yaml.safe_load(SUITE.read_text())
+    loaded: dict[str, Any] = yaml.safe_load(SUITE.read_text(encoding="utf-8"))
     return loaded
 
 

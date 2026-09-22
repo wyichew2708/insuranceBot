@@ -14,11 +14,14 @@ from okf import Bundle
 
 def test_conflict_tickets_parse_to_coordinates(tmp_path: Path) -> None:
     (tmp_path / "a.md").write_text(
-        "# Website defect — maid-insurance ALL:waiver_of_co_insurance.limit\n\n- opened: x\n"
+        "# Website defect — maid-insurance ALL:waiver_of_co_insurance.limit\n\n- opened: x\n",
+        encoding="utf-8",
     )
-    (tmp_path / "b.md").write_text("# Website defect — travel-insurance :child.limit\n")
-    (tmp_path / "c.md").write_text("# Website defect — pet-insurance pawfect-get-quote:n_a.limit\n")
-    (tmp_path / "junk.md").write_text("not a ticket\n")
+    (tmp_path / "b.md").write_text("# Website defect — travel-insurance :child.limit\n", encoding="utf-8")
+    (tmp_path / "c.md").write_text(
+        "# Website defect — pet-insurance pawfect-get-quote:n_a.limit\n", encoding="utf-8"
+    )
+    (tmp_path / "junk.md").write_text("not a ticket\n", encoding="utf-8")
     assert _contested(tmp_path) == {
         ("maid-insurance", "waiver_of_co_insurance", "limit"),
         ("travel-insurance", "child", "limit"),

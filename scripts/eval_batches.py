@@ -85,7 +85,7 @@ def main() -> int:
     if not args.suite.is_file():
         print(f"no suite at {args.suite} — run `evalgen generate` first", file=sys.stderr)
         return 1
-    suite = Suite.model_validate_json(args.suite.read_text())
+    suite = Suite.model_validate_json(args.suite.read_text(encoding="utf-8"))
     cases = suite.cases[: args.limit] if args.limit else suite.cases
     batches = [cases[i : i + args.batch_size] for i in range(0, len(cases), args.batch_size)]
 
@@ -145,7 +145,8 @@ def main() -> int:
                         "ran_at": dt.datetime.now().isoformat(timespec="seconds"),
                         "results": [r.model_dump(mode="json") for r in results],
                     }
-                )
+                ),
+                encoding="utf-8",
             )
             done_cases += len(batch)
             passed = sum(1 for r in results if r.passed)
@@ -184,7 +185,7 @@ def main() -> int:
     # number after a crash, on another machine, or a week later.
     results = []
     for path in sorted(args.out.glob("batch-*.json")):
-        payload = json.loads(path.read_text())
+        payload = json.loads(path.read_text(encoding="utf-8"))
         results.extend(CaseResult.model_validate(r) for r in payload["results"])
     if not results:
         print("no batches on disk", file=sys.stderr)
@@ -208,7 +209,7 @@ def main() -> int:
         wall_clock_s=0.0,
     )
     summary = args.out / "summary.json"
-    summary.write_text(report.model_dump_json(indent=1))
+    summary.write_text(report.model_dump_json(indent=1), encoding="utf-8")
 
     r = report
     print()

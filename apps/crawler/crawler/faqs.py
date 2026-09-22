@@ -166,7 +166,9 @@ def write(pairs: list[FaqPair], out_dir: Path) -> dict[str, int]:
         ]
         for pair in group:
             lines += [f"## {pair.question}", "", pair.answer, ""]
-        (out_dir / f"{_slug(product)}.md").write_text("\n".join(lines))
+        (out_dir / f"{_slug(product)}.md").write_text("\n".join(lines), encoding="utf-8")
 
-    (out_dir / "faq-pairs.json").write_text(json.dumps([p.__dict__ for p in pairs], indent=1) + "\n")
+    (out_dir / "faq-pairs.json").write_text(
+        json.dumps([p.__dict__ for p in pairs], indent=1) + "\n", encoding="utf-8"
+    )
     return {"products": len(by_product), "pairs": len(pairs)}

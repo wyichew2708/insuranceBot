@@ -65,7 +65,7 @@ def test_initials_are_expanded_beside_themselves(tmp_path: Path) -> None:
     """Both forms are kept: the wordings say "covered CI" and the product
     pages say "Critical Illness", and an answer has to reach both."""
     (tmp_path / "vocabulary.yaml").write_text(
-        "abbreviations:\n  ci: critical illness\n  pa: personal accident\n"
+        "abbreviations:\n  ci: critical illness\n  pa: personal accident\n", encoding="utf-8"
     )
     abbr = load_abbreviations(tmp_path)
     out = expand_abbreviations("looking for ci product", abbr)
@@ -74,7 +74,7 @@ def test_initials_are_expanded_beside_themselves(tmp_path: Path) -> None:
 
 def test_an_abbreviation_inside_a_word_is_not_one(tmp_path: Path) -> None:
     """The `ci` in "decision" and "special" is not critical illness."""
-    (tmp_path / "vocabulary.yaml").write_text("abbreviations:\n  ci: critical illness\n")
+    (tmp_path / "vocabulary.yaml").write_text("abbreviations:\n  ci: critical illness\n", encoding="utf-8")
     abbr = load_abbreviations(tmp_path)
     for text in ("a special decision", "specific circumstances"):
         assert expand_abbreviations(text, abbr) == text

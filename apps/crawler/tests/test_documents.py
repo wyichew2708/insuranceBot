@@ -120,7 +120,10 @@ class _StubBackend:
 
 def _manifest(tmp_path: Path, urls: list[str]) -> Path:
     path = tmp_path / "crawl-manifest.json"
-    path.write_text(json.dumps({"documents": [{"url": u, "host": "h", "kind": "wording"} for u in urls]}))
+    path.write_text(
+        json.dumps({"documents": [{"url": u, "host": "h", "kind": "wording"} for u in urls]}),
+        encoding="utf-8",
+    )
     return path
 
 
@@ -332,7 +335,7 @@ async def test_the_same_contract_on_both_hosts_is_one_document(tmp_path: Path) -
     written = list((tmp_path / "raw/wordings").glob("*.md"))
     assert len(written) == 1
     # Both addresses are on the document.
-    body = written[0].read_text()
+    body = written[0].read_text(encoding="utf-8")
     assert "www.tiq.com.sg" in body and "www.etiqa.com.sg" in body
 
 
@@ -386,7 +389,7 @@ async def test_only_the_current_revision_is_served(tmp_path: Path) -> None:
     assert report.superseded == 1
     written = list((tmp_path / "raw/wordings").glob("*.md"))
     assert len(written) == 1
-    body = written[0].read_text()
+    body = written[0].read_text(encoding="utf-8")
     assert new in body and old not in body
     # The server's own timestamp is recorded.
     assert 'last_modified: "Tue, 18 Feb 2025 06:06:04 GMT"' in body
@@ -429,7 +432,8 @@ async def test_the_product_page_link_beats_a_newer_upload(tmp_path: Path) -> Non
                     },
                 ]
             }
-        )
+        ),
+        encoding="utf-8",
     )
     client = httpx.AsyncClient(
         transport=httpx.MockTransport(
@@ -441,7 +445,7 @@ async def test_the_product_page_link_beats_a_newer_upload(tmp_path: Path) -> Non
 
     written = list((tmp_path / "raw/wordings").glob("*.md"))
     assert len(written) == 1, "only the current wording is served"
-    assert linked in written[0].read_text(), "the site's own link decides"
+    assert linked in written[0].read_text(encoding="utf-8"), "the site's own link decides"
     assert report.superseded == 1
 
 
@@ -459,7 +463,7 @@ async def test_without_a_site_link_the_newest_upload_wins(tmp_path: Path) -> Non
     report = await ingest(manifest, tmp_path / "raw", _StubBackend(ParsedDoc("body")), rps=0, client=client)
     await client.aclose()
     written = list((tmp_path / "raw/wordings").glob("*.md"))
-    assert len(written) == 1 and new in written[0].read_text()
+    assert len(written) == 1 and new in written[0].read_text(encoding="utf-8")
     assert report.superseded == 1
 
 

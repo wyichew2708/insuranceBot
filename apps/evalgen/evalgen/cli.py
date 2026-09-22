@@ -70,7 +70,7 @@ def cmd_generate(args: argparse.Namespace) -> int:
     bundle = _bundle(args.bundle)
     suite = generate(bundle, args.bundle, args.today)
     args.suite.parent.mkdir(parents=True, exist_ok=True)
-    args.suite.write_text(suite.model_dump_json(indent=2))
+    args.suite.write_text(suite.model_dump_json(indent=2), encoding="utf-8")
     print(
         f"generated {suite.total} cases from {len(bundle.pages)} pages "
         f"and {len(bundle.tables)} table rows → {args.suite}"
@@ -91,19 +91,19 @@ def cmd_generate(args: argparse.Namespace) -> int:
 def cmd_run(args: argparse.Namespace) -> int:
     bundle = _bundle(args.bundle)
     suite = (
-        Suite.model_validate_json(args.suite.read_text())
+        Suite.model_validate_json(args.suite.read_text(encoding="utf-8"))
         if args.suite.exists()
         else generate(bundle, args.bundle, args.today)
     )
     report = run_suite(bundle, Settings(bundle_path=args.bundle), suite)
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "auto-eval.json").write_text(report.model_dump_json(indent=2))
+    (args.out / "auto-eval.json").write_text(report.model_dump_json(indent=2), encoding="utf-8")
     _print_summary(report)
     return 0 if report.accuracy >= args.gate else 1
 
 
 def cmd_report(args: argparse.Namespace) -> int:
-    report = Report.model_validate_json((args.out / "auto-eval.json").read_text())
+    report = Report.model_validate_json((args.out / "auto-eval.json").read_text(encoding="utf-8"))
     paths = write_all(report, args.out)
     for name, path in paths.items():
         print(f"{name:9} {path}")
@@ -114,7 +114,7 @@ def cmd_all(args: argparse.Namespace) -> int:
     bundle = _bundle(args.bundle)
     suite = generate(bundle, args.bundle, args.today)
     args.suite.parent.mkdir(parents=True, exist_ok=True)
-    args.suite.write_text(suite.model_dump_json(indent=2))
+    args.suite.write_text(suite.model_dump_json(indent=2), encoding="utf-8")
     print(f"generated {suite.total} cases from {len(bundle.pages)} pages and {len(bundle.tables)} table rows")
     short = _print_products(suite, args.min_per_product)
 

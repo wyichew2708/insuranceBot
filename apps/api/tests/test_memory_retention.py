@@ -21,7 +21,7 @@ def test_retention_survives_restart_and_preserves_recall(tmp_path: Path) -> None
     memory = SessionMemory(tmp_path, max_turns=8)
     for i in range(30):
         remember(memory, f"question {i}")
-    persisted = json.loads((tmp_path / "sessions/s1.json").read_text())
+    persisted = json.loads((tmp_path / "sessions/s1.json").read_text(encoding="utf-8"))
     assert [t["question"] for t in persisted["turns"]] == [f"question {i}" for i in range(22, 30)]
     recalled = SessionMemory(tmp_path, max_turns=8).recall("s1")
     assert recalled.questions == [f"question {i}" for i in range(30 - RECALL_TURNS, 30)]
@@ -34,7 +34,7 @@ def test_existing_long_session_is_trimmed_on_load(tmp_path: Path) -> None:
     for i in range(40):
         remember(old, f"question {i}")
     assert len(SessionMemory(tmp_path).record("s1")["turns"]) == 20
-    assert len(json.loads((tmp_path / "sessions/s1.json").read_text())["turns"]) == 20
+    assert len(json.loads((tmp_path / "sessions/s1.json").read_text(encoding="utf-8"))["turns"]) == 20
 
 
 def test_expiry_removes_cached_and_unvisited_files(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -69,7 +69,7 @@ def test_new_turn_refreshes_expiry(tmp_path: Path, monkeypatch: pytest.MonkeyPat
 def test_malformed_file_is_empty_memory(tmp_path: Path, contents: str) -> None:
     sessions = tmp_path / "sessions"
     sessions.mkdir()
-    (sessions / "s1.json").write_text(contents)
+    (sessions / "s1.json").write_text(contents, encoding="utf-8")
     assert SessionMemory(tmp_path).recall("s1").questions == []
 
 

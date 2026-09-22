@@ -78,8 +78,8 @@ def compiled(tmp_path_factory: pytest.TempPathFactory) -> Path:
     asyncio.run(run())
     wordings = root / "raw" / "wordings"
     wordings.mkdir(parents=True, exist_ok=True)
-    (wordings / "travel-policy-wording-v1-26.md").write_text(TRAVEL_WORDING)
-    (wordings / "fidelity-guarantee-policy-wording-2023-02.md").write_text(ORPHAN_WORDING)
+    (wordings / "travel-policy-wording-v1-26.md").write_text(TRAVEL_WORDING, encoding="utf-8")
+    (wordings / "fidelity-guarantee-policy-wording-2023-02.md").write_text(ORPHAN_WORDING, encoding="utf-8")
     compile_bundle(CompileConfig(source_root=root, dest_root=root, today=TODAY, sign_off=["compliance:test"]))
     return root
 

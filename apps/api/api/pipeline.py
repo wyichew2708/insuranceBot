@@ -10,6 +10,7 @@ the pages it considered and rejected.
 from __future__ import annotations
 
 import dataclasses
+import re
 
 from harness import (
     AnswerEnvelope,
@@ -18,7 +19,7 @@ from harness import (
     Session,
     Trace,
 )
-from harness.ask import Ask, read_ask
+from harness.ask import Ask, read_ask, read_section
 from harness.contracts import Link
 from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import OUT_OF_CORPUS, Intent, classify, smalltalk_kind
@@ -46,6 +47,7 @@ from api.language import detect_language
 from api.llm import LLMProvider, provider_for
 from api.memory import ConversationState, SessionMemory
 from api.navigation import greeting_map
+from api.present import response_preview
 from api.reference import resolve
 from api.router import Layer1
 from api.router import route as route_turn
@@ -207,6 +209,8 @@ def answer_question(
     trace.language = envelope.language
     if trace.handler == "refusal" and trace.language != "en":
         envelope.answer.answer = LOCALISED_REFUSAL[trace.language]
+    if envelope.delivered and not (ask and ask.full) and envelope.answer.table is None:
+        envelope.preview = response_preview(envelope.answer.answer)
     trace.answer = envelope.answer.model_dump(mode="json")
     if envelope.delivered and not envelope.answer.smalltalk:
         memory.refine_later(session.session_id, question, envelope.answer.answer, provider)
@@ -338,10 +342,16 @@ def _answer_turn(
                     product_page=page.id,
                 )
             )
+    if ask.product_page and ask.section is None:
+        section = read_section(bundle, ask.product_page, question)
+        if section is not None:
+            ask = dataclasses.replace(ask, section=section, scope="specific")
     recent = (history or [])[-3:]
     if REFUND_FOLLOWUP_RE.search(question) and any(CANCEL_CONTEXT_RE.search(t) for t in recent):
         ask = dataclasses.replace(ask, intent=Intent.payment)
         trace.note("read as a refund question: the conversation is about a cancellation")
+    if "introduce" in question.lower() and current_ask.resolved:
+        ask = dataclasses.replace(ask, intent=Intent.coverage, scope="overview")
     if comparison_requested(bundle, question, ask):
         ask = dataclasses.replace(ask, intent=Intent.compare)
     with trace.stage("ask") as detail:
@@ -392,7 +402,7 @@ def _answer_turn(
     # asked of it, and letting one through costs a page budget to arrive at a
     # paragraph of policy wording about something else entirely. `gate_domain`
     # blocks the reply, so nothing here is counted as an answer.
-    if off_domain(bundle, question, ask):
+    if off_domain(bundle, question, ask) and ask.intent not in {Intent.compare, Intent.browse}:
         return dispatch_required("domain", turn)
 
     # A recommendation, which no page can give and a licensed adviser must.
@@ -403,7 +413,23 @@ def _answer_turn(
         return dispatch_required("advice", turn)
 
     if ask.intent is Intent.compare:
+        if re.search(r"\b(?:it|this|that)\b", question, re.I):
+            previous = state.product_page if state is not None else None
+            if previous is None:
+                previous = next(
+                    (
+                        prior.product_page
+                        for earlier in reversed(history or [])
+                        if (prior := read_ask(bundle, earlier)).resolved
+                    ),
+                    None,
+                )
+            turn.comparison_base = previous
         return dispatch_required("knowledge.compare", turn)
+
+    situation_answer = dispatch("travel_situation", turn)
+    if situation_answer is not None:
+        return situation_answer
 
     # A shopper, not a questioner. "what life products" and "looking for a CI
     # plan" ask what exists; retrieval finds the best single page and answers
@@ -418,7 +444,7 @@ def _answer_turn(
         if handled is not None:
             return handled
 
-    if classify(question) is Intent.browse:
+    if ask.intent is Intent.browse:
         handled = dispatch("browse", turn)
         if handled is not None:
             return handled

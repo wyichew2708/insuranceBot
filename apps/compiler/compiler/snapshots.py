@@ -96,7 +96,7 @@ class Snapshot:
 
 
 def parse_snapshot(path: Path, bundle_root: Path) -> Snapshot:
-    raw = path.read_text()
+    raw = path.read_text(encoding="utf-8")
     if not raw.startswith("---"):
         raise ValueError(f"{path} has no frontmatter")
     _, block, body = raw.split("---", 2)

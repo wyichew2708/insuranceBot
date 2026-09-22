@@ -89,7 +89,7 @@ def _catalogue(bundle_root: Path) -> dict[str, dict[str, Any]]:
         for page in bundle.pages.values()
         if page.frontmatter.type is PageType.product and page.id.count("/") == 2
     }
-    data = yaml.safe_load((bundle_root / "catalogue.yaml").read_text())
+    data = yaml.safe_load((bundle_root / "catalogue.yaml").read_text(encoding="utf-8"))
     out: dict[str, dict[str, Any]] = {}
     for entry in data.get("products", []):
         slug = str(entry["slug"])
@@ -201,7 +201,7 @@ def _conversations(
 
 
 def build(bundle_root: Path) -> list[dict[str, Any]]:
-    spec = yaml.safe_load(TAXONOMY.read_text())
+    spec = yaml.safe_load(TAXONOMY.read_text(encoding="utf-8"))
     contracts = spec["contracts"]
     lines = spec["lines"]
     hygiene = {"must_not_contain": list(spec.get("hygiene", []))}
@@ -295,7 +295,7 @@ def main() -> int:
         allow_unicode=True,
         width=100,
     )
-    args.out.write_text(header + body)
+    args.out.write_text(header + body, encoding="utf-8")
     print(f"  wrote {len(cases)} cases → {args.out.relative_to(ROOT)}")
     return 0
 

@@ -39,7 +39,7 @@ from enum import Enum
 from harness.ask import Ask
 from harness.gates import ADVICE_SEEKING_RE
 from harness.intent import OUT_OF_CORPUS, Intent, smalltalk_kind
-from okf.names import index_for
+from okf.names import GENERIC_WORDS, index_for
 
 from api.guardrails import medical_emergency
 from okf import Bundle, Scope
@@ -49,7 +49,7 @@ from okf import Bundle, Scope
 #: category the customer typed, even where the catalogue also lists it as
 #: one product's alias. "Tiq Travel Insurance" keeps its brand word and is a
 #: name.
-_GENERIC = frozenset({"insurance", "cover", "coverage", "plan", "policy", "protection", "the", "a", "an"})
+_GENERIC = GENERIC_WORDS
 
 
 class Layer1(str, Enum):

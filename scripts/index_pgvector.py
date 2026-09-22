@@ -120,7 +120,7 @@ def _raw_rows(root: Path, name: str) -> dict[str, dict[str, Any]]:
         rel = f"raw/{path.relative_to(raw)}"
         if rel.startswith(SKIP_RAW):
             continue
-        text = path.read_text(errors="ignore")
+        text = path.read_text(encoding="utf-8", errors="ignore")
         doc_type = page_type_of_text(text)
         for heading, body in raw_sections(text):
             if len(body.strip()) < MIN_SECTION_CHARS:

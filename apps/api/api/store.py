@@ -171,7 +171,7 @@ class ContentStore:
         if extra is not None:
             extra["last_edited_by"] = actor
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(render_page(page))
+        path.write_text(render_page(page), encoding="utf-8")
         return SaveResult(
             page_id=page.id,
             path=str(path.relative_to(self.root)),
@@ -208,7 +208,8 @@ class ContentStore:
             f"Authored in the content portal by {actor} on {dt.date.today().isoformat()}.\n"
             f"This file is the source of record for `{page_id}`; the page cites it.\n\n"
             "## Source material\n\n"
-            f"{source_text.strip() or '(none supplied)'}\n"
+            f"{source_text.strip() or '(none supplied)'}\n",
+            encoding="utf-8",
         )
         frontmatter: dict[str, Any] = {
             "id": page_id,
@@ -291,7 +292,7 @@ class ContentStore:
         source = staged_root / "wiki" / f"{page_id}.md"
         if not source.exists():
             raise StoreError(f"{page_id!r} is not in this scan")
-        staged = parse_page(source.read_text())
+        staged = parse_page(source.read_text(encoding="utf-8"))
         data = staged.frontmatter.model_dump(mode="json", exclude_none=True)
         data["status"] = Status.draft.value
         data["reviewed_by"] = []

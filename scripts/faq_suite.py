@@ -46,7 +46,7 @@ _NOT_A_QUESTION_RE = re.compile(r"^(published faqs|frequently asked questions|fa
 
 
 def _questions(path: Path) -> list[str]:
-    text = path.read_text(errors="replace")
+    text = path.read_text(encoding="utf-8", errors="replace")
     out: list[str] = []
     for match in _QUESTION_RE.finditer(text):
         q = " ".join(match.group(1).split())
@@ -121,7 +121,9 @@ def main() -> int:
         f"# {len(cases)} cases from {args.bundle}\n\n"
     )
     payload = {"bundle": args.bundle.name, "cases": cases}
-    args.out.write_text(header + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=1000))
+    args.out.write_text(
+        header + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=1000), encoding="utf-8"
+    )
     products = len({c["expect"]["cite_product"] for c in cases})  # type: ignore[index]
     print(f"wrote {len(cases)} cases across {products} products to {args.out}")
     return 0

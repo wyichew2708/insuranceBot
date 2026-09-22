@@ -58,7 +58,7 @@ def test_a_value_present_in_any_tier_is_not_a_conflict() -> None:
 def test_conflict_is_written_as_a_website_defect_ticket(tmp_path: Path) -> None:
     conflicts = scan(BUNDLE_ROOT)
     written = write_conflicts(tmp_path, conflicts[:1])
-    text = written[0].read_text()
+    text = written[0].read_text(encoding="utf-8")
     assert "website defect" in text
     assert "Status:** open" in text
 

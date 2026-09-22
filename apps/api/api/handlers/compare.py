@@ -48,6 +48,10 @@ def requested(bundle: Bundle, question: str, ask: Ask) -> bool:
 def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
     turn.require(Evidence.wiki)
     products = _products(turn.bundle, turn.question, turn.ask)
+    if turn.comparison_base and len(products) == 1:
+        previous = turn.bundle.get(turn.comparison_base)
+        if previous is not None and previous.id != products[0].id:
+            products.insert(0, previous)
     columns: list[tuple[Page, str]] = []
     if len(products) == 1:
         tiers = _named_tiers(turn.bundle, turn.question, products[0])
@@ -61,8 +65,10 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
                 product.frontmatter.version_in_force or "",
             )
             varying = [t for t in available if t != "ALL"]
-            if len(tiers) > 1 or (varying and not tiers):
+            if len(tiers) > 1:
                 break
+            if varying and not tiers:
+                return overview(turn, products)
             columns.append((product, tiers[0] if tiers else "ALL"))
     if len(columns) != 2:
         return _finish(
@@ -246,4 +252,92 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
             unresolved=[g.detail for g in envelope.gates if g.blocking],
         )
         trace.answer = envelope.answer.model_dump(mode="json")
+    return envelope, trace
+
+
+def overview(turn: Turn, products: list[Page]) -> tuple[AnswerEnvelope, Trace]:
+    """Compare published topic headings before asking for tiers for exact limits."""
+    pages = []
+    claims = []
+    lines = ["Here is a product-level comparison. Exact limits depend on the selected plan tier."]
+    for product in products:
+        if not servable(product, turn.session.today):
+            continue
+        cover = turn.bundle.get(product.id + "/cover") or turn.bundle.get(product.id + "/benefits")
+        topics = []
+        topic_sources = {}
+        published = product.section("What it covers") or ""
+        for phrase in (
+            "overseas medical expense coverage",
+            "medical expenses in Singapore and overseas",
+            "emergency medical evacuation",
+            "trip cancellation",
+            "travel delay",
+            "pre-existing medical conditions coverage",
+            "personal belongings",
+        ):
+            match = re.search(re.escape(phrase), published, re.I)
+            if match:
+                topics.append(match.group())
+                topic_sources[match.group()] = product.id
+        if cover is not None and servable(cover, turn.session.today):
+            for heading in re.findall(r"^## (.+)$", cover.body, re.M):
+                clean = re.sub(r"^(?:Section\s+)?\d+[A-Z]?\s*[-.:)]?\s*", "", heading, flags=re.I)
+                if clean and not re.search(r"\d|\{\{|limit|maximum|^individual$", clean, re.I):
+                    topics.append(clean)
+                    topic_sources[clean] = cover.id
+            pages.append(cover)
+        shown = list(dict.fromkeys(topics))[:4]
+        label = product_label(product)
+        lines.append(
+            f"- **{label}** — Published topics: "
+            + ("; ".join(shown) if shown else "see the product documents")
+            + "."
+        )
+        claims.append(Claim(text=label, source_id=product.id, locator=product.id))
+        if shown and cover is not None:
+            claims.extend(Claim(text=t, source_id=topic_sources[t], locator=topic_sources[t]) for t in shown)
+        pages.append(product)
+    lines.append("Choose a topic to explore, or name the tiers for a numeric comparison.")
+    for page in pages:
+        turn.budget.charge_page()
+        turn.trace.loaded.append(LoadedPage(page_id=page.id, title=page.frontmatter.title, via="compare"))
+    answer = GroundedAnswer(
+        answer="\n\n".join(lines),
+        claims=claims,
+        confidence=0.8,
+        destinations=[
+            Link(label=product_label(p), url=url, desk="product")
+            for p in products
+            if (url := landing_for(p, turn.session.channel))
+        ],
+        advice_flag=any(p.frontmatter.regulated_advice for p in products),
+    )
+    outgoing = turn.guard.screen_output(turn.question, "\n".join(c.text for c in claims), answer.answer, [])
+    if outgoing.blocked or _fail_closed(outgoing, turn.settings):
+        return _refusal(turn.trace, outgoing, "guardrail-output", "comparison overview failed screening")
+    turn.budget.charge_tokens((len(answer.model_dump_json()) + 3) // 4)
+    turn.budget.check_clock()
+    envelope, trace = _finish(
+        turn.trace,
+        answer,
+        turn.bundle,
+        turn.session,
+        turn.question,
+        turn.raw_root,
+        [p.id for p in pages],
+        ask=turn.ask,
+    )
+    envelope.gates.append(outgoing.as_gate("guardrail-output"))
+    trace.gates = envelope.gates
+    if not envelope.delivered:
+        trace.blocked_draft = answer.answer
+        envelope.answer = GroundedAnswer(
+            answer="I cannot verify this against the approved documents. Please contact our team for help.",
+            handoff=True,
+            destinations=[CONTACT_LINK],
+        )
+        return envelope, trace
+    envelope.answer.suggestions = [f"What does {product_label(p)} cover?" for p in products]
+    envelope.answer.suggestions += [f"What does {product_label(p)} not cover?" for p in products]
     return envelope, trace

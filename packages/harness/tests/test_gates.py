@@ -120,7 +120,7 @@ def test_a_quoted_contract_figure_is_bound_by_transcription(bundle: Bundle, tmp_
     agreed. Quoting binds them, and the gate checks the quotation."""
     (tmp_path / "wordings").mkdir(parents=True)
     (tmp_path / "wordings" / "travel.md").write_text(
-        "You must notify Us within thirty (30) days of the event."
+        "You must notify Us within thirty (30) days of the event.", encoding="utf-8"
     )
     a = GroundedAnswer(
         answer="You must notify us within thirty (30) days.",
@@ -134,7 +134,9 @@ def test_a_quoted_contract_figure_is_bound_by_transcription(bundle: Bundle, tmp_
 def test_a_quotation_the_source_does_not_contain_is_blocked(bundle: Bundle, tmp_path: Path) -> None:
     """Otherwise `quote_ref` would be a way to assert any number at all."""
     (tmp_path / "wordings").mkdir(parents=True)
-    (tmp_path / "wordings" / "travel.md").write_text("You must notify Us within thirty (30) days.")
+    (tmp_path / "wordings" / "travel.md").write_text(
+        "You must notify Us within thirty (30) days.", encoding="utf-8"
+    )
     a = GroundedAnswer(
         answer="You must notify us within 90 days.",
         figures=[Figure(label="quotation", text="90", quote_ref="raw/wordings/travel.md#p3")],
@@ -149,7 +151,7 @@ def test_a_quotation_the_source_does_not_contain_is_blocked(bundle: Bundle, tmp_
 def test_a_quotation_is_matched_past_the_extractor_punctuation(bundle: Bundle, tmp_path: Path) -> None:
     """An extractor writes `S$ 1,000` where the PDF printed `S$1,000`."""
     (tmp_path / "wordings").mkdir(parents=True)
-    (tmp_path / "wordings" / "travel.md").write_text("the excess is S$ 1,000 per claim")
+    (tmp_path / "wordings" / "travel.md").write_text("the excess is S$ 1,000 per claim", encoding="utf-8")
     a = GroundedAnswer(
         answer="The excess is S$1,000.",
         figures=[Figure(label="quotation", text="S$1,000", quote_ref="raw/wordings/travel.md")],

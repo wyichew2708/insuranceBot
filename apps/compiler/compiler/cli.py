@@ -51,7 +51,7 @@ def cmd_impact(args: argparse.Namespace) -> int:
 
 def cmd_facts(args: argparse.Namespace) -> int:
     path = Path(args.source)
-    doc = SourceDoc(path=str(path), text=path.read_text())
+    doc = SourceDoc(path=str(path), text=path.read_text(encoding="utf-8"))
     print(f"# {doc.path} (hash {doc.content_hash})")
     for fact in extract_facts(doc):
         print(f"  {fact.benefit_code}.{fact.attribute} = {fact.value} {fact.unit}  @{fact.locator}")

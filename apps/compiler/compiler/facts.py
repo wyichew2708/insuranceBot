@@ -70,7 +70,12 @@ class SourceDoc:
 def load_sources(raw_root: Path) -> list[SourceDoc]:
     docs: list[SourceDoc] = []
     for path in sorted(raw_root.rglob("*.md")):
-        docs.append(SourceDoc(path=f"raw/{path.relative_to(raw_root)}", text=path.read_text(errors="ignore")))
+        docs.append(
+            SourceDoc(
+                path=f"raw/{path.relative_to(raw_root)}",
+                text=path.read_text(encoding="utf-8", errors="ignore"),
+            )
+        )
     return docs
 
 

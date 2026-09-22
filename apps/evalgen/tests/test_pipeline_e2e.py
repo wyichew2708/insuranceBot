@@ -24,7 +24,7 @@ def report(bundle: Bundle):  # type: ignore[no-untyped-def]
     return run_suite(bundle, Settings(bundle_path=BUNDLE_ROOT), suite)
 
 
-KNOWN = json.loads((Path(__file__).parent / "known-findings.json").read_text())["findings"]
+KNOWN = json.loads((Path(__file__).parent / "known-findings.json").read_text(encoding="utf-8"))["findings"]
 KNOWN_CASES = {case for finding in KNOWN.values() for case in finding["cases"]}
 
 
@@ -128,7 +128,7 @@ def test_merge_case_reports_channel_specific_links(bundle: Bundle) -> None:
 def test_report_artifacts_render(report, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
     paths = write_all(report, tmp_path)
     assert set(paths) == {"json", "markdown", "html"}
-    payload = json.loads(paths["json"].read_text())
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["total_cases"] == report.total_cases
 
     md = markdown(report)

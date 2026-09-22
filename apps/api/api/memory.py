@@ -180,7 +180,7 @@ class SessionMemory:
     @staticmethod
     def _read(path: Path) -> dict[str, Any] | None:
         with contextlib.suppress(OSError, ValueError, TypeError):
-            record = json.loads(path.read_text())
+            record = json.loads(path.read_text(encoding="utf-8"))
             if (
                 isinstance(record, dict)
                 and isinstance(record.get("turns"), list)
@@ -338,6 +338,6 @@ class SessionMemory:
         path = self._path(session_id)
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps(record, ensure_ascii=False, indent=1))
+            path.write_text(json.dumps(record, ensure_ascii=False, indent=1), encoding="utf-8")
         except OSError:
             pass  # memory is a convenience; a full disk must not fail the turn

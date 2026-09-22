@@ -11,7 +11,18 @@ FROM python:3.11-slim AS base
 # same versions CI tested against rather than whatever resolves on build day.
 COPY --from=ghcr.io/astral-sh/uv:0.5 /uv /usr/local/bin/uv
 
-ENV PYTHONUNBUFFERED=1 \
+# UTF-8 everywhere, explicitly. The corpus is Singaporean insurance prose: it
+# carries em dashes, "S$", ticks in benefit tables, and Malay, Chinese and
+# Tamil in the field-test questions. A slim image has no locale configured, so
+# Python 3.11 would pick the C locale's ASCII for any file opened without an
+# encoding and for stdout — the first product page read would raise
+# UnicodeDecodeError. Every call site names utf-8 as well; this covers the
+# ones inside dependencies, and makes the container's default match.
+ENV PYTHONUTF8=1 \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PYTHONIOENCODING=utf-8 \
+    PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \

@@ -354,6 +354,7 @@ def _ask_from_trace(trace: Trace) -> Ask | None:
                 intent=intent,
                 product=detail.get("product"),
                 scope=detail.get("scope", "specific"),
+                full=bool(detail.get("full")),
             )
     return None
 

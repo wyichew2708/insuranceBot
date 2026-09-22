@@ -77,7 +77,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     }
     manifest_path = config.out_dir / "web" / "crawl-manifest.json"
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    manifest_path.write_text(json.dumps(manifest, indent=2))
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     ok = result.ok_pages
     print(f"\ncrawled {len(ok)} pages across {len(result.hosts)} hosts")
