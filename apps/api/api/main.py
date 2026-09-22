@@ -13,7 +13,7 @@ import threading
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, StreamingResponse
 from harness import AnswerEnvelope, AnswerRequest, Channel, Session, TraceStore
 from pydantic import BaseModel
@@ -26,6 +26,14 @@ from api.settings import Settings, get_settings
 from okf import Bundle, lint_bundle
 
 app = FastAPI(title="Etiqa SG knowledge layer", version="0.2.0")
+
+#: Where this service is mounted. Read once, at import: a route's path is
+#: fixed when it is registered, so this cannot be a per-request setting.
+API_PREFIX = get_settings().api_prefix
+
+#: Every route is declared on the router and the router is mounted under the
+#: prefix, so there is one place that decides the shape of every URL.
+router = APIRouter()
 
 UI_ROOT = Path(__file__).parent.parent
 CONSOLE = UI_ROOT / "console" / "index.html"
@@ -70,18 +78,23 @@ def traces() -> TraceStore:
     return store
 
 
-@app.get("/healthz")
+@router.get("/healthz")
 async def healthz() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.get("/readyz")
+@router.get("/readyz")
 async def readyz() -> dict[str, Any]:
     loaded = bundle()
-    return {"status": "ready", "pages": len(loaded.pages), "table_rows": len(loaded.tables)}
+    return {
+        "status": "ready",
+        "pages": len(loaded.pages),
+        "table_rows": len(loaded.tables),
+        "memory_enabled": settings().memory.lower() == "on",
+    }
 
 
-@app.get("/v1/navigation")
+@router.get("/v1/navigation")
 async def navigation(channel: Channel = Channel.direct) -> dict[str, Any]:
     session = Session(session_id="navigation", channel=channel)
     loaded = bundle()
@@ -91,37 +104,56 @@ async def navigation(channel: Channel = Channel.direct) -> dict[str, Any]:
     }
 
 
-@app.get("/", response_class=HTMLResponse)
+def _page(path: Path, missing: str) -> HTMLResponse:
+    """A served UI page, told where the API it calls actually lives.
+
+    The pages ship with root-relative URLs. Behind a prefix those resolve to
+    paths the app does not serve, so the UI loads and every call 404s. Rather
+    than templating each URL, the prefix is declared once as a global the
+    page's own fetch helper prepends.
+    """
+    if not path.exists():
+        raise HTTPException(status_code=404, detail=missing)
+    html = path.read_text(encoding="utf-8")
+    inject = f'<script>window.API_PREFIX = "{API_PREFIX}";</script>'
+    if "<head>" in html:
+        html = html.replace("<head>", f"<head>\n{inject}", 1)
+    else:
+        html = f"{inject}\n{html}"
+    return HTMLResponse(html)
+
+
+@router.get("/", response_class=HTMLResponse)
 async def console() -> HTMLResponse:
-    if not CONSOLE.exists():
-        raise HTTPException(status_code=404, detail="console not built")
-    return HTMLResponse(CONSOLE.read_text())
+    return _page(CONSOLE, "console not built")
 
 
-@app.get("/studio", response_class=HTMLResponse)
+@router.get("/studio", response_class=HTMLResponse)
 async def studio() -> HTMLResponse:
     """The content portal. Served from this app for the same reason the debug
     console is: a review tool you have to deploy separately is a review tool
     nobody opens."""
-    if not STUDIO.exists():
-        raise HTTPException(status_code=404, detail="studio not built")
-    return HTMLResponse(STUDIO.read_text())
+    return _page(STUDIO, "studio not built")
 
 
-@app.get("/chat", response_class=HTMLResponse)
+@router.get("/chat", response_class=HTMLResponse)
 async def chat() -> HTMLResponse:
     """The customer-facing surface. The console at `/` shows the machinery;
     this shows what a person asking about their insurance would need — the
     answer, where it came from, and an honest signal when the bot is handing
     them over. Same `/v1/answer` contract underneath, no privileged path."""
-    if not CHAT.exists():
-        raise HTTPException(status_code=404, detail="chat UI not built")
-    return HTMLResponse(CHAT.read_text())
+    return _page(CHAT, "chat UI not built")
 
 
-@app.post("/v1/answer", response_model=AnswerEnvelope)
+@router.post("/v1/answer", response_model=AnswerEnvelope)
 async def answer(req: AnswerRequest) -> AnswerEnvelope:
-    envelope, trace = answer_question(bundle(), req.question, req.session, settings(), history=req.history)
+    envelope, trace = answer_question(
+        bundle(),
+        req.question,
+        req.session,
+        settings(),
+        history=req.history if "history" in req.model_fields_set else None,
+    )
     traces().put(trace)
     return envelope
 
@@ -158,7 +190,7 @@ def _chunks(text: str, words: int = STREAM_WORDS) -> list[str]:
     ]
 
 
-@app.post("/v1/answer/stream")
+@router.post("/v1/answer/stream")
 async def answer_stream(req: AnswerRequest) -> StreamingResponse:
     """The same turn as `/v1/answer`, as server-sent events.
 
@@ -172,7 +204,9 @@ async def answer_stream(req: AnswerRequest) -> StreamingResponse:
       stage   — each pipeline stage as it opens and closes, with a customer
                 label, so the wait is accounted for (4 to 14 s on the Mac);
       delta   — the *verified* answer text, paced in small chunks, once the
-                gates have passed it;
+                gates have passed it: the preview where the turn has one,
+                otherwise the whole answer, so what is paced out is what the
+                customer is left reading;
       done    — the full envelope, identical to `/v1/answer`'s response;
       error   — the turn failed; the detail is the exception's name.
     """
@@ -190,7 +224,12 @@ async def answer_stream(req: AnswerRequest) -> StreamingResponse:
     def work() -> None:
         try:
             envelope, trace = answer_question(
-                bundle(), req.question, req.session, settings(), history=req.history, on_stage=on_stage
+                bundle(),
+                req.question,
+                req.session,
+                settings(),
+                history=req.history if "history" in req.model_fields_set else None,
+                on_stage=on_stage,
             )
             traces().put(trace)
             emit("done", envelope.model_dump(mode="json"))
@@ -207,7 +246,13 @@ async def answer_stream(req: AnswerRequest) -> StreamingResponse:
             if event == "close":
                 break
             if event == "done":
-                text = ((data.get("answer") or {}).get("answer")) or ""
+                # The preview where there is one, because that is the text the
+                # customer is left looking at: the UI shows it and folds the
+                # full wording behind "Read full answer". Streaming the long
+                # form and then replacing it with the short one reads as the
+                # answer being taken back, which is the one thing this stream
+                # is designed never to do.
+                text = data.get("preview") or ((data.get("answer") or {}).get("answer")) or ""
                 for chunk in _chunks(text):
                     yield _sse("delta", {"text": chunk})
                     await asyncio.sleep(STREAM_PAUSE_S)
@@ -220,7 +265,7 @@ async def answer_stream(req: AnswerRequest) -> StreamingResponse:
     )
 
 
-@app.get("/v1/sessions/{session_id}")
+@router.get("/v1/sessions/{session_id}")
 async def session_memory(session_id: str) -> dict[str, Any]:
     """What this session has asked and been told, one summary line per turn,
     and the rolling summary a later turn falls back on."""
@@ -240,7 +285,7 @@ class TraceSummary(BaseModel):
     pages: int
 
 
-@app.get("/v1/traces", response_model=list[TraceSummary])
+@router.get("/v1/traces", response_model=list[TraceSummary])
 async def list_traces(limit: int = 25) -> list[TraceSummary]:
     return [
         TraceSummary(
@@ -257,7 +302,7 @@ async def list_traces(limit: int = 25) -> list[TraceSummary]:
     ]
 
 
-@app.get("/v1/traces/{trace_id}")
+@router.get("/v1/traces/{trace_id}")
 async def get_trace(trace_id: str) -> dict[str, Any]:
     trace = traces().get(trace_id)
     if trace is None:
@@ -268,13 +313,13 @@ async def get_trace(trace_id: str) -> dict[str, Any]:
     return payload
 
 
-@app.delete("/v1/traces")
+@router.delete("/v1/traces")
 async def clear_traces() -> dict[str, str]:
     traces().clear()
     return {"status": "cleared"}
 
 
-@app.get("/v1/bundle")
+@router.get("/v1/bundle")
 async def bundle_info() -> dict[str, Any]:
     loaded = bundle()
     report = lint_bundle(loaded)
@@ -301,7 +346,7 @@ async def bundle_info() -> dict[str, Any]:
     }
 
 
-@app.get("/v1/bundle/lint")
+@router.get("/v1/bundle/lint")
 async def bundle_lint() -> dict[str, Any]:
     report = lint_bundle(bundle())
     return {
@@ -319,7 +364,7 @@ async def bundle_lint() -> dict[str, Any]:
     }
 
 
-@app.get("/v1/bundle/page/{page_id:path}")
+@router.get("/v1/bundle/page/{page_id:path}")
 async def bundle_page(page_id: str) -> dict[str, Any]:
     page = bundle().get(page_id)
     if page is None:
@@ -339,13 +384,13 @@ def reload() -> Bundle:
     return _load()
 
 
-@app.post("/v1/bundle/reload")
+@router.post("/v1/bundle/reload")
 async def reload_bundle() -> dict[str, Any]:
     loaded = reload()
     return {"status": "reloaded", "pages": len(loaded.pages), "table_rows": len(loaded.tables)}
 
 
-@app.get("/v1/fixtures")
+@router.get("/v1/fixtures")
 async def fixtures() -> dict[str, Any]:
     """Everything the console needs to build its session picker."""
     from api.sor import FIXTURE_POLICIES
@@ -370,7 +415,7 @@ class EvalRunRequest(BaseModel):
     suite: str = "all"
 
 
-@app.post("/v1/evals/run")
+@router.post("/v1/evals/run")
 async def run_evals(req: EvalRunRequest) -> dict[str, Any]:
     """Loop 3 in-process, so the console can run the gate without a terminal."""
     try:
@@ -380,7 +425,7 @@ async def run_evals(req: EvalRunRequest) -> dict[str, Any]:
     return run_suites(bundle(), settings(), suite=req.suite)
 
 
-@app.get("/v1/evals")
+@router.get("/v1/evals")
 async def list_evals() -> dict[str, Any]:
     try:
         from evals.runner import available_suites
@@ -390,4 +435,5 @@ async def list_evals() -> dict[str, Any]:
 
 
 configure_cms(bundle, settings, reload)
-app.include_router(cms_router)
+app.include_router(router, prefix=API_PREFIX)
+app.include_router(cms_router, prefix=API_PREFIX)

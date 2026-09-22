@@ -804,8 +804,23 @@ cp .env.example .env
 `.env` is gitignored and is read from the working directory, so it belongs at
 the repository root and `make` should be run from there.
 
+`API_PREFIX` moves the whole service — the JSON API, the debug console at `/`,
+the studio and the chat UI — under one path, for a gateway that routes by path
+rather than by host:
+
+```bash
+API_PREFIX=/api   # POST /api/v1/answer, GET /api/chat, GET /api/healthz
+```
+
+Leading and trailing slashes are normalised, so `api`, `/api` and `api/` are
+the same mount. The served pages are handed their own prefix and call back
+through it, so nothing in the browser needs rebuilding. A health probe has to
+move with it: `/healthz` is a 404 under a prefix, and the compose healthcheck
+reads `API_PREFIX` for exactly that reason.
+
 ```
 BUNDLE_PATH=okf
+API_PREFIX=             # mount point; empty serves at the root
 LLM_PROVIDER=auto       # auto | deterministic | anthropic | vllm
 ANTHROPIC_API_KEY=      # unset → deterministic composer
 ANTHROPIC_MODEL=claude-sonnet-5

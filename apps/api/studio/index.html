@@ -346,7 +346,7 @@ const pct = v => (v * 100).toFixed(1) + '%';
 let STATE = { overview:null, pages:[], selected:null, scan:null, suggestions:[], actor:'portal' };
 
 async function api(path, opts) {
-  const res = await fetch(path, { headers:{'content-type':'application/json'}, ...opts });
+  const res = await fetch((window.API_PREFIX || '') + path, { headers:{'content-type':'application/json'}, ...opts });
   const text = await res.text();
   let body; try { body = text ? JSON.parse(text) : {}; } catch { body = { detail:text }; }
   if (!res.ok) throw Object.assign(new Error(body.detail?.message || body.detail || res.statusText),

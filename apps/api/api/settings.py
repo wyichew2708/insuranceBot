@@ -6,14 +6,34 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
+    @field_validator("api_prefix")
+    @classmethod
+    def _normalise_prefix(cls, value: str) -> str:
+        """One leading slash, no trailing slash — "api/", "/api" and "api" are
+        the same mount, and a gateway's copy of the value should not decide
+        whether the routes exist."""
+        trimmed = value.strip().strip("/")
+        return f"/{trimmed}" if trimmed else ""
+
     bundle_path: Path = Path("okf")
+
+    # --- Where the API is mounted ---------------------------------------
+    # Every route — the JSON API, the debug console, the studio and the chat
+    # UI — is served under this prefix. Empty serves at the root, as before.
+    # Set it when the service sits behind a gateway that routes by path
+    # ("/insurance-bot") rather than by host, so the app's own URLs match the
+    # ones the customer's browser asked for. The served pages are told their
+    # prefix, so a UI loaded from behind one calls back through it.
+    #
+    #   API_PREFIX=/api   ->  POST /api/v1/answer, GET /api/chat
+    api_prefix: str = ""
 
     # --- Generation (§H.1) ---------------------------------------------
     # Which engine phrases the answer. "auto" resolves from what is

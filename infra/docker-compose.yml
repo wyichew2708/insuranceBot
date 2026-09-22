@@ -35,6 +35,9 @@ services:
       # container's configuration is readable here and a missing `.env` is a
       # working state rather than a startup error.
       BUNDLE_PATH: ${BUNDLE_PATH:-okf}
+      # Mount point. Empty serves the API and the UIs at the root; set it
+      # when a gateway routes to this service by path rather than by host.
+      API_PREFIX: ${API_PREFIX:-}
       LLM_PROVIDER: ${LLM_PROVIDER:-auto}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-5}
@@ -65,7 +68,10 @@ services:
       # site and is absent on a fresh checkout, so it is not mounted.
       # - ./okf-web:/app/okf-web:ro
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).status==200 else 1)"]
+      # Follows API_PREFIX: under a prefix `/healthz` is a 404 and the
+      # container would be restarted for failing a probe it is answering
+      # correctly one path along.
+      test: ["CMD", "python", "-c", "import os,urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080' + os.environ.get('API_PREFIX','') + '/healthz', timeout=2).status==200 else 1)"]
       interval: 15s
       timeout: 3s
       retries: 3

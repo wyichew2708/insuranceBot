@@ -78,6 +78,41 @@ If `okf-real/` is missing you are on the wrong branch — it does not exist on
 
 ## 3. Choose a corpus
 
+### Where the service is mounted
+
+`API_PREFIX` serves everything under one path — the JSON API, the debug
+console at `/`, the studio and the chat UI. Empty, the default, serves at the
+root. Set it when a gateway routes to this service by path rather than by
+host and forwards the prefix rather than stripping it:
+
+```bash
+API_PREFIX=/insurance-bot
+```
+
+Three consequences worth knowing before you set it:
+
+- **Health probes move.** `/healthz` becomes `/insurance-bot/healthz`; the old
+  path is a 404. The compose healthcheck reads `API_PREFIX` and follows, but
+  an external probe — a load balancer, a Kubernetes `livenessProbe` — has to
+  be updated by hand, or the service is restarted for failing a check it is
+  answering correctly one path along.
+- **The UIs follow automatically.** Each served page is handed its own prefix
+  and prepends it to every call, so the console, studio and chat work from
+  behind a prefix with no rebuild.
+- **It is read once, at import.** A route's path is fixed when it is
+  registered, so changing `API_PREFIX` needs a restart, not a reload.
+
+### Character encoding
+
+The container sets `PYTHONUTF8=1`, `LANG`, `LC_ALL` and `PYTHONIOENCODING` to
+UTF-8, and every file the code opens names `encoding="utf-8"` explicitly. Both
+belong there. The corpus is Singaporean insurance prose — em dashes, `S$`,
+ticks in benefit tables, and Malay, Chinese and Tamil in the field-test
+questions — and a slim image has no locale configured, so Python would
+otherwise decode a product page as ASCII and raise `UnicodeDecodeError` on the
+first read. If you build your own image from this source, keep those four
+variables.
+
 `BUNDLE_PATH` selects which compiled bundle the API serves. Three exist:
 
 | value | contents | when to use |
@@ -122,6 +157,7 @@ The settings that matter:
 ```bash
 BUNDLE_PATH=okf-real          # which corpus to serve
 API_PORT=8080                 # host port; the container always listens on 8080
+API_PREFIX=                   # mount point, e.g. /api; empty serves at the root
 
 LLM_PROVIDER=auto             # auto | deterministic | anthropic | vllm
 ANTHROPIC_API_KEY=            # only for LLM_PROVIDER=anthropic
