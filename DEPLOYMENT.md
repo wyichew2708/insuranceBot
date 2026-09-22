@@ -437,21 +437,124 @@ docker compose --project-directory . -f infra/docker-compose.yml \
 - **rerank** — `BAAI/bge-reranker-v2-m3`, optional. Skip it and the fused
   ranking stands.
 
-### Step 2 — create the schema
+### Step 2 — initialise the database
 
-`infra/pgvector/schema.sql` is applied automatically by the postgres container
-on **first start only** (`docker-entrypoint-initdb.d`). An existing volume
-will not re-run it, so apply it by hand after an upgrade that adds a table:
+Two paths. The compose container does all of this for you; a Postgres you
+already have — your own cluster, RDS, Cloud SQL, Supabase — needs the four
+statements in **2b** run by someone with the privilege to run them.
+
+Either way the end state is the same: a database with the `vector` extension
+installed, and `infra/pgvector/schema.sql` applied into it.
+
+#### 2a. The compose container (the default)
+
+Nothing to do. The image is `pgvector/pgvector:pg16`, which ships pgvector
+**0.8.3** — HNSW needs 0.5.0 or newer, so anything from that image works. On
+first start it creates the database and role from its own environment and runs
+every file in `docker-entrypoint-initdb.d`, which is where the compose file
+mounts the schema:
+
+```yaml
+POSTGRES_DB:       okf
+POSTGRES_USER:     okf
+POSTGRES_PASSWORD: ${PGVECTOR_PASSWORD:-okf}
+```
+
+**The default password is `okf`.** It is fine on a laptop and wrong anywhere
+else. Set `PGVECTOR_PASSWORD` before the *first* start — Postgres reads it
+only when it initialises the data directory, so changing it later means either
+`ALTER ROLE okf PASSWORD …` or destroying the volume. Whatever you choose has
+to match `PGVECTOR_DSN` in step 3.
+
+`PGVECTOR_PORT` (default 5432) moves the host-side port when something else is
+already on it.
+
+#### 2b. A Postgres you already have
+
+Run these as a superuser — `postgres` locally, `rds_superuser` on RDS, the
+`postgres` role on Cloud SQL. The extension is the only part that needs the
+privilege; the tables can be created by the application role afterwards.
+
+```sql
+CREATE ROLE okf LOGIN PASSWORD 'choose-something';
+CREATE DATABASE okf OWNER okf;
+\connect okf
+CREATE EXTENSION IF NOT EXISTS vector;
+```
+
+Then apply the schema as the application role, so it owns its own tables:
+
+```bash
+PGPASSWORD='choose-something' psql -h db-host -U okf -d okf \
+  -v ON_ERROR_STOP=1 -f infra/pgvector/schema.sql
+```
+
+Two failures worth recognising, because the message says exactly which one it
+is:
+
+```
+ERROR:  permission denied to create extension "vector"
+HINT:  Must be superuser to create this extension.
+```
+
+pgvector is installed but you are not superuser. Ask whoever is to run the
+`CREATE EXTENSION` line; everything after it you can run yourself.
+
+```
+ERROR:  extension "vector" is not available
+DETAIL:  Could not open extension control file ".../vector.control": No such file or directory.
+```
+
+pgvector is not installed on that server at all. On a managed service it is
+usually available but has to be enabled — an extension allow-list on RDS, a
+database flag on Cloud SQL — rather than installed. On your own cluster it is
+a package (`postgresql-16-pgvector`) and a restart.
+
+#### Verify the init
+
+```bash
+psql -h db-host -U okf -d okf -c "\d"
+psql -h db-host -U okf -d okf -tAc \
+  "select extversion from pg_extension where extname='vector'"
+```
+
+`\d`, not `\dt`: two of the four relations are views, and `\dt` lists only
+tables.
+
+```
+ Schema |         Name          | Type  | Owner
+--------+-----------------------+-------+-------
+ public | chunk                 | table | okf
+ public | chunk_fingerprint     | view  | okf
+ public | raw_chunk             | table | okf
+ public | raw_chunk_fingerprint | view  | okf
+```
+
+The extension version wants to be `0.5.0` or newer — that is where HNSW
+arrives, and `schema.sql` builds an HNSW index.
+
+Both tables empty at this point. Step 4 fills them.
+
+#### Re-applying it
+
+`schema.sql` is idempotent — every statement is `IF NOT EXISTS` or `CREATE OR
+REPLACE` — so running it against a live database is safe and re-running it
+prints a few `already exists, skipping` notices. That matters because
+`docker-entrypoint-initdb.d` runs on **first start only**: an existing volume
+never sees a schema change. After pulling a version that adds a table, apply
+it by hand:
 
 ```bash
 docker compose --project-directory . -f infra/docker-compose.yml \
   --profile gpu exec -T postgres psql -U okf -d okf < infra/pgvector/schema.sql
 ```
 
-It is idempotent — every statement is `IF NOT EXISTS` — so running it against
-a live database is safe.
+If that is ever not enough — a column type changed rather than a table being
+added — the honest fix is to drop the two tables and re-run `make index`.
+Nothing in them is a system of record; they are a cache of the corpus, and
+rebuilding is cheaper than migrating.
 
-Two tables, deliberately not one:
+#### What it creates
 
 | | `chunk` | `raw_chunk` |
 |---|---|---|
@@ -462,6 +565,11 @@ Two tables, deliberately not one:
 They are separate because a wiki chunk is a compiled, approved, dated page and
 a raw chunk is a PDF someone published. One table would mean one WHERE clause
 that is right for half its rows.
+
+`embedding` is `vector(1024)`, which is bge-m3's width. A different embedding
+model almost certainly has a different width, and changing `EMBED_MODEL`
+without changing the column fails on the first insert — see the table at the
+end of this section.
 
 ### Step 3 — point the API at them
 
