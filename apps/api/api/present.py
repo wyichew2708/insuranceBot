@@ -19,6 +19,7 @@ customer asked for the shape of the product and the shape is the answer.
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 
 from harness.ask import Ask, friendly_heading
 from harness.ask import section_titles as _section_titles
@@ -316,3 +317,76 @@ def digest(
     head = f"**{name} — {topic}** comes in {len(items)} parts. In brief:"
     tail = "Tap a part below for its full wording, or ask about your own situation."
     return "\n\n".join([head, "\n".join(items), tail])
+
+
+def response_preview(text: str, threshold: int = 140) -> str:
+    """An extractive preview only: the full verified reply remains available.
+
+    Keep complete paragraphs, never cut a condition halfway through a sentence.
+    The UI labels the omitted remainder explicitly as details and conditions.
+    """
+    if len(text.split()) <= threshold:
+        return ""
+    chosen = []
+    count = 0
+    for paragraph in text.split("\n\n"):
+        words = len(paragraph.split())
+        if count + words > 100:
+            # A bullet block can be previewed at complete item boundaries.
+            lines = paragraph.splitlines()
+            if any(line.startswith("- ") for line in lines):
+                kept = []
+                for line in lines:
+                    if count + len(line.split()) > 100:
+                        break
+                    kept.append(line)
+                    count += len(line.split())
+                if any(line.startswith("- ") for line in kept):
+                    chosen.append("\n".join(kept))
+            break
+        chosen.append(paragraph)
+        count += words
+    if chosen:
+        return "\n\n".join(chosen)
+    # A long indivisible paragraph is left intact instead of concealing qualifiers.
+    return ""
+
+
+#: "for the plan tier held" is the compiler's wording for a figure that varies
+#: by plan, written when nothing knows which plan. Where the customer named
+#: one, the figure beside it is that plan's, and saying so is the difference
+#: between a number and an answer.
+_TIER_HELD_RE = re.compile(r"\s*for the plan tier held\b", re.I)
+
+
+def name_the_plan(text: str, tier: str, plans: Sequence[str] = ()) -> str:
+    """Say which plan the figures belong to, or drop the phrase where they
+    already name every plan themselves.
+
+    Applied after the gates, never before. The gates check a claim against the
+    span it was composed from, and the span says "for the plan tier held" —
+    rewriting it earlier made a grounded sentence look ungrounded, and
+    groundedness refused the answer. Nothing here changes a figure; it renames
+    the tier the figures were already fetched for.
+    """
+    if tier and tier not in ("UNKNOWN", "ALL"):
+        label = " ".join(word.capitalize() for word in tier.split("-"))
+        return _TIER_HELD_RE.sub(f" on the {label} plan", text)
+    # No plan known, so the figures were spelled out one per plan: "... for the
+    # plan tier held is Entry $50,000, Savvy $100,000" both claims ignorance
+    # and then answers. Keep the answer.
+    labels = [" ".join(w.capitalize() for w in t.split("-")) for t in plans if t and t != "ALL"]
+    if not labels:
+        return text
+
+    # Sentence by sentence: the phrase goes only where that sentence already
+    # names a plan. It sits before the figures in one compiled shape ("... for
+    # the plan tier held is Entry $5,000") and after them in another
+    # ("Reimbursed up to Entry S$200,000 ... for the plan tier held"), so the
+    # test is whether a plan is named nearby, not where the words fall.
+    def strip(sentence: str) -> str:
+        if any(label in sentence for label in labels):
+            return _TIER_HELD_RE.sub("", sentence)
+        return sentence
+
+    return "".join(strip(part) for part in re.split(r"(?<=[.!?])(\s+)", text))

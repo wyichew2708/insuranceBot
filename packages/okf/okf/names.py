@@ -31,6 +31,7 @@ from __future__ import annotations
 import contextlib
 import difflib
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 
 from okf.bundle import Bundle
@@ -49,6 +50,20 @@ FUZZY_MIN_CHARS = 7
 MIN_FAMILY_CHARS = 6
 
 _PUNCT_RE = re.compile(r"[^\w\s-]")
+
+
+#: Words that name a line of business rather than a product in it. A phrase
+#: made of one of everything else plus these is a category ("travel cover"),
+#: not a name; two products can both carry it. Shared with the router, which
+#: decides on the same basis whether to ask which product was meant.
+GENERIC_WORDS = frozenset(
+    {"insurance", "cover", "coverage", "plan", "policy", "protection", "the", "a", "an"}
+)
+
+
+def distinguishing(phrase: str) -> int:
+    """How many of a phrase's words separate one product from its neighbours."""
+    return sum(1 for w in phrase.split() if w not in GENERIC_WORDS)
 
 
 def normalise(text: str) -> str:
@@ -97,7 +112,12 @@ class ProductNameIndex:
                 phrase = normalise(alias)
                 if len(phrase.split()) >= MIN_NAME_WORDS and phrase != title:
                     index.names.append(Name(phrase, page.id, key, "alias"))
-        index.names.sort(key=lambda n: -len(n.phrase))
+        # Most distinguishing first, then longest. Length alone let a
+        # category alias that happens to be longer shadow the product's
+        # own name: "will tiq travel cover ..." matched "travel cover",
+        # whose single head word reads as the whole travel line, and the
+        # customer who named the product was asked which one they meant.
+        index.names.sort(key=lambda n: (-distinguishing(n.phrase), -len(n.phrase)))
         return index
 
     def named(self, question: str) -> list[Name]:
@@ -251,3 +271,38 @@ def names_of(page: Page) -> list[str]:
     fm = page.frontmatter
     out = {normalise(fm.title)} | {normalise(a) for a in fm.aliases}
     return sorted((n for n in out if len(n.split()) >= MIN_NAME_WORDS), key=len, reverse=True)
+
+
+#: Words a customer puts around a plan's name — "the Savvy plan", "plan B",
+#: "Enhanced Gold tier". None of them are part of the name.
+_PLAN_WORD_RE = re.compile(r"\b(?:plan|tier|package|option)\b")
+
+
+def plan_tiers_in(question: str, tiers: Sequence[str]) -> set[str]:
+    """Every plan of this product's that the question names.
+
+    Tiers are stored slugged — `plan-a`, `enhanced-gold` — and customers type
+    them spaced and cased however they like: "plan B", "the Enhanced Gold",
+    "savvy". Matching is on the slug with its separators relaxed, whole words
+    only, so "entry" matches "the entry plan" and not "entrylevel".
+    """
+    text = normalise(question)
+    if not text:
+        return set()
+    return {
+        tier
+        for tier in tiers
+        if tier != "ALL"
+        and re.search(r"\b" + r"[\s-]+".join(re.escape(w) for w in tier.split("-")) + r"\b", text)
+    }
+
+
+def plan_tier_in(question: str, tiers: Sequence[str]) -> str | None:
+    """The one plan the question names, or none.
+
+    None where the question names no plan, and none where it names more than
+    one: a question about two plans is a comparison, and answering it with
+    either one's figures would be picking a side the customer did not.
+    """
+    found = plan_tiers_in(question, tiers)
+    return found.pop() if len(found) == 1 else None

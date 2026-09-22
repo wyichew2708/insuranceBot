@@ -44,7 +44,16 @@ def test_anonymous_session_will_not_guess_a_tier(bundle: Bundle, settings: Setti
         policy_id=None,
     )
     assert env.answer.unresolved, "an unknown tier must be declared, not guessed"
-    assert "S$500,000" not in env.answer.answer
+    # A tier-varying limit is published once per plan, and all of them can be
+    # said without guessing which is the customer's — what must never happen
+    # is one figure offered as though it were theirs. So S$500,000 may appear,
+    # and only immediately after the name of the plan it belongs to.
+    for figure in ("S$200,000", "S$500,000", "S$1,000,000"):
+        if figure in env.answer.answer:
+            before = env.answer.answer.split(figure)[0]
+            assert before.rstrip().endswith(("Tier 1", "Tier 2", "Tier 3")), (
+                f"{figure} is stated without naming the plan it belongs to"
+            )
 
 
 def test_channel_render_is_deterministic(bundle: Bundle, settings: Settings) -> None:

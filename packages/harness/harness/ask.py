@@ -61,6 +61,8 @@ NAME_FILLER = frozenset(
         "an",
         "my",
         "about",
+        "introduce",
+        "introduction",
         "info",
         "information",
         "details",
@@ -89,14 +91,29 @@ SUMMARY_PHRASE_RE = re.compile(r"^[\w\s'&-]{0,50}\b(?:cover|coverage|benefits?|s
 _SECTION_RE = re.compile(r"\bsection\s+(\d+[a-z]?)\b", re.I)
 
 
-def asked_benefits(bundle: Bundle, question: str) -> set[str]:
-    """Benefit codes the question names — through the bundle's vocabulary
-    ("suitcase" → `baggage_loss`) or a section number ("section 6" →
-    `section_6`). Empty where the question names none."""
+def asked_benefits(bundle: Bundle, question: str, product: str | None = None) -> set[str]:
+    """Benefit codes the question names.
+
+    Three routes to the same set. The bundle's vocabulary maps a customer's
+    words to a concept ("suitcase" → `baggage_loss`); a section number names
+    itself ("section 6" → `section_6`); and, where the product is known, the
+    question is matched against that product's own benefit-table codes.
+
+    The third exists because the first two never reach the table. The
+    vocabulary's concepts and the table's codes are different vocabularies —
+    `medical_expenses` against `medical_expenses_incurred_in_singapore` — so a
+    limit question matched a concept, found no row under that name, and the
+    customer was told the corpus does not address a benefit it publishes.
+    """
+    from okf.tables import benefit_codes_in
+
     from okf import expand_vocabulary, load_vocabulary
 
     asked = set(expand_vocabulary(question, load_vocabulary(bundle.root)))
     asked.update(f"section_{m.group(1).lower()}" for m in _SECTION_RE.finditer(question or ""))
+    if product:
+        codes = {r.benefit_code for r in bundle.tables.rows if r.product == product}
+        asked.update(benefit_codes_in(question or "", sorted(codes)))
     return asked
 
 
@@ -219,6 +236,12 @@ def _scope(question: str, intent: Intent, bare: bool) -> str:
 
 
 #: "Show everything", "in full", "the full wording": no digest.
+#: Words that make a question about a benefit a question about its figure.
+LIMIT_CUE_RE = re.compile(
+    r"\b(?:limit|limits|how much|maximum|max|payout|pay ?out|sum insured|covered for|amount)\b",
+    re.I,
+)
+
 FULL_RE = re.compile(
     r"\b(show (?:me )?everything|in full|full (?:answer|details?|wording|list)|all of it)\b", re.I
 )
@@ -278,6 +301,14 @@ def read_section(bundle: Bundle, product_page: str, question: str) -> tuple[str,
     """
     haystack = f" {normalise(question)} "
     root = bundle.get(product_page)
+    if re.search(r"\bcancellation policy\b", question, re.I) and not re.search(
+        r"\b(?:flight|trip)\b", question, re.I
+    ):
+        conditions = bundle.get(product_page + "/conditions")
+        if conditions is not None:
+            for heading in _HEADING_RE.findall(conditions.body):
+                if "cancellation by you" in heading.lower():
+                    return conditions.id, heading
     product_names = names_of(root) if root is not None else []
     titles = section_titles(bundle, product_page)
     best: tuple[int, str, str] | None = None
@@ -343,11 +374,23 @@ def _read_turn(bundle: Bundle, question: str) -> Ask:
     index: ProductNameIndex = index_for(bundle)
     intent = classify(question)
     evidence: dict[str, str] = {"intent": "classifier"}
-    subject = frozenset(asked_benefits(bundle, question))
+    # The name is read first: a benefit code is a fact about one product's
+    # table, so the question can only be matched against the right table once
+    # we know which product it is about.
+    named = index.named(question)
+    subject = frozenset(asked_benefits(bundle, question, named[0].key if len(named) == 1 else None))
     if subject:
         evidence["subject"] = "vocabulary"
+    # "Trip cancellation" is a benefit with a published limit; "cancel my
+    # policy" is a servicing request. Both contain "cancellation", and the
+    # keyword classifier reads the word before it reads the phrase, so the
+    # benefit question was answered with the notice period for terminating
+    # the policy. A benefit the product's own table names, asked about with a
+    # figure word, is a limit question whatever else the sentence contains.
+    if intent is Intent.renewal and subject and LIMIT_CUE_RE.search(question or ""):
+        intent = Intent.limit
+        evidence["intent"] = "a benefit the table names, asked as a figure"
 
-    named = index.named(question)
     if len(named) == 1:
         hit = named[0]
         bare = index.bare(hit.page_id, question, NAME_FILLER)

@@ -26,7 +26,7 @@ from harness.gates import NUMERIC_SPAN_RE
 from harness.intent import REQUIREMENTS, Intent, classify, classify_topic
 from okf.linter import ALLOW_NUMBER, SOURCE_REF_RE
 from okf.page import Lifecycle
-from okf.sources import OFFER_QUESTION_RE
+from okf.sources import OFFER_QUESTION_RE, citation_for
 from okf.tables import TOKEN_RE, find_tokens
 
 from api.retrieval import keywords, score_page
@@ -951,7 +951,22 @@ def compose(
     declared = declared_routes(bundle)
 
     for selection in selections:
-        resolved = resolve_transclusions(selection.body, bundle.tables, product_key, version, tier)
+        resolved = resolve_transclusions(
+            selection.body,
+            bundle.tables,
+            product_key,
+            version,
+            tier,
+            # Nobody has told us the plan: on a question that asked for a
+            # figure, answer with every plan's figure rather than with a
+            # placeholder. "What is the travel delay limit" is asking what the
+            # plans pay and the corpus publishes all of them. Narrow to limit
+            # questions deliberately — on a coverage or overview turn a wall
+            # of per-plan amounts is noise, and the navigation map's own
+            # questions stopped being answerable when it was not.
+            spell_out_tiers=ask is not None and ask.intent is Intent.limit,
+            tier_order=list(product.frontmatter.plan_tiers) if product else [],
+        )
         for figure in resolved.figures:
             figures.append(
                 Figure(
@@ -1073,11 +1088,14 @@ def compose(
             # to nothing. An empty claim asserts nothing and cites a page for it.
             if not text:
                 continue
+            title, url = citation_for(bundle.root, locator)
             claims.append(
                 Claim(
                     text=under_heading(selection.heading, text),
                     source_id=selection.page.id,
                     locator=locator,
+                    source_title=title,
+                    source_url=url,
                 )
             )
 

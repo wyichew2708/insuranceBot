@@ -131,6 +131,7 @@ BROWSE_RE = re.compile(
     # end on the same noun.
     rf"^(?:what|which)\s+(?:(?!(?:is|are|was|were|do|does|did|can|will)\b)\w+\s+){{0,2}}{_OFFERING}\s*"
     rf"(?:(?:do|does|are|can|have)\b[\w\s]{{0,20}})?[?.!]?$"
+    rf"|\bintroduce\b[^?.!]{{0,50}}\b(?:products|plans|policies|insurance)\b"
     # Explicit shopping language, anywhere in the turn.
     r"|\b(?:looking|search(?:ing)?|shopping)\s+for\b"
     r"|\b(?:show|list)\s+me\b"
@@ -758,7 +759,13 @@ REQUIREMENTS: dict[Intent, Requirement] = {
     # nothing in between.
     Intent.price: Requirement(
         needs_figure=True,
-        needs_figure_label=("premium", "price", "cost"),
+        # Not "cost": in a policy the word names a covered expense, not what
+        # the customer pays for the policy. "The cost of replacement of
+        # sanitary ware limit is $2,500" is a Business Owners Super Suite
+        # cover limit, and it settled "how much is it?" — the one question the
+        # corpus cannot answer for that product, which is why the contract
+        # says hand it to a person.
+        needs_figure_label=("premium", "price"),
     ),
     # A backstop behind the deterministic entity answer in `api.entity`: if a
     # bundle declares no single underwriter and the turn reaches the composer,

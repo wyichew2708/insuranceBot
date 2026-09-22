@@ -17,6 +17,8 @@ from harness import (
 from harness.gates import unbound_spans
 from harness.intent import Intent, classify
 from harness.trace import LoadedPage
+from okf.names import plan_tier_in
+from okf.page import Page
 from okf.tables import find_tokens
 
 from api.clarify import (
@@ -47,7 +49,7 @@ from api.handlers.shared import (
     _wording_pointer,
 )
 from api.llm import Draft
-from api.present import bulletise, digest, present_overview, section_chips
+from api.present import bulletise, digest, name_the_plan, present_overview, section_chips
 from api.retrieval import (
     NO_MATCH_PREFIXES,
     frontmatter_filter,
@@ -70,6 +72,15 @@ from okf import (
     load_vocabulary,
     term_idf,
 )
+
+
+def _lists_every_plan(text: str, product: Page) -> bool:
+    """Does the answer already give a figure per plan?"""
+    plans = [t for t in product.frontmatter.plan_tiers if t and t != "ALL"]
+    if len(plans) < 2:
+        return False
+    labels = [" ".join(w.capitalize() for w in t.split("-")) for t in plans]
+    return sum(1 for label in labels if label in text) >= 2
 
 
 def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
@@ -386,6 +397,17 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
         if not version and product is not None:
             version = product.frontmatter.version_in_force or ""
 
+        # A customer who names the plan has told us the tier, and that is the
+        # tier the figures should come from. Only the system of record can say
+        # which plan they *hold*, so a named plan never overrides one read from
+        # a policy — but for everyone else the alternative was "[unavailable]"
+        # and an invitation to sign in, on a question that named its own answer.
+        if tier == "UNKNOWN" and product is not None:
+            asked_tier = plan_tier_in(question, product.frontmatter.plan_tiers)
+            if asked_tier and bundle.tables.tiers_for(bundle.product_key(product), version).count(asked_tier):
+                tier = asked_tier
+                trace.note(f"plan named in the question: {tier}")
+
         with trace.stage("compose") as detail:
             # The keyword classifier catches "which plan should I buy" and
             # misses "what cover do you recommend I take" — same regulated
@@ -548,6 +570,11 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
                     draft.answer = bulletise(draft.answer)
                     detail["shape"] = "bulleted"
 
+        if ask.section and "cancellation by you" in ask.section[1].lower() and not draft.handoff:
+            # Keep the selected clause's heading: "terminate" in its body is
+            # cancellation by the customer, not the automatic termination list.
+            draft.answer = "Cancellation by you:\n\n" + draft.answer
+
         if incoming.acted_on("distress"):
             # Routed to a person rather than answered. What a customer in
             # crisis should actually be told is a compliance decision, not one
@@ -568,11 +595,19 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
             and ask.intent in (Intent.limit, Intent.coverage, Intent.price, Intent.unknown)
             and _tier_specific(product, bundle)
         ):
+            # The tier is unknown and that stays on the record either way: it
+            # is what a reviewer reads to know the answer was not personalised.
             draft.unresolved.append("plan tier unknown — sign in for tier-specific limits")
-            draft.answer += (
-                "\n\nLimits vary by plan tier, so sign in or tell me your tier and "
-                "I'll give you the exact figure."
-            )
+            # The sentence, though, is only worth saying when the figures were
+            # not already given per plan. "Entry $5,000, Savvy $5,000, Luxury
+            # $10,000" answers the question for every plan there is; following
+            # it with "tell me your tier and I'll give you the exact figure"
+            # reads as though it had not.
+            if not _lists_every_plan(draft.answer, product):
+                draft.answer += (
+                    "\n\nLimits vary by plan tier, so sign in or tell me your tier and "
+                    "I'll give you the exact figure."
+                )
 
     except BudgetExhausted as exc:
         # A defined exit, never a loop (§F.3).
@@ -748,5 +783,15 @@ def run(turn: Turn) -> tuple[AnswerEnvelope, Trace]:
         trace.answer = envelope.answer.model_dump(mode="json")
         return envelope, trace
 
+    # The gates have read every claim against the span it came from, so the
+    # tier can now be named in the prose. Before them it could not: the span
+    # says "for the plan tier held", and a sentence that no longer matched its
+    # evidence was refused by groundedness — correctly.
+    # The plans this product is sold in: the catalogue's list where the page
+    # declares one, otherwise whatever its table actually has rows for.
+    plans = list(product.frontmatter.plan_tiers) if product else []
+    if not plans and product is not None:
+        plans = bundle.tables.tiers_for(bundle.product_key(product), version)
+    draft.answer = name_the_plan(draft.answer, tier, plans)
     trace.answer = draft.model_dump(mode="json")
     return AnswerEnvelope(answer=draft, gates=results, delivered=True, trace_id=trace.trace_id), trace

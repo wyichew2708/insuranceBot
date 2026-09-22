@@ -12,6 +12,7 @@ import re
 from decimal import Decimal
 from typing import Any, Literal
 
+from okf.names import plan_tiers_in
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 # Authored country-name vocabulary, deliberately independent of service URLs.
@@ -154,7 +155,9 @@ def extract_slots(
         values["destination"] = None
     if re.search(r"\bnot (?:travelling |traveling |going )?to\b", text):
         values["destination"] = None
-    mentioned_tiers = {tier for tier in tiers if re.search(r"\b" + re.escape(tier) + r"\b", text)}
+    # Slugged tiers, spaced names: "plan B" is `plan-b` and "Enhanced Gold" is
+    # `enhanced-gold`. Matching the slug literally found neither.
+    mentioned_tiers = plan_tiers_in(question, tiers)
     if mentioned_tiers:
         values["tier"] = mentioned_tiers.pop() if len(mentioned_tiers) == 1 else None
     elif re.search(r"\btier\s*[:=]", text):

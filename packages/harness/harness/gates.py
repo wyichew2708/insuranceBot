@@ -605,10 +605,25 @@ def gate_groundedness(ctx: GateContext, threshold: float = 0.6) -> GateResult:
         # A judge that returned nothing is recorded, not trusted: the lexical
         # test below still runs, and the detail says the model was silent.
 
+    # Words the answer got from the benefit table rather than from the cited
+    # prose: the figures themselves and the plan names they are labelled with.
+    # The page says "the amount payable for the plan tier held is
+    # {{table:baggage.limit}}"; the answer says "... is Classic $3,000, Deluxe
+    # $5,000, Suite $7,500". Every added word is published — numeric-binding
+    # checks each one against its row — but none of them is in the prose this
+    # overlap is measured against, so counting them scored a correctly
+    # composed sentence at 0.50 and refused it. They are excluded from the
+    # measure; the prose around them is still held to it.
+    from_table: set[str] = set()
+    for figure in ctx.answer.figures:
+        if figure.table_row_id or figure.sor_field:
+            from_table |= _tokens(figure.text)
+            from_table |= _tokens(figure.table_row_id.split(":")[2] if figure.table_row_id else "")
+
     weak: list[str] = []
     scores: list[float] = []
     for claim in ctx.answer.claims:
-        claim_tokens = _tokens(claim.text)
+        claim_tokens = _tokens(claim.text) - from_table
         if not claim_tokens:
             continue
         score = len(claim_tokens & evidence) / len(claim_tokens)
@@ -805,13 +820,44 @@ def _judge_entailment(ctx: GateContext) -> GateResult | None:
     # the block the judge was shown, there is nothing to fail — the model is
     # being conservative about a long block, and "tiq travel" was refused
     # over a marketing line whose figures sat in its own evidence.
+    # An amount that came out of a benefit-table row is verified against that
+    # row by numeric-binding, which re-reads the table; the judge cannot see it
+    # in the evidence because the evidence is the compiled section, where the
+    # figure is still a `{{table:...}}` token. Before a plan could be named the
+    # token resolved to "[unavailable]" and the claim carried no money at all,
+    # so this never arose; with the tier read from the question it resolves to
+    # a real figure, and refusing it here would refuse every plan-specific
+    # answer. The provenance is not weaker — it is checked somewhere stricter.
+    from_table = {
+        span
+        for f in ctx.answer.figures
+        if f.table_row_id or f.sor_field
+        for span in _MONEY_OR_RATE_RE.findall(f.text)
+    }
+    # ...and every figure the cited products' own tables publish. Taking this
+    # from the answer's figure list alone was not enough: a turn that spells a
+    # limit out per plan carries several rows behind one sentence, and what
+    # survives onto the draft is not reliably all of them. The table is the
+    # authority either way — numeric-binding re-reads it — so a span that
+    # appears in it verbatim is published, whatever the figure list holds.
+    cited_products = {
+        ctx.bundle.product_key(page)
+        for page in (ctx.bundle.get(c.source_id) for c in ctx.answer.claims)
+        if page is not None
+    }
+    if cited_products:
+        for row in ctx.bundle.tables.rows:
+            if row.product in cited_products:
+                from_table.update(_MONEY_OR_RATE_RE.findall(row.rendered()))
     unsettled_figures = [
         c.text[:60]
         for i, c in judged_set
         if verdicts.get(i) == "neutral"
         and _MONEY_OR_RATE_RE.search(c.text)
         and not _is_list_fragment(c.text)
-        and not all(span in shown_for.get(i, "") for span in _MONEY_OR_RATE_RE.findall(c.text))
+        and not all(
+            span in shown_for.get(i, "") or span in from_table for span in _MONEY_OR_RATE_RE.findall(c.text)
+        )
     ]
     if unsettled_figures:
         return GateResult(
