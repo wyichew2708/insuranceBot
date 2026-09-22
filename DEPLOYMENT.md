@@ -395,68 +395,213 @@ changes the runtime, not the answer contract.
 On a Linux host with NVIDIA GPUs, vLLM in a container is the right answer,
 and it is the `vllm` service under the compose `gpu` profile (§8a).
 
-## 8a. The GPU host: vectors, embeddings, reranking
+## 8a. RAG: vector embeddings, step by step
 
-Everything the API depends on is a URL, so the Mac and the GPU host differ by
-a `.env`, and both can be tested against the same code.
+Optional. With `PGVECTOR` unset or `auto` and no DSN, retrieval is lexical and
+everything in this guide up to here is complete. Turn this on when the field
+test shows misses the corpus could have answered — recall on the words
+customers use is what it buys, and nothing else.
 
-    docker compose --profile gpu up -d        # postgres, embed, rerank, vllm
-    make index                                # embed the served bundle, once
+### What it changes, and what it does not
 
-    PGVECTOR=auto
-    PGVECTOR_DSN=postgresql://okf:okf@gpu-host:5432/okf
-    EMBED_BASE_URL=http://gpu-host:8080/v1    # TEI serving BAAI/bge-m3
-    RERANK_BASE_URL=http://gpu-host:8081      # optional cross-encoder
-    VLLM_BASE_URL=http://gpu-host:8000        # or the Mac's MLX server
+A chunk found by similarity is a **candidate**, not an answer. It passes the
+same frontmatter filter, the same composition and the same nine gates as one
+found by words, and it is fused into the lexical ranking as a bonus rather
+than replacing it. A draft or expired chunk cannot win on similarity, because
+the WHERE clause is the frontmatter ladder in SQL. Retrieval gets better at
+finding; nothing gets easier to say.
 
-What it is, and is not. A chunk found by similarity is a *candidate* — under
-the same frontmatter filter, composition and gates as one found by words. It
-is fused into the lexical rank as a bonus, so a page the words missed can rise
-above the confidence floor, and a draft or expired chunk cannot win on
-similarity. Both indexes are built offline by `make index`, keyed by content
-hash so a recompile re-embeds what changed, and never inside `Bundle.load` —
-the evaluators and CI need no database. At request time the API embeds only
-the question, once per turn for both searches.
+### Step 1 — bring up Postgres, the embedder and the reranker
 
-**Two tables.** `chunk` is the compiled wiki, whose WHERE clause is the
-frontmatter ladder in SQL — approved, in its effective window, not
-review-overdue, right jurisdiction, not withdrawn. Its hits are used twice:
-pooled to page scores, which decide which pages retrieval reads, and kept at
-section level, which helps the composer decide which section of them answers.
+The `gpu` profile holds all three. Nothing in it starts without the flag, so a
+Mac or a CPU host runs the API exactly as before.
 
-`raw_chunk` is the immutable sources, and it is what makes the RAG fallback
-hybrid. It has no frontmatter to filter on — it is a PDF someone published —
-so what guards it is `okf.sources.may_support` (the product pages and the
-documents, never the marketing) plus the customer's in-force version, applied
-in Python to the dense list and the lexical list by the same function. The two
-rankings are fused by reciprocal rank, and `found_by` on every hit says which
-retriever found it. The raw index is searched **only on the turns the fallback
-actually fires**, so it costs an ordinary turn nothing.
+The compose file lives under `infra/`, so a bare `docker compose` from the
+repo root finds nothing. Use the invocation `make docker-up` uses, written out
+in full — holding it in a shell variable works under bash and silently fails
+under zsh, which does not word-split an unquoted expansion.
 
-    make index                                # both tables
-    uv run python scripts/index_pgvector.py --bundle okf-real --only raw
-    uv run python scripts/index_pgvector.py --bundle okf-real --dry-run
+```bash
+docker compose --project-directory . -f infra/docker-compose.yml \
+  --profile gpu up -d postgres embed rerank
 
-Two floors, both settings rather than constants because they should be set by
-measurement: `VECTOR_FLOOR` (0.55) for the wiki, `VECTOR_RAW_FLOOR` (0.5) for
-the sources. Below a floor a hit is the shape of every document in the corpus
-and earns nothing. The raw floor is the looser of the two because the fallback
-fires precisely when nothing matched, and its hits reach the trace as evidence
-rather than the answer as prose.
+docker compose --project-directory . -f infra/docker-compose.yml \
+  --profile gpu ps
+```
 
-Failure is a mode, not an outage. `PGVECTOR=auto` degrades to the lexical
-path when the database or the embedder is unreachable, records why on the
-trace as `vector_degraded`, and marks the turn `retrieval_mode: lexical`. An
-evaluation refuses to score a "hybrid" run served that way. `PGVECTOR=on`
-fails the turn instead, for testing the path; `off` never opens a connection.
-`/v1/integrations` probes the database and reports its own error verbatim.
+- **postgres** — `pgvector/pgvector:pg16`, on a named volume. This is the one
+  service in the stack with state; the corpus itself is still read-only files.
+- **embed** — Text Embeddings Inference serving `BAAI/bge-m3`. Multilingual
+  on purpose: Malay, Chinese and Tamil all appeared in the field test, and an
+  English-only embedder would answer none of them.
+- **rerank** — `BAAI/bge-reranker-v2-m3`, optional. Skip it and the fused
+  ranking stands.
 
-Why the earlier guide said "no vector store". Grep with a frontmatter filter
-beats embeddings on precision at this bundle size, and still does. What it
-loses is recall on the words customers use, which became a measured failure
-in the field test. The vectors are bounded to recall by design; every admitted
-chunk still carries a page id and a source ref, and the rejected-candidate log
-still explains every rejection.
+### Step 2 — create the schema
+
+`infra/pgvector/schema.sql` is applied automatically by the postgres container
+on **first start only** (`docker-entrypoint-initdb.d`). An existing volume
+will not re-run it, so apply it by hand after an upgrade that adds a table:
+
+```bash
+docker compose --project-directory . -f infra/docker-compose.yml \
+  --profile gpu exec -T postgres psql -U okf -d okf < infra/pgvector/schema.sql
+```
+
+It is idempotent — every statement is `IF NOT EXISTS` — so running it against
+a live database is safe.
+
+Two tables, deliberately not one:
+
+| | `chunk` | `raw_chunk` |
+|---|---|---|
+| holds | the compiled wiki, one row per section | the immutable sources, one row per `##` |
+| filtered by | the frontmatter ladder, in SQL | `okf.sources.may_support` + in-force version, in Python |
+| searched | every turn | only when the fallback fires |
+
+They are separate because a wiki chunk is a compiled, approved, dated page and
+a raw chunk is a PDF someone published. One table would mean one WHERE clause
+that is right for half its rows.
+
+### Step 3 — point the API at them
+
+```bash
+PGVECTOR=auto                                  # auto | on | off
+PGVECTOR_DSN=postgresql://okf:okf@gpu-host:5432/okf
+EMBED_BASE_URL=http://gpu-host:8080/v1         # TEI, OpenAI-compatible
+EMBED_MODEL=BAAI/bge-m3
+RERANK_BASE_URL=http://gpu-host:8081           # optional
+```
+
+`auto` resolves from what is configured: an empty DSN is the lexical path, and
+no stage is opened for it. `on` fails the turn when the database is
+unreachable — use it to test the path, never in production. `off` never opens
+a connection.
+
+The API image already carries the driver — the Containerfile syncs
+`--extra pgvector`. Running from a checkout, the extra is declared on the
+`api` package, not on the workspace root, so it has to be named:
+
+```bash
+# serving only — this is what the container does
+uv sync --package api --extra pgvector
+
+# a checkout that also runs the tests and the linters
+uv sync --package api --extra pgvector --all-groups
+```
+
+`uv sync --extra pgvector` on its own fails with *Extra `pgvector` is not
+defined*, and the first form without `--all-groups` removes the dev tooling,
+so `make test` and `make lint` stop working until you sync again.
+
+Without the driver the probe says so in as many words: *psycopg not
+installed*.
+
+### Step 4 — build the index
+
+Offline, once, and again after every recompile. **Never at request time**: the
+API embeds only the question.
+
+```bash
+make index                                              # both tables, okf-real
+uv run python scripts/index_pgvector.py --bundle okf-real --dry-run
+uv run python scripts/index_pgvector.py --bundle okf-real --only raw
+```
+
+`--dry-run` needs the database but not the embedder, and tells you the scale
+before you commit to it. For `okf-real` today:
+
+```
+okf-real: 305 pages → 2109 wiki sections, 16303 raw sections
+  chunk:     on disk 0 · unchanged 0 · to embed 2109 · to delete 0
+  raw_chunk: on disk 0 · unchanged 0 · to embed 16303 · to delete 0
+```
+
+Rows are keyed by content hash, so a re-run embeds only what changed and
+deletes rows for sections that no longer exist — a recompile costs what it
+changed, not the whole corpus. The script prints a fingerprint per table when
+it finishes; keep it, step 5 compares against it.
+
+This is deliberately not part of `Bundle.load`. Twenty-six other callers load
+a bundle — the compiler, the evaluators, the linter, every test — and
+embedding there would make `make evals` and CI depend on a GPU.
+
+### Step 5 — verify
+
+Two endpoints. The first reports what is *configured*, with the DSN password
+redacted; the second actually opens a connection and says what it found.
+
+```bash
+curl -s localhost:8080/v1/cms/integrations \
+  | jq '.integrations[] | select(.name=="pgvector")'
+
+curl -s -X POST localhost:8080/v1/cms/integrations/pgvector/test | jq
+```
+
+The probe answers in one line, and the line is the diagnosis:
+
+```json
+{ "name": "pgvector", "ok": false, "elapsed_ms": 90.5,
+  "detail": "connected; no wiki index for bundle 'okf-real' — run `make index` (wiki: not indexed; raw: not indexed); embeddings FAILED: http://gpu-host:8080/v1/models → HTTP 404" }
+```
+
+Indexed and healthy, it reads:
+
+```
+"connected; 'okf-real' — wiki: 1284 chunks, fingerprint 9f2c41ab8e03…; raw: 5120 chunks, fingerprint 3ac0…"
+```
+
+Compare that fingerprint with the one `make index` printed when it finished.
+If they differ, the corpus has been recompiled since the index was built and
+the index is stale.
+
+Then ask a question and read the trace:
+
+```bash
+curl -s localhost:8080/v1/traces | jq '.[0] | {retrieval_mode, vector_degraded}'
+```
+
+`retrieval_mode` is `hybrid` or `lexical`, recorded per turn. An evaluation
+refuses to score a run as hybrid that was actually served lexically, which is
+the whole reason it is on the trace.
+
+### Step 6 — tune the floors, by measurement
+
+```bash
+VECTOR_FLOOR=0.55        # the wiki index
+VECTOR_RAW_FLOOR=0.5     # the sources
+```
+
+Below its floor a hit is the shape of every document in the corpus and earns
+nothing. The raw floor is looser because the fallback fires precisely when
+nothing else matched, and its hits reach the trace as evidence rather than the
+answer as prose. Both are settings rather than constants because they should
+be set against your own field test — run it in both modes and compare. The
+only acceptable outcome is misses down, unsafe answers not up.
+
+### When it breaks
+
+Failure is a mode, not an outage. Under `auto` an unreachable database or
+embedder degrades to the lexical path, records `vector_degraded` on the trace
+with the exception's name, and marks the turn `lexical`. The turn still
+answers. Kill the database mid-suite and the run completes.
+
+| symptom | cause | fix |
+|---|---|---|
+| probe says *psycopg not installed* | driver extra missing | `uv sync --extra pgvector` |
+| probe reachable, `wiki: empty` | schema applied, never indexed | `make index` |
+| fingerprint differs from the last index run | corpus recompiled since | `make index` again |
+| `relation "raw_chunk" does not exist` | volume predates the table | apply `schema.sql` by hand (step 2) |
+| every turn is `lexical` with a DSN set | embedder unreachable | check `EMBED_BASE_URL`; the trace names the exception |
+| dimension mismatch on insert | `EMBED_MODEL` changed | the column is `vector(1024)` for bge-m3 — a different model needs a new column type and a full re-index |
+
+### Why the earlier guide said "no vector store"
+
+Grep with a frontmatter filter beats embeddings on precision at this bundle
+size, and still does. What it loses is recall on the words customers use,
+which became a measured failure in the field test. The vectors are bounded to
+recall by design: every admitted chunk still carries a page id and a source
+ref, and the rejected-candidate log still explains every rejection.
 
 ---
 

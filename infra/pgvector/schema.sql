@@ -41,9 +41,10 @@ CREATE INDEX IF NOT EXISTS chunk_bundle_status
 CREATE INDEX IF NOT EXISTS chunk_page
     ON chunk (bundle, page_id);
 
--- What the API compares against the served bundle on /readyz: if the set of
--- content hashes in the index differs from the bundle's, the index is stale
--- and the API says so rather than serving it.
+-- The index's identity, so a stale one can be spotted rather than served.
+-- `make index` prints it when it finishes and the integrations probe
+-- (GET /v1/cms/integrations) reports it per table: when the two differ, the
+-- corpus has been recompiled since the index was last built.
 CREATE OR REPLACE VIEW chunk_fingerprint AS
     SELECT bundle, count(*) AS chunks, md5(string_agg(content_hash, ',' ORDER BY id)) AS fingerprint
     FROM chunk GROUP BY bundle;
@@ -80,8 +81,8 @@ CREATE INDEX IF NOT EXISTS raw_chunk_embedding_hnsw
 CREATE INDEX IF NOT EXISTS raw_chunk_bundle
     ON raw_chunk (bundle, source_path);
 
--- Same fingerprint contract as `chunk_fingerprint`: /readyz compares this
--- against the sources on disk and refuses to call a stale index fresh.
+-- Same fingerprint contract as `chunk_fingerprint`, over the sources rather
+-- than the wiki. Reported by the integrations probe alongside it.
 CREATE OR REPLACE VIEW raw_chunk_fingerprint AS
     SELECT bundle, count(*) AS chunks, md5(string_agg(content_hash, ',' ORDER BY id)) AS fingerprint
     FROM raw_chunk GROUP BY bundle;
