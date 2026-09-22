@@ -50,6 +50,15 @@ class Claim(BaseModel):
     text: str
     source_id: str  # wiki page id, or a raw/ path
     locator: str | None = None
+    #: What the document the claim was taken from is called, and where a
+    #: person can read it. The locator is a path inside the bundle — right for
+    #: an auditor, useless to a customer being asked to take a policy term on
+    #: trust. These carry the same provenance in a form that can be shown:
+    #: "Home Insurance policy wording", linking to the insurer's own PDF.
+    #: Both are derived from the cited document's own front matter, never
+    #: composed, so a citation cannot name a document that is not there.
+    source_title: str | None = None
+    source_url: str | None = None
 
 
 class Figure(BaseModel):
@@ -225,6 +234,7 @@ class AnswerEnvelope(BaseModel):
     summary: str = ""
     map: list[NavigationNode] = Field(default_factory=list)
     handover_summary: str = ""
+    preview: str = ""
 
 
 class NavigationNode(BaseModel):

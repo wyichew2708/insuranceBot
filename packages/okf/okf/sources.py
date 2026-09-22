@@ -114,3 +114,52 @@ def may_support(
     if kind == OFFER:
         return bool(OFFER_QUESTION_RE.search(question or ""))
     return False
+
+
+#: Front matter of a raw document, read once per bundle.
+_CITATION_CACHE: dict[tuple[str, str], tuple[str | None, str | None]] = {}
+
+_FM_RE = re.compile(r'^(\w+):\s*"?([^"\n]*)"?\s*$', re.M)
+
+
+def _title_from_path(path: str) -> str:
+    """A filename as a person would say it: `policy-wording-home-insurance.md`
+    becomes "Policy wording home insurance"."""
+    stem = path.rsplit("/", 1)[-1].removesuffix(".md")
+    words = re.sub(r"[-_]+", " ", stem).strip()
+    return words[:1].upper() + words[1:] if words else path
+
+
+def citation_for(root: Path, locator: str | None) -> tuple[str | None, str | None]:
+    """The name and address of the document a claim cites.
+
+    Read from the document's own front matter — `title` and `source_url` on a
+    crawled page, `source_url` alone on a policy wording, where the name comes
+    from the filename instead. Anything unreadable yields nothing rather than
+    a guess: a citation that names the wrong document is worse than one that
+    names none.
+    """
+    if not locator:
+        return None, None
+    path = locator.split("#", 1)[0]
+    if not path.startswith("raw/"):
+        return None, None
+    key = (str(root), path)
+    if key in _CITATION_CACHE:
+        return _CITATION_CACHE[key]
+    title: str | None = None
+    url: str | None = None
+    try:
+        head = (root / path).read_text(encoding="utf-8", errors="ignore")[:1200]
+        if head.startswith("---"):
+            fields = dict(_FM_RE.findall(head.split("---", 2)[1]))
+            title = (fields.get("title") or "").strip() or None
+            url = (fields.get("source_url") or "").strip() or None
+    except OSError:
+        pass
+    if title is None:
+        title = _title_from_path(path)
+    if url and not url.startswith("https://"):
+        url = None
+    _CITATION_CACHE[key] = (title, url)
+    return title, url

@@ -152,6 +152,27 @@ textarea:focus{outline:none;border-color:var(--accent)}
 .comparison table { width: 100%; border-collapse: collapse; text-align: left; }
 .comparison caption { text-align: left; margin-bottom: .5rem; font-weight: 600; }
 .comparison th, .comparison td { padding: .6rem; border-bottom: 1px solid var(--line); min-width: 8rem; }
+
+/* While the verified answer is being paced out. The caret is the only signal
+   that more is coming; it is removed when the envelope renders. */
+.streaming > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: .5ch;
+  height: 1em;
+  margin-left: .12em;
+  vertical-align: -.12em;
+  background: currentColor;
+  opacity: .55;
+  animation: caret 1s steps(2, start) infinite;
+}
+@keyframes caret { 0%, 50% { opacity: .55 } 50.01%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .streaming > :last-child::after { animation: none }
+}
+
+/* A cited passage, under the name of the document it came from. */
+.srcs .quote { display: block; opacity: .8; margin: .2em 0 .15em }
 </style>
 
 <header>
@@ -161,6 +182,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
     <p><span class="dot"></span><span id="corpus">connecting…</span></p>
   </div>
   <div class="tools">
+    <button class="ghost" id="new-chat">New chat</button>
     <button class="ghost" id="settings-btn" aria-pressed="false">Session</button>
     <button class="ghost" id="theme-btn" title="Light or dark">◐</button>
     <a class="ghost" href="/" style="text-decoration:none">Debug&nbsp;console</a>
@@ -219,13 +241,22 @@ textarea:focus{outline:none;border-color:var(--accent)}
 </footer>
 
 <script>
+/* Served under `API_PREFIX` when the app is mounted behind a gateway
+   that routes by path; empty at the root. */
+const API = (window.API_PREFIX || "");
+
 const $ = s => document.querySelector(s);
 const thread = $("#thread"), main = $("#main"), box = $("#q"), send = $("#send");
-const sessionId = "chat-" + Math.random().toString(36).slice(2, 10);
+const sessionId = sessionStorage.getItem("insurance-session") || "chat-" + crypto.randomUUID();
+sessionStorage.setItem("insurance-session", sessionId);
+let serverMemory = false;
+$("#new-chat").onclick = () => {
+  sessionStorage.removeItem("insurance-session");
+  location.reload();
+};
 let busy = false;
-// The customer's own turns, oldest first. The service holds no session state,
-// so the surface that has the transcript is the one that sends it — and it is
-// used only to restore a subject to a turn that names none.
+// Client history is a bounded fallback when server memory is disabled.
+// With memory enabled, omit history so the retained typed state remains usable.
 const history = [];
 
 /* ---- theme ---- */
@@ -243,9 +274,10 @@ $("#settings-btn").onclick = e => {
 };
 
 /* ---- what this bundle actually holds ---- */
-(async () => {
+const readiness = (async () => {
   try {
-    const r = await fetch("/readyz").then(r => r.json());
+    const r = await fetch(API + "/readyz").then(r => r.json());
+    serverMemory = r.memory_enabled === true;
     $("#corpus").textContent = `${r.pages} pages · ${r.table_rows} benefit rows`;
   } catch { $("#corpus").textContent = "offline"; }
 })();
@@ -277,7 +309,7 @@ function bindPicks(element) {
 }
 async function loadNavigation() {
   try {
-    const response = await fetch(`/v1/navigation?channel=${encodeURIComponent($("#channel").value)}`);
+    const response = await fetch(API + `/v1/navigation?channel=${encodeURIComponent($("#channel").value)}`);
     if (!response.ok) throw new Error("navigation unavailable");
     const data = await response.json();
     $("#chips").innerHTML = renderNavigation(data.map);
@@ -290,7 +322,7 @@ $("#channel").addEventListener("change", loadNavigation);
 /* ---- policies from the system of record ---- */
 (async () => {
   try {
-    const { policies = [] } = await fetch("/v1/fixtures").then(r => r.json());
+    const { policies = [] } = await fetch(API + "/v1/fixtures").then(r => r.json());
     for (const p of policies) {
       const o = document.createElement("option");
       o.value = JSON.stringify(p);
@@ -407,24 +439,30 @@ async function ask() {
   if (pol) session.policy = JSON.parse(pol);
 
   try {
-    const res = await fetch("/v1/answer/stream", {
+    await readiness;
+    const res = await fetch(API + "/v1/answer/stream", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: q, session, history: history.slice(-6) }),
+      body: JSON.stringify({ question: q, session, ...(serverMemory ? {} : {history: history.slice(-20)}) }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     // Progress while the turn runs, then the verified text as it is paced
     // out, then the envelope. Nothing shown here is ever taken back: the
     // server streams only what the gates passed.
+
+    // Painted as it arrives. Nothing here is ever retracted: the server only
+    // starts sending text once the gates have passed the answer, so the words
+    // appearing are the words that stay. The stage line runs until the first
+    // chunk, then the answer takes over.
     let streamed = "";
     const env = await readEvents(res, {
       stage: s => {
-        if (s.phase === "start")
+        if (s.phase === "start" && !streamed)
           bubble.innerHTML = `<div class="typing"><i></i><i></i><i></i></div><div class="stage">${escapeHtml(s.label)}</div>`;
       },
       delta: d => {
-        streamed += d.text;
-        bubble.innerHTML = render(streamed, []);
+        streamed += d.text || "";
+        bubble.innerHTML = `<div class="streaming">${render(streamed, [])}</div>`;
         main.scrollTop = main.scrollHeight;
       },
     });
@@ -456,13 +494,25 @@ async function ask() {
       head = '<div class="tag handoff">This needs a licensed adviser</div>';
     }
 
+    // One entry per document, not one per sentence: an exclusions answer cites
+    // the same policy wording five times, and "5 sources" overstated what the
+    // answer actually rests on. The count is of documents; each is named as
+    // the insurer names it and links to the insurer's own copy where the
+    // corpus recorded one, so a customer can check a term rather than trust it.
     const claims = a.claims || [];
-    const sources = claims.length
-      ? `<details class="src"><summary>${claims.length} source${claims.length > 1 ? "s" : ""}</summary>
-           <ul class="srcs">${[...new Map(claims.map(c =>
-             [c.locator || c.source_id, c])).values()].map(c =>
-               `<li>${escapeHtml((c.text || "").slice(0, 190))}
-                  <code>${escapeHtml(c.locator || c.source_id)}</code></li>`).join("")}
+    const byDoc = [...new Map(claims.map(c =>
+      [c.source_url || c.locator || c.source_id, c])).values()];
+    const sources = byDoc.length
+      ? `<details class="src"><summary>${byDoc.length} source${byDoc.length > 1 ? "s" : ""}</summary>
+           <ul class="srcs">${byDoc.map(c => {
+             const name = escapeHtml(c.source_title || c.locator || c.source_id);
+             const head = c.source_url
+               ? `<a href="${escapeHtml(c.source_url)}" target="_blank" rel="noopener noreferrer">${name} ↗</a>`
+               : `<strong>${name}</strong>`;
+             return `<li>${head}
+                  <span class="quote">${escapeHtml((c.text || "").slice(0, 190))}</span>
+                  <code>${escapeHtml(c.locator || c.source_id)}</code></li>`;
+           }).join("")}
            </ul></details>`
       : "";
 
@@ -476,7 +526,10 @@ async function ask() {
         "</div>";
     }
     const responseText = a.table ? (a.answer || "").split("\n- ")[0] : (a.answer || "");
-    bubble.innerHTML = head + render(responseText, a.figures) +
+    const concise = env.preview ? render(env.preview, a.figures) +
+      `<details class="src"><summary>Read full answer and conditions</summary>${render(responseText, a.figures)}</details>`
+      : render(responseText, a.figures);
+    bubble.innerHTML = head + concise +
       (env.delivered ? renderComparison(a.table) : "") + options +
       renderNavigation(env.map) + renderNavigation((a.destinations || []).map(link => ({
         kind: "destination", label: link.label, url: link.url
