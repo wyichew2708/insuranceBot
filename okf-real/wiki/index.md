@@ -32,6 +32,8 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/business/business-owners-super-suite` — [Business Owners Super Suite](./product/business/business-owners-super-suite.md)
 
+- `product/business/business-owners-super-suite/benefits` — [Business Owners Super Suite — Benefits](./product/business/business-owners-super-suite/benefits.md)
+
 - `product/business/business-owners-super-suite/claims` — [Business Owners Super Suite — Making a claim](./product/business/business-owners-super-suite/claims.md)
 
 - `product/business/business-owners-super-suite/conditions` — [Business Owners Super Suite — Policy conditions](./product/business/business-owners-super-suite/conditions.md)
@@ -43,6 +45,8 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/business/business-owners-super-suite/exclusions` — [Business Owners Super Suite — Exclusions](./product/business/business-owners-super-suite/exclusions.md)
 
 - `product/business/corporate-travel` — [Corporate Travel Insurance](./product/business/corporate-travel.md)
+
+- `product/business/corporate-travel/benefits` — [Corporate Travel Insurance — Benefits](./product/business/corporate-travel/benefits.md)
 
 - `product/business/corporate-travel/exclusions` — [Corporate Travel Insurance — Exclusions](./product/business/corporate-travel/exclusions.md)
 
@@ -164,6 +168,8 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 
 - `product/general/personal-accident` — [Tiq Personal Accident](./product/general/personal-accident.md)
 
+- `product/general/personal-accident/benefits` — [Tiq Personal Accident — Benefits](./product/general/personal-accident/benefits.md)
+
 - `product/general/personal-accident/claims` — [Tiq Personal Accident — Making a claim](./product/general/personal-accident/claims.md)
 
 - `product/general/personal-accident/conditions` — [Tiq Personal Accident — Policy conditions](./product/general/personal-accident/conditions.md)
@@ -257,6 +263,8 @@ One canonical page per product. Brand is a channel attribute, not a product iden
 - `product/general/travel-insurance/faq` — [Tiq Travel Insurance — Published FAQs](./product/general/travel-insurance/faq.md)
 
 - `product/general/travel-takaful` — [Travel Takaful](./product/general/travel-takaful.md)
+
+- `product/general/travel-takaful/benefits` — [Travel Takaful — Benefits](./product/general/travel-takaful/benefits.md)
 
 - `product/general/travel-takaful/conditions` — [Travel Takaful — Policy conditions](./product/general/travel-takaful/conditions.md)
 

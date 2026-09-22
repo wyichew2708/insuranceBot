@@ -30,6 +30,7 @@ faq_intents:
 - coverage
 - eligibility
 - offer
+- payment
 - unknown
 ---
 

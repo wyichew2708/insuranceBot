@@ -15,9 +15,10 @@ aliases:
 - what does pet-insurance cover
 channels: []
 plan_tiers:
-- pawmazing-get-quote
-- pawtastic-get-quote
-- pawfect-get-quote
+- pawsome
+- pawmazing
+- pawtastic
+- pawfect
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
@@ -34,6 +35,26 @@ review_due: '2026-12-02'
 confidence: high
 ---
 
-## N a
+## 8 weeks onwards
 
-The amount payable for the plan tier held is {{table:n_a.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+The amount payable for the plan tier held is {{table:8_weeks_onwards.period}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+## Accidental injury
+
+The amount payable for the plan tier held is {{table:accidental_injury.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+## Funeral expenses
+
+The amount payable for the plan tier held is {{table:funeral_expenses.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+## Non surgical illness cover
+
+The amount payable for the plan tier held is {{table:non_surgical_illness_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+## Surgical illness cover
+
+The amount payable for the plan tier held is {{table:surgical_illness_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+## Third party liability
+
+The amount payable for the plan tier held is {{table:third_party_liability.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].

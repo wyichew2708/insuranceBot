@@ -23,9 +23,9 @@ channels:
   surfaces:
   - https://www.etiqa.com.sg/personal/travel-insurance
 plan_tiers:
-- 1-000
-- 1-000
-- 3-000
+- entry
+- savvy
+- luxury
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
@@ -67,9 +67,35 @@ The policy wording sets out cover under: Medical Expenses Incurred Overseas; Med
 
 ## Headline benefits
 
+The bankruptcy of travel agent limit for the plan tier held is {{table:bankruptcy_of_travel_agent.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
 The child limit for the plan tier held is {{table:child.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
 
+The child ren guardian limit for the plan tier held is {{table:child_ren_guardian.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The compassionate visit limit for the plan tier held is {{table:compassionate_visit.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The emergency telephone charges limit for the plan tier held is {{table:emergency_telephone_charges.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The flight overbooking limit for the plan tier held is {{table:flight_overbooking.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The hijacking kidnapping and hostage limit for the plan tier held is {{table:hijacking_kidnapping_and_hostage.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
 The home content cover limit for the plan tier held is {{table:home_content_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The hospital visitation limit for the plan tier held is {{table:hospital_visitation.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The medical expenses incurred in singapore limit for the plan tier held is {{table:medical_expenses_incurred_in_singapore.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The rental car limit for the plan tier held is {{table:rental_car.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The sport equipment protector limit for the plan tier held is {{table:sport_equipment_protector.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The travel curtailment limit for the plan tier held is {{table:travel_curtailment.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The travel postponement limit for the plan tier held is {{table:travel_postponement.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+The trip cancellation and loss of deposit limit for the plan tier held is {{table:trip_cancellation_and_loss_of_deposit.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
 
 Full benefit detail is on the [benefits page](./travel-insurance/benefits.md).
 

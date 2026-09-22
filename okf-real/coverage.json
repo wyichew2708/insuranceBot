@@ -2,8 +2,8 @@
  "total": {
   "sources": 1329,
   "words": 2585453,
-  "reached": 122276,
-  "share": 0.047
+  "reached": 123537,
+  "share": 0.048
  },
  "sources": {
   "raw/brochures/2023-05-etiqa-ilp-sub-fund-factsheets-all-portfolios.md": {
@@ -1745,11 +1745,12 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-business-owners-super-suite.md": {
    "words": 4938,
-   "reached": 66,
-   "share": 0.013,
+   "reached": 284,
+   "share": 0.058,
    "pages": [
     "channel/broker",
-    "product/business/business-owners-super-suite"
+    "product/business/business-owners-super-suite",
+    "product/business/business-owners-super-suite/benefits"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-casualty-products-liability.md": {
@@ -1795,10 +1796,11 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-corporate-travel.md": {
    "words": 794,
-   "reached": 79,
-   "share": 0.099,
+   "reached": 188,
+   "share": 0.237,
    "pages": [
-    "product/business/corporate-travel"
+    "product/business/corporate-travel",
+    "product/business/corporate-travel/benefits"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/business-insurance-engineering-contractors-all-risks-erection-all-risks.md": {
@@ -3493,8 +3495,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md": {
    "words": 1074,
-   "reached": 16,
-   "share": 0.015,
+   "reached": 95,
+   "share": 0.088,
    "pages": [
     "product/general/maid-insurance",
     "product/general/maid-insurance/benefits"
@@ -3626,8 +3628,8 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md": {
    "words": 3269,
-   "reached": 174,
-   "share": 0.053,
+   "reached": 295,
+   "share": 0.09,
    "pages": [
     "product/general/travel-infinite",
     "product/general/travel-infinite/benefits"
@@ -3635,10 +3637,11 @@
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-takaful.md": {
    "words": 6651,
-   "reached": 32,
-   "share": 0.005,
+   "reached": 235,
+   "share": 0.035,
    "pages": [
-    "product/general/travel-takaful"
+    "product/general/travel-takaful",
+    "product/general/travel-takaful/benefits"
    ]
   },
   "raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md": {
@@ -6816,8 +6819,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md": {
    "words": 1570,
-   "reached": 61,
-   "share": 0.039,
+   "reached": 126,
+   "share": 0.08,
    "pages": [
     "product/general/maid-insurance",
     "product/general/maid-insurance/benefits"
@@ -6841,8 +6844,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md": {
    "words": 2703,
-   "reached": 35,
-   "share": 0.013,
+   "reached": 133,
+   "share": 0.049,
    "pages": [
     "product/general/pet-insurance",
     "product/general/pet-insurance/benefits"
@@ -6912,10 +6915,11 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md": {
    "words": 1333,
-   "reached": 15,
-   "share": 0.011,
+   "reached": 96,
+   "share": 0.072,
    "pages": [
-    "product/general/personal-accident"
+    "product/general/personal-accident",
+    "product/general/personal-accident/benefits"
    ]
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-tiqinvest.md": {
@@ -6928,8 +6932,8 @@
   },
   "raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md": {
    "words": 4993,
-   "reached": 196,
-   "share": 0.039,
+   "reached": 483,
+   "share": 0.097,
    "pages": [
     "product/general/travel-insurance",
     "product/general/travel-insurance/benefits"

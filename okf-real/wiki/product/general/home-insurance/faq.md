@@ -30,6 +30,8 @@ faq_intents:
 - claim
 - coverage
 - eligibility
+- payment
+- price
 - renewal
 - unknown
 ---

@@ -28,10 +28,11 @@ review_due: '2026-12-02'
 confidence: medium
 faq_intents:
 - claim
+- contact
 - coverage
-- eligibility
 - exclusion
-- renewal
+- payment
+- price
 - unknown
 ---
 

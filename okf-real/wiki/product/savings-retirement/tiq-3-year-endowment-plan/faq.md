@@ -27,7 +27,9 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: medium
 faq_intents:
+- claim_status
 - eligibility
+- payment
 - unknown
 ---
 

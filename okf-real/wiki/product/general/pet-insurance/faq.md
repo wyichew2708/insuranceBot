@@ -29,6 +29,7 @@ confidence: medium
 faq_intents:
 - claim
 - coverage
+- eligibility
 - exclusion
 - offer
 - renewal

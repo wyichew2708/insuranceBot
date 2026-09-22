@@ -26,9 +26,10 @@ channels:
   surfaces:
   - https://www.etiqa.com.sg/personal/pet-insurance
 plan_tiers:
-- pawmazing-get-quote
-- pawtastic-get-quote
-- pawfect-get-quote
+- pawsome
+- pawmazing
+- pawtastic
+- pawfect
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-pet-insurance.md
@@ -61,7 +62,15 @@ The policy wording sets out cover under: Death Benefit; Terminal Illness (TI) Be
 
 ## Headline benefits
 
-The n a limit for the plan tier held is {{table:n_a.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+The accidental injury limit for the plan tier held is {{table:accidental_injury.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+The funeral expenses limit for the plan tier held is {{table:funeral_expenses.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+The non surgical illness cover limit for the plan tier held is {{table:non_surgical_illness_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+The surgical illness cover limit for the plan tier held is {{table:surgical_illness_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
+
+The third party liability limit for the plan tier held is {{table:third_party_liability.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered].
 
 Full benefit detail is on the [benefits page](./pet-insurance/benefits.md).
 

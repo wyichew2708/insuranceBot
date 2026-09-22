@@ -51,6 +51,8 @@ What you can get: Overseas medical expense coverage from $200,000 to $2.5 millio
 
 ## Headline benefits
 
+The child limit for the plan tier held is {{table:child.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
 The golf equipment limit for the plan tier held is {{table:golf_equipment.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
 
 The golf hole in one limit for the plan tier held is {{table:golf_hole_in_one.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
@@ -60,6 +62,14 @@ The individual limit for the plan tier held is {{table:individual.limit}} [src:r
 The limit limit for the plan tier held is {{table:limit.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
 
 The maximum limit for the plan tier held is {{table:maximum.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+The medical expenses incurred overseas limit for the plan tier held is {{table:medical_expenses_incurred_overseas.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+The travel postponement limit for the plan tier held is {{table:travel_postponement.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+The trip cancellation and loss of deposit limit for the plan tier held is {{table:trip_cancellation_and_loss_of_deposit.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+The trip curtailment disruption limit for the plan tier held is {{table:trip_curtailment_disruption.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
 
 The unused green fee limit for the plan tier held is {{table:unused_green_fee.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
 

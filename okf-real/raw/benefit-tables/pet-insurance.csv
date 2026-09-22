@@ -1,4 +1,23 @@
 product,version,tier,benefit_code,attribute,value,unit,source_ref
-pet-insurance,2026,pawfect-get-quote,n_a,limit,500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
-pet-insurance,2026,pawmazing-get-quote,n_a,limit,250,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
-pet-insurance,2026,pawtastic-get-quote,n_a,limit,350,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,8_weeks_onwards,period,12,weeks onwards,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,8_weeks_onwards,period,16,weeks onwards,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawsome,8_weeks_onwards,period,16,weeks onwards,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,8_weeks_onwards,period,8,weeks onwards,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,accidental_injury,limit,3500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,accidental_injury,limit,1000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawsome,accidental_injury,limit,500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,accidental_injury,limit,2500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,funeral_expenses,limit,500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,funeral_expenses,limit,250,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,funeral_expenses,limit,350,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,non_surgical_illness_cover,limit,3500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,non_surgical_illness_cover,limit,1000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawsome,non_surgical_illness_cover,limit,500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,non_surgical_illness_cover,limit,2500,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,surgical_illness_cover,limit,15000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,surgical_illness_cover,limit,5000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawsome,surgical_illness_cover,limit,2000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,surgical_illness_cover,limit,10000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawfect,third_party_liability,limit,500000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawmazing,third_party_liability,limit,100000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered
+pet-insurance,2026,pawtastic,third_party_liability,limit,250000,$,raw/web/www.tiq.com.sg/2026-08-25/product-pet-insurance.md#what-is-covered

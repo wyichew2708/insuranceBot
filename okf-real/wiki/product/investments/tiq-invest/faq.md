@@ -27,9 +27,12 @@ reviewed_by:
 review_due: '2026-12-02'
 confidence: medium
 faq_intents:
+- account
+- claim_status
 - coverage
 - eligibility
 - limit
+- payment
 - unknown
 ---
 

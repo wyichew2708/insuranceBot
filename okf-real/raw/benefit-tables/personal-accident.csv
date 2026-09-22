@@ -1,0 +1,13 @@
+product,version,tier,benefit_code,attribute,value,unit,source_ref
+personal-accident,2026,enhanced-gold,section_13_physiotherapy,limit,1500,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-platinum,section_13_physiotherapy,limit,2000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-silver,section_13_physiotherapy,limit,1000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-gold,section_1_accidental_death,limit,300000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-platinum,section_1_accidental_death,limit,500000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-silver,section_1_accidental_death,limit,125000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-gold,section_6_facial_reconstruction_surgery,limit,2000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-platinum,section_6_facial_reconstruction_surgery,limit,5000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-silver,section_6_facial_reconstruction_surgery,limit,1000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-gold,section_8_mobility_expense_reimbursement,limit,2000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-platinum,section_8_mobility_expense_reimbursement,limit,3000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered
+personal-accident,2026,enhanced-silver,section_8_mobility_expense_reimbursement,limit,1000,$,raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered

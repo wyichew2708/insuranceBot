@@ -33,6 +33,14 @@ review_due: '2026-12-02'
 confidence: high
 ---
 
+## Adult aged below 70 years old
+
+The amount payable for the plan tier held is {{table:adult_aged_below_70_years_old.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+## Child
+
+The amount payable for the plan tier held is {{table:child.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
 ## Golf equipment
 
 The amount payable for the plan tier held is {{table:golf_equipment.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
@@ -52,6 +60,22 @@ The amount payable for the plan tier held is {{table:limit.limit}} [src:raw/web/
 ## Maximum
 
 The amount payable for the plan tier held is {{table:maximum.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+## Medical expenses incurred overseas
+
+The amount payable for the plan tier held is {{table:medical_expenses_incurred_overseas.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+## Travel postponement
+
+The amount payable for the plan tier held is {{table:travel_postponement.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+## Trip cancellation and loss of deposit
+
+The amount payable for the plan tier held is {{table:trip_cancellation_and_loss_of_deposit.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
+
+## Trip curtailment disruption
+
+The amount payable for the plan tier held is {{table:trip_curtailment_disruption.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance-travel-infinite.md#what-is-covered].
 
 ## Unused green fee
 

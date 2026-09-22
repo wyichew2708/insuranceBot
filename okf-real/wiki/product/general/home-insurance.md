@@ -21,7 +21,9 @@ channels:
   landing: https://www.tiq.com.sg/product/home-insurance
   surfaces:
   - https://www.etiqa.com.sg/personal/home-insurance
-plan_tiers: []
+plan_tiers:
+- homeowner-landlord
+- tenant
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-home-insurance.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-home-insurance.md

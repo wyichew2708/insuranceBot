@@ -57,7 +57,19 @@ The policy wording sets out cover under: Personal Accident; Repatriation Expense
 
 The accidental death limit for the plan tier held is {{table:accidental_death.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].
 
-The sum insured s is {{table:sum_insured_s.period}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered].
+The plan a limit for the plan tier held is {{table:plan_a.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered].
+
+The plan b limit for the plan tier held is {{table:plan_b.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered].
+
+The plan c limit for the plan tier held is {{table:plan_c.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered].
+
+The repatriation expenses limit for the plan tier held is {{table:repatriation_expenses.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].
+
+The security bond protector limit for the plan tier held is {{table:security_bond_protector.limit}} [src:raw/web/www.etiqa.com.sg/2026-08-25/personal-maid-insurance.md#what-is-covered].
+
+The special grant limit for the plan tier held is {{table:special_grant.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].
+
+The termination re hiring expenses limit for the plan tier held is {{table:termination_re_hiring_expenses.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].
 
 The third party liability limit for the plan tier held is {{table:third_party_liability.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-maid-insurance.md#what-is-covered].
 

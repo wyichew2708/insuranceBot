@@ -28,13 +28,17 @@ channels:
   hotline: +65 6887 8777
   surfaces:
   - https://www.etiqa.com.sg/personal/personal-accident
-plan_tiers: []
+plan_tiers:
+- enhanced-silver
+- enhanced-gold
+- enhanced-platinum
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-personal-accident.md
 version_in_force: '2026'
 effective_from: '2026-08-25'
 links:
+  benefits: product/general/personal-accident/benefits
   exclusions: product/general/personal-accident/exclusions
   concepts: []
 compiled_from_commit: working-tree
@@ -42,7 +46,7 @@ compiled_at: '2026-09-03T00:00:00'
 reviewed_by:
 - UNREVIEWED-eval-only
 review_due: '2026-12-02'
-confidence: medium
+confidence: high
 replaces:
 - ePROTECT personal mobility
 ---
@@ -54,6 +58,16 @@ Coverage for your policy is automatic and no further action is required from you
 ## What it covers
 
 The policy wording sets out cover under: Payment of Benefit; Accidental Death; Permanent Disablement due to Accident; Temporary Total Disablement; Hospitalisation Allowance; Facial Reconstruction Surgery; Bereavement Grant; Mobility Expense Reimbursement; Ambulance Fees; Home or Office Modification Reimbursement; Death due to Infectious Disease; Permanent Disablement due to Infectious Disease [src:raw/wordings/eprotect-personal-mobility-policy-wording2018.md].
+
+## Headline benefits
+
+The section 1 accidental death limit for the plan tier held is {{table:section_1_accidental_death.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered].
+
+The section 6 facial reconstruction surgery limit for the plan tier held is {{table:section_6_facial_reconstruction_surgery.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered].
+
+The section 8 mobility expense reimbursement limit for the plan tier held is {{table:section_8_mobility_expense_reimbursement.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-tiq-personal-accident.md#what-is-covered].
+
+Full benefit detail is on the [benefits page](./personal-accident/benefits.md).
 
 ## What is not covered
 

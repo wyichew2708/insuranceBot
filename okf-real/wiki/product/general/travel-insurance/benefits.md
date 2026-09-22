@@ -15,9 +15,9 @@ aliases:
 - what does travel-insurance cover
 channels: []
 plan_tiers:
-- 1-000
-- 1-000
-- 3-000
+- entry
+- savvy
+- luxury
 authority:
 - raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md
 - raw/web/www.etiqa.com.sg/2026-08-25/personal-travel-insurance.md
@@ -38,10 +38,62 @@ confidence: high
 
 The amount payable for the plan tier held is {{table:adult_aged_below_70_years_old.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
 
+## Bankruptcy of travel agent
+
+The amount payable for the plan tier held is {{table:bankruptcy_of_travel_agent.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
 ## Child
 
 The amount payable for the plan tier held is {{table:child.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
 
+## Child ren guardian
+
+The amount payable for the plan tier held is {{table:child_ren_guardian.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Compassionate visit
+
+The amount payable for the plan tier held is {{table:compassionate_visit.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Emergency telephone charges
+
+The amount payable for the plan tier held is {{table:emergency_telephone_charges.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Flight overbooking
+
+The amount payable for the plan tier held is {{table:flight_overbooking.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Hijacking kidnapping and hostage
+
+The amount payable for the plan tier held is {{table:hijacking_kidnapping_and_hostage.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
 ## Home content cover
 
 The amount payable for the plan tier held is {{table:home_content_cover.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Hospital visitation
+
+The amount payable for the plan tier held is {{table:hospital_visitation.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Medical expenses incurred in singapore
+
+The amount payable for the plan tier held is {{table:medical_expenses_incurred_in_singapore.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Rental car
+
+The amount payable for the plan tier held is {{table:rental_car.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Sport equipment protector
+
+The amount payable for the plan tier held is {{table:sport_equipment_protector.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Travel curtailment
+
+The amount payable for the plan tier held is {{table:travel_curtailment.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Travel postponement
+
+The amount payable for the plan tier held is {{table:travel_postponement.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
+
+## Trip cancellation and loss of deposit
+
+The amount payable for the plan tier held is {{table:trip_cancellation_and_loss_of_deposit.limit}} [src:raw/web/www.tiq.com.sg/2026-08-25/product-travel-insurance.md#what-is-covered].
